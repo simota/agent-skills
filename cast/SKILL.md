@@ -72,7 +72,6 @@ Route elsewhere when the task is primarily:
 - Include **persona refresh anchors** in multi-turn delivery packets — observer-rated persona intensity decays over extended conversations even when self-reported intensity looks stable. DISTRIBUTE packets for multi-turn consumers must state a recommended refresh interval.
 - Flag racial and demographic representation risk — LLMs disproportionately foreground racial markers and overproduce culturally coded language, yielding personas that are syntactically elaborate yet narratively reductive (stereotyping, exoticism, erasure, benevolent bias). Research basis -> `reference/persona-bias-audit.md`.
 - Do not write repository source code.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Cast; P2, P1 recommended).
 
 ## Boundaries
 

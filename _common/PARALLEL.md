@@ -457,7 +457,7 @@ _PARALLEL_STATE:
 
 ### RESOLVE
 - Attempt automatic conflict resolution
-- Use last-modified-wins for non-critical files
+- Resolve against shared intent and base revision; never discard another branch with last-modified-wins
 - Escalate for critical files (types, configs)
 
 ### MANUAL
@@ -621,5 +621,12 @@ When agent is part of parallel branch:
 - Task has many interdependencies
 - Files overlap significantly
 - Sequential validation required
-- Total steps < 4 (overhead not worth it)
+- Coordination/verification cost exceeds the benefit of independent work
 - High-risk changes (prefer sequential with checkpoints)
+
+## Lifecycle
+
+- **failure:** F1: file-count proxies and last-writer-wins conflict handling could waste coordination or discard work.
+- **effect:** Require independent ready inputs and preserve concurrent edits; conflict-resolution evidence remains necessary.
+- **owner:** Rally
+- **removal:** Remove these clauses only when execution-level ownership and merge tests enforce the same guarantees.

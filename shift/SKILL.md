@@ -96,7 +96,6 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ## Core Contract
 
-- Follow the workflow phases in order for every migration task.
 - Document scope, risk, and effort for every migration.
 - Provide concrete code transforms (codemods), not just migration guides.
 - Verify behavioral equivalence at every boundary.
@@ -104,7 +103,6 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Stay within migration orchestration domain; route implementation to Builder, tests to Radar.
 - Define measurable success criteria: critical-data integrity ≥99.9%, latency deviation ≤±10% of the pre-migration baseline, failed transactions <0.02%.
 - Tool selection: ast-grep (or jssg) for cross-language and large-scale codemods, jscodeshift when deep JS/TS AST control is needed, OpenRewrite for Java/Kotlin/Python refactoring at scale (Lossless Semantic Trees, official Spring Boot 3→4 and Jakarta-rename recipes). **Always dry-run before batch execution.**
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Shift; P2, P1 recommended).
 - Apply `_common/CODE_QUALITY.md` to every code change (7 axes, proportional to change surface) and emit `CODE_QUALITY_GATE` before done. `SEC: risk` blocks completion.
 
 ## Migration Strategy Decision

@@ -4,7 +4,7 @@
 
 Default flow for `/flux multi`. Run subagents in parallel — one per AVAILABLE engine — to produce **assumption inversions and cross-domain reframes**, then synthesize a *Portfolio of divergent perspective shifts*.
 
-**Base Engine Policy (2026-05)**: Default baseline = **Claude + Codex (dual-engine, 2 spawns)**. agy adds a third axis (tri-engine, 3 spawns) when AVAILABLE. For Flux the agy uplift is meaningful (Gemini 3.7 Flash (High) at High effort tier + 1M-context cross-domain analogy; mandated Flash — `_common/CLI_COMPATIBILITY.md §4 ‡`, no Deep Think) but dual-engine (Claude's broad-domain reasoning + Codex's GitHub-priors as alternative-domain analogy source) still produces meaningful divergence. When agy is UNAVAILABLE, compensate by explicitly framing each Claude branch with a different reframing technique (Bisociation / SCAMPER / TRIZ inversion / Oblique Strategies) to widen prompt-frame diversity. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
+**Base Engine Policy (2026-05)**: Default baseline = **Claude + Codex (dual-engine, 2 spawns)**. agy adds a third axis (tri-engine, 3 spawns) when AVAILABLE. For Flux the agy uplift is meaningful (runtime capability/model selection: `_common/CLI_COMPATIBILITY.md`) but dual-engine (Claude's broad-domain reasoning + Codex's GitHub-priors as alternative-domain analogy source) still produces meaningful divergence. When agy is UNAVAILABLE, compensate by explicitly framing each Claude branch with a different reframing technique (Bisociation / SCAMPER / TRIZ inversion / Oblique Strategies) to widen prompt-frame diversity. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
 
 **Why multiple engines for reframing (different from Judge, more extreme than Spark):** Flux's entire value proposition is *vertical reasoning reinforces existing thought structures rather than breaking them* (de Bono). A single engine — no matter how capable — is structurally bounded by its training-data priors and will only produce assumption-inversions consistent with those priors. Multiple independent engines with non-overlapping training data (Codex/GitHub-heavy, Claude/Anthropic-curated baseline; Antigravity/Google-product-heavy when AVAILABLE) each apply their own implicit prior to the *same* problem, producing reframes that no single engine can reach alone.
 
@@ -45,7 +45,7 @@ Spawn **three Agent calls in a single message**.
 | Subagent | Engine | Baseline command |
 |----------|--------|------------------|
 | `reframe-codex` | Codex CLI | `codex exec --full-auto "<prompt>"` |
-| `reframe-agy` | Antigravity CLI | `agy -p "<prompt>" --dangerously-skip-permissions --log-file <path>` (silent-failure detection mandatory — see `_common/MULTI_ENGINE_RECIPE.md §3.5 Engine Runtime Failure Detection`) |
+| `reframe-agy` | Antigravity CLI | Authorized headless/native dispatch → `_common/CLI_COMPATIBILITY.md` §9; validate outputs under `_common/MULTI_ENGINE_RECIPE.md` §3.5 |
 | `reframe-claude` | Claude Code CLI (subagent) | Agent tool with `subagent_type: general-purpose` |
 
 **Loose prompt rule**: pass only Role + Target + Output format. Do NOT pass Cynefin classification rules, framework taxonomies, or ASN-test criteria — those apply at SYNTHESIZE. Each engine should freely produce reframes from its own implicit priors.

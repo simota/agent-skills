@@ -2,7 +2,7 @@
 
 > **Tier:** `orchestration` — activates from the hub, a recipe, or on engine detection. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
 
-Common protocol for individual skills to spawn parallel sub-agents via the **Agent tool** (formerly Task tool, renamed in v2.1.63).
+Common protocol for individual skills to delegate independent subtasks using the runtime's advertised subagent interface.
 For Nexus internal parallel branches → `_common/PARALLEL.md`. For full team orchestration (4+ workers) → Rally.
 
 ---
@@ -47,75 +47,34 @@ Task received
 A subagent's value is that it explores in a **clean context window** and returns a **condensed, distilled summary — Anthropic's reference figure is 1,000–2,000 tokens** (*Effective context engineering for AI agents*). The detailed exploration (dozens of file reads, dead ends, raw tool output) is spent inside the subagent and *never enters the parent's context*; only the distillation crosses the boundary. That separation of detailed search from high-level synthesis is the mechanism — a subagent that streams its raw findings back has paid the spawn cost and kept the context cost.
 
 **Two consequences for authoring:**
-- **Give every spawn a return envelope in that range** unless the deliverable genuinely needs more. `_STEP_COMPLETE` / `## NEXUS_HANDOFF` already impose structure; the 1-2k figure is the default *size* to pair with it. On Opus 5 this is not optional — its default output runs long in both channels (`OPUS_5_AUTHORING.md` P2).
+- **Give each spawn an appropriate return ceiling**, not a token quota. Return evidence pointers and unresolved issues rather than raw traces; `_STEP_COMPLETE` / `## NEXUS_HANDOFF` supply the structure. Large artifacts may remain in files.
 - **Judge a fan-out by context saved, not tasks parallelized.** If each branch would return its full trace, the parent's context grows as fast as if it had done the work inline, and only wall-clock improves.
 
 ---
 
 ## Agent Tool Quick Reference
 
+Discover the installed runtime's agent interface, allowed tools, capacity, nesting, isolation and join/resume semantics through `_common/CLI_COMPATIBILITY.md`. Custom subagent definitions and `SKILL.md` are different formats: the repository's skills retain exactly `name` and `description` frontmatter keys.
+
 ### subagent_type Selection
 
-| Type | Model Default | Tools Available | Best For |
-|------|-------------|----------------|----------|
-| `Explore` | Haiku | Read-only (Glob, Grep, Read — Write/Edit denied) | Fast codebase exploration, file search |
-| `Plan` | Inherits | Read-only (Write/Edit denied) | Architecture analysis, plan mode research |
-| `general-purpose` | Inherits | All (including Edit, Write, Bash, MCP) | Implementation, testing, any task requiring changes |
-| `Bash` | Inherits | Shell only | Terminal commands in separate context |
-| `claude-code-guide` | Haiku | Read-only + WebFetch/WebSearch | Questions about Claude Code features |
-| Custom (`name`) | Per definition | Per `.claude/agents/` definition | Domain-specific tasks with tailored config |
-
-**Custom Subagent Definitions:** Markdown files placed in `.claude/agents/` (project) or `~/.claude/agents/` (user) can define your own subagent_type. Fields such as `tools`, `disallowedTools`, `model`, `permissionMode`, `skills`, `memory`, `hooks`, `maxTurns`, `effort`, and `isolation` can be pre-configured.
+Choose an advertised read-only investigator for research, a suitably scoped writer for implementation, and a separate verifier where required. A role label does not enforce read-only access: check the actual grant.
 
 ### model Selection
 
-| Complexity | Model | Use When |
-|-----------|-------|----------|
-| Low | `haiku` | Simple searches, formatting, extraction |
-| Medium | `sonnet` | Standard analysis, code review, moderate reasoning |
-| High | `opus` | Complex reasoning, architecture decisions |
-| — | `inherit` (default) | Use parent session's model |
-
-Full model IDs (`claude-opus-5`, `claude-sonnet-5`, etc.) are also supported.
+Inherit the authorized model/effort unless a supported, evidence-justified alternative is within budget. Do not hard-code generation names in skill prompts.
 
 ### Key Frontmatter Fields (Custom Subagents)
 
-| Field | Description |
-|-------|-------------|
-| `maxTurns` | Maximum agentic turns (runaway prevention, cost control) |
-| `effort` | Reasoning effort: `low`/`medium`/`high`/`xhigh`/`max`. Opus 5 defaults to **`high`** — set `xhigh` explicitly for coding/agentic subagents (and `max_tokens` ≥ 64k), or `low` for cheap fan-out, where `low`/`medium` are notably stronger than on earlier Opus models. Effort cannot be combined with disabled thinking above `high` |
-| `isolation` | `worktree` for git worktree isolation (prevents file conflicts during parallel work) |
-| `memory` | Persistent memory: `user`/`project`/`local` (cross-session learning) |
-| `skills` | Skill content to inject at startup (pre-injection of SKILL.md) |
-| `hooks` | Lifecycle hooks scoped to this subagent |
-| `background` | `true` to always run as background task |
+Use only fields documented for the actual CLI and version. Never copy custom-agent configuration fields into this repository's SKILL.md frontmatter. Context isolation, file ownership and permission scopes must be checked at dispatch.
 
 ### Parallel Launch
 
-Spawn multiple subagents by issuing **multiple Agent tool calls in a single message**. The system executes them concurrently.
-
-```
-# In one message, call Agent 2-3 times:
-Agent(subagent_type="Explore", prompt="Research area A...")
-Agent(subagent_type="Explore", prompt="Research area B...")
-Agent(subagent_type="Explore", prompt="Research area C...")
-```
-
----
+Launch independent work through the available concurrent interface, then join all prerequisite results. A familiar tool name or multiple sequential calls does not prove parallel execution.
 
 ## Codex Orchestrator Parallelism
 
-This document assumes the **Claude Code** `Agent` tool. When the **Codex CLI** drives the hub, the parallelism primitives differ — apply `_common/CODEX_ORCHESTRATION.md` instead of the Agent mechanics above:
-
-| Concept | Claude Code (this doc) | Codex CLI hub |
-|---------|------------------------|---------------|
-| Spawn | `Agent(prompt, ...)` | `spawn_agent(prompt)` → `wait_agent(id)` |
-| Parallel | N `Agent(... run_in_background: true)` (non-blocking) | N `spawn_agent`; independent hub work may continue; join required results before aggregation (C2) |
-| Max fan-out | soft cap **3** (else Rally) | governed by effective runtime capacity / nesting / budget (C1), not the soft 3 |
-| Continue / resume | new `Agent` per step | `send_input` / `resume_agent` / `close_agent` for 4+ step chains (C6) |
-| Prereq | `Agent` tool present | advertised spawn capability + available capacity; legacy depth limits apply to planned child depth (C1/C5) |
-
-The patterns below (RESEARCH_FAN_OUT, MULTI_ENGINE, etc.) and their merge strategies are engine-agnostic — only the spawn/join syntax changes.
+Use `_common/CODEX_ORCHESTRATION.md` for Codex and `_common/AGY_ORCHESTRATION.md` for agy; apply the same outcome, authority, ownership and merge contracts. Runtime details stay in the compatibility layer.
 
 ---
 
@@ -144,77 +103,19 @@ Multiple AI engines independently work on the same task, leveraging diverse know
 
 #### Engine Dispatch Table
 
-| Engine | Command | Fallback (when `which` fails) |
-|--------|---------|-------------------------------|
-| Codex | `codex exec --full-auto -o /tmp/codex-<slug>.md` (artifact = source of truth; keep foreground — detached-TTY silent crash #19945, see `_common/CLI_COMPATIBILITY.md §9.3`) | Claude subagent (Task) |
-| Antigravity | `agy -p --dangerously-skip-permissions --log-file <path> --print-timeout 15m` (use `@<path>` for file refs; **capture output via prompt-mandated artifact file, NOT stdout** — `_common/CLI_COMPATIBILITY.md §9.2`; silent-failure detection mandatory — see `_common/MULTI_ENGINE_RECIPE.md §Engine Runtime Failure Detection`) | Claude subagent (Task) |
-| Claude | Claude subagent (Task) | — |
+Bind installed authorized engines through `_common/CLI_COMPATIBILITY.md`; collect runtime outcomes under `_common/MULTI_ENGINE_RECIPE.md` §3.5. No engine may be declared successful from exit status alone.
 
 #### Loose Prompt Rules
 
-External engines (Codex, Antigravity) must receive **minimal, unbiased prompts** to maximize independent perspective:
-
-**Pass only:**
-1. **Role** — one line describing the task persona
-2. **Target** — code, files, or context to analyze
-3. **Output format** — expected structure of results
-
-**Do NOT pass:** domain frameworks, category lists, methodology descriptions, checklists, or detailed procedures. Let each engine apply its own knowledge.
+Pass a bounded task, authoritative inputs/revision, acceptance criteria, output schema, allowed effects and prohibited outcomes. Withhold other engines' conclusions and prescriptive domain frameworks until synthesis to preserve independence. “Loose” never means omitting security, scope or legal constraints.
 
 #### Dispatch Examples
 
-```bash
-# Codex — foreground only (#19945 detached-TTY silent crash); artifact = source of truth
-codex exec --full-auto -o "/tmp/codex-<slug>.md" "$(cat /tmp/prompt.md)"
-[ -s "/tmp/codex-<slug>.md" ] || echo "VERDICT: codex RUNTIME-BROKEN (empty artifact despite RC=$?)"
-
-# Antigravity — file-handoff capture MANDATORY (stdout never flushes to non-TTY:
-# issues #76 + #115, both OPEN/unfixed through v1.0.10 — a SUCCESSFUL run also produces empty piped stdout).
-# In the prompt itself:
-#   1. Reference files as @<path> (e.g. @docs/spec.md) — bare path strings trigger the
-#      subagent-delegate silent-timeout pattern.
-#   2. End with the §9.2 MANDATORY OUTPUT PROTOCOL block: write the COMPLETE deliverable
-#      to /tmp/agy-<slug>.md (ABSOLUTE path) + final line <<<END_OF_OUTPUT>>>.
-# ⚠ Pre-flight Notification REQUIRED before the first headless spawn of a session —
-# see _common/CLI_COMPATIBILITY.md §9.1. Recommends /update-config to allowlist
-# the Bash pattern in settings.json (the spawn creates a two-layer autonomous loop).
-SLUG="<task-slug>"
-OUT="/tmp/agy-${SLUG}.md"; LOG="/tmp/agy-${SLUG}.log"
-rm -f "$OUT"
-# agy REQUIRES a TTY: from a socket-stdin shell `agy -p` hangs silently and `script -q /dev/null`
-# fails ("Operation not supported on socket"). Give it a real pty via python pty.spawn (§9.2).
-python3 - "$LOG" <<'PY' || true
-import pty, sys
-pty.spawn(["agy","-p",open("/tmp/prompt.md").read(),"--dangerously-skip-permissions",
-           "--log-file",sys.argv[1],"--print-timeout","15m"])
-PY
-if [ -s "$OUT" ] && grep -q '<<<END_OF_OUTPUT>>>' "$OUT"; then
-  echo "OK: deliverable at $OUT"
-else
-  # Fallback: transcript harvest (undocumented internal path — bitrot risk)
-  TR="$(ls -td "$HOME/.gemini/antigravity-cli/brain"/*/ 2>/dev/null | head -1).system_generated/logs/transcript.jsonl"
-  [ -f "$TR" ] && grep '"type":"PLANNER_RESPONSE"' "$TR" | grep '"status":"DONE"' | tail -1 > "${OUT}.transcript.json"
-  if [ ! -s "$OUT" ] && [ ! -s "${OUT}.transcript.json" ]; then
-    grep -E "RESOURCE_EXHAUSTED|Resets in|error getting token|agent executor error|unexpected end of JSON|subagent.*timeout|interaction timeout" "$LOG" | head -5
-    echo "VERDICT: agy RUNTIME-BROKEN — record in rejection ledger, exclude from aggregation"
-  fi
-fi
-# Full pattern + rationale: _common/CLI_COMPATIBILITY.md §9.2 + _common/MULTI_ENGINE_RECIPE.md §Engine Runtime Failure Detection
-```
-
-```yaml
-# Claude (Agent tool)
-Agent:
-  subagent_type: general-purpose
-  mode: dontAsk
-  description: "[task description]"
-  prompt: |
-    [Role]. [Target]. [Output format].
-```
+Use the available native spawn API, or a documented headless CLI inside its approved sandbox. Validate structured output and required artifacts; do not copy historical permission-bypass/PTY recipes into every skill. Exact commands and conditional workarounds → `_common/CLI_COMPATIBILITY.md` §9.
 
 #### Fallback Rule
 
-When an engine is unavailable (`which` fails), its workload falls back to a Claude subagent. This ensures 3 independent analyses even when external tools are missing.
+Use the Degraded Modes in `_common/MULTI_ENGINE_RECIPE.md`. Same-engine independent sessions may provide additional perspectives but never count as missing engines or acquire their provenance tags. Report missing independent verification instead of simulating it.
 
 #### Merge Strategies for Multi-Engine
 
@@ -288,7 +189,7 @@ Multiple subagents implement different solutions to the same problem, then the b
 | **All subagents fail** | Fall back to sequential single-agent execution |
 | **Timeout** (subagent takes too long) | Use available results; note incomplete coverage |
 | **Conflicting results** | Flag contradictions explicitly; escalate to user if safety-critical |
-| **Engine unavailable** (MULTI_ENGINE) | Fallback to Claude subagent per dispatch table |
+| **Engine unavailable** (MULTI_ENGINE) | Apply truthful degraded mode; never relabel a same-engine result |
 
 ---
 
@@ -296,9 +197,9 @@ Multiple subagents implement different solutions to the same problem, then the b
 
 | Rule | Limit | Reason |
 |------|-------|--------|
-| Max parallel subagents | **~3 (default guideline)** | Not an absolute ceiling — tune to the hub engine and model generation (e.g. a Fable 5 hub can fan out more aggressively). For large parallel workloads, delegating to Rally for proper coordination is recommended. |
+| Max parallel subagents | **~3 (default guideline)** | Not an absolute ceiling — tune to available capacity, ownership, measured benefit and authorized budget. For large parallel workloads, delegating to Rally for proper coordination is recommended. |
 | File ownership | **Exclusive** | No two subagents modify the same file |
-| Cost awareness | **Each subagent = separate Claude instance** | Only parallelize when benefit > overhead |
+| Cost awareness | **Each subagent consumes runtime resources** | Only parallelize when benefit > overhead |
 | Spawn decision | **Agent's judgment** | Unless Nexus explicitly instructs `multi-engine` |
 | Nesting | **Prohibited** | Subagents cannot spawn other subagents |
 | Output style | **No completion preamble** | See `_common/OUTPUT_STYLE.md §Subagent Completion Pattern` — open with the deliverable, never with "completed/finished/here is the report" |
@@ -317,13 +218,11 @@ When invoking a subagent via the `Agent` tool, instruct it explicitly in the pro
 
 ## Context Inheritance Rules
 
-Understanding subagent context behavior is important:
+Do not assume parent history, skills, permissions or MCP connections transfer identically across engines. Verify actual inheritance through `_common/CLI_COMPATIBILITY.md`; explicitly supply the scoped task, applicable contracts and evidence references. Restrict tools/effects with host controls where possible. A textual prohibition alone is not sandbox isolation.
 
-| Aspect | Inherits? | Notes |
-|--------|-----------|-------|
-| Parent's conversation history | No | Must be passed explicitly via prompt |
-| Parent's Skills | No | Must be pre-injected via the `skills` field |
-| Permission settings | Yes | Inherits parent's permissions. `bypassPermissions` cannot be overridden |
-| MCP servers | Partial | Must be explicitly specified via `mcpServers`. Inline definitions are subagent-only |
-| CLAUDE.md | Yes (teams) | Agent Teams teammates load it normally |
-| Tool access | Configurable | Can be restricted via `tools`/`disallowedTools` |
+## Lifecycle
+
+- **failure:** F1: model-specific payloads and assumed tool signatures could misroute delegation.
+- **effect:** Use verified interfaces and scoped evidence without duplicating specialist methods; live-runtime evaluation remains required.
+- **owner:** Rally
+- **removal:** Retire adapter-specific text after all callers use the compatibility contract and delegation fixtures preserve ownership and result joins.

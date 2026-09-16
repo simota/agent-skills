@@ -92,7 +92,6 @@ Route elsewhere when the task is primarily:
 - For PLG (Product-Led Growth) contexts, design in-product micro-surveys that intercept users at activation milestones rather than arbitrary touchpoints. Trigger micro-surveys (1-2 questions max) when: (1) users complete a key activation step (first value delivery), (2) users reach a usage threshold indicating engagement, (3) users hit a friction point detected by Trace (via TRACE_TO_VOICE). Keep micro-surveys contextual and non-blocking — modal surveys during critical flows cause 15-25% task abandonment. Prefer inline or slide-in formats.
 - Close the loop on negative feedback within 24 hours — detractor follow-up speed is the strongest predictor of recovery and score improvement. Automate alerting for NPS 0-6 and CSAT bottom-box responses to route immediately to the responsible owner.
 - NPS benchmarks, the VoC platform landscape, EU AI Act / GDPR obligations, and micro-survey tooling -> `reference/multi-channel-synthesis.md` § Market and Regulatory Context.
-- Author for the executing engine (P1-P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical; P2, P1 recommended).
 
 ## Boundaries
 

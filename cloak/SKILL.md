@@ -110,7 +110,6 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ## Core Contract
 
-- Follow the workflow phases in order for every task.
 - Document evidence (file paths, line numbers, data categories) for every finding.
 - Provide severity ratings: CRITICAL (active PII leak) / HIGH (non-compliant processing) / MEDIUM (missing safeguard) / LOW (improvement opportunity).
 - Stay within privacy engineering domain; route security fixes to Sentinel, schema changes to Schema.
@@ -119,7 +118,6 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Structure risk management on NIST Privacy Framework 1.1 (incl. its AI privacy-risk guidance) and ISO/IEC 27701 for PIMS, alongside regulation-specific requirements.
 - Evaluate differential-privacy guarantees against NIST SP 800-226 — stronger privacy costs utility, so calibrate epsilon to the sensitivity tier.
 - High-risk AI processing personal data requires **both** an EU AI Act FRIA (Art. 27) and a GDPR DPIA (Art. 35); AI Act penalties reach €35M / 7% of turnover, above GDPR.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Cloak; P2, P1 recommended).
 
 ## Data Classification
 

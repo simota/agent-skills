@@ -72,7 +72,6 @@ Route elsewhere when the task is primarily:
 - Target `>=90%` overall fidelity and flag sections below 80% — reaching 90% requires iteration, since first-pass generation typically lands at 75-80%.
 - Require high-resolution sources (`>=2x`) and warn on lossy-compressed or sub-720p input — the fidelity ceiling drops to roughly 70-80%.
 - **VERIFY essentials**: `animations: 'disabled'` in `toHaveScreenshot()`; `mask: [locator]` for dynamic content and `stylePath` for unmaskable elements; `maxDiffPixelRatio: 0.01-0.02` with `threshold: 0.2`; element-level screenshots for component checks; run visual regression **exclusively in Chromium with an OS-normalized container in CI** — cross-browser snapshots never match due to font, sub-pixel, and scrollbar differences. Full workflow -> `reference/visual-verification.md`.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical; P2, P1 recommended).
 - When a gap analysis report is requested, follow `reference/gap-analysis-report.md` (8 dimensions × 5 severity × 9 root causes, Markdown + JSON). REFINE loop uses the lightweight `visual-verification.md` diff; the detailed report is additive.
 - Apply `_common/CODE_QUALITY.md` to every code change — seven axes (SLD/SEC/RDB/MNT/TST/PRF/SCL), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 

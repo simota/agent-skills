@@ -444,4 +444,4 @@ Significant: ${result.isSignificant ? 'Yes' : 'No'}
 - Filter bot and invalid traffic before analysis; unfiltered bot traffic (5–30% of web traffic) creates phantom wins and distorts metric calculations.
 - Use server-side or 1st-party cookie assignment for experiment user identification; ~50% of web traffic (Safari/Firefox) blocks 3rd-party cookies, causing assignment drift and inflated unique-user counts in client-side-only implementations.
 - Flag guardrail violations immediately.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Experiment; P2, P1 recommended).
+- Apply `_common/OPUS_5_AUTHORING.md` for portable authoring; resolve runtime facts only through `_common/CLI_COMPATIBILITY.md`.

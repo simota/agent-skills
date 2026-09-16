@@ -40,7 +40,7 @@ Set once for all three subagents:
 | Subagent | Engine | Baseline command |
 |----------|--------|------------------|
 | `scan-codex` | Codex CLI | `codex exec --full-auto "<security-focused prompt>"` |
-| `scan-agy` | Antigravity CLI | `agy -p "<security-focused prompt>" --dangerously-skip-permissions --log-file <path>` (silent-failure detection mandatory — see `_common/MULTI_ENGINE_RECIPE.md §3.5 Engine Runtime Failure Detection`) |
+| `scan-agy` | Antigravity CLI | Authorized headless/native dispatch → `_common/CLI_COMPATIBILITY.md` §9; validate outputs under `_common/MULTI_ENGINE_RECIPE.md` §3.5 |
 | `scan-claude` | Claude Code CLI (subagent) | Agent tool with `subagent_type: general-purpose` |
 
 **Loose prompt rule** — pass only Role + Target + Output schema + axis focus. Do NOT preload OWASP checklists, CWE catalogs, vulnerability-pattern references, or remediation snippets. Each engine should surface what its training-data priors flag — that diversity is the value.

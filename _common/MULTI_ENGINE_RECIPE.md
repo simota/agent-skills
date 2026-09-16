@@ -14,7 +14,7 @@ Cross-skill protocol for the `multi` Recipe — spawning subagents in parallel a
 
 **Default baseline: Claude + Codex (dual-engine).** agy / Antigravity CLI is an **optional addon** — used when AVAILABLE at PREFLIGHT, gracefully skipped when not. Skills MUST NOT treat agy as a hard prerequisite; recipes MUST function correctly in dual-engine mode.
 
-Rationale: agy v1.0.x has frequent silent runtime failures (RESOURCE_EXHAUSTED quota, OAuth expiry, executor errors, internal subagent timeouts — see §3.5). Building hard dependencies on agy makes recipes brittle. The dual-engine Claude+Codex baseline covers the core diversity need (judgment-oriented engine + sandbox-execution engine with non-overlapping training-data priors); agy contributes a third axis (1M context / multimodal / Gemini-Flash model-priors at High effort tier / Search grounding) when reachable but is never load-bearing. (agy is mandated to Gemini 3.7 Flash (High) — `_common/CLI_COMPATIBILITY.md §4 ‡`; no Deep Think.)
+This is a repository deployment baseline, not a claim that vendors have disjoint training data or fixed domain strengths. An available authorized third engine may add independent evidence; measure its contribution. Runtime failures and partial outputs are handled by §3.5 for every engine. Model and capability selection follows `_common/CLI_COMPATIBILITY.md`.
 
 | Engine count at runtime | Mode | Tag convention | Confidence floor |
 |-------------------------|------|----------------|------------------|
@@ -30,7 +30,7 @@ Recipes documented as "tri-engine" historically should be read as "multi-engine 
 
 A skill should ship a `multi` Recipe when at least one of these conditions holds:
 
-1. **Training-data divergence value** — different engines (Codex/GitHub-heavy, Antigravity/Google-product-heavy, Claude/Anthropic-curated) have non-overlapping priors that meaningfully change the output (ideation, research design, competitive analysis, failure-mode enumeration).
+1. **Independent perspective value** — different authorized engines may produce useful alternative hypotheses; evaluate their grounded contribution rather than asserting knowledge of their training data.
 2. **Self-bias risk** — the skill's output is evaluative and a single engine would inherit blind spots (security scanning, code review, persona channeling).
 3. **Decision stakes warrant cross-validation** — strategic judgment, architectural choices, security findings, post-mortems where a single-engine answer is too narrow.
 
@@ -210,82 +210,38 @@ done
 
 ### 3. FAN-OUT — parallel subagents
 
-Spawn **three Agent calls in a single message** for genuine parallel execution. Each subagent has an independent context (no shared bias).
+Launch the selected available engines in independent contexts using `_common/CLI_COMPATIBILITY.md`. The dual-engine baseline requires two real engines, not three mandatory calls; add the optional third only when available and justified. Use exclusive artifacts and a join before synthesis.
 
-| Subagent | Engine | Baseline command |
-|----------|--------|------------------|
-| `{verb}-codex` | Codex CLI | `codex exec --full-auto -o /tmp/codex-<slug>.md "<prompt>"` (artifact file is the source of truth; **keep the spawn foreground** — detached-TTY silently crashes with no output, #19945 unfixed through 0.137.0 — see `_common/CLI_COMPATIBILITY.md §9.3`) |
-| `{verb}-agy` | Antigravity CLI | `agy -p "<prompt>" --dangerously-skip-permissions --log-file <path>` (use `@<path>` to inject files; **output captured via file-handoff, NOT stdout** — prompt must mandate an absolute-path artifact + sentinel per `_common/CLI_COMPATIBILITY.md §9.2`; request JSON inside the artifact, not via the unreliable `--output-format json` flag; silent-failure detection mandatory — see §Engine Runtime Failure Detection below; **Pre-flight Notification required** before first spawn — see `_common/CLI_COMPATIBILITY.md §9.1`) |
-| `{verb}-claude` | Claude Code CLI (subagent) | Agent tool with `subagent_type: general-purpose` |
+**Loose prompt rule:** pass task, revision-bound inputs, ACs, authority/prohibited effects and the skill's output schema. Do not reveal other engines' conclusions or impose the synthesizer's taxonomy prematurely. Never omit safety constraints for “independence.”
 
-`{verb}` is skill-specific: `propose` (Spark), `demand` (Echo[demand]), `failure` (Omen), `deliberate` (Magi), etc.
-
-**Loose prompt rule** (per `_common/SUBAGENT.md` MULTI_ENGINE): pass only Role + Target + Output format. Do NOT pass skill-specific frameworks, taxonomies, or templates — those are applied at SYNTHESIZE. The point is to let each engine's training-data priors drive independent output.
-
-**JSON output schema** is mandatory for deterministic integration. Each skill defines its own schema in its `reference/tri-engine-{verb}.md`, but always includes:
+**JSON output schema** remains required for deterministic integration. Preserve the skill-specific schema in `reference/tri-engine-{verb}.md` and record actual engine identity. Re-emit malformed output within the original authority/budget or mark that branch incomplete; a parser repair is not new substantive evidence.
 
 ```json
 {
   "engine": "codex|agy|claude",
-  "outputs": [ /* skill-specific output items */ ],
-  "engine_notes": "Optional: what bias/strength this engine knows it brings"
+  "outputs": [],
+  "engine_notes": "Observed limitations, not invented training-data claims"
 }
 ```
 
-If an engine returns free-form Markdown, ask its subagent to re-emit as JSON before integrating.
-
 ### 3.4.1. agy Pre-flight Notification (mandatory)
 
-Before the first `{verb}-agy` subagent of a session emits the Bash spawn, surface the **Pre-flight Notification** defined in `_common/CLI_COMPATIBILITY.md §9.1`. Reason: combining `agy --dangerously-skip-permissions` with a Claude Code `Bash` spawn produces a two-layer autonomous loop that bypasses approval gates on both sides. The notification recommends running `/update-config` once to allowlist the Bash pattern in `settings.json` `permissions.allow`. The notification is informational (does not gate AUTORUN). Subsequent spawns in the same session may downgrade to a single-line reminder if the allowlist entry is confirmed.
+Before a material new effect, disclose it and resolve any required approval under `_common/CLI_COMPATIBILITY.md` §9.1. The historical informational notice is **not authorization** for permission bypass; no global allowlist/configuration mutation is part of this recipe. Already-authorized normal headless calls need no repetitive notification.
 
 ### 3.5. Engine Runtime Failure Detection (mandatory)
 
-Some CLIs report runtime failures (quota exhaustion, auth expiry, executor errors, MCP-config corruption) only to a log file, exiting `0` with empty stdout. A subagent that reads only stdout will misclassify the silent failure as "engine returned no findings", polluting CLUSTER / SCORE and producing fake divergence. Each engine has an explicit runtime-failure-detection rule.
+For **every engine**, capture process/tool status, structured result where available, diagnostics, required artifacts and the revision/run they belong to. An empty result is “no findings” only after evidence shows the requested analysis completed. A required tool denial, timeout, malformed schema or missing artifact is incomplete even if the process exits zero.
 
-| Engine | Failure mode | Detection contract (subagent MUST follow) |
-|--------|--------------|--------------------------------------------|
-| `agy` v1.0.10 | `exit 0` + empty stdout on any of: **non-TTY stdout-flush bug — a SUCCESSFUL run also emits nothing to piped stdout** (official issues #76 + #115, both OPEN; unfixed through v1.0.10 / 2026-06-23) / `RESOURCE_EXHAUSTED` 429 / OAuth revoked / `agent executor error` / corrupt `~/.gemini/config/mcp_config.json` / **internal subagent 60s timeout when bare file paths are used instead of `@<path>` syntax** (v1.0.2 changelog: timeout cap restricted to subagents only — main agent escapes it, but delegated file reads still die silently) / **`--print-timeout` (default 5min) exceeded on heavy multi-file synthesis** | **stdout is not the deliverable channel** — apply `_common/CLI_COMPATIBILITY.md §9.2`: prompt-mandated absolute-path artifact + sentinel, verify file exists / non-empty / sentinel present; fallback to transcript harvest (`brain/<conv-id>/.../transcript.jsonl` last `PLANNER_RESPONSE`); ONLY if both artifact and transcript are empty, `grep -E "RESOURCE_EXHAUSTED\|Resets in\|error getting token\|agent executor error\|unexpected end of JSON\|subagent.*timeout\|interaction timeout"` against `--log-file` and report `RUNTIME-BROKEN` with the matched excerpt; retry with `--print-timeout 15m` if heavy synthesis is suspected. Pass file refs as `@<path>` |
-| `codex` 0.137.0 | non-zero exit code on most failures; **EXCEPTION: detached-TTY + non-trivial prompt silently crashes with no output** (#19945, regression 0.124.0+, unfixed) — triggered by `setsid` / background-Bash spawns; also `--json`/`--output-schema` silently ignored when MCP tools are active (#15451) | Keep the spawn **foreground**; pass `-o <abs path>` and treat a missing/empty artifact as `RUNTIME-BROKEN` even on `RC == 0`; validate `--output-schema` artifacts parse before aggregating; capture stderr. See `_common/CLI_COMPATIBILITY.md §9.3` |
-| Claude subagent | structured Agent-tool errors | Surface verbatim |
-
-**Canonical agy headless pattern** (`_common/SUBAGENT.md` Dispatch Examples carries the same snippet — keep them in sync; full rationale + prompt block: `_common/CLI_COMPATIBILITY.md §9.2`):
-
-```bash
-# Prompt MUST end with the §9.2 MANDATORY OUTPUT PROTOCOL block:
-#   write deliverable to /tmp/agy-<slug>.md (absolute path) + final-line sentinel <<<END_OF_OUTPUT>>>
-SLUG="<task-slug>"
-OUT="/tmp/agy-${SLUG}.md"; LOG="/tmp/agy-${SLUG}.log"
-rm -f "$OUT"
-# agy REQUIRES a TTY: from a socket-stdin shell `agy -p` hangs silently and `script -q /dev/null`
-# fails ("Operation not supported on socket"). Give it a real pty via python pty.spawn (§9.2).
-# stdout is NOT the deliverable channel either — issues #76/#115 (unfixed through v1.0.10).
-python3 - "$LOG" <<'PY' || true
-import pty, sys
-pty.spawn(["agy","-p",open("/tmp/prompt.md").read(),"--dangerously-skip-permissions",
-           "--log-file",sys.argv[1],"--print-timeout","15m"])
-PY
-if [ -s "$OUT" ] && grep -q '<<<END_OF_OUTPUT>>>' "$OUT"; then
-  echo "OK: deliverable at $OUT"
-else
-  # Fallback: transcript harvest (undocumented internal path — bitrot risk)
-  TR="$(ls -td "$HOME/.gemini/antigravity-cli/brain"/*/ 2>/dev/null | head -1).system_generated/logs/transcript.jsonl"
-  [ -f "$TR" ] && grep '"type":"PLANNER_RESPONSE"' "$TR" | grep '"status":"DONE"' | tail -1 > "${OUT}.transcript.json"
-  if [ ! -s "$OUT" ] && [ ! -s "${OUT}.transcript.json" ]; then
-    grep -E "RESOURCE_EXHAUSTED|Resets in|error getting token|agent executor error|unexpected end of JSON|subagent.*timeout|interaction timeout" "$LOG" | head -5
-    echo "VERDICT: agy RUNTIME-BROKEN"
-    exit 42   # caller treats non-0 as RUNTIME-BROKEN; do not silently aggregate
-  fi
-fi
-```
+Current command syntax and version-specific workarounds live in `_common/CLI_COMPATIBILITY.md` §9. Prefer documented structured output. Only a reproduced installed-version defect justifies PTY/file-handoff or foreground-only execution; never suppress the exit code or harvest another run's most recent transcript.
 
 **Integration rules** (main context):
 
-- A `RUNTIME-BROKEN` engine is recorded in the rejection ledger (`engine: RUNTIME-BROKEN (reason: <quota|auth|mcp_corrupt|executor>)`) and excluded from CLUSTER / SCORE.
-- Never emit concurrence tags including a `RUNTIME-BROKEN` engine. `[codex+agy+claude]` requires all three engines to have produced real output.
-- If `agy` is `RUNTIME-BROKEN` on quota (`RESOURCE_EXHAUSTED`), the reset window is in the log (`Resets in NhNm`). Surface it in the rejection ledger so the user knows when to retry.
-- If 2+ engines are `RUNTIME-BROKEN`, fall through to the Degraded Modes table below.
+- Record `RUNTIME-BROKEN (reason: ...)` in the rejection ledger and exclude that branch from CLUSTER/SCORE. Sanitize diagnostics before surfacing them.
+- Never emit concurrence tags for missing, substituted or failed engines. `[codex+agy+claude]` requires three real, usable engine outputs.
+- For rate limits/authentication failures, preserve the observed retry/reset information without inventing a delay or opening credential files. Retry only within authorized bounds; repeated identical failures require diagnosis.
+- Multiple failures use the Degraded Modes below. Reduced coverage cannot silently satisfy a missing independent-verification requirement.
 
-This contract is shared by every `multi` Recipe; do not re-derive it per skill.
+This contract is shared by every `multi` Recipe; do not duplicate shell wrappers per skill.
 
 ### 4. NORMALIZE
 
@@ -488,3 +444,10 @@ When adding `multi` Recipe to a new skill:
 - `spark/reference/tri-engine-proposal.md` — canonical Pattern D implementation (with Portfolio/Compete merge)
 - `echo/reference/tri-engine-demand.md` — canonical Pattern D with calibration + cross-axis (persona × engine)
 - `_common/OPUS_5_AUTHORING.md` — spawn prompt sizing, thinking-depth nudges, parallel-fan-out triggers
+
+## Lifecycle
+
+- **failure:** F1: dated model traits and duplicated invocation recipes drifted from current execution interfaces.
+- **effect:** Central dispatch guidance replaces repeated model/permission mandates; authentic engine provenance and failure handling remain required.
+- **owner:** Judge
+- **removal:** Remove local dispatch guidance when every recipe consumes the compatibility adapter and runtime tests cover capture and failure states.

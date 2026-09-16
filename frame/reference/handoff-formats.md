@@ -5,14 +5,14 @@ Purpose: load this when Frame must package extracted design context for a specif
 ## Contents
 
 - [Common Header (All Handoffs)](#common-header-all-handoffs)
-- [Frame -> Muse (Design-to-Token)](#frame---muse-design-to-token)
-- [Frame -> Forge (Design-to-Prototype)](#frame---forge-design-to-prototype)
-- [Frame -> Artisan (Design-to-Production)](#frame---artisan-design-to-production)
-- [Frame -> Builder (API/Data Context)](#frame---builder-apidata-context)
-- [Frame -> Schema (Data Model)](#frame---schema-data-model)
-- [Frame -> Vision (Visual Context)](#frame---vision-visual-context)
-- [Frame -> Vitrine (Code Connect)](#frame---vitrine-code-connect)
-- [Frame -> Canvas (Diagram)](#frame---canvas-diagram)
+- [Frame -> Muse (Design-to-Token)](#frame--muse-design-to-token)
+- [Frame -> Forge (Design-to-Prototype)](#frame--forge-design-to-prototype)
+- [Frame -> Artisan (Design-to-Production)](#frame--artisan-design-to-production)
+- [Frame -> Builder (API/Data Context)](#frame--builder-apidata-context)
+- [Frame -> Schema (Data Model)](#frame--schema-data-model)
+- [Frame -> Vision (Visual Context)](#frame--vision-visual-context)
+- [Frame -> Vitrine (Code Connect)](#frame--vitrine-code-connect)
+- [Frame -> Canvas (Diagram)](#frame--canvas-diagram)
 
 ## Common Header (All Handoffs)
 

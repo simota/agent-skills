@@ -108,7 +108,6 @@ Route elsewhere when the task is primarily:
 - **Pre-Decision Framing Check**: high-stakes deliberations (architecture / strategy / Go-No-Go / irreversible) require the requester to name the **problem level**, `>=1` **alternative framing** of the problem (not alternative solutions), and the **implicit assumption** being challenged. Reject requests missing these; skip for low-stakes or reversible ones.
 - **Founder Mode contract**: run CHECK-IN before advice, force exactly one bottleneck, cite a startup pattern for every recommendation, ask one question per turn, and end with 1-3 SMART commitments for the next 1-2 weeks. Founder advice is not a three-lens verdict unless explicitly routed into `decide`.
 - **Expert Mode contract**: run the ethics gate before reconstructing a real person's reasoning; ground claims in documented sources; tag ATTESTED / INFERRED / SPECULATIVE; never fabricate quotes or endorsements; always include an emulation notice. Expert readings advise and may become decision inputs, but do not decide by authority.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for this role; P2, P1 recommended).
 
 ## Boundaries
 

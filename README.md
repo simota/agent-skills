@@ -24,11 +24,10 @@ cd ~/repos/agent-skills
 make link
 ```
 
-`make link` symlinks each skill directory into `~/.claude/skills`, `~/.codex/skills`, and
+`make link` symlinks each skill directory into `~/.claude/skills`, `~/.agents/skills`, and
 `~/.gemini/antigravity-cli/skills` individually, so every CLI reads the same working tree and a single `git pull`
 updates all of them. Skills already present in those directories are preserved: a name that already
-exists is reported and skipped, never overwritten. A CLI that is not installed (no `~/.codex`, for
-example) is skipped too, so the same command works on a single-CLI machine.
+exists is reported and skipped, never overwritten. Missing destination parents are skipped except for the guarded Codex migration described below, so the same command works on a single-CLI machine. A directory is an installation hint, not a live CLI availability test.
 
 | Command | Effect |
 |---------|--------|
@@ -56,6 +55,12 @@ The shortest path when the target directory does not exist yet and only one CLI 
 /Radar Improve test coverage
 /Vision I want to redesign the dashboard with a modern look
 ```
+
+### Runtime compatibility and legacy Codex installs
+
+Current model/CLI facts and official sources live in [`_common/CLI_COMPATIBILITY.md`](_common/CLI_COMPATIBILITY.md). Skills remain model-agnostic; actual availability, permissions and loading require runtime verification. Gemini CLI and Cursor are secondary readers, not additional installer targets.
+
+Codex skills now use `~/.agents/skills`; settings still use `~/.codex`. The installer preserves old files. To remove **only this repository's old links**, run `make unlink-codex CODEX_DIR="$HOME/.codex/skills"`, inspect the result, then `make link-codex`. Foreign files/links are not removed. If `.agents` is absent but `.codex` exists, the installer creates the new parent only outside the source repository; otherwise create the intended external skill root explicitly.
 
 ## Overview
 

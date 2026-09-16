@@ -48,6 +48,47 @@ class InstallBoundaryTests(unittest.TestCase):
     def assert_ok(self, result):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
+    def codex_default(self, home, target="link-codex"):
+        return self.run_command(MAKE, "--no-print-directory", target, f"HOME={home}")
+
+    def test_codex_default_uses_agents_root_and_preserves_legacy(self):
+        home = self.root / "home"
+        legacy = home / ".codex" / "skills"
+        legacy.mkdir(parents=True)
+        (legacy / "foreign.md").write_text("preserve\n")
+        self.assert_ok(self.codex_default(home))
+        current = home / ".agents" / "skills"
+        self.assertEqual((current / "alpha").resolve(), self.repo / "alpha")
+        (current / "foreign").mkdir()
+        self.assert_ok(self.codex_default(home))
+        self.assert_ok(self.codex_default(home, "unlink-codex"))
+        self.assertFalse((current / "alpha").is_symlink())
+        self.assertTrue((current / "foreign").is_dir())
+        self.assertEqual((legacy / "foreign.md").read_text(), "preserve\n")
+
+    def test_codex_default_skips_when_cli_and_shared_root_are_absent(self):
+        home = self.root / "home"
+        home.mkdir()
+        result = self.codex_default(home)
+        self.assert_ok(result)
+        self.assertIn("skip", result.stdout)
+        self.assertFalse((home / ".agents").exists())
+
+    def test_codex_default_refuses_first_use_parent_inside_repository(self):
+        home = self.repo / "home"
+        (home / ".codex").mkdir(parents=True)
+        result = self.codex_default(home)
+        self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertFalse((home / ".agents").exists())
+
+    def test_codex_default_refuses_parent_symlink_into_repository(self):
+        home = self.root / "home"
+        home.mkdir()
+        (home / ".agents").symlink_to(self.repo, target_is_directory=True)
+        result = self.codex_default(home)
+        self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertFalse((self.repo / "skills").exists())
+
     def test_unlink_rejects_a_directory_inside_the_source_tree(self):
         self.cli = self.repo / "alpha"
         contract = self.cli / "shared"

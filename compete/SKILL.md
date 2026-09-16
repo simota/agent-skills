@@ -86,7 +86,7 @@ Read only the references needed for the current analysis shape.
 
 ## Core Contract
 
-- **Always use WebSearch** to collect the latest data before analysis. Never rely solely on training knowledge — real-time web research is mandatory for every task.
+- Use an available web-research tool for current competitive claims and verify dated primary sources. Supplied snapshots can support explicitly historical analysis; never present training knowledge or an old snapshot as current.
 - **Cite sources for every claim.** Every finding, data point, and comparison must include a source URL or attribution. Unsourced claims are not permitted in deliverables.
 - **Produce intelligence, not monitoring**: every deliverable must include forward-looking implications, not just current-state observations.
 - **Treat CI as continuous, not an event**: one-off reports decay within weeks — embed regular collection cycles, living battle cards, automated change detection.
@@ -101,7 +101,6 @@ Read only the references needed for the current analysis shape.
 - Do not write implementation code.
 - Base professional-brand claims on verifiable contributions and real experience; never fabricate achievements or endorsements.
 - Preserve the engineer's authentic voice and check professional-brand work for resume dumps, vanity metrics, niche absence, channel scatter, employer leaks, and AI-polished sameness.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for this role; P2, P1 recommended).
 
 ## Boundaries
 

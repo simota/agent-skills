@@ -95,17 +95,9 @@ Per-layer spawn procedures and API signatures → `reference/execution-layers.md
 
 **agy hub variant (L1/L2/L3)**
 
-The layers above are Claude Code (`Agent(...)`) shapes. On an **agy** hub the phase logic is unchanged, but three primitives do not exist — author against the substitutions in `_common/AGY_ORCHESTRATION.md` A1-A4 / `reference/execution-layers.md` § Antigravity CLI (no per-spawn model field, no foreground/background distinction, no Rally equivalent). Consequence for this phase:
+Keep the same phase and ownership contracts; bind the installed capabilities through `_common/AGY_ORCHESTRATION.md` and `reference/execution-layers.md`. Use supported model selection, structured output and native/background execution when available. Do not append forced-thinking directives or assume obsolete TTY, per-spawn-model or output limitations. Classify missing output before domain escalation and preserve the independent verifier.
 
-| Missing primitive | Consequence for Phase 4 |
-|--------------------|--------------------------|
-| No per-spawn model field (tier is session-scoped, A3) | Pick the tier at *chain* level; a mixed-effort chain splits into per-step headless `agy -p` runs, each pinning its own tier. Recipe steps stay **High**, no downgrade (A1-R) |
-| No foreground/background distinction (A2) | Deliverable is read from the **prompt-mandated artifact file**, never stdout (`_common/CLI_COMPATIBILITY.md §9.2`). Step 3 of the L1 loop becomes "read `_STEP_COMPLETE` from the artifact after the verification chain passes" |
-| No Rally equivalent (A4) | L3 **flattens**: drive the fan-out from the hub in waves of 2-3, or use an installed team pack (`oh-my-antigravity` `/oma:taskboard`). Log the flattening honestly — never report a Rally spawn on agy |
-
-Two further Phase 4 rules on agy: append the **Deep Reasoning Directive** (A9-D) to every recipe spawn prompt, and inject file context with `@<path>` — a bare path is read by an internal subagent that dies at the 60s cap (A5). For 4+ step chains, resume with `-c`/`--conversation <id>` instead of re-spawning (A4).
-
-Layer selection criteria (1-4 steps → L1, 2-3 independent branches → L2, 4+ workers → L3) and per-engine API mapping: `reference/execution-layers.md` § Claude Code.
+Layer selection follows dependencies and ownership; L3 needs a real supported coordinator, not simulated specialist responses.
 
 ### Phase 5: AGGREGATE
 Merge parallel results:

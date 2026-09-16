@@ -57,7 +57,7 @@ Spawn **three Agent calls in a single message** so they run concurrently. Each s
 | Subagent | Engine | Baseline command |
 |----------|--------|------------------|
 | `propose-codex` | Codex CLI | `codex exec --full-auto "<prompt>"` |
-| `propose-agy` | Antigravity CLI | `agy -p "<prompt>" --dangerously-skip-permissions --log-file <path>` (silent-failure detection mandatory — see `_common/MULTI_ENGINE_RECIPE.md §3.5 Engine Runtime Failure Detection`) |
+| `propose-agy` | Antigravity CLI | Authorized headless/native dispatch → `_common/CLI_COMPATIBILITY.md` §9; validate outputs under `_common/MULTI_ENGINE_RECIPE.md` §3.5 |
 | `propose-claude` | Claude Code CLI (subagent) | Agent tool with `subagent_type: general-purpose` |
 
 **Loose prompt rule (per `_common/SUBAGENT.md` MULTI_ENGINE)**: pass only Role + Target + Output format. Do NOT pass JTBD templates, RICE rubrics, OST taxonomies, or persona archetypes — let each engine apply its own training-data priors. The Spark main context applies framework rules during SYNTHESIZE, not at FAN-OUT.

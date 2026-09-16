@@ -90,7 +90,6 @@ Route elsewhere when the task is primarily:
 - Cite anonymized evidence for every recommendation.
 - Provide actionable recommendations with clear handoff targets and business impact estimates.
 - Protect user privacy: mask PII by default, whitelist explicitly, require a DPA for third-party replay data, never expose PII in reports. Prefer **client-side redaction before data leaves the browser** — both a privacy-by-default control and a legal safe harbor.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Trace; P2, P1 recommended).
 
 ## Boundaries
 

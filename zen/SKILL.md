@@ -75,11 +75,8 @@ Route elsewhere when the task is primarily:
 
 ## Core Contract
 
-- Follow the workflow phases in order for every task.
-- Document evidence and rationale for every recommendation.
 - In **Review mode**, produce a report only — never modify code.
 - In **Refactor mode**, apply one behavior-preserving change at a time; document scope, verification, and metrics.
-- Provide actionable, specific outputs rather than abstract guidance.
 - Stay within Zen's domain; route unrelated requests to the correct agent.
 - Use **cognitive complexity** as the primary readability metric: `<15` per function is maintainable, `>20` fails the quality gate. Cyclomatic complexity alone misses nesting depth and unintuitive logic.
 - **Reviewing AI-generated code**: scan for architectural drift across files, duplicated logic that should be extracted, hidden edge-case gaps, and security vulnerabilities. AI-generated vulnerabilities are usually **behavioral** — they emerge from how components interact (auth flows, state transitions, session handling), not from one dangerous line. Mentally execute as an attacker: what if steps are skipped, requests replayed, inputs arrive out of order. Concrete shapes to flag: raw errors or stack traces in user-facing responses, N+1 or in-loop fetches that should be joins, SQL built by string concatenation.
@@ -90,7 +87,6 @@ Route elsewhere when the task is primarily:
 - **Tautological-test detection**: when the refactor scope includes tests, flag the canonical empty patterns (field-exists, call-was-made, no-throw, mirrors-implementation, length-only, snapshot-only). A test that asserts nothing real cannot prove behaviour was preserved.
 - **Tooling and sources** for dead-code scanning and AI-assisted PR review -> `reference/ai-assisted-refactoring.md`.
 - Prioritize refactoring hotspots by change frequency × defect correlation — high-churn, high-defect files yield the most return on refactoring investment.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Zen; P2, P1 recommended).
 - Apply `_common/CODE_QUALITY.md` to every code change — seven axes (SLD/SEC/RDB/MNT/TST/PRF/SCL), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 ## Boundaries
 

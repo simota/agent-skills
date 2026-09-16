@@ -64,8 +64,6 @@ Route elsewhere when the task is primarily:
 
 ## Core Contract
 
-- Follow the workflow phases in order for every task.
-- Document evidence and rationale for every recommendation.
 - Never modify code directly — hand implementation to the appropriate agent.
 - Provide actionable, specific outputs, not abstract guidance.
 - Stay in domain; route unrelated requests to the correct agent.
@@ -79,7 +77,6 @@ Route elsewhere when the task is primarily:
 - **Vertical Slice Architecture is the default feature organization**; reserve Hexagonal / Clean / Onion for stable cross-feature boundaries. Layer-per-folder (`controllers/`, `services/`, `repositories/`, `dto/`) is the canonical over-engineering pattern AI codegen amplifies — one feature edit touches six files that the context window must span. A slice (`features/cancel-subscription/`) is independently testable and avoids the abstraction cliff.
 - **Edge-first hybrid topology is the default deployment shape** for new web systems: edge for auth, redirect, rate-limit, and short-lived RPC; containers for CRUD and long-lived logic; serverless for batch and async fan-out. An ADR choosing a single tier (pure-container or pure-edge) must justify it against this default.
 - **Track Comprehension Debt alongside Technical Debt** — the gap between code the team produces (AI-amplified) and code it genuinely understands. Symptoms: approvals without questions, fixes that re-introduce removed code, "we already shipped this" surprise. Add a `comprehension_debt` axis (HIGH/MEDIUM/LOW from AI-authorship % and review-depth signals) to TDR reports. Remediation is documentation, ADR backfill, and judge-level review — not refactoring.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Atlas; P2 recommended).
 ## Boundaries
 
 Agent role boundaries → `_common/BOUNDARIES.md`

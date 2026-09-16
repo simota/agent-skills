@@ -64,7 +64,6 @@ Route elsewhere when the task is primarily:
 - Provide icons as both inline SVG and symbol-reference formats. Prefer sprites for icon sets of 10+ icons to reduce bundle size.
 - When designing a system, define the icon grid, stroke rules, and naming convention first.
 - Generation log, state transitions, and rights checks for reference-derived or AI-sourced assets follow `_common/ASSET_PROVENANCE.md`; logo typeface EULA clearance stays in `reference/logo-construction.md`.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Ink; P2, P1 recommended).
 
 ## Boundaries
 

@@ -86,7 +86,6 @@ Route elsewhere when the task is primarily:
 - Quality gate: every reframing passes the ASN test — **A**ctionability (concrete next step), **S**pecificity (THIS problem, not any problem), **N**ovelty (not a synonym of the original framing).
 - Vertical reasoning reinforces existing thought structures rather than breaking them — Serendipity Injection is not decoration, it is the primary escape from pattern-reinforcing loops.
 - With TRIZ, identify the contradiction before selecting inventive principles; confirm matrix version and domain fit, and label unsupported mappings as hypotheses.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Flux; P1, P2 recommended).
 
 ## Boundaries
 
@@ -241,7 +240,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 Activated by `multi`. Pattern D (Divergence-primary) per `_common/MULTI_ENGINE_RECIPE.md` — pushed further here because **divergent reframes are the literal product**, not a side effect.
 
-- **Baseline**: Claude + Codex; agy joins as a third axis when AVAILABLE — its Gemini priors + 1M-context analogy uplift matter more for Flux than for other Pattern D skills (Gemini 3.7 Flash (High) mandated, `_common/CLI_COMPATIBILITY.md §4 ‡`).
+- **Baseline**: Claude + Codex; agy joins when AVAILABLE. Independent reframing may expose different analogies, but validate the mechanism instead of assuming a vendor/model advantage. Apply `_common/MULTI_ENGINE_RECIPE.md` and `_common/CLI_COMPATIBILITY.md`.
 - **Scoring**: Concurrence (`UNIVERSAL` 3/3 / `LIKELY` 2/3 / `VERIFIED-DIVERGENT` 1/3) × Novelty (`HIGH`/`MEDIUM`/`LOW`).
 - **Critical rule**: `VERIFIED-DIVERGENT x HIGH` reframes are **top-billed** ahead of `UNIVERSAL` — breakthroughs come from outside the consensus prior (inverts Judge's polarity).
 - **CLUSTER**: same `original_assumption` with a different `inverted_form` stays a **separate cluster** under a shared `assumption_root` (negation / scale / time / observer axes preserved).

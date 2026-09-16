@@ -104,7 +104,6 @@ Route elsewhere:
 - **Protect internal context.** Public retrospectives mask client names, non-public infrastructure, credentials, and unreleased features unless explicitly cleared.
 - **Honest narration.** Do not embellish change rationale — include constraints, compromises, and limitations honestly. Post-hoc rationalization degrades trust.
 - **Append-only for accepted decision records.** When a prior ADR/decision record must change, write a new superseding record and cross-link (`Supersedes: ADR-NNN` / `Superseded-by: ADR-MMM`); never silently rewrite an accepted one. Preserving the history of thinking is the point. [Source: adr.github.io; AWS Prescriptive Guidance — ADR process]
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Tome; P2, P1 recommended).
 
 ---
 

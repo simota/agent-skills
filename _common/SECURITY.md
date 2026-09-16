@@ -15,7 +15,7 @@ Standard protocol for treating SKILL.md files, bundled scripts, MCP server defin
 - **No silent updates.** A skill that was clean at install time can be `git pull`-ed into a malicious state. Track `sha256` of every shipped file in the trust manifest; flag any out-of-band change.
 - **No invisible characters.** Reject any file containing Unicode Tag codepoints (`U+E0000`–`U+E007F`), zero-width joiners in instruction positions, or bidi overrides (`U+202A`–`U+202E`, `U+2066`–`U+2069`) outside of explicitly-allowlisted i18n contexts. These are the canonical hidden-instruction channels. [Source: embracethered.com — Scary Agent Skills]
 - **Pin MCP tool definitions.** A MCP server may rewrite its tool description after install ("rug pull"). Hash-pin the tool description JSON on first use; re-verify on every session start. [Source: invariantlabs.ai — MCP Tool Poisoning]
-- **Frontmatter stays minimal.** The official Anthropic Skills frontmatter is `name` and `description` only. Do not invent custom keys (`capabilities:`, `required_tools:`, etc.) — capability declarations belong in the Markdown body to remain forward-compatible with the official spec. [Source: platform.claude.com — Agent Skills Overview]
+- **Frontmatter stays minimal.** This repository accepts exactly `name` and `description` in SKILL.md frontmatter; this is a stricter portability policy, not a claim that every vendor format permits only two keys. Do not invent custom keys (`capabilities:`, `required_tools:`, etc.) — capability declarations belong in the Markdown body to remain forward-compatible with the official spec. [Source: platform.claude.com — Agent Skills Overview]
 - **Escalate to `chain`.** When a new third-party skill enters the repo, when a SKILL.md hash mismatch is detected, when MCP tool descriptions change, or when a plugin marketplace install is requested, escalate via `chain` before applying.
 
 ---
@@ -163,3 +163,10 @@ revocable — never the value (`oracle/reference/agent-design.md`).
 - **OWASP Agentic Skills Top 10** — SKILL.md distribution channel threats. [Source: owasp.org/www-project-agentic-skills-top-10]
 - **OWASP Top 10 for Agentic Applications (2026)** — ASI04 Agentic Supply Chain Vulnerabilities. [Source: genai.owasp.org]
 - **OWASP Top 10:2025 A03** — Software Supply Chain Failures. [Source: owasp.org/Top10/2025/A03_2025-Software_Supply_Chain_Failures]
+
+## Lifecycle
+
+- **failure:** F1: the repository's minimal frontmatter policy was incorrectly presented as the entire vendor specification.
+- **effect:** The stricter two-key intake requirement is unchanged; only attribution is corrected.
+- **owner:** Chain
+- **removal:** Remove the clarification when the intake policy changes deliberately and frontmatter rejection tests enforce its replacement.

@@ -78,7 +78,6 @@ AI/ML design and evaluation specialist. Oracle designs prompt systems, RAG pipel
 - **Write the Evaluation Contract with the architecture decision, not after it** — one versioned artifact: thresholds, prohibited behavior, latency/cost budget, dataset identity, human-review policy, online signals, rollback condition, owner. Cannot build the dataset, adjudicate a prohibited behavior, or state a rollback condition ⇒ the feature does not get raised production authority; it ships one action tier lower. → `reference/evaluation-observability.md`.
 - **Gate releases on a conjunction, never a composite score** — `deterministic PASS ∧ critical failures = 0 ∧ no-regression slices PASS ∧ latency/cost in budget ∧ human calibration done`. Declare `hard_failures` (unauthorized action, unsupported claim, personal-data exposure) that block regardless of mean score, and stratify the dataset into Representative / Critical / Counterexample / Regression / Adversarial so rare-but-severe failure is never averaged away.
 - Account for compounding failure — a 5-layer pipeline at 95% per layer yields only 77% end-to-end reliability; measure each layer independently.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Oracle; P2, P1 recommended).
 
 ## Boundaries
 

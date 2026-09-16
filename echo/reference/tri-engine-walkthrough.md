@@ -49,7 +49,7 @@ Spawn **three Agent calls in a single message** so they run concurrently. Each s
 | Subagent | Engine | Baseline command |
 |----------|--------|------------------|
 | `walkthrough-codex` | Codex CLI | `codex exec --full-auto "<prompt>"` |
-| `walkthrough-agy` | Antigravity CLI | `agy -p "<prompt>" --dangerously-skip-permissions --log-file <path>` (silent-failure detection mandatory — see `_common/MULTI_ENGINE_RECIPE.md §3.5 Engine Runtime Failure Detection`) |
+| `walkthrough-agy` | Antigravity CLI | Authorized headless/native dispatch → `_common/CLI_COMPATIBILITY.md` §9; validate outputs under `_common/MULTI_ENGINE_RECIPE.md` §3.5 |
 | `walkthrough-claude` | Claude Code CLI (subagent) | Agent tool with `subagent_type: general-purpose` |
 
 **Loose prompt rule:** pass only Role + Personas + UI flow + Step list + Artifacts + Output schema. Do NOT pass Echo's Nielsen heuristics, NASA-TLX rubric, dark-pattern taxonomy, or Peak-End synthesis rules — those frames apply at SYNTHESIZE. Each engine should channel the persona through the steps in its own way.

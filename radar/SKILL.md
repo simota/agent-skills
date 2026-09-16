@@ -86,7 +86,6 @@ Route elsewhere when:
 - **FlakyGuard-class discipline for flaky tests.** Never auto-fix in a CI loop — propose a diff to a human-reviewable branch. Six-class root-cause taxonomy → `reference/flaky-test-guide.md`.
 - **Metamorphic Relations solve the Oracle Problem.** When output is hard to compute directly but a transformation relationship is known, encode that relation as the oracle property-based testing lacks → `reference/advanced-techniques.md`.
 - Full rationale, examples, and sources for the five bullets above → `reference/testing-research-rationale.md`.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P2, P5 critical for Radar; P1 recommended).
 - Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries

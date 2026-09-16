@@ -50,7 +50,7 @@ Read this file before executing the `wish` Recipe.
 
 *Range derivation* (convention: `reference/recipe-contract.md` §1 element 7): floor = S/M, ACCEPT on cycle 1 → 2+3+8+(4+2)+3+3+2 = **27**; ceiling = L/XL, 6 cycles (N=5 + bonus), dual-lineage cycles 1-2 at ×1.6, skeptics on 3 near-ceiling cycles → 2+6+14+(8×1.6×2 + 8×4 + 4×3 ≈ 70)+5+3+2 = **102**. **Confirm-before-launch always** (intentional — same unconditional gate as `summit`; the Scarcity Gate is that confirmation) **with a declared budget envelope** (§4).
 
-**Model selection (Plan-and-Execute):** Phase 1 Crystallization, the Phase 1.5 anchor ratification, and both Phase 4 gate verdicts are judgment-heavy → plan-tier (opus / Fable 5). Phase 2 generators, Phase 3 Evaluators/skeptics, and Phase 3.5 personas → Sonnet 5 default, per SKILL.md § Core Contract. Cross-engine distribution overrides the per-tier default where the §6 Phase 2 mandate applies.
+**Model selection (Plan-and-Execute):** choose supported authorized capability/effort for judgment-heavy crystallization, anchor ratification and gate verdicts; use task-evaluated settings for generators, evaluators and personas. `_common/CLI_COMPATIBILITY.md` owns exact IDs. Preserve Phase 2's real cross-engine diversity and independent judging.
 
 ---
 
@@ -138,7 +138,7 @@ The `outcome` field is backfilled lazily: at the NEXT wish's Phase 0, ask one li
 - **No exemplar found** (genuinely novel deliverable class) → say so explicitly, fall back to Magi/Omen reachability sanity-check on invented anchors (the pre-anchoring behavior), and **record the fallback in the Fulfillment Report** — an unanchored ceiling is a weaker claim and must not read as an anchored one.
 - **Do not copy the exemplar.** It calibrates the bar; reproducing it is `clone`'s job and a different recipe. The Comparative Gate asks whether ours *wins*, not whether it *resembles*.
 
-**Phase 2 — cross-engine diversity mandate.** Where the hub can reach more than one engine (`_common/CLI_COMPATIBILITY.md §4`), the tournament distributes candidates across model families — e.g. Claude Code / Codex CLI (`gpt-5.6-sol` for design-shaped work) / agy (Gemini 3.7 Flash High). Rules: **at most one candidate per (engine, angle) pair**; the judge panel is likewise engine-diverse; a single-engine run **declares the monoculture** in the Fulfillment Report rather than presenting three same-model samples as a tournament. Blind judging is not optional — a judge that knows which engine produced which candidate carries a prior about the answer.
+**Phase 2 — cross-engine diversity mandate.** Where more than one engine is available and authorized, distribute candidates across actual model families. At most one candidate per (engine, angle) pair; keep the judge panel independent and engine-diverse. A single-engine run declares the monoculture instead of relabeling three same-model samples as a cross-engine tournament. Judge blind to producer identity; resolve runtime IDs through `_common/CLI_COMPATIBILITY.md`.
 
 **Evaluator roster by deliverable class** (default mapping — Phase 1 selects Evaluators matching the contract's actual dimensions; a dimension with no matching specialist gets a purpose-prompted general evaluator, still Generator-excluded):
 

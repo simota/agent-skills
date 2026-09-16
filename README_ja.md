@@ -24,11 +24,10 @@ cd ~/repos/agent-skills
 make link
 ```
 
-`make link` は各スキルディレクトリを `~/.claude/skills`・`~/.codex/skills`・`~/.gemini/antigravity-cli/skills` へ
+`make link` は各スキルディレクトリを `~/.claude/skills`・`~/.agents/skills`・`~/.gemini/antigravity-cli/skills` へ
 個別に symlink します。全 CLI が同一の作業ツリーを読むため、`git pull` 1回で全 CLI が最新になります。
 それらのディレクトリに既にあるスキルは維持されます — 同名エントリは報告のうえ skip され、上書きされる
-ことはありません。未インストールの CLI（`~/.codex` が無い等）も skip されるため、CLI が1つだけの環境
-でも同じコマンドが使えます。
+ことはありません。配置先の親ディレクトリが無ければ、下記の保護付きCodex移行を除いてskipするため、CLIが1つだけの環境でも利用できます。ディレクトリの有無は配置の手掛かりであり、実際のCLI利用可否を保証しません。
 
 | コマンド | 効果 |
 |---------|------|
@@ -56,6 +55,12 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 /Radar テストカバレッジを向上させて
 /Vision ダッシュボードをモダンにリデザインしたい
 ```
+
+### 実行環境の互換性と旧Codexインストール
+
+最新モデル・CLI仕様・公式根拠は [`_common/CLI_COMPATIBILITY.md`](_common/CLI_COMPATIBILITY.md) に集約しています。スキル本体はモデル非依存です。実環境の利用権限・機能・スキル読込は別途確認してください。Gemini CLIとCursorは追加の読取環境であり、インストーラーの対象追加ではありません。
+
+Codexのスキル配置先は `~/.agents/skills`、設定は引き続き `~/.codex` です。旧配置は自動削除しません。**このリポジトリが作った旧リンクだけ**を外す場合は `make unlink-codex CODEX_DIR="$HOME/.codex/skills"` の結果を確認し、`make link-codex` を実行してください。他のファイルやリンクは保持します。`.agents` がなく `.codex` が存在する場合、新しい親ディレクトリをソースリポジトリ外に限って作成します。それ以外は意図した外部配置先を明示的に準備してください。
 
 ## 📚 概要
 

@@ -21,7 +21,7 @@ Engine command summary (full invocation contract lives in `_common/MULTI_ENGINE_
 |--------|---------|---------------------|
 | **Claude** | (internal) | Primary deliberator, orchestrator |
 | **Codex** | `codex exec --full-auto "{prompt}"` | Independent external deliberator |
-| **Antigravity** | `agy -p "{prompt}" --dangerously-skip-permissions --log-file <path>` (silent-failure detection mandatory — see `_common/MULTI_ENGINE_RECIPE.md §3.5 Engine Runtime Failure Detection`) | Independent external deliberator |
+| **Antigravity** | `agy -p "{prompt}" --log-file <path>` (silent-failure detection mandatory — see `_common/MULTI_ENGINE_RECIPE.md §3.5 Engine Runtime Failure Detection`) | Authorized headless/native dispatch → `_common/CLI_COMPATIBILITY.md` §9; validate outputs under `_common/MULTI_ENGINE_RECIPE.md` §3.5 |
 
 ---
 
@@ -59,7 +59,7 @@ conditions:
 dissent_note: "Key concern if this decision goes the other way"
 \`\`\`
 
-Be direct. State your position clearly. Do not hedge."
+State your position, evidence and material uncertainty clearly."
 ```
 
 ### Codex Optimization Notes
@@ -73,7 +73,7 @@ Be direct. State your position clearly. Do not hedge."
 
 ## Deliberation Prompt Template (agy)
 
-Antigravity CLI (`agy`) is invoked via `agy -p` with `--dangerously-skip-permissions` plus `--log-file <path>` for non-interactive execution. Antigravity benefits from additional context due to its larger context window. **agy v1.0.0 silent-failure detection is mandatory** — see `_common/MULTI_ENGINE_RECIPE.md §3.5 Engine Runtime Failure Detection` for the canonical headless pattern (mktemp log file, empty-stdout grep, `RUNTIME-BROKEN` ledger).
+Antigravity deliberation uses the installed authorized headless interface under `_common/CLI_COMPATIBILITY.md`. Supply only relevant background and preserve independent analysis; validate outputs with `_common/MULTI_ENGINE_RECIPE.md` §3.5.
 
 ### Prompt Structure
 
@@ -107,14 +107,14 @@ conditions:
 dissent_note: "Key concern if this decision goes the other way"
 \`\`\`
 
-Be direct. State your position clearly. Do not hedge." --dangerously-skip-permissions
+State your position, evidence and material uncertainty clearly."
 ```
 
 ### agy Optimization Notes
 
 - Include a `## Background` section with extended context (leverages larger context window)
 - Same YAML output format as Codex for consistent parsing
-- `--dangerously-skip-permissions` flag enables non-interactive execution
+- Use existing scoped permissions; a blocked required tool is not permission to disable approval controls.
 
 ---
 
@@ -210,7 +210,7 @@ Engine Mode adapts based on available engines:
 
 | Available Engines | Mode | Behavior |
 |---|---|---|
-| 3 (Claude + Codex + Antigravity) | **3-Engine Mode** | 3 engines deliberate independently — adds agy's 1M context / multimodal / High-effort-tier axis (Gemini 3.7 Flash (High) mandated — `_common/CLI_COMPATIBILITY.md §4 ‡`; no Deep Think) |
+| 3 (Claude + Codex + Antigravity) | **3-Engine Mode** | Three actual independent engine outputs; verify available capabilities, not a fixed model/effort advantage |
 | 2 (Claude + Codex — DEFAULT BASELINE) | **2-Engine Mode** | 2 engines deliberate independently; consensus patterns: 2-0 / 1-1 / 0-2. NOT degraded — this is the recipe's normal operating state |
 | 2 (Claude + agy, Codex unavailable) | **2-Engine Mode (variant)** | Same scoring as above but with agy in place of Codex; flag the substitution because Codex is the preferred second axis |
 | 1 (Claude only) | **Auto-fallback** | Automatic switch to Simple Mode, notify user |
@@ -271,7 +271,7 @@ engine_error:
 
 3. EXTERNAL ENGINE CALLS (PARALLEL)
    └─ codex exec --full-auto "{prompt}"
-   └─ agy -p "{prompt}" --dangerously-skip-permissions
+   └─ agy -p "{prompt}"
 
 4. OUTPUT PARSING
    └─ Parse each engine's YAML output

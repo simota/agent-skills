@@ -2,166 +2,72 @@
 
 > **Tier:** `orchestration` — activates from the hub, a recipe, or on engine detection. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
 
-> Counterpart to `_common/OPUS_5_AUTHORING.md`. That file governs authoring when **Claude Code** drives the Nexus hub; this file governs authoring when **Codex CLI** drives the hub.
-> Owner: Architect (canonical doc); referenced by orchestrators (Nexus, Orbit, Rally, Magi) and any SKILL.md whose spawn path can run on Codex CLI.
-> Scope: Codex CLI as the **orchestrator engine** (the CLI running the top-level hub session). Codex as a *worker / spawn target* of a Claude hub is covered by `_common/SUBAGENT.md` (MULTI_ENGINE) and `_common/MULTI_ENGINE_RECIPE.md`.
-
-Engine-selection rule for orchestrators:
-
-| Orchestrator engine (hub) | Authoring protocol |
-|---------------------------|--------------------|
-| Claude Code | `_common/OPUS_5_AUTHORING.md` (P1–P12) |
-| **Codex CLI** | **this file (C1–C9)** |
-| Antigravity (`agy`) | `_common/AGY_ORCHESTRATION.md` (A1–A9) |
-
----
+Codex-specific adaptation of the shared `_common/OPUS_5_AUTHORING.md` principles. Current model IDs, CLI features, permission guidance, and official sources live in `_common/CLI_COMPATIBILITY.md`. Preserve C1–C9 identifiers for existing consumers; do not copy this protocol into spawn prompts.
 
 ## Why This Exists
 
-The Nexus stack historically assumed Claude Code is the hub: the canonical spawn template is `Agent(...)`, model selection is `sonnet/opus/haiku`, parallelism is `run_in_background`, and the authoring protocol is Opus-5-specific (effort levels, P4 parallel triggers). None of those map cleanly to a Codex CLI hub, which spawns via `spawn_agent`/`wait_agent`, runs the latest gpt-5.6 generation throughout with role-based variants (sol/terra/luna, see C3.0), runs spawned agents concurrently, and uses runtime spawn limits rather than a soft "max 3" convention.
-
-When Codex drives the hub, apply the nine principles below instead of the Opus principles. They are grounded in verified repository facts (`_common/CLI_COMPATIBILITY.md`, `nexus/SKILL.md` Execution Layers) and, for the config/prompting levers (C3, C7, C9), in the official Codex docs at `developers.openai.com/codex/*` and the OpenAI Codex prompting guide (verified 2026-06); items with no confirmed source are marked **未確認** and must not be speculatively completed.
-
----
+A host's native tools, configuration, and result channels differ from another CLI's. Adapt those interfaces without replacing the specialist's method or importing another model's prompting workarounds. A Codex worker in a multi-engine review also follows `_common/MULTI_ENGINE_RECIPE.md` and `_common/SUBAGENT.md`.
 
 ## The Nine Principles
 
 ### C1. Spawn Capacity and Depth Budget
 
-Use the active runtime's advertised spawn tools and limits. A missing legacy config key is not evidence that spawning is unavailable. Current local Codex uses `[agents] enabled` (default `true`) and `max_concurrent_threads_per_session`; `max_threads` remains a legacy alias. Hosted sessions may supply their limits directly without a local `config.toml`. [Verified 2026-09-13 — [official Subagents documentation](https://learn.chatgpt.com/docs/agent-configuration/subagents).]
-
-**Apply by:**
-- Before the first spawn, inspect the advertised tool contract and available capacity. Respect an explicit disabled setting or runtime denial; do not require a local CLI/config probe when the host already exposes the capability.
-- On older builds that enforce `agents.max_depth`, compare the **planned child depth** with the configured limit: `current_depth + 1 <= max_depth`. Root depth `0` with `max_depth=1` permits direct children; a depth-1 hub needs `max_depth>=2`. A slash-command invocation alone does not prove that the hub is nested.
-- Distinguish concurrency from nesting: queue work against the effective concurrent-agent cap, and check nesting only when a child must spawn another child. Do not change configuration just to satisfy a hard-coded threshold.
-- Fall back to internal execution only after a concrete blocker is established, and log it (`Execution: internal (reason: current_depth=1, agents.max_depth=1)`). Never use a generic "spawn tool not found".
-- For large homogeneous sweeps, use `spawn_agents_on_csv` only if the active runtime advertises it; otherwise use bounded fan-out. Tool names and config schemas vary by release, so follow the installed interface rather than inventing missing APIs.
+Before fan-out, discover the actual native delegation interface and effective capacity/depth limits. Respect the lower of runtime limits, recipe limits, and authorized budget. Do not assume a fixed thread count or an old config key. Verify a capability through advertised tools, runtime help/configuration, or a harmless supported probe. Record concrete unavailable/denied capability evidence before using the fallback in `nexus/reference/execution-layers.md`.
 
 ### C2. Concurrent Fan-Out / Join
 
-Spawn independent branches, keep doing independent hub work while they run, and wait before consuming their results. Codex does not need Claude's `run_in_background` flag to run child threads concurrently. The join is a dependency boundary, not a ban on useful hub work. [Verified 2026-09-13 — [official Subagents documentation](https://learn.chatgpt.com/docs/agent-configuration/subagents).]
-
-**Apply by:**
-- Start independent branches within the C1 capacity budget; collect every required result before aggregating or starting dependent steps.
-- Use the active runtime's advertised wait/message tools. A timeout or mailbox notification alone is not a completed result.
-- Keep hub-spoke ownership: independent writes need disjoint file ownership; shared mutations wait for the relevant branches to finish.
+Launch independent tasks together when the host supports it. Give each writer disjoint files or an isolated worktree; identify the merge owner and join required results before dependent work. A running child is not a completed result. Use sequential execution for real data dependencies, shared mutable state, or an explicit recipe gate—not merely because calls appear in a numbered plan.
 
 ### C3. Reasoning-Effort Routing
 
-> **C3.0 — Latest-generation mandate + variant tiering for Codex (user policy, 2026-07-10).** Codex always runs on the **latest model generation — currently the `gpt-5.6` family** for **every step and every spawned subagent** (orbit build loops, `spawn_agent` fan-out, charter §5 roster, recipe plan/execute steps); never fall back to a previous generation (`gpt-5.5` and older) on cost grounds. **Within the generation, select the variant by role** (aligned with the official guidance at learn.chatgpt.com/docs/models):
-> - **`gpt-5.6-sol`** (flagship) — hub/orchestrator, planning, design, and high-stakes work: ambiguous, high-value tasks where failure is costly (complex code changes, deep research, security review, architecture). **The hub itself is always sol.**
-> - **`gpt-5.6-terra`** (balanced) — standard implementation: feature builds, bug fixes, test authoring, build loops. Official "pragmatic all-rounder" and the natural upgrade path from gpt-5.5 (comparable capability, ~half the price).
-> - **`gpt-5.6-luna`** (fast) — spawned subagents doing well-shaped high-volume work: extraction, classification, transformation, formatting, structured summaries, docs.
->
-> "Latest generation" is the contract — when a newer family supersedes gpt-5.6, update this block and everything follows. When a step doesn't fit a tier cleanly, prefer the higher variant.
+**C3.0 — Runtime selection:** use `_common/CLI_COMPATIBILITY.md` §4. The previous fixed-generation/variant mandate is retired. Preserve explicit user model choices and the approved cost envelope; select a current stable available model when a selection is needed. Do not silently fall back across unavailable models or providers.
 
-Plan-and-Execute's cost principle (Core Contract) is realized for Codex through **variant tiering (sol plan / terra execute / luna rote) plus `model_reasoning_effort`** — the generation stays gpt-5.6 throughout.
-
-**Apply by (verified 2026-07 against learn.chatgpt.com/docs/models; gpt-5.6 released 2026-07-09):**
-- Planning / design / hub → `gpt-5.6-sol`; standard implementation → `gpt-5.6-terra`; rote/high-volume subagents → `gpt-5.6-luna` (C3.0). Within a variant, differentiate by `model_reasoning_effort`.
-- Reasoning effort is tunable via the **`model_reasoning_effort`** config key (`config.toml` or `-c model_reasoning_effort="..."`), values `minimal | low | medium | high | xhigh` (default `medium`; `xhigh` model-dependent; a `max` level for sol is third-party-reported, 未確認). [Verified — config-reference.]
-- **Official effort principle:** start with the lowest effort that yields acceptable results, then escalate; there is **no exact effort mapping from gpt-5.5 to gpt-5.6** (official migration note) — re-calibrate per task rather than copying old settings.
-- **Verification caveat:** sol at maximum effort is reported (third-party benchmark) to hallucinate more than gpt-5.5 — keep independent verification steps thick for precision-critical output.
+Configure effort only through supported model/runtime settings. Choose it from task difficulty and measured quality, not a copied enum or the number of files. Stronger reasoning does not establish permission, guarantee correctness, or replace required tests.
 
 ### C4. Loose-Prompt Spawning
 
-Codex subagents perform best with minimal, unbiased framing — **Role / Target / Output** only (`_common/SUBAGENT.md` MULTI_ENGINE loose-prompt rule). Over-specifying with checklists, category lists, or methodology descriptions suppresses Codex's independent perspective.
-
-**Apply by:**
-- Pass the CLI-agnostic spawn template body (Role, Task, Context delta, Constraints, Acceptance criteria, Output envelope) but resist padding it with domain frameworks the specialist's own SKILL.md already supplies.
-- The specialist reads its own `SKILL.md` (`~/.codex/skills/` or `<repo>/.agents/skills/`); do not duplicate that content into the spawn prompt.
+Pass the goal, source paths/revision, constraints, owned write surface, acceptance criteria, and result shape. The specialist reads its own SKILL.md and applicable contracts; do not repeat its framework, chain-of-thought instructions, or a second checklist. Keep independent reviewers free of the producer's verdict while giving them the actual task and evidence needed to verify it.
 
 ### C5. Lazy Tool Visibility
 
-Codex does not always list `spawn_agent` in the model's visible tool inventory. "Not visible" ≠ "not callable".
-
-**Apply by:**
-- If C1 confirms capability but the short inventory omits the tool, discover the advertised spawn interface and attempt it; do not invent an unlisted API.
-- Only log an internal fall-back after an actual call failure, with the concrete error.
+A shortened tool list is not proof of absence. Use the runtime's discovery mechanism when available, then call only the returned schema. If no discovery/spawn mechanism is exposed, say exactly that; do not invent `spawn_agent` parameters or a wait/resume tool. Distinguish not installed, not exposed, denied, and failed.
 
 ### C6. Checkpoint-Resume via Session Tools
 
-For chains with 4+ steps (the SKILL checkpoint-resume threshold), continue an existing subagent instead of re-spawning.
-
-**Apply by:**
-- Use `send_input` to feed the next step's delta into a live subagent, and `resume_agent` to revive a checkpointed one, rather than spawning a fresh session each step.
-- Call `close_agent` to release a finished subagent's context and keep the depth/budget envelope clear.
-- Omitted spawn fields inherit from the parent session — pass only the state delta, not the full context.
+Continue a matching existing worker when its role and context remain valid, using the runtime's advertised session lifecycle tools. Rehydrate repository state and pass deltas; do not reuse stale claims after a revision changes. Independent verification still needs independence, not a resumed producer recast as a critic. Release finished workers where supported and persist evidence-bound checkpoints for long work.
 
 ### C7. Sandbox / Approval Posture
 
-Codex runs sandbox-on by default. An autonomous hub must set an approval policy consistent with the active Nexus mode. Excessive per-action approval prompting is the **single biggest cause of lost autonomy** ("interrupts you forty times") — set the posture deliberately, do not leave the cautious default in an AUTORUN run. [Verified 2026-06 — developers.openai.com/codex/config-reference, /agent-approvals-security.]
-
-**Apply by:**
-- AUTORUN / AUTORUN_FULL → `approval_policy = "never"` + `sandbox_mode = "workspace-write"` in `config.toml` (or `-c` overrides) so subagents proceed without per-action prompts while writes stay confined to the workspace. (`--full-auto` is the legacy shortcut for this pairing and is now flagged **deprecated** in the CLI reference — prefer the explicit keys; the canonical key is `approval_policy` / `--ask-for-approval`, not the older `approval_mode` alias.)
-- To keep a safety gate without pausing for the human, route eligible approvals through the automated reviewer: `approvals_reviewer = "auto_review"` (vs `"user"`), or `approval_policy = { granular = { … } }` to auto-reject only high-risk categories.
-- Network is **off by default** under `workspace-write`; if the task needs installs/fetches, pre-grant `[sandbox_workspace_write] network_access = true` so it does not stall at the network boundary mid-run.
-- Never use `--dangerously-bypass-approvals-and-sandbox` (alias **`--yolo`**) in production or untrusted workspaces; restrict to sandboxed/CI/authorized-dev contexts.
-- Guided / Interactive modes keep the default per-action approval; do not silently widen it.
-- Known bug (track, don't rely on the per-session toggle): approval prompts can repeat even under auto-approve/`never`, notably in the VS Code extension (GitHub openai/codex #10187, #5038). The reliable mitigation is the config-level `never` + sandbox posture above.
+Inherit the user's effective sandbox, approval, network, and managed policy. AUTORUN does not authorize editing global configuration, setting approval to never, enabling network, or removing isolation. Plan work within the grant; obtain only genuinely missing authorization for required effects. Denied work remains blocked/partial unless an authorized alternative succeeds. Apply `_common/CLI_COMPATIBILITY.md` §5; never use a bypass as an automatic retry strategy.
 
 ### C8. AGENTS.md Authority
 
-Codex reads `AGENTS.md` (`~/.codex/AGENTS.md` global, `<repo>/AGENTS.md` project) — **not** `CLAUDE.md`. Output language, commit conventions, and naming rules come from there.
-
-**Apply by:**
-- Resolve output-language and convention directives from `AGENTS.md`, not from a `CLAUDE.md` assumption.
-- When authoring cross-CLI skills, keep shared rules in `AGENTS.md` (per `_common/CLI_COMPATIBILITY.md §7`) so a Codex hub inherits them.
+Use Codex's applicable AGENTS.md chain and the repository's precedence rules, rather than assuming CLAUDE.md is auto-loaded. Respect nested scope and managed controls. Keep cross-tool rules in the common repository entry point and portable skill contracts.
 
 ### C9. Autonomy / Self-Driving Maximization
 
-The most common Codex underperformance is **premature stopping** — it analyzes instead of finishing, asks clarifying questions instead of acting, or hands back at the first uncertainty. Config (C3 effort, C7 approval) removes the *mechanical* interrupts; this principle removes the *behavioral* ones via the spawn prompt and `AGENTS.md`. These are the highest-leverage autonomy levers and several are **Codex-specific (opposite of general GPT-5 advice)**. [Verified 2026-06 — OpenAI Codex prompting guide + GPT-5 prompting guide (developers.openai.com/cookbook), /codex/learn/best-practices.]
-
-**Apply by:**
-- **Persistence directive** — include in the spawn prompt / `AGENTS.md`: *"Keep going until the query is completely resolved before yielding back. Never stop or hand back when you encounter uncertainty — research or deduce the most reasonable approach and continue."* Directly counters early termination.
-- **Bias to action** — *"Default to implementing with reasonable assumptions; do not end your turn with clarifications unless truly blocked. Decide the most reasonable assumption, proceed, and document it after acting."* Counters "asks instead of doing".
-- **⚠️ Remove preamble/plan/status-update prompting (Codex-specific).** On Codex models, prompting for an upfront plan, preambles, or running status updates *causes the model to stop abruptly* — the inverse of general GPT-5 guidance. If you ported a Claude/GPT-5 system prompt, strip these. This is the most-missed lever; it composes with C4 (loose-prompt spawning).
-- **Completion oracle ("Done when")** — give an explicit stop condition + self-validation loop (write/run tests, lint, types, confirm behavior matches request). Without it Codex "fixes one test and stops". Pairs with the recipe's own VERIFY gate.
-- **Raise effort for long-horizon work** — combine with C3: `model_reasoning_effort = "high"` (or `"xhigh"`) sustains multi-step autonomous runs; OpenAI's own guidance is to raise reasoning effort to increase tool-calling persistence and reduce clarifying questions.
-- Keep `AGENTS.md` short and command-exact (C8): paste runnable build/test/lint commands and concrete prohibitions so the agent self-validates rather than pausing to ask how.
-
----
+For an implementation assignment, execute and validate the requested result within scope. Resolve reversible uncertainty from evidence or a safe documented default; ask only for unresolved consequential choices. Follow the Completion Contract in `_common/OPERATIONAL.md`; do not append repetitive persistence/self-verification directives to every spawn. Communicate material progress and blockers proportionally—there is no universal ban on plans or status updates. After a concrete failed check, repair or diagnose; do not merely announce a follow-up.
 
 ## Per-Role Apply Matrix
 
-| Role | Critical (◎) | Recommended (○) |
-|------|---|---|
-| Orchestrators (Nexus, Orbit, Rally, Magi, Nexus[deliver], Sherpa) | C1, C2, C6, C9 | C3, C7 |
-| Builders / executors (Builder, Artisan, Forge, Native) spawned by a Codex hub | C4, C5, C9 | C3, C7 |
-| Investigators / reviewers spawned by a Codex hub | C4 | C6, C9 |
-| Knowledge/Meta (Lore, Compass, Architect) authoring for Codex hubs | C3, C8 | C1, C9 |
-
-(◎ = address explicitly in SKILL.md; ○ = address if relevant)
-
-C8 (AGENTS.md authority) applies to **every** role authored for a Codex hub.
-
----
+Orchestrators emphasize C1/C2/C6/C7; implementation workers C4/C7/C9; independent reviewers C4/C6; skill authors C3/C5/C8. These select relevant checks, not extra workflow phases. Role boundaries remain `_common/BOUNDARIES.md`.
 
 ## Validation Hooks
 
-When validating a skill's Codex-orchestrator path, use the nine checks below (Architect validation):
+- R-C1: capacity and fallback claims have actual runtime evidence.
+- R-C2: independent branches can run concurrently; required results are joined and writes isolated.
+- R-C3: model/effort selection uses the current Compatibility contract, available interfaces, and authorization.
+- R-C4: handoffs contain the task and evidence, not duplicated methodology.
+- R-C5: tool discovery precedes an absence claim where supported; no fabricated API.
+- R-C6: resume preserves state validity and verification independence.
+- R-C7: permission boundaries are inherited, not widened by AUTORUN.
+- R-C8: applicable AGENTS.md scope and rule classes are respected.
+- R-C9: implementation reaches objective validation or a concrete unresolved blocker.
 
-- R-C1 Spawn-depth prereqs verified before fan-out; concrete internal fall-back reason
-- R-C2 Independent branches run concurrently; every required result is collected before dependent work or aggregation
-- R-C3 All Codex steps and spawned subagents run on the latest gpt-5.6 generation with the role-matched variant (hub/plan/design=sol, standard implementation=terra, rote subagents=luna, C3.0); no fallback to a previous generation; depth tuned via `model_reasoning_effort` (`minimal|low|medium|high|xhigh`), no invented level names beyond these.
-- R-C4 Loose-prompt spawn (Role/Target/Output); no methodology padding
-- R-C5 Lazy-visibility handling (attempt call when prereqs hold)
-- R-C6 Checkpoint-resume via `send_input`/`resume_agent`/`close_agent` for 4+ step chains
-- R-C7 Approval posture matches the active Nexus mode (AUTORUN → `approval_policy="never"`+`workspace-write`, `network_access` pre-granted if needed); no prod bypass flags
-- R-C8 Rules resolved from `AGENTS.md`, not `CLAUDE.md`
-- R-C9 Autonomy directives present for self-driving runs: persistence + bias-to-action + **no preamble/plan/status prompting (Codex-specific)** + completion oracle; effort raised for long-horizon work
-
-Pass criterion: address all `◎` principles for the role; aim for ≥ 7/9 total.
-
----
+Apply relevant checks and report their evidence. A tally such as “7/9” is not proof that a missing security or completion requirement is acceptable. Static review cannot certify a live Codex run.
 
 ## How to Reference This File
 
-In a SKILL.md:
+Reference C identifiers from a Compatibility section only when the skill actually delegates or generates a Codex runner. Shared behavior remains in the spine; vendor facts remain in `_common/CLI_COMPATIBILITY.md`.
 
-```markdown
-- Author for the active orchestrator engine. Claude Code hub → `_common/OPUS_5_AUTHORING.md`;
-  Codex CLI hub → `_common/CODEX_ORCHESTRATION.md` (apply C[X], C[Y] for this role).
-```
-
-Cite by ID (C1–C9); let this file be the single source of truth. Do not duplicate principle text into individual SKILL.md files.
+**Lifecycle:** failure: Claude-specific tools or stale model/approval mandates leak into Codex execution; effect: evidence-based interface adaptation without relaxing boundaries; owner: compatibility maintainers; removal: when a tested shared runtime adapter supplies all C1–C9 guarantees and consumers migrate together.

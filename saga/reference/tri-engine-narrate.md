@@ -54,7 +54,7 @@ Three Agent calls in one message:
 | Subagent | Engine | Baseline command |
 |----------|--------|------------------|
 | `narrate-codex` | Codex CLI | `codex exec --full-auto "<prompt>"` |
-| `narrate-agy` | Antigravity CLI | `agy -p "<prompt>" --dangerously-skip-permissions --log-file <path>` (silent-failure detection mandatory — see `_common/MULTI_ENGINE_RECIPE.md §3.5 Engine Runtime Failure Detection`) |
+| `narrate-agy` | Antigravity CLI | Authorized headless/native dispatch → `_common/CLI_COMPATIBILITY.md` §9; validate outputs under `_common/MULTI_ENGINE_RECIPE.md` §3.5 |
 | `narrate-claude` | Claude Code CLI (subagent) | Agent tool with `subagent_type: general-purpose` |
 
 **Loose prompt rule**: pass only Role + Customer + Feature + Channel + Output format. Do **NOT** pass:

@@ -92,7 +92,7 @@ LLM outputs are non-deterministic. Probe MUST:
 - Run each confirming payload **at least 3 times** with `temperature` set to the production value (and again at `temperature=0` when feasible).
 - Report success rate (e.g. `3/3`, `2/5`) — single-shot success is "Unconfirmed".
 - Capture full prompts, responses, model name, version, and `temperature` / `top_p` parameters as evidence.
-- Pin model identifiers (e.g. `gpt-5.6-<snapshot>`, `claude-opus-5@<snapshot>`) — silent model upgrades invalidate prior reports. #TODO(agent): confirm current dated-snapshot ID format for both providers before citing a specific date/hash.
+- Record the exact provider-returned model identifier, any supported immutable revision, runtime version, configuration and test date. An alias is not a snapshot: mark it mutable when the provider exposes no immutable revision. Never invent a date/hash syntax. Re-run affected security evaluations after a verified model or runtime change; current identity discovery follows `_common/CLI_COMPATIBILITY.md`.
 
 ## Anti-Patterns
 

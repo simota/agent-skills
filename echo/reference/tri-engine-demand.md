@@ -52,7 +52,7 @@ Spawn **three Agent calls in a single message** so they run concurrently. Each s
 | Subagent | Engine | Baseline command |
 |----------|--------|------------------|
 | `demand-codex` | Codex CLI | `codex exec --full-auto "<prompt>"` |
-| `demand-agy` | Antigravity CLI | `agy -p "<prompt>" --dangerously-skip-permissions --log-file <path>` (silent-failure detection mandatory — see `_common/MULTI_ENGINE_RECIPE.md §3.5 Engine Runtime Failure Detection`) |
+| `demand-agy` | Antigravity CLI | Authorized headless/native dispatch → `_common/CLI_COMPATIBILITY.md` §9; validate outputs under `_common/MULTI_ENGINE_RECIPE.md` §3.5 |
 | `demand-claude` | Claude Code CLI (subagent) | Agent tool with `subagent_type: general-purpose` |
 
 **Loose prompt rule (per `_common/SUBAGENT.md` MULTI_ENGINE)**: pass only Role + Persona-channel block + Target product + Output format. Do NOT pass the Echo[demand] "curse of knowledge" table, JTBD templates, or assumption-challenge taxonomies — those Echo[demand]-specific frames are applied at SYNTHESIZE. Each engine channels persona voice in its own way.

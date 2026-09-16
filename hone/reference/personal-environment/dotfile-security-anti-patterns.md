@@ -9,7 +9,7 @@ Purpose: Read this when auditing dotfile repositories, secret handling, bootstra
 - [Common secret categories](#common-secret-categories)
 - [Repository-structure anti-patterns](#repository-structure-anti-patterns)
 - [Multi-machine traps](#multi-machine-traps)
-- [How Builder uses this reference](#how-anvil-uses-this-reference)
+- [How Builder uses this reference](#how-builder-uses-this-reference)
 
 ## Dotfile-Management Anti-Patterns
 

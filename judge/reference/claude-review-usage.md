@@ -13,10 +13,10 @@ Claude Code is one of the engines in Judge's default multi-engine parallel revie
 | Binary | `claude` on `$PATH` | `claude --version` must succeed (verified ≥ `2.1.x`) |
 | Authentication | Claude Max / Pro / Team / Enterprise subscription login | Use `claude auth login` (add `--sso` for SSO, `--email <addr>` to pre-fill). Browser OAuth on first launch. **Do not** use `--console` (that flag forces Console API billing). **Do not** set `ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN`, or Bedrock/Vertex credentials for this flow |
 | Long-lived auth (CI) | `claude setup-token` | Generates a long-lived OAuth token for scripted/CI review runs — still subscription-backed, no API key |
-| Model | Default (no `--model` flag) | Always rely on the session default — never override |
+| Model | Inherit the authorized session selection | No automatic model change; explicit alternatives require verified availability and authorization under `_common/CLI_COMPATIBILITY.md` |
 | Review context | Subagent or plan mode (or `dontAsk` for locked CI) | Claude-based reviews must avoid self-bias (see Mandatory Subagent Pattern below) |
 | Working directory | Git repository root | Review commands operate on the current git worktree |
-| Auto mode availability | Max / Team / Enterprise / API plans only | **Not available on Pro**; requires Sonnet 5 / Opus 5 (or a prior Sonnet/Opus generation) on Anthropic API (not Bedrock / Vertex / Foundry). If a recipe uses `--permission-mode auto`, confirm the user's plan first |
+| Auto mode availability | Runtime/provider/account-dependent | Verify current eligibility in `_common/CLI_COMPATIBILITY.md` and the official permission docs; do not infer permission from model generation or subscription labels |
 
 **Never** pass `--model`, `--bare` (bypasses subscription auth, forces API-key mode), or set `ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN`, `AWS_ACCESS_KEY_ID`, `GOOGLE_APPLICATION_CREDENTIALS` for this flow. Authentication is managed by the Claude subscription login. Writes to [protected paths](https://code.claude.com/docs/en/permission-modes#protected-paths) (`.git`, `.vscode`, `.claude`, shell rc files, `.mcp.json`) always prompt regardless of mode — review flows should never write to them anyway.
 
@@ -58,7 +58,7 @@ Non-interactive review always uses `-p` plus `--permission-mode plan` for read-o
 | `-p, --print` | Headless mode — run once and print, then exit | Yes for automation |
 | `--permission-mode plan` | Reads only; Claude proposes without editing source. Other tool prompts may still appear | Recommended default for headless review |
 | `--permission-mode dontAsk` | Fully non-interactive: auto-denies any tool not pre-approved via `permissions.allow` (read-only Bash is allowed) | Locked-down CI runs; strictly safer than `plan` for unattended |
-| `--permission-mode auto` | Classifier-gated auto-approval; aborts under repeated blocks in `-p` (3 consecutive / 20 total). **Requires Max/Team/Enterprise/API plan** + Sonnet 5 / Opus 5 (or a prior Sonnet/Opus generation) | Use only when the review must run tools (e.g., run tests) and the user is on a qualifying plan |
+| `--permission-mode auto` | Classifier-gated approval where supported; may abort on blocked actions | Verify current eligibility and approved scope; it is not a read-only guarantee |
 | `--output-format <text\|json\|stream-json>` | Output shape for scripted parsing | `json` for CI, `text` for humans |
 | `--json-schema '<schema>'` | Enforce strict JSON schema on output | For deterministic CI ingestion |
 | `--agents '<json>'` | Inline custom agent definitions | To declare a reviewer persona |
@@ -100,7 +100,7 @@ claude --from-pr 1234 -p "Continue the review on this PR-linked session. Re-chec
 
 ## Use Case Cookbook
 
-Every recipe pairs `-p` with `--permission-mode plan` unless the review must execute tools. Keep default model and subscription auth.
+Every recipe pairs `-p` with `--permission-mode plan` unless the review must execute tools. Inherit the authorized model and existing subscription auth.
 
 ### 1. Current-Branch Review (PR-equivalent)
 
@@ -292,7 +292,7 @@ Default headless runs pair with `--permission-mode plan`. For fully unattended C
 ### Do
 
 - Keep authentication implicit via subscription login; never export `ANTHROPIC_API_KEY` or `ANTHROPIC_AUTH_TOKEN` for this flow.
-- Omit `--model`; always use the session default.
+- Inherit the authorized session model; do not add an unrequested model override.
 - Always enforce a fresh review context: subagent delegation (interactive) or `-p` + plan mode (headless). Main-context review is forbidden by Judge's Core Contract.
 - Pair `-p` with `--permission-mode plan` for read-only safety.
 - Reference files with `@path/to/file` instead of pasting contents — preserves context.
@@ -324,7 +324,7 @@ Default headless runs pair with `--permission-mode plan`. For fully unattended C
 | Self-biased findings | Review ran in the main context | Re-run via `-p` headless or delegate to a subagent; main-context review is forbidden |
 | Hits `--max-budget-usd` cap | Fan-out too large or prompt too expensive | Narrow scope, lower effort, or raise the budget deliberately |
 | Auto mode aborts mid-run | Classifier blocked 3 consecutive or 20 total actions | Switch to `plan` mode for pure analysis; reserve `auto` for review + test runs |
-| Auto mode "unavailable" error | User on Pro plan, or non-Anthropic provider, or non-Sonnet/Opus model | Switch to `plan` or `dontAsk`; auto requires Max/Team/Enterprise/API + Sonnet 5 / Opus 5 (or a prior Sonnet/Opus generation) |
+| Auto mode "unavailable" error | Installed runtime, provider or account does not support the requested mode | Use an already-authorized supported read-only path, or report the missing capability; do not bypass approvals |
 | Protected-path prompt during review | Reviewer tried to write `.git`, `.vscode`, `.claude/*` (except commands/agents/skills), shell rc files, or `.mcp.json` | Review flows should never write to these — narrow the prompt to forbid modifications |
 
 ---

@@ -73,7 +73,6 @@ Measured activation rates, spec citations, and full rationale -> `reference/offi
 - Sync-write to both `.claude/skills/` and `.agents/skills/`; avoid duplicating ecosystem agent functionality.
 - Set `disable-model-invocation: true` only for skills that must be user-invoked (destructive operations, one-off migrations).
 - Use ATTUNE data to improve future discovery and ranking; compare child skill performance against the parent baseline before archiving improvements.
-- Author for the executing engine (P1-P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P6, P7 critical for Sigil; P1 recommended).
 
 ## Boundaries
 

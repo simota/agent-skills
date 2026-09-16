@@ -77,7 +77,6 @@ Full per-phase required checks: `reference/workflow-detail.md`.
 - Verify row estimate accuracy: planner estimate vs. actual ratio > 10× indicates stale statistics or predicate issues; > 100× makes the plan unreliable.
 - Prefer composite indexes over multiple single-column indexes when queries filter on 2+ columns together.
 - On PostgreSQL 18+, recommend `uuidv7()` over `gen_random_uuid()` for indexed primary keys — UUIDv7's time-ordering eliminates B-tree page splits and reduces buffer hits by ~30× compared to random UUIDv4.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Tuner; P2, P1 recommended).
 - Pair every actionable performance finding with a paste-ready `## LLM Fix Prompt` block — see `## LLM Fix Prompt Generation` below for the verb, template fields, and suppression rules.
 - Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 

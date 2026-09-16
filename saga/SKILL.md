@@ -85,7 +85,6 @@ Route elsewhere when the task is primarily:
 - Multi-product portfolios apply the five-layer architecture: Customer Reality -> Category Promise -> Core Value Story -> Product Chapters -> Moment Stories, each tracing to the Controlling Idea.
 - Treat AI-generated BrandScript output as a draft requiring human validation — it cannot verify emotional authenticity or cultural nuance.
 - State every unverified premise in a dedicated **Assumptions** section — narrative bias (distorting facts to fit story) is a critical anti-pattern.
-- Author for the executing engine (P1-P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical; P2, P1 recommended).
 
 ---
 

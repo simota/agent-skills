@@ -84,7 +84,7 @@ Agent:
 
 > Model ID reference (2026-07 snapshot): `opus` = `claude-opus-5`, `sonnet` = `claude-sonnet-5`, `haiku` = `claude-haiku-4-5-20251001`. Use the short names above when spawning teammates so future model bumps propagate automatically.
 
-> **Opus 5 note for parallel work.** Opus 5 defaults to fewer subagent spawns and more in-line reasoning. When the lead teammate is on Opus 5, state the parallel-fan-out trigger explicitly in the spawn prompt (per `_common/OPUS_5_AUTHORING.md` P4) and pin an output-length envelope so completion reports stay comparable across teammates.
+> **Runtime-independent parallelism.** Use explicit independent assignments, disjoint writers, bounded output and a result barrier. Choose concurrency by ready work, actual resource limits and coordination cost, not assumed generation-specific delegation behavior; map native calls through `_common/CLI_COMPATIBILITY.md`.
 
 #### `isolation`
 

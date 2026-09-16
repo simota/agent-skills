@@ -81,7 +81,6 @@ Route elsewhere when the task is primarily:
 - Up to 70 % of database performance issues stem from design flaws, not hardware — invest time in modeling before scaling infrastructure.
 - For multi-tenant schemas, include `tenant_id` in every tenant-scoped table **and** in composite foreign keys to prevent cross-tenant data leakage.
 - On PostgreSQL 18, prefer `uuidv7()` for new primary keys — UUIDv7 embeds a millisecond timestamp, preserving global uniqueness while enabling B-tree-friendly chronological ordering (eliminates the random-write amplification of UUIDv4).
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Schema; P2, P1 recommended).
 - Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries

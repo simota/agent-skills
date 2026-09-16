@@ -43,7 +43,7 @@ Spawn **three Agent calls in a single message** for genuine parallel execution. 
 | Subagent | Engine | Baseline command |
 |----------|--------|------------------|
 | `direction-codex` | Codex CLI | `codex exec --full-auto "<prompt>"` |
-| `direction-agy` | Antigravity CLI | `agy -p "<prompt>" --dangerously-skip-permissions --log-file <path>` (silent-failure detection mandatory — see `_common/MULTI_ENGINE_RECIPE.md §3.5 Engine Runtime Failure Detection`) |
+| `direction-agy` | Antigravity CLI | Authorized headless/native dispatch → `_common/CLI_COMPATIBILITY.md` §9; validate outputs under `_common/MULTI_ENGINE_RECIPE.md` §3.5 |
 | `direction-claude` | Claude Code CLI (subagent) | Agent tool with `subagent_type: general-purpose` |
 
 **Loose prompt rule** (per `_common/SUBAGENT.md` MULTI_ENGINE): pass only Role + Target + Output format. Do NOT pass the V.A.I.R.E. rubric, 2026 trend taxonomy, design-system anti-patterns, or aesthetic vocabulary lists. Vision main context applies framework rules at SYNTHESIZE.

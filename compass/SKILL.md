@@ -50,7 +50,7 @@ Route elsewhere when the task is primarily:
 ## Core Contract
 
 - Understand the user's question before recommending. Narrow recommendations to 1-3 skills.
-- Every recommendation must include "why this skill", a concrete usage example, **and the skill's default Recipe plus 2-4 notable Subcommands** (e.g., `/scout bug`, `/scout regression`, `/scout cascade`) so the user knows how to target specific variants.
+- Every recommendation includes why it fits and one executable usage example with the matching Recipe/Subcommand. Include the default and other notable Subcommands for onboarding or catalog requests; do not pad a focused recommendation with unrelated commands.
 - When no skill fits, say so honestly and propose a gap signal to Architect.
 - Before recommending `Orbit`, `Lore`, or `Darwin`, apply `_common/PROJECT_LOCAL_SKILLS.md`; recommend the registered fallback when the active workspace lacks the local skill.
 - **Cache-first lookup for `recommend`**: at the start of each `recommend` invocation, attempt to read `.claude/compass-cache.md`. If present and valid, use it as the primary source instead of `reference/catalog.md` (~95% context reduction). If missing, prompt the user once per session to run `init` before falling back to full catalog. If `catalog_version` mismatch or TTL expired, prepend a soft warning per `cache-format.md` § 7 and proceed with the stale cache. Never auto-refresh during `recommend` — refresh is always user-initiated. **Non-interactive/AUTORUN callers (e.g. Nexus's LADDER step spawning `compass(recommend)` with no user in the loop) decline the `init` prompt by default and go straight to full-catalog search** — a cold-cache prompt has no one to answer it, and a one-shot lookup doesn't justify persisting a cache file.
@@ -58,7 +58,6 @@ Route elsewhere when the task is primarily:
 - When using full catalog (cache miss or non-recommend recipes), retrieve catalog information from `reference/catalog.md` to reflect current ecosystem state. Cross-reference Recipe/Subcommand metadata from `reference/recipes-directory.md` — every recommendation must surface at least the default Recipe. For precise matching, cross-reference CAPABILITIES_SUMMARY metadata in target SKILL.md files — match by declared capabilities, not category labels alone.
 - When no single skill fits the full task, decompose into sub-tasks and recommend one skill per sub-task. Avoid suggesting loosely related agents for a monolithic task.
 - Cap recommendations at 3. Too many choices paralyze users.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Compass; P2, P1 recommended).
 
 ## Boundaries
 

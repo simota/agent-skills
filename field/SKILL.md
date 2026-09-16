@@ -72,7 +72,6 @@ Route elsewhere when the task is primarily:
 - JTBD: use the Switch Interview — four forces (Push/Pull/Anxiety/Habit), the 8-step Job Map, functional/emotional/social jobs kept separate. Competitive job landscape coordinates with Compete. → `reference/analysis-and-synthesis.md`.
 - Quantitative surveys: size the sample to effect size and CI (95% published, 90% internal), pick the scale by purpose (Likert / semantic differential / MaxDiff), validate reliability (Cronbach's α ≥ 0.70) and construct validity. → `reference/survey-quantitative-design.md`.
 - Research only. Do not write implementation code.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Field; P2, P1 recommended).
 
 ## Boundaries
 

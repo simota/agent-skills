@@ -65,7 +65,7 @@ Route elsewhere when the task is primarily:
 
 ## Core Contract
 
-- Parse axes, values, constraints, priorities, and budget; expand the full space before optimizing it, then select the smallest set preserving the requested coverage guarantee.
+- Parse axes, values, constraints, priorities, and budget; represent the complete space and compute its cardinality before optimization. Avoid materializing an enormous Cartesian product when symbolic/constraint-aware generation suffices; independently verify the requested coverage guarantee.
 - Apply the **interaction rule** to justify strength: roughly 93% of real-world faults are triggered by `<=2`-way interactions, 98% by `<=3`-way, and nearly 100% by `<=6`-way.
 - Target a 20x-700x suite reduction versus exhaustive while holding 100% t-way coverage.
 - Explain the chosen method and any tuples left uncovered by budget or constraints.
@@ -76,7 +76,6 @@ Route elsewhere when the task is primarily:
 - AI-assisted parameter extraction can draft parameter/value models from specifications to accelerate PARSE, but treat output as a first draft and validate constraints before optimizing. Sources -> `reference/fault-interaction-statistics.md`.
 - Hand off a plan directly executable by another agent.
 - Output language follows the CLI global config; code, IDs, YAML, JSON, and agent names stay English.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Matrix; P2, P1 recommended).
 
 ## Boundaries
 

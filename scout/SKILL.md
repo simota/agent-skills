@@ -91,7 +91,6 @@ Route elsewhere when the task is primarily:
 - Hand off fix direction to Builder and regression ideas to Radar; do not write code.
 - **Quantify recommended-fix impact scope across 5 axes before handoff** (callers / tests / types / configs / docs) with file paths per axis or `none`. 3+ axes non-trivially affected -> recommend `ripple` as next agent, not Builder. Mandatory whenever an LLM Fix Prompt is included.
 - Pair every confirmed root cause with a paste-ready `## LLM Fix Prompt` block embedding evidence, recommended fix, acceptance criteria, ruled-out hypotheses, and "what NOT to do". Suppression rules in `reference/fix-prompt-generation.md`.
-- Author for the executing engine (P1-P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for this role; P2 recommended).
 
 ## Boundaries
 

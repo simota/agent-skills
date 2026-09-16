@@ -10,6 +10,8 @@
 
 ---
 
+> Example model IDs are placeholders: resolve a supported, authorized stable ID through `_common/CLI_COMPATIBILITY.md` before executing.
+
 ## Streaming Response Pattern (SSE)
 
 Server-Sent Events (SSE) is the standard for streaming LLM token output to clients.
@@ -20,7 +22,7 @@ Content-Type: application/json
 Accept: text/event-stream
 
 {
-  "model": "gpt-5.6-terra",
+  "model": "<authorized-model-id>",
   "stream": true,
   "input": [{"role": "user", "content": "Hello"}]
 }
@@ -105,7 +107,7 @@ Forces the model to produce JSON that conforms to a specified schema. On support
 
 ```json
 {
-  "model": "gpt-5.6-terra",
+  "model": "<authorized-model-id>",
   "input": [
     { "role": "user", "content": "Extract product fields from: ..." }
   ],

@@ -148,35 +148,9 @@ critical exception, and it is indistinguishable from success until the decision 
 
 ## Token Economics
 
-> Claude rows verified against `platform.claude.com/docs/en/about-claude/pricing` on **2026-07-25**. OpenAI GPT-5.6 rows verified against `platform.openai.com/pricing` on **2026-08-19** and show standard short-context rates. Check each vendor's official page before quoting because prices and service tiers change.
+Use `_common/CLI_COMPATIBILITY.md` to identify the actual runtime/model, then obtain a dated rate card from the provider's official pricing page. Record input/output units, cached read/write, context band, service tier, batch, region, tool charges and effective date separately. CLI subscription cost and API token billing are not interchangeable.
 
-| Model | Input / 1M | Output / 1M | Speed | Quality | Default use |
-|-------|------------|-------------|-------|---------|-------------|
-| Claude Fable 5 | `$10.00` | `$50.00` | Slow | Highest | Frontier reasoning, long-running agents |
-| Claude Opus 5 | `$5.00` | `$25.00` | Moderate | Highest | Complex agentic coding, `~10%` of traffic |
-| Claude Sonnet 5 | `$2.00` → `$3.00` | `$10.00` → `$15.00` | Fast | High | Production default (intro pricing through 2026-08-31, then standard) |
-| Claude Haiku 4.5 | `$1.00` | `$5.00` | Fastest | Good | Classification, extraction, tier-1 routing |
-| GPT-5.6 Sol | `$5.00` | `$30.00` | Medium | Highest | Frontier cross-vendor fallback |
-| GPT-5.6 Terra | `$2.50` | `$15.00` | Medium | High | General cross-vendor fallback |
-| GPT-5.6 Luna | `$1.00` | `$6.00` | Fast | Good | Lower-cost cross-vendor routing |
-| GPT-4o-mini | `$0.15` | `$0.60` | Fast | Good | High-volume extraction |
-| Gemini 3.7 Flash (High) | `TBD (needs confirmation)` | `TBD (needs confirmation)` | Fast | Good | High-volume extraction (Gemini) |
-
-Claude cost modifiers (multiply the base rates above):
-
-| Modifier | Effect |
-|----------|--------|
-| Batch API | **0.5×** input and output (Opus 5 → `$2.50` / `$12.50`) |
-| Cache write, 5 min | 1.25× input |
-| Cache write, 1 h | 2× input |
-| Cache read (hit) | **0.1×** input — pays off after one read on the 5-min tier |
-| Fast mode (research preview, Opus 5 only) | 2× both (`$10` / `$50`); stacks with caching, excludes Batch |
-| `inference_geo: "us"` | 1.1× all categories |
-| 1M context window | **No premium** — a 900k-token request bills at the same per-token rate as 9k |
-
-Minimum cacheable prompt on Opus 5 is **512 tokens**, so short system prompts now cache.
-
-Formula: `monthly cost = (input cost + output cost) × requests/day × 30`. Always compute this per feature before shipping.
+Do not keep a static vendor ranking or assign traffic percentages without task evaluations. Compare total cost per successful fixed-AC task, including retries, fallback, verification and user correction. Missing pricing is `UNVERIFIED`, not zero. The formulas elsewhere in this reference take observed usage and the verified rate card as inputs; no universal cache/batch multiplier applies.
 
 ## Workflow
 

@@ -15,7 +15,7 @@
 | Charter section | Orbit use |
 |-----------------|-----------|
 | §4 work package (this one) | goal + atomic steps + per-package AC → Orbit operation contract |
-| §5 roster entry | owner skill + model tier + **engine** (Codex CLI always uses the latest gpt-5.6 generation, variant by role — sol=plan/design, terra=implementation, luna=rote; latest-generation mandate `_common/CODEX_ORCHESTRATION.md` C3.0) + `fallback_engine` |
+| §5 roster entry | owner skill + verified authorized model/effort + **engine** + explicit `fallback_engine`; resolve runtime facts via `_common/CLI_COMPATIBILITY.md` |
 | §7 verification plan (package-scoped) | `verify.sh` / DONE-gate commands |
 | §10 per-package DoD checklist | the **external DONE gate** (see below) |
 | §3 conventions + §9 run-log path | commit/test/lint/build commands; where to append events |
@@ -48,7 +48,7 @@ Append-only, one line per event, written immediately, atomic (temp-then-rename).
 
 ## Engine
 
-Build-loop packages run on the engine §5 assigns — **Codex CLI model `gpt-5.6-terra`** (role-matched variant of the latest generation — build loops=terra, plan/design=sol, rote=luna; never a previous generation — latest-generation mandate `_common/CODEX_ORCHESTRATION.md` C3.0; tune depth within the variant via `model_reasoning_effort`). Run the Codex engine-availability check (spawn capacity/nesting under `_common/CODEX_ORCHESTRATION.md` C1 and the required advertised subagent tools permitted) before consuming the contract, exactly as apex Phase 6. If unreachable, apply the package `fallback_engine` and log the substitution as `PKG_RECOVER` (no silent fallback).
+Build-loop packages run on the engine assigned in §5. Verify its advertised spawn/capacity and authorized model using `_common/CLI_COMPATIBILITY.md` and the corresponding orchestration adapter before consuming the contract. An unreachable engine may use only the package's authorized `fallback_engine`; log `PKG_RECOVER`, preserve ACs and do not silently substitute a provider.
 
 ## Boundaries (hub-spoke preserved)
 

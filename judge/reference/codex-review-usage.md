@@ -11,7 +11,7 @@ Operational reference for invoking `codex review`. This file is the single sourc
 | Binary | `codex` on `$PATH` **or** at a known fallback path | `codex --version` must succeed. See **Robust availability detection** below — never declare unavailable based on a single `command -v` miss |
 | Subcommand | `codex review` | Non-interactive code review mode |
 | Authentication | Subscription login (`codex login`) | No API key / `OPENAI_API_KEY` required; do not set or pass API keys |
-| Model | Default (no `-m` / `--model` flag) | Always rely on the CLI default — never override the model |
+| Model | Inherit the authorized session selection | No automatic model change; explicit alternatives require verified availability and authorization under `_common/CLI_COMPATIBILITY.md` |
 | Working directory | Git repository root | Commands operate on the current git worktree |
 
 **Never** pass `-m`, `--model`, `-c model=...`, or set `OPENAI_API_KEY`. Authentication and model selection are managed by the user's subscription login.
@@ -87,7 +87,7 @@ echo "Focus on authentication flow and session handling" | codex review --base m
 
 ## Use Case Cookbook
 
-Pick the recipe that matches the user's request. Every recipe keeps the default model and subscription auth — only the flags and prompt change.
+Pick the recipe that matches the user's request. Every recipe inherits the authorized model and existing subscription auth — only the flags and prompt change.
 
 ### 1. Standard PR Review
 
@@ -311,7 +311,7 @@ Always pair the mode flag with a focus prompt — bare invocations produce lower
 ### Do
 
 - Keep authentication implicit via `codex login`; never export `OPENAI_API_KEY` for this flow.
-- Omit `-m` / `--model` / `-c model=...`; always use the default model.
+- Inherit the authorized session model. Use a model override only when explicitly authorized and supported by the installed review interface.
 - Always pass a focused prompt — it directly raises signal-to-noise ratio.
 - Use `-` + stdin for prompts longer than ~200 characters or when sourcing from files.
 - Prepend `REVIEW.md` content when the file exists at repo root.

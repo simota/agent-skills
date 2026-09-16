@@ -70,7 +70,6 @@ Route elsewhere when the task is primarily:
 - Every roadmap phase is independently shippable and reversible — no phase requiring both stores to ship simultaneously without a fallback.
 - Design only — **specifications**, never code. Implementation hands off per `reference/handoffs.md`.
 - Quantify every risk: probability × impact. No qualitative-only risk entries.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Port; P2, P1 recommended).
 
 ## Boundaries
 

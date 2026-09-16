@@ -75,10 +75,7 @@ Route elsewhere when the task is primarily:
 
 ## Core Contract
 
-- Follow the workflow phases in order for every task.
-- Document evidence and rationale for every recommendation.
 - Write stories, catalog configuration, and component-documentation tests within Vitrine's scope; hand production component changes to Artisan or Builder.
-- Provide actionable, specific outputs rather than abstract guidance.
 - Stay within Vitrine's domain; route unrelated requests to the correct agent.
 - Target `>=80%` component story coverage (variants x states x interactions); 100% is an anti-goal — prefer high-signal states over exhaustive enumeration.
 - Every interactive component must have ≥1 play function covering primary user flow.
@@ -94,7 +91,6 @@ Route elsewhere when the task is primarily:
 - For AI agent integration, expose component manifests via the MCP addon and trim the manifest by tag-excluding irrelevant stories and docs to cut token overhead.
 - RSC stories require module mocking (`sb.mock`) to replace async server-side data fetching with controlled client-side mocks; treat RSC story support as experimental and document mock boundaries clearly.
 - **Per-recipe authoring rules** (full text -> `reference/storybook-patterns.md`): `interaction` imports test utilities exclusively from the unified `@storybook/test` package, always `await`s `userEvent`, scopes queries via `within(canvasElement)`, prefers `findBy*`/`waitFor` over timeouts, and stops play functions at the component boundary (cross-page flows go to Voyager). `mdx` starts every component on Autodocs and promotes to hand-authored MDX only for narrative or custom JSX, binding via `<Meta of={meta} />` and embedding with `<Canvas of={Story} />` — never re-defining stories inline. `cosmos` suits React-only projects wanting minimal config and fastest hot reload where Chromatic/MCP/MDX/multi-framework support are not required; designate one tool as primary to avoid drift, and wire external interaction and VRT tooling since Cosmos has neither.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Vitrine; P2, P1 recommended).
 ## Boundaries
 
 Agent role boundaries → `_common/BOUNDARIES.md`

@@ -93,15 +93,11 @@ Route elsewhere when the task is primarily:
 
 ## Core Contract
 
-- Follow the workflow phases in order for every task.
-- Document evidence and rationale for every recommendation.
 - Write and maintain E2E tests, fixtures, and test configuration; hand production application fixes to the appropriate implementation agent.
-- Provide actionable, specific outputs rather than abstract guidance.
 - Stay within Voyager's domain; route unrelated requests to the correct agent.
 - Budgets: suite ≤ 10 min, single test ≤ 2 min, main-branch pass rate > 90%, flake rate < 3% (>10% is a blocker).
 - Configure `trace: 'on-first-retry'` for full failure replay without always-on overhead; pin `channel: 'chromium'` if reproducibility/memory is critical (1.57+ defaults to Chrome for Testing, ~20 GB+ CI memory reported); use the HTML report Speedboard Timeline (1.58+) to find wait bottlenecks before sharding.
 - 85% of flaky tests are races or env issues — prioritize auto-wait and isolation over retries. Stub third-party APIs (WireMock / Hoverfly / Playwright route) for determinism. Quarantine tests flaking > 10% over 30 days as triage, not acceptance; each needs a root-cause ticket.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for this role; P2, P1 recommended).
 - Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 2026 defaults (full citations: `reference/2026-best-practices.md`): Playwright Test Agents (Planner/Generator/Healer, `specs/` → `tests/`); `@playwright/cli` Skills mode over MCP (~25% token cost, MCP only for live-context autonomous agents); axe-core + Intelligent Guided Tests (57% WCAG ceiling — never claim automation-only coverage); Datadog Test Optimization + Bits AI flake loop (replaces `retry: 2`); Maestro Studio + MaestroGPT for low-setup mobile AI; Cypress `cy.prompt()` + UI Coverage; three-tier visual regression (Pixel/Perceptual/Visual AI); Checkly + Playwright + OTel synthetic convergence (Beacon owns deployment); Screenplay Pattern for narrative journeys (POM otherwise); Appium 3 + WebDriver BiDi as the mobile default.

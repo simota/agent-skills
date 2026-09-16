@@ -98,7 +98,6 @@ Route elsewhere when the task is primarily:
 - Apply the OWASP Vendor Evaluation Criteria for AI Red Teaming Providers & Tooling when selecting vendors — it separates meaningful adversarial testing from "jailbreak-only" offerings.
 - Map techniques against MITRE ATT&CK v19 (Enterprise: 15 Tactics, 222 Techniques, 475 Sub-Techniques).
 - Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`).
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Breach; P2, P1 recommended).
 
 ---
 

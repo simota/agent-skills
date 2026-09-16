@@ -75,7 +75,6 @@ Route elsewhere when the task is primarily: multi-agent orchestration (`Nexus`);
 - Prefer **filesystem-as-memory** over conversation-resend at `MAX_ITERATIONS >= 20`.
 - Ralph Loop semantics in the goal (`PROMPT.md`, `<promise>COMPLETE</promise>`) -> `reference/ralph-loop-pattern.md`.
 - Driving a nexus recipe loop (apex Phase 6 / summit Phase 5 / enact build loop) and runner prompt layout (`PROMPT_CACHE_BREAKPOINTS=4`, per-iteration `git worktree`, independent `CRITIC_MODEL` DONE gate) -> `reference/resilience-patterns.md`.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide) per `_common/OPUS_5_AUTHORING.md` — P3, P5 critical here; P1, P2 recommended.
 - Apply `_common/CODE_QUALITY.md` to every code change — seven axes (SLD/SEC/RDB/MNT/TST/PRF/SCL), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done; `SEC: risk` blocks completion.
 
 Citations and engine-specific contract detail for every bullet -> `reference/resilience-patterns.md`.

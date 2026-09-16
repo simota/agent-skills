@@ -49,7 +49,7 @@ Spawn **one Agent call per AVAILABLE engine in a single message**. Each subagent
 |----------|--------|-----------------|------------------|
 | `deliberate-codex` | Codex CLI | Always (Codex required for magi multi) | `codex exec --full-auto "<prompt>"` |
 | `deliberate-claude` | Claude Code CLI (subagent) | Always (host engine) | Agent tool with `subagent_type: general-purpose` |
-| `deliberate-agy` | Antigravity CLI | **Only when AVAILABLE at PREFLIGHT** | `agy -p "<prompt>" --dangerously-skip-permissions --log-file <path>` (silent-failure detection mandatory — see `_common/MULTI_ENGINE_RECIPE.md §3.5 Engine Runtime Failure Detection`) |
+| `deliberate-agy` | Antigravity CLI | **Only when AVAILABLE at PREFLIGHT** | Authorized headless/native dispatch → `_common/CLI_COMPATIBILITY.md` §9; validate outputs under `_common/MULTI_ENGINE_RECIPE.md` §3.5 |
 
 **Loose prompt rule** (per `_common/SUBAGENT.md` MULTI_ENGINE): pass Role + Target + Output format only. Do NOT pass:
 
