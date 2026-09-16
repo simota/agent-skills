@@ -1,0 +1,130 @@
+name: reference-density-apply
+on:
+  push:
+    branches: [refactor/reference-density]
+    paths: [.github/workflows/reference-density-apply.yml]
+permissions:
+  contents: write
+jobs:
+  apply:
+    if: github.repository == 'simota/agent-skills' && github.ref == 'refs/heads/refactor/reference-density'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: refactor/reference-density
+          fetch-depth: 0
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Apply hash-checked baseline-relative text edits
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import base64
+          import hashlib
+          import json
+          import lzma
+          import subprocess
+          from pathlib import Path, PurePosixPath
+          baseline = '35ffd55887b6a9e53d2e2b5d3c9266aa4bf5de99'
+          temporary = {
+              '.github/workflows/reference-snapshot.yml',
+              '.github/workflows/reference-density-apply.yml',
+              *[f'.github/reference-density.{i}.txt' for i in range(8)],
+          }
+          changed = set(subprocess.check_output(
+              ['git', 'diff', '--name-only', baseline, 'HEAD'], text=True).splitlines())
+          if changed != temporary:
+              raise SystemExit(f'Unexpected branch delta: {sorted(changed ^ temporary)}')
+          chunks = [Path(f'.github/reference-density.{i}.txt').read_text().strip() for i in range(8)]
+          for i, chunk in enumerate(chunks):
+              print('chunk', i, hashlib.sha256(chunk.encode()).hexdigest())
+          raw = base64.b64decode(''.join(chunks), validate=True)
+          if hashlib.sha256(raw).hexdigest() != 'c7dac5029e4ad5ed6b59940a53d5819ea59964f26ee0208da62dd254fc5105de':
+              raise SystemExit('Change data SHA-256 mismatch')
+          records = json.loads(lzma.decompress(raw))
+          if not isinstance(records, list) or len(records) != 159:
+              raise SystemExit('Unexpected record count')
+          seen = set()
+          for record in records:
+              if not isinstance(record, list) or len(record) != 3:
+                  raise SystemExit('Invalid edit record')
+              name, old_hash, edits = record
+              if not isinstance(name, str) or not isinstance(old_hash, str):
+                  raise SystemExit('Invalid record types')
+              rel = PurePosixPath(name)
+              if rel.is_absolute() or '..' in rel.parts or name in seen or rel.suffix != '.md':
+                  raise SystemExit(f'Unsafe or duplicate path: {name}')
+              seen.add(name)
+              path = Path(name)
+              if path.is_symlink() or not path.is_file():
+                  raise SystemExit(f'Expected existing regular file: {name}')
+              original = subprocess.check_output(['git', 'show', f'{baseline}:{name}'])
+              if path.read_bytes() != original or hashlib.sha256(original).hexdigest() != old_hash:
+                  raise SystemExit(f'Baseline mismatch: {name}')
+              if edits is None:
+                  path.unlink()
+                  continue
+              if not isinstance(edits, list):
+                  raise SystemExit(f'Invalid edit list: {name}')
+              lines = original.decode('utf-8').splitlines(keepends=True)
+              end = 0
+              for edit in edits:
+                  if not isinstance(edit, list) or len(edit) != 3:
+                      raise SystemExit(f'Invalid splice: {name}')
+                  start, stop, replacement = edit
+                  if type(start) is not int or type(stop) is not int or not isinstance(replacement, str):
+                      raise SystemExit(f'Invalid splice types: {name}')
+                  if not (end <= start <= stop <= len(lines)):
+                      raise SystemExit(f'Overlapping or out-of-range splice: {name}')
+                  end = stop
+              for start, stop, replacement in reversed(edits):
+                  lines[start:stop] = [replacement]
+              path.write_bytes(''.join(lines).encode('utf-8'))
+          for name in sorted(temporary):
+              Path(name).unlink()
+          print(f'Applied {len(seen)} verified records; removed temporary transport files')
+          PY
+          git add -u
+          actual_tree=$(git write-tree)
+          test "$actual_tree" = 6961ec286f54a5878dc78948c72b8629ef06f8db
+          printf 'baseline=%s\nvalidated_tree=%s\n' 35ffd55887b6a9e53d2e2b5d3c9266aa4bf5de99 "$actual_tree" | tee "$RUNNER_TEMP/reference-tree.log"
+          git diff --cached --check
+      - name: Install existing checker dependencies and hooks
+        run: |
+          python3 -m pip install -r requirements-checks.txt
+          make hooks
+      - name: Run all existing checks and regression tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          make check 2>&1 | tee "$RUNNER_TEMP/reference-check.log"
+          python3 _common/scripts/lint-contracts.py --report > "$RUNNER_TEMP/reference-contracts.log"
+      - name: Commit verified tree with the existing hook enabled
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'refactor: reduce reference runtime overhead' -m 'Remove duplicated tutorials, consolidate equivalent schemas, and keep domain-specific execution constraints behind conditional reference loading. Repair reachable paths without expanding skill entrypoints. This is a partial semantic audit, not a claim that the full reference corpus is minimal.' 2>&1 | tee "$RUNNER_TEMP/reference-commit.log"
+          test "$(git rev-parse HEAD^{tree})" = 6961ec286f54a5878dc78948c72b8629ef06f8db
+          git push origin HEAD:refactor/reference-density
+          git rev-parse HEAD | tee -a "$RUNNER_TEMP/reference-tree.log"
+      - name: Publish validation evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: reference-density-validation
+          path: |
+            ${{ runner.temp }}/reference-tree.log
+            ${{ runner.temp }}/reference-check.log
+            ${{ runner.temp }}/reference-contracts.log
+            ${{ runner.temp }}/reference-commit.log
+          retention-days: 7
+          if-no-files-found: warn
