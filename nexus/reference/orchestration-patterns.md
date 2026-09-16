@@ -28,7 +28,7 @@ Every `Agent(...)` block in this file omits the fields that never vary. Assume o
 
 ```
 subagent_type: general-purpose
-mode: bypassPermissions
+# Inherit the authorized permission policy; map this schematic envelope through CLI_COMPATIBILITY.md.
 model: sonnet                    # tier per hub-authoring.md § Model Selection
 prompt prefix: "You are the <Agent> agent. First, read ~/.claude/skills/<agent>/SKILL.md
                 and follow its instructions."
@@ -68,7 +68,7 @@ result2 = Agent(name: "builder-fix", description: "Implement fix",
 
 ## Pattern B: Parallel Branches (L2: Parallel Spawn)
 
-> **Opus 5 note — the branch count is a ceiling, not a target.** Opus 5 delegates readily, so the failure mode this pattern must guard is *over*-fan-out, not under-fan-out (`OPUS_5_AUTHORING.md` P4). Two rules follow: (1) a branch must be a genuinely independent, sizeable track — work finishable in a handful of tool calls stays inline; prefer one branch over several when one suffices. (2) **Never open a branch whose job is to check another branch's output on that branch's behalf.** Independent verification is a *sequential* step after the barrier (a different specialist, Q9), not a parallel sibling — a verify-branch racing its producer has no output to verify yet. Multi-agent coordination is otherwise a strength on Opus 5: writer-verifier hand-offs work well and branches rarely clobber each other, so the file-ownership isolation below remains the load-bearing guard rather than a workaround for model confusion.
+> **Branch count is a ceiling, not a target.** Fan out only independent, worthwhile tracks with disjoint ownership. Verify a produced artifact after its barrier, not in a sibling racing the producer. Preserve independent verification (Q9); a larger context window is not a reason to replace it with self-review. Runtime dispatch follows `_common/CLI_COMPATIBILITY.md`.
 
 ```
 Nexus → Agent(Builder-A, background) ──┐
@@ -280,18 +280,11 @@ score delta < 0.2, or max reached.
 |--------|-----------|-------------------|----------------|
 | **Claude Code** | `Agent(...)` foreground | N × `Agent(..., run_in_background: true)` in one response | completion notifications; no cleanup call |
 | **Codex CLI** | `spawn_agent` → `wait_agent` | N × `spawn_agent` issued before any wait | `wait_agent` each, then `close_agent` each |
-| **agy** | headless one-shot (no background primitive) | wave of independent one-shots | artifact polling — no `wait` primitive exists |
+| **agy** | Advertised native agent or headless call | Independent supported calls | Join and validate current-run results; exact lifecycle in compatibility adapter |
 
 Per-CLI API detail (tool names, prereqs, flags) → `reference/execution-layers.md`.
 
-**agy-specific loop rules:** every step pins the mandated Gemini 3.7 Flash (High) tier with the Deep
-Reasoning Directive appended (`_common/AGY_ORCHESTRATION.md` A1-R/A9-D), captures via the
-prompt-mandated artifact + sentinel (`_common/CLI_COMPATIBILITY.md §9.2`), and injects the upstream
-artifact with `@<path>` — never a bare path (A5). Maker ≠ checker still holds (separate processes,
-isolated contexts), which is why the pattern ports; but the generator runs a *fast* model, so weight
-the evaluator rubric accordingly. A capture failure (empty artifact / missing sentinel) is **not** a
-REVISE signal — resolve it as a Level 0 capture failure first (typed retry, max 1). Iterate by
-re-spawning one-shots or resuming with `-c`/`--conversation <id>`.
+**agy-specific loop rules:** use `_common/AGY_ORCHESTRATION.md` and `_common/CLI_COMPATIBILITY.md` §9.2 for supported invocation and capture. Maker ≠ checker requires separate contexts and unmodified evaluator criteria; model choice never lowers the rubric. Diagnose a missing required result as Level 0 capture failure (typed retry, max 1), not a REVISE verdict. Resume only the identified current run, or spawn an independent bounded call when appropriate.
 
 ---
 

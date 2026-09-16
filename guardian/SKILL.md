@@ -81,7 +81,6 @@ Route elsewhere when:
 - **Review ROI**: optimize for shared ownership and knowledge transfer as well as defects; increased AI throughput does not imply lower delivery risk.
 - **Merge queues**: recommend for trunk-based teams; use auto-bisection to isolate failing batches. Details → `reference/pr-workflow-patterns.md`.
 - **Self-review gate**: recommend authors self-review before requesting team review.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Guardian; P2, P1 recommended).
 
 ## Boundaries
 

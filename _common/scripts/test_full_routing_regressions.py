@@ -76,6 +76,20 @@ class RecipeSourceTests(TempCase):
                           "dispatch allowlist only\n```\n" + commands + "\n```\n"
                           "Default Recipe: `" + default + "`.\n\n## Subcommand Dispatch\n")
 
+    def test_external_allowlist_accepts_explicit_label_variants(self):
+        for label in ("dispatch allowlist only", "Dispatch allowlist:", "DISPATCH ALLOWLIST"):
+            with self.subTest(label=label):
+                path = self.external_registry()
+                path.write_text(path.read_text().replace("dispatch allowlist only", label))
+                self.assertEqual(recipes.validate("skill", path)[0], [])
+
+    def test_label_variants_do_not_hide_missing_or_duplicate_commands(self):
+        for commands in ("other", "bug · ghost", "bug · bug"):
+            with self.subTest(commands=commands):
+                path = self.external_registry(commands)
+                path.write_text(path.read_text().replace("dispatch allowlist only", "Dispatch allowlist:"))
+                self.assertTrue(any("allowlist" in error for error in recipes.validate("skill", path)[0]))
+
     def test_external_allowlist_must_match_registry_and_have_no_duplicates(self):
         for commands in ("other", "bug · ghost", "bug · bug"):
             with self.subTest(commands=commands):

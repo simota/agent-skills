@@ -287,7 +287,8 @@ questions:
 
 ```yaml
 questions:
-  - question: "The specification contains 20+ acceptance criteria. Select the verification scope."
+  # Use only when verification scope was not already authorized; never narrow frozen ACs.
+  - question: "The specification contains 20+ acceptance criteria and scope is unspecified. Select the verification scope."
     header: "Scope"
     options:
       - label: "Verify all criteria (recommended)"

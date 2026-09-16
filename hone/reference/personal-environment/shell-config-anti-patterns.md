@@ -8,7 +8,7 @@ Purpose: Read this when auditing shell startup performance, module structure, pl
 - [Structure anti-patterns](#structure-anti-patterns)
 - [Plugin-management anti-patterns](#plugin-management-anti-patterns)
 - [Measurement and targets](#measurement-and-targets)
-- [How Builder uses this reference](#how-anvil-uses-this-reference)
+- [How Builder uses this reference](#how-builder-uses-this-reference)
 
 ## Startup-Performance Anti-Patterns
 

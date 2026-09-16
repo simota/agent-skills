@@ -46,7 +46,7 @@ Coordinate specialist agents, design the minimum viable chain, execute safely. `
 - Adapt routing from execution evidence under safety constraints; track OE per chain type.
 - Treat `orbit`, `lore`, and `darwin` as project-local extensions. Before selecting one, apply `_common/PROJECT_LOCAL_SKILLS.md` Availability Gate; if unavailable, route to its registered fallback and report `project_local_fallback: true`.
 - Treat `_common/SKILL_PACKS.md` optional add-ons and explicit-invocation skills as gated surfaces. Select an add-on only when its profile is active or after surfacing a pack mismatch; select an explicit-invocation skill only when the request names that skill or unambiguously requests its narrow artifact.
-- Use standardized protocols (MCP, A2A, ACP) and Plan-and-Execute; per-engine planning/execution models → `reference/hub-authoring.md` § Model Selection (**agy is always Gemini 3.7 Flash (High)**).
+- Use the runtime's supported interfaces and Plan-and-Execute; model selection and capability discovery belong in `_common/CLI_COMPATIBILITY.md` and `reference/hub-authoring.md`, not a fixed model mandate.
 - Treat vendor feature names as runtime capabilities, not Nexus contracts. For Claude Code Dynamic Workflows, use the stable pattern mapping in `reference/orchestration-patterns.md` and verify current availability or limits against `_common/CLI_COMPATIBILITY.md` and the official product docs at execution time.
 - Output language follows the CLI global config; identifiers and technical terms stay English.
 
@@ -70,7 +70,7 @@ Agent boundaries → `_common/BOUNDARIES.md` · disambiguation → `reference/ag
 - Document goal and acceptance criteria in 1-3 lines before chain selection.
 - Choose the minimum agents needed.
 - Log an immutable record per routing decision (input summary, chain, confidence, rationale).
-- Decompose with Sherpa when a task touches 3+ files, spans components, or hides intermediate steps.
+- Use Sherpa when unresolved dependencies or cross-component work require specialist decomposition; file count alone does not require another handoff.
 - Use the `NEXUS_HANDOFF` format from `_common/HANDOFF.md`.
 - Verify workspace availability before every handoff to a project-local extension.
 - Validate each step's result (schema, required fields, confidence) to catch semantic failures.
@@ -80,13 +80,13 @@ Agent boundaries → `_common/BOUNDARIES.md` · disambiguation → `reference/ag
 ### Ask First
 
 - `L4` security triggers, destructive data actions, external system changes.
-- Actions affecting 10+ files.
+- Actions affecting 10+ files when that scope is not already explicitly authorized.
 - Routing adaptation replacing a high-performing chain (`CES ≥ B`).
 - Chain designs with 5+ agents.
 - First production use of a newly registered agent.
 - Approving a new skill via LADDER (architect's gap-fill proposal, pre-registration).
 - **Before the session's first `agy -p … --dangerously-skip-permissions` spawn** — emit the Pre-flight Notification per `_common/CLI_COMPATIBILITY.md §9.1` (informational; does not block AUTORUN).
-- **On a Fable 5 hub, before a task not warranting Fable 5-tier reasoning** (SIMPLE / single trivial step, no multi-domain planning) — confirm and recommend the cheaper path. The **Fable 5 cost gate (F8)** is contract-level and blocks even in `AUTORUN`/`AUTORUN_FULL`.
+- **Before an unapproved cost escalation** — obtain approval for a higher-priced model, extra paid usage, or a larger delegation budget. The cost gate (`F8` migration identifier) applies to every engine; an already authorized model/scope does not require repeated confirmation.
 
 ### Never
 
@@ -169,18 +169,18 @@ Inline Recipes (`kaizen`, `essential`, `killer`, `trim`) have no top-level refer
 
 ## Execution Model
 
-**Orchestrator detection** — detect which CLI drives *this hub session* once, before the first spawn (`Agent` → Claude Code; `spawn_agent` → Codex CLI; `/agent` in a TUI main session → agy), then bind the spawn API, authoring protocol, and model map. Detection table, per-CLI prereqs, model selection, adaptive-prompt policy, canonical spawn template → `reference/hub-authoring.md` § Execution Model + `reference/execution-layers.md`.
+**Orchestrator detection** — establish the host runtime and advertised delegation capabilities before the first spawn; discover actual schemas rather than identifying a host solely from a familiar tool name. Bind the runtime adapter and authorized model choice. Detection table, per-CLI prereqs, model selection, adaptive-prompt policy, canonical spawn template → `reference/hub-authoring.md` § Execution Model + `reference/execution-layers.md`.
 
 **Spawn decision** — Core Rule #3 decides: no spawn tool → internal (log the verified blocker); specialist expertise → spawn (mandatory); trivial edit → spawn only if overhead is justified. Bound the *upper* count, and **never spawn an agent to re-check another's output** — that is a sequential VERIFY step, not a sibling.
 
 **Spawn prompt non-negotiables** — front-load ACs (P1), output envelope (P2), scope (P8), completion bound (Q16-Q17), `Prohibited outcomes`, and least-authority `Authority` with `redelegation: false` (Q2/Q23). Never request producer self-verification; use a separate verifier. Adaptive prompt policy applies at ≥3 spawns, loop Recipes, or repeat agents (`reference/adaptive-prompt-policy.md`). After `SPECIFY`, inject its goal/ACs/prohibited outcomes/constraints verbatim before directives.
 
-> **MANDATORY before spawning agy or codex as an agent** — read `_common/CLI_COMPATIBILITY.md §9.2` (agy headless MUST allocate a real pty via `python3 pty.spawn`; bare `agy -p` and `script -q /dev/null` **fail silently**, so capture via artifact/sentinel, never stdout) and §9.3 (codex `-o <abs path>` artifact is authoritative). These are silent-output regressions, not edge cases.
+> Before an external spawn, read `_common/CLI_COMPATIBILITY.md` §9 for supported result channels and permission boundaries. Apply historical workarounds only to a reproduced installed-version defect.
 
 ## Safety Contract
 
 - **Guardrails:** `L1` monitor/log → `L2` auto-verify/checkpoint → `L3` pause + auto-recovery → `L4` abort + rollback.
-- **Error handling:** `L1` retry (max 3) → `L2` auto-adjust or inject Builder → `L3` rollback + recovery chain → `L4` ask user (max 5) → `L5` abort. **agy headless failures classify `L0` CAPTURE_FAILURE first** — `exit 0/124 + empty stdout` also describes a *successful* `agy -p` run, so the artifact decides, not the exit code; one typed repair retry, never an L1-L3 escalation.
+- **Error handling:** `L1` retry (max 3) → `L2` auto-adjust or inject Builder → `L3` rollback + recovery chain → `L4` ask user (max 5) → `L5` abort. Diagnose missing output as `L0` CAPTURE_FAILURE before domain escalation; one typed repair retry, with process status and current-run artifact evidence. Timeout is not success.
 - **Circuit breaker:** three consecutive failures marks an agent DEGRADED until a probe succeeds; "Agent Tennis" (two agents disagreeing 3+ turns without progress) trips the breaker and escalates.
 - **Checkpoint-resume:** chains of 4+ steps persist step outputs at each boundary so interrupted runs resume from the last checkpoint.
 - **Auto-decision:** proceed only at sufficient confidence with acceptable reversibility; confirm risky or irreversible work first. Depth follows the Autonomy Ledger and never relaxes an Ask First gate.
@@ -234,7 +234,7 @@ Read only files matching the current decision point. A file already named where 
 
 **Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/VALUES.md` · `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
 
-Beyond the spine, follow `_common/HARNESS_EVOLUTION.md`. Apply the hub-engine protocol: `_common/OPUS_5_AUTHORING.md` (Claude Code; add F-principles on a Fable 5 hub), `CODEX_ORCHESTRATION.md`, or `AGY_ORCHESTRATION.md` (A1-A9). Journal in `.agents/nexus.md`, log to `.agents/PROJECT.md`, no agent names in commits/PRs. Keep chains small, handoffs structured, recovery explicit.
+Beyond the spine, follow `_common/HARNESS_EVOLUTION.md`. Apply the hub-engine protocol: `_common/OPUS_5_AUTHORING.md` (shared P1-P12), plus `CODEX_ORCHESTRATION.md` or `AGY_ORCHESTRATION.md` (A1-A9) when applicable. Journal in `.agents/nexus.md`, log to `.agents/PROJECT.md`, no agent names in commits/PRs. Keep chains small, handoffs structured, recovery explicit.
 
 ## Operational Notes for Spawns
 

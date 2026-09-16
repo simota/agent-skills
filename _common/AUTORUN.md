@@ -26,96 +26,24 @@ This protocol works across different AI platforms (Claude Code, Codex CLI, Gemin
 
 ## Agent Spawn Execution
 
-In AUTORUN mode, Nexus spawns each agent as an independent Claude session via the Agent tool.
+In AUTORUN mode, Nexus delegates each specialist step through the verified host interface, preserving independent contexts and the existing authority boundary.
 
-The canonical spawn prompt — including the four mandatory directive fields (Recipe, Acceptance criteria, Output length envelope, Tool-use directive, Thinking directive) — is defined once in `nexus/reference/hub-authoring.md` § Agent Spawn Template. Author every spawn from that template; do not reproduce a reduced copy here.
+The canonical outcome brief is defined once in `nexus/reference/hub-authoring.md` § Agent Spawn Template. Carry its ACs, scope, authority, prohibited outcomes and completion bound; tool directions are conditional and forced-thinking directives are retired.
 
 ### Execution Layers
 
-#### Claude Code
-
-| Layer | Method | When | API |
-|-------|--------|------|-----|
-| **L1: Direct Spawn** | Agent tool (foreground) | 1-4 step sequential chains | `Agent(prompt, mode)` |
-| **L2: Parallel Spawn** | Agent tool (background) | 2-3 independent branches | `Agent(prompt, run_in_background: true)` |
-| **L3: Rally Delegation** | Spawn Rally as Agent | 4+ workers, complex ownership | `Agent(prompt="You are Rally...")` |
-
-#### Codex CLI
-
-| Layer | Method | When | API |
-|-------|--------|------|-----|
-| **L1: Direct Spawn** | `spawn_agent` → `wait_agent` | 1-4 step sequential chains | `spawn_agent(prompt)` → `wait_agent(id)` |
-| **L2: Parallel Spawn** | Multiple `spawn_agent` → `wait_agent` all | 2-3 independent branches | `spawn_agent` × N → `wait_agent` × N |
-| **L3: Rally Delegation** | `spawn_agent` with Rally prompt | 4+ workers, complex ownership | `spawn_agent(prompt="You are Rally...")` |
-
-**Codex Subagent Tools:**
-- `spawn_agent` — Spawn a new subagent
-- `send_input` — Send additional instructions to a running subagent
-- `wait_agent` — Wait for a subagent to complete
-- `resume_agent` — Resume a paused subagent
-- `close_agent` — Close a subagent's thread
+`nexus/reference/execution-layers.md` defines L1 direct, L2 parallel and L3 coordinated execution. Bind actual tools through `_common/CLI_COMPATIBILITY.md`; do not infer API names or capability from another CLI. Join dependencies, isolate writers and keep independent verification.
 
 ### Model Selection
 
-Model-per-role assignment is hub-engine-specific and defined once in `nexus/reference/hub-authoring.md` § Model Selection — Claude Code hub defaults to **Sonnet 5** (task-appropriate), escalating to **opus / fable-5** for the high-reasoning tier and **haiku** for trivial steps; Codex hub uses the latest gpt-5.6 generation with role-based variants (sol plan / terra execute / luna rote); agy hub is mandated to Gemini 3.7 Flash (High). Do not reproduce a bare `sonnet/opus/haiku` map here.
+Follow `nexus/reference/hub-authoring.md` § Model Selection and `_common/CLI_COMPATIBILITY.md` §4. Inherit the authorized model/effort, verify current stable alternatives when needed, and never escalate cost or permissions automatically.
 
 **Context Strategy** (orthogonal to model choice): `reset` = file-based handoff (fresh context per agent), `continuous` = in-context handoff (accumulated context), `hybrid` = Nexus continuous + spawned agents reset. Typical pairing — investigation/evaluator → `reset`, standard implementation → `hybrid`, high-complexity design/revision generator → `continuous`. See `nexus/reference/context-strategy.md` for details.
 
 ### Advanced Spawn Options
 
-Agent tool (v2.1.63+) supports additional frontmatter fields for fine-grained control:
+Use only supported host options for capacity/turn limits, effort, isolated workspaces, resume, skill injection and memory. Do not copy custom-agent frontmatter into SKILL.md. An isolated worktree prevents direct write collisions, not semantic conflicts; verify the merged revision and inherited constraints. No permission-mode changes are implied by AUTORUN.
 
-| Option | Description | When to Use |
-|--------|-------------|-------------|
-| `maxTurns` | Maximum agentic turns before stopping | Cost control and runaway prevention. Investigation: 20-30, implementation: 50-80 |
-| `effort` | Reasoning effort (`low`/`medium`/`high`/`max`) | Haiku+low for ultra-lightweight tasks, Opus+max for maximum precision |
-| `isolation: worktree` | Isolated execution via Git worktree | Prevents file conflicts during L2 parallel runs. Each branch works in its own independent copy |
-| `resume` (agent ID) | Resume an existing subagent | Retry after failure or continue additional work. Retains full history |
-| `skills` | Pre-inject Skill content | Inject SKILL.md directly instead of telling the prompt to "read" it |
-| `memory` | Persistent memory (`user`/`project`/`local`) | Cross-session persistence for routing learning and pattern accumulation |
-
-**Worktree isolation for L2:**
-```
-# Using worktree during L2 parallel spawn eliminates file conflict risk
-Agent(
-  name: "builder-feature-a"
-  isolation: worktree          # Run in an independent git worktree
-  run_in_background: true
-  ...
-)
-Agent(
-  name: "builder-feature-b"
-  isolation: worktree
-  run_in_background: true
-  ...
-)
-# After both complete, merge the worktree changes
-```
-
-### Custom Subagent Definitions
-
-By placing a Markdown file in `.claude/agents/` (project) or `~/.claude/agents/` (user), you can pre-define a custom subagent_type. This keeps the spawn-time prompt concise and ensures tool restrictions, model selection, and skill injection are reliably applied.
-
-```yaml
-# ~/.claude/agents/scout-agent.md
----
-name: scout-agent
-description: Bug investigation and root cause analysis. Use proactively for bug reports.
-tools: Read, Grep, Glob, Bash
-disallowedTools: Write, Edit
-model: sonnet
-maxTurns: 30
-memory: project
-skills:
-  - scout
----
-You are the Scout agent. Investigate the root cause of the bug and identify reproduction steps and impact scope.
-Do not modify code. When complete, report in the _STEP_COMPLETE format.
-```
-
-Predefined agents can be referenced directly via `subagent_type: "scout-agent"`.
-
----
 
 ## Agent Context Injection
 
@@ -136,8 +64,7 @@ Agent(
   name: "scout-login-bug"
   description: "Investigate login bug root cause"
   subagent_type: general-purpose
-  mode: bypassPermissions
-  model: sonnet
+  # Inherit authorized permissions and model; use the actual host schema.
   prompt: |
     You are the Scout agent.
     First, read ~/.claude/skills/scout/SKILL.md and follow its instructions.
@@ -528,3 +455,10 @@ Constraints of Agent Teams (requires `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`):
 | Session resume limitation | In-process teammates are not restored by `/resume` |
 | Permissions fixed at spawn time | All teammates inherit the leader's permission mode |
 | Split-pane | Requires tmux or iTerm2 (VS Code Terminal not supported) |
+
+## Lifecycle
+
+- **failure:** F1: fixed generation directives and automatic permission bypass contradicted runtime-scoped authority.
+- **effect:** Authorization and completion gates remain while engine-specific details use the compatibility adapter.
+- **owner:** Nexus
+- **removal:** Retire adapter references only when an equivalent runtime contract preserves scoped permissions, mode gates and completion checks.

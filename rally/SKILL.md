@@ -65,8 +65,8 @@ Rally may be spawned by Nexus as an Agent (L3 delegation) when 4+ workers are ne
 
 ## Core Contract
 
-- Start with the smallest viable team — preferred size `3-5` teammates. Accuracy gains saturate past ~4 agents without structured topology, and unstructured coordination amplifies errors up to 17x versus ~4x under centralized hub-spoke. Never exceed `8` without explicit justification.
-- Target `5-6` tasks per teammate — productive without excessive context switching.
+- Start with the smallest viable team; `3-5` is a planning preference, not a minimum. Two independent work units can justify two workers. Never exceed `8` without explicit justification.
+- Assign only useful dependency-ready work to each teammate; do not manufacture tasks to satisfy a per-worker quota.
 - Use Rally only for true multi-session parallel work — investigation-only, single-agent, or sequential work stays with Nexus, Sherpa, or a direct specialist.
 - Complete the `ownership_map` before spawning: every writable file has one owner and `exclusive_write` never overlaps. This is the single most critical safety guarantee — violations cause silent merge corruption.
 - **Convergence detection**: when all teammates hit the same blocker, parallelism collapses — N agents attempting one fix produce N conflicting patches. Detect early and diversify task targets (different test suites, different compilation targets, or an oracle implementation to partition the space).
@@ -78,13 +78,12 @@ Rally may be spawned by Nexus as an Agent (L3 delegation) when 4+ workers are ne
 - Every teammate prompt includes team name and role, task, file ownership, constraints, context, completion criteria, and reporting instructions.
 - Verify build, tests, lint/type checks, and ownership compliance before reporting.
 - Run lightweight HARMONIZE after every session and journal user overrides.
-- **Budget guardrails**: set a maximum API cost per session. Agent Teams cost `3-4x` the tokens of a single session and subagents `1.5-2x`, with `1.5-7x` duplication from repeated context propagation. If parallel speedup does not justify the multiplier, prefer subagents or sequential execution; on hitting the limit, degrade gracefully (finish in-flight work, report partial results) rather than allowing unbounded spend.
+- **Budget guardrails**: set a maximum approved cost per session and compare useful parallel progress with coordination and retry cost. At the limit, finish safe in-flight work and report partial results; do not expand spend or permissions.
 - **Specialization over duplication**: assign distinct specialist roles rather than having every teammate do the same work — specialization outperforms duplication at scale.
 - **Fan-in timeout**: explicit deadlines per task; a teammate exceeding 2x expected duration is escalated or replaced, never waited on indefinitely.
 - **Verification-capacity guardrail**: parallelism multiplies generation but not the ability to verify it. Cap WIP by *unverified output in flight*, not teammate count — track generated-vs-verified gap, task age, rework rate, and owner coverage per risk class, and pause dispatch to drain highest-risk-first when the gap grows. Adding reviewers does not fix an untrusted test signal; repair the signal first. → `_common/EVIDENCE_LADDER.md` §5.
 - **Worktree isolation**: each teammate gets its own git worktree — a separate working directory and branch on shared history. The `ownership_map` is the logical constraint (who owns what); worktree isolation is the execution mechanism. TaskCreate, SendMessage, and worktree isolation are the three coordination primitives.
-- **Model mixing**: assign the cheaper tier to roles that do not need top-tier reasoning (boilerplate, test writing, formatting) and reserve the strong model for architectural decisions.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Rally; P2, P1 recommended).
+- **Model mixing**: inherit authorized runtime choices; specialize by capability only when supported and justified by the work. Current selection and permissions are in `_common/CLI_COMPATIBILITY.md`.
 
 ## Boundaries
 

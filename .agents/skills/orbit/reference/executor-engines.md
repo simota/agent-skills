@@ -28,9 +28,9 @@ Any executor must provide:
 | Requirement | Why |
 |-------------|-----|
 | non-interactive mode | Orbit has no TTY |
-| auto-approval or no prompts | loops cannot answer confirmations |
+| existing scoped grants; no unresolved prompts | loops cannot grant themselves permission |
 | CWD-based operation | runner changes into project root first |
-| standard exit codes | `0` success, non-zero failure |
+| process status plus actual completion evidence | `0` alone is not a passed DONE gate |
 | stdout/stderr output | runner logs through `tee` |
 | SIGTERM handling | `portable_timeout` terminates hung runs |
 
@@ -81,168 +81,69 @@ Orbit enforces timeouts at three independent layers:
 
 Note: `TOOL_TIMEOUT` is advisory — it requires executor-level support. Executors that do not support per-tool timeouts will rely on `ITER_TIMEOUT` as the effective boundary.
 
-Recommended prompt pattern:
-
-```bash
-EXEC_CMD='codex exec --full-auto -m gpt-5.6-terra "Read goal.md and complete the task described in it"'
-```
-
 ## Engine Quick Reference
 
-| Engine | Base command | Non-interactive flag | Auto-approve flag | Model override | Output format |
-|--------|--------------|----------------------|-------------------|----------------|---------------|
-| Codex | `codex exec` | default | `--full-auto` | `-m gpt-5.6-terra` (**mandatory** — latest generation, role-matched variant; build loops=terra, C3.0) | `--json` + `-o <path>` artifact. ⚠ Keep spawns **foreground** — detached-TTY silently crashes with no output (#19945, unfixed 0.137.0; `_common/CLI_COMPATIBILITY.md §9.3`) |
-| Antigravity | `agy` | `-p "prompt"` | `--dangerously-skip-permissions` | not supported (always default) | not supported (pin schema in prompt) |
-| Claude Code | `claude` | `-p "prompt"` | `--dangerously-skip-permissions` | `--model <model>` (default: auto) | `--output-format json` (capture via file redirect, not pipe — §9.3) |
+Select the executor through `_common/CLI_COMPATIBILITY.md`. Orbit's loop contract requires an installed, authorized, noninteractive interface and an independent DONE gate; it does not require permission bypass. Verify the effective model/effort, tool grants, output schema and timeout behavior before freezing `EXEC_CMD`.
 
-All engines use their default model when no model flag is specified. **Exception — Codex latest-generation mandate (user policy, `_common/CODEX_ORCHESTRATION.md` C3.0):** always spawn Codex with an explicit `-m gpt-5.6-<variant>` (build loops=terra, plan/design=sol, rote=luna); never rely on the default and never fall back to a previous generation. Tune depth within a variant via `model_reasoning_effort` (`-c model_reasoning_effort="..."`), not by changing the model. **Exception — agy model mandate (user policy, 2026-06-23):** always Gemini 3.7 Flash (High) (agy's default; never `/model`-switch or `--model`-override away to Pro/Claude/GPT-OSS). For Claude Code, keep the default unless there is a specific reason to override.
+| Engine | Documented headless entry | Orbit integration |
+|--------|---------------------------|-------------------|
+| Codex | `codex exec` | Inherit approved model and sandbox; inspect structured result plus changed files |
+| Antigravity | `agy -p` | Normal scoped grants; validate JSON/result, diagnostics and required artifacts |
+| Claude Code | `claude -p` | Preauthorized narrowly scoped tools; validate result and external DONE gate |
+| Gemini CLI / custom | Verify installed help | Do not assume agy flags or model IDs are interchangeable |
 
 ## Codex
 
 ### Recommended command
 
 ```bash
-EXEC_CMD='codex exec --full-auto -m gpt-5.6-terra "Read goal.md and complete the task described in it"'
+# Schematic, operator-authored configuration. Run only after approved grants are verified.
+EXEC_CMD='codex exec "Read goal.md and complete its authorized task; report actual checks and blockers"'
 ```
 
 ### Key flags
 
-| Flag | Required | Meaning |
-|------|----------|---------|
-| `--full-auto` | Yes | skip confirmations (workspace-write sandbox) |
-| `-s <sandbox>` | No | `read-only` / `workspace-write` / `danger-full-access` |
-| `-C <dir>` | No | override working directory |
-| `--add-dir <dir>` | No | grant write access to additional directory |
-| `--json` | No | JSONL structured output (exec mode) |
-| `--search` | No | enable live web search |
-| `--skip-git-repo-check` | No | allow non-git directories |
-| `--ephemeral` | No | skip disk persistence |
-
-Note: `--dangerously-skip-permissions` (`--dangerously-bypass-approvals-and-sandbox`) disables all safety checks including sandboxing. Use `--full-auto` for Orbit loops.
-
-**Codex latest-generation mandate (user policy, `_common/CODEX_ORCHESTRATION.md` C3.0):** always pass an explicit `-m gpt-5.6-<variant>` when spawning a Codex subagent (build loops=terra, plan/design=sol, rote=luna) — do not rely on the account default and never fall back to a previous generation. Adjust reasoning depth within a variant via `model_reasoning_effort` (`-c model_reasoning_effort="..."`), not by switching the model.
+Current model, effort, output, permission and workspace flags → `_common/CLI_COMPATIBILITY.md`. A loop cannot approve an action; a denied required action is a blocker, not a reason to disable the sandbox. Do not infer success from process exit alone.
 
 ### Cloud execution
 
-```bash
-codex cloud "Read goal.md and complete the task described in it" --attempts 2
-codex apply <TASK_ID>
-```
+Use only an explicitly selected, authorized cloud workflow supported by the installed CLI. Applying its patch remains subject to ownership, revision checks and the external DONE gate. Local skills/global settings may not transfer to a cloud worker.
 
 ## Antigravity (`agy`)
 
 ### Recommended command
 
 ```bash
-EXEC_CMD='agy -p "Read goal.md and complete the task described in it" --dangerously-skip-permissions'
+# Normal headless execution; required tools must already have scoped authorization.
+EXEC_CMD='agy -p "Read goal.md and complete its authorized task; report actual checks and blockers"'
 ```
 
 ### Key flags (verified against `agy --help` v1.0.0)
 
-| Flag | Required | Meaning |
-|------|----------|---------|
-| `-p, --print, --prompt "<str>"` | Yes | Run a single prompt non-interactively and print the response |
-| `--dangerously-skip-permissions` | Yes | Auto-approve all tool permission requests (Gemini CLI's `--yolo` is renamed to this) |
-| `--sandbox` | No | Run in a sandbox with terminal restrictions enabled |
-| `--add-dir <path>` | No | Add a directory to the workspace (repeatable) |
-| `-c, --continue` | No | Continue the most recent conversation |
-| `--conversation <id>` | No | Resume a previous conversation by ID |
-| `-i, --prompt-interactive "<str>"` | No | Run an initial prompt interactively and continue the session |
-| `--print-timeout <duration>` | No | Timeout for print mode wait (default 5m0s) |
-| `--log-file <path>` | No | Override CLI log file path |
-
-Subcommands: `changelog`, `help`, `install` (configure environment paths), `plugin` / `plugins` (list/install/uninstall/enable/disable/import/validate/link), `update`.
-
-**Not supported in Antigravity CLI** (vs Gemini CLI): `--yolo` (renamed to `--dangerously-skip-permissions`), `-e`/`--extensions` (use `agy plugin install` instead), `--approval-mode`, `--include-directories` (use `--add-dir`), `--all-files`, `--allowed-tools`, `--checkpointing`. ⚠ `--model` was on this removed-list in early agy (v1.0.2) but was **re-added in v1.0.5** (`agy --model "<name>"` + `agy models` subcommand, per multiple T3 sources) — see model mandate below.
-
-**Model — agy mandate (user policy, 2026-06-23)**: always **Gemini 3.7 Flash (High)** for every step/subagent (it is also agy's default, so "never switch away"); pin via `agy --model "Gemini 3.7 Flash (High)"` (v1.0.5+) or `/model` (TUI). Detail: `_common/CLI_COMPATIBILITY.md §4 ‡`. This OVERRIDES the generic "keep the default unless overridden" guidance above for the agy column.
-
-**`--output-format <fmt>` — UNRELIABLE (re-verified 2026-06-23, through v1.0.10)**: availability is inconsistent across installs ("flag not defined" reports) and no schema is documented; there is also no `-o` artifact flag. Do not depend on either. **stdout itself is also not a capture channel** — `agy -p` never flushes to non-TTY stdout even on success (issues #76 + #115, both OPEN, unfixed through v1.0.10). For any flow that must consume agy output, mandate an absolute-path artifact write + sentinel in the prompt and verify per `_common/CLI_COMPATIBILITY.md §9.2`; loop runners that verify goal completion via files/git state (not stdout) are unaffected.
-
-**File context injection**: always reference files in the prompt with `@<path>` syntax (e.g. `@docs/spec.md`). Without `@`, agy treats the path as plain text and delegates the read to an internal subagent that hits the 60s timeout cap (v1.0.2 changelog: "restricted the default 60-second interaction timeout specifically to subagents"), producing the `exit 0 + empty stdout` silent-failure pattern.
-
-**⚠ Pre-flight Notification (mandatory before first headless spawn)**: emit the canonical notification per `_common/CLI_COMPATIBILITY.md §9.1`. Recommends `/update-config` to allowlist the Bash pattern in `settings.json` `permissions.allow`. Required because the agy autonomous loop + Claude Code Bash spawn combine into a two-layer approval-gate bypass.
-
-Authentication: resolved from the Google login session (interactive `agy` launch). No `agy auth login/logout/status` subcommands — manage via the IDE/CLI launch flow.
-
-Context file: `GEMINI.md` in project root for persistent instructions (Antigravity CLI continues to read this file).
+Legacy heading, **not a current flag matrix**. Resolve current supported flags in `_common/CLI_COMPATIBILITY.md` §3–§5 and §9.2. Structured output and per-call model selectors are documented in current releases; PTY/file capture is conditional on a reproduced legacy defect. Never automatically install plugins, harvest another run's transcript or treat a soft-denied tool as completed work.
 
 ## Claude Code
 
 ### Recommended commands
 
-Full autonomy:
-
 ```bash
-EXEC_CMD='claude -p "Read goal.md and complete the task described in it" --dangerously-skip-permissions'
-```
-
-Restricted tools:
-
-```bash
-EXEC_CMD='claude -p "Read goal.md and complete the task described in it" --dangerously-skip-permissions --allowedTools "Read,Write,Edit,Bash,Glob,Grep"'
-```
-
-Budget-constrained:
-
-```bash
-EXEC_CMD='claude -p "Read goal.md and complete the task described in it" --dangerously-skip-permissions --max-budget-usd 5.00'
-```
-
-Turn-limited:
-
-```bash
-EXEC_CMD='claude -p "Read goal.md and complete the task described in it" --dangerously-skip-permissions --max-turns 10'
+# Normal print mode under existing scoped permissions, not an unrestricted loop.
+EXEC_CMD='claude -p "Read goal.md and complete its authorized task; report actual checks and blockers"'
 ```
 
 ### Key flags
 
-| Flag | Required | Meaning |
-|------|----------|---------|
-| `-p "prompt"` | Yes | non-interactive (print) mode |
-| `--dangerously-skip-permissions` | Yes | skip all permission prompts |
-| `--allowedTools "Tool1,Tool2"` | No | auto-approve specific tools only |
-| `--disallowedTools "Tool1"` | No | block specific tools |
-| `--max-budget-usd <amount>` | No | cost cap per session — ⚠ absent from the current headless docs (2026-06 re-verification); confirm via `claude --help` before relying on it in a loop contract |
-| `--max-turns <N>` | No | limit agent turns — ⚠ same caveat as `--max-budget-usd` |
-| `--output-format <fmt>` | No | `text` / `json` / `stream-json` — capture via **file redirect**, not pipe (64KB pipe truncation + stream-json block-buffering; `_common/CLI_COMPATIBILITY.md §9.3`) |
-| `--json-schema <schema>` | No | enforce structured output via JSON Schema |
-| `--effort <level>` | No | `low` / `medium` / `high` / `max` (Opus only) |
-| `--add-dir <dir>` | No | additional working directories |
-| `-w, --worktree` | No | execute in isolated git worktree |
-| `--append-system-prompt <text>` | No | append to default system prompt |
-| `--mcp-config <file>` | No | load MCP server configuration |
-| `--fallback-model <model>` | No | fallback on overload |
-
-Model is not specified by default — Claude Code uses its own default model. Override with `--model <model>` (aliases: `sonnet`, `opus`) only when needed.
-
-Note: `--permission-mode bypassPermissions` is deprecated. Use `--dangerously-skip-permissions` for non-interactive loops.
+Use the current compatibility adapter and installed help for structured capture, turn/budget limits and skill loading. A configured turn cap is not a monetary cap; a worktree is not a security sandbox. Keep the immutable Orbit contract and external loop limits even when native long-running execution is available.
 
 ## Engine Selection Guide
 
 ### Characteristics
 
-| Aspect | Codex | Gemini | Claude Code |
-|--------|-------|--------|-------------|
-| strength | code generation and refactoring | broad general execution | agentic execution and tool use |
-| speed | fast | moderate | moderate |
-| cost | low to medium | low to medium | medium to high |
-| autonomy | high | high | high |
-| sandbox | Seatbelt/Landlock | Docker/Podman | git worktree |
-| structured output | `--json` (JSONL) + `-o <path>` artifact | prompt-mandated artifact file per `CLI_COMPATIBILITY.md §9.2` (`--output-format json` unreliable; stdout never flushes to non-TTY) | `--output-format json/stream-json` |
-| budget control | — | — | `--max-budget-usd`, `--max-turns` |
-| special control | cloud exec, MCP server | approval modes, extensions | tool restrictions, effort levels, agents |
+Choose from verified tool access, model availability, structured results, isolated workspaces, resumability, measured task results and authorized cost. Do not assign universal speed/quality rankings to vendor names.
 
 ### Recommended Pairing
 
-| Loop tier | Recommended engine | Rationale |
-|-----------|--------------------|-----------|
-| Light | Codex | fastest turnaround |
-| Standard | Codex or Claude | balanced speed and capability |
-| Heavy | Claude or Codex | stronger reasoning for complex tasks |
-| Marathon | Claude with `--max-budget-usd` | predictable long-run cost |
-
-All pairings use each engine's default model. Override only when the default does not meet the task's requirements.
+Light/Standard/Heavy/Marathon retain their existing timeout and budget contracts. Select a supported stable executor that satisfies those contracts; no generation is pinned here. If a required capability is missing, report the precise blocker or use the explicitly authorized fallback.
 
 ## Custom Executor
 

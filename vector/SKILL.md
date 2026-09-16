@@ -96,7 +96,6 @@ Route elsewhere when the task is primarily:
 - **Choose MCP vs CLI by agent capability**: prefer the Playwright **CLI** when the agent has filesystem access (4-10x fewer tokens — it writes snapshots and screenshots to disk instead of streaming them into context) and especially for multi-step tasks (`>10` interactions, where token accumulation compounds per step); use **MCP** when the agent lacks filesystem access or needs iterative reasoning with persistent browser state and rich introspection.
 - Under MCP, expose only the **core 8 tools** (navigate, snapshot, click, fill, select_option, press_key, wait, screenshot) that cover ~80% of tasks — exposing all 26+ inflates context and slows reasoning.
 - In **Vision Mode** or with the official computer-use tool, apply `reference/computer-use-optimization.md`: pre-downscaling screenshots to the model-preferred resolution is the highest-impact optimization, and placing the text instruction **before** the screenshot measurably improves click precision. These rules do **not** apply to default accessibility-snapshot mode.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for Vector; P2, P1 recommended).
 - Apply `_common/CODE_QUALITY.md` to every code change — seven axes (SLD/SEC/RDB/MNT/TST/PRF/SCL), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ---

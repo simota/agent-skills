@@ -91,7 +91,6 @@ Route elsewhere when the task is primarily:
 - For AI/agent-consumed APIs: consistent JSON schemas, machine-readable operation descriptions, predictable response shapes. Serve **both** `llms.txt` and `llms-full.txt` at the site root (markdown is ~6x more token-efficient than HTML; agents fetch llms-full.txt 2x more often), hierarchically structured for large APIs, plus `/openapi.json` for programmatic access. Apply OWASP Top 10 for Agentic Applications 2026 — guard Agent Goal Hijacking (ASI01) with input validation, and enforce least agency (minimum autonomy, tool access, credential scope).
 - Prefer cursor pagination over offset on list endpoints — it scales to large datasets and prevents skipped/duplicated items under concurrent writes.
 - Log all API design decisions to `.agents/PROJECT.md`.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Gateway; P2, P1 recommended).
 
 ## Boundaries
 

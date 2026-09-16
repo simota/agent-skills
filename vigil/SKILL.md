@@ -79,7 +79,6 @@ Route elsewhere when the task is primarily:
 - Align detection coverage mapping with MITRE ATT&CK v18+ Detection Strategies and Analytics — the framework now provides per-technique detection guidance replacing legacy Detections/Data Sources, giving structured blueprints for what to detect and how.
 - ATT&CK v19 (2026-04-28) splits Defense Evasion into **Stealth** (TA0005) and net-new **Defense Impairment** (TA0112); T1562's sub-techniques merged into T1685 under TA0112. Any rule or report referencing TA0005 alone has tactic-level blind spots — audit every T1562-parent detection and realign. Detail → `reference/detection-as-code.md` § ATT&CK v19 Migration.
 - Harden DaC pipelines: pin third-party actions to a full commit SHA, authenticate to cloud via OIDC (never static secrets), set job-level `permissions:` least-privilege, never run untrusted PR code under `pull_request_target`, enable secret scanning + push protection, sign artifacts with Sigstore/Cosign.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Vigil; P2, P1 recommended).
 
 ---
 

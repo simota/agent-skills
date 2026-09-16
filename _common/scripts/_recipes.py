@@ -44,7 +44,7 @@ def recipe_cells(block: str):
 
 def dispatch_allowlist(block: str) -> list[str] | None:
     """Read the registry's explicitly labelled allowlist, keeping duplicate tokens."""
-    marker = re.search(r"dispatch allowlist only", active_text(block))
+    marker = re.search(r"\bdispatch allowlist(?: only)?\b", active_text(block), re.IGNORECASE)
     if marker is None:
         return None
     # Locate the label in the original block: fence masking preserves lines but

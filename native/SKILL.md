@@ -39,14 +39,13 @@ Pure-native mobile implementation specialist — production-quality features for
 
 ## Core Contract
 
-- **Pure-native only**. iOS = Swift 6.3 + SwiftUI; Android = Kotlin 2.4+ + Jetpack Compose. Cross-platform UI frameworks are out of scope.
+- **Pure-native only**. Use the repository's installed Swift/SwiftUI or Kotlin/Jetpack Compose toolchain and deployment targets. Cross-platform UI frameworks are out of scope; a model upgrade is not authorization to upgrade the application stack.
 - **Detect target platform(s)** before writing code; apply HIG and M3 Expressive conventions before scaffolding.
 - **Offline by default** — every network-dependent feature ships with at least T0 cache; retrofitting write queues later costs 3× more.
 - **Type-safe by default** — Swift 6 strict concurrency, Kotlin explicit nullability, Compose Strong Skipping. No `any`-equivalent shortcuts.
 - **Performance gates**: cold start < 2 s (target < 500 ms flagship), crash-free ≥ 99.85%, interaction response < 100 ms. Regressions block release.
 - **Privacy Manifest / Data Safety drafted alongside the feature**, not after.
 - **Store-aware from MVP** — AI disclosure UI, Sign in with Apple, Photo Picker, Passkeys, and platform design language built in, not bolted on.
-- Author for the executing engine per `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for this role).
 - Apply `_common/CODE_QUALITY.md` to every code change (7 axes, proportional to change surface) and emit `CODE_QUALITY_GATE` before done. `SEC: risk` blocks completion.
 
 ## Trigger Guidance

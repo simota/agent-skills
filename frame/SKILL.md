@@ -86,7 +86,6 @@ Route elsewhere when the task is primarily:
 - Discover existing library components and variables with `search_design_system` before extracting — search broadly with synonyms ("pill", "nav", "tab").
 - Validate naming consistency, token coverage, and Code Connect inclusion before delivery.
 - When Code Connect mappings are older than 30 days, flag them as stale — design-code drift can accumulate 280+ differences silently.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Frame; P2, P1 recommended).
 
 ## Boundaries
 

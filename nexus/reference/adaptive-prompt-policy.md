@@ -3,9 +3,9 @@
 **Purpose:** Auto-tailor every spawn prompt to the current **project** and **session** context, and self-reinforce within the session from observed outcomes — so inter-agent instructions get sharper as a session progresses, without any durable global rewrite.
 **Read when:** Composing a spawn prompt at an EXECUTE step, or deciding how directives adapt to project/session signals.
 
-> **Scope is the safety model.** This policy operates **only within the current session + project**. It is **ephemeral** (resets at the session/project boundary) and **reversible** (every adjustment is per-spawn; nothing irreversible happens). Because no durable global file is written, **no approval gate is required** — this runs automatically in all modes. Durable, cross-project template rewrites are explicitly **out of scope** here; that path stays gated (offline `tune` → Darwin promotion → Guardian commit, see §6).
+> **Scope is the safety model.** This policy operates **only within the current session + project**. It is **ephemeral** (resets at the session/project boundary) and **reversible** (every adjustment is per-spawn; nothing irreversible happens). Prompt-only tuning within the existing grant requires no new approval; cost, permission and mode gates still apply. Durable, cross-project template rewrites are explicitly **out of scope** here; that path stays gated (offline `tune` → Darwin promotion → Guardian commit, see §6).
 
-> **Honest mechanism.** This is **evidence-accumulating, case-based adaptation** — not neural RL. The hub cannot train weights mid-session. "Reinforcement" means: a journaled within-session record of `context-features → directive-choice → outcome`, consulted to bias the next spawn's directive selection. Bounded, **corrective (bidirectional)** heuristics over a vetted directive library, never free-form prompt invention — every adjustment maps to an existing structured directive field (envelope / effort / tool-use / thinking / which references), never raw prepended text.
+> **Honest mechanism.** This is **evidence-accumulating, case-based adaptation** — not neural RL. The hub cannot train weights mid-session. "Reinforcement" means: a journaled within-session record of `context-features → directive-choice → outcome`, consulted to bias the next spawn's directive selection. Bounded, **corrective (bidirectional)** heuristics over a vetted directive library, never free-form prompt invention — every adjustment maps to an existing structured directive field (envelope / authorized effort / tool-use / which references), never raw prepended text.
 
 ---
 
@@ -17,13 +17,13 @@
 ③ ADAPTIVE ASSEMBLY — every EXECUTE step: base template ⊕ ① ⊕ ② → the spawn prompt
 ```
 
-> **Boundary vs `specify-phase.md`.** This policy tunes **directive fields** (envelope, effort, tool-use, thinking, which references) and never writes task content. The instruction's **content** — goal, acceptance criteria, prohibited outcomes, what stays delegated — is set once at the gated `SPECIFY` phase and copied verbatim into every `_AGENT_CONTEXT`. Order is fixed: Specified Brief first, directive fields layered on after. They occupy disjoint fields and must never overwrite each other.
+> **Boundary vs `specify-phase.md`.** This policy tunes **directive fields** (envelope, authorized effort, tool-use, which references) and never writes task content. The instruction's **content** — goal, acceptance criteria, prohibited outcomes, what stays delegated — is set once at the gated `SPECIFY` phase and copied verbatim into every `_AGENT_CONTEXT`. Order is fixed: Specified Brief first, directive fields layered on after. They occupy disjoint fields and must never overwrite each other.
 
 Layer ③ is the only thing that touches a spawn; ① and ② are the inputs it reads. Layer ① is built during **Orchestrator Detection** (before the first spawn) and cached; ② updates at each step boundary; ③ runs immediately before each `Agent(...)` spawn.
 
 ### Applicability — when NOT to apply
 
-Profile assembly + ledger upkeep is meta-overhead; applying it to trivial work violates the minimum-chain principle (Core Rule #1; "40% of agentic projects fail on cost/complexity"). **Gate:**
+Profile assembly + ledger upkeep is meta-overhead; applying it to trivial work violates the minimum-chain principle (Core Rule #1). **Gate:**
 - **Skip** for a single-spawn or trivial run — use the base template directly (the Project Profile's hub-engine defaults still apply, since those are free and load-bearing for correctness; the Session Ledger does not spin up).
 - **Apply** when the chain has ≥ 3 spawns, runs a loop recipe (`converge`/`kaizen`/`apex`/`migrate`), or the same agent is spawned more than once — i.e. when there is enough repetition for within-session reinforcement to pay back its overhead.
 
@@ -38,7 +38,7 @@ Assemble at Orchestrator Detection (before the first spawn) and cache for the se
 | `.agents/PROJECT.md` | project phase, goals, constraints | which references to front-load; tone |
 | repo stack (lang / framework) | TS-strict / dynamic / native | tool-use directive emphasis (type rigor, test-first) |
 | `CLAUDE.md` / `AGENTS.md` / `GEMINI.md` | conventions, language, style | output language, naming, commit style passed to spawns |
-| hub engine (Opus 5 / Fable 5 / Codex / agy) | authoring protocol | **Opus 5 → P1 + P2 envelope + P8 scope bound always, P3/P5 by scale, and P9 forbids any self-check wording; Fable 5 → lighter prompt + no-reasoning-reproduction.** Both default to `high` effort (per `hub-authoring.md`) |
+| host runtime and advertised capabilities | adapter and authorized model/effort | Shared P-principles and mandatory outcome/authority fields; CLI-specific syntax from `_common/CLI_COMPATIBILITY.md` |
 | domain affinity (Game/SaaS/…) | task domain | default add-on agents, envelope sizing |
 | repo size / file count | scope | base output envelope (small repo → tighter) |
 
@@ -59,7 +59,7 @@ Within-session signals → next-spawn adjustment. **A directive only flips on a 
 | Observed this session | Adjustment to subsequent spawns |
 |-----------------------|----------------------------------|
 | Output repeatedly overran its envelope | Tighten the envelope for that agent / similar tasks |
-| Step failed VERIFY (or `BLOCKED`/`FAILED`) | Raise effort, add context delta, add a thinking directive next attempt |
+| Step failed VERIFY (or `BLOCKED`/`FAILED`) | Diagnose the evidence, then supply the smallest missing context or corrected instruction; change effort only within the authorized runtime and budget |
 | Steps repeatedly passed VERIFY cheaply | Loosen — trim directives for token economy (corrective, bidirectional) |
 | **User issued an explicit correction turn** (style, scope, wrong assumption) | Map it to a **structured constraint** on subsequent same-agent spawns (envelope / tone / scope / forbidden-actions field) — never prepend the raw correction text. Detected only from an explicit user turn, not inferred. |
 | Token budget pressure rising | Trim which references are loaded; shrink envelopes; switch context-strategy toward `reset` |
@@ -80,10 +80,10 @@ spawn_prompt = base template (Agent Spawn Template)
 ```
 
 **Bounded to vetted ranges — the assembly is selection, not invention:**
-- Envelope length, effort tier, tool-use / thinking directives, and the reference subset are chosen from the libraries in `hub-authoring.md` / `OPUS_5_AUTHORING.md`. The policy **selects and dials within** those; it never authors a novel unsafe directive.
+- Output limits, supported effort settings, tool constraints, and the reference subset are chosen from the libraries in `hub-authoring.md` / `OPUS_5_AUTHORING.md`. The policy **selects and dials within** those; it never authors a novel unsafe directive.
 - **Never deletes a behavior or safety rule, acceptance criterion, or output-contract field** (Core Rule #4 — preserve behavior before style). Adaptation only *adds/sizes* guidance; it cannot strip the spawn's required structure.
-- **Two directives are floors, not dials.** The P2 length envelope and the P8 scope bound are present on every Opus 5 spawn and can be *sized* but never dropped — Opus 5 over-produces and widens scope by default, so removing them is not a token optimization, it is a regression. Likewise the P9 prohibition is absolute: the policy may never add "verify / double-check / re-check your work" wording as a response to a VERIFY failure (raise effort or tighten the scope bound instead; independent verification is a *chain* step, not a prompt field).
-- **Honors the hub-authoring protocol**: Opus 5 → P1/P2/P8 always plus P3/P5 by scale; Fable 5 → lighter prompts, and the **no-reasoning-reproduction rule** (any "echo/show/transcribe your reasoning" wording is forbidden — it trips `refusal`). Adjustments resolve through the **per-engine mapping** in `hub-authoring.md` — e.g. "raise effort" = a higher reasoning tier on Claude Code but `model_reasoning_effort` on Codex (the model never downgrades there), not a model swap.
+- **Outcome and authority controls are floors, not dials.** Size the output envelope and scope to the task; preserve frozen ACs, prohibited outcomes and completion criteria. A failed check needs diagnosis and a targeted fix, not a generic self-check instruction or automatic effort escalation.
+- **Honor `hub-authoring.md`.** Adapt supported runtime settings within the existing grant; never demand private reasoning, bypass refusal, or weaken independent verification. Concrete tests remain required even when generic self-review prose is removed.
 
 The tuning shapes the spawn prompt but does **not** bypass the active Mode's confirmations (in `INTERACTIVE`/`GUIDED` the step still stops where the Mode requires; only the prompt *content* is adapted, not the gating). It is **internal but never silent**: every adjustment that differs from the base template emits a **Tuning Trace** (§9) so the user can always see what was changed and why.
 
@@ -122,7 +122,7 @@ Each guard is defined where it operates; this is the index of what is guarded an
 - **G6 Adaptation masking a real problem** — persistent VERIFY-fail / BLOCKED / FAILED escalates through normal error handling instead of being re-tuned (§3).
 - **G7 Stripping required structure** — the hard rule that behavior/safety/AC/output-contract fields are never deleted (§4).
 - **G8 Cross-session contamination** — ephemeral by default; warm-start pre-seeds Layer ① only (§5).
-- **G9 Unsafe directive on Fable 5** — the no-reasoning-reproduction rule enforced at assembly (§4).
+- **G9 Unsafe directive** — reject private-reasoning extraction and any directive that widens authority (§4).
 
 ---
 

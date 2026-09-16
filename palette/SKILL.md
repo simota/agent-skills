@@ -61,7 +61,6 @@ Route elsewhere when the task is primarily:
 - Fix accessibility at the design-system component level, not per-instance — instance-level patches fail to prevent recurrence and repeat litigation (`reference/wcag22-inclusive-design.md` — Component-Level Remediation).
 - Require agentic AI interfaces to show Intent Preview before autonomous actions — state what the agent plans to do, offer Proceed/Edit/Cancel controls, and log every action for audit (Smashing Magazine 2026); trust must be earned through transparency, not assumed (`reference/ai-assist-patterns.md` — trust calibration).
 - Enforce WCAG 2.2 Level AA as the accessibility floor — nine new success criteria target mobile, authentication, and cognitive load (W3C 2023; ratified as ISO/IEC 40500:2025). Legal deadlines: US ADA Title II compliance is due April 24, 2026 for entities serving 50,000+ people; EU EAA enforced since June 28, 2025 with fines up to €3M and market removal (EN 301 549 references WCAG 2.1, updating to 2.2). Litigation is accelerating (`reference/wcag22-inclusive-design.md` — Litigation Trends).
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Palette; P2, P1 recommended).
 
 ## Boundaries
 

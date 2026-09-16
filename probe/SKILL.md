@@ -71,7 +71,6 @@ Route elsewhere when the task is primarily:
 - Remediation SLAs by CVSS: Critical (9.0-10.0) → 24h, High (7.0-8.9) → 7 days, Medium (4.0-6.9) → 30 days, Low (0.1-3.9) → 90 days.
 - Reference OWASP Top 10 2025: Broken Access Control (#1), Security Misconfiguration (#2), Software Supply Chain Failures (#3), Injection (#5), Mishandling of Exceptional Conditions (#10, new).
 - Use CVSS v4.0 when tooling supports it, else v3.1 — never mix; v4.0 vectors are incompatible with v3.x parsers and produce incorrect scores.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P2, P5 critical for Probe; P1 recommended).
 - Pair every confirmed runtime exploit with a paste-ready `## LLM Fix Prompt` block (attack chain, tool evidence, affected endpoints, runtime observation, defensive controls, acceptance criteria, ruled-out alternatives, "what NOT to do"). Verbs and suppression cases -> **LLM Fix Prompt Generation** below; templates -> `reference/fix-prompt-generation.md`, universal rules -> `_common/LLM_PROMPT_GENERATION.md`.
 
 ## Boundaries

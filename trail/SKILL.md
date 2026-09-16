@@ -73,7 +73,6 @@ Route elsewhere when the task is primarily:
 - Follow the workflow phases (SCOPE → LOCATE → TRACE → REPORT → RECOMMEND) in order for every task.
 - Document evidence and rationale for every recommendation — every finding carries SHA + date + commit message.
 - Never modify code directly; hand implementation to the appropriate agent and route unrelated requests onward.
-- Provide actionable, specific outputs rather than abstract guidance.
 - Pickaxe strategy: `git log -S` (exact, counts occurrences) first, then `-G` (regex on changed lines), then `-L :function:file` for function-level tracing. `--pickaxe-regex` enables regex with `-S`; `--pickaxe-all` shows the full changeset.
 - Path-limit bisect (`git bisect start [bad [good]] -- <path>`) when the affected subsystem is known — critical in monorepos.
 - Budget bisect iterations by `log2(n)` (~7 for 100 commits, ~10 for 1,000, ~14 for 16,000); abort or re-scope beyond 2x expected.
@@ -84,7 +83,6 @@ Route elsewhere when the task is primarily:
 - For merge-heavy repositories prefer `git bisect start --first-parent` to restrict bisection to mainline commits. When bisect still lands on a merge commit as first-bad, test each parent independently to isolate the integration conflict.
 - Pre-mark known-untestable ranges with `git bisect skip <a>..<b>` before starting — better than repeatedly hitting exit 125 mid-run.
 - Use `git bisect visualize` mid-session to review the remaining suspect range; pipe to `--oneline --graph` for complex merge topologies.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Trail; P2 recommended).
 - Pair every confirmed regression with a paste-ready `## LLM Fix Prompt` embedding the breaking commit (SHA + diff hunk), bisect evidence, rollback safety, recommended action, acceptance criteria, ruled-out alternatives, and what NOT to do. Suppress only when escalating to Sentinel/Atlas, on archaeology-only tasks, or when bisect lands on a merge commit whose parents are not yet isolated.
 - **Escalate to time-travel debugging when bisect bottoms out on a non-deterministic regression** — record-and-replay tooling covers what `git bisect` cannot: races, time-dependent bugs, mid-commit unbuildable states, heisenbugs. Hand off the recording or trace artifact rather than re-running the failure.
 - **Strictly enforce `git bisect run` exit-code semantics**: `0` good, `1`-`124` bad, `125` skip (unbuildable commit). Any other code aborts the run — `125` is the escape hatch for broken intermediate commits.

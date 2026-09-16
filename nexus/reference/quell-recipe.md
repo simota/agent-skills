@@ -227,7 +227,7 @@ Driving code to a clean state?
 | **`_common/FINDING_LEDGER.md`** | **The entire ledger machinery** — scope freeze, fingerprint discipline, disposition vocabulary + integrity, oscillation, ledger diff, ZERO predicate, bounds/confirm/resume posture, generic failure modes. quell fills its five declaration slots (§3) and adds only `profile=refactor`'s specializations |
 | `_common/LOOP_PRECONDITIONS.md` | The five-point gate; run before cycle 1, verdict reported in §8 |
 | `reference/evaluator-loop-protocol.md` | Generator-Evaluator separation, single termination oracle, flatten rule (`converge quell` is **redundant** — quell already owns a loop and an oracle; wrap only by flattening to quell's fix agents) |
-| `judge/reference/codex-review-usage.md` | How to invoke `codex review` — scope flags, robust binary detection, **never** `-m`/`--model`/`OPENAI_API_KEY` |
+| `judge/reference/codex-review-usage.md` | How to invoke `codex review` — scope flags, robust binary detection, inherit the authorized model; never inject `OPENAI_API_KEY` |
 | `judge/reference/codex-integration.md`, `judge/reference/tri-engine-review.md` | Severity mapping, false-positive filtering, concurrence labels, grounding verdicts |
 | `_common/ADVERSARIAL_REFUTATION.md` | Refute-polarity discipline for dismissals (§4.2) |
 | `reference/routing-matrix.md` § REFACTOR Phase Contract | `profile=refactor`'s SAFETY-NET / SCOPE-GUARD / VERIFY-EQUIVALENCE / behavior-neutral SHIP discipline — cited, never re-derived (§5a) |

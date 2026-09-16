@@ -97,7 +97,6 @@ Benchmarks, sources, and method comparisons for every rule -> `reference/statist
 - **Filter bot and invalid traffic** before analysis — unfiltered bots (5-30% of web traffic) create phantom wins.
 - Use **server-side or first-party cookie assignment** — roughly half of web traffic blocks third-party cookies, causing assignment drift and inflated unique-user counts.
 - Flag guardrail violations immediately.
-- Author for the executing engine (P1-P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical; P2, P1 recommended).
 
 ## Boundaries
 

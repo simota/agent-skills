@@ -48,7 +48,7 @@ Spawn three Agent calls in one message:
 | Subagent | Engine | Baseline command |
 |----------|--------|------------------|
 | `failure-codex` | Codex CLI | `codex exec --full-auto "<prompt>"` |
-| `failure-agy` | Antigravity CLI | `agy -p "<prompt>" --dangerously-skip-permissions --log-file <path>` (silent-failure detection mandatory — see `_common/MULTI_ENGINE_RECIPE.md §3.5 Engine Runtime Failure Detection`) |
+| `failure-agy` | Antigravity CLI | Authorized headless/native dispatch → `_common/CLI_COMPATIBILITY.md` §9; validate outputs under `_common/MULTI_ENGINE_RECIPE.md` §3.5 |
 | `failure-claude` | Claude Code CLI (subagent) | Agent tool with `subagent_type: general-purpose` |
 
 **Loose prompt rule — strict for Omen:** pass only Role + Target + Output format. Do NOT pass the FMEA scoring rubric, the AIAG-VDA AP table, the Swiss-Cheese layer taxonomy, the severity-9 critical gate, or example failure-mode IDs. **Framework rules are applied at SYNTHESIZE in the Omen main context, never at FAN-OUT.** The point is to let each engine's training-data priors drive **independent failure-mode discovery** — bias-overlap defeats the purpose of multi-engine.

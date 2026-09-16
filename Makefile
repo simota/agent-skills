@@ -17,7 +17,7 @@
 
 REPO       := $(CURDIR)
 CLAUDE_DIR := $(HOME)/.claude/skills
-CODEX_DIR  := $(HOME)/.codex/skills
+CODEX_DIR  := $(HOME)/.agents/skills
 AGY_DIR    := $(HOME)/.gemini/antigravity-cli/skills
 export REPO CLAUDE_DIR CODEX_DIR AGY_DIR
 
@@ -47,6 +47,11 @@ help:
 # the only removals are links into this repo whose target the repo has dropped.
 define do_link
 set -e; r=$$(cd "$$REPO" && pwd -P); t="$${$(1)}"; p=$$(dirname "$$t"); \
+if [ ! -d "$$p" ] && [ "$(1)" = "CODEX_DIR" ] && [ "$$t" = "$$HOME/.agents/skills" ] && [ -d "$$HOME/.codex" ]; then \
+  h=$$(cd "$$HOME" && pwd -P); \
+  case "$$h/.agents" in "$$r"|"$$r"/*) echo "ERROR   $$t is inside this repo — refusing to create skill root"; exit 1;; esac; \
+  mkdir -p "$$p"; \
+fi; \
 if [ ! -d "$$p" ]; then echo "skip    $$t — $$p does not exist"; exit 0; fi; \
 p=$$(cd "$$p" && pwd -P); \
 case "$$p/$$(basename "$$t")" in "$$r"|"$$r"/*) \

@@ -82,7 +82,7 @@ Spawn **one Agent call per AVAILABLE engine in a single message** so they run co
 |----------|--------|-----------------|-----------|------------------|
 | `review-codex` | Codex CLI | Always (Codex required for judge) | `codex-review-usage.md` | `codex review --base <branch> "<focused prompt>"` |
 | `review-claude` | Claude Code CLI | Always (host engine) | `claude-review-usage.md` | `claude -p "<focused prompt>" --permission-mode plan` |
-| `review-agy` | Antigravity CLI | **Only when AVAILABLE at PREFLIGHT** | `antigravity-review-usage.md` | `agy -p "<focused prompt>" --dangerously-skip-permissions --log-file <tmp>` (silent-failure detection per `antigravity-review-usage.md` § Silent Failure Detection) |
+| `review-agy` | Antigravity CLI | **Only when AVAILABLE at PREFLIGHT** | `antigravity-review-usage.md` | Authorized headless/native dispatch → `_common/CLI_COMPATIBILITY.md` §9; validate outputs under `_common/MULTI_ENGINE_RECIPE.md` §3.5 |
 
 Each subagent prompt must require structured JSON output so integration is deterministic:
 

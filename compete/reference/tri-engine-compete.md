@@ -46,7 +46,7 @@ Spawn **three Agent calls in a single message** for genuine parallel execution.
 | Subagent | Engine | Baseline command |
 |----------|--------|------------------|
 | `compete-codex` | Codex CLI | `codex exec --full-auto "<prompt>"` |
-| `compete-agy` | Antigravity CLI | `agy -p "<prompt>" --dangerously-skip-permissions --log-file <path>` (silent-failure detection mandatory — see `_common/MULTI_ENGINE_RECIPE.md §3.5 Engine Runtime Failure Detection`) |
+| `compete-agy` | Antigravity CLI | Authorized headless/native dispatch → `_common/CLI_COMPATIBILITY.md` §9; validate outputs under `_common/MULTI_ENGINE_RECIPE.md` §3.5 |
 | `compete-claude` | Claude Code CLI (subagent) | Agent tool with `subagent_type: general-purpose` |
 
 **Loose prompt rule**: pass only Role + Target + Output format. Do NOT pass Compete's analysis templates, 7 Powers framework, SWOT taxonomies, or positioning-map axes — those apply in SYNTHESIZE. The whole point is to let each engine's training-data priors drive divergent competitor discovery.

@@ -167,7 +167,6 @@ CAPTURE → MODEL → VALIDATE → REFINE → HANDOFF
 
 ### Authoring Defaults
 
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Weave; P2, P1 recommended).
 
 ---
 

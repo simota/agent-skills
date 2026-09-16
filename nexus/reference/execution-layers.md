@@ -1,78 +1,51 @@
 # Execution Layers — Per-CLI Detail
 
-**Purpose:** Full per-CLI prereqs, runtime notes, and silent-failure mitigations for Nexus spawn paths.
-
-**Read when:** Authoring a spawn against Codex CLI (`spawn_agent`) or Antigravity (`agy`), or debugging a fall-back to internal execution.
-
-**Source-of-truth for CLI compatibility:** `_common/CLI_COMPATIBILITY.md` (this file expands the Nexus-facing slice).
-
----
+Read when binding a spawn interface or diagnosing a fallback. `_common/CLI_COMPATIBILITY.md` owns current commands, model availability, flags, paths and version-specific workarounds. `reference/hub-authoring.md` owns the outcome brief.
 
 ## Claude Code
 
-| Layer | Method | When | API |
-|-------|--------|------|-----|
-| **L1: Direct Spawn** | Agent tool (foreground) | 1-4 step sequential chains | `Agent(prompt, mode: bypassPermissions)` |
-| **L2: Parallel Spawn** | Agent tool (background) | 2-3 independent branches | `Agent(prompt, run_in_background: true)` |
-| **L3: Rally Delegation** | Spawn Rally as Agent | 4+ workers, complex ownership | `Agent(prompt="You are Rally...")` |
-| **L3-alt: Agent Teams** | TeammateTool (peer-to-peer) | Shared task list, independent contexts | Claude Agent SDK `team_name` parameter |
+| Layer | Purpose | Preconditions |
+|-------|---------|---------------|
+| L1: Direct Spawn | One bounded specialist session | Advertised agent tool and allowed task effects |
+| L2: Parallel Spawn | Independent branches, then join | Supported concurrency, exclusive writers, available budget |
+| L3: Rally Delegation | Complex ownership/team coordination | Actual team/subagent support; justified coordination cost |
 
-**Prereq**: fall back only if the `Agent` tool is absent from the tool list (normally always available).
-
----
+Use the runtime's actual schemas, not pseudocode copied from older documentation. Preserve inherited permissions. A worktree prevents direct write collisions but does not prove compatible APIs, schemas or aggregate constraints. Join required workers and verify the integrated revision.
 
 ## Codex CLI
 
-| Layer | Method | When | API |
-|-------|--------|------|-----|
-| **L1: Direct Spawn** | `spawn_agent` → `wait_agent` | 1-4 step sequential chains | `spawn_agent(prompt)` → `wait_agent(id)` |
-| **L2: Parallel Spawn** | Multiple `spawn_agent` → `wait_agent` all | 2-3 independent branches | `spawn_agent` × N → `wait_agent` × N |
-| **L3: Rally Delegation** | `spawn_agent` with Rally prompt | 4+ workers, complex ownership | `spawn_agent(prompt="You are Rally...")` |
+### Prerequisites
 
-**Subagent Tools:** `spawn_agent`, `send_input`, `wait_agent`, `resume_agent`, `close_agent`
-**Prereqs:** apply `_common/CODEX_ORCHESTRATION.md` C1 against the active runtime. Confirm advertised spawn capability, effective concurrent-agent capacity, and any nesting limit before dispatch. Current local builds use `agents.enabled` and `agents.max_concurrent_threads_per_session`; hosted sessions may expose these constraints directly.
+Apply `_common/CODEX_ORCHESTRATION.md` C1/C5. Discover advertised tools and effective capacity/nesting limits. A lazily exposed tool requires supported discovery; a guessed `spawn_agent`/`wait_agent` call is not a capability probe.
 
-On builds that enforce `agents.max_depth`, require `current_depth + 1 <= max_depth`, not an unconditional `max_depth >= 2`. Root depth `0` can spawn with the legacy default `1`; only an already nested hub needs a higher limit. If a tool is omitted from the short inventory, discover the advertised interface per C5 before declaring it unavailable. Record the concrete runtime blocker for any internal fallback.
+### Execution layers
 
----
+L1 is a single native subagent. L2 launches independent work before joining required results. L3 uses supported resume/team coordination when the task requires it. Tool names, parameter shapes and limits come from the active host. A shell-launched CLI is an alternative only when installed, authorized and appropriate to the ownership boundary.
 
-## Antigravity CLI (`agy`)
+### Runtime notes
 
-| Layer | Method | When | API |
-|-------|--------|------|-----|
-| **L1: Direct Spawn** | `/agent <name> "<task>"` (TUI) or `agy -p "<prompt>"` (one-shot) | 1-4 step sequential chains | TUI: `/agent <slug> "<prompt>"` / Headless: `agy -p "<prompt>" --dangerously-skip-permissions` (use `@<path>` to inject file context; **deliverable captured via prompt-mandated artifact file, NOT stdout** — see § agy headless capture below + `_common/CLI_COMPATIBILITY.md §9.2`) |
-| **L2: Parallel Spawn** | Multiple `/agent` invocations (async, each own context) | 2-3 independent branches | Aggregate via `/tasks`; no explicit `wait` primitive |
-| **L3: Role-Driven Team** | Plugin-installed team pack (`oh-my-antigravity` etc. via `agy plugin install <url>`) | 4+ workers, complex ownership | Community pattern — `/oma:taskboard` priority queue + approval gates (no Rally equivalent documented) |
+Inherit the authorized model, approval and sandbox settings. Validate result status, outputs, stderr and required effects. Current structured output is preferred; historical detached-terminal defects require installed-version reproduction before imposing foreground-only execution. Never convert missing output into a clean review.
 
-**Subagent Tools:** `/agent`, `/tasks`, `/resume`, `/rewind`, `/btw` (read-only side question), `/schedule`, `/goal` (experimental flag status unverified)
-**Config:** Subagent depth-cap key name **unverified** — community guidance says "cap subagent depth" but no JSON/TOML key was found in official docs. Treat as runtime/budget concern via `/usage` polling, not as a config switch.
-**Skill root:** `~/.gemini/antigravity-cli/skills/` (global) or `<repo>/.agents/skills/` (workspace, preferred).
-**Permission model:** `request-review` (default — pause for review) / `proceed-in-sandbox` (containerized auto) / `always-proceed` (host auto, production-forbidden) / `strict` (read-only).
+## Antigravity CLI (agy)
 
-**Prereqs (must hold or internal-fall-back — distinct from Codex):**
-1. **`agy` binary is on PATH** — verify with `which agy && agy --version`.
-2. **Main TUI session** — agy launches `/agent` only as a TUI slash command. If Nexus itself runs as a customAgent (its own `agent.json` exists under `~/.gemini/antigravity-cli/brain/<session>/.agents/agents/<name>/`), nested spawn is impossible unless `customAgent.toolNames` permits a `/agent` equivalent.
-3. **Headless (`agy -p`) requires OS-level process isolation** — TUI slash commands unavailable. Substitute with `Bash("agy -p '<spawn prompt>' --dangerously-skip-permissions")` to run a separate agy process. The `--dangerously-skip-permissions` flag is **required for autonomous Nexus execution** because headless `agy -p` cannot interactively respond to `request-review` prompts and will hang or fail otherwise. Treat this flag like Claude Code's `bypassPermissions` mode — never use it in production / untrusted-workspace contexts; restrict to ephemeral sandboxes, CI runners, or explicitly-authorized dev environments.
-4. **No tool named `spawn_agent` exists in agy** — the correct fallback log form is "`/agent` slash command unavailable (reason: <not in TUI main session | toolNames does not permit | headless mode without --prompt-interactive>)".
+### Prerequisites
 
-**Runtime notes**: (0) **Model mandate** — every step and every spawned subagent runs Gemini 3.7 Flash (High); pin before spawning. Canonical: `_common/CLI_COMPATIBILITY.md §4 ‡`. (0.5) **Never combine `--sandbox` with `--dangerously-skip-permissions`** (issue #36, OPEN — the skip flag auto-approves the agent's `bypassSandbox` escape, defeating the sandbox); rely on host-level isolation (ephemeral VM/CI) for containment. (1) Model is switched via `/model` in TUI before spawning, not per-agent — design recipes around the active model or instruct the user to switch. (2) `/usage` does not update live — for long chains (>20 min) prefer `agy -p` one-shot triggered externally over TUI-resident `/agent` to avoid mid-run quota cliffs. (3) Permission mode defaults to `request-review`; recipes assuming autonomy must instruct the user to switch to `proceed-in-sandbox` (TUI) or pass `--dangerously-skip-permissions` (headless `agy -p`) — never use `always-proceed` or unrestricted skip in production. The headless flag is the only way to bypass the interactive review prompt that would otherwise stall a Nexus-orchestrated agy spawn. (4) `request-review` is reported as occasionally ignored for file edits — treat as runtime risk, not configuration guarantee.
+Apply `_common/AGY_ORCHESTRATION.md`. Verify installed CLI help, authorized account/model and the task's required capabilities. TUI commands are not automatically shell commands or tools available in a custom subagent.
 
-**⚠ MANDATORY Pre-flight Notification**: before the first `agy -p ... --dangerously-skip-permissions` spawn of a session, Nexus MUST emit the Pre-flight Notification defined in `_common/CLI_COMPATIBILITY.md §9.1`. Rationale: spawning agy headless from Claude Code's `Bash` tool creates a two-layer autonomous loop that bypasses both sides' approval gates. The notification recommends running the `update-config` skill once to allowlist the specific Bash pattern in `settings.json permissions.allow`. The notification fires in AUTORUN / AUTORUN_FULL too (informational, not a gate). See §9.1 for canonical template.
+### Execution layers
 
-### agy headless capture — the artifact decides success
+Use advertised native agents or the documented headless interface. Prefer structured results when available; parallelize only isolated calls within budget and join them before synthesis. Do not assume preview teamwork is needed, or enable it automatically.
 
-**Neither stdout nor the exit code is a success signal.** agy needs a real pty (`python3 pty.spawn`; `script -q /dev/null` fails on socket stdin) and never flushes non-TTY stdout, so `exit 0/124` with empty stdout is also what a *successful* run looks like. The prompt-mandated absolute-path artifact plus its `<<<END_OF_OUTPUT>>>` sentinel is the only thing that decides whether a spawn succeeded; inject inputs with `@<path>` (a bare path is read by an internal subagent that dies at the 60s cap).
+### Runtime notes
 
-Canonical spawn block, verification chain, transcript/log fallbacks, and the typed-retry rule: **`_common/CLI_COMPATIBILITY.md §9.2`** — copy it, do not re-derive. Per-pitfall mechanisms (#76/#115 flush, 60s subagent cap, `--print-timeout` default, inconsistent `--output-format json`, quota/OAuth) are tabled in `_common/CLI_COMPATIBILITY.md §9`; failure-detection contract in `_common/MULTI_ENGINE_RECIPE.md §3.5`.
+`_common/CLI_COMPATIBILITY.md` §9.1–§9.2 defines permissions and result handling. Normal headless execution does **not** require permission bypass or a PTY. Capture exit status, structured result, stderr and declared artifacts. Denied required tools, timeouts and missing outputs remain incomplete even when the process exits zero.
 
-**Cross-CLI mapping:** see `_common/CLI_COMPATIBILITY.md`.
+A reproducible legacy stdout/TTY defect may justify version-scoped PTY or explicit file output. Associate fallback artifacts with the exact current run; never harvest an unrelated “latest transcript,” accept a stale file or swallow a process failure. Remove the workaround once its reproducer passes normally.
 
+### Pre-flight Notification
 
-## Per-CLI Spawn API + Key Rules (SKILL.md excerpt)
+Notify the user before a material new effect or cost; obtain approval where the contract requires it. Informational narration does not authorize a bypass. Never recommend global allowlisting or change user settings merely to make spawning noninteractive.
 
-Per-CLI spawn API at a glance — Claude Code `Agent` (L1 fg / L2 background / L3 Rally); Codex `spawn_agent`→`wait_agent` (prereqs: active runtime capability/capacity per C1); agy `/agent` TUI or `agy -p --dangerously-skip-permissions` headless (prereq TUI main session or OS-level isolation). Full per-CLI prereqs, runtime notes, silent-failure mitigations, and the verified headless template → `reference/execution-layers.md`. Cross-CLI mapping → `_common/CLI_COMPATIBILITY.md`.
+## Fallback to Internal Execution
 
-**MANDATORY before spawning agy/codex as an agent** — read `_common/CLI_COMPATIBILITY.md §9.2` (agy headless MUST allocate a real pty (`python3 pty.spawn`) — bare `agy -p` and `script -q /dev/null` fail silently; artifact/sentinel capture, never stdout) and §9.3 (codex `-o <abs path>` artifact is authoritative). Silent-output regressions, not edge cases.
-
-Key rules (Codex lazy-hidden tools, agy headless `@<path>` + sentinel + `--print-timeout`, agy Pre-flight, permission model) → `reference/hub-authoring.md` § Execution-Layer Key Rules.
-
+Follow SKILL.md Core Rule #3: record the verified capability blocker and permitted alternatives already checked. Internal execution is not an independent specialist session and cannot expand Nexus's control-plane ownership or a read-only skill's boundary. Preserve frozen ACs, identify any unavailable independent verification and cap status accordingly. Do not repeatedly retry the same failed capability or install/enable a runtime without authorization.

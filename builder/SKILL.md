@@ -110,10 +110,9 @@ Rationale, thresholds, and sources for every rule below: `reference/core-contrac
 - Circuit breaker per endpoint (not per host): open after 5 failures in 60s (payment <= 3, search <= 10), half-open after 30s-2min, close on success.
 - Use `using` / `await using` for disposable resources; type `catch` parameters as `unknown` and narrow with `instanceof`.
 - Write LLM-friendly deterministic code: explicit over implicit, boring over clever, behaviour co-located with its trigger.
-- Generate test skeletons for Radar handoff on every deliverable.
+- Run the targeted verification for changed behavior. Provide Radar with executable checks already run and skeletons only for remaining coverage; a skeleton is not evidence of a passing test.
 - **Verification-first** — identify or create the verification path (tests, screenshot diff, expected stdout, type signature, schema contract) *before* implementation code. Code without a verifier is data, not deliverable. Fix root causes; never suppress symptoms.
 - **Run the 5-axis impact scope check at VERIFY before declaring done** — callers / tests / types+contracts / configs / docs, each with a documented verdict. 3+ axes non-trivially affected or high uncertainty -> recommend `ripple` before completion. Never close VERIFY with an axis marked "unchecked".
-- Author for the executing engine (P1-P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for Builder; P2, P1 recommended).
 - **Pair-programming mode (`pair`) changes cadence, not the quality bar.** Builder drives (writes code); the user navigates (sets direction, approves each increment). ONE small increment at a time: propose intent + its verification, get go-ahead, implement, show diff + run that verification, confirm, advance. Every increment meets the full Core Contract — this is not a speed shortcut (that is Forge). The 5-axis check still runs at close. INTERACTIVE — cannot run unattended; under AUTORUN, seed the increment plan and return `Next: USER`. Bounded by max-increments / user-stop / goal-met / diminishing-returns; checkpoint-resumable. Full contract -> `reference/pair-programming.md`.
 - **Image-generation recipes deliver code and operating guidance, not generated images.** Use Python + `google-genai`, read `GEMINI_API_KEY` from the environment, verify supported model/pricing data before quoting it, parse every response part defensively, and preserve seed/parameters/cost/timestamp in `metadata.json`. Full contract -> `reference/image-generation-api.md`.
 - For Gemini image requests, translate the final prompt to English and use `Subject + Style + Composition + Technical`; keep policy checks, SynthID disclosure, bounded retries, quota handling, and output provenance in the implementation.
@@ -170,15 +169,15 @@ Handoff tokens follow `<SOURCE>_TO_<TARGET>` for every direction above (e.g.
 
 ### Agent Teams Aptitude
 
-Builder's post-BUILD handoffs to Radar, Sentinel, and Tuner are independent verification tasks with no shared file writes. Use **VERIFICATION_PARALLEL** (`_common/SUBAGENT.md`) or Rally **Pattern D: Specialist Team** (2–3 members) when wall-clock time matters:
+Builder's post-BUILD handoffs to Radar, Sentinel, and Tuner may run independently once production edits are stable. Radar owns test writes; the other branches stay read-only, and the hub joins results before completion. Use **VERIFICATION_PARALLEL** (`_common/SUBAGENT.md`) or Rally **Pattern D: Specialist Team** (2–3 members) when wall-clock time matters:
 
-| Member | Role | Ownership | Model |
-|--------|------|-----------|-------|
-| `test-writer` | Radar handoff — generate test skeletons | `tests/**`, `__tests__/**` | `sonnet` |
-| `security-scanner` | Sentinel handoff — static security scan | read-only | `sonnet` |
-| `perf-analyzer` | Tuner handoff — performance hotspot analysis | read-only | `haiku` |
+| Member | Role | Ownership |
+|--------|------|-----------|
+| `test-writer` | Radar handoff — generate test skeletons | `tests/**`, `__tests__/**` |
+| `security-scanner` | Sentinel handoff — static security scan | read-only |
+| `perf-analyzer` | Tuner handoff — performance hotspot analysis | read-only |
 
-Spawn only when the deliverable touches 4+ files and post-BUILD verification would otherwise block. For single-file fixes, sequential handoff is sufficient.
+Use this fan-out when independent verification work justifies its cost, regardless of file count. Model selection, native tool discovery, and permissions follow `_common/CLI_COMPATIBILITY.md`; never assume a tool or model alias.
 
 ## Decision Policy
 
@@ -236,7 +235,7 @@ Scope bounds worth knowing before dispatch: `fix` `<50` lines · `patch` `<=30` 
 Routing rules:
 
 - If the request involves domain complexity, API calls, frontend state, or version-sensitive language behavior, read `reference/implementation-policy.md`.
-- Always generate test skeletons for Radar handoff.
+- For coverage gaps, provide Radar with focused test cases or skeletons and label them unexecuted.
 
 ## Output Requirements
 
@@ -246,7 +245,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 - Input validation at system boundaries.
 - Error handling with actionable messages.
 - Edge case coverage (null, empty, timeout, partial failure).
-- Test skeleton for Radar handoff.
+- Actual verification results, plus a Radar handoff for remaining test coverage when needed.
 - DDD pattern justification when domain modeling is involved.
 - Performance considerations for data-intensive operations.
 - **Impact Scope Report**: 5-axis verdict block with per-axis status (`OK / Updated / N/A / NEEDS-REVIEW`) for callers, tests, types, configs, docs. If any axis is `NEEDS-REVIEW`, recommend `ripple` invocation before merge.

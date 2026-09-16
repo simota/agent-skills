@@ -16,14 +16,14 @@ Primary: `~/.codex/config.toml`
 
 | Key | Type | Default | Description | Recommendation |
 |-----|------|---------|-------------|----------------|
-| `model` | string | `"gpt-5.6"` | Model identifier | Use latest generation (currently gpt-5.6; generic ID auto-selects — or pin a variant: `gpt-5.6-sol`/`-terra`/`-luna`) |
+| `model` | string | Account/runtime dependent | Supported authorized model ID | Verify current stable availability in `_common/CLI_COMPATIBILITY.md`; inherit explicit user selection |
 | `provider` | string | `"openai"` | API provider | Match to model availability |
-| `model_reasoning_effort` | string | `"medium"` | Reasoning depth: `none`, `minimal`, `low`, `medium`, `high`, `xhigh` | `medium` for general use |
+| `model_reasoning_effort` | string | Model/runtime dependent | Supported reasoning effort | Verify current official schema and effective settings; no automatic maximum or spend escalation |
 | `model_reasoning_summary` | string | `"auto"` | Reasoning summary: `auto`, `concise`, `detailed`, `none` | `concise` for transparency without verbosity |
 | `model_verbosity` | string | `"medium"` | Output verbosity: `low`, `medium`, `high` | `medium` for balanced output |
 | `personality` | string | `"none"` | Communication style: `none`, `friendly`, `pragmatic` | `pragmatic` for professional use |
 | `hide_agent_reasoning` | boolean | `false` | Suppress reasoning events | Keep `false` for transparency |
-| `show_raw_agent_reasoning` | boolean | `false` | Show raw reasoning content | Enable for debugging |
+| `show_raw_agent_reasoning` | boolean | `false` | Runtime-specific diagnostic setting | Do not enable by default or request private reasoning reproduction; use observable decisions and tool evidence |
 
 ## Policy Settings
 

@@ -74,15 +74,15 @@ Route elsewhere when the task is primarily:
 
 ## Core Contract
 
-- Break work down until the current step is testable, committable, and small enough to finish in `5-15 min`. Aim for similarly-sized pieces across the plan to enable predictable velocity.
-- Show one active step at a time — bounded autonomy over full roadmap exposure.
+- Decompose around testable, committable, reversible boundaries. The `5-15 min` target is a planning estimate, not a guaranteed runtime or a reason to split one atomic change unnecessarily.
+- Show one active step per workstream and expose independent ready units to Nexus/Rally; dependent work still waits for its prerequisite evidence.
 - Keep progress visible with quantitative indicators (X/Y steps, % complete, velocity trend).
 - Detect drift early and redirect to a Parking Lot rather than silently expanding scope; keep a formal change gate and reject informal additions.
 - Surface blockers, dependencies, and cut points before they become emergencies. Use explicit escalation paths: if a step falls outside predefined criteria, pause and route with full context.
 - Track estimate accuracy with **PRED(0.25)** (share of estimates within 25% relative error) and feed actuals back into planning.
 - Prefer Plan-and-Execute decomposition — decoupling planning from execution avoids repeated re-planning cycles. Route planning to high-capability agents and execution to specialized workers.
 - Protect flow state — a single context switch costs ~23 minutes of recovery, and interrupted tasks take 2x longer with 2x the errors.
-- Author for the executing engine (P1-P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P1, P2, P7 critical). Decomposition that omits acceptance criteria or length envelopes forces downstream agents to ask instead of execute.
+- Include acceptance criteria and required handoff artifacts in each decomposition so downstream specialists can execute without repeating scope questions.
 - **Anchor decomposition on the Explore -> Plan -> Implement -> Commit cycle.** Each Atomic Step belongs to exactly one phase: `Explore` reads code and loads context but writes nothing; `Plan` produces a plan artifact (diff builder, AC list, test stubs) but no implementation; `Implement` writes code against the locked plan; `Commit` runs the verifier and produces a commit/PR. Skip `Plan` only when the change is mechanically obvious — forcing Plan-mode for cross-file work catches half the failure surface before code is written.
 - **Output Spec-Kit-compatible Atomic Steps** on `spec` / `speckit` — match the `spec/` `plan/` `tasks/` layout and the Constitution -> Specify -> Plan -> Tasks -> Implement contract so downstream agents consume steps without translation.
 - **Keep atomic steps small to counteract AI-era PR bloat** — AI-assisted teams produce measurably larger PRs, longer reviews, and more unreviewed merges. One committable concern per step directly counters this.

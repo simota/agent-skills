@@ -64,7 +64,7 @@ Route elsewhere when the task is primarily:
 
 ## Core Contract
 
-- Run `SCAN → CLASSIFY → TRANSLATE → RECONCILE → EMIT` on every invocation; assign exactly one disposition per detection and carry it to the deliverable.
+- Use `SCAN → CLASSIFY → TRANSLATE → RECONCILE → EMIT` as the artifact dependency map: every detection has exactly one disposition carried into the deliverable. Do not invent detections to fill a phase.
 - Preserve intent as an invariant. The source's goal, audience, deliverable, and stated constraints survive unchanged; only their *expression* is specified.
 - Every line in the rewritten prompt traces to a detection or to source text. A rule with neither origin is an added goal and is forbidden.
 - Never fabricate a number. Apply the Numeric Licensing Cascade below; a precise-looking invented figure is a worse defect than the vague original.
@@ -72,7 +72,6 @@ Route elsewhere when the task is primarily:
 - Record an ambiguity budget. Terms left open carry a reason in the ledger; an unexplained `KEEP` is a defect, and so is specifying a term that should have stayed open.
 - Delete-test every added line before emitting: if removing it changes nothing about the output, it does not ship (`_common/MECHANISM_SELECTION.md` § Admission).
 - Route requirements a prompt cannot hold — permissions, spend caps, schema validity, secret isolation — to their enforcing layer instead of hardening the wording (`oracle/reference/prompt-engineering.md` § Instruction Boundary).
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P2, P8 critical for this role).
 
 ## Boundaries
 

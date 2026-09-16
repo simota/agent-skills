@@ -114,7 +114,7 @@ Three AI engines each play a different user persona to validate UI flows (**Pers
 | Engine | Persona | Command | Fallback |
 |--------|---------|---------|----------|
 | Codex | Senior Engineer | `codex exec --full-auto` | Claude subagent |
-| Antigravity | Beginner User | `agy -p --dangerously-skip-permissions --log-file <path>` (silent-failure detection mandatory — see `_common/MULTI_ENGINE_RECIPE.md §3.5 Engine Runtime Failure Detection`) | Claude subagent |
+| Antigravity | Beginner User | `agy -p --dangerously-skip-permissions --log-file <path>` (silent-failure detection mandatory — see `_common/MULTI_ENGINE_RECIPE.md §3.5 Engine Runtime Failure Detection`) | Authorized headless/native dispatch → `_common/CLI_COMPATIBILITY.md` §9; validate outputs under `_common/MULTI_ENGINE_RECIPE.md` §3.5 |
 | Claude | Accessibility User | Claude subagent (Task) | — |
 
 > Persona assignments are not fixed. Echo may choose the optimal combination for the target UI.

@@ -87,7 +87,6 @@ Code review specialist delivering verdicts on three quality axes — **secure ·
 - Pair every consensus-level finding with a paste-ready `## LLM Fix Prompt` block (suppress for nit/style with a one-line note) -> `reference/fix-prompt-generation.md`.
 - **Lean is the third quality axis**: detect waste (over-engineering, YAGNI, dead code, redundancy) — report-only, routing high-cost-of-keeping removals to **Void** and mechanical ones to **Zen**. **Secure beats lean** — never flag a boundary defense as waste. Playbook -> `reference/lean-review.md`.
 - **Pair mode (`pair`) preserves report-only**: Judge is the **navigator** and never writes the fix; on agreement it spawns a **driver** (Builder/Zen/Sentinel/Radar), with a per-fix confirmation gate. No driver available -> propose-only. Contract -> `reference/pair-review.md`.
-- Author for the executing engine per `_common/OPUS_5_AUTHORING.md` (P10, P2 critical; P9, P1 recommended).
 
 Benchmarks, thresholds, and citation provenance for every claim above -> `reference/research-citations.md`.
 
@@ -96,7 +95,7 @@ Benchmarks, thresholds, and citation provenance for every claim above -> `refere
 
 **Multi-Engine (default)** on `/judge` or "review PR/changes" — fan out 2 (Claude + Codex) or 3 (agy AVAILABLE) parallel subagents, then integrate, ground, filter; each subagent follows its own `*-review-usage.md`. **Single-Engine** when the user names one engine, `>=2` are unavailable, or scope is `<50` LOC low-risk. **Pair (INTERACTIVE)** on `/judge pair` or "fix as we go". **GitHub Async** via an `@codex review` PR comment. Mode table -> `reference/tri-engine-review.md`.
 
-**Invocation invariants (all engines):** subscription auth only — never set a provider API key; always the default model — never `-m` / `--model` / `-c model=...`; always attach a focused prompt requiring structured JSON.
+**Invocation invariants (all engines):** use existing subscription authentication; never inject a provider API key. Inherit the authorized model selection; a different model requires explicit authorization and a supported interface verified through `_common/CLI_COMPATIBILITY.md`. Require focused, structured findings and validate actual tool results, not only JSON shape.
 
 **Tip:** ambiguous scope -> `git status` first to pick PR / pre-commit / commit.
 

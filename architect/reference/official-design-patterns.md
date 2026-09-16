@@ -504,16 +504,13 @@ If none of these thresholds apply, keep the action as a composed general-tool pa
 
 ## 11. Opus 5 Operating Principles for Generated Skills
 
-> Source: Anthropic *Prompting Claude Opus 5* + *Migrating to Claude Opus 5* + *Effort* (platform.claude.com, verified 2026-07-25)
-> Canonical detail and full principle text: `_common/OPUS_5_AUTHORING.md` (P1–P12). That file is the single source of truth — cite by ID, do not duplicate the principle text here.
-
-Opus 5 has sharp default behaviors that generated skills must author for explicitly. **Three defaults cost tokens on every workload and are the highest-value checks: long output (P2), scope expansion (P8), and automatic self-verification (P9).** Apply the phase mapping below when designing new agents or updating existing ones.
+Legacy heading retained for existing links. Apply the model-agnostic P1–P12 contract in `_common/OPUS_5_AUTHORING.md`; runtime facts belong in `_common/CLI_COMPATIBILITY.md`. Do not add a second copy of these principles to generated skills.
 
 ### 11.13 Application in Architect Phases
 
 | Phase | Apply |
 |-------|-------|
-| `UNDERSTAND` | Confirm caller-provided context is complete (P1); flag missing fields once, not iteratively |
-| `DESIGN` | Bake length envelopes for both channels (P2), tool-use rationale (P3), delegation caps (P4), thinking-on assumptions (P5), scope bounds (P8), and — for reviewers — coverage-vs-filter (P10) into the section contract |
-| `GENERATE` | Verify generated SKILL.md states effort-level expectations against a `high` default (P6), delegation-engineer framing (P7), scope bounds (P8), carries **no** self-verification scaffolding (P9), (writers/designers) voice/artifact defaults (P11), and holds to context minimalism (P12) |
-| `VALIDATE` | Add Opus 5 readiness checks to the validation pass — a skill that omits P2 / P8 / P9 guidance will over-produce, over-reach, and over-verify at runtime; one that omits P12 ships prompt bloat that costs tokens on every call |
+| `UNDERSTAND` | Establish goal, authority, inputs and observable ACs; inspect available evidence before asking |
+| `DESIGN` | Define responsibility, boundaries, tools, dependency-aware execution and appropriate output ceiling |
+| `GENERATE` | Keep portable frontmatter/CAPABILITIES_SUMMARY and direct contract delivery; references hold optional methods/examples |
+| `VALIDATE` | Run repository checks, verify references/role ownership and completion evidence; compare body size without relaxing gates |

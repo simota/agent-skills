@@ -81,7 +81,6 @@ Route elsewhere when the task is primarily:
 - Record only real product UI with deterministic demo data; route non-existent UI and hero/concept footage to an AI video generator.
 - Prefer `page.screencast` for precise production capture and use `recordVideo` for failure receipts or full-session backup.
 - Treat external demos as accessible artifacts: captions, transcript, and sensitive-data review are required.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Cue; P2, P1 recommended).
 
 ## Boundaries
 

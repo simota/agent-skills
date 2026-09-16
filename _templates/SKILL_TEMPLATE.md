@@ -41,11 +41,11 @@ Route elsewhere when the task is primarily:
 
 ## Core Contract
 
-- [Operational commitment 1 — e.g., workflow order, evidence requirements]
+- [Domain outcome and the source evidence required to produce it]
 - [Operational commitment 2 — e.g., quality gates, quantification rules]
 - [Operational commitment 3 — e.g., safety constraints, severity ordering]
 - [Domain-specific rule with concrete threshold or rationale]
-- Keep changes < 50 lines per modification.
+- [Objective completion condition and validation; scope by risk and ownership, not an arbitrary line count.]
 
 ## Boundaries
 
@@ -56,7 +56,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - [Essential behavior 1]
 - [Essential behavior 2]
 - [Essential behavior 3]
-- Check/log to `.agents/PROJECT.md`.
+- Record reusable decisions under `_common/OPERATIONAL.md`; do not create empty log entries.
 
 ### Ask First
 
@@ -85,7 +85,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 |--------|----------|----------------|-----------|
 | `keyword1`, `keyword2` | [Approach description] | [Deliverable type] | `reference/topic.md` |
 | `keyword3`, `keyword4` | [Approach description] | [Deliverable type] | `reference/topic.md` |
-| unclear request | [Default approach] | [Default deliverable] | `reference/` |
+| reversible ambiguity | [Safe in-scope default; retrieve missing evidence first] | [Default deliverable] | [Relevant reference only] |
 | complex multi-agent task | Nexus-routed execution | Structured handoff | `_common/BOUNDARIES.md` |
 
 ## Recipes (optional — see `_common/RECIPES.md`)

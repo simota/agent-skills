@@ -42,7 +42,7 @@ Cross-tool agent instructions for this repository. Read by **Antigravity CLI (`a
 
 ## Skill Authoring Conventions
 
-1. **Frontmatter discipline**: Each `SKILL.md` MUST contain exactly `name` and `description` keys. Capability declarations belong in the Markdown body (Anthropic Agent Skills spec; `chain` skill rejects custom keys).
+1. **Frontmatter discipline**: Each `SKILL.md` MUST contain exactly `name` and `description` keys. Capability declarations belong in the Markdown body (this repository's portability contract; `chain` rejects custom keys here).
 2. **Description quality**: `description:` should include 3-5 trigger keywords and the primary use case in ≤2 sentences. Vague descriptions cause tool bloat (40-50K token overhead in multi-skill loadouts).
 3. **CAPABILITIES_SUMMARY comment block**: Preserve the existing `<!-- CAPABILITIES_SUMMARY: ... -->` HTML comment format when editing existing skills. New skills follow `_templates/SKILL_TEMPLATE.md`.
 4. **References**: Heavy content (checklists, schemas, anti-patterns) goes in `reference/<topic>.md` and is loaded on demand. Keep `SKILL.md` under 500 lines (Anthropic guidance); `_common/scripts/lint-frontmatter.py` flags >500 as P3, >700 as P2, >1000 as P1.
@@ -92,12 +92,12 @@ This repository's skills are authored primarily for **Claude Code**, but the `_c
 
 | Layer | Claude Code | Codex CLI | agy |
 |-------|-------------|-----------|-----|
-| Direct spawn | `Agent(prompt, mode: bypassPermissions)` | `spawn_agent(prompt)` → `wait_agent(id)` | `/agent <name> "<task>"` or `agy -p "<prompt>" --dangerously-skip-permissions` (flag mandatory for headless — bypasses default `request-review` gate, equivalent to Claude Code's `bypassPermissions`) |
-| Parallel | `Agent(..., run_in_background: true)` × N | multiple `spawn_agent` → `wait_agent` all | multiple `/agent` invocations in TUI |
-| Skill root | `~/.claude/skills/` | `~/.codex/skills/` (未確認) | `~/.gemini/antigravity-cli/skills/` |
+| Direct spawn | Advertised agent interface | Advertised subagent interface | Native agent or documented headless mode |
+| Parallel | Available background agents; join dependencies | Concurrent subagents; join dependencies | Independent authorized calls; join dependencies |
+| Global skill root | `~/.claude/skills/` | `~/.agents/skills/` | `~/.gemini/antigravity-cli/skills/` |
 | Workspace skill root | `<repo>/.claude/skills/` | `<repo>/.agents/skills/` | `<repo>/.agents/skills/` |
 
-Full mapping → `_common/CLI_COMPATIBILITY.md`.
+Current versions, models, schemas, optional features and legacy workarounds → `_common/CLI_COMPATIBILITY.md` (official sources checked 2026-09-17). Discover capabilities in the running host; a CLI name does not prove a tool or account entitlement. Normal headless execution does not authorize permission bypass.
 
 ---
 

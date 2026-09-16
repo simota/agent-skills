@@ -21,7 +21,7 @@ Each agent **MUST** maintain a personal journal at `.agents/{agent-name}.md`.
 ```
 
 **Rules:**
-- **Before starting work** (mandatory): Read `.agents/{agent-name}.md` and `.agents/PROJECT.md` to load prior context and avoid repeating past mistakes. Create files if missing.
+- **Before starting work** (mandatory): Read relevant existing entries in `.agents/{agent-name}.md` and `.agents/PROJECT.md` to recover prior decisions. Create a missing file only when there is an entry worth preserving; do not create empty compliance artifacts.
 - **Skip tier**: single-turn, read-only answers that produce no file writes may skip the journal load — administrative overhead must stay proportional to task size.
 - **During work**: Capture genuinely reusable insights as they emerge — not task logs, not narrative diaries.
 - **Before declaring task complete**: Append at least one entry to `.agents/{agent-name}.md` if any reusable insight was generated. If the task produced no novel insight, state this explicitly in the activity log and skip the journal write.
@@ -76,7 +76,7 @@ inherits prior state. Skip for a fresh single-step task with no inherited state.
 4. Open questions, `Do not repeat` entries, and known failures.
 5. Whether each `Verified` entry still binds: same `head`, `verified_at` after the change it covers.
 
-Emit the result as a short **state reconstruction**, and make conflicts explicit rather than averaging them away:
+Retain a short **state reconstruction** for the handoff; surface it when there is a conflict or stale evidence, rather than narrating every routine read. For example:
 
 ```yaml
 reconstructed:
@@ -105,20 +105,20 @@ action: "re-run auth tests at a91c0de before any edit"
 
 ## Pre-Execution Planning
 
-Plan **proportional to task complexity** — not maximally. Over-planning a trivial task is itself an anti-pattern: it burns tokens, adds latency, and (on instruction-literal models like Opus 5) inflates output. Under-planning a complex task causes rework and silent drift. Calibrate.
+Plan to the task’s dependencies, uncertainty, and risk. File count alone is not a reason for extra planning or delegation; preserve any stricter recipe-specific gate.
 
 **Before starting work, decide the planning tier:**
 
 | Tier | Trigger (any match) | Required planning |
 |------|---------------------|-------------------|
-| **Skip** | Single atomic operation; ≤ 2 files; no implicit intermediate steps; reversible | None — execute directly. Do **not** emit a plan. |
-| **Light** | 3+ files OR multi-step OR ambiguous requirements | State goal + acceptance criteria (1–3 lines) and an ordered step list before the first edit. |
-| **Full** | 6+ steps OR cross-component OR irreversible/destructive OR security-sensitive | Light plan + explicit risk/impact note + confirmation gate where `Ask First` rules apply, before any mutating action. |
+| **Skip** | One well-scoped reversible operation with no unresolved dependency | None — execute directly. Do **not** emit a plan. |
+| **Light** | Multiple dependent actions or meaningful but reversible uncertainty | State goal + acceptance criteria (1–3 lines) and an ordered step list before the first edit. |
+| **Full** | Cross-component decisions, substantial dependency uncertainty, irreversible/destructive or security-sensitive effects | Light plan + explicit risk/impact note + confirmation gate where `Ask First` rules apply, before any mutating action. |
 
 **Rules:**
 - The plan precedes the first mutating action (edit, write, spawn, external call) — not read-only investigation, which may proceed to inform the plan.
 - Match plan depth to the tier; do **not** escalate a Skip/Light task to Full "to be safe". Minimum viable planning mirrors Nexus Core Rule #1 (minimum viable chain).
-- For orchestrators, the planning tier maps to chain size: Skip → single agent, Light → short chain (+Sherpa if 3+ files), Full → decomposition (Sherpa) + risk gate.
+- For orchestrators, the planning tier maps to chain size: Skip → the owning specialist, Light → the minimum viable chain, Full → explicit dependencies and risk gates; involve Sherpa when decomposition itself needs specialist work, not merely because several files change.
 - Re-plan, don't improvise, when scope changes mid-task (e.g., 3+ test failures, an unexpected dependency surfaces). A stale plan followed blindly is worse than a re-derived one.
 - A Light/Full plan is a deliverable artifact: surface it to the user (or the handoff) before execution, not as a post-hoc rationalization.
 
@@ -128,7 +128,13 @@ Plan **proportional to task complexity** — not maximally. Over-planning a triv
 
 ## Engine-Conditional Authoring
 
-Skills run under whichever engine invokes them (Claude Code Opus 5 / Sonnet 5 / Fable 5 / Fable 5.1, Codex CLI, agy). Model-specific authoring principles bind only when the matching engine executes: `_common/OPUS_5_AUTHORING.md` P1–P11 are Opus 5-specific; P12 is Claude 5 generation-wide. Detect the active engine per `nexus/reference/hub-authoring.md` § Orchestrator Detection — never hardcode a single model's quirks as unconditional SKILL.md directives.
+Use the model-agnostic authoring rules in `_common/OPUS_5_AUTHORING.md` (legacy filename, P1–P12 preserved). Read `_common/CLI_COMPATIBILITY.md` when selecting a runtime/model or using a CLI-specific capability; verify the installed interface and account availability instead of copying dated model mandates.
+
+## Execution and Evidence
+
+Workflow phases express prerequisites and required artifacts, not a private thinking itinerary. Combine low-risk steps or parallelize independent reads and disjoint work where no recipe, safety gate, or dependency requires order. Never parallelize competing writers or verification against a still-changing artifact.
+
+For authorized implementation, inspect state → apply the scoped change → validate the affected behavior and artifact; repair failed checks within scope before delivery. Read-only specialists return evidence and the owning implementation handoff instead. Preserve frozen acceptance criteria and the Completion Contract below. Do not replace executable evidence with repeated self-review or pad every tool call with commentary. Summarize material decisions, blockers, and results.
 
 ---
 
@@ -198,40 +204,32 @@ A question is an interrupt: the person rebuilds context, weighs options, and dec
 
 ## Contract Precedence
 
-`_common/` holds many protocols and they are not peers. When two disagree, resolve in this order rather than averaging them:
+Resolve file scope using the repository's `AGENTS.md` and its tool-specific deltas. Resolve conflicting rules by class, highest first:
 
-1. **The user's own words in this session** — nothing in this directory outranks them.
-2. **The repository's instruction files** (`CLAUDE.md` / `AGENTS.md`) — they describe *this* repo; a shared protocol describes every repo.
-3. **The invoked SKILL.md** — its Core Contract and Boundaries bind for work inside its domain.
-4. **The spine** — `OPERATIONAL.md` · `VALUES.md` · `BOUNDARIES.md` · `HANDOFF.md` · `AUTORUN.md` · `GIT_GUIDELINES.md` · `OUTPUT_STYLE.md` · `OPUS_5_AUTHORING.md` · `WORK_GATE.md`. In effect for every run.
-5. **On-demand contracts** — everything else here, in effect only once its activation condition is met.
+1. Enforced security controls, permission boundaries, `_common/SECURITY.md`, and `_common/WEB_FETCH_SAFETY.md`.
+2. Legal and licensing constraints.
+3. Repository-wide architecture and shared contracts, including `AGENTS.md` / applicable `CLAUDE.md` deltas.
+4. Component rules in a SKILL.md or its references.
+5. The current task request.
+6. A model-generated plan.
 
-**Two rules on top of the order.**
+A narrower or newer lower-class instruction cannot silently override a higher class. A safety floor and an applicable Ask First gate cannot be weakened by a local plan. Within the same class, use an explicit precedence rule when one exists; otherwise stop with `blocked_by_instruction_conflict`, name both rules and their consequences, and record `HD-DOC` under `_common/HARNESS_DEBT.md`. Do not invent a midpoint.
 
-- **Specific beats general at the same rank.** A protocol scoped to the situation at hand outranks one scoped to all situations. A safety floor is the exception in the other direction: `SECURITY.md`, `WEB_FETCH_SAFETY.md`, and any **Ask First** gate are never narrowed by a more specific contract, only widened.
-- **An unresolvable conflict is surfaced, not split.** Two contracts that genuinely cannot both hold is a defect in the corpus — name both sources and ask, rather than inventing a midpoint that neither file endorses. File it as `HD-DOC` (`HARNESS_DEBT.md`) so the next run does not re-derive it.
+### Contract Activation
 
-**This order settles conflicts between documents, not conflicts inside one.** When a single instruction pulls two ways — thorough versus shipped, safe versus usable — the tie-breaker is `_common/VALUES.md`, which orders the goods rather than the files. It never overrules a contract; it decides where the contracts are silent.
+1. **The spine** — `OPERATIONAL.md` · `VALUES.md` · `BOUNDARIES.md` · `HANDOFF.md` · `AUTORUN.md` · `GIT_GUIDELINES.md` · `OUTPUT_STYLE.md` · `OPUS_5_AUTHORING.md` · `WORK_GATE.md`. Tier controls activation, not permission to override another rule: domain contracts activate on subject matter, orchestration contracts on a hub/recipe/engine, and authoring contracts when creating or auditing skills.
 
-Each file states its own tier on the line under its title. `spine` = rank 4 above. `domain` activates on subject matter, `orchestration` on the hub/recipe/engine layer, `authoring` when creating or auditing skills rather than doing user work.
+Where contracts leave a value trade-off open, use `_common/VALUES.md`; it does not overrule a contract.
 
 ---
 
 ## Reachability Is Not Arrival
 
-Nothing under `_common/` loads automatically. A contract arrives because a file the agent already has open names it **and the agent follows that name** — and `lint-contracts.py` verifies the first half of that sentence, never the second. A `Read when:` line is a condition the agent evaluates; a contract that must be in hand *before* the approach is chosen cannot sit behind one, because by the time the condition is recognised the decision it governs has been made.
+Nothing under `_common/` loads automatically. Before acting, open the spine contracts directly named by the invoked SKILL.md, once per independent context, and apply the on-demand contracts whose conditions hold. A link or directory listing is not the content of a rule.
 
-The remedy is **delivery**: carry the rule verbatim in the body of every SKILL.md, where loading the skill is what puts it in context, and have a check keep the copies identical to one definition.
+`lint-contracts.py` proves a direct delivery path, not that a live model actually read it. Preserve the skill-local `_common` link and direct spine references. Pass critical ACs, authority and prohibitions explicitly in isolated handoffs rather than relying on an indirect link. Load domain checklists only when relevant; do not preload the entire reference tree or repeatedly reload unchanged contracts.
 
-**This corpus cannot currently afford it, and the number is the reason.** Measured 2026-08-21: with `nexus/SKILL.md` at ~6998 tokens against the S2 advisory of 7000 (`lint-frontmatter.py`), the largest skill has single-digit headroom and roughly a quarter of the roster sits within 400 characters of the ceiling. Delivering even a two-line gate pushes 20+ skills over a budget the roster was deliberately refactored to meet, and raising the advisory to fit is a goalpost move, not a solution.
-
-So the rule stands and the mechanism waits:
-
-- **Do not deliver into SKILL.md bodies while the roster has no headroom.** The trade is real but it is currently paid in the wrong currency.
-- **Treat depth-1 reachability as the available substitute**, and read it for what it is — a proven path, not a fired rule. CD-2 blocking on depth 2+ is what keeps even that much true.
-- **The condition to revisit** is headroom: if the median SKILL.md body drops meaningfully below the advisory, delivery of the pre-execution scope gate becomes affordable and should be reconsidered ahead of any other addition.
-
-Recorded here rather than dropped because the shape of the gap outlasts the arithmetic (`_common/VALUES.md` § 4), and because the next session to notice it would otherwise re-derive both the idea and the measurement.
+Use `lint-frontmatter.py` to measure current body size instead of retaining a historical headroom claim. Reduced context cost must not come from dropping applicable safety, completion or ownership contracts.
 
 ---
 
@@ -404,3 +402,10 @@ description. Route by what the learning *is*, before writing it anywhere:
 3. **Anything retained carries source, scope, and an expiry trigger.** A retained item that cannot say where
    it came from and what would invalidate it is a future stale-context incident
    (`triage/reference/response-workflow.md` `A6`).
+
+## Lifecycle
+
+- **failure:** F1: repeated phase and journal ceremony consumed context while instruction precedence conflicted with AGENTS.md.
+- **effect:** A shared execution/evidence rule replaces repeated prose; contract-delivery and negative regression tests remain the oracle.
+- **owner:** Nexus
+- **removal:** Remove duplicated wording when no consumer requires it; retire the shared rule only after completion and precedence tests cover a replacement.

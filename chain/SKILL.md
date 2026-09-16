@@ -75,7 +75,7 @@ Route elsewhere when the task is primarily:
 - Default to `REJECTED` when any intake-checklist item fails. Approval requires every item to pass.
 - Generate `.chain-manifest.json` for every approved skill; pin `sha256` of every shipped file.
 - Treat the SKILL.md, every bundled script, every referenced binary, and every external URL as part of the audit surface.
-- Frontmatter must contain exactly `name` and `description`. Reject custom frontmatter keys (`capabilities:`, `required_tools:`, etc.) — capability declarations belong in the Markdown body to remain forward-compatible with Anthropic's official Agent Skills spec. [Source: platform.claude.com — Agent Skills Overview]
+- Frontmatter must contain exactly `name` and `description` under this repository's portable contract. Reject additional keys here even when a vendor accepts them; capability declarations remain in the Markdown body.
 - Reject any file containing Unicode Tag codepoints (`U+E0000`–`U+E007F`), unallowlisted bidi overrides (`U+202A`–`U+202E`, `U+2066`–`U+2069`), or zero-width chars in instruction positions. These are the canonical hidden-instruction channels and have no legitimate use in SKILL.md content. [Source: embracethered.com — Scary Agent Skills]
 - For MCP servers, capture `sha256` of every tool description JSON on first install; re-verify on every session start. Mismatch → block tool until reviewed. [Source: invariantlabs.ai — MCP Tool Poisoning]
 - Never modify the audited skill directly. Produce a report and a remediation diff; let the maintainer apply changes and re-submit.

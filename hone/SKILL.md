@@ -68,7 +68,7 @@ Route elsewhere when the task is primarily:
 ## Core Contract
 
 - Always fetch official documentation before auditing.
-- Read all config files under `~/.codex/`, `~/.gemini/`, and/or `~/.claude/` before analysis (based on target CLI).
+- Inventory the selected CLI's non-secret configuration first; read applicable settings, rules, and referenced hook definitions. Exclude credentials, auth stores, and session history even during a full audit.
 - Apply source tier classification (T1-T4) to all web-sourced claims per `reference/web-sources.md`.
 - Use the audit checklist from `reference/audit-checklist.md` for systematic evaluation.
 - Generate Before/After diff proposals using templates from `reference/proposal-templates.md`.
@@ -79,7 +79,6 @@ Route elsewhere when the task is primarily:
 - Apply every instruction-density, rules/glob, MCP, plugin, settings-hierarchy, and prompt-cache check in `reference/audit-checklist.md` and `reference/key-thresholds.md`; do not duplicate their evolving thresholds here.
 - **Hook audit rules**: PreToolUse hooks return correct exit codes (`0` allow, `2` block) and security-critical hooks use `permissionDecision: "deny"`, which cannot be bypassed even in bypassPermissions mode. Automated/CI pipelines must not rely on PermissionRequest hooks (they do not fire with `-p`) — recommend PreToolUse instead. A hook "allow" is never the sole security gate, since hooks can tighten but never loosen past deny rules. Flag overly broad `allowedHttpHookUrls` and any `httpHookAllowedEnvVars` exposing secrets. MCP OAuth configs must carry RFC 8707 resource indicators — unbound tokens are replayable against unintended services. Detail -> `reference/key-thresholds.md`.
 - **Hook implementation rules**: inspect existing hooks first; use the narrowest event and matcher; set explicit timeouts; keep human-readable output on stderr and JSON protocol output on stdout; use `exit 2` for security-critical command-hook blocks; pair `updatedInput` with `permissionDecision: "allow"`; define fail-open or fail-closed behavior for missing dependencies. Full contract -> `reference/hooks/hook-system.md`.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Hone; P2, P1 recommended).
 - Audit instruction bloat, AGENTS.md/CLAUDE.md drift, mechanism placement, and prompt-cache ordering using the linked `_common/` protocols; schedule re-evaluation every 3–6 months and after major model releases.
 
 Full rationale, mechanism detail, and sources for the bullets above → `reference/key-thresholds.md`.
@@ -91,7 +90,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 ### Always
 
 - WebFetch official Codex CLI, Antigravity CLI, and/or Claude Code sources before making any recommendation.
-- Read all configuration files for the target CLI(s) before analysis.
+- Read all in-scope non-secret configuration files for the selected CLI(s); follow the exclusions in Core Contract.
   - Codex: `config.toml`, `AGENTS.md`, `rules/`, `instructions.md`
   - Gemini: `settings.json`, `GEMINI.md`, extensions
   - Claude Code: `~/.claude/settings.json`, `<project>/.claude/settings.json`, `CLAUDE.md`, `.claude/commands/`
@@ -141,7 +140,7 @@ Full rationale and sources for the above → `reference/boundaries-rationale.md`
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
 | `FETCH` | WebSearch/WebFetch target CLI official docs, repo, release notes | Classify all sources by tier (T1-T4) | `reference/web-sources.md` |
-| `AUDIT` | Read all target CLI config files, evaluate against checklist | Check every item — no sampling | `reference/audit-checklist.md`, `reference/codex-config-schema.md` and/or `reference/antigravity-config-schema.md` and/or `reference/claude-code-config-schema.md` |
+| `AUDIT` | Read in-scope non-secret CLI configuration, evaluate against checklist | Check every item — no sampling | `reference/audit-checklist.md`, `reference/codex-config-schema.md` and/or `reference/antigravity-config-schema.md` and/or `reference/claude-code-config-schema.md` |
 | `PROPOSE` | Generate Before/After diff proposals with priority and safety | Use proposal templates, order by priority | `reference/proposal-templates.md` |
 
 Explicit hook recipes use `SCAN → PROPOSE → IMPLEMENT → VERIFY → MAINTAIN`: inspect existing hooks and collision risk; choose the event, matcher, handler type, timeout, and blocking behavior; back up and apply the smallest hook-only change; validate JSON and handler stdin manually; then review false positives, latency, and lifecycle fit. Read `reference/hooks/hook-system.md`, plus the recipe-specific reference.

@@ -92,21 +92,11 @@ cost = (input_tokens / 1000) × input_price_per_1k
 
 ### Provider Unit Price Reference (approximate, check current pricing)
 
-| Provider | Model | Input $/1K tokens | Output $/1K tokens |
-|----------|-------|-------------------|---------------------|
-| Anthropic | claude-fable-5 | $0.010 | $0.050 |
-| Anthropic | claude-opus-5 | $0.005 | $0.025 |
-| Anthropic | claude-sonnet-5 | $0.002 (intro, → $0.003 on 2026-09-01) | $0.010 (intro, → $0.015) |
-| Anthropic | claude-haiku-4-5 | $0.001 | $0.005 |
-| OpenAI | gpt-5.6-sol | $0.005 | $0.030 |
-| OpenAI | gpt-5.6-terra | $0.0025 | $0.015 |
-| OpenAI | gpt-5.6-luna | $0.001 | $0.006 |
-| OpenAI | gpt-4o-mini | $0.00015 | $0.0006 |
-| Google | gemini-3.7-flash | TBD (verify) | TBD (verify) |
-
-> Note: Prices change frequently. Always verify from official provider documentation. Anthropic rows were verified 2026-07-25 against `platform.claude.com/docs/en/about-claude/pricing`; OpenAI GPT-5.6 rows were verified 2026-08-19 against `platform.openai.com/pricing` and show standard short-context rates. Google rows remain unconfirmed and must not be treated as billing-accurate. Cost dashboards must model provider-specific service tiers, context bands, caching, batch, and regional-processing modifiers rather than applying Claude multipliers to every provider.
+Maintain a dated provider/model rate-card input instead of embedding mutable prices here. Verify official prices, billing units, service tier, context bands, cached input/write, batch and region; correlate usage with the actual model/run. `_common/CLI_COMPATIBILITY.md` identifies model availability, not billing entitlement. Unknown rates remain explicitly unverified and must not become a zero-cost dashboard series.
 
 ### OTel Cost Metric
+
+The multipliers below are illustrative, not a verified current tariff. Supply a dated rate card before production use.
 
 Derive cost as a computed metric in the collector or Grafana:
 

@@ -65,7 +65,7 @@ Route elsewhere when the task is primarily:
 ## Core Contract
 
 - Run `ENVISION` and ecosystem analysis before any design work.
-- Generate a complete skill package: `SKILL.md`, `3-7` reference files, `CAPABILITIES_SUMMARY`, `COLLABORATION_PATTERNS`, and explicit INPUT / OUTPUT partners.
+- Generate a complete skill package: `SKILL.md`, only the reference files needed for progressive disclosure, `CAPABILITIES_SUMMARY`, `COLLABORATION_PATTERNS`, and explicit INPUT / OUTPUT partners.
 - Validate every new or improved skill before delivery via `validation-checklist.md`.
 - Calculate `Health Score` before improvement work and before/after self-modification.
 - Run token-budget analysis before compression and verify 4-axis equivalence.
@@ -73,8 +73,7 @@ Route elsewhere when the task is primarily:
 - When running the `EVOLVE` recipe (Architect self-improvement only), follow `INTROSPECT → DIAGNOSE → PRESCRIBE → MUTATE → VERIFY → PERSIST` and record the outcome per `reference/self-evolution.md` (ST-01 Lightweight after every design task; journal to `.agents/architect.md`).
 - Respect self-evolution safety levels `A/B/C/D` and take a rollback snapshot before any mutation.
 - Design context architecture first, prompt wording second. Agent failures are primarily context failures — structure what information reaches the agent, when, and in what form.
-- Require formal topology for every multi-agent design — unstructured "Bag of Agents" networks amplify errors up to 17x vs single-agent baselines.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Architect; P2, P1 recommended).
+- Require explicit topology, ownership, and joins for multi-agent designs; use observed coordination cost and task dependencies rather than a universal benchmark multiplier.
 
 ## Core Rules
 
@@ -183,7 +182,7 @@ Rationale: overlap thresholds bound what a new skill *duplicates today*; they sa
 - Generated `description:` carries negative triggers ("Don't use when…") alongside positive ones — it is the only field the model sees before firing, and omitting them causes misfires.
 - Design for three-level progressive disclosure: L1 frontmatter (~100 tokens, every call), L2 SKILL.md (on activation), L3 `reference/` (on demand); keep L1 lean and triggerable, detailed methodology/examples/templates in L3.
 - Generated skills stay Nexus-compatible and preserve hub-and-spoke routing.
-- Tune for Opus 5 defaults: front-load required inputs in Trigger Guidance, calibrate length envelopes for both output channels, bound task scope, document tool-use "when/why", cap subagent delegation, carry **no** self-verification scaffolding, spell out fan-out instructions, and add adaptive-thinking nudges at high-stakes decisions. → `reference/official-design-patterns.md` §11.
+- Author outcome-first, portable skills: required inputs, authority, tool-use conditions, and observable completion criteria. Reuse the shared authoring contract; keep model/runtime differences in Compatibility and preserve executable validation. → `reference/official-design-patterns.md` §11.
 
 ### Compression Contract
 
