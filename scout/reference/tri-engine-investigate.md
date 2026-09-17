@@ -1,14 +1,10 @@
 # Multi-Engine Parallel Investigation (Scout Delta)
 
-> **Filename retained** as `tri-engine-investigate.md` for backward compatibility. Covers both dual-engine baseline (Claude + Codex) and tri-engine optional (Claude + Codex + agy) modes.
+Shared engine selection, capability/authorization gates, dispatch, capture, attribution and degraded-mode policy: `_common/MULTI_ENGINE_RECIPE.md` and `_common/CLI_COMPATIBILITY.md`. This reference defines only the domain payload and integration rules.
 
 Default flow for `/scout multi`. Run subagents in parallel — one per AVAILABLE engine — as independent RCA subagents, integrate hypotheses across both axes (confidence + perspective), and deliver a **Pattern H — Hybrid** investigation report that ships a primary root cause backed by consensus while preserving well-reasoned alternative hypotheses as verification-recommended branches.
 
 Activate on an explicit `multi` request, an explicit request for parallel/cross-engine RCA, or after the default `bug` Recipe has stalled across three hypotheses. Automatic promotion exists to break hypothesis lock-in, not to replace focused single-engine debugging for an obvious cause.
-
-**Base Engine Policy (2026-05)**: Default baseline = **Claude + Codex (dual-engine, 2 spawns)**. agy adds a third axis (tri-engine, 3 spawns) when AVAILABLE at PREFLIGHT. dual-engine mode is NOT degraded — Codex sandbox-execution priors + Claude judgment break the most common hypothesis lock-in cases. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
-
-**Why multiple engines for RCA (Pattern H, not Pattern C):** A single-engine RCA is structurally prone to hypothesis lock-in — once an engine commits to a causal chain, downstream evidence is filtered through that frame. Independent fan-out across engines with non-overlapping training-data priors (Codex/GitHub-heavy + Claude/Anthropic-curated as dual-engine baseline; Antigravity/Google-product-heavy when AVAILABLE) breaks the lock and surfaces alternative root cause hypotheses that the primary engine never considered. **Concurrence raises confidence on the primary RCA; divergence is not noise — it preserves the alternative hypothesis space for parallel verification.** Scout's downstream (Builder) does not write code from a single committed RCA — it receives a primary-plus-alternative bundle with explicit verification ordering.
 
 **This file specifies Scout-specific deltas only.** Read `_common/MULTI_ENGINE_RECIPE.md` first for shared mechanics:
 
@@ -16,7 +12,7 @@ Activate on an explicit `multi` request, an explicit request for parallel/cross-
 - `§Canonical Flow` — SCOPE → PREFLIGHT → FAN-OUT → NORMALIZE → CLUSTER → SCORE → GROUND → SYNTHESIZE → DELIVER skeleton
 - `§PREFLIGHT` — engine availability probe (run in Scout main context only)
 - `§FAN-OUT` — Agent tool dispatch, loose-prompt rule, runtime-failure detection (`agy` silent-failure pattern)
-- `§Degraded Modes` — baseline fallback table; Scout-specific overrides below
+- `§Engine Availability Modes` — baseline fallback table; Scout-specific overrides below
 - `§Engine-Attribution Tag Convention` — base tag formats
 
 ---
@@ -25,7 +21,7 @@ Activate on an explicit `multi` request, an explicit request for parallel/cross-
 
 ### 1. SCOPE — RCA-specific inputs
 
-All three subagents share:
+All selected subagents share:
 
 - Symptom and observed behavior (verbatim error message, stack trace, log lines)
 - Reproduction status (reproduced / partially reproduced / not reproduced) and minimal repro if available
@@ -147,33 +143,25 @@ The multi-engine report extends `reference/output-format.md` with:
 
 ## Scout Subagent Prompt Skeleton
 
-Use the Agent tool three times in the same message. Each subagent receives:
+Use the canonical spawn/capture template in `_common/CLI_COMPATIBILITY.md` with the JSON schema in this reference. Spawn once per selected available engine, not a fixed three. Add these domain fields; the main context owns normalization, grounding and synthesis.
 
-```
-You are the {engine} investigation subagent for Scout.
+**Role:**
+Independently perform root cause analysis for the bug below. You are one of the selected engines working in parallel — do not aim for exhaustiveness; surface the root cause hypotheses your training data suggests are most plausible. Genuinely different hypotheses across engines are valuable; do not anchor to the most obvious explanation.
 
-# Role
-Independently perform root cause analysis for the bug below. You are one of three engines working in parallel — do not aim for exhaustiveness; surface the root cause hypotheses your training data suggests are most plausible. Genuinely different hypotheses across engines are valuable; do not anchor to the most obvious explanation.
-
-# Symptom
+**Symptom:**
 {Verbatim error message, stack trace, log lines, behavioral description}
 
-# Reproduction state
+**Reproduction state:**
 {reproduced | partially reproduced | not reproduced}
 {Minimal repro steps if available}
 
-# Environment
+**Environment:**
 {Runtime, version, deployment context}
 
-# Ruled-out hypotheses (do not re-traverse)
+**Ruled-out hypotheses (do not re-traverse):**
 {List from prior single-engine investigation if multi mode was auto-promoted, with elimination evidence}
 
-# Output format
-Return ONLY JSON matching this exact schema (no commentary outside the JSON):
-
-{JSON schema from §3}
-
-# Constraints
+**Constraints:**
 - Return 1-3 hypotheses. Single-hypothesis is acceptable for high-conviction cases; multiple are preferred for ambiguous symptoms.
 - Each `root_cause_hypothesis` must name a SYSTEMIC cause, not a surface symptom and not "human error".
 - Each `causal_chain` must trace trigger → state transition → failure. No hand-waving steps.
@@ -181,26 +169,12 @@ Return ONLY JSON matching this exact schema (no commentary outside the JSON):
 - Each hypothesis must include `reproduction_steps` even if speculative — label as "speculative repro" if unverified.
 - Confidence is 0.0-1.0 numeric. Calibrate honestly; the integration step downgrades over-confident outputs.
 - Do not write fix code — RCA only.
-- Open with the deliverable (no completion preamble).
-```
-
-For Codex / Antigravity subagents, the subagent's first action is `codex exec --full-auto` / `agy -p` (with silent-failure detection per `_common/MULTI_ENGINE_RECIPE.md §3.5`). For the Claude subagent, use the Agent tool with `subagent_type: general-purpose`.
-
----
 
 ## Scout-Specific Degraded-Mode Overrides
 
-Inherits the base table from `_common/MULTI_ENGINE_RECIPE.md §Degraded Modes`. Scout overrides:
+Use `_common/MULTI_ENGINE_RECIPE.md` § Engine Availability Modes and its actual-engine denominator. A healthy Claude+Codex pair is the normal dual-engine baseline, not a 2/3 degraded result.
 
-| Situation | Scout behavior |
-|-----------|----------------|
-| 1 engine binary missing | All clusters cap at `LIKELY` (2/3 ceiling); GROUND must be stricter for surviving CANDIDATEs |
-| 2 engines fail | Every hypothesis is `CANDIDATE` and must be `VERIFIED` to ship as Primary; Alternative Hypotheses section omitted (no divergence to preserve from a single engine) |
-| All 3 fail | Degrade to default `bug` Recipe |
-| Symptom is a known pattern (e.g., null deref with obvious cause) | Optionally skip multi; recommend default Recipe |
-| Reproduction requires production data | Multi mode still useful for hypothesis breadth, but GROUND produces many `NEEDS-INFO` verdicts; flag in report |
-
----
+With one usable engine, every hypothesis begins CANDIDATE; a primary still requires the grounding/reproduction gates. Do not fabricate an independent alternative. With zero, use `bug`. Production-data-dependent reproduction remains NEEDS-INFO unless authorized evidence is available.
 
 ## Cross-References
 

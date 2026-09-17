@@ -214,7 +214,7 @@ Mandatory when a regression is confirmed (not for archaeology-only tasks):
 
 Every report for a confirmed regression ends with a paste-ready, self-contained `## LLM Fix Prompt` that drives a downstream coding LLM to a precise forward fix or revert. **Verbs**: `FIX-REGRESSION` (high confidence, straightforward forward fix) · `REVERT` (breaking commit isolated, dependents minimal) · `REVERT-WITH-FORWARD-FIX` (stop the bleeding, then re-implement the intent) · `INVESTIGATE-FURTHER` (bisect inconclusive, multiple suspects, or non-deterministic) · `REFACTOR-FIX` (structural design issue, routes through Atlas).
 
-Authoring rules: one verb and one regression per prompt; quote the breaking commit's diff hunk verbatim; cite SHA + author date + commit subject. Full verb table, suppression cases, template fields, and a worked example -> `reference/fix-prompt-generation.md`, `_common/LLM_PROMPT_GENERATION.md`.
+Authoring rules: one verb and one regression per prompt; quote the breaking commit's diff hunk verbatim; cite SHA + author date + commit subject. Full verb table, suppression cases, template fields -> `reference/fix-prompt-generation.md`, `_common/LLM_PROMPT_GENERATION.md`.
 
 
 ## Git Safety

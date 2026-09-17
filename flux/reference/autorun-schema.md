@@ -19,7 +19,7 @@ _STEP_COMPLETE:
       blind_spots_detected: "[count]"
       serendipity_injections: "[count]"
     tri_engine:                                  # present only when `multi` Recipe ran
-      engines_run: [codex, agy, claude]
+      engines_run: [actual usable engines]  # authorized and actually invoked
       engines_failed: [list or none]
       merge_strategy: "[Portfolio | Compete]"   # Portfolio is the default for Flux
       concurrence_distribution:
@@ -41,6 +41,6 @@ _STEP_COMPLETE:
     - [Blind Spot Report]
   Risks:
     - [Risk 1]
-  Next: Magi | Spark | Magi | Atlas | Lore | DONE
+  Next: Magi | Spark | Atlas | Lore | DONE
   Reason: [Why this next step]
 ```

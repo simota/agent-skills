@@ -85,7 +85,6 @@ Route elsewhere when:
 - **Use Mutation Score as the ceiling, not Coverage.** Coverage is a Goodhart-vulnerable floor metric. Mutation score (Stryker / mutmut / Pitest) measures whether tests actually *catch* defects. Thresholds: `break: 50`, `low: 60`, `high: 80`. Scope mutation gates to changed files to keep CI under 5 minutes.
 - **FlakyGuard-class discipline for flaky tests.** Never auto-fix in a CI loop — propose a diff to a human-reviewable branch. Six-class root-cause taxonomy → `reference/flaky-test-guide.md`.
 - **Metamorphic Relations solve the Oracle Problem.** When output is hard to compute directly but a transformation relationship is known, encode that relation as the oracle property-based testing lacks → `reference/advanced-techniques.md`.
-- Full rationale, examples, and sources for the five bullets above → `reference/testing-research-rationale.md`.
 - Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
@@ -119,7 +118,6 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Train teams to ignore test results by leaving flaky tests in the main pipeline — quarantine immediately and fix in dedicated sessions.
 - Let AI agents auto-fix flaky failures in CI loops without verifying flaky vs. real regression first.
 
-Full rationale and sources for the above → `reference/boundaries-rationale.md`.
 
 ## Agent-Readable Test Output
 
@@ -198,7 +196,6 @@ Additional layers:
 - Snapshot testing only for stable, intentional output shapes.
 - AI-assisted test generation for edge-case discovery.
 
-Tooling, version detail, benchmark data, and sources for the layers above → `reference/testing-research-rationale.md`.
 
 ## Critical Constraints
 
@@ -212,7 +209,6 @@ Tooling, version detail, benchmark data, and sources for the layers above → `r
 - Prefer `waitFor`, `findBy*`, retries with context, and deterministic clocks over sleeps.
 - Quarantine flaky tests out of the main CI/CD pipeline immediately; schedule dedicated fix sessions rather than deprioritizing against feature work.
 
-Benchmarks, prevalence data, and sources for every threshold above → `reference/testing-research-rationale.md`.
 
 ## Output Routing
 
@@ -273,8 +269,6 @@ Mode-specific additions:
 | `reference/async-testing-patterns.md` | Testing async flows, streams, races, and timeout-heavy code |
 | `reference/framework-deep-patterns.md` | Using advanced framework-specific features |
 | `reference/testing-anti-patterns.md` | Auditing test quality and common test smells |
-| `reference/testing-research-rationale.md` | The full rationale, benchmark data, and sources behind Core Contract, Critical Constraints, or Test Mix bullets. |
-| `reference/boundaries-rationale.md` | The full rationale and sources behind the `Never` list. |
 | `reference/recipe-verify-gates.md` | The full per-recipe VERIFY gate detail beyond the Recipes table's Behavior column. |
 | `reference/ai-assisted-testing.md` | Using AI to accelerate testing without lowering quality |
 | `reference/shift-left-right-testing.md` | Connecting Radar to observability, QAOps, or production feedback loops |
@@ -285,6 +279,7 @@ Mode-specific additions:
 | `_common/CODE_QUALITY.md` | About to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 | `_common/EVIDENCE_LADDER.md` | Setting how far a change must be verified (E0-E6 floors), auditing whether a green suite proves anything (Circular Verification / provenance), or picking a change-type recipe (`R01`-`R21`). |
 | `reference/test-data/` | Designing factories, boundary data, and seed sets (absorbed from `mint`) |
+| `reference/test-data/anonymization.md` | Before exporting or reusing identifying or production-derived fixture/replay data |
 
 ## Operational
 
@@ -300,4 +295,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-

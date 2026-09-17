@@ -254,7 +254,6 @@ When results are already available (Remap mode), also include:
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/quickstart.md` | A fast starter template for test, deploy, or risk planning. |
 | `reference/input-schema.md` | Input arrives as natural language, YAML, JSON, or a table. |
 | `reference/combination-methods.md` | Method definitions, formulas, default reduction guidance. |
 | `reference/optimization-algorithms.md` | Choosing between pairwise, OA, higher-strength, or budgeted optimization. |
@@ -267,7 +266,6 @@ When results are already available (Remap mode), also include:
 | `reference/pairwise-ipog.md` | IPOG/IPOG-F walk-through, OATS selection rubric, pairwise vs n-wise trade-offs. |
 | `reference/equiv-class-bva.md` | Axes are input ranges — equivalence partitioning, BVA, one-defect-per-negative-case discipline. |
 | `reference/risk-weighted-coverage.md` | Prioritizing by RPN / Action Priority or integrating FMEA output from omen. |
-| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Matrix-specific Output/Next schema. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the plan, thinking depth at t-way strength, front-loading domain/axes at SCAN. Critical: P3, P5. |
 | `_common/PROOF_CARRYING.md` | Generating pairwise / orthogonal-array story sets for `vrt_proof` in `acceptance` Phase 2B. Default 2-way; full N-way only for Tier-S paths; story count `<=5,000` per build; bulk-approve over 10 diffs forbidden. |
 
@@ -284,7 +282,7 @@ Agent, Status(SUCCESS|PARTIAL|BLOCKED|FAILED), Output(domain, axes_count, total_
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Matrix-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
+Emit `_STEP_COMPLETE` using `_common/AUTORUN.md` § Default Completion Schema; no skill-specific extension is required.
 
 ## Nexus Hub Mode
 

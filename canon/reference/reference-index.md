@@ -10,7 +10,7 @@ name it, or when scanning what this skill can consult at all.
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/security-standards.md` | OWASP, NIST, or CIS details, and the OWASP Agentic Top 10 list. |
+| `reference/security-standards.md` | Security-standard version selection, canonical sources, OWASP 2025 mapping, and evidence/crosswalk rules. |
 | `reference/accessibility-standards.md` | WCAG, WAI-ARIA, or JIS details. |
 | `reference/api-standards.md` | OpenAPI, JSON Schema, RFC, or GraphQL. |
 | `reference/quality-standards.md` | ISO 25010, 12-Factor, CNCF, or SRE. |

@@ -247,7 +247,6 @@ Experiment receives metric baselines and hypotheses from upstream agents, and de
 | `reference/sample-size-calculator.md` | You need power analysis, calculateSampleSize, or quick reference tables. |
 | `reference/experiment-templates.md` | You need hypothesis document, experiment report, maturity model, or review process templates. |
 | `reference/common-pitfalls.md` | You need peeking, multiple comparisons, SRM detection, network effects, switchback design, or selection bias guidance. |
-| `reference/code-standards.md` | You need good/bad experiment code examples or key rules. |
 | `reference/adaptive-experimentation.md` | You need MAB vs A/B selection, Thompson Sampling, auto-stop rules, or contextual bandits. |
 | `reference/interleaving-tests.md` | You need high-sensitivity ranking tests, Team Draft Interleaving, or search/recommendation testing. |
 | `reference/guardrail-metrics.md` | You need 4-layer metric taxonomy (primary/secondary/counter/guardrail), non-inferiority margin design, stop/ship trigger matrices, Type II handling on underpowered guardrails, or Netflix/Microsoft ExP/Airbnb/Booking portfolio patterns. |
@@ -274,4 +273,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-

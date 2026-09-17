@@ -160,8 +160,8 @@ Behavior notes per Recipe:
 | Signal | Approach | Primary output | Read next |
 | ------ | -------- | -------------- | --------- |
 | `NPS`, `loyalty`, `advocacy`, `promoter` | NPS analysis | NPS survey + report | `reference/nps-survey.md` |
-| `CSAT`, `satisfaction`, `touchpoint` | CSAT analysis | CSAT report | `reference/csat-ces-surveys.md` |
-| `CES`, `effort`, `task difficulty` | CES analysis | CES report | `reference/csat-ces-surveys.md` |
+| `CSAT`, `satisfaction`, `touchpoint` | CSAT analysis | CSAT report | `reference/csat-ces-measurement.md` |
+| `CES`, `effort`, `task difficulty` | CES analysis | CES report | `reference/csat-ces-measurement.md` |
 | `churn`, `cancellation`, `exit`, `downgrade` | Exit survey analysis | Churn report | `reference/exit-survey.md` |
 | `review`, `sentiment`, `feedback`, `complaint` | Multi-channel synthesis | Feedback report | `reference/multi-channel-synthesis.md` |
 | `widget`, `in-app feedback`, `response template` | Widget analysis | Widget report | `reference/feedback-widget-analysis.md` |
@@ -173,7 +173,7 @@ Behavior notes per Recipe:
 Routing rules:
 
 - If the request mentions NPS, loyalty, or advocacy, read `reference/nps-survey.md`.
-- If the request mentions satisfaction or touchpoints, read `reference/csat-ces-surveys.md`.
+- If the request mentions satisfaction or touchpoints, read `reference/csat-ces-measurement.md`.
 - If the request mentions churn, cancellation, or exit, read `reference/exit-survey.md`.
 - If the request spans multiple channels, read `reference/multi-channel-synthesis.md`.
 - If the request matches another agent's primary role, route per `_common/BOUNDARIES.md`.
@@ -226,13 +226,12 @@ Overlap boundaries:
 | File | Read this when... |
 | ---- | ----------------- |
 | `reference/nps-survey.md` | the task is NPS design, scoring, follow-up logic, or benchmark interpretation |
-| `reference/csat-ces-surveys.md` | the task is CSAT or CES design, touchpoint selection, or effort analysis |
+| `reference/csat-ces-measurement.md` | CSAT/CES instrument, scale and denominator selection, follow-up rules, or combined interpretation. |
 | `reference/exit-survey.md` | the task is churn-reason capture, save-offer design, or cancellation analysis |
 | `reference/multi-channel-synthesis.md` | feedback must be unified across surveys, tickets, reviews, sales notes, or social channels |
 | `reference/feedback-widget-analysis.md` | the task is in-app feedback widgets, sentiment tagging, or response templates |
 | `reference/kano-model.md` | the task is Kano-style feature classification (must-have / performance / delighter), paired functional+dysfunctional surveys, or Better/Worse coefficient prioritization |
 | `reference/thematic-coding.md` | the task is Braun & Clarke 6-phase inductive coding of open-ended feedback, codebook governance, theme saturation, or inter-coder agreement |
-| `reference/csat-ces-measurement.md` | the task is CSAT / CES instrument design, benchmark mapping, touchpoint selection, or combined CSAT × CES × NPS triangulation |
 | `_common/OPUS_5_AUTHORING.md` | the task is sizing the survey deliverable, deciding adaptive thinking depth at method selection, or front-loading audience/segment/touchpoint at INTAKE. Critical for Voice: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | You contribute `source_proof` (sentiment-source pointers) and feed multi-channel synthesis into the Insight Ledger queue in `nexus growth-acceptance` Phase 0. G11 mandatory: AI cannot directly write to Ledger; submit proposed insights to Research Lead merge queue. Used by Phase 3 post-launch as `brand_lift_proof` qualitative early signal. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Voice-specific Output/Next schema. |

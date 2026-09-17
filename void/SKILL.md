@@ -257,7 +257,6 @@ Rule: necessity -> `Void`; cleanliness -> `Zen`; unused artifacts -> `Sweep`.
 | [feature-creep-pitfalls.md](reference/feature-creep-pitfalls.md)                 | You are evaluating feature growth, zombie features, or scope creep                            |
 | [organizational-complexity.md](reference/organizational-complexity.md)           | You are pruning process, meetings, reporting, approvals, or document sprawl                   |
 | [\_common/OPUS_5_AUTHORING.md](_common/OPUS_5_AUTHORING.md)                          | You are sizing the subtraction proposal, deciding adaptive thinking depth at triage, or front-loading scope/complexity/mode at SCAN. Critical for Void: P3, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Void-specific Output/Next schema. |
 
 ## Operational
 
@@ -270,7 +269,7 @@ Rule: necessity -> `Void`; cleanliness -> `Zen`; unused artifacts -> `Sweep`.
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Void-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
+Emit `_STEP_COMPLETE` using `_common/AUTORUN.md` § Default Completion Schema; no skill-specific extension is required.
 
 ## Nexus Hub Mode
 

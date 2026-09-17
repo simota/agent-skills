@@ -190,7 +190,7 @@ Mandatory when actionable modes exist (suppress for plan-review-only or all-acce
 
 ## LLM Fix Prompt Generation
 
-Every Omen pre-mortem with at least one actionable failure mode ends with paste-ready `## LLM Fix Prompt` blocks — self-contained prompts that drive the receiving agent (Builder for guardrails, Beacon for monitoring, Triage/Mend for runbooks) toward a precise mitigation without manual reformulation. Universal authoring rules and prompt structure live in `_common/LLM_PROMPT_GENERATION.md`; Omen-specific verbs, suppression cases, template fields, and a worked example live in `reference/fix-prompt-generation.md`.
+Every Omen pre-mortem with at least one actionable failure mode ends with paste-ready `## LLM Fix Prompt` blocks — self-contained prompts that drive the receiving agent (Builder for guardrails, Beacon for monitoring, Triage/Mend for runbooks) toward a precise mitigation without manual reformulation. Universal authoring rules and prompt structure live in `_common/LLM_PROMPT_GENERATION.md`; Omen-specific verbs, suppression cases, template fields live in `reference/fix-prompt-generation.md`.
 
 | Verb | Use when | Receiving agent |
 |------|----------|----------------|

@@ -22,5 +22,4 @@ name it, or when scanning what this skill can consult at all.
 | `reference/advanced-tool-use.md` | The tool catalog is the bottleneck (`>=10` tools or `>10k` tokens of definitions, falling selection accuracy, aggregated MCP servers). Covers tool search, `defer_loading`, programmatic calling, the advisor tool. |
 | `reference/human-ai-trust.md` | A human decides whether to accept the output — explanation design, over/underreliance and sycophancy metrics, the disagreement policy, verification affordances by risk class, escalation-to-human. |
 | `reference/agent-behavior-contract.md` | How much role, policy, memory, relationship, and character an agent needs — necessity axes, budgets, invariant/parameter/state, spec vs prompt vs enforcement, drift. |
-| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Oracle-specific Output/Next schema. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the design, thinking depth at DESIGN, front-loading use case/budget/tier at PROFILE. Critical: P3, P5. |

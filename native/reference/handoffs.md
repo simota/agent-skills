@@ -1,184 +1,27 @@
-# Handoff Templates
+# Native Handoff Contracts
 
-**Purpose:** Input / output handoff templates for the Native agent.
-**Read when:** A handoff format is required for collaboration with another agent.
+Read only the row for the selected recipient. Shared envelope, ownership and delivery semantics: `_common/HANDOFF.md`. Values must describe the actual Swift/SwiftUI or Kotlin/Compose project, installed toolchain and verified artifacts, not a fictitious app or a cached minimum version.
 
----
+## Incoming
 
-## Incoming Handoffs
+| Marker | Required domain payload |
+|---|---|
+| `PORT_TO_NATIVE_HANDOFF` | Consume the canonical schema in `../port/reference/handoffs.md`: blueprint, parity matrix, architecture map, screen specifications and platform defaults. Do not substitute a prototype summary. |
+| `FORGE_TO_NATIVE_HANDOFF` | `prototype_url`, `target_platforms`, `framework`, `validated_patterns` (navigation/state/data), `prototype_quality` (L0–L3), `known_issues`, `handoff_notes`. A cross-platform prototype is evidence/input, not permission to implement that framework. |
+| `VISION_TO_NATIVE_HANDOFF` | `design_direction`, `platform_considerations` (ios/android), `key_screens` (name/description), `interaction_patterns`, `references`. |
+| `BUILDER_TO_NATIVE_HANDOFF` | `api_specification` (base_url/auth/endpoints with method/path/request_type/response_type), `shared_types` (path/description), `error_handling`, `notes`. Pass credential references only. |
 
-### FORGE_TO_NATIVE_HANDOFF
+## Outgoing
 
-```yaml
-FORGE_TO_NATIVE_HANDOFF:
-  prototype_url: "[Prototype location or repo path]"
-  target_platforms:
-    - iOS
-    - Android
-  framework: "React Native | Flutter | SwiftUI | Compose"
-  validated_patterns:
-    - navigation: "Stack with 3 screens validated"
-    - state: "Cart state with Zustand prototype"
-    - data: "REST API mock with MSW"
-  prototype_quality: "L1"  # L0=builder, L1=functional, L2=polished, L3=near-production
-  known_issues:
-    - "Android back button not handled"
-    - "Offline state not considered"
-  handoff_notes: "UI validated with stakeholders, business logic needs production hardening"
-```
+| Marker | Required domain payload |
+|---|---|
+| `NATIVE_TO_RADAR_HANDOFF` | `test_scope` (component or flow, type, installed framework, key_scenarios), `platform_specific_tests` (ios/android), `mock_data_location`. Radar owns unit/integration assertions; browser/mobile E2E execution routes to Voyager. |
+| `NATIVE_TO_GEAR_HANDOFF` | `ci_cd_requirements` (build/test/deploy by platform), `environment_variables` (names and secret-store references, never values), `fastlane_lanes` only when the project uses Fastlane. Carry signing/provisioning requirements without credentials; do not prescribe Expo, EAS, Jest or OTA for pure-native delivery. |
+| `NATIVE_TO_LAUNCH_HANDOFF` | `app_version`, `build_number`, `platforms` (ios: min_os/bundle_id/build_artifact/signing; android: min_sdk/package/build_artifact/signing), `store_compliance` (privacy/iap/content with evidence and unresolved items), `release_notes` by locale, `rollout_plan`, `feature_flags`, `rollback_plan`. Distinguish halt/flag-off/hotfix from an unsupported promise of instantly reverting a released store binary. |
+| `NATIVE_TO_VITRINE_HANDOFF` | `components` (name/path/variants/interface schema), actual native preview/catalog configuration and `preview_notes`. `NATIVE_TO_SHOWCASE_HANDOFF` is the legacy name; route existing input to Vitrine, never revive a retired skill or generate React Native stories for a pure-native component. |
 
-### VISION_TO_NATIVE_HANDOFF
+## Release Evidence
 
-```yaml
-VISION_TO_NATIVE_HANDOFF:
-  design_direction: "[Design concept summary]"
-  platform_considerations:
-    ios: "SF Symbols, native feel, bottom sheet modals"
-    android: "Material 3 tokens, top app bar, FAB"
-  key_screens:
-    - name: "Home"
-      description: "[Screen description]"
-    - name: "Detail"
-      description: "[Screen description]"
-  interaction_patterns:
-    - "Swipe-to-dismiss for modals"
-    - "Pull-to-refresh on lists"
-    - "Haptic feedback on key actions"
-  references:
-    - "[Figma URL or design asset path]"
-```
-
-### BUILDER_TO_NATIVE_HANDOFF
-
-```yaml
-BUILDER_TO_NATIVE_HANDOFF:
-  api_specification:
-    base_url: "[API base URL]"
-    auth: "Bearer token / API key"
-    endpoints:
-      - method: GET
-        path: "/api/v1/products"
-        response_type: "Product[]"
-      - method: POST
-        path: "/api/v1/cart/items"
-        request_type: "AddCartItemRequest"
-        response_type: "CartItem"
-  shared_types:
-    - path: "src/types/product.ts"
-      description: "Product domain types"
-  error_handling:
-    - "4xx: show user-friendly message"
-    - "429: exponential backoff"
-    - "5xx: retry with circuit breaker"
-  notes: "API supports ETag for caching, use for offline sync"
-```
-
----
-
-## Outgoing Handoffs
-
-### NATIVE_TO_RADAR_HANDOFF
-
-```yaml
-NATIVE_TO_RADAR_HANDOFF:
-  test_scope:
-    - component: "CartScreen"
-      type: "unit"
-      framework: "jest + @testing-library/react-native"
-      key_scenarios:
-        - "Empty cart displays placeholder"
-        - "Add item updates count badge"
-        - "Offline queue shows pending indicator"
-    - flow: "Checkout"
-      type: "e2e"
-      framework: "detox | maestro"
-      key_scenarios:
-        - "Complete purchase flow"
-        - "Payment failure recovery"
-  platform_specific_tests:
-    ios:
-      - "Face ID permission flow"
-    android:
-      - "Back button navigation"
-  mock_data_location: "src/__mocks__/fixtures/"
-```
-
-### NATIVE_TO_LAUNCH_HANDOFF
-
-```yaml
-NATIVE_TO_LAUNCH_HANDOFF:
-  app_version: "1.2.0"
-  build_number: "42"
-  platforms:
-    ios:
-      min_os: "16.0"
-      bundle_id: "com.example.myapp"
-      build_artifact: "MyApp.ipa"
-      signing: "App Store Distribution"
-    android:
-      min_sdk: 24
-      package: "com.example.myapp"
-      build_artifact: "app-release.aab"
-      signing: "Play App Signing"
-  store_compliance:
-    privacy:
-      - "PrivacyInfo.xcprivacy updated"
-      - "Data safety form matches implementation"
-    iap:
-      - "All subscriptions tested in sandbox"
-      - "Restore button accessible from settings"
-    content:
-      - "Age rating: 4+ (no user-generated content)"
-  release_notes:
-    ja: |
-      - <JA translation: offline cart support>
-      - <JA translation: push notification integration>
-      - <JA translation: performance improvements>
-    en: |
-      - Offline cart support
-      - Push notification integration
-      - Performance improvements
-  rollback_plan: "Revert to build 41 via Fastlane if critical issues found"
-```
-
-### NATIVE_TO_GEAR_HANDOFF
-
-```yaml
-NATIVE_TO_GEAR_HANDOFF:
-  ci_cd_requirements:
-    build:
-      ios: "EAS Build or Xcode Cloud"
-      android: "EAS Build or Gradle"
-    test:
-      unit: "jest --ci"
-      e2e: "maestro test flows/"
-    deploy:
-      staging: "EAS Update (OTA) to preview channel"
-      production: "EAS Submit to App Store Connect / Google Play Console"
-  environment_variables:
-    - "EXPO_PUBLIC_API_URL"
-    - "SENTRY_DSN"
-    - "GOOGLE_SERVICES_JSON (secret)"
-    - "APPLE_TEAM_ID (secret)"
-  fastlane_lanes:
-    - "beta: build + deploy to TestFlight/Internal Testing"
-    - "release: build + submit for review"
-```
-
-### NATIVE_TO_SHOWCASE_HANDOFF
-
-```yaml
-NATIVE_TO_SHOWCASE_HANDOFF:
-  components:
-    - name: "ProductCard"
-      path: "src/components/ProductCard.tsx"
-      variants: ["default", "compact", "skeleton"]
-      props_schema: "src/components/ProductCard.types.ts"
-    - name: "CartBadge"
-      path: "src/components/CartBadge.tsx"
-      variants: ["empty", "count", "offline-pending"]
-  storybook_config:
-    platform: "react-native"
-    addons: ["@storybook/addon-react-native-web"]
-  preview_notes: "Use Expo Go or development build for native preview"
-```
+- Use `reference/store-compliance.md` for applicable policy checks, and `reference/release-rollout.md` for rollout/halt controls; their requirements are not duplicated here.
+- Unknown or unverified compliance checks remain unknown/unverified. Never paste sample `OK`, age ratings, SDK deadlines, test metrics or build identifiers as observations.
+- A handoff does not authorize deployment, external publication, signing changes, data export or additional spending. Preserve pending approvals and failed checks in the shared envelope.

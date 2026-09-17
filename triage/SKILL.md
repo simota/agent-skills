@@ -267,7 +267,6 @@ Routing rules:
 | `reference/escalation-matrix.md` | Designing the tiered escalation policy: on-call rotation, paging thresholds, auto-escalation timers, handoff scripts, after-hours rules, or PagerDuty / Opsgenie / VictorOps integration. |
 | `reference/incident-communications.md` | Authoring stakeholder-specific incident templates: internal engineering / leadership / sales / support, external status page, customer notices, social updates, with SEV-based cadence and legal-review hooks. |
 | `_common/OPUS_5_AUTHORING.md` | Calibrating tool-use eagerness at DETECT, deciding adaptive thinking depth at CLASSIFY, or sizing the postmortem. Critical for Triage: P3, P5. |
-| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Triage-specific Output/Next schema. |
 
 ## Daily Process
 
@@ -289,7 +288,7 @@ Execution loop: `SURVEY → PLAN → VERIFY → PRESENT`
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Triage-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
+Emit `_STEP_COMPLETE` using `_common/AUTORUN.md` § Default Completion Schema; no skill-specific extension is required.
 
 ## Nexus Hub Mode
 

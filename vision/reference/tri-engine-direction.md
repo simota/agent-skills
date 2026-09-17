@@ -1,14 +1,8 @@
 # Multi-Engine Design Direction
 
-> **Filename retained** as `tri-engine-direction.md` for backward compatibility. Covers both dual-engine baseline (Claude + Codex) and tri-engine optional (Claude + Codex + agy) modes.
+Shared engine selection, capability/authorization gates, dispatch, capture, attribution and degraded-mode policy: `_common/MULTI_ENGINE_RECIPE.md` and `_common/CLI_COMPATIBILITY.md`. This reference defines only the domain payload and integration rules.
 
 Default flow for `/vision multi`. Run subagents in parallel — one per AVAILABLE engine — to generate **divergent UX/design directions** for the same brief, integrate results across two axes (concurrence + divergence), and deliver a **Portfolio of complementary directions** that the user selects between before downstream handoff to Muse / Palette / Flow / Forge.
-
-**Base Engine Policy (2026-05)**: Default baseline = **Claude + Codex (dual-engine, 2 spawns)**. agy adds a third axis (tri-engine, 3 spawns) when AVAILABLE at PREFLIGHT. For Vision the agy uplift is meaningful (Material 3 Expressive / Google design-language coverage); dual-engine still covers GitHub component libraries (Codex) + editorial-brand aesthetics (Claude). See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
-
-**Why multiple engines for design direction (Pattern D — Divergence-primary):** Vision's value is *breadth of aesthetic and interaction priors*. Codex (GitHub-heavy training, dev-tooling and component-library exposure) + Claude (Anthropic-curated corpus, broader editorial/brand references) form the dual-engine baseline carrying non-overlapping design-trend training data. Antigravity (Google product corpus, Material 3 Expressive, MD-style restraint) adds the third axis when AVAILABLE. A unanimous direction (2/2 dual / 3/3 tri) is a **safe, broadly recognized aesthetic**; a divergent direction (1/2 dual / 1/3 tri) is often a **brand-defining breakthrough** — the angle only one engine surfaced.
-
-**Adapted from `_common/MULTI_ENGINE_RECIPE.md` (canonical Pattern D protocol) and `spark/reference/tri-engine-proposal.md` (Pattern D reference implementation). Re-uses SCOPE / PREFLIGHT / FAN-OUT / NORMALIZE / CLUSTER mechanics; specializes SCORE / GROUND / SYNTHESIZE for design-direction Portfolio output.**
 
 ---
 
@@ -20,7 +14,7 @@ SCOPE → PREFLIGHT → FAN-OUT (parallel subagents) → NORMALIZE → CLUSTER �
 
 ### 1. SCOPE
 
-Define the design brief once. All three subagents share the same scope:
+Define the design brief once. All selected subagents share the same scope:
 
 - Operating mode (`REDESIGN` / `NEW_PRODUCT` / `TREND_APPLICATION` / `LINEAR_RESTRAINT` / `SPATIAL` / `AI_INTERFACE`)
 - Product surface (marketing site / SaaS dashboard / mobile app / spatial / AI agent UI)
@@ -38,11 +32,11 @@ Use the canonical probe from `_common/MULTI_ENGINE_RECIPE.md §2`. Probe `codex`
 
 ### 3. FAN-OUT — parallel subagents
 
-Spawn **three Agent calls in a single message** for genuine parallel execution. Each subagent has independent context and generates **2–3 design directions** for the brief.
+Dispatch one independent task per selected, authorized engine using the shared CLI adapter for genuine parallel execution. Each subagent has independent context and generates **2–3 design directions** for the brief.
 
 | Subagent | Engine | Baseline command |
 |----------|--------|------------------|
-| `direction-codex` | Codex CLI | `codex exec --full-auto "<prompt>"` |
+| `direction-codex` | Codex CLI | Authorized invocation via `_common/CLI_COMPATIBILITY.md` |
 | `direction-agy` | Antigravity CLI | Authorized headless/native dispatch → `_common/CLI_COMPATIBILITY.md` §9; validate outputs under `_common/MULTI_ENGINE_RECIPE.md` §3.5 |
 | `direction-claude` | Claude Code CLI (subagent) | Agent tool with `subagent_type: general-purpose` |
 
@@ -96,7 +90,7 @@ If an engine returns free-form Markdown, ask its subagent to re-emit as JSON bef
 
 ### 4. NORMALIZE
 
-Parse the three JSON blobs into a unified direction list. Tag each direction with its source engine. Preserve per-engine wording — different phrasings of the same `aesthetic_language` may reveal different angles on the same concept.
+Parse the usable JSON outputs into a unified direction list. Tag each direction with its source engine. Preserve per-engine wording — different phrasings of the same `aesthetic_language` may reveal different angles on the same concept.
 
 ### 5. CLUSTER — same direction across engines
 
@@ -214,15 +208,12 @@ The user selects one direction from the Portfolio; the selected direction's hand
 
 ## Parallel Subagent Prompt Skeleton
 
-Use the Agent tool three times **in the same message** for genuine parallel execution. Each subagent receives a self-contained prompt:
+Use the canonical spawn/capture template in `_common/CLI_COMPATIBILITY.md` with the JSON schema in this reference. Spawn once per selected available engine, not a fixed three. Add these domain fields; the main context owns normalization, grounding and synthesis.
 
-```
-You are the {engine} design-direction subagent for Vision.
+**Role:**
+Generate {N=2-3} design directions for the brief below. You are one of the selected engines working independently — do not try to be exhaustive; surface what your aesthetic training-data priors suggest is most promising. Diverge from safe defaults if your training data points to a stronger angle.
 
-# Role
-Generate {N=2-3} design directions for the brief below. You are one of three engines working independently — do not try to be exhaustive; surface what your aesthetic training-data priors suggest is most promising. Diverge from safe defaults if your training data points to a stronger angle.
-
-# Target
+**Target:**
 - Operating mode: {REDESIGN | NEW_PRODUCT | TREND_APPLICATION | LINEAR_RESTRAINT | SPATIAL | AI_INTERFACE}
 - Product surface: {marketing site | SaaS dashboard | mobile app | spatial | AI agent UI}
 - Brand anchor: {existing palette, typography, voice keywords, anti-keywords — or "open"}
@@ -231,12 +222,7 @@ Generate {N=2-3} design directions for the brief below. You are one of three eng
 - Constraints: WCAG 2.2 AA mandatory; {brand locks}; {platform limits}
 - Forbidden directions: {explicit anti-patterns or off-brand aesthetics — or "none"}
 
-# Output format
-Return ONLY JSON matching this exact schema (no commentary outside the JSON):
-
-{JSON schema from §3}
-
-# Constraints
+**Constraints:**
 - Each direction names a concrete CONCEPT, not a generic adjective ("Quiet Industrial" not "Modern")
 - Each direction occupies a specific spectrum_position — name it
 - Each direction includes at least 3 concrete reference_style_influences (real products, movements, OS design languages)
@@ -246,33 +232,12 @@ Return ONLY JSON matching this exact schema (no commentary outside the JSON):
 - If mode = AI_INTERFACE: every direction MUST populate interaction_language.ai_disclosure_pattern with explainability AND user override
 - Do not write implementation code — direction documents only
 - Do not invent brand names or design movements; if you cite a reference, it must be a real, identifiable artifact
-- Open with the deliverable (no completion preamble)
-```
-
-The three subagents return JSON; Vision main context handles NORMALIZE through DELIVER.
-
----
 
 ## Degraded Modes
 
-| Situation | Behavior |
-|-----------|----------|
-| 1 engine binary missing | Run the other two; note reduced aesthetic-breadth in Portfolio header; `VERIFIED-DIVERGENT` directions from the single remaining engine require stricter brand/a11y grounding |
-| 2 engines fail | Single-engine Portfolio (2–3 directions from one engine); flag reduced confidence and recommend the user request a re-run when other engines are available |
-| All 3 fail | Abort `multi`; degrade to default `direction` Recipe with Vision main context |
-| User explicitly requests single direction | Skip Portfolio; use `multi --compete` Compete merge OR fall back to default `direction` Recipe |
-| Scope obviously trivial (e.g., "pick a button color") | Skip multi; recommend `direction` Recipe |
+Use `_common/MULTI_ENGINE_RECIPE.md` § Engine Availability Modes and its actual-engine denominator. A healthy Claude+Codex pair is the normal dual-engine baseline, not a 2/3 degraded result.
 
----
-
-## Why Pattern D (Portfolio-only) Fits Vision
-
-- **Vision does not write code.** The downstream contract is a *direction document* selected by a human. Collapsing three engines into one "winner" erases the breadth that makes multi-engine ideation valuable for design.
-- **Aesthetic spectrum coverage is the quality signal**, not engine agreement. A Portfolio with `UNIVERSAL minimalist` + `VERIFIED-DIVERGENT brutalist` gives the team a real strategic choice. A Compete-merged single direction would arbitrarily silence the divergence.
-- **The user owns brand identity**, not the agent. Vision's job is to surface defensible options with clear trade-offs, then hand off to Muse/Palette/Flow/Forge once a direction is selected.
-- **Vision's brand-fit / a11y / AI-trust guardrails apply in SYNTHESIZE, not at FAN-OUT.** Letting engines run loose maximizes aesthetic divergence; brand and accessibility enforcement happens centrally in GROUND.
-
----
+With one usable engine, a 2–3 direction portfolio may still be offered but must be labeled single-engine; preserve user selection and brand/a11y grounding. With zero, use `direction`. An explicitly requested single direction routes to the ordinary recipe rather than inventing a portfolio winner.
 
 ## Cross-References
 
@@ -286,7 +251,6 @@ The three subagents return JSON; Vision main context handles NORMALIZE through D
 - `vision/reference/agent-orchestration.md` — Muse / Palette / Flow / Forge / Frame handoff contracts that downstream stubs feed
 - `vision/reference/output-formats.md` — direction-card and Portfolio document templates
 
-
 ---
 
 # Multi-Engine Mode (SKILL.md excerpt)
@@ -299,4 +263,3 @@ Activated by the `multi` Recipe (or any explicit request for parallel design-dir
 - **Aesthetic-spectrum coverage (Vision-specific second axis)**: surviving directions span ≥2 `spectrum_position` values (modernist · minimalist · brutalist · expressive · calm · spatial · …), with at least one opposite the most-concurrent direction. `LINEAR_RESTRAINT` suppresses maximalist/brutalist; `SPATIAL` requires spatial coverage; `AI_INTERFACE` requires `interaction_language.ai_disclosure_pattern` on every direction.
 - **Merge**: `Portfolio` (default) — 3–5 complementary direction cards ordered UNIVERSAL → LIKELY → VERIFIED-DIVERGENT, each with principles / aesthetic + interaction language / references / persona fit / outcome link / risk areas / downstream handoff stubs (Muse/Palette/Flow/Forge/Frame/Prose), plus a lead-recommendation + challenger footer (`docs/design/PORTFOLIO-direction-[topic]-[date].md`). `Compete` (opt-in via `multi --compete`) — a single re-mixed direction (`docs/design/DIRECTION-[name].md`). Portfolio is default because Vision writes no code and direction is a human selection decision — collapsing to one winner erases the aesthetic breadth that makes multi-engine valuable.
 - **Engine-attribution tag (mandatory on every shipped direction)**: `[codex+agy+claude]` (3/3) / `[codex+agy]` etc. (2/3) / `[codex-verified]` (1/3 verified-divergent).
-

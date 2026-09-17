@@ -239,11 +239,11 @@ Guardian classifies/structures; Judge evaluates code quality. Guardian recommend
 ## Reference Map
 
 Load only references relevant to the active decision:
-- **Commits/history:** `commit-conventions.md`, `commit-analysis.md`, `history-audit.md`, `history-reshape.md`, `squash-optimization.md`
-- **PR workflow:** `pr-workflow-patterns.md`, `pr-quality-scoring.md`, `pr-split-strategy.md`, `pr-ship-flow.md`, `branching-strategies.md`, `branch-health.md`
-- **Risk/verification:** `risk-assessment.md`, `security-analysis.md`, `predictive-quality-gate.md`, `coverage-integration.md`
-- **Automation/runtime:** `git-automation.md`, `git-recipes.md`, `autorun-mode.md`, `autorun-schema.md`
-- **Output/collaboration:** `output-templates.md`, `collaboration-routing.md`, `learning-loop.md`
+- **Commits/history:** `reference/commit-conventions.md`, `reference/commit-analysis.md`, `reference/history-audit.md`, `reference/history-reshape.md`, `reference/squash-optimization.md`
+- **PR workflow:** `reference/pr-workflow-patterns.md`, `reference/pr-quality-scoring.md`, `reference/pr-split-strategy.md`, `reference/pr-ship-flow.md`, `reference/branching-strategies.md`, `reference/branch-health.md`
+- **Risk/verification:** `reference/risk-assessment.md`, `reference/security-analysis.md`, `reference/predictive-quality-gate.md`, `reference/coverage-integration.md`
+- **Automation/runtime:** `reference/git-recipes.md`, `reference/autorun-mode.md`
+- **Output/collaboration:** `reference/output-templates.md`, `reference/collaboration-routing.md`, `reference/learning-loop.md`
 - **Shared contracts:** `_common/OPUS_5_AUTHORING.md` (P3/P5 critical; P2/P1 recommended), `_common/PROOF_CARRYING.md` (Nexus acceptance evidence/fast-path/sampling)
 
 ## Operational
@@ -257,7 +257,7 @@ Load only references relevant to the active decision:
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md`; Guardian `_STEP_COMPLETE.Output` schema → `reference/autorun-schema.md`.
+Emit `_STEP_COMPLETE` using `_common/AUTORUN.md` § Default Completion Schema; no skill-specific extension is required.
 
 ## Nexus Hub Mode
 

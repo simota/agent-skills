@@ -1,188 +1,64 @@
-# PII Masking & Anonymization
+# Test-Data De-identification Contract
 
-**Purpose:** Techniques for converting production data into safe test data — Faker-based replacement, format-preserving masks, k-anonymity, and the production-scrub pipeline.
-**Read when:** Anonymizing production data or ensuring fixtures contain no real PII.
-**Pair with:** `pii-masking-deidentification.md` for the formal de-id taxonomy (HMAC tokenization, FF3-1 FPE, k/l/t/ε guarantees, retention horizons, scope boundaries vs Cloak/Canon[regulatory]/Siege). This file is the hands-on Faker pipeline; the other is the privacy-engineering taxonomy.
+Read when a fixture or replay dataset might contain production-derived or identifying data. Prefer schema-generated fixtures; production-derived replay requires the admission and release gates below.
 
----
+## Admission and Ownership
 
-## Anonymization Techniques
+- Classify source columns, free text, nested objects, metadata, and quasi-identifier combinations **before export**. Production access or an existing dump does not authorize transfer to CI, an LLM, a laptop, or a third party.
+- Transform inside the approved protected boundary. Project an **allowlisted output schema**; never spread a real record and replace only known PII fields. Omit unclassified fields until reviewed.
+- Radar owns the test dataset and utility evidence. Unresolved privacy design → Cloak; regulatory conclusions → Canon; load-volume generation → Siege. No masking method, synthetic label, or metric alone authorizes public sharing or proves legal anonymization.
+- Suppress real credentials, password hashes, government identifiers, payment PANs, and unnecessary sensitive fields. Use reserved/provider test values for validators; do not send real or transformed production payment details to a processor.
 
-### 1. Faker Replacement (Recommended Default)
+## Select the Minimum Sufficient Transformation
 
-Replace real values with realistic fakes. Best for most test data needs.
+| Test need | Mechanism | Required check |
+|-----------|-----------|----------------|
+| No production-specific behavior | Generate from schema and explicit edge cases | No real input rows or unapproved training data; valid constraints |
+| Stable PK/FK relationships | Keyed HMAC tokenization with a consistent namespace per join domain | Canonical input encoding, stable key version, collision detection, all related tables transformed together |
+| Display-only fields | Synthetic replacements in the required locale | Reserved contact destinations; no outbound delivery; distribution sufficient for the tests |
+| Unused sensitive field | Suppression | No passthrough through JSON, logs, snapshots, or free text |
+| Aggregate behavior | Generalization or a reviewed statistical mechanism | Explicit utility tolerance and measured re-identification risk |
+| Strict shape validator | Reserved synthetic values first; otherwise reviewed domain-aware tokenization | Length/charset **and** checksum constraints; reversibility and key access documented |
 
-```typescript
-import { faker } from '@faker-js/faker';
+HMAC is pseudonymous linkage, not a claim of anonymous data. Plain hashes, public salts, partial email/phone masks, and normalization do not establish a privacy floor. Keep keys outside fixtures and logs; key rotation requires re-issuing the linked dataset. Do not silently truncate tokens without a collision budget and rejection test.
 
-function anonymizeUser(real: User): User {
-  return {
-    ...real,
-    name: faker.person.fullName(),
-    email: faker.internet.email(),
-    phone: faker.phone.number(),
-    address: faker.location.streetAddress(),
-    ssn: undefined, // Remove entirely
-    dateOfBirth: faker.date.birthdate(),
-  };
-}
-```
+Do not copy an FPE implementation or choose a cipher from this file. Check the current NIST specification and the installed audited library for the required domain; FPE does not inherently preserve check digits. The NIST revision-1 **second public draft** removed FF3/FF3-1; this is a draft status, not a claim that a final revision has been published.
 
-### 2. Consistent Hashing
+## Statistical Release Gates
 
-Preserve referential integrity while anonymizing.
+Preserve the repository's screening defaults only as **local risk-review inputs**, not legal guarantees:
 
-```typescript
-import { createHash } from 'crypto';
+| Metric | Local screening default | Measure, do not infer |
+|--------|-------------------------|----------------------|
+| k-anonymity | k ≥ 5 internal; k ≥ 10 external candidate | Minimum equivalence-class size across the **joint** quasi-identifier set; an age bucket width is not k |
+| l-diversity | l ≥ 3 | Sensitive-value diversity within each equivalence class |
+| t-closeness | t ≤ 0.2 | Declared distance metric and reference distribution; do not compare unlike definitions |
 
-function consistentAnonymize(value: string, salt: string): string {
-  const hash = createHash('sha256').update(value + salt).digest('hex');
-  return hash.substring(0, 16);
-}
+External release still requires approval and a linkage/re-identification assessment. A dataset passing these screens can remain identifying. For differential privacy, require a reviewed mechanism, adjacency definition, bounded contribution/sensitivity, randomness implementation, declared ε/δ, and composition accounting. A toy noise function, Faker output, or an LLM-generated dataset is not DP evidence. Do not invent a universal ε budget.
 
-// Same input always produces same output
-// "john@example.com" → "a3f2b8c1d4e5f6a7" (always)
-```
+## Validation Before Release
 
-### 3. Format-Preserving Masking
+- Verify the allowlisted output schema and scan **all** fields, free text, logs, artifacts, and snapshots. Check known source identifiers and join-based leakage; a regex or a known-domain check alone cannot prove absence of PII.
+- Validate PK/FK/unique constraints, token collisions, nullability, and consuming assertions. Record the utility floor and measured distribution/edge-case coverage; do not preserve identifiable outliers merely to match a histogram.
+- Verify no transformation secret, reversible lookup table, raw source sample, or real contact endpoint ships with the dataset. Keep any necessary mapping separately under the source boundary's access controls.
+- Reject on unresolved privacy evidence, expired retention, or failed utility tests; do not weaken the privacy gate to make a fixture pass. Escalate a utility/privacy conflict to Cloak.
 
-Maintain data shape while removing real values.
+## Retention and Handoff
 
-```typescript
-function maskEmail(email: string): string {
-  const [local, domain] = email.split('@');
-  return `${local[0]}${'*'.repeat(local.length - 1)}@${domain}`;
-  // "john.doe@example.com" → "j*******@example.com"
-}
+These are repository defaults; a stricter approved source policy wins. Every dataset carries `generated_at`, `expires_at`, source authorization, schema version, transformation/key version identifiers (never key values), per-column technique, validation evidence, and permitted recipients/use. Consumers reject expired datasets.
 
-function maskPhone(phone: string): string {
-  return phone.replace(/\d(?=\d{4})/g, '*');
-  // "090-1234-5678" → "***-****-5678"
-}
+| Horizon | Storage control |
+|---------|-----------------|
+| ≤ 24 hours | In-memory only; no disk or backup |
+| ≤ 7 days | Encrypted volume, automatic deletion, no laptop copies |
+| ≤ 30 days | Encrypted, access-logged storage and periodic rescan |
+| > 30 days | Explicit privacy-owner approval with a new expiry; re-masking alone does not extend permission |
 
-function maskCreditCard(cc: string): string {
-  return cc.replace(/\d(?=\d{4})/g, '*');
-  // "4111111111111111" → "************1111"
-}
-```
+Handoff includes the fixture set, utility limitations, privacy-test definitions/results, retention policy, and deletion responsibility. Siege may scale only the approved output; Canon receives evidence, not an unsupported compliance verdict.
 
-### 4. k-Anonymity
+## Canonical Checks
 
-Generalize values so each record is indistinguishable from k-1 others.
+- NIST SP 800-188: https://csrc.nist.gov/pubs/sp/800/188/final — select a sharing model, review disclosure risk, and measure release criteria.
+- NIST SP 800-38G revision: https://csrc.nist.gov/pubs/sp/800/38/g/r1/2pd — verify publication status and supported FPE algorithms before choosing an implementation.
 
-```typescript
-function kAnonymizeAge(age: number, k: number = 5): string {
-  const rangeSize = k;
-  const lower = Math.floor(age / rangeSize) * rangeSize;
-  return `${lower}-${lower + rangeSize - 1}`;
-  // age 27, k=5 → "25-29"
-}
-
-function kAnonymizeZip(zip: string): string {
-  return zip.substring(0, 3) + '**';
-  // "10001" → "100**"
-}
-```
-
-### 5. Differential Privacy (Aggregate Only)
-
-Add calibrated noise for statistical queries.
-
-```typescript
-function addLaplaceNoise(value: number, sensitivity: number, epsilon: number): number {
-  const scale = sensitivity / epsilon;
-  const u = Math.random() - 0.5;
-  const noise = -scale * Math.sign(u) * Math.log(1 - 2 * Math.abs(u));
-  return value + noise;
-}
-```
-
----
-
-## PII Field Classification
-
-| Risk Level | Fields | Action |
-|------------|--------|--------|
-| Critical | SSN, credit card, password hash | **Remove entirely** |
-| High | Name, email, phone, address, DOB | **Replace with Faker** |
-| Medium | IP address, user agent, geolocation | **Generalize or hash** |
-| Low | Preferences, settings, roles | **Keep as-is** |
-
----
-
-## Production Data Pipeline
-
-```
-Production DB
-     ↓
-[1. Export] → pg_dump --data-only
-     ↓
-[2. Classify] → Identify PII columns per table
-     ↓
-[3. Anonymize] → Apply technique per classification
-     ↓
-[4. Validate] → Verify no PII leaked, FK intact
-     ↓
-[5. Import] → Load into test environment
-```
-
-### Validation Checklist
-
-- [ ] No real email addresses (check for known domains)
-- [ ] No real phone numbers (check for valid patterns)
-- [ ] No real names cross-referenced with other fields
-- [ ] FK constraints still valid after anonymization
-- [ ] Data distributions roughly preserved
-- [ ] Unique constraints still satisfied
-- [ ] No PII in free-text fields (comments, notes, descriptions)
-
----
-
-## Language-Specific Faker Locales
-
-| Language | Locale | Key Features |
-|----------|--------|-------------|
-| Japanese | `ja` | 日本語名、住所、電話番号 |
-| English | `en` | Names, addresses, phone |
-| Chinese | `zh_CN` | 中文名、地址 |
-| Korean | `ko` | 한국어 이름, 주소 |
-| German | `de` | Deutsche Namen, Adressen |
-
-```typescript
-import { faker } from '@faker-js/faker/locale/ja';
-
-const jaUser = {
-  name: faker.person.fullName(),    // "田中 太郎"
-  address: faker.location.city(),   // "横浜市"
-  phone: faker.phone.number(),      // "090-1234-5678"
-};
-```
-
----
-
-## Legal Considerations
-
-- GDPR Article 4(5): Pseudonymization is NOT anonymization
-- Properly anonymized data falls outside GDPR scope
-- Test environments with real PII require same security controls as production
-- Document anonymization approach for audit compliance
-- Consider Cloak agent for full privacy engineering compliance
-
-## 2026 Posture: Synthetic + Differential Privacy is the New Baseline
-
-By 2026 the legal advice on "scrub production then ship to staging" has hardened. Multiple 2026 GDPR guidance pieces describe the old scrub-and-ship pipeline as **legally indefensible** for QA environments — pseudonymized production data still pulls in GDPR obligations, and audit trails for "we removed enough" are not credible under examination.
-
-The 2026 gold standard:
-
-1. **Synthetic data generation** (GAN-based, VAE-based, or LLM-based — see `llm-generated-fixtures.md`) becomes the source for test data; production data does not leave the production boundary.
-2. **Differential Privacy** layered on top of the generator: calibrated noise during training prevents the synthetic model from memorising a specific individual. DP-protected synthetic data is the only widely-accepted shape that earns *anonymization* treatment under GDPR.
-3. **Hold-out validation**: keep a small, locked real-data set inside the production boundary and verify that models / queries trained on synthetic produce comparable results — that is the credibility evidence for regulators.
-
-Practical rules:
-
-- For greenfield projects in 2026, **skip the production-scrub pipeline entirely** — synthesise from schema + statistics, never from real rows.
-- For projects with a legacy scrub pipeline, **add DP** as the next step rather than refining the scrub. DP-protected outputs survive a GDPR audit; better-scrubbed PII does not.
-- DP alone may qualify as pseudonymization under GDPR Articles 4(5) / 89 (still under controller obligations) — full *anonymization* requires DP-protected synthetic generation, not raw DP on production rows.
-- For LLM-generated fixtures, validate DP claims independently — running `faker` + LLM through a privacy harness (e.g., SDV / Synthcity privacy metrics) is the audit evidence.
-
-See `replay-production-scrub.md` for the migration path off scrub-and-ship pipelines and `llm-generated-fixtures.md` for the LLM-based synthesis flow.
+Source entrypoints checked 2026-09-17. Offline: retain the declared controls and report missing specification/release evidence; never infer approval.

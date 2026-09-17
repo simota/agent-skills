@@ -1,12 +1,8 @@
 # Multi-Engine Research Design
 
-> **Filename retained** as `tri-engine-research.md` for backward compatibility. Covers both dual-engine baseline (Claude + Codex) and tri-engine optional (Claude + Codex + agy) modes.
+Shared engine selection, capability/authorization gates, dispatch, capture, attribution and degraded-mode policy: `_common/MULTI_ENGINE_RECIPE.md` and `_common/CLI_COMPATIBILITY.md`. This reference defines only the domain payload and integration rules.
 
 Default flow for `/researcher multi`. Run subagents in parallel — one per AVAILABLE engine — to generate **research designs** (methodologies, interview guides, survey scaffolds, recruitment criteria, analysis plans), score them on methodology coverage and triangulation potential, then synthesize either a single Combined Plan (multi-method triangulation) or a Portfolio of independent research programs.
-
-**Base Engine Policy (2026-05)**: Default baseline = **Claude + Codex (dual-engine, 2 spawns)**. agy adds a third axis (tri-engine, 3 spawns) when AVAILABLE at PREFLIGHT. dual-engine mode is NOT degraded. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
-
-**Why multiple engines for research design (Pattern D — Divergence-primary):** Each engine carries a different methodological bias. Codex (GitHub-heavy) skews toward quantitative-heavy, instrument-driven designs (A/B tests, survey scales, log analysis). Claude (Anthropic-curated) skews toward qualitative-heavy, ethics-aware designs (open-ended interviews, diary studies, JTBD switch interviews) — together they form the dual-engine baseline covering quant + qual. Antigravity (Google-product-heavy, optional when AVAILABLE) skews toward mixed-methods at-scale (large-N usability, HEART metrics, longitudinal panels) — it patches the at-scale gap when reachable. For the same research question, the engines propose *non-overlapping methodology sets* — and triangulating across methods is the discipline's core quality lever. Single-engine breakthroughs (e.g., a guerrilla-test angle that solo Claude surfaces) are NOT auto-low-value.
 
 **Pattern type:** D (Divergence-primary). See `_common/MULTI_ENGINE_RECIPE.md §Pattern D`. This document specifies only the **Field-specific differences**.
 
@@ -24,7 +20,7 @@ PREFLIGHT, FAN-OUT engine-dispatch table, NORMALIZE, and degraded modes are inhe
 
 ## 1. SCOPE (Field-specific inputs)
 
-All three subagents share the same scope packet:
+All selected subagents share the same scope packet:
 
 - **Research question(s)** — primary + secondary, framed as questions, not features
 - **Decision to influence** — what stakeholder choice the findings should de-risk
@@ -208,15 +204,12 @@ Do not surface engine-raw JSON. Do not include rejected clusters in the main lis
 
 ## Parallel Subagent Prompt Skeleton
 
-Use the Agent tool three times **in the same message**. Each subagent receives a self-contained prompt:
+Use the canonical spawn/capture template in `_common/CLI_COMPATIBILITY.md` with the JSON schema in this reference. Spawn once per selected available engine, not a fixed three. Add these domain fields; the main context owns normalization, grounding and synthesis.
 
-```
-You are the {engine} research-design subagent for Field.
+**Role:**
+Design {N=2-4} research approaches for the target below. You are one of the selected engines working independently — surface what your training data suggests is the most informative methodology mix. Do not try to be exhaustive; depth over breadth.
 
-# Role
-Design {N=2-4} research approaches for the target below. You are one of three engines working independently — surface what your training data suggests is the most informative methodology mix. Do not try to be exhaustive; depth over breadth.
-
-# Target
+**Target:**
 - Research question(s): {primary + secondary}
 - Decision to influence: {what stakeholder choice the findings de-risk}
 - Stance preference: {generative | evaluative | descriptive | open}
@@ -225,12 +218,7 @@ Design {N=2-4} research approaches for the target below. You are one of three en
 - Inclusion floor: {minimum diversity dimensions}
 - Ethics flags: {minors / vulnerable populations / sensitive topics / regulated domain — if any}
 
-# Output format
-Return ONLY JSON matching this exact schema (no commentary outside the JSON):
-
-{JSON schema from §2 above}
-
-# Constraints
+**Constraints:**
 - Methods must serve the research question — do not propose a method just because it is fashionable
 - Separate observation from interpretation in analysis_approach
 - For qualitative usability, never propose N < 5; for quantitative benchmarks, never propose N < 30
@@ -238,12 +226,6 @@ Return ONLY JSON matching this exact schema (no commentary outside the JSON):
 - Inclusion dimensions must meet the floor — no WEIRD-only samples unless explicitly justified
 - Do not write implementation code — research designs only
 - Do not fabricate personas, prior studies, or product capabilities; if you reference existing artifacts, name them specifically
-- Open with the deliverable (no completion preamble)
-```
-
-The three subagents return JSON; Field main context handles NORMALIZE through PRESENT.
-
----
 
 ## Cross-References
 
@@ -256,18 +238,3 @@ The three subagents return JSON; Field main context handles NORMALIZE through PR
 - `field/reference/survey-quantitative-design.md` — applied at SYNTHESIZE for survey-method clusters
 - `field/reference/continuous-discovery-mixed-methods.md` — applied at SYNTHESIZE for Combined-Plan triangulation logic
 - `_common/OPUS_5_AUTHORING.md` — spawn prompt sizing, parallel-fan-out triggers
-
-
-## Field-Specific Contracts (SKILL.md excerpt)
-
-**Field-specific contracts** (full algorithm, JSON schema, coverage matrix, GROUND checklist, subagent prompts → `reference/tri-engine-research.md`):
-
-- Spawn subagents `research-codex`, `research-agy`, `research-claude` in a single message. Run PREFLIGHT in main context only (subagent PATH is narrower).
-- Loose prompts only (Role + Target + Output format). Do NOT pass methodology templates, sample-size formulas, SUS/UEQ rubrics, screener archetypes, or JTBD scaffolds — framework rules apply at SYNTHESIZE, not FAN-OUT.
-- CLUSTER rule: same research question + different methodology = separate clusters. Merging methodologies destroys divergence signal.
-- Scoring: `UNIVERSAL` (3/3, standard/defensible), `LIKELY` (2/3, often triangulation partner), `VERIFIED-DIVERGENT` (1/3 after ethics/IRB/feasibility/inclusion/hallucination grounding — not auto-low-value).
-- Coverage matrix: plot survivors on qual/quant × generative/evaluative grid. Heavy skew is a finding, reported in PRESENT.
-- GROUND checks (mandatory pre-ship): sample-size feasibility vs timeline/budget, ethics coverage for sensitive populations, inclusion floor (no WEIRD-only without justification), hallucinated personas/prior-studies, BEST-framework AI-moderation/synthetic disclosure, statistical power (qual <5 or quant <30 → under-powered flag).
-- Merge: `Combined Plan` (default; triangulation graph dense — clusters cover ≥2 matrix cells with shared question) → `docs/research/PLAN-[topic]-[date].md` sequencing generative → evaluative → confirmatory. `Portfolio` (when stances/questions diverge) → `docs/research/PORTFOLIO-[topic]-[date].md` ordered UNIVERSAL → LIKELY → VERIFIED-DIVERGENT with "run first" recommendation.
-- Mandatory engine-attribution tag on every shipped design: `[codex+agy+claude]` / `[codex+claude]` etc. Append `[NEEDS-IRB]` or `[NEEDS-INFO:<dim>]` when grounding passes with caveats.
-- Degraded modes: 1 engine down → continue with 2; 2 down → single-engine + stricter grounding; all down → standard Recipe fallback.

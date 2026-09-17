@@ -87,7 +87,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `screencast`, `video receipt`, `visual proof`, `recording` | `playwright` (screencast — read `ai-powered-e2e-testing.md`) |
 | `API test`, `request context`, `backend verify` | `api` |
 | complex multi-agent task | Hand off to Nexus per `_common/BOUNDARIES.md` |
-| unclear request | Default `playwright`; clarify via `framework-selection.md` |
+| unclear request | Apply `SKILL.md` Trigger Guidance and existing-stack/approval boundaries; clarify the missing scope |
 
 ### Handoff Thresholds
 
@@ -103,4 +103,3 @@ Operational thresholds that trigger a recipe choice or a cross-agent handoff (di
 - If load, chaos, or resilience testing is required, hand off to `Siege`.
 - If the request is interactive browser operation, not reusable E2E automation, hand off to `Vector`.
 - If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`.
-

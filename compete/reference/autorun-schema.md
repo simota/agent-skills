@@ -17,7 +17,7 @@ _STEP_COMPLETE:
       confidence: "[high | medium | low]"
       sources_cited: "[number]"
     tri_engine:                                  # present only when `multi` Recipe ran
-      engines_run: [codex, agy, claude]
+      engines_run: [actual usable engines]  # authorized and actually invoked
       engines_failed: [list or none]
       artifact_merged_into: "[Feature Matrix | Battle Card | Positioning Map | SWOT | Landscape | LLM Visibility | Win/Loss]"
       coverage_distribution:

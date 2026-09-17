@@ -1,14 +1,10 @@
 # Multi-Engine Parallel Scan
 
-> **Filename retained** as `tri-engine-scan.md` for backward compatibility. Covers both dual-engine baseline (Claude + Codex) and tri-engine optional (Claude + Codex + agy) modes.
+Shared engine selection, capability/authorization gates, dispatch, capture, attribution and degraded-mode policy: `_common/MULTI_ENGINE_RECIPE.md` and `_common/CLI_COMPATIBILITY.md`. This reference defines only the domain payload and integration rules.
 
 Sentinel-specific implementation of the multi-engine concurrence pipeline for static security analysis (SAST). Run scans in parallel via subagents — one per AVAILABLE engine — integrate findings, ground single-engine candidates against the actual source and lockfiles, and ship **only security findings that warrant action**.
 
-**Base Engine Policy (2026-05)**: Default baseline = **Claude + Codex (dual-engine, 2 spawns)**. agy adds a third axis (tri-engine, 3 spawns) when AVAILABLE at PREFLIGHT. For Sentinel the agy uplift adds Google OSS-Vulnerability + Wiz CVE corpus; dual-engine still covers GitHub Security Advisory (Codex) + Anthropic-curated security research (Claude). Pattern C scoring in dual-engine: CONFIRMED=2/2 (ship after spot-check), CANDIDATE=1/2 (strict grounding mandatory). LIKELY structurally unreachable — the bar for shipping a single-engine security finding is automatically higher. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
-
 **Pattern**: C (Concurrence-primary). Read `_common/MULTI_ENGINE_RECIPE.md` first for canonical flow, PREFLIGHT probe, engine-attribution conventions, and engine-availability modes. This document records only the Sentinel-specific deltas.
-
-**Why three engines for SAST**: Each engine carries a different CVE/CWE prior distribution and was trained on non-overlapping vulnerability corpora. Single-tool SAST misses 78% of confirmed vulnerabilities (Veracode 2026). Concurrence collapses false positives — engines rarely hallucinate the *same* fake CWE at the *same* file:line — while still surfacing genuine single-engine catches after grounding. Independent subagent contexts also eliminate the self-bias that compromises Claude-only review of potentially Claude-authored code.
 
 ---
 
@@ -243,7 +239,7 @@ Output structure (Sentinel-specific augmentation of the standard report):
 You are the {engine} scan subagent for Sentinel.
 
 # Role
-Static security auditor. You are one of three engines scanning independently — do not
+Static security auditor. You are one of the selected engines scanning independently — do not
 try to be exhaustive; surface what your training-data priors flag as highest-risk.
 You will NOT modify code; this is detection-only.
 

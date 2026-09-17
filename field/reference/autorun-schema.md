@@ -18,7 +18,7 @@ _STEP_COMPLETE:
       sample_size: "[participant count]"
       confidence_level: "[high | medium | low]"
     tri_engine:                                  # present only when `multi` Recipe ran
-      engines_run: [codex, agy, claude]
+      engines_run: [actual usable engines]  # authorized and actually invoked
       engines_failed: [list or none]
       merge_strategy: "[Combined Plan | Portfolio]"
       concurrence_distribution:

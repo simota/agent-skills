@@ -11,7 +11,7 @@ alone, and gives the variables that decide the allocation.
 
 **Consumers:** `palette` (usability review, interaction arbitration) · `vision` (direction
 justification, redesign trade-offs) · `muse` (the `decision-priority.md` unit of a delivered
-design-system package — see `reference/design-system-context.md` §4) · `magi` (escalation target
+design-system package — see `_common/../muse/reference/design-system-context.md` §4) · `magi` (escalation target
 when the allocation is contested) · `echo` (explaining *why* a walkthrough friction point is
 intentional) · `funnel[premium]` / `funnel` (conversion vs. trust) · `atelier` / `forge` / `artisan`
 (implementation-time trade-offs).

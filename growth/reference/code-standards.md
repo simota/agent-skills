@@ -1,109 +1,25 @@
-# Growth Code Standards
+# Growth Consent Integration
 
-## Good Growth Code
+Read when implementing Google measurement consent. Generic CTA/JSON-LD examples live in neither this contract nor a separate style guide; use the site's actual schema and tracking plan.
 
-```typescript
-// Rich Snippet (JSON-LD) for Search Engines
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Product",
-  "name": "Awesome Tool",
-  "description": "Boost your productivity..."
-}
-</script>
+## Purpose-specific consent contract
 
-// Clear Call-to-Action (CTA) with descriptive link
-<a href="/signup" className="btn-primary" onClick={trackSignupClick}>
-  Start your free trial
-</a>
-```
-
-## Google Consent Mode v2
-
-Consent Mode v2 is required for Google Ads conversion modeling when users decline cookies. It introduces 4 parameters and must be loaded before any Google tag.
-
-### Required Parameters
-
-| Parameter | Controls |
-|-----------|----------|
-| `analytics_storage` | GA4 measurement cookies |
-| `ad_storage` | Google Ads cookies |
-| `ad_user_data` | Sending user data to Google for ads |
+| Signal | Controlled purpose |
+|---|---|
+| `analytics_storage` | Analytics-related storage |
+| `ad_storage` | Advertising-related storage |
+| `ad_user_data` | Sending user data for advertising |
 | `ad_personalization` | Personalized advertising |
 
-### Advanced Mode Implementation (with conversion modeling)
+1. Select basic/advanced behavior with the site's approved privacy/CMP policy. Consent Mode is not a consent collector or proof of a lawful basis; denied storage does not automatically mean zero network traffic.
+2. Set explicit defaults before measurement `config`/`event` commands. Where no valid choice exists, this skill uses denied defaults; a timeout never grants consent.
+3. Map each signal to the **actual purpose-specific CMP choice**. `acceptedAll === false` means neither “analytics accepted” nor “partial consent.” Unknown/withdrawn purposes stay denied.
+4. Apply updates before navigation, persist/restore choices through the approved CMP, and propagate withdrawal. Do not infer one advertising purpose from another.
+5. Use the host's supported API: `gtag('consent', 'default'|'update', state)` for gtag; Tag Manager consent templates use `setDefaultConsentState`/`updateConsentState`, not a queued gtag substitute.
+6. Test no-choice, accept-all, reject-all, every partial choice, withdrawal, reload and asynchronous CMP initialization. Inspect both storage and outgoing requests; report unverified behavior instead of calling the integration compliant.
 
-```typescript
-type ConsentValue = 'granted' | 'denied';
+Use all four fields explicitly (`'granted' | 'denied'`), with no caller-supplied default override that silently grants an unselected purpose. Keep consent initialization separate from UI analytics events; test that rejection does not itself become a tracked conversion.
 
-interface ConsentState {
-  analytics_storage: ConsentValue;
-  ad_storage: ConsentValue;
-  ad_user_data: ConsentValue;
-  ad_personalization: ConsentValue;
-}
+## Source at execution time
 
-// Step 1: Initialize gtag with default denied state BEFORE loading gtag.js
-// This must run synchronously before the Google tag script
-function initConsentMode(defaultState: Partial<ConsentState> = {}): void {
-  window.dataLayer = window.dataLayer ?? [];
-  function gtag(...args: unknown[]) { window.dataLayer.push(args); }
-
-  // Set defaults — denied by default for GDPR compliance
-  gtag('consent', 'default', {
-    analytics_storage: 'denied',
-    ad_storage: 'denied',
-    ad_user_data: 'denied',
-    ad_personalization: 'denied',
-    wait_for_update: 500, // ms to wait for CMP to respond
-    ...defaultState,
-  });
-}
-
-// Step 2: After user interacts with CMP, update consent state
-function updateConsent(state: ConsentState): void {
-  function gtag(...args: unknown[]) { window.dataLayer.push(args); }
-  gtag('consent', 'update', state);
-}
-
-// Step 3: Typical CMP integration pattern
-function onCMPResponse(userAcceptedAll: boolean): void {
-  if (userAcceptedAll) {
-    updateConsent({
-      analytics_storage: 'granted',
-      ad_storage: 'granted',
-      ad_user_data: 'granted',
-      ad_personalization: 'granted',
-    });
-  } else {
-    // Partial consent — analytics only, no ad personalization
-    updateConsent({
-      analytics_storage: 'granted',
-      ad_storage: 'denied',
-      ad_user_data: 'denied',
-      ad_personalization: 'denied',
-    });
-  }
-}
-
-// HTML load order (CRITICAL — CMP and consent init must precede gtag.js)
-// <script>/* initConsentMode() call */</script>
-// <script>/* CMP SDK */</script>
-// <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
-```
-
-> **Advanced Mode** enables conversion modeling for users who declined consent, recovering ~20-30% of conversion signal. Requires enrolling the property in Google Ads and GA4 settings.
-
-## Bad Growth Code
-
-```typescript
-// "Click here" is bad for SEO and Accessibility
-<a href="/signup">Click here</a>
-
-// Missing Open Graph tags (looks ugly on Twitter/Slack)
-<head>
-  <title>Home</title>
-  {/* No description, no image... */}
-</head>
-```
+https://developers.google.com/tag-platform/security/guides/consent — checked 2026-09-17. Verify current API ordering, host-specific consent APIs, basic/advanced behavior and async CMP handling. Do not retain a claimed conversion-recovery percentage or infer legal applicability from the vendor guide.

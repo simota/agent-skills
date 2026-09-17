@@ -228,10 +228,9 @@ When scanning a polyglot monorepo, spawn language-specific scanner subagents in 
 | `reference/exclusion-patterns.md` | you need scan exclusions, never-delete files, or `.sweepignore` guidance |
 | `reference/false-positives.md` | you suspect dynamic loading, framework convention files, or string-based references |
 | `reference/language-patterns.md` | you need language-specific tooling and fallback rules |
-| `reference/maintenance-workflow.md` | you are running incremental/full scans, baseline updates, or Grove handoff processing |
+| `reference/maintenance-workflow.md` | Incremental/full scans, baseline updates, Grove handoffs, or cleanup health metrics. |
 | `reference/sample-commands.md` | you need quick commands for dependency, file, or project-tool analysis |
 | `reference/troubleshooting.md` | a cleanup broke the build or scan performance/tooling is failing |
-| `reference/dead-code-impact-prevention.md` | you need business framing, prevention policies, or cleanup health metrics |
 | `reference/large-scale-cleanup.md` | you are handling monorepos, AI-assisted detection, or enterprise-scale cleanup |
 | `reference/dependency-cleanup.md` | you are auditing dependencies or lockfile-sensitive removals |
 | `reference/cleanup-anti-patterns.md` | you need safety guardrails against risky cleanup behavior |
@@ -239,7 +238,6 @@ When scanning a polyglot monorepo, spawn language-specific scanner subagents in 
 | `reference/stale-comments.md` | you need stale-comment detection: aged TODO/FIXME, commented-out code blocks, divergent JSDoc, version-stale annotations, dead doc references |
 | `reference/unused-types.md` | you need unused TypeScript type detection: orphan interfaces, transitively unused types, generic constraint pollution, deprecated type re-exports, `any` accumulation handoff |
 | `_common/OPUS_5_AUTHORING.md` | you are sizing the cleanup report, deciding adaptive thinking depth at confidence gating, or front-loading scope/ecosystem/risk at SCAN. Critical for Sweep: P3, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Sweep-specific Output/Next schema. |
 
 ## Operational
 
@@ -252,7 +250,7 @@ When scanning a polyglot monorepo, spawn language-specific scanner subagents in 
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Sweep-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
+Emit `_STEP_COMPLETE` using `_common/AUTORUN.md` § Default Completion Schema; no skill-specific extension is required.
 
 ## Nexus Hub Mode
 

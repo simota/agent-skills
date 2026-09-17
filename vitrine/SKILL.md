@@ -6,7 +6,7 @@ description: "Authoring Storybook stories, component catalogs, and Visual Regres
 <!--
 CAPABILITIES_SUMMARY:
 - Storybook story creation (CSF 3.0, CSF factories, MDX 3, autodocs, play functions, addon-vitest)
-- React Cosmos fixture creation (Cosmos 6+, useFixtureInput, decorators, server fixtures)
+- React Cosmos fixture creation (installed-version controls, decorators, fixture export shapes)
 - Story coverage audit (variant/state/a11y/interaction scoring with quantitative thresholds, built-in coverage reports)
 - Visual regression testing setup (Chromatic, Playwright VRT, Lost Pixel, Applitools Eyes AI diff)
 - Forge preview story enhancement (prototype → production quality)
@@ -164,7 +164,7 @@ See `reference/framework-alternatives.md` for full comparison and setup guides.
 ## React Cosmos 6+
 
 Lightweight fixture-based React component explorer. Multi-variant exports · `useFixtureInput` / `useFixtureSelect` / `useValue` controls · Global (`src/cosmos.decorator.tsx`) and scoped decorators · Lazy fixtures · Coexists with Storybook (`*.fixture.tsx` + `*.stories.tsx`). Note: Storybook's ecosystem advantage (30M+ weekly downloads, addon-vitest, Chromatic, Test Codegen) is decisive for most teams; recommend Cosmos primarily for lightweight React-only projects or teams already invested in the Cosmos workflow.
-See `reference/react-cosmos-guide.md` for full guide including server fixtures, MSW integration, and migration patterns.
+See `reference/react-cosmos.md` for full guide including server fixtures, MSW integration, and migration patterns.
 
 ## Visual Regression Testing
 
@@ -180,17 +180,17 @@ See `reference/visual-regression.md` for setup, test runner config, and CI workf
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `SURVEY` | Detect tool (Storybook/Cosmos/Histoire), inventory components, audit existing stories/fixtures | Understand before acting | `reference/storybook-patterns.md`, `reference/react-cosmos-guide.md` |
+| `SURVEY` | Detect tool (Storybook/Cosmos/Histoire), inventory components, audit existing stories/fixtures | Understand before acting | `reference/storybook-patterns.md`, `reference/react-cosmos.md` |
 | `PLAN` | Design story structure, choose coverage strategy, plan variants/states | Choose output route before working | `reference/storybook-patterns.md`, `reference/framework-alternatives.md` |
 | `VERIFY` | Validate visual regression baselines, a11y addon results, play function interactions | Check against requirements | `reference/visual-regression.md` |
 | `PRESENT` | Deliver story files, coverage report, migration notes, and next actions | Include evidence and rationale | `reference/storybook-patterns.md` |
 ## Output Routing
 
-Map the signal to an approach — most route to `reference/storybook-patterns.md`: `story`/`storybook`/`CSF` -> story creation · `fixture`/`cosmos` -> Cosmos fixtures (`reference/react-cosmos-guide.md`) · `audit`/`coverage`/`missing stories` -> coverage health report · `visual regression`/`VRT`/`chromatic` -> VRT setup (`reference/visual-regression.md`) · `migrate`/`CSF 2`/`upgrade storybook`/`ESM migration` -> version migration · `metrics`/`design system health` -> metrics dashboard spec · `histoire`/`ladle`/`alternative` -> alternative tool setup (`reference/framework-alternatives.md`) · `play function`/`interaction test` -> play functions · `portable stories`/`composeStories` -> story reuse in tests · `design token` -> token docs · `test codegen`/`record test` -> Test Codegen · `sb.mock`/`automock` -> module mocking · `story generation` -> generated stories · `CSF factories` -> factories migration. Full table -> `reference/storybook-patterns.md`.
+Map the signal to an approach — most route to `reference/storybook-patterns.md`: `story`/`storybook`/`CSF` -> story creation · `fixture`/`cosmos` -> Cosmos fixtures (`reference/react-cosmos.md`) · `audit`/`coverage`/`missing stories` -> coverage health report · `visual regression`/`VRT`/`chromatic` -> VRT setup (`reference/visual-regression.md`) · `migrate`/`CSF 2`/`upgrade storybook`/`ESM migration` -> version migration · `metrics`/`design system health` -> metrics dashboard spec · `histoire`/`ladle`/`alternative` -> alternative tool setup (`reference/framework-alternatives.md`) · `play function`/`interaction test` -> play functions · `portable stories`/`composeStories` -> story reuse in tests · `design token` -> token docs · `test codegen`/`record test` -> Test Codegen · `sb.mock`/`automock` -> module mocking · `story generation` -> generated stories · `CSF factories` -> factories migration. Full table -> `reference/storybook-patterns.md`.
 
 Routing rules:
 
-- If the request involves Cosmos, read `reference/react-cosmos-guide.md`.
+- If the request involves Cosmos, read `reference/react-cosmos.md`.
 - If the request involves visual testing, read `reference/visual-regression.md`.
 - If the request involves tool selection, read `reference/framework-alternatives.md`.
 - Always detect the project's existing tool before creating stories.
@@ -243,16 +243,14 @@ Vitrine receives components and design context from upstream agents. Vitrine sen
 | File | Content |
 |------|---------|
 | `reference/storybook-patterns.md` | CSF 3.0 templates, Storybook 8.5+, audit format, Forge enhancement |
-| `reference/react-cosmos-guide.md` | Cosmos 6 guide, fixtures, decorators, MSW, migration |
+| `reference/react-cosmos.md` | Installed Cosmos integration, fixture exports, decorators, mocked state and export verification. |
 | `reference/visual-regression.md` | Chromatic, Playwright, Lost Pixel setup and CI |
 | `reference/framework-alternatives.md` | Histoire, Ladle, tool comparison |
 | `reference/storybook-interactions.md` | Play function authoring, `@storybook/test` API, addon-vitest integration, Interactions panel debugging |
 | `reference/mdx-docs.md` | MDX 3 + Storybook 10 Doc Blocks, Autodocs vs hand-authored MDX trade-off, multi-page docs structure |
-| `reference/react-cosmos.md` | Cosmos 6+ fixtures, decorator chains, multi-instance props, Storybook vs Cosmos decision tree |
 | `_common/UX_TRENDS_2026.md` | 2025-2026 component catalogue context — token-layer linkage (§1), framework state (React 19.2 / Svelte 5 / Vue 3.6, §3), and case studies for Radix Themes 3.0 / Primer / Polaris Unified. Read §1 Design and §3 Frontend. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the story plan, deciding adaptive thinking depth at PLAN, or front-loading target component/coverage tier at SCAN. Critical for Vitrine: P3, P5 |
 | `_common/PROOF_CARRYING.md` | You generate `vrt_proof` (visual regression diff within tolerance per Matrix Sampling Policy PD-2) in `nexus acceptance` Phase 2B. Use matrix-sampled stories (pairwise default for Tier-A, full pairwise + critical-path full-coverage for Tier-S). New story-set additions pass shadow-run for ≥3 weeks before becoming Gate-blocking. Pixel-match snapshot ≠ translation quality (PD-2 locale semantic note). |
-| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Vitrine-specific Output/Next schema. |
 
 ## Operational
 
@@ -263,7 +261,7 @@ Vitrine receives components and design context from upstream agents. Vitrine sen
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Vitrine-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
+Emit `_STEP_COMPLETE` using `_common/AUTORUN.md` § Default Completion Schema; no skill-specific extension is required.
 
 ## Nexus Hub Mode
 

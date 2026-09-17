@@ -1,14 +1,8 @@
 # Multi-Engine Cognitive Walkthrough
 
-> **Filename retained** as `tri-engine-walkthrough.md` for backward compatibility. Covers both dual-engine baseline (Claude + Codex) and tri-engine optional (Claude + Codex + agy) modes.
+Shared engine selection, capability/authorization gates, dispatch, capture, attribution and degraded-mode policy: `_common/MULTI_ENGINE_RECIPE.md` and `_common/CLI_COMPATIBILITY.md`. This reference defines only the domain payload and integration rules.
 
 Default flow for `/echo multi`. Run subagents in parallel — one per AVAILABLE engine — to perform cognitive walkthroughs of the **same UI flow** across the **same persona set**, then integrate the results across three axes — per-persona concurrence, cross-persona universality, and engine-specific blind-spot fills.
-
-**Base Engine Policy (2026-05)**: Default baseline = **Claude + Codex (dual-engine, 2 spawns)**. agy adds a third axis (tri-engine, 3 spawns) when AVAILABLE at PREFLIGHT. dual-engine mode is NOT degraded — Claude (empathy-curated persona channeling) + Codex (GitHub-issue user-pain patterns) cover two distinct UX-judgment priors. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
-
-**Why multiple engines for cognitive walkthrough (different from Judge / Spark):** Judge optimizes for *agreement on a single defect* — concurrence is the quality signal. Spark optimizes for *breadth of ideation*. Echo lives in between: a friction confirmed by all AVAILABLE engines × N personas is one of the strongest synthetic UX signals available, but the *novel* friction noticed by only one engine inside one persona's voice is often the breakthrough finding the team had unconsciously normalized. Each engine has different priors about how a "beginner," "senior," or "mobile user" actually moves through a UI; multi-engine flow surfaces both convergent confidence and divergent angle in a single matrix.
-
-**Adapted from `_common/MULTI_ENGINE_RECIPE.md` (Pattern H) and `echo/reference/tri-engine-demand.md`.** Re-uses PREFLIGHT and FAN-OUT mechanics; only the parts that differ for the walkthrough domain are documented below.
 
 ---
 
@@ -22,7 +16,7 @@ The flow mirrors Echo[demand]'s tri-engine demand generation but the unit of wor
 
 ### 1. SCOPE
 
-Define the walkthrough target once. All three subagents share:
+Define the walkthrough target once. All selected subagents share:
 
 - **UI flow under evaluation** — name, entry condition, success condition (and failure conditions if any).
 - **Step list** — ordered atomic steps the persona is expected to traverse (e.g., `S1 land → S2 sign up CTA → S3 form → S4 verify email → S5 dashboard`). Each step is the unit subagents must score.
@@ -44,11 +38,11 @@ Identical to `_common/MULTI_ENGINE_RECIPE.md §2`. Probe `codex`, `agy`, `claude
 
 ### 4. FAN-OUT — parallel subagents
 
-Spawn **three Agent calls in a single message** so they run concurrently. Each subagent receives the **same persona set + same step list + same artifacts** and is asked to walk every persona through every step independently. The matrix unit is one `(persona, step)` cell per engine — so 3 personas × 5 steps × 3 engines = 45 cells per session.
+Dispatch one independent task per selected, authorized engine using the shared CLI adapter so they run concurrently. Each subagent receives the **same persona set + same step list + same artifacts** and is asked to walk every persona through every step independently. The matrix unit is one `(persona, step)` cell per engine — so 3 personas × 5 steps × 3 engines = 45 cells per session.
 
 | Subagent | Engine | Baseline command |
 |----------|--------|------------------|
-| `walkthrough-codex` | Codex CLI | `codex exec --full-auto "<prompt>"` |
+| `walkthrough-codex` | Codex CLI | Authorized invocation via `_common/CLI_COMPATIBILITY.md` |
 | `walkthrough-agy` | Antigravity CLI | Authorized headless/native dispatch → `_common/CLI_COMPATIBILITY.md` §9; validate outputs under `_common/MULTI_ENGINE_RECIPE.md` §3.5 |
 | `walkthrough-claude` | Claude Code CLI (subagent) | Agent tool with `subagent_type: general-purpose` |
 
@@ -101,7 +95,7 @@ If an engine returns free-form Markdown, ask its subagent to re-emit as JSON bef
 
 ### 5. NORMALIZE
 
-Parse the three JSON blobs into a unified walkthrough cell list. Tag each cell with `(engine, persona_id, step_id)`. Preserve per-engine wording — divergent persona voice is signal.
+Parse the usable JSON outputs into a unified walkthrough cell list. Tag each cell with `(engine, persona_id, step_id)`. Preserve per-engine wording — divergent persona voice is signal.
 
 ### 6. CLUSTER — dedup within the same (persona, step)
 
@@ -165,7 +159,7 @@ For every `CANDIDATE` cluster, the Echo main context must:
    - `[synthetic-only]` — no real-data sources available
 6. **Mark each as** `VERIFIED-DIVERGENT` (keep with confidence tag), `REJECTED-{reason}` (drop), or `NEEDS-INFO` (escalate).
 
-For `CONFIRMED` and `LIKELY` clusters, run only artifact-existence + persona-voice authenticity + real-data calibration. Three engines rarely fabricate the same artifact in the same way.
+For `CONFIRMED` and `LIKELY` clusters, verify artifact existence, persona-voice authenticity and real-data calibration. Engine agreement does not replace evidence; apply any additional grounding check required by the claim.
 
 ### 9. SYNTHESIZE — persona × engine matrix + priority-ranked friction list
 
@@ -219,7 +213,7 @@ Output follows the existing Echo `walkthrough` report template (`echo/reference/
 - **Header summary table** gains engine-status line and dual concurrence stats: `CONFIRMED: N / LIKELY: N / VERIFIED-DIVERGENT: N` AND `CROSS-PERSONA-UNIVERSAL: N / SEGMENT: N / PERSONA-SPECIFIC: N`.
 - **Cross-persona universal section** is mandatory in multi mode (single-engine mode treats cross-persona analysis as optional).
 - **Per-step matrix view** is mandatory; the compact emotion × persona × engine grid is the signature multi-mode deliverable.
-- **Dark pattern findings** — when surfaced by any engine, automatically promote to `CONFIRMED` if any 2 engines flag the same dark pattern (FTC/EU DSA risks are too high to require 3/3 concurrence).
+- **Dark pattern auto-promotion** — a dark-pattern friction flagged by ≥2 engines retains the `CONFIRMED` walkthrough-priority tag and increments `dark_pattern_auto_promoted`. This is the local risk-asymmetry rule, not a finding of legal violation or real-user validation. Verify the artifact and escalate regulatory applicability to Canon; even a single engine may flag a risk for verification.
 - **AI persona bias disclosure** — every multi-engine report must include the synthetic-only / hypothesis / supported / validated calibration distribution, even if no real-data sources existed. This makes the bias surface visible to the team.
 
 Do not include rejected friction in the main list. Do not surface engine-raw output. Synthetic-true tagging applies to every finding unless calibration upgraded it to `[validated]`.
@@ -228,68 +222,24 @@ Do not include rejected friction in the main list. Do not surface engine-raw out
 
 ## Parallel Subagent Invocation
 
-Use the Agent tool three times **in the same message** for genuine parallel execution. Each subagent receives a self-contained prompt:
+Use the canonical spawn/capture template in `_common/CLI_COMPATIBILITY.md` with the JSON schema in this reference. Spawn once per selected available engine, not a fixed three. Add these domain fields; the main context owns normalization, grounding and synthesis.
 
-```
-You are the {engine} walkthrough subagent for Echo. You channel synthetic users — walk AS the persona through the supplied UI flow, not ABOUT the persona.
+**Role:**
+For each persona below, walk through every step of the UI flow independently. You are one of the selected engines channeling the same personas through the same flow; do not smooth out persona quirks to match expected best practices. Report what the channeled persona actually experiences at each step, even when the friction is small or the experience is positive.
 
-# Role
-For each persona below, walk through every step of the UI flow independently. You are one of three engines channeling the same personas through the same flow; do not smooth out persona quirks to match expected best practices. Report what the channeled persona actually experiences at each step, even when the friction is small or the experience is positive.
-
-# Personas
-{PERSONA_CHANNEL block per persona — include archetype, environmental context, mental model gaps, prior tool exposure, last frustration}
-
-# UI Flow
-- Flow name: {scope.flow_name}
-- Entry condition: {scope.entry}
-- Success condition: {scope.success}
-- Steps (walk every step for every persona):
-  - S1: {step label} — artifact: {screenshot path / route / copy excerpt}
-  - S2: ...
-  - Sn: ...
-- Mode bias: {walkthrough | confusion | emotion | dark-pattern | a11y}
-
-# Output format
-Return ONLY JSON matching this exact schema (no commentary outside the JSON):
-
-{JSON schema above}
-
-# Constraints
+**Constraints:**
 - Walk EVERY persona through EVERY step — do not skip cells; if a persona would abandon mid-flow, still record the abandonment step and mark `task_success: false`
 - Speak in persona voice in `predicted_behavior`, `description`, and `confusion_moments` — first person where natural
 - Assign emotional_score at every step (-3 to +3); use cognitive_load 1-4 every step
 - Do not invent UI elements, copy, or routes not present in the supplied artifacts — if the artifact is insufficient for a step, mark friction_class `other` with description "evidence insufficient" rather than fabricating
 - Report friction even when severity = 1 (cosmetic) — surface, do not pre-filter
 - Note in engine_notes which persona you felt strongest channeling and any cell you genuinely struggled with
-```
-
-The three subagents return JSON; Echo main context handles NORMALIZE through DELIVER.
-
----
 
 ## Degraded Modes
 
-| Situation | Behavior |
-|-----------|----------|
-| 1 engine binary missing | Run the other two; flag reduced persona-voice diversity; `CANDIDATE` clusters from the remaining engines require stricter grounding |
-| 2 engines fail | Single-engine output; treat every friction as `CANDIDATE`; ground all before reporting; loud `[synthetic-only]` tag throughout |
-| All 3 fail | Abort multi mode; degrade to standard `walkthrough` Recipe with the Echo main context |
-| User explicitly requests single engine | Skip fan-out; use standard `walkthrough` Recipe |
-| Fewer than 3 personas available | Multi mode still runs but with the reduced persona pool — flag persona-representativeness as a risk per `_common/AI_PERSONA_RISKS.md` |
-| Artifacts unavailable to one engine (e.g., screenshot unreadable) | That engine emits `friction_class: other / "evidence insufficient"` for affected cells; main context downgrades affected steps to `NEEDS-INFO` rather than dropping |
+Use `_common/MULTI_ENGINE_RECIPE.md` § Engine Availability Modes and its actual-engine denominator. A healthy Claude+Codex pair is the normal dual-engine baseline, not a 2/3 degraded result.
 
----
-
-## Why This Works for Cognitive Walkthrough (different from Judge, Echo[demand])
-
-- **Persona-channeling priors differ across engines.** Codex (GitHub/code-heavy), Antigravity (Google product-heavy), and Claude (Anthropic-curated) each have different training-data exposure to how "beginners," "seniors," "mobile users," or "accessibility-dependent users" actually move through a UI. Three independent channelings surface more authentic persona voice diversity than a single engine.
-- **Per-persona concurrence raises confidence on each cell.** When all three engines channel beginner-persona to the same friction at the same step, that friction almost certainly reflects a real UX problem (synthetic-vs-validated calibration still applies).
-- **Cross-persona universality is the strongest synthetic signal.** Friction that surfaces across 2+ personas × 2+ engines (4+ independent voices at the same step) is the kind of finding that justifies an immediate Palette / Experiment handoff without further validation. The persona × engine matrix makes this signal visible instead of averaging it out.
-- **Divergent-voice findings preserve the "normalized friction" insight.** The most valuable Echo finding is often the one no team member noticed — surfaced by exactly one engine, because the other two unconsciously smoothed over the persona's quirk. Pattern H scoring keeps `DIVERGENT` findings visible instead of penalizing them.
-- **AI-persona bias risks (WEIRD bias, hallucination, mode-collapse per `_common/AI_PERSONA_RISKS.md`) are partially mitigated by tri-engine.** Different engines have different bias profiles; their disagreement reveals where any single engine is collapsing. Still tag synthetic-true unless calibrated against real Voice/Trace data.
-- **Dark pattern detection benefits from cross-engine concurrence.** When 2/3 engines flag the same dark pattern at the same step, regulatory risk is high enough (FTC, EU DSA, CPRA, EU DFA) to treat as `CONFIRMED` even without 3/3 — false negatives in dark-pattern audit are far more costly than false positives.
-
----
+With one usable engine, mark findings synthetic-only and do not claim cross-engine universality. With zero, use `walkthrough`. Persona coverage, unavailable UI states and missing real-user calibration remain explicit limitations.
 
 ## Cross-References
 

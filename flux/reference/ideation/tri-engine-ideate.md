@@ -1,14 +1,10 @@
 # Multi-Engine Flux[ideate] (Parallel Brainstorm Round)
 
-> **Filename retained** as `tri-engine-riff.md` for backward compatibility. Covers both dual-engine baseline (Claude + Codex) and tri-engine optional (Claude + Codex + agy) modes.
+Shared engine selection, capability/authorization gates, dispatch, capture, attribution and degraded-mode policy: `_common/MULTI_ENGINE_RECIPE.md` and `_common/CLI_COMPATIBILITY.md`. This reference defines only the domain payload and integration rules.
 
-Implementation notes for `/flux multi`. Reads as a delta on `_common/MULTI_ENGINE_RECIPE.md` — this document only states what is **Riff-specific**. Read the common protocol first.
-
-**Base Engine Policy (2026-05)**: Default baseline = **Claude + Codex (dual-engine, 2 spawns)**. agy adds a third axis (tri-engine, 3 spawns) when AVAILABLE at PREFLIGHT. dual-engine mode is NOT degraded. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
+Implementation notes for `/flux multi`. Reads as a delta on `_common/MULTI_ENGINE_RECIPE.md` — this document only states what is **Flux[ideate]-specific**. Read the common protocol first.
 
 **Pattern type**: D (Divergence-primary). **Verb**: `flux`. **Subagent names**: `riff-codex` + `riff-claude` (dual-engine baseline) + `riff-agy` (when AVAILABLE).
-
-**Why three engines for brainstorming.** Flux[ideate] already rotates through four modes (Expand / Propose / Evaluate / Subtract). Multiplying that by three engines gives a **4 × 3 = 12-angle matrix** on a single theme — but each engine's training-data priors push each mode in a different direction (Codex tilts toward GitHub-shaped solutions, Antigravity tilts toward Google-product ergonomics, Claude tilts toward Anthropic-curated framing). The breakthrough idea usually lives in a single cell of the matrix, not at the consensus center.
 
 **Dialogue posture.** Unlike Spark/Echo[demand], Flux[ideate] is **interactive**. `multi` is positioned as a **single "parallel brainstorm round"** dropped into an ongoing dialogue — the 9 / 12 outputs become **seed ideas for the next dialogue turn**, not a final deliverable. Flux[ideate] never replaces dialogue with multi; multi accelerates one divergence step inside dialogue.
 
@@ -65,7 +61,7 @@ Each subagent returns:
 
 ---
 
-## CLUSTER Identity Rules (Riff-specific)
+## CLUSTER Identity Rules (Flux[ideate]-specific)
 
 Two ideas match (form one cluster) when **both** hold:
 
@@ -86,7 +82,7 @@ Record the engine set per cluster. Per-engine wording variants are preserved —
 
 ## SCORE Rubric
 
-Flux[ideate] is Pattern D (Divergence-primary). Apply the base D rubric per `_common/MULTI_ENGINE_RECIPE.md`, with one Riff-specific tweak: **score within each mode, not across modes**. A `UNIVERSAL` `expand` idea is incomparable to a `VERIFIED-DIVERGENT` `subtract` idea — they serve different turns of the diamond.
+Flux[ideate] is Pattern D (Divergence-primary). Apply the base D rubric per `_common/MULTI_ENGINE_RECIPE.md`, with one Flux[ideate]-specific tweak: **score within each mode, not across modes**. A `UNIVERSAL` `expand` idea is incomparable to a `VERIFIED-DIVERGENT` `subtract` idea — they serve different turns of the diamond.
 
 | Engines in cluster (within one mode) | Label | Interpretation in Flux[ideate] |
 |--------------------------------------|-------|------------------------|
@@ -98,14 +94,14 @@ Flux[ideate] is Pattern D (Divergence-primary). Apply the base D rubric per `_co
 
 ---
 
-## GROUND Checks (Riff-specific)
+## GROUND Checks (Flux[ideate]-specific)
 
 For each `VERIFIED-DIVERGENT` candidate, the Flux[ideate] main context checks:
 
 1. **Theme connection** — does the idea actually connect back to the user's stated theme? If only loosely related, downgrade to `NEEDS-INFO` and surface as a tangent-with-question rather than a primary seed.
 2. **Mode fit** — does the idea actually do what its declared mode demands? An `expand` idea that proposes a concrete solution is mis-moded; either re-tag as `propose` or drop.
 3. **Hallucinated entity check** — if the idea cites a specific feature, persona, competitor, or capability the system clearly does not have, mark `REJECTED-HALLUCINATION`.
-4. **Sugar-coat check** (Riff-specific) — if the idea reads as polite cheerleading without a real challenge, drop. Flux[ideate]'s Core Contract demands honest friction; cheerleading ideas waste a divergence slot.
+4. **Sugar-coat check** (Flux[ideate]-specific) — if the idea reads as polite cheerleading without a real challenge, drop. Flux[ideate]'s Core Contract demands honest friction; cheerleading ideas waste a divergence slot.
 5. **Duplicate-of-prior-turn check** — if the dialogue has already explored this angle, mark `REJECTED-DUPLICATE`.
 
 For `UNIVERSAL` / `LIKELY` clusters, do only the hallucinated-entity check and the duplicate-of-prior-turn check.
@@ -171,7 +167,7 @@ The Flux[ideate] main context **tracks dialogue state across rounds**, so the du
 
 ## Degraded Modes
 
-Identical to `_common/MULTI_ENGINE_RECIPE.md §Degraded Modes`. Riff-specific addition:
+Identical to `_common/MULTI_ENGINE_RECIPE.md §Engine Availability Modes`. Flux[ideate]-specific addition:
 
 | Situation | Behavior |
 |-----------|----------|
@@ -183,27 +179,19 @@ Identical to `_common/MULTI_ENGINE_RECIPE.md §Degraded Modes`. Riff-specific ad
 
 ## Subagent Prompt Skeleton
 
-Use the Agent tool **three times in the same message** for parallel execution. Each subagent prompt:
+Use the canonical spawn/capture template in `_common/CLI_COMPATIBILITY.md` with the JSON schema in this reference. Spawn once per selected available engine, not a fixed three. Add these domain fields; the main context owns normalization, grounding and synthesis.
 
-```
-You are the {engine} flux subagent for Flux[ideate] (brainstorming partner).
+**Role:**
+Generate brainstorming ideas for the active mode(s) below. You are one of the selected engines working independently — do not try to be exhaustive; surface what your training data suggests is the most non-obvious angle. Flux[ideate]'s whole purpose is to find ideas the user could not easily reach alone.
 
-# Role
-Generate brainstorming ideas for the active mode(s) below. You are one of three engines working independently — do not try to be exhaustive; surface what your training data suggests is the most non-obvious angle. Flux[ideate]'s whole purpose is to find ideas the user could not easily reach alone.
-
-# Target
+**Target:**
 - Theme: {user's stated theme}
 - Prior dialogue context: {short summary of what was already explored, to avoid duplication}
 - Active mode(s): {expand | propose | evaluate | subtract | ALL}
 - Target idea count: {3-4 if single mode, 2-3 per mode if all-modes}
 - Persona pool (if relevant): {personas from Cast registry or "open"}
 
-# Output format
-Return ONLY JSON matching this exact schema (no commentary outside the JSON):
-
-{JSON schema with id / mode / idea_text / rationale / connection_to_theme fields}
-
-# Constraints
+**Constraints:**
 - EXPAND ideas must name an ANGLE OR ASSUMPTION TO CHALLENGE, not a solution
 - PROPOSE ideas must be ONE concrete sentence, not a paragraph
 - EVALUATE ideas must name a TRADE-OFF AXIS, not pick a winner
@@ -211,12 +199,8 @@ Return ONLY JSON matching this exact schema (no commentary outside the JSON):
 - Each idea must connect back to the stated theme (state how in connection_to_theme)
 - Do not paraphrase or invent capabilities, personas, or competitors the user did not mention; if you cite reuse of something existing, name it specifically
 - Honest friction is the whole point — do not produce polite cheerleading; if you see a fatal flaw in the user's theme framing, surface it as a high-priority EXPAND idea
-- Open with the deliverable (no completion preamble)
-```
 
 Loose-prompt rule applies — do NOT pass the SCAMPER lens taxonomy, Crazy-8 axis catalog, Steelman protocol, or any other Flux[ideate] Recipe templates. Those apply at SYNTHESIZE in the main context only.
-
----
 
 ## Cross-References
 

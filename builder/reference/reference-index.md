@@ -10,7 +10,6 @@ name it, or when scanning what this skill can consult at all.
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/core-contract-rationale.md` | A Core Contract rule needs its reasoning, tuning number, or source. |
 | `reference/implementation-policy.md` | Repository-first architecture selection, language/toolchain grounding, implementation boundaries, and frontend state ownership. |
 | `reference/cross-language-port.md` | `port` recipe — parallel-run black-box comparison, semantic equivalence tests. |
 | `reference/external-integration.md` | `integrate` recipe — sandbox-first, secret handling, vendor retry, webhook signatures. |
