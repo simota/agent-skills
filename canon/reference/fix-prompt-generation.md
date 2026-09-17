@@ -1,21 +1,10 @@
 # Canon LLM Fix Prompt Generation
 
-**Purpose:** Canon-specific action verbs, suppression cases, template fields, and worked example for the `## LLM Fix Prompt` block paired with every confirmed standards violation that has actionable, in-scope remediation.
+**Purpose:** Canon-specific action verbs, suppression cases, template fields for the `## LLM Fix Prompt` block paired with every confirmed standards violation that has actionable, in-scope remediation.
 **Read when:** Canon has assessed a requirement as `Partial` or `Non-compliant` and is handing remediation to Builder or an implementation specialist rather than emitting an audit-only gap report.
 
 > Universal authoring rules and prompt structure: `_common/LLM_PROMPT_GENERATION.md`.
-> This file documents only Canon-specific verbs, suppression cases, template fields, and an example.
-
-## Contents
-
-- When Canon emits a Fix Prompt vs hands off / withholds
-- Canon action verbs
-- Verb selection heuristic
-- Canon-specific suppression cases
-- Per-violation fix prompt template (Canon-specific fields)
-- Worked example
-
----
+> This file documents only Canon-specific verbs, suppression cases, template fields.
 
 ## When Canon Emits a Fix Prompt vs Hands Off / Withholds
 
@@ -178,106 +167,3 @@ Constraints:
 ````
 
 ---
-
-## Worked Example (REMEDIATE)
-
-**Scenario:** A primary call-to-action button uses light-grey text (`#999`) on a white background (`#fff`), giving a contrast ratio of 2.85:1 — failing WCAG 2.2 SC 1.4.3 (Contrast Minimum, Level AA, requires ≥ 4.5:1 for normal text).
-
-````markdown
-## LLM Fix Prompt
-
-```text
-# Your task
-REMEDIATE the standards violation described below.
-
-# Finding context
-- Title: Primary CTA button text fails WCAG 2.2 contrast minimum
-- Severity: High
-- Confidence: HIGH (measured contrast ratio, deterministic)
-- Standard cited: WCAG 2.2 SC 1.4.3 Contrast (Minimum), Level AA
-- Gap classification: non-conforming
-
-# Violation
-SC 1.4.3 requires a contrast ratio of at least 4.5:1 for normal text against
-its background. The primary CTA button renders text `#999999` on background
-`#ffffff`, producing a measured ratio of 2.85:1 — below the AA threshold.
-
-Location: `src/components/PrimaryButton.tsx:18` in `<PrimaryButton>` (token
-`color.text.muted` consumed at line 18; token defined at
-`src/styles/tokens.css:42`)
-
-# Evidence
-Current implementation:
-```
-.primary-button {
-  color: var(--color-text-muted); /* #999999 */
-  background: var(--color-bg-default); /* #ffffff */
-}
-```
-
-Standard requirement (verbatim):
-> "The visual presentation of text and images of text has a contrast ratio of
-> at least 4.5:1, except for the following: Large Text … Incidental … Logotypes."
-> — WCAG 2.2, Success Criterion 1.4.3
-
-The button text is normal-weight 14px — none of the exceptions (Large Text,
-Incidental, Logotypes) apply.
-
-# Remediation per standard
-Approach: Raise the foreground color until the measured contrast against the
-button background is ≥ 4.5:1. The design system already defines
-`color.text.default` (`#1a1a1a`) which yields 17.4:1 against `#ffffff`. Replace
-the muted token usage on the primary CTA with the default text token; keep the
-muted token for genuinely de-emphasized contexts where SC 1.4.3 exceptions
-apply (large text ≥ 18pt, incidental UI).
-
-Files to modify:
-- src/components/PrimaryButton.tsx — swap `color.text.muted` for `color.text.default` at line 18
-- src/components/PrimaryButton.test.tsx — add an axe-core assertion that the rendered button has no SC 1.4.3 violations
-- src/styles/tokens.css — add an inline comment on `color.text.muted` warning that it must not be used for SC 1.4.3-bound text
-
-Constraints:
-- Do NOT lower the contrast threshold or switch the assertion to AAA (7:1) —
-  the fix must satisfy AA without overshooting and constraining the design system.
-- Adjacent SCs (1.4.11 Non-Text Contrast, 2.4.7 Focus Visible) must remain
-  satisfied — verify focus ring and border still meet 3:1 against background.
-- Do not change the button background; the design system reserves white
-  backgrounds for primary surfaces.
-
-# Acceptance criteria
-- [ ] Rendered primary CTA measures contrast ≥ 4.5:1 (verify with axe-core or @adobe/leonardo-contrast-colors)
-- [ ] PrimaryButton.test.tsx asserts no SC 1.4.3 violations via axe-core
-- [ ] SC 1.4.11 (Non-Text Contrast) and SC 2.4.7 (Focus Visible) still pass on the same component
-- [ ] Token `color.text.muted` carries an inline comment restricting its use
-- [ ] No new test failures in src/components/
-
-# Ruled-out alternatives (do not revisit)
-- Adding a darker background to the button — eliminated: the design system
-  reserves white backgrounds for primary surfaces; changing it cascades to
-  other components.
-- Marking the text as "Large Text" by upsizing to 18pt — eliminated: the
-  visual hierarchy treats this as a body-weight CTA; upsizing would conflict
-  with the design system's type scale.
-- Suppressing the axe-core rule for this component — eliminated: SC 1.4.3 is a
-  Level AA conformance requirement; suppression would be a false-conformance
-  claim under WCAG 2.2 §5 Conformance Requirements.
-- Switching to AAA (7:1) for everything — eliminated: out of scope; the
-  engagement targets AA conformance, and AAA imposes design constraints the
-  user has not opted into.
-
-# What NOT to do
-- Do not silence the symptom by suppressing the axe-core rule, lowering the
-  threshold in the test, or marking the test xfail
-- Do not invent a "decorative text" exemption — WCAG 2.2 SC 1.4.3 lists its
-  exceptions exhaustively (Large Text, Incidental, Logotypes); this button
-  text is none of those
-- Do not assess against an unpinned WCAG version — the cited fix is bound to
-  WCAG 2.2 SC 1.4.3 specifically
-- Do not bundle unrelated a11y changes (focus order, alt text, ARIA labels)
-  into the same PR
-- Do not expand scope to other components unless they share the same token
-  usage and same conformance gap
-```
-````
-
-This prompt is self-contained: a coding LLM (or Palette, if the design-system token itself needs revisiting) can act on it without seeing the rest of the Canon report.

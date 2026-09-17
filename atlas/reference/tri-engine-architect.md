@@ -1,14 +1,10 @@
 # Multi-Engine Architecture Deliberation (Atlas Delta)
 
-> **Filename retained** as `tri-engine-architect.md` for backward compatibility. Covers both dual-engine baseline (Claude + Codex) and tri-engine optional (Claude + Codex + agy) modes.
+Shared engine selection, capability/authorization gates, dispatch, capture, attribution and degraded-mode policy: `_common/MULTI_ENGINE_RECIPE.md` and `_common/CLI_COMPATIBILITY.md`. This reference defines only the domain payload and integration rules.
 
 Default flow for `/atlas multi`. Run subagents in parallel — one per AVAILABLE engine — to produce architectural assessments and ADR drafts, integrate results across two axes (concurrence + divergence), and deliver a **consensus ADR with explicit dissenting options** so the trade-off matrix becomes exhaustive rather than the single-engine narrow.
 
-**Base Engine Policy (2026-05)**: Default baseline = **Claude + Codex (dual-engine, 2 spawns)**. agy adds a third axis (tri-engine, 3 spawns) when AVAILABLE at PREFLIGHT. dual-engine mode is NOT degraded. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
-
 **Pattern type:** H (Hybrid — concurrence calibrates confidence on smells, divergence enriches the Options section).
-
-**Why three engines for architecture (different from Judge or Spark):** Judge optimizes for *agreement on a single defect* — concurrence is the quality signal. Spark optimizes for *creative recombination of existing data/logic* — divergence is the breakthrough. Atlas sits between the two: an ADR is a **decision document**, so concurrence on the *problem framing* and *forces at play* raises confidence, while divergence on the *recommended option* exposes architectural-style trade-offs that a single engine would silently flatten. Codex carries GitHub-heavy OSS architecture priors (layered, hexagonal, Spring/Rails canon), Antigravity carries Google-product priors (microservices, event-driven, scale-first), Claude carries Anthropic-curated priors (DDD, modular monolith, evolutionary architecture). Surfacing all three as named Options inside one ADR delivers a richer trade-off matrix than the canonical "1 recommendation + 2 strawman alternatives" template ever produces.
 
 **This file specifies Atlas-specific deltas only.** Read `_common/MULTI_ENGINE_RECIPE.md` first for shared mechanics:
 
@@ -16,7 +12,7 @@ Default flow for `/atlas multi`. Run subagents in parallel — one per AVAILABLE
 - `§Canonical Flow` — SCOPE → PREFLIGHT → FAN-OUT → NORMALIZE → CLUSTER → SCORE → GROUND/CALIBRATE → SYNTHESIZE → DELIVER skeleton
 - `§PREFLIGHT` — engine availability probe (run in Atlas main context only)
 - `§FAN-OUT` — Agent tool dispatch, loose-prompt rule, runtime-failure detection (`agy` silent-failure pattern)
-- `§Degraded Modes` — baseline fallback table; Atlas-specific overrides below
+- `§Engine Availability Modes` — baseline fallback table; Atlas-specific overrides below
 
 ---
 
@@ -24,7 +20,7 @@ Default flow for `/atlas multi`. Run subagents in parallel — one per AVAILABLE
 
 ### 1. SCOPE — architecture-specific inputs
 
-All three subagents share:
+All selected subagents share:
 
 - System / module / boundary under analysis (with concrete file or package references when available)
 - Architectural concern: greenfield design / structural bottleneck / debt remediation / modernization / boundary redesign
@@ -221,8 +217,6 @@ Chosen option: **{Recommended option name}**, because {justification — referen
 - Rejected during grounding: {count by category — hallucinated module / already mitigated / infeasible / anti-pattern}
 ```
 
-**Why "Consensus + Dissenting Options" beats "single-engine ADR":** A normal ADR's "Considered Options" section is written by the author of the recommendation, so the alternatives are strawmen — present to satisfy the "≥2 alternatives" rule, not to genuinely compete. Atlas `multi` replaces those strawmen with **three independently-reasoned options from non-overlapping training data**. The trade-off matrix becomes load-bearing instead of decorative, and future supersession ADRs can reference the rejected options directly rather than re-discovering them.
-
 ### 8. PRESENT
 
 Default output: a single ADR file at `docs/architecture/decisions/ADR-NNNN-{slug}.md` matching the extended MADR structure above. If the user asked for an RFC instead, swap to the RFC template from `reference/adr-rfc-templates.md` and keep the same Consensus + Dissenting Options spine.
@@ -241,51 +235,30 @@ Do not include rejected smells/options in the main flow. Do not surface engine-r
 
 ## Atlas Subagent Prompt Skeleton
 
-Use the Agent tool three times **in the same message**. Each subagent prompt:
+Use the canonical spawn/capture template in `_common/CLI_COMPATIBILITY.md` with the JSON schema in this reference. Spawn once per selected available engine, not a fixed three. Add these domain fields; the main context owns normalization, grounding and synthesis.
 
-```
-You are the {engine} architect subagent for Atlas.
+**Role:**
+Produce an architectural assessment and 1-2 draft ADR options for the target below. You are one of the selected engines working independently — do not try to be exhaustive across architectural styles; surface the option(s) your training data suggests as the strongest fit, and name the style explicitly. Other engines will surface other styles. Atlas main context will integrate.
 
-# Role
-Produce an architectural assessment and 1-2 draft ADR options for the target below. You are one of three engines working independently — do not try to be exhaustive across architectural styles; surface the option(s) your training data suggests as the strongest fit, and name the style explicitly. Other engines will surface other styles. Atlas main context will integrate.
-
-# Target
+**Target:**
 - System / module under analysis: {scope}
 - Architectural concern: {greenfield | bottleneck | debt | modernization | boundary redesign}
 - Forces at play: {scaling, team topology, regulatory, latency, deployment surface}
 - Existing artifacts: {prior ADRs, dependency-graph snippets, coupling metrics, fitness functions in place}
 - Constraints: {must-keep contracts, banned deps, runtime fences, team realities}
 
-# Output format
-Return ONLY JSON matching this exact schema (no commentary outside the JSON):
-
-{JSON schema from §3}
-
-# Constraints
+**Constraints:**
 - Each ADR option must name a specific architectural_style (do not write style-agnostic recommendations)
 - Each option must include both positive AND negative trade-offs (no Fairy Tale ADRs)
 - Each option must include a migration_strategy and rollback_plan (no Sprint ADRs)
 - Each option must classify reversibility (TYPE-1 vs TYPE-2)
 - If you assert that a module / metric / dependency exists, name it specifically — do not invent
-- Open with the deliverable (no completion preamble)
-```
-
-The three subagents return JSON; Atlas main context handles NORMALIZE through PRESENT.
-
----
 
 ## Atlas-Specific Degraded-Mode Overrides
 
-Inherits the base table from `_common/MULTI_ENGINE_RECIPE.md §Degraded Modes`. Atlas overrides:
+Use `_common/MULTI_ENGINE_RECIPE.md` § Engine Availability Modes and its actual-engine denominator. A healthy Claude+Codex pair is the normal dual-engine baseline, not a 2/3 degraded result.
 
-| Situation | Atlas behavior |
-|-----------|----------------|
-| 1 engine binary missing | Note reduced architectural-style diversity; `DIVERGENT` options from the single surviving engine require stricter grounding |
-| 2 engines fail | Single-engine ADR with reduced confidence and only one Option section; flag "tri-engine degraded — consider re-running" in front matter |
-| All 3 fail | Degrade to standard `adr` Recipe |
-| Scope obviously trivial (e.g., "should this private helper be a class or function") | Skip multi; recommend `analyze` or `zen` instead |
-
----
+With one usable engine, label the ADR single-engine and do not claim cross-engine consensus; preserve defensible alternative options when evidence supports them. With zero, use `adr`. A trivial local design choice routes to `analyze`/Zen.
 
 ## Cross-References
 
@@ -296,23 +269,3 @@ Inherits the base table from `_common/MULTI_ENGINE_RECIPE.md §Degraded Modes`. 
 - `atlas/reference/adr-rfc-templates.md` — MADR 4.0 base template that the Consensus + Dissenting Options structure extends
 - `atlas/reference/architecture-decision-anti-patterns.md` — Fairy Tale / Sprint / Mega / Tunnel-Vision ADR checks applied at GROUND
 - `atlas/reference/architecture-health-metrics.md` — thresholds used to calibrate smell severity during grounding
-
-
-## Scoring, Synthesis, and Attribution (SKILL.md excerpt)
-
-**Two-axis scoring (Pattern H — distinct from Judge's Pattern C or Spark's Pattern D):**
-- **Confidence axis on smells:** `CONFIRMED` (3/3) — high-confidence problem; ship to ADR Context. `LIKELY` (2/3) — ship with dissenter noted. `CANDIDATE` (1/3) — must pass strict grounding to survive.
-- **Perspective axis on options:** `CONVERGENT` (3/3 same style + intervention + migration class) — promote to Recommended Option. `CONVERGENT-PARTIAL` (2/3) — chosen with dissent in Options. `DIVERGENT-{style}` (1/3, grounded) — preserved as a named Option, NOT auto-low-value. The divergent option's architectural-style perspective is the value-add of running `multi`.
-
-**Critical Atlas-specific rule:** Options targeting the same smell with **different architectural styles** are NOT merged at CLUSTER. They ride into the final ADR's Considered Options section as separate entries — replacing the single-engine strawmen typically written there with three independently-reasoned recommendations.
-
-**Synthesis output — Consensus + Dissenting Options ADR:**
-- Extended MADR 4.0 structure (Context → Decision Drivers → Considered Options → Decision Outcome → Trade-off Matrix → Positive/Negative Consequences → Risks → Pros/Cons of each Dissenting Option → Migration Strategy → Rollback Plan → Fitness Functions → Engine Concurrence Notes).
-- The trade-off matrix becomes the load-bearing artifact — it now contains genuine cross-style trade-offs instead of author-imagined alternatives.
-- Output path: `docs/architecture/decisions/ADR-NNNN-{slug}.md` (or RFC template if user asked for an RFC) with `tri_engine` front matter capturing engine status and confidence/perspective distributions.
-
-**Engine-attribution tags (mandatory on every shipped smell and option):**
-- Smells: `[codex+agy+claude] [CONFIRMED]` (3/3) / `[codex+agy] [LIKELY]` etc. (2/3) / `[codex-verified] [VERIFIED-CANDIDATE]` (1/3 grounded).
-- Options: `[codex+agy+claude] [CONVERGENT]` / `[codex+claude] [CONVERGENT-PARTIAL]` etc. / `[agy-verified] [DIVERGENT-{style}]`.
-
-**Degraded modes:** 1 engine down → continue with 2; reduced architectural-style diversity flagged in ADR front matter. 2 down → single Option section ADR with explicit degradation note. All down → degrade to standard `adr` Recipe.

@@ -161,9 +161,9 @@ Inline Recipes (`kaizen`, `essential`, `killer`, `trim`) have no top-level refer
 | `CLASSIFY` | Task type, complexity, confidence, guardrail needs; crystallize the intent contract (goal + ACs + non-goals + prohibited outcomes) | `confidence-scoring.md`, `intent-clarification.md`, `autonomy-quality-protocol.md` (Q1-Q3) |
 | `CHAIN` | Minimum viable chain, parallel branches, Plan-and-Execute | `routing-matrix.md`, `agent-chains.md`, `agent-disambiguation.md` |
 | `SPECIFY?` | Gated `Chisel brief`; fires on load-bearing ambiguity, ≥3 spawns, loop/quality-max, or rework, and **runs only after every applicable `Ask First` gate has resolved**. Copy its ACs/prohibited outcomes/constraints/delegated list verbatim into every `_AGENT_CONTEXT`; never replace `GATE` or run per-spawn | `specify-phase.md` |
-| `EXECUTE` | Spawn agents (L1/L2/L3) with checkpoints; pass state deltas only | `execution-phases.md`, `guardrails.md`, `error-handling.md`, `orchestration-patterns.md` |
+| `EXECUTE` | Spawn agents (L1/L2/L3) with checkpoints; pass state deltas only | `reference/execution-phases.md`, `reference/guardrails.md`, `reference/error-handling.md`, `reference/orchestration-patterns.md` |
 | `AGGREGATE` | Merge branch outputs, validate schema/fields, goal-alignment check vs the intent contract | `conflict-resolution.md`, `handoff-validation.md`, `autonomy-quality-protocol.md` (Q7-Q8) |
-| `VERIFY` | Acceptance criteria; tests/build/security mandatory; producer ≠ sole verifier; evidence-bound claims | `guardrails.md`, `output-formats.md`, `quality-iteration.md`, `autonomy-quality-protocol.md` (Q9-Q15) |
+| `VERIFY` | Acceptance criteria; tests/build/security mandatory; producer ≠ sole verifier; evidence-bound claims | `reference/guardrails.md`, `output-formats.md`, `quality-iteration.md`, `autonomy-quality-protocol.md` (Q9-Q15) |
 | `DELIVER` | Final user-facing response | `output-formats.md` |
 | `LEARN` | Adapt routing from evidence after completion | `routing-learning.md` |
 

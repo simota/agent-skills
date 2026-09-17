@@ -285,7 +285,7 @@ Routine or trivial steps that produce nothing worth persisting don't need an ent
 
 **Orchestrator handling (Nexus/Rally):** When recovery- or learning-relevant state is clearly missing from a handoff, the orchestrator asks the agent to record it before the chain moves on. Persistent journaling gaps from the same agent are a review signal — surface them rather than silently degrading.
 
-**Why journaling matters:** Session durability (next section) depends on persistent state outside the orchestrator context. A handoff that skips journaling weakens crash recovery and routing learning — see also `_common/EVOLUTION.md` and `reference/routing-learning.md` (Nexus).
+**Why journaling matters:** Session durability (next section) depends on persistent state outside the orchestrator context. A handoff that skips journaling weakens crash recovery and routing learning — see also `_common/EVOLUTION.md` and `_common/nexus/reference/routing-learning.md` (Nexus).
 
 ---
 

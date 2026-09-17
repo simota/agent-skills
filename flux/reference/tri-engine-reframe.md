@@ -1,16 +1,10 @@
 # Multi-Engine Reframe Generation
 
-> **Filename retained** as `tri-engine-reframe.md` for backward compatibility. Covers both dual-engine baseline (Claude + Codex) and tri-engine optional (Claude + Codex + agy) modes.
+Shared engine selection, capability/authorization gates, dispatch, capture, attribution and degraded-mode policy: `_common/MULTI_ENGINE_RECIPE.md` and `_common/CLI_COMPATIBILITY.md`. This reference defines only the domain payload and integration rules.
 
 Default flow for `/flux multi`. Run subagents in parallel — one per AVAILABLE engine — to produce **assumption inversions and cross-domain reframes**, then synthesize a *Portfolio of divergent perspective shifts*.
 
-**Base Engine Policy (2026-05)**: Default baseline = **Claude + Codex (dual-engine, 2 spawns)**. agy adds a third axis (tri-engine, 3 spawns) when AVAILABLE. For Flux the agy uplift is meaningful (runtime capability/model selection: `_common/CLI_COMPATIBILITY.md`) but dual-engine (Claude's broad-domain reasoning + Codex's GitHub-priors as alternative-domain analogy source) still produces meaningful divergence. When agy is UNAVAILABLE, compensate by explicitly framing each Claude branch with a different reframing technique (Bisociation / SCAMPER / TRIZ inversion / Oblique Strategies) to widen prompt-frame diversity. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
-
-**Why multiple engines for reframing (different from Judge, more extreme than Spark):** Flux's entire value proposition is *vertical reasoning reinforces existing thought structures rather than breaking them* (de Bono). A single engine — no matter how capable — is structurally bounded by its training-data priors and will only produce assumption-inversions consistent with those priors. Multiple independent engines with non-overlapping training data (Codex/GitHub-heavy, Claude/Anthropic-curated baseline; Antigravity/Google-product-heavy when AVAILABLE) each apply their own implicit prior to the *same* problem, producing reframes that no single engine can reach alone.
-
 **Consequence**: In Flux's `multi` Recipe, `VERIFIED-DIVERGENT` reframes (surfaced by exactly one engine) are the **most valuable** outputs — they represent perspective shifts structurally unreachable by the other two engines. This inverts Judge's scoring polarity. Flux ships divergence first, concurrence second.
-
-**Adapted from `_common/MULTI_ENGINE_RECIPE.md` (Pattern D — Divergence-Primary) and `spark/reference/tri-engine-proposal.md` (canonical Pattern D).**
 
 ---
 
@@ -24,7 +18,7 @@ PREFLIGHT, FAN-OUT, NORMALIZE follow the canonical Pattern D protocol in `_commo
 
 ### 1. SCOPE
 
-Define the reframe target once. All three subagents share the same scope:
+Define the reframe target once. All selected subagents share the same scope:
 
 - **Stuck problem statement** (verbatim user framing — the thing being reframed)
 - **Evidence of stuck-ness** (what was tried, why it didn't work, where thinking loops)
@@ -40,11 +34,11 @@ Identical to `_common/MULTI_ENGINE_RECIPE.md §2`. Run engine availability detec
 
 ### 3. FAN-OUT — parallel subagents
 
-Spawn **three Agent calls in a single message**.
+Dispatch one independent task per selected, authorized engine using the shared CLI adapter; join the actual results before synthesis.
 
 | Subagent | Engine | Baseline command |
 |----------|--------|------------------|
-| `reframe-codex` | Codex CLI | `codex exec --full-auto "<prompt>"` |
+| `reframe-codex` | Codex CLI | Authorized invocation via `_common/CLI_COMPATIBILITY.md` |
 | `reframe-agy` | Antigravity CLI | Authorized headless/native dispatch → `_common/CLI_COMPATIBILITY.md` §9; validate outputs under `_common/MULTI_ENGINE_RECIPE.md` §3.5 |
 | `reframe-claude` | Claude Code CLI (subagent) | Agent tool with `subagent_type: general-purpose` |
 
@@ -75,7 +69,7 @@ Target 4-6 reframes per engine. Quality over quantity — engines should err tow
 
 ### 4. NORMALIZE
 
-Parse the three JSON blobs into a unified reframe list. Tag each reframe with its source engine. **Preserve per-engine wording verbatim** — in Flux, the *phrasing* of a reframe is part of its perspective-shift value (Oblique Strategies-style provocation is wording-sensitive).
+Parse the usable JSON outputs into a unified reframe list. Tag each reframe with its source engine. **Preserve per-engine wording verbatim** — in Flux, the *phrasing* of a reframe is part of its perspective-shift value (Oblique Strategies-style provocation is wording-sensitive).
 
 ### 5. CLUSTER — Flux-specific identity rules
 
@@ -182,15 +176,12 @@ Default = inline Portfolio in the chat, with the document also written to `docs/
 
 ## Parallel Subagent Prompt Skeleton
 
-Use the Agent tool three times **in the same message**. Each subagent receives:
+Use the canonical spawn/capture template in `_common/CLI_COMPATIBILITY.md` with the JSON schema in this reference. Spawn once per selected available engine, not a fixed three. Add these domain fields; the main context owns normalization, grounding and synthesis.
 
-```
-You are the {engine} reframe subagent for Flux.
+**Role:**
+Generate {N=4-6} reframings of the stuck problem below. You are one of the selected engines working independently — do not try to be exhaustive or balanced; surface the inversions and perspective shifts that YOUR training-data priors find most provocative. Divergence from the other two engines is valuable, not a defect.
 
-# Role
-Generate {N=4-6} reframings of the stuck problem below. You are one of three engines working independently — do not try to be exhaustive or balanced; surface the inversions and perspective shifts that YOUR training-data priors find most provocative. Divergence from the other two engines is valuable, not a defect.
-
-# Target
+**Target:**
 - Stuck problem statement: {scope}
 - Evidence of stuck-ness: {what was tried, why it didn't work}
 - Visible constraints (real): {list}
@@ -198,45 +189,19 @@ Generate {N=4-6} reframings of the stuck problem below. You are one of three eng
 - Cynefin domain (if classified): {domain or "unknown"}
 - Reframe axis preference: {assumption-inversion / cross-domain / perspective-rotation / all}
 
-# Output format
-Return ONLY JSON matching this exact schema (no commentary outside the JSON):
-
-{JSON schema from §3}
-
-# Constraints
+**Constraints:**
 - Each reframe must name the ORIGINAL ASSUMPTION being challenged, not just the new framing
 - Each reframe must specify the INVERTED FORM (what the new assumption is, not just that something is reversed)
 - Each reframe must list ONE concrete next-step action made available by the reframe that was NOT available under the original framing
 - Prefer bold inversions over safe restatements — a reframe that fails to change the action surface is not a reframe
 - If you cite a cross-domain source, the mechanism must plausibly exist in that domain
 - Do not paraphrase the original framing in different words and call it a reframe — synonym-substitution fails the Novelty test
-- Open with the JSON (no completion preamble)
-```
-
-The three subagents return JSON; Flux main context handles NORMALIZE through PRESENT.
-
----
 
 ## Degraded Modes
 
-| Situation | Behavior |
-|-----------|----------|
-| 1 engine binary missing | Run the other two; note reduced perspective breadth; `CANDIDATE` reframes from the single remaining engine require stricter ASN + bias-blind-spot grounding |
-| 2 engines fail | Single-engine output; treat every reframe as `CANDIDATE`; ground all before reporting; flag that divergence-value is severely reduced and recommend falling back to standard `reframe` Recipe |
-| All 3 fail | Abort tri-engine flow; degrade to standard `reframe` Recipe (DEEP pipeline) |
-| User explicitly requests single engine | Skip fan-out; use standard `reframe` Recipe |
-| Scope is a yes/no decision (not a reframing problem) | Recommend `Magi` instead — Flux multi adds no value where the options are already framed |
+Use `_common/MULTI_ENGINE_RECIPE.md` § Engine Availability Modes and its actual-engine denominator. A healthy Claude+Codex pair is the normal dual-engine baseline, not a 2/3 degraded result.
 
----
-
-## Why This Works for Reframing (different from Spark, opposite of Judge)
-
-- **Vertical reasoning reinforces, lateral thinking inverts (de Bono).** A single engine cannot escape its own training-data prior — it can only re-arrange concepts within that prior. Three independent priors *can* surface inversions outside any one prior's reach.
-- **`VERIFIED-DIVERGENT × HIGH` is the unique value of `multi`.** If Flux's multi Recipe only surfaced reframes all three engines agreed on, it would be doing nothing the standard `reframe` Recipe couldn't do (cheaper and faster). The whole investment in fan-out pays off when one engine produces a perspective shift the other two structurally couldn't reach.
-- **Portfolio-only default protects divergence.** Compete merge — choosing "the best reframe" — recreates the consensus prior the user came to Flux to escape. The Portfolio output forces the user to encounter all surviving perspectives, which is the actual reframing work.
-- **Bias-blind-spot audit is more important here than in Spark/Judge.** Each engine's reframes inherit that engine's biases. If Flux's main context does not explicitly audit its own synthesis for the same biases it flagged in the original framing, the multi-engine recipe just shifts the bias-source from one prior to a three-prior average. The Blind Spot Report in the Portfolio output is non-optional.
-
----
+With one usable engine, keep candidate reframes and the Blind Spot Report with an explicit single-engine label; do not invent independent engine voices. With zero, use `reframe`. Do not compensate for a missing engine by injecting framework-specific branches that violate the loose-prompt contract.
 
 ## Cross-References
 

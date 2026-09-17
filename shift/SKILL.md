@@ -243,7 +243,6 @@ vs Launch, Schema, Builder, Sentinel, Chain, Magi → `reference/migration-strat
 | `reference/bundle-size-analysis.md` | `modernize` — analysis tools, budget enforcement (≤170KB initial JS compressed), Vite config |
 | `reference/migration-patterns.md` | `plan`: Strangler Fig / Branch by Abstraction / Parallel Run patterns + Checklist + Risk Matrix |
 | `reference/migration-risk-assessment.md` | `plan`: risk matrix and migration strategy selection |
-| `reference/code-standards.md` | `modernize`: good/bad code examples and PoC commenting patterns |
 | `reference/dependency-upgrade-anti-patterns.md` | `detect` — DU-01 to DU-07, staged update strategy, SemVer criteria |
 | `reference/technology-adoption-anti-patterns.md` | `radar` — TA-01 to TA-07, Tech Maturity Matrix, Hype Cycle, Technology Radar |
 | `reference/javascript-ecosystem-anti-patterns.md` | `radar` for JS/Node — JE-01 to JE-07, node_modules issues, PM selection, supply-chain security |

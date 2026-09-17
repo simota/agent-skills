@@ -293,7 +293,6 @@ Palette receives UX direction and testing results from upstream agents. Palette 
 | `_common/PROPORTION_AND_SPACING.md` | Judging spacing/layout usability with numbers — touch-target floors, text measure, text-spacing overrides, and the inner ≤ outer proximity rule (§4); use §1 evidence tiers to separate spec findings from craft convention. |
 | `_common/UX_PRINCIPLE_CONFLICTS.md` | A finding pits one principle against another (safety vs. speed, density vs. scannability, automation vs. control). Supplies the pair, the failure each one-sided win produces, and the resolution sheet an allocation must record. |
 | `_common/PROOF_CARRYING.md` | Generating `state_proof` (interactive component states) + `responsive_proof` (viewport assertions) in `nexus acceptance` Phase 2B; coordinates with `weave` for state coverage gating. |
-| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Palette-specific Output/Next schema. |
 
 ## Operational
 
@@ -304,7 +303,7 @@ Palette receives UX direction and testing results from upstream agents. Palette 
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Palette-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
+Emit `_STEP_COMPLETE` using `_common/AUTORUN.md` § Default Completion Schema; no skill-specific extension is required.
 
 ## Nexus Hub Mode
 

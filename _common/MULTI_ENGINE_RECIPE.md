@@ -245,7 +245,7 @@ This contract is shared by every `multi` Recipe; do not duplicate shell wrappers
 
 ### 4. NORMALIZE
 
-Parse the three JSON blobs into a unified output list. Tag each output with its source engine. Preserve per-engine wording — divergent phrasing may carry signal.
+Parse the usable JSON results from the selected engines into a unified output list. Tag each output with its source engine. Preserve per-engine wording — divergent phrasing may carry signal.
 
 ### 5. CLUSTER — dedup across engines
 
@@ -296,58 +296,9 @@ Output structure follows the skill's existing template, with multi-engine additi
 
 ## Parallel Subagent Prompt Skeleton
 
-Use the Agent tool three times in the same message. Each subagent prompt follows this structure:
+Use `_common/CLI_COMPATIBILITY.md` §3's scoped spawn template and §9's capture contract. Add only the domain JSON schema and constraints from the selected skill reference; launch the actual available engine count, then join before synthesis.
 
-```
-You are the {engine} {verb} subagent for {Skill}.
-
-# Role
-{One-line task persona}. You are one of three engines working independently — do not try to be exhaustive; surface what your training data suggests is most promising.
-
-# Target
-{Task-specific context: scope, persona, system, plan, etc.}
-
-# Output format
-Return ONLY JSON matching this exact schema (no commentary outside the JSON):
-
-{skill-specific JSON schema}
-
-# Constraints
-- {Skill-specific quality constraints}
-- Do not paraphrase or invent entities the system clearly does not have; if you assert reuse of existing data/logic, name it specifically
-- Open with the deliverable (no completion preamble)
-```
-
-Engine-specific invocation:
-
-```bash
-# Codex (subagent runs this) — foreground only (#19945); artifact file is the source of truth
-codex exec --full-auto -o "/tmp/codex-<slug>.md" "$(cat /tmp/prompt.md)"
-[ -s "/tmp/codex-<slug>.md" ] || echo "VERDICT: codex RUNTIME-BROKEN (empty artifact despite RC=$?)"
-
-# Antigravity (subagent runs this) — agy needs a real pty (use python pty.spawn, NOT
-# `script -q /dev/null` which fails on socket stdin) + file-handoff capture MANDATORY (stdout
-# never flushes to non-TTY: issues #76/#115, unfixed through v1.0.10). Prompt must end with the §9.2 OUTPUT
-# PROTOCOL block: write JSON deliverable to $OUT (absolute path) + final-line sentinel <<<END_OF_OUTPUT>>>.
-SLUG="<task-slug>"
-OUT="/tmp/agy-${SLUG}.json"; LOG="/tmp/agy-${SLUG}.log"
-rm -f "$OUT"
-python3 - "$LOG" <<'PY' || true
-import pty, sys
-pty.spawn(["agy","-p",open("/tmp/prompt.md").read(),"--dangerously-skip-permissions",
-           "--log-file",sys.argv[1],"--print-timeout","15m"])
-PY
-if ! { [ -s "$OUT" ] && grep -q '<<<END_OF_OUTPUT>>>' "$OUT"; }; then
-  grep -E "RESOURCE_EXHAUSTED|Resets in|error getting token|agent executor error|unexpected end of JSON" "$LOG" | head -5
-  echo "VERDICT: agy RUNTIME-BROKEN — see §Engine Runtime Failure Detection (try transcript fallback per CLI_COMPATIBILITY §9.2 first)"
-fi
-```
-
-For the Claude subagent, use the Agent tool with `subagent_type: general-purpose` and the prompt above.
-
-**Invocation invariants** (all engines): subscription auth only (no provider API keys), default model (no `-m` / `--model` / `-c model=...`), structured JSON output required.
-
----
+Do not copy shell wrappers here. Historical PTY, foreground-only, default-model and permission-bypass mandates are superseded by the capability, authorization and reproduced-defect gates in that adapter. Preserve independent inputs, authentic engine identity, current-run artifact provenance and every required output field.
 
 ## Engine Availability Modes
 

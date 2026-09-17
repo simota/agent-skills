@@ -1,22 +1,11 @@
 # Multi-Engine Competitive Analysis
 
-> **Filename retained** as `tri-engine-compete.md` for backward compatibility. Covers both dual-engine baseline (Claude + Codex) and tri-engine optional (Claude + Codex + agy) modes.
+Shared engine selection, capability/authorization gates, dispatch, capture, attribution and degraded-mode policy: `_common/MULTI_ENGINE_RECIPE.md` and `_common/CLI_COMPATIBILITY.md`. This reference defines only the domain payload and integration rules.
 
 Default flow for `/compete multi`. Run subagents in parallel — one per AVAILABLE engine — to surface competitive coverage across non-overlapping training-data priors, then integrate results into Battle Card / Feature Matrix / Positioning Map / SWOT artifacts with engine-concurrence attribution.
 
-**Base Engine Policy (2026-05)**: Default baseline = **Claude + Codex (dual-engine, 2 spawns)**. agy adds a third axis (tri-engine, 3 spawns) when AVAILABLE at PREFLIGHT. For Compete the third engine's coverage uplift is **larger than for other Pattern D skills** because agy patches a blind-spot (large-cap APAC enterprise SaaS) that Claude and Codex share. When agy is UNAVAILABLE, surface the uncovered segment in the Uncommon-Competitors callout and recommend a manual WebSearch sweep. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
+Coverage gaps must be established from the actual competitor/source inventory. Do not infer geography, vendor class, factual correctness or missing coverage from an engine brand. Ground divergent competitors against primary sources before inclusion.
 
-**Why multiple engines for competitive analysis (Pattern D — Divergence-primary):** Each engine's training data carries distinct enterprise/product exposure:
-
-- **Codex** — GitHub-heavy corpus → strong on OSS, dev tools, infrastructure vendors, indie SaaS, GitHub-published changelogs
-- **Antigravity** — Google-product-adjacent corpus → strong on Google Workspace / Cloud peers, enterprise SaaS, large-cap incumbents, ad/martech, regional Asia-Pacific players (optional axis when AVAILABLE)
-- **Claude** — Anthropic-curated corpus → strong on diverse industries, B2C consumer brands, recent fundraising signal, AI-native competitors, regulated verticals
-
-A single engine *will* systematically miss competitors in the segments it under-indexes. The most valuable output of multi-engine compete is a `VERIFIED-DIVERGENT` competitor — a real, ground-checked competitor that only one engine surfaced because the others' training data structurally blinded them to that segment. Dual-engine covers two of the three blind-spot axes (codex/claude); tri-engine adds the third (agy).
-
-**Adapted from `_common/MULTI_ENGINE_RECIPE.md` and `spark/reference/tri-engine-proposal.md`. Re-uses PREFLIGHT, FAN-OUT, NORMALIZE, CLUSTER stages; specializes SCORE / GROUND / SYNTHESIZE for competitive coverage.**
-
----
 
 ## Flow
 
@@ -26,7 +15,7 @@ SCOPE → PREFLIGHT → FAN-OUT (parallel subagents) → NORMALIZE → CLUSTER �
 
 ### 1. SCOPE
 
-Define the competitive analysis target once. All three subagents share the same scope:
+Define the competitive analysis target once. All selected subagents share the same scope:
 
 - Product / category boundary (what we sell, what category, what JTBD)
 - Decision question (battle card? matrix? positioning? SWOT? — drives SYNTHESIZE format)
@@ -41,11 +30,11 @@ Run the combined preflight from `_common/MULTI_ENGINE_RECIPE.md §PREFLIGHT`. Pr
 
 ### 3. FAN-OUT — parallel subagents
 
-Spawn **three Agent calls in a single message** for genuine parallel execution.
+Dispatch one independent task per selected, authorized engine using the shared CLI adapter for genuine parallel execution.
 
 | Subagent | Engine | Baseline command |
 |----------|--------|------------------|
-| `compete-codex` | Codex CLI | `codex exec --full-auto "<prompt>"` |
+| `compete-codex` | Codex CLI | Authorized invocation via `_common/CLI_COMPATIBILITY.md` |
 | `compete-agy` | Antigravity CLI | Authorized headless/native dispatch → `_common/CLI_COMPATIBILITY.md` §9; validate outputs under `_common/MULTI_ENGINE_RECIPE.md` §3.5 |
 | `compete-claude` | Claude Code CLI (subagent) | Agent tool with `subagent_type: general-purpose` |
 
@@ -82,7 +71,7 @@ If an engine returns free-form Markdown, ask its subagent to re-emit as JSON bef
 
 ### 4. NORMALIZE
 
-Parse the three JSON blobs into a unified competitor list. Tag each entry with `source_engine`. Preserve per-engine wording — divergent phrasings on positioning / weaknesses often carry signal about which segment the engine is viewing the competitor from.
+Parse the usable JSON outputs into a unified competitor list. Tag each entry with `source_engine`. Preserve per-engine wording — divergent phrasings on positioning / weaknesses often carry signal about which segment the engine is viewing the competitor from.
 
 ### 5. CLUSTER — dedup across engines (competitor identity normalization)
 
@@ -187,17 +176,14 @@ For each VERIFIED-DIVERGENT competitor:
 
 ## Parallel Subagent Prompt Skeleton
 
-Use the Agent tool three times **in the same message**. Each subagent prompt:
+Use the canonical spawn/capture template in `_common/CLI_COMPATIBILITY.md` with the JSON schema in this reference. Spawn once per selected available engine, not a fixed three. Add these domain fields; the main context owns normalization, grounding and synthesis.
 
-```
-You are the {engine} competitive-analysis subagent for Compete.
-
-# Role
+**Role:**
 Surface 5-10 competitors for the target below, spanning direct / indirect / substitute / non-consumption.
-You are one of three engines working independently — do not try to be exhaustive across all segments;
+You are one of the selected engines working independently — do not try to be exhaustive across all segments;
 surface the competitors your training data knows most confidently. Other engines will cover what you miss.
 
-# Target
+**Target:**
 - Product / category: {scope}
 - Decision question: {battle card / matrix / SWOT / positioning / etc.}
 - Geographic / segment scope: {global / US / JP / enterprise / SMB / etc.}
@@ -205,45 +191,18 @@ surface the competitors your training data knows most confidently. Other engines
 - Known competitor seeds (already on our list, prioritize SURFACING ADDITIONS): {list or "none"}
 - Existing signals: {Voice / Pulse / Field findings if any}
 
-# Output format
-Return ONLY JSON matching this exact schema (no commentary outside the JSON):
-
-{JSON schema from §3}
-
-# Constraints
+**Constraints:**
 - Name each competitor by its CANONICAL product/company name; include aliases separately
 - Categorize each as direct | indirect | substitute | non-consumption — do not lump all into "direct"
 - Surface competitors in segments YOUR training data knows well; do not fabricate competitors in segments you do not know
 - For each competitor, name at least one strength AND one weakness (avoid pure marketing copy)
 - If you assert a feature or pricing posture, base it on something your training data actually contains — do not invent
-- Open with the deliverable (no completion preamble)
-```
-
-The three subagents return JSON; Compete main context handles NORMALIZE through DELIVER. Source-grounding via WebSearch happens at step 7 (GROUND) and is mandatory for every CANDIDATE / DIVERGENT cluster.
-
----
 
 ## Degraded Modes
 
-| Situation | Behavior |
-|-----------|----------|
-| 1 engine binary missing | Run the other two; note reduced coverage breadth in header; CANDIDATE clusters from the single remaining engine require stricter grounding |
-| 2 engines fail | Single-engine output; treat every competitor as CANDIDATE; ground all via WebSearch before reporting; flag reduced coverage and disable the "Uncommon Competitors" callout (no concurrence signal available) |
-| All 3 fail | Abort multi mode; degrade to standard `matrix` Recipe with the Compete main context |
-| User explicitly requests single engine | Skip fan-out; use standard analysis Recipe |
-| Scope obviously trivial (e.g., "is X a competitor of Y") | Optionally skip multi; recommend single-engine `matrix` |
-| WebSearch unavailable during GROUND | Mark all CANDIDATE clusters as `NEEDS-INFO`; do not ship as VERIFIED-DIVERGENT without source attribution |
+Use `_common/MULTI_ENGINE_RECIPE.md` § Engine Availability Modes and its actual-engine denominator. A healthy Claude+Codex pair is the normal dual-engine baseline, not a 2/3 degraded result.
 
----
-
-## Why This Works for Competitive Analysis (Pattern D rationale)
-
-- **Each engine's training data has structural coverage gaps that are knowable but invisible to that engine.** Codex over-indexes OSS / GitHub-published / dev-tool vendors; Antigravity over-indexes Google ecosystem / large-cap SaaS; Claude over-indexes diverse industries and AI-native players. A `VERIFIED-DIVERGENT` competitor surfaced by one engine is a real competitor that the other two were structurally blind to — not a low-confidence guess.
-- **Concurrence (3/3) still filters obvious hallucinations.** When all three engines independently name the same competitor with overlapping features and positioning, the competitor is almost certainly real and well-known.
-- **The Uncommon-Competitor callout is the load-bearing deliverable.** Sales teams losing deals to a competitor they cannot name benefit far more from "here is the competitor your CI program structurally missed" than from "here is one more line on the matrix you already knew."
-- **Compete's anti-patterns (no surface-level metrics, no reaction-to-every-move, ethical sources only, source-attribution mandatory) apply at SYNTHESIZE/GROUND, not at FAN-OUT.** Letting engines run loose maximizes coverage; rule enforcement happens centrally.
-
----
+With one usable engine, every competitor is a candidate until source-verified; omit the cross-engine Uncommon Competitors claim. With no usable engines, use `matrix`. Without current-source access, unverified facts remain `NEEDS-INFO`, never VERIFIED-DIVERGENT.
 
 ## Cross-References
 
@@ -255,7 +214,6 @@ The three subagents return JSON; Compete main context handles NORMALIZE through 
 - `compete/reference/battle-card.md` — Battle Card output format that absorbs engine_concurrence tags
 - `compete/SKILL.md` — Feature Matrix / SWOT output requirements
 - `compete/reference/competitive-moats-category-design.md` — Positioning Map output format
-
 
 ---
 

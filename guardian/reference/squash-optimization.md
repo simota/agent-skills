@@ -2,16 +2,6 @@
 
 Purpose: Score adjacent commits, group squash candidates, synthesize better messages, and keep attribution and rollback safety intact.
 
-## Contents
-
-- Pairwise scoring
-- Decision thresholds
-- Group detection
-- Message synthesis
-- Sequence optimization
-- Verification and rollback
-- Orbit boundary
-
 ## Pairwise Scoring
 
 Evaluate adjacent commit pairs across six weighted factors:
@@ -72,15 +62,6 @@ Message construction rules:
 - preserve scope and intent
 - add `Co-authored-by:` when attribution matters
 - explain rationale in the body only when useful
-
-## Sequence Optimization
-
-Default flow:
-1. detect noise commits
-2. score adjacent pairs
-3. form candidate groups
-4. generate synthesized commit messages
-5. produce a rebase plan or keep-separate advice
 
 ## Verification and Rollback
 

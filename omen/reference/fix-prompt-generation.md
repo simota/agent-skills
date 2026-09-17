@@ -1,21 +1,10 @@
 # Omen LLM Fix Prompt Generation
 
-**Purpose:** Omen-specific action verbs, suppression cases, template fields, and worked example for the `## LLM Fix Prompt` block paired with every actionable failure mode (RPN above threshold, AP not Low, not classified `ACCEPT-RISK`).
+**Purpose:** Omen-specific action verbs, suppression cases, template fields for the `## LLM Fix Prompt` block paired with every actionable failure mode (RPN above threshold, AP not Low, not classified `ACCEPT-RISK`).
 **Read when:** Omen has enumerated failure modes via FMEA / pre-mortem / fault tree / Swiss Cheese / HAZOP and one or more modes warrant downstream action.
 
 > Universal authoring rules and prompt structure: `_common/LLM_PROMPT_GENERATION.md`.
-> This file documents only Omen-specific verbs, suppression cases, template fields, and an example.
-
-## Contents
-
-- When Omen emits a Fix Prompt
-- Omen action verbs
-- Verb selection heuristic
-- Omen-specific suppression cases
-- Per-failure-mode fix prompt template (Omen-specific fields)
-- Worked example
-
----
+> This file documents only Omen-specific verbs, suppression cases, template fields.
 
 ## When Omen Emits a Fix Prompt
 
@@ -182,83 +171,3 @@ For `ACCEPT-RISK`, no Fix Prompt is emitted; instead the report records:
 ```
 
 ---
-
-## Worked Example (ADD-GUARDRAIL)
-
-**Scenario:** Pre-mortem on a new payments checkout flow surfaces a duplicate-charge failure mode caused by client retries on flaky network conditions. No idempotency control exists today.
-
-````markdown
-## LLM Fix Prompt
-
-```text
-# Your task
-ADD-GUARDRAIL the failure mode described below.
-
-# Failure mode context
-- Failure mode ID: FM-007
-- Title: Duplicate payment charge on client retry of /checkout
-- RPN score: 9 × 6 × 7 = 378  (Severity 9, Occurrence 6, Detection 7)
-- AP score: High
-- Severity rationale: Customer is double-charged in production, triggers chargeback and trust loss; per-incident cost ~$50 plus reputational damage. Severity 9 (single-customer financial loss with regulatory exposure under PSD2 dispute rules).
-- Confidence: HIGH (Omen pre-mortem + payment-team incident history corroborates)
-- Source method: pre-mortem + FMEA
-
-# Failure scenario
-1. User submits checkout, the request reaches Stripe and the charge succeeds.
-2. The 200 response is lost on the user's mobile network (timeout at our edge).
-3. The browser auto-retries POST /checkout (default fetch retry on transient error).
-4. Our handler accepts the retried request with no replay guard, calls Stripe again, and a second charge succeeds.
-5. The user sees one order but two charges; chargeback and refund workflow triggers.
-
-Location of risk: `src/api/checkout.ts:88` in `createCheckoutHandler()` (POST entrypoint, no idempotency key)
-
-# Detection gap
-What currently prevents or detects this failure: None at the application layer.
-- Stripe idempotency keys: not used
-- Database unique constraint on (user_id, cart_hash, minute_bucket): not present
-- Client-side debounce: 300ms only; mobile retry triggers > 1s later
-Swiss-Cheese layers analyzed: client retry guard (hole), edge dedupe (hole), application idempotency (hole), database constraint (hole), Stripe replay protection (hole when key absent). All five layers permeable.
-
-# Recommended action
-Approach: Require an `Idempotency-Key` header on POST /checkout. Persist (key, response) for 24h; on replay, return the stored response without re-invoking Stripe. Forward the same key as Stripe's `Idempotency-Key` header so the upstream layer is also protected.
-Files / surfaces to modify:
-- src/api/checkout.ts — read `Idempotency-Key` header, look up in cache, short-circuit on hit
-- src/lib/idempotency.ts — new module: Redis-backed key store with 24h TTL, atomic put-if-absent
-- src/lib/stripe-client.ts — pass `Idempotency-Key` to Stripe SDK
-- src/api/checkout.test.ts — add replay tests
-- web/checkout-form.tsx — generate UUIDv4 per submit, send in header
-Defensive controls:
-- Redis SET NX EX 86400 for atomic key reservation
-- Stripe SDK native `idempotencyKey` option (Stripe stores 24h, matches our TTL)
-- Reject requests missing the header with 400 (after a 2-week observability period in warn-only mode)
-Constraints:
-- Latency budget: idempotency check must add < 5ms p99 (Redis is in-VPC)
-- Backward compatible during rollout: warn-only mode for 2 weeks, then enforce
-- Do not change the `/checkout` response shape
-
-# Acceptance criteria
-- [ ] All POST /checkout calls require Idempotency-Key after enforcement date
-- [ ] Replay of identical key within 24h returns the original response without calling Stripe
-- [ ] Stripe receives the same Idempotency-Key (verified in Stripe dashboard request logs)
-- [ ] Regression test covers: (a) network-loss replay, (b) deliberate double-click, (c) key collision across users (must reject)
-- [ ] Failure scenario step 4 no longer reaches step 5 in test harness
-- [ ] No new test failures in src/api/checkout.test.ts
-- [ ] Beacon alert fires when idempotency cache miss-rate spikes (cross-link to ADD-MONITOR FM-007-M)
-
-# Ruled-out alternatives (do not revisit)
-- Client-side debounce only — eliminated: does not address mobile network retries that fire seconds later, and trusts the client
-- Database unique constraint on (user_id, cart_hash) — eliminated: cart contents may change legitimately within seconds; constraint produces false rejects
-- Stripe-side idempotency key alone without local store — eliminated: still calls Stripe network on every replay, wasting quota and adding latency; also returns Stripe's response wrapper which leaks internal IDs
-- Disable client retry — eliminated: cannot enforce on third-party browsers / native apps
-
-# What NOT to do
-- Do not silence the symptom by issuing automatic refunds on detected duplicates — root cause stays open
-- Do not skip the warn-only rollout — clients without the header will hard-fail in production
-- Do not log the full Idempotency-Key value (treat as a request secret)
-- Do not bundle unrelated checkout changes (UI tweaks, analytics events) into this PR
-- Do not weaken Stripe webhook signature verification while adding this guardrail
-- Do not expand scope beyond the cited files unless evidence demands it
-```
-````
-
-This prompt is self-contained: a coding LLM (Builder) can act on it without seeing the rest of the Omen FMEA report. The cross-link to a paired `ADD-MONITOR` for the same failure mode (FM-007-M) is explicit so Beacon can pick up the detection layer in parallel.

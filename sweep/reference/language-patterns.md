@@ -4,18 +4,8 @@ Purpose: language-specific detection tooling, fallback rules, and common false-p
 
 Scope boundary:
 - This file = **per-language tooling** (knip/vulture/staticcheck/cargo-udeps choice and fallback hierarchy).
-- `false-positives.md` = **cross-language detection patterns** (dynamic loading, framework conventions, magic strings, risk matrix).
-- `troubleshooting.md` = **recovery procedures** when tool output misleads (ts-prune/depcheck re-export false-positive flow, backup restore).
-
-## Contents
-
-1. TypeScript / JavaScript
-2. Python
-3. Go
-4. Rust
-5. Swift
-6. Kotlin
-7. Language-agnostic risk patterns
+- `reference/false-positives.md` = **cross-language detection patterns** (dynamic loading, framework conventions, magic strings, risk matrix).
+- `reference/troubleshooting.md` = **recovery procedures** when tool output misleads (ts-prune/depcheck re-export false-positive flow, backup restore).
 
 ## TypeScript / JavaScript
 
@@ -87,107 +77,42 @@ Common false positives:
 
 ## Rust
 
-| Tool | Purpose | Usage |
-|------|---------|-------|
-| `cargo udeps` | Unused dependencies | `cargo +nightly udeps` |
-| `cargo clippy` | Dead code warnings | `cargo clippy -- -W dead_code` |
+Start with the installed compiler/Clippy dead-code diagnostics; dependency analyzers are candidate generators, not deletion proofs. Select an already-installed compatible analyzer through its documented help, not a cached plugin/version matrix.
 
-```bash
-cargo +nightly udeps
-cargo +nightly udeps --workspace
-cargo clippy -- -W dead_code
-```
+Before deletion, verify:
+- FFI names against non-Rust consumers and exported headers; linker-retained `#[used]` / `link_section` / exported symbols are not ordinary call-graph roots.
+- Trait-object consumers, `Drop`, derives and procedural-macro output; use the installed toolchain's supported expansion tooling, never a copied unstable flag.
+- `cfg(feature)`, `cfg(test)`, build scripts, examples, doctests, binaries and CI targets. No importing workspace member does not prove a crate is unused.
+- Feature consumers with `cargo tree -e features`. Test the project's supported feature/target combinations; default-feature tests are incomplete, while mutually exclusive features can make blanket `--all-features` invalid.
+- External public-API consumers before removing exports or workspace dependencies.
 
-### Edition 2024 / 1.85+ Deep-Dive
-
-The table above is the language-patterns quick lookup. For Rust-specific cleanup landmines — including:
-
-- Full tooling matrix (`cargo machete`, `cargo unused-features`, `cargo bloat`, `cargo-modules`, `cargo expand`)
-- Safe-to-remove vs tread-carefully categories
-- FFI symbol landmines (`#[no_mangle]`, `#[unsafe(no_mangle)]`, `#[used]`, `#[link_section]`)
-- `#[cfg(feature = "...")]` / `#[cfg(test)]` / `#[derive]`-fed / `Drop` impl pitfalls
-- Workspace-wide cleanup, version drift in `[workspace.dependencies]`
-- Feature flag cleanup workflow
-
-→ Read [`rust-cheatsheet.md`](./rust-cheatsheet.md).
-
-Upstream sources of truth (do not duplicate):
-
-- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
+Canonical feature semantics: https://doc.rust-lang.org/cargo/reference/features.html (checked 2026-09-17). Recheck installed syntax and supported feature combinations when changing the build matrix.
 
 ## Swift
 
-| Tool | Purpose | Usage |
-|------|---------|-------|
-| `swiftlint` | Unused declarations, unused imports, unused captures | `swiftlint lint --strict` |
-| Periphery | Cross-module unused declarations | `periphery scan --workspace MyApp.xcworkspace --schemes MyApp` |
-| `swiftc -warnings-as-errors` | Builtin unused-result and dead-code warnings | `swift build -Xswiftc -warnings-as-errors` |
-| `xcrun swift-symbolgraph-extract` | Public symbol surface diff (libraries) | See cheatsheet |
+Use the project's configured compiler warnings and unused-declaration analysis. SwiftLint `unused_declaration` and `unused_import` are **analyzer rules**: an ordinary `swiftlint lint --strict` run is not evidence they ran. Confirm the installed analyzer configuration and required compiler log before claiming coverage.
 
-Common false positives:
-- `@objc` / `@objcMembers` / `dynamic` (consumed via Obj-C runtime, KVO)
-- `@IBOutlet` / `@IBAction` / `@IBInspectable` (consumed by Interface Builder)
-- `Codable` synthesized members
-- Macro-emitted symbols
-- `#if DEBUG` / `#if canImport(...)` blocks
+Before deletion, verify:
+- Objective-C files, selector/class-name strings, KVO, `@objc` / `dynamic` and C exports.
+- Storyboards/XIBs and `@IBOutlet` / `@IBAction` / `@IBInspectable`; entry points including `@main` and SwiftUI `App`.
+- `Codable` synthesis, reflection, macros and protocol witnesses consumed through type erasure.
+- Re-exported/conditional imports, test-target consumers and supported platform/build configurations. Inspect deprecated API consumers; deprecation is not disuse.
+- SwiftPM build-tool plugins, macros and resources: absence of `import` does not prove the dependency unused. Diff the public symbol surface for library removals.
 
-### Swift 6.2 Deep-Dive
-
-The table above is the language-patterns quick lookup. For Swift-specific cleanup landmines — including:
-
-- Full tooling matrix (SwiftLint rules, Periphery config, symbol graphs)
-- Safe-to-remove vs tread-carefully categories
-- Obj-C runtime landmines (`@objc`, `@objcMembers`, `dynamic`, `@_cdecl`)
-- Interface Builder consumers (`@IBOutlet`, `@IBAction`, `@IBInspectable`)
-- `Codable` synthesis, `Mirror` reflection, macro-emitted symbols
-- SwiftPM dependency cleanup, package traits cleanup
-- `#if DEBUG` / `#if swift(>=...)` stale-block removal
-
-→ Read [`swift-cheatsheet.md`](./swift-cheatsheet.md).
-
-Upstream sources of truth (do not duplicate):
-
-- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
+Analyzer contracts: https://realm.github.io/SwiftLint/unused_declaration.html and https://realm.github.io/SwiftLint/unused_import.html (checked 2026-09-17). Keep version-specific invocation in the installed tool's documentation, not here.
 
 ## Kotlin
 
-| Tool | Purpose | Usage |
-|------|---------|-------|
-| Detekt | Unused private/internal members, imports, parameters | `./gradlew detekt` |
-| IntelliJ "Unused declaration" inspection | Cross-module unused symbols | `./gradlew qodana` (CI) |
-| `gradle-dependency-analysis-plugin` | Unused dependencies, misplaced configurations | `./gradlew buildHealth` |
-| `-Xexplicit-api=strict` | Library public-API exposure | `./gradlew assemble -PkotlinExplicitApi=strict` |
-| Ktlint | Unused imports (style) | `./gradlew ktlintCheck` |
+Use configured Detekt/IDE inspections and Gradle dependency analysis only where the project's installed plugins expose them. Discover actual wrapper tasks; do not assume `qodana`, `buildHealth`, or `apiCheck` exists. Explicit-API mode checks visibility/types, not dead-code reachability; minifier removal is not proof that deleting source is safe.
 
-Common false positives:
-- Reflection-accessed (`KClass.declaredMemberProperties`, Spring component scanning)
-- `@Component` / `@Service` / `@Repository` (Spring auto-detect)
-- `@SerialName` fields on `Serializable` types (consumed by kotlinx.serialization)
-- `@Parcelize` data class fields
-- `@JvmField` / `@JvmStatic` / `@JvmOverloads` (Java interop)
-- KSP2 / kapt generated code references
-- `lateinit` properties (init via DI / framework)
-- `data class` synthesized members (`copy`, `componentN`)
-- Compose `@Composable` callable signatures
-- Convention plugins in `buildSrc/` / `build-logic/`
+Before deletion, verify:
+- Reflection, Spring component scanning/DI and `lateinit` initialization.
+- Serialization and `Parcelize` fields, generated KSP/kapt consumers, data-class synthesis and Compose signatures.
+- Java callers and generated `@JvmField` / `@JvmStatic` / `@JvmOverloads` interfaces; file-level JVM naming, import aliases and opt-in propagation.
+- Gradle settings, CI task selectors, build-script dependencies, version catalogs, `buildSrc` and convention plugins. Module age is not a deletion signal.
+- Compiler/plugin-generated code and published public APIs across supported targets. A processor migration belongs to a separately scoped migration: confirm processor support and compare generated output before removing kapt configuration.
 
-### Kotlin 2.3+ / K2 Deep-Dive
-
-The table above is the language-patterns quick lookup. For Kotlin-specific cleanup landmines — including:
-
-- Full tooling matrix (Detekt rules, IntelliJ inspections, dependency analysis plugin)
-- Safe-to-remove vs tread-carefully categories
-- Reflection / Spring DI / kotlinx.serialization landmines
-- `@Parcelize`, `@JvmField`/`@JvmStatic`/`@JvmOverloads` removal pitfalls
-- KSP2 / kapt-generated code, `lateinit`, `data class` synthesis
-- Gradle multi-module cleanup, version catalog cleanup
-- kapt → KSP2 migration cleanup
-
-→ Read [`kotlin-cheatsheet.md`](./kotlin-cheatsheet.md).
-
-Upstream sources of truth (do not duplicate):
-
-- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
+Language/toolchain claims are subject to `../builder/reference/implementation-policy.md` § Language and Toolchain Grounding.
 
 ## Language-Agnostic Risk Patterns
 

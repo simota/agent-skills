@@ -19,7 +19,7 @@ _STEP_COMPLETE:
       dissent: "[perspective and rationale, or none]"
       risk_count: "[count]"
     tri_engine:                                  # present only when `multi` Recipe ran
-      engines_run: [codex, agy, claude]          # subset reflecting AVAILABLE engines
+      engines_run: [actual usable engines]      # authorized and actually invoked
       engines_failed: [list or none]
       matrix_size: "[9-cell | 6-cell | 3-cell]"
       # Per-viewpoint concurrence — each viewpoint (logos/pathos/sophia) tagged as:

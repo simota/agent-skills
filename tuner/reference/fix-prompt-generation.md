@@ -1,20 +1,10 @@
 # Tuner LLM Fix Prompt Generation
 
-**Purpose:** Tuner-specific action verbs, suppression cases, template fields, and worked example for the `## LLM Fix Prompt` block at the end of every Tuner performance report.
+**Purpose:** Tuner-specific action verbs, suppression cases, template fields for the `## LLM Fix Prompt` block at the end of every Tuner performance report.
 **Read when:** You are writing the `## LLM Fix Prompt` block for a Tuner report, choosing an action verb, or deciding whether to suppress.
 
 > Universal authoring rules and prompt structure: `_common/LLM_PROMPT_GENERATION.md`.
-> This file documents only Tuner-specific verbs, suppression cases, template fields, and an example.
-
-## Contents
-
-- Tuner action verbs
-- Verb selection heuristic
-- Tuner-specific suppression cases
-- Per-finding fix prompt template (Tuner-specific fields)
-- Worked example
-
----
+> This file documents only Tuner-specific verbs, suppression cases, template fields.
 
 ## Tuner Action Verbs
 
@@ -168,112 +158,3 @@ Constraints:
 For `INVESTIGATE-FURTHER`, replace "Recommended action" with "Verification plan" (pg_stat_statements query, auto_explain config, or production trace request). For `MITIGATE`, add a "Cache strategy" block (TTL, invalidation, stampede guard).
 
 ---
-
-## Worked Example (ADD-INDEX)
-
-**Scenario:** Order history endpoint runs a Seq Scan on a 12M-row table because the composite filter+sort pattern lacks a matching composite index.
-
-````markdown
-## LLM Fix Prompt
-
-```text
-# Your task
-ADD-INDEX the database performance finding described below.
-
-# Finding context
-- Title: Seq Scan on orders during /api/orders/history (user_id + created_at range + ORDER BY created_at)
-- Severity: High (P99 = 2400ms vs 200ms target on user-facing endpoint)
-- Confidence: HIGH (EXPLAIN ANALYZE BUFFERS + pg_stat_statements top-10 + reproduced in staging)
-- Database system: PostgreSQL 18.1
-- Bottleneck classification: missing composite index + redundant sort
-
-# Slow query
-```sql
-SELECT id, user_id, total_amount, status, created_at
-FROM orders
-WHERE user_id = $1
-  AND created_at >= $2
-  AND created_at < $3
-ORDER BY created_at DESC
-LIMIT 50;
-```
-
-Location: `src/server/orders/handler.ts:88` in `loadHistory()`
-
-# Current plan (EXPLAIN ANALYZE BUFFERS)
-```
-Limit  (cost=423012.10..423012.22 rows=50 width=72) (actual time=2387.4..2387.5 rows=50 loops=1)
-  Buffers: shared hit=8124 read=412318
-  ->  Sort  (cost=423012.10..423485.22 rows=189249 width=72)
-        Sort Key: created_at DESC
-        Sort Method: top-N heapsort  Memory: 38kB
-        ->  Seq Scan on orders  (cost=0.00..416712.50 rows=189249 width=72)
-              Filter: ((user_id = $1) AND (created_at >= $2) AND (created_at < $3))
-              Rows Removed by Filter: 11814751
-              Buffers: shared hit=8124 read=412318
-Planning Time: 0.34 ms
-Execution Time: 2387.61 ms
-```
-
-# Workload context
-- Table size: 12,004,000 rows
-- Rows scanned vs returned: 12,004,000 scanned / 50 returned (selectivity = 4.2e-6)
-- Buffer hits / reads: shared hit=8124 read=412318 (99.4% disk reads — confirms no cache benefit)
-- Row-estimate ratio: estimate 189,249 vs actual ~50 after sort+limit (~3800× over-estimate; not blocking but flag for autovacuum/ANALYZE)
-- Frequency: 4,200 calls/min per pg_stat_statements (top-3 in workload)
-- P99 latency: 2400ms (target: ≤200ms)
-
-# Plan after fix (estimated)
-```
-Limit  (cost=0.43..52.18 rows=50 width=72) (actual time=0.18..1.42 rows=50)
-  Buffers: shared hit=58
-  ->  Index Scan Backward using idx_orders_user_created on orders
-        Index Cond: ((user_id = $1) AND (created_at >= $2) AND (created_at < $3))
-Estimated Execution Time: ~3 ms (vs current 2387 ms — ~800× improvement)
-```
-
-# Recommended action
-Approach: Add a composite descending index on `(user_id, created_at DESC)` with an `INCLUDE` canon covering the SELECT columns, eliminating both the Seq Scan and the explicit Sort. The index serves the equality on user_id, the range on created_at, and the ORDER BY in a single backward index scan.
-
-Files / DDL to modify:
-- New migration: `migrations/20260501_orders_user_created_idx.sql`
-
-```sql
--- PostgreSQL production-safe form
-CREATE INDEX CONCURRENTLY idx_orders_user_created
-  ON orders (user_id, created_at DESC)
-  INCLUDE (id, total_amount, status);
-```
-
-Constraints:
-- Write overhead estimate: +6% on INSERT (measured on staging copy via `pgbench -f insert.sql`); orders table has 1.2M inserts/day, so cost is acceptable
-- Lock risk: `CREATE INDEX CONCURRENTLY` is required (12M rows, online traffic); estimated build duration ~28 min in staging, monitor for 60 min on production with `pg_stat_progress_create_index`
-- Backward-compat: response shape unchanged; no API impact
-
-# Acceptance criteria
-- [ ] EXPLAIN ANALYZE BUFFERS on the production query shows `Index Scan Backward using idx_orders_user_created` (no Seq Scan, no explicit Sort)
-- [ ] P99 latency for /api/orders/history drops below 200ms (current: 2400ms)
-- [ ] Row-estimate ratio re-checked: planner estimate within 10× of actual after VACUUM ANALYZE
-- [ ] Write overhead on INSERT measured at ≤10% (current baseline: 1.4ms/row → max 1.55ms/row)
-- [ ] Index build completes via `CREATE INDEX CONCURRENTLY` (no exclusive lock on orders)
-- [ ] No regression on `/api/orders/recent` and `/api/admin/orders` benchmark queries
-- [ ] PostgreSQL 18 index lookup count per scan stays at 1 (no skip-scan degeneration into repeated scans)
-
-# Ruled-out alternatives (do not revisit)
-- Single-column index on `created_at` only — eliminated: leaves Seq Scan on filter, only helps the sort
-- Single-column index on `user_id` only — eliminated: eliminates Seq Scan but explicit Sort remains; staging benchmark showed P99 = 480ms (still >target)
-- Materialized view per-user — eliminated: 4M+ active users would explode the MV; MV refresh cost dominates
-- Partitioning by `created_at` (monthly) — eliminated: pre-mature for 12M rows (Tuner threshold: 100M+); revisit if growth exceeds 30M rows
-- Drop `orders.status` from response to enable a leaner covering index — eliminated: API contract requires status
-
-# What NOT to do
-- Do not `CREATE INDEX` without `CONCURRENTLY` — exclusive lock on a 12M-row table will block writes for 25+ minutes
-- Do not silence the symptom by raising the P99 SLO target above 200ms — the latency is user-felt
-- Do not drop the existing `idx_orders_user_id` index in the same migration — verify zero usage via `pg_stat_user_indexes` over a full week first; that is a separate cleanup PR
-- Do not add additional indexes "while we're at it" — measure the write overhead budget impact one index at a time
-- Do not skip the row-estimate sanity check — the 3800× over-estimate suggests stale statistics that may also affect adjacent queries
-- Do not wrap `created_at` in functions (e.g., `WHERE DATE(created_at) = $1`) — that would defeat the new index
-```
-````
-
-This prompt is self-contained: a coding LLM (or Schema for migration coordination) can act on it without seeing the rest of the Tuner report.

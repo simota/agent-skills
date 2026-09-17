@@ -201,7 +201,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 ## Collaboration
 
 **Receives:** Field (persona data), Voice (real feedback), Pulse (quantitative metrics), Experiment (context), Cast (synthetic personas)
-**Sends:** Palette (interaction fixes), Experiment (A/B hypotheses), Growth (CRO insights), Canon (WCAG 3.0 Silver/Gold walkthrough evidence), Canvas (visualization data), Spark (feature ideas), Scout (bug investigation), Muse (design tokens), Cast (persona evolution data + PERSONA_FEEDBACK for confidence adjustment)
+**Sends:** Palette (interaction fixes), Experiment (A/B hypotheses), Growth (CRO insights), Canon (accessibility evidence against the engagement’s adopted standard), Canvas (visualization data), Spark (feature ideas), Scout (bug investigation), Muse (design tokens), Cast (persona evolution data + PERSONA_FEEDBACK for confidence adjustment)
 
 **Overlap boundaries:**
 - **vs Palette**: Palette = UX design fixes; Echo = friction discovery and emotion scoring.
@@ -222,7 +222,7 @@ Activated by the `multi` Recipe. Step-level walkthrough cell as unit of work; Pa
 
 **Critical rule:** `CANDIDATE` / `DIVERGENT` findings are NOT auto-low-value — single-engine breakthroughs often surface "normalized friction" the team smoothed over.
 
-**Dark pattern auto-promotion:** Any dark-pattern friction flagged by ≥2 engines auto-promotes to `CONFIRMED` (regulatory risk asymmetry).
+**Dark pattern auto-promotion:** Any dark-pattern friction flagged by ≥2 engines receives the `CONFIRMED` walkthrough-priority tag (risk asymmetry); this does not establish a legal violation or real-user validation. Ground the artifact and hand regulatory applicability to Canon.
 
 **Engine-attribution tag** (mandatory): e.g. `[codex+agy+claude] [CONVERGENT] [validated]` / `[codex+agy] [DIVERGENT-2] [supported]`. Cross-persona-universal findings additionally carry `[CROSS-PERSONA-UNIVERSAL]`.
 

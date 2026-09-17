@@ -362,4 +362,4 @@ No changes required. Existing loops already implement the standard phases under 
 
 ### For Tier 3 Implementation
 
-Follow Tier 3 Activation Requirements above. Reference Architect's `reference/self-evolution.md` as the canonical implementation example.
+Follow Tier 3 Activation Requirements above. Reference Architect's `_common/architect/reference/self-evolution.md` as the canonical implementation example.

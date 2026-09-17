@@ -49,7 +49,7 @@ File counts are evidence, not automatic permission. Safety and blast radius can 
 | RELEASE | Prepare or execute release only when `release=true` and authorized | Guardian, Launch, Gear | Release evidence or an explicit release-ready handoff |
 | DELIVER | Aggregate evidence and residuals | Nexus | `NEXUS_COMPLETE` + Delivery Report |
 
-Checkpoint-resume applies: persist phase outputs to `.agents/nexus-delivery-state.md` at every boundary. `mode=resume` continues from the last valid checkpoint after revalidating repository state and permissions.
+Checkpoint format → `reference/delivery-output-formats.md` (read when saving/resuming). Checkpoint-resume applies: persist phase outputs to `.agents/nexus-delivery-state.md` at every boundary. `mode=resume` continues from the last valid checkpoint after revalidating repository state and permissions.
 
 ## Chain Selection
 

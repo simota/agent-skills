@@ -231,7 +231,7 @@ Routing rules:
 ## Collaboration
 
 **Receives:** Vision (`VISION_TO_ATELIER`, carrying `DESIGN_INTENT_HANDOFF`) for direction and constraints, the user for an ad-hoc brief, and Judge (`QUALITY_FEEDBACK`) for output review.
-**Sends:** every delegate receives a `DESIGN_INTENT_HANDOFF` — Frame (Figma extraction, Code Connect), Muse (tokens, DTCG alignment), Forge (prototype), Pixel (mockup reproduction), Ink / Builder (visual assets), Stage (deck), Canvas (diagram), Scribe (multi-format export), Artisan (production implementation), Vitrine (Storybook catalog). Out-of-scope multi-domain work escalates to Nexus via `NEXUS_ROUTING`. Full table -> `reference/autorun-schema.md`.
+**Sends:** every delegate receives a `DESIGN_INTENT_HANDOFF` — Frame (Figma extraction, Code Connect), Muse (tokens, DTCG alignment), Forge (prototype), Pixel (mockup reproduction), Ink / Builder (visual assets), Stage (deck), Canvas (diagram), Scribe (multi-format export), Artisan (production implementation), Vitrine (Storybook catalog). Out-of-scope multi-domain work escalates to Nexus via `NEXUS_ROUTING`.
 
 
 ## Output Requirements

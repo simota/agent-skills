@@ -186,7 +186,7 @@ Parse the first token of user input:
 
 ## LLM Fix Prompt Generation
 
-When remediation is handed off rather than shipped inline, the report ends with a paste-ready, self-contained `## LLM Fix Prompt` block addressed to Builder (or the human operator for `REVOKE-AND-ROTATE`). Authoring rules → `_common/LLM_PROMPT_GENERATION.md`; template fields and worked examples → `reference/fix-prompt-generation.md`.
+When remediation is handed off rather than shipped inline, the report ends with a paste-ready, self-contained `## LLM Fix Prompt` block addressed to Builder (or the human operator for `REVOKE-AND-ROTATE`). Authoring rules → `_common/LLM_PROMPT_GENERATION.md`; template fieldss → `reference/fix-prompt-generation.md`.
 
 Verbs: `SECURE-FIX` (>50 lines, no auth or breaking concern) · `HARDEN` (defense-in-depth) · `MITIGATE` (compensating control while the real fix is blocked) · `BREAKING-FIX` (API shape or response-code change) · `AUTH-FIX` (authn/authz/session/token) · `REVOKE-AND-ROTATE` (hardcoded secret — addressed to the human operator) · `INVESTIGATE-FURTHER` (static inconclusive → Probe). Receiving-agent mapping → `reference/fix-prompt-generation.md` § Verb Table.
 

@@ -1,16 +1,10 @@
 # Multi-Engine Demand Generation
 
-> **Filename retained** as `tri-engine-demand.md` for backward compatibility. Covers both dual-engine baseline (Claude + Codex) and tri-engine optional (Claude + Codex + agy) modes.
+Shared engine selection, capability/authorization gates, dispatch, capture, attribution and degraded-mode policy: `_common/MULTI_ENGINE_RECIPE.md` and `_common/CLI_COMPATIBILITY.md`. This reference defines only the domain payload and integration rules.
 
 Default flow for `/echo demand multi`. Run subagents in parallel — one per AVAILABLE engine — to generate synthetic user demands across the same persona set, integrate results across two axes (concurrence + divergence), and deliver a Demand Report that preserves both universal pain points AND engine-specific blind-spot fills.
 
-**Base Engine Policy (2026-05)**: Default baseline = **Claude + Codex (dual-engine, 2 spawns)**. agy adds a third axis (tri-engine, 3 spawns) only when AVAILABLE at PREFLIGHT. Dual-engine mode is NOT degraded — persona-voice divergence comes from independent channeling of the same persona by 2 engines with non-overlapping training-data priors (Claude's empathy-curated corpus + Codex's GitHub-issue-driven complaint patterns). See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
-
 **Pattern**: D (Divergence-primary) per `_common/MULTI_ENGINE_RECIPE.md`. Divergent single-engine demands are NOT auto-low-value — they often surface the silent-majority insight that the other engines' persona-channeling priors smoothed over.
-
-**Why three engines for synthetic demand (different from Judge):** Judge optimizes for *agreement on a single defect* — concurrence is the quality signal. Echo[demand] optimizes for *authentic user voice from diverse persona perspectives* — concurrence reveals universal unmet needs (high-confidence demands), but divergence reveals engine-specific persona-channeling angles. Each engine has different priors about how a "beginner" or "accessibility-dependent user" actually thinks; the breakthrough demand often comes from the engine that channels the persona most distinctively.
-
-**Adapted from `judge/reference/tri-engine-review.md`. Re-uses PREFLIGHT and FAN-OUT mechanics; replaces SCORE/GROUND/FILTER with Concurrence-Divergence Scoring and Synthesis that preserves persona-voice fidelity.**
 
 ---
 
@@ -22,7 +16,7 @@ SCOPE → CAST → PREFLIGHT → FAN-OUT (parallel subagents) → NORMALIZE → 
 
 ### 1. SCOPE
 
-Define the demand-generation target once. All three subagents share the same scope:
+Define the demand-generation target once. All selected subagents share the same scope:
 
 - Product / feature surface
 - Generation mode (EXPLORE / DEEP / CHALLENGE / COMPETE / EDGE) per `reference/demand-mode-playbooks.md`
@@ -47,11 +41,11 @@ Availability verdict and "never declare unavailable based on..." rules: identica
 
 ### 4. FAN-OUT — parallel subagents
 
-Spawn **three Agent calls in a single message** so they run concurrently. Each subagent receives the **same persona set** but channels them independently. Each engine has different priors about how each persona expresses frustration — this is the source of valuable divergence.
+Dispatch one independent task per selected, authorized engine using the shared CLI adapter so they run concurrently. Each subagent receives the **same persona set** but channels them independently. Each engine has different priors about how each persona expresses frustration — this is the source of valuable divergence.
 
 | Subagent | Engine | Baseline command |
 |----------|--------|------------------|
-| `demand-codex` | Codex CLI | `codex exec --full-auto "<prompt>"` |
+| `demand-codex` | Codex CLI | Authorized invocation via `_common/CLI_COMPATIBILITY.md` |
 | `demand-agy` | Antigravity CLI | Authorized headless/native dispatch → `_common/CLI_COMPATIBILITY.md` §9; validate outputs under `_common/MULTI_ENGINE_RECIPE.md` §3.5 |
 | `demand-claude` | Claude Code CLI (subagent) | Agent tool with `subagent_type: general-purpose` |
 
@@ -84,7 +78,7 @@ If an engine is genuinely unavailable per PREFLIGHT criteria, record the failure
 
 ### 5. NORMALIZE
 
-Parse the three JSON blobs into a unified demand list. Tag each demand with its source engine **and** its persona. Demand identity in Echo[demand] is `(persona, demand-essence)` — the same persona can have multiple demands, and the same demand-essence can surface across personas. If an engine returns free-form Markdown, ask its subagent to re-emit as JSON before integrating.
+Parse the usable JSON outputs into a unified demand list. Tag each demand with its source engine **and** its persona. Demand identity in Echo[demand] is `(persona, demand-essence)` — the same persona can have multiple demands, and the same demand-essence can surface across personas. If an engine returns free-form Markdown, ask its subagent to re-emit as JSON before integrating.
 
 ### 6. CLUSTER — dedup across engines
 
@@ -155,7 +149,7 @@ Synthesis steps:
 2. **Cross-persona analysis**: list `CROSS-PERSONA-UNIVERSAL` demands as the top-priority section. These are the strongest synthetic signals.
 3. **Persona-specific demands**: list `PERSONA-SPECIFIC` demands grouped by persona, with a one-line note on why only that persona notices.
 4. **Engine-channeling notes**: a brief section noting which engine channeled which persona most distinctively, surfaced from the engines' optional `engine_notes` field. Useful for next-session persona prep.
-5. **Assumption challenges**: aggregate from all three engines' `blind_spots_surfaced` fields. Deduplicate; flag the strongest 3-5 as `Questions for the Team`.
+5. **Assumption challenges**: aggregate from all selected engines' `blind_spots_surfaced` fields. Deduplicate; flag the strongest 3-5 as `Questions for the Team`.
 6. **Don't-build candidates** (multi-only): list `NO-DEMAND-CONSENSUS` areas — feature surfaces where all engines were silent. Mark each as **don't-build / already-adequate** or **shared-bias-suspect** (per the negative-concurrence caveat). This is the subtraction signal single-engine cannot produce.
 7. **Rejection ledger** (condensed): count and categories of rejected demands (voice-mismatch / criteria-vague / persona-fabricated / **feasibility-filtered — must be 0**) — preserves transparency without noise.
 
@@ -174,7 +168,7 @@ Output structure follows the existing Echo[demand] Demand Report template (`echo
 
 - **Header summary table** gains engine-status line and concurrence stats (`UNIVERSAL: N / LIKELY: N / VERIFIED-DIVERGENT: N / CROSS-PERSONA: N`)
 - **Cross-Persona Analysis** section is mandatory in multi mode (single-engine mode treats it as optional)
-- **Per-demand `LLM Instruction Prompt`** still applies — verb selection per `echo/SKILL.md §LLM Instruction Prompt Generation`. Each per-request prompt embeds the demand's engine_concurrence and calibration tags so downstream agents (Spark, Scribe, Builder) know whether they are acting on a 3/3-validated demand or a 1/3-divergent hypothesis.
+- **Per-demand `LLM Instruction Prompt`** still applies — verb selection per `reference/demand-handoffs.md` § Paste-ready demand prompts. Each per-request prompt embeds the demand's engine_concurrence and calibration tags so downstream agents (Spark, Scribe, Builder) know whether they are acting on a multi-engine-supported synthetic demand or a single-engine divergent hypothesis.
 - **Per-report `LLM Orchestration Prompt`** at the bottom — adapted to mention the tri-engine origin and the calibration distribution.
 
 Do not include rejected demands in the main list. Do not surface engine-raw output. Synthetic-true tagging applies to every demand unless calibration upgraded it to `[validated]`.
@@ -183,29 +177,18 @@ Do not include rejected demands in the main list. Do not surface engine-raw outp
 
 ## Parallel Subagent Invocation
 
-Use the Agent tool three times **in the same message** for genuine parallel execution. Each subagent receives a self-contained prompt:
+Use the canonical spawn/capture template in `_common/CLI_COMPATIBILITY.md` with the JSON schema in this reference. Spawn once per selected available engine, not a fixed three. Add these domain fields; the main context owns normalization, grounding and synthesis.
 
-```
-You are the {engine} demand subagent for Echo[demand]. You channel synthetic user voice — speak AS the persona, not ABOUT the persona.
+**Role:**
+For each persona below, generate {N=2-4} feature demands in first-person voice. You are one of the selected engines channeling the same personas independently. Express the persona as your training data suggests they would actually speak; do not smooth out their quirks.
 
-# Role
-For each persona below, generate {N=2-4} feature demands in first-person voice. You are one of three engines channeling the same personas independently. Express the persona as your training data suggests they would actually speak; do not smooth out their quirks.
-
-# Personas
-{PERSONA_CHANNEL blocks from CAST step — full template per persona including last_frustration, unspoken_assumption, daily_context, current_emotion}
-
-# Target
+**Target:**
 - Product / feature surface: {scope}
 - Mode bias: {EXPLORE | DEEP | CHALLENGE | COMPETE | EDGE — per `reference/demand-mode-playbooks.md`}
 - Roadmap / assumptions to challenge: {if CHALLENGE mode}
 - Competitor anchor: {if COMPETE mode}
 
-# Output format
-Return ONLY JSON matching this exact schema (no commentary outside the JSON):
-
-{JSON schema}
-
-# Constraints
+**Constraints:**
 - Speak in FIRST PERSON as the persona ("I", "my", "me") — never developer/PM voice
 - Preserve emotional specificity — frustration sounds different from resignation
 - Include daily-context scenes (when/where/what they were doing) — not abstract requests
@@ -213,23 +196,12 @@ Return ONLY JSON matching this exact schema (no commentary outside the JSON):
 - Avoid jargon the persona would not actually use
 - Do not filter demands by technical feasibility — users do not know implementation cost
 - Surface at least one assumption the team likely holds (in `blind_spots_surfaced`) per persona
-```
-
-The three subagents return JSON; Echo[demand] main context handles NORMALIZE through DELIVER.
-
----
 
 ## Degraded Modes
 
-| Situation | Behavior |
-|-----------|----------|
-| 1 engine binary missing | Run the other two; note reduced persona-voice diversity; `CANDIDATE-DEMAND / DIVERGENT-VOICE` clusters from the single remaining engine require stricter calibration |
-| 2 engines fail | Single-engine output; treat every demand as `CANDIDATE-DEMAND`; calibrate all before reporting; flag reduced confidence; loud `synthetic-only` tag |
-| All 3 fail | Abort tri-engine flow; degrade to standard `request` Recipe with the Echo[demand] main context |
-| User explicitly requests single engine | Skip fan-out; use standard `request` Recipe |
-| Fewer than 3 personas available | Multi mode still runs but with the same persona pool — flag persona-representativeness as a risk per `reference/demand-calibration.md` |
+Use `_common/MULTI_ENGINE_RECIPE.md` § Engine Availability Modes and its actual-engine denominator. A healthy Claude+Codex pair is the normal dual-engine baseline, not a 2/3 degraded result.
 
----
+With one usable engine, every demand is CANDIDATE-DEMAND and explicitly synthetic-only; calibrate before handoff. With zero, use `request`. Fewer than three personas remains a representativeness limitation even when several engines are available.
 
 ## Mode Modifier Interaction
 
@@ -242,16 +214,6 @@ When combining `multi` with `CHALLENGE` mode, the engines independently counter 
 
 ---
 
-## Why This Works for Synthetic Demand (different from Judge)
-
-- **Persona-channeling priors differ across engines.** Codex, Antigravity, and Claude have different training-data exposure to how "beginners," "power users," or "accessibility-dependent users" actually speak. Three independent channelings of the same persona surface more authentic voice diversity than a single engine ever could.
-- **Concurrence still filters obviously inauthentic voices.** When three engines independently channel the same persona to the same unmet need, that demand almost certainly reflects a real friction class — though synthetic-vs-validated calibration still applies.
-- **Divergence preserves the "silent majority" insight.** The most valuable Echo[demand] demand is often the one no team member noticed — surfaced by exactly one engine, because the other two engines unconsciously smoothed over the persona's quirks. Tri-engine flow makes this divergence visible instead of averaging it out.
-- **Cross-persona signals are stronger in tri-engine mode.** A demand that surfaces across 3 personas × 3 engines (9 independent voices) is one of the strongest synthetic signals Echo[demand] can produce — call it out as a `CROSS-PERSONA-UNIVERSAL`.
-- **AI-persona bias risks (mode-collapse, WEIRD, over-sanitization per `_common/AI_PERSONA_RISKS.md`) are partially mitigated by tri-engine.** Different engines have different bias profiles; their disagreement reveals where any single engine is collapsing. Still tag synthetic-true unless calibrated against real data.
-
----
-
 ## Cross-References
 
 - `_common/SUBAGENT.md §MULTI_ENGINE` — base protocol for engine dispatch and loose prompts
@@ -260,4 +222,4 @@ When combining `multi` with `CHALLENGE` mode, the engines independently counter 
 - `echo/reference/demand-persona-embodiment.md` — PERSONA_CHANNEL template fed into FAN-OUT
 - `echo/reference/demand-calibration.md` — confidence tagging applied at CALIBRATE step
 - `echo/reference/demand-mode-playbooks.md` — Mode Modifier semantics (COMPETE / EDGE / CHALLENGE compatibility)
-- `echo/SKILL.md §LLM Instruction Prompt Generation` — per-request and per-report prompt generation rules
+- `reference/demand-handoffs.md` § Paste-ready demand prompts — per-request and per-report prompt generation rules

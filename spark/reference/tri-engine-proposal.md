@@ -1,16 +1,10 @@
 # Multi-Engine Proposal Generation
 
-> **Filename retained** as `tri-engine-proposal.md` for backward compatibility. Covers both dual-engine baseline (Claude + Codex, 2 spawns / 6 cells) and tri-engine optional (Claude + Codex + agy, 3 spawns / 9 cells) modes.
+Shared engine selection, capability/authorization gates, dispatch, capture, attribution and degraded-mode policy: `_common/MULTI_ENGINE_RECIPE.md` and `_common/CLI_COMPATIBILITY.md`. This reference defines only the domain payload and integration rules.
 
 Default flow for `/spark multi`. Run subagents in parallel — one per AVAILABLE engine — to generate feature proposals, integrate results across two axes (concurrence + divergence), and deliver either a Compete-merged single best proposal or a Portfolio of complementary proposals.
 
-**Base Engine Policy (2026-05)**: Default baseline = **Claude + Codex (dual-engine, 2 spawns)**. agy adds a third axis (tri-engine, 3 spawns) only when AVAILABLE at PREFLIGHT. Dual-engine mode is NOT degraded. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes` for tag vocabulary (`[codex+claude]` for dual / `[codex+agy+claude]` etc. for tri) and runtime mode selection.
-
 **Pattern**: D (Divergence-primary) per `_common/MULTI_ENGINE_RECIPE.md`. Divergent single-engine proposals are NOT auto-low-value — they often surface the breakthrough opportunity each engine's training-data blind spot would otherwise hide.
-
-**Why three engines for proposals (different from Judge):** Judge optimizes for *agreement on a single defect* — concurrence is the quality signal, divergence is noise. Spark optimizes for *creative recombination of existing data/logic* — concurrence reveals universally strong opportunities, but divergence reveals each engine's unique training-data blind spots. Both axes carry value. A 3/3 concurrent proposal is a "safe bet"; a 1/3 divergent proposal may be the breakthrough.
-
-**Adapted from `judge/reference/tri-engine-review.md`. Re-uses PREFLIGHT, FAN-OUT, NORMALIZE, and CLUSTER stages; replaces SCORE/GROUND/FILTER with Concurrence-Divergence Scoring and Synthesis.**
 
 ---
 
@@ -22,7 +16,7 @@ SCOPE → PREFLIGHT → FAN-OUT (parallel subagents) → NORMALIZE → CLUSTER �
 
 ### 1. SCOPE
 
-Define the proposal target once. All three subagents share the same scope:
+Define the proposal target once. All selected subagents share the same scope:
 
 - Product / feature surface (existing capabilities, unused data, repeated workflows)
 - Target persona (ideally from Cast registry at `.agents/personas/registry.yaml`)
@@ -52,11 +46,11 @@ Availability verdict and "never declare unavailable based on..." rules: identica
 
 ### 3. FAN-OUT — parallel subagents
 
-Spawn **three Agent calls in a single message** so they run concurrently. Each subagent has an independent context (different training data, different ideation bias) and produces proposals independently.
+Dispatch one independent task per selected, authorized engine using the shared CLI adapter so they run concurrently. Each subagent has an independent context (different training data, different ideation bias) and produces proposals independently.
 
 | Subagent | Engine | Baseline command |
 |----------|--------|------------------|
-| `propose-codex` | Codex CLI | `codex exec --full-auto "<prompt>"` |
+| `propose-codex` | Codex CLI | Authorized invocation via `_common/CLI_COMPATIBILITY.md` |
 | `propose-agy` | Antigravity CLI | Authorized headless/native dispatch → `_common/CLI_COMPATIBILITY.md` §9; validate outputs under `_common/MULTI_ENGINE_RECIPE.md` §3.5 |
 | `propose-claude` | Claude Code CLI (subagent) | Agent tool with `subagent_type: general-purpose` |
 
@@ -88,7 +82,7 @@ If an engine is genuinely unavailable per PREFLIGHT criteria, record the failure
 
 ### 4. NORMALIZE
 
-Parse the three JSON blobs into a unified proposal list. Tag each proposal with its source engine. If an engine returns free-form Markdown, ask its subagent to re-emit as JSON before integrating.
+Parse the usable JSON outputs into a unified proposal list. Tag each proposal with its source engine. If an engine returns free-form Markdown, ask its subagent to re-emit as JSON before integrating.
 
 ### 5. CLUSTER — dedup across engines
 
@@ -125,6 +119,8 @@ For every `CANDIDATE / DIVERGENT` cluster, the Spark main context must:
 For `UNIVERSAL` and `LIKELY` clusters, do a lightweight duplication spot-check only — three engines rarely hallucinate the same product capability simultaneously, but they may all suggest something already shipped.
 
 ### 8. SYNTHESIZE — Compete vs Portfolio (user-selectable merge strategy)
+
+Apply Spark’s proposal gates: no “everyone” persona, no activity-only JTBD, no confidence above 50% without evidence, and no more than 20% of proposals rated Impact=3. Scope, privacy and authorization constraints apply during fan-out as well as synthesis.
 
 Spark supports two merge strategies. Default is **Portfolio** unless the user explicitly asks for a single proposal or invokes `multi --compete`.
 
@@ -175,57 +171,29 @@ Do not include rejected proposals in the main list. Do not surface engine-raw ou
 
 ## Parallel Subagent Invocation
 
-Use the Agent tool three times **in the same message** for genuine parallel execution. Each subagent receives a self-contained prompt:
+Use the canonical spawn/capture template in `_common/CLI_COMPATIBILITY.md` with the JSON schema in this reference. Spawn once per selected available engine, not a fixed three. Add these domain fields; the main context owns normalization, grounding and synthesis.
 
-```
-You are the {engine} proposal subagent for Spark.
+**Role:**
+Generate {N=3-5} feature proposals for the target below. You are one of the selected engines working independently — do not try to be exhaustive; surface what your training data suggests is most promising.
 
-# Role
-Generate {N=3-5} feature proposals for the target below. You are one of three engines working independently — do not try to be exhaustive; surface what your training data suggests is most promising.
-
-# Target
+**Target:**
 - Product / feature surface: {scope}
 - Persona pool: {personas from Cast registry or "open"}
 - Outcome anchor: {behavioral metric to move}
 - Discovery evidence: {Pulse / Voice / Compete / Field findings if any}
 
-# Output format
-Return ONLY JSON matching this exact schema (no commentary outside the JSON):
-
-{JSON schema}
-
-# Constraints
+**Constraints:**
 - Each proposal names the user PROBLEM, not the solution (e.g., "Difficulty exporting large datasets" not "CSV Export Button")
 - Each proposal targets a SPECIFIC persona (never "everyone")
 - Each proposal includes a measurable outcome_hypothesis AND a fail_condition
 - Do not write implementation code — proposals only
 - Do not paraphrase or invent capabilities the product clearly does not have; if you assert reuse of existing data/logic, name it specifically
-```
-
-The three subagents return JSON; Spark main context handles NORMALIZE through PRESENT.
-
----
 
 ## Degraded Modes
 
-| Situation | Behavior |
-|-----------|----------|
-| 1 engine binary missing | Run the other two; note reduced ideation breadth; `CANDIDATE / DIVERGENT` clusters from the single remaining engine require stricter grounding |
-| 2 engines fail | Single-engine output; treat every proposal as `CANDIDATE`; ground all before reporting; flag reduced confidence |
-| All 3 fail | Abort tri-engine flow; degrade to standard `propose` Recipe with the Spark main context |
-| User explicitly requests single engine | Skip fan-out; use standard `propose` Recipe |
-| Scope obviously trivial (e.g., "add a button to do X") | Optionally skip multi mode; recommend single-engine `propose` |
+Use `_common/MULTI_ENGINE_RECIPE.md` § Engine Availability Modes and its actual-engine denominator. A healthy Claude+Codex pair is the normal dual-engine baseline, not a 2/3 degraded result.
 
----
-
-## Why This Works for Proposals (different from Judge)
-
-- **Independent training data surfaces non-overlapping ideas.** Codex's GitHub-heavy corpus, Antigravity's Google-product corpus, and Claude's Anthropic-curated corpus all bias toward different reference designs. A 1/3 divergent proposal often represents one engine's unique angle, not a hallucination.
-- **Concurrence still filters obvious hallucinations.** When all three engines independently recombine the same existing capabilities into the same proposal, that proposal is almost certainly grounded in the product's real surface area.
-- **The Compete/Portfolio split matches real product-discovery use cases.** Users sometimes want one RFC (Compete); sometimes want a menu (Portfolio). Forcing one mode would mismatch the workflow.
-- **Spark's anti-pattern guardrails (no "everyone" personas, no activity-framed JTBD, no Confidence >50% without evidence, ≤20% Impact=3 distribution) apply in SYNTHESIZE, not at FAN-OUT.** Letting engines run loose maximizes divergence; rule enforcement happens centrally.
-
----
+With one usable engine, treat proposals as CANDIDATE and ground before handoff. With zero, use `propose`. A trivial feature or an explicit single-engine request uses the ordinary recipe without unnecessary fan-out.
 
 ## Cross-References
 

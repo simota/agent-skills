@@ -15,7 +15,7 @@ _STEP_COMPLETE:
     anti_pattern_check: [AP results]
     files_changed: List[{path, type, changes}]
     tri_engine:                                  # present only when `multi` Recipe ran
-      engines_run: [codex, agy, claude]
+      engines_run: [actual usable engines]  # authorized and actually invoked
       engines_failed: [list or none]
       merge_strategy: "[Portfolio | Compete]"
       concurrence_distribution:

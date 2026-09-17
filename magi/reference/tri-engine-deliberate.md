@@ -1,32 +1,26 @@
 # Multi-Engine Deliberation
 
-> **Filename retained** as `tri-engine-deliberate.md` for backward compatibility. The content covers both **dual-engine baseline (6-cell matrix)** and **tri-engine optional (9-cell matrix)** modes.
+Shared engine selection, capability/authorization gates, dispatch, capture, attribution and degraded-mode policy: `_common/MULTI_ENGINE_RECIPE.md` and `_common/CLI_COMPATIBILITY.md`. This reference defines only the domain payload and integration rules.
 
 Default flow for `/magi multi`. Run subagents in parallel — one per AVAILABLE engine — each engine independently deliberates from **all three Magi viewpoints (Logos / Pathos / Sophia)** — then integrate into a deliberation matrix (engines × 3 viewpoints) for two-pass scoring (per-viewpoint concurrence + per-engine consistency) and pattern-based final verdict.
-
-**Base Engine Policy (2026-05)**: Default baseline = **Claude + Codex (dual-engine, 6-cell matrix)**. agy is added as a third axis (tri-engine, 9-cell matrix) only when AVAILABLE at PREFLIGHT. dual-engine mode is the recipe's normal operating state, NOT a degraded mode. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
-
-**Why multi-engine deliberation (Pattern H — Hybrid):** Magi's value model demands both *consensus signal* (high concurrence within a viewpoint raises confidence) AND *dissent signal* (cross-viewpoint divergence reveals trade-offs in the decision). Single-engine deliberation inherits one model's blind spots across all three viewpoints. Multi-engine deliberation produces a matrix where patterns (e.g., "all Logos approve, all Pathos reject") become the verdict's most valuable artifact — not noise to average away. **Dual-engine baseline (Claude judgment + Codex sandbox-execution priors) covers the load-bearing diversity**; the optional agy axis adds a third independent training-data signature when reachable.
-
-**Adapted from `_common/MULTI_ENGINE_RECIPE.md` (Pattern H). Re-uses SCOPE / PREFLIGHT / FAN-OUT / NORMALIZE / DELIVER stages; replaces single-axis CLUSTER/SCORE with a two-pass concurrence model and replaces SYNTHESIZE with matrix visualization + pattern-based verdict synthesis.**
 
 ---
 
 ## Flow
 
 ```
-SCOPE → PREFLIGHT → FAN-OUT (3 subagents, each emits all 3 viewpoints) → NORMALIZE
+SCOPE → PREFLIGHT → FAN-OUT (N selected engines, each emits all 3 viewpoints) → NORMALIZE
        → CLUSTER (two-pass: per-viewpoint + per-engine) → SCORE → GROUND/CALIBRATE
-       → SYNTHESIZE (9-cell matrix + pattern verdict) → DELIVER
+       → SYNTHESIZE (N×3 matrix + pattern verdict) → DELIVER
 ```
 
-**Critical fan-out design**: spawn 3 subagents (not 9). Each subagent independently produces all 3 viewpoint reasonings (Logos + Pathos + Sophia) in one JSON payload. This keeps spawn cost low while still letting each engine reason across all viewpoints with its own training-data priors. Cross-engine viewpoint divergence becomes the cluster-scoring signal.
+**Matrix sizing:** one independent invocation per selected engine, not per cell. N=2 produces 6 cells; N=3 produces 9. Matrix dimensions, denominators, summaries and labels always reflect the actual usable engines.
 
 ---
 
 ## 1. SCOPE
 
-Define the deliberation target once. All three subagents share the same scope:
+Define the deliberation target once. All selected subagents share the same scope:
 
 - The decision being deliberated (one clear question, not a bundle)
 - Decision domain (Architecture / Trade-off / Go/No-Go / Strategy / Priority)
@@ -37,7 +31,7 @@ Define the deliberation target once. All three subagents share the same scope:
 
 ## 2. PREFLIGHT — engine availability (Magi main context, never delegated)
 
-Use the canonical probe from `_common/MULTI_ENGINE_RECIPE.md §2 PREFLIGHT`. Magi main context runs the combined probe once; subagent PATH is narrower and will produce false negatives. Pass absolute binary paths to subagents when the standard PATH probe failed.
+Use the canonical probe from `_common/MULTI_ENGINE_RECIPE.md §2 PREFLIGHT`. Magi main context runs the combined probe once; a subagent can have a different PATH; probe absence is not proof that the host cannot dispatch. Pass absolute binary paths to subagents when the standard PATH probe failed.
 
 Availability verdicts and "never declare unavailable based on..." rules: identical to the protocol baseline.
 
@@ -47,7 +41,7 @@ Spawn **one Agent call per AVAILABLE engine in a single message**. Each subagent
 
 | Subagent | Engine | Spawn Condition | Baseline command |
 |----------|--------|-----------------|------------------|
-| `deliberate-codex` | Codex CLI | Always (Codex required for magi multi) | `codex exec --full-auto "<prompt>"` |
+| `deliberate-codex` | Codex CLI | Always (Codex required for magi multi) | Authorized invocation via `_common/CLI_COMPATIBILITY.md` |
 | `deliberate-claude` | Claude Code CLI (subagent) | Always (host engine) | Agent tool with `subagent_type: general-purpose` |
 | `deliberate-agy` | Antigravity CLI | **Only when AVAILABLE at PREFLIGHT** | Authorized headless/native dispatch → `_common/CLI_COMPATIBILITY.md` §9; validate outputs under `_common/MULTI_ENGINE_RECIPE.md` §3.5 |
 
@@ -91,19 +85,19 @@ Each engine should reason about the decision from Logos / Pathos / Sophia *using
       "key_trade_offs": ["..."]
     }
   },
-  "engine_notes": "Optional: what bias this engine knows it brings (e.g., 'Codex priors are GitHub-heavy; flags infra-cost trade-offs more often than UX cost')"
+  "engine_notes": "Optional: evidenced limitations or assumptions in this invocation, not guessed model-corpus characteristics"
 }
 ```
 
-Each subagent therefore emits **3 cells** of the final 9-cell matrix. Three subagents × 3 viewpoints = 9 independent reasonings.
+Each subagent emits **3 cells**. Viewpoints from the same invocation are different lenses, not evidence of independent training data.
 
-**Independence preservation**: subagents must not see each other's outputs before all have returned. Confidence anchoring across engines is the single biggest contamination risk; running all three Agent calls in the same message guarantees structural independence.
+**Independence preservation**: subagents must not see each other's outputs before all have returned. Separate invocations and withhold sibling outputs until collection completes; parallel timing alone does not establish evidentiary independence.
 
 If an engine is genuinely unavailable per PREFLIGHT criteria, record the failure. With 2 engines: 6-cell matrix; with 1 engine: 3-cell degraded mode (flag reduced confidence). All 3 down → abort multi, degrade to `decide` Recipe.
 
 ## 4. NORMALIZE
 
-Parse the three JSON blobs into a unified **9-cell matrix** indexed by `cell_id = "{viewpoint}_{engine}"` (e.g., `logos_codex`, `pathos_agy`, `sophia_claude`).
+Parse the usable JSON outputs into a unified **N×3 matrix** indexed by `cell_id = "{viewpoint}_{engine}"` (e.g., `logos_codex`, `pathos_agy`, `sophia_claude`).
 
 Preserve per-engine wording — divergent rationale phrasing inside the same viewpoint carries diagnostic signal. Do not collapse or summarize at this stage.
 
@@ -115,7 +109,7 @@ Magi runs **two clustering passes** in sequence. Each pass produces a different 
 
 ### Pass A — Per-viewpoint engine clustering (concurrence axis)
 
-For each viewpoint (Logos, Pathos, Sophia), cluster the 3 engine cells by verdict:
+For each viewpoint (Logos, Pathos, Sophia), cluster the available engine cells by verdict:
 
 - `viewpoint_concurrence[logos]` = {APPROVE: [engines], REJECT: [engines], ABSTAIN: [engines]}
 - Same for `pathos` and `sophia`
@@ -141,6 +135,8 @@ Magi's scoring uses both Pass A (per-viewpoint concurrence) and Pass B (per-engi
 
 ### Per-viewpoint concurrence labels (Pass A)
 
+Tri-engine labels below. In dual mode use 2/2=`CONFIRMED`, 1/2=`CANDIDATE`; `LIKELY` is unreachable. All-ABSTAIN stays `UNDECIDED`.
+
 | Engines agreeing within viewpoint | Concurrence label | Perspective tag |
 |-----------------------------------|-------------------|-----------------|
 | 3 / 3 same verdict | `CONFIRMED` | `CONVERGENT` |
@@ -165,13 +161,13 @@ After Pass A + Pass B, extract these matrix patterns — they drive the final ve
 
 | Matrix pattern | Meaning | Suggested verdict shape |
 |----------------|---------|-------------------------|
-| All 9 cells APPROVE | Universal approval | `GO` (high confidence) — still run devil's advocate per Magi 3-0 rule |
-| All 9 cells REJECT | Universal rejection | `NO-GO` (high confidence) |
-| Logos: 3/3 APPROVE; Pathos: 3/3 REJECT; Sophia: split | Technical-vs-human trade-off | `CONDITIONAL with ethical guardrails` — surface the lens conflict explicitly |
+| All 3N cells APPROVE | Universal approval | `GO` (high confidence) — still run devil's advocate per Magi 3-0 rule |
+| All 3N cells REJECT | Universal rejection | `NO-GO` (high confidence) |
+| All Logos APPROVE; all Pathos REJECT; Sophia split | Technical-vs-human trade-off | `CONDITIONAL with ethical guardrails` — surface the lens conflict explicitly |
 | All Logos APPROVE; All Sophia REJECT | Technical-vs-business trade-off | `CONDITIONAL` — Sophia objection becomes the gating criterion |
 | All Pathos REJECT; Logos+Sophia mixed | Human-cost dominant blocker | `NO-GO unless human-cost mitigation` |
-| One engine consistent-approve; other two consistent-reject | Engine-bias asymmetry | Investigate which engine's training data diverges; do not let one engine dominate (Byzantine cap at 50% weight per `_common/MULTI_ENGINE_RECIPE.md`) |
-| All three engines `internally-split` (1-1-1 each) | Genuine high-dimensional uncertainty | `ESCALATE TO HUMAN` — the decision has real trade-offs no engine resolves |
+| One engine consistent-approve; remaining engines consistent-reject | Engine-bias asymmetry | Compare the evidenced assumptions and sources; do not infer hidden training data or let one engine dominate (Byzantine cap at 50% weight per `_common/MULTI_ENGINE_RECIPE.md`) |
+| All selected engines `internally-split` (1-1-1 each) | Genuine high-dimensional uncertainty | `ESCALATE TO HUMAN` — the decision has real trade-offs no engine resolves |
 | Per-viewpoint `CONFIRMED` on 3/3 viewpoints, but verdicts differ | 3 viewpoints each unanimous but different conclusions | Strong evidence of multi-objective trade-off; explicit `CONDITIONAL` with per-lens guardrails |
 
 The matrix pattern is the verdict's primary input, not the average confidence score.
@@ -184,19 +180,21 @@ For Pattern H, ground both confidence and dissent:
 2. **Mitigation check** — does the cited concern already have a mitigation in the existing system? If a Pathos REJECT cites "no rollback path" but the team has a documented rollback runbook, downgrade that cell to ABSTAIN with a note.
 3. **Specificity check** — is each cell's rationale concrete enough to be falsifiable? Vague rationales ("users won't like it") fail; specific ones ("survey N=120 showed 38% rejection of this UX pattern") pass.
 4. **Confidence stress-test** — for any cell with confidence ≥ 85, apply "what would make this wrong?" Lower confidence if the counter-anchor cannot be answered.
-5. **Calibration against shared evidence** — for KNOWLEDGE-type tasks, all three engines should have anchored to the shared factual base from FRAME. If one engine's evidence list diverges sharply, check whether that engine ignored the shared evidence or surfaced an additional fact.
+5. **Calibration against shared evidence** — for KNOWLEDGE-type tasks, all selected engines should have anchored to the shared factual base from FRAME. If one engine's evidence list diverges sharply, check whether that engine ignored the shared evidence or surfaced an additional fact.
 
 Mark each cell as `VERIFIED` (keep as-is), `DOWNGRADED` (kept with adjusted verdict/confidence), or `REJECTED-{reason}` (drop from matrix).
 
-For `CONFIRMED / CONVERGENT` viewpoints, do a lightweight spot-check on the first cell only — three engines rarely hallucinate the same concern simultaneously.
+For every shipped cell, verify each distinct load-bearing claim. Reuse evidence checks for identical claims, but concurrence never substitutes for grounding: engines may share the same unsupported source.
 
 For `CANDIDATE / DIVERGENT-2` viewpoints (the 1-1-1 case within a lens), ground all three cells strictly — divergence is informative, but each dissent must rest on real evidence to count.
 
-## 8. SYNTHESIZE — 9-cell matrix visualization + pattern-based verdict
+## 8. SYNTHESIZE — matrix visualization + pattern-based verdict
 
 Magi's `multi` SYNTHESIZE has two mandatory outputs:
 
-### Output A — 9-cell matrix table (always present)
+### Output A — N×3 matrix table (always present)
+
+Tri-engine illustration below; remove unavailable columns and recompute labels for dual mode.
 
 ```
                       |  codex          |  agy            |  claude         | Viewpoint Concurrence
@@ -210,7 +208,7 @@ Engine Consistency    | mostly-aligned  | internally-split| internally-split|  M
 
 Each cell shows verdict + confidence. Row trailer = per-viewpoint concurrence + perspective tag. Column trailer = per-engine consistency.
 
-Below the table, summarize each cell's rationale in 1-2 sentences (9 mini-paragraphs). Preserve the dissents — every well-reasoned `DOWNGRADED` cell stays in the synthesis with its counter-anchor visible.
+Below the table, summarize each retained cell's rationale in 1-2 sentences. Preserve the dissents — every well-reasoned `DOWNGRADED` cell stays in the synthesis with its counter-anchor visible.
 
 ### Output B — Pattern-based final verdict
 
@@ -231,7 +229,7 @@ Verdict shape:
 
 ### Devil's advocate trigger
 
-If the matrix shows `CONFIRMED / CONVERGENT` on all 3 viewpoints (i.e., 9 cells unanimous), Magi's standard 3-0 groupthink rule applies — run a devil's advocate challenge before finalizing. In `multi` mode, the DA challenge is more credible because the unanimity already crosses 3 independent engines AND 3 independent viewpoints, so the DA must specifically attack the matrix pattern (not just one cell).
+Apply the 3-0 groupthink rule when **all cells share the same verdict**: 6/6 in dual mode or 9/9 in tri mode. A devil's advocate challenge is mandatory and must attack the matrix pattern, not just one cell. Separate unanimous rows with conflicting verdicts are a trade-off pattern, not all-cell unanimity.
 
 ### Engine-attribution tags (mandatory)
 
@@ -239,45 +237,42 @@ Every shipped output carries tags per `_common/MULTI_ENGINE_RECIPE.md`:
 
 - Per-viewpoint concurrence tag: `[codex+agy+claude]` (3/3) / `[codex+agy]` etc. (2/3) / `[codex-verified]` (1/3 grounded)
 - Per-viewpoint perspective tag: `[CONVERGENT]` / `[DIVERGENT-1]` / `[DIVERGENT-2]`
-- Final verdict carries a matrix-pattern label: `[matrix:all-9-approve]`, `[matrix:pathos-block]`, `[matrix:logos-sophia-split]`, etc.
+- Final verdict carries a matrix-pattern label: `[matrix:all-cells-approve]`, `[matrix:pathos-block]`, `[matrix:logos-sophia-split]`, etc.
 
 ## 9. DELIVER
 
 Output structure layered on top of Magi's standard verdict template:
 
-1. **MAGI MULTI-ENGINE VERDICT** header — banner naming the three engines that ran (and any failures)
+1. **MAGI MULTI-ENGINE VERDICT** header — banner naming the actual engines that ran (and any failures)
 2. **Decision restatement** + reversibility + task type (from FRAME)
-3. **9-cell matrix table** (Output A above)
-4. **Per-cell summaries** (9 short paragraphs, grouped by viewpoint)
+3. **N×3 matrix table** (Output A above)
+4. **Per-cell summaries** (actual retained cells, grouped by viewpoint)
 5. **Cross-cutting matrix pattern** identified
 6. **Final verdict + weighted confidence** (Output B above) with matrix-pattern label
 7. **Risk register** — derived from `key_trade_offs` aggregated across cells, deduped, ranked by severity
 8. **Cognitive bias check** — Magi standard (anchoring, confirmation, sunk cost, curse of knowledge) plus multi-engine-specific: cross-engine anchoring (any engine override another's framing?), engine-bias asymmetry (did one engine dominate the matrix?)
-9. **Dissent record** — every DIVERGENT viewpoint's minority cells stay visible; for 9-cell-unanimous matrices, include the DA challenge result
+9. **Dissent record** — every DIVERGENT viewpoint's minority cells stay visible; for all-cell-unanimous matrices, include the DA challenge result
 10. **Engine status + rejection ledger** — which engines ran/failed, how many cells were REJECTED/DOWNGRADED at GROUND, by category
 11. **Next steps + agent routing** — per Magi standard
 
-Do not surface raw subagent JSON in the final report. Do not collapse the 9-cell matrix into a single "average verdict" — the matrix itself is the deliverable's most valuable artifact.
+Do not surface raw subagent JSON in the final report. Do not collapse the matrix into a single "average verdict" — the matrix itself is the deliverable's most valuable artifact.
 
 ---
 
 ## Parallel Subagent Invocation
 
-Use the Agent tool three times **in the same message** for genuine parallel execution. Each subagent receives a self-contained prompt:
+Use the canonical spawn/capture template in `_common/CLI_COMPATIBILITY.md` with the JSON schema in this reference. Spawn once per selected available engine, not a fixed three. Add these domain fields; the main context owns normalization, grounding and synthesis.
 
-```
-You are the {engine} deliberation subagent for Magi.
-
-# Role
+**Role:**
 Deliberate on the decision below from all three Magi viewpoints — Logos (technical/data),
-Pathos (user/team/ethics), Sophia (business/ROI/timing). You are one of three engines
+Pathos (user/team/ethics), Sophia (business/ROI/timing). You are one of the selected engines
 working independently. Apply your training-data priors; do not try to be exhaustive across
 all engines — just give each viewpoint your honest reasoning.
 
 Critically: keep the three viewpoints INDEPENDENT inside your own reasoning. Score each
 viewpoint before considering the others. Do not let one viewpoint's verdict anchor the next.
 
-# Target
+**Target:**
 - Decision question: {one clear question}
 - Domain: {Architecture | Trade-off | Go/No-Go | Strategy | Priority}
 - Reversibility: {HIGH | MEDIUM | LOW}
@@ -286,23 +281,12 @@ viewpoint before considering the others. Do not let one viewpoint's verdict anch
 - Shared evidence (for KNOWLEDGE tasks only): {metrics, test results, compliance evidence}
 - Options being arbitrated: {explicit list if multi-option}
 
-# Output format
-Return ONLY JSON matching this exact schema (no commentary outside the JSON):
-
-{viewpoints JSON schema from §3 FAN-OUT}
-
-# Constraints
+**Constraints:**
 - Each viewpoint produces APPROVE / REJECT / ABSTAIN + confidence 0-100 + rationale
 - Stress-test any confidence >= 85 with "what would make this wrong?" and include the counter-anchor in `dissents`
 - For each viewpoint, list at least one counter-anchor BEFORE scoring (consider-the-opposite)
 - Cite specific evidence in `evidence` — do not invent facts, file paths, metrics, or prior decisions the system clearly does not have
 - Do not write implementation code
-- Open with the deliverable (no completion preamble)
-```
-
-The three subagents return JSON; Magi main context handles NORMALIZE through DELIVER.
-
----
 
 ## Engine Availability Modes
 
@@ -321,17 +305,6 @@ The three subagents return JSON; Magi main context handles NORMALIZE through DEL
 
 ---
 
-## Why This Works for Magi (Pattern H — both axes matter)
-
-- **9-cell matrix is the verdict's signal, not noise.** A single-engine three-viewpoint deliberation can only surface 3 perspectives; the tri-engine matrix surfaces 9 independent reasonings, and the *patterns across those 9 cells* (e.g., "all Pathos REJECT regardless of engine") are stronger evidence than any individual cell.
-- **Concurrence within a viewpoint raises confidence.** When 3 engines independently approve from the Logos lens, that approval is more trustworthy than 3 viewpoints from one engine — independent priors cannot easily hallucinate the same evidence.
-- **Divergence across viewpoints reveals trade-offs.** Pattern H explicitly preserves dissent. "All Logos APPROVE, all Pathos REJECT" is not a bug to average away — it is the decision's actual shape, and the verdict must reflect that as `CONDITIONAL` rather than collapsing to a meaningless 50%.
-- **Two-pass clustering separates engine bias from viewpoint signal.** Per-viewpoint concurrence (Pass A) measures inter-engine agreement on one lens; per-engine consistency (Pass B) measures intra-engine alignment across lenses. The two passes together prevent one engine's strong stance from dominating the matrix (Byzantine 50%-cap rule).
-- **Independence preserved across both axes.** Subagents emit all 3 viewpoints in one payload, but the prompt instructs them to keep the 3 viewpoints independent inside their reasoning. Cross-engine independence comes from parallel spawn; cross-viewpoint independence comes from prompt discipline.
-- **Pattern-based verdict matches real Magi use cases.** GO / NO-GO / CONDITIONAL / ESCALATE are not derived from averaged confidence but from the matrix shape — the same way an experienced decision-maker reads a disagreement.
-
----
-
 ## Cross-References
 
 - `_common/MULTI_ENGINE_RECIPE.md` — Pattern H protocol (concurrence + divergence both matter), PREFLIGHT, FAN-OUT, engine-attribution tags, degraded modes
@@ -342,37 +315,6 @@ The three subagents return JSON; Magi main context handles NORMALIZE through DEL
 - `magi/reference/voting-mechanics.md` — confidence calibration, consensus patterns, escalation rules
 - `magi/reference/decision-domains.md` — domain-specific viewpoint focus matrices applied at SYNTHESIZE
 - `magi/reference/engine-deliberation-guide.md` — Engine Mode sibling for Simple-Mode Recipes (`decide` / `tradeoff` / `arbitrate` / `strategic`); each engine emits ONE integrated YAML position (not 3 viewpoints) and the result is a 3-engine vote, not a 9-cell matrix. `multi` Recipe supersedes it when tri-engine 9-cell deliberation is required.
-- `magi/reference/devils-advocate.md` — DA challenge protocol invoked when 9-cell matrix is unanimous
-
+- `magi/reference/devils-advocate.md` — DA challenge protocol invoked on 6/6 or 9/9 unanimity
 
 ---
-
-## Multi-Engine Mode (SKILL.md excerpt)
-
-Activated by the `multi` Recipe (or explicit user request for cross-engine arbitration). Produces a **deliberation matrix sized by AVAILABLE engines × 3 viewpoints**: **dual-engine = 6-cell** (Claude + Codex × Logos/Pathos/Sophia, default baseline), **tri-engine = 9-cell** when agy is AVAILABLE.
-
-**Base Engine Policy (2026-05)**: Default baseline = Claude + Codex (dual-engine). agy is added when AVAILABLE — never required. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`. Filename `tri-engine-deliberate.md` covers both dual and tri modes.
-
-**Core mechanics:**
-- Spawn one Agent subagent per AVAILABLE engine in a single message: `deliberate-codex` + `deliberate-claude` (baseline); add `deliberate-agy` when AVAILABLE.
-- Each subagent emits all three viewpoints in one JSON payload — matrix is N×3 cells from N fan-out calls. Cross-engine independence via parallel spawn; cross-viewpoint independence via prompt discipline.
-- Engine availability PREFLIGHT runs in Magi main context (never delegated).
-- Loose prompts only (Role + Target + Output format). Do NOT pass domain matrices, rubrics, bias checklists, or viewpoint templates — framework rules apply at SYNTHESIZE.
-- Pipeline: NORMALIZE → CLUSTER (two-pass) → SCORE → GROUND → SYNTHESIZE.
-
-**Pattern H — both axes matter:** concurrence within a viewpoint raises confidence; divergence across viewpoints surfaces real trade-offs ("All Logos APPROVE, all Pathos REJECT" → `CONDITIONAL`, not averaged 50%).
-
-**Two-pass scoring:** Pass A — per-viewpoint engine clustering (concurrence: `CONFIRMED` / `LIKELY` / `CANDIDATE` / `UNDECIDED`; perspective: `CONVERGENT` / `DIVERGENT-N`). Pass B — per-engine viewpoint clustering (consistency: `consistent` / `mostly-aligned` / `internally-split` / `consistent-reject`). Dual-engine omits `LIKELY` (unreachable with 2). Full cluster rules → `reference/tri-engine-deliberate.md`.
-
-**Pattern-based final verdict** (not averaged confidence): map matrix shape to verdict. Examples — all cells APPROVE → `GO` (still run DA per 3-0 rule); Logos APPROVE × Pathos REJECT × Sophia split → `CONDITIONAL with ethical guardrails`; one engine approve / others reject → engine-bias asymmetry; all engines `internally-split` → `ESCALATE`. Full catalog → `reference/tri-engine-deliberate.md §6`.
-
-**Engine-attribution tags (mandatory):** concurrence tag (e.g., `[codex+agy+claude]` 3/3, `[codex+agy]` 2/3, `[codex-verified]` 1/3 grounded); perspective tag (`[CONVERGENT]` / `[DIVERGENT-N]`); matrix-pattern label on final verdict (`[matrix:all-cells-approve]`, `[matrix:pathos-block]`, etc. — cell count adapts to engine count).
-
-**All-cells-unanimous trigger:** 6/6 dual or 9/9 tri unanimous → 3-0 groupthink rule applies; DA mandatory and must attack the matrix pattern, not just one cell.
-
-**Output structure:** the deliberation matrix table is the primary artifact — never collapse to a single averaged verdict. Per-cell rationale, matrix pattern, pattern-based verdict, aggregated risk register, and dissent record sit on top.
-
-**Engine Availability Modes:** Tri (9-cell) / Dual (6-cell, DEFAULT BASELINE — not degraded, log agy absence) / Single (3-cell, all CANDIDATE, pattern detection disabled — flag reduced confidence) / Zero → degrade to `decide` Simple Mode.
-
-Full algorithm, JSON schema, prompt skeletons, two-pass cluster rules, grounding checks, and matrix-pattern catalog → `reference/tri-engine-deliberate.md`.
-

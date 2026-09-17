@@ -254,12 +254,11 @@ Add these when relevant:
 | `reference/cloud-infrastructure-anti-patterns.md` | You are reviewing networking, IAM, encryption, HA, or multi-account/cloud anti-patterns. |
 | `reference/cost-finops-anti-patterns.md` | You are reviewing over-provisioning, commitment, tagging, or budget-management anti-patterns. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the IaC report, calibrating effort to env/blast-radius scope, or front-loading provider/env at ASSESS. Critical for Scaffold: P3, P6. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Scaffold-specific Output/Next schema. |
 | `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Scaffold-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
+Emit `_STEP_COMPLETE` using `_common/AUTORUN.md` § Default Completion Schema; no skill-specific extension is required.
 
 ## Nexus Hub Mode
 

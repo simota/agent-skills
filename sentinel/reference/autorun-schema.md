@@ -20,9 +20,9 @@ _STEP_COMPLETE:
       false_positive_note: "[reason if downgraded | none]"
     tri_engine:
       activated: "[true | false]"
-      engines_run: "[codex, agy, claude]"
+      engines_run: "[actual usable engines]"
       engines_failed: "[list or none]"
-      concurrence: "[CONFIRMED: N, LIKELY: N, VERIFIED: N (1/3-grounded)]"
+      concurrence: "[CONFIRMED: N, LIKELY: N, VERIFIED: N (grounded singleton / actual usable engines)]"
       findings_shipped: "[count after FILTER]"
       rejected: "[count + top categories: hallucinated_sink | upstream_mitigated | framework_guaranteed | test_file_only | unreachable_dep | wrong_cwe_mapping | style_only]"
       ai_authored_flag: "[true | false]"

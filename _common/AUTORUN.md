@@ -57,75 +57,27 @@ When spawning an agent, Nexus provides context through the prompt:
 
 The spawned agent reads its own SKILL.md and follows its own methodology autonomously. Nexus does not need to simulate the agent's personality or process.
 
-### Example: Spawning Scout
+## Default Completion Schema
 
-```
-Agent(
-  name: "scout-login-bug"
-  description: "Investigate login bug root cause"
-  subagent_type: general-purpose
-  # Inherit authorized permissions and model; use the actual host schema.
-  prompt: |
-    You are the Scout agent.
-    First, read ~/.claude/skills/scout/SKILL.md and follow its instructions.
+When `_AGENT_CONTEXT` is supplied, read its task, context and constraints, execute the owning skill's workflow, and emit `_STEP_COMPLETE`. Use a skill-specific schema when one is explicitly supplied; otherwise use the default below. `Agent` is the current owner, not a hard-coded specialist. Skipped validation is reported, never counted as passed.
 
-    Task: Investigate the root cause of the login bug.
-    Symptom: Users cannot log in
-    Constraints: Do not modify code (investigation only)
-
-    When complete, output the result in the following format:
-    _STEP_COMPLETE:
-      Agent: Scout
-      Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-      Output: [investigation result]
-      Next: [recommended next agent or DONE]
-)
-```
-
-Scout returns:
-```
+```yaml
 _STEP_COMPLETE:
-  Agent: Scout
-  Status: SUCCESS
-  Output: Root cause identified - token refresh timing issue in auth middleware
+  Agent: <owner>
+  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
+  Output:
+    deliverable: [primary artifact]
+    parameters:
+      task_type: "[task type]"
+      scope: "[scope]"
+  Validations:
+    completeness: "[complete | partial | blocked]"
+    quality_check: "[passed | flagged | skipped]"
+  Next: [recommended next agent or DONE]
+  Reason: [Why this next step]
 ```
 
-### Example: Spawning Scout (Codex CLI)
-
-```
-# Step 1: Spawn Scout
-scout_id = spawn_agent(
-  prompt: |
-    You are the Scout agent.
-    First, read ~/.claude/skills/scout/SKILL.md and follow its instructions.
-
-    Task: Investigate the root cause of the login bug.
-    Symptom: Users cannot log in
-    Constraints: Do not modify code (investigation only)
-
-    When complete, output the result in the _STEP_COMPLETE format.
-)
-
-# Step 2: Wait for completion
-result = wait_agent(scout_id)
-
-# Step 3: Use result to spawn Builder
-builder_id = spawn_agent(
-  prompt: |
-    You are the Builder agent.
-    First, read ~/.claude/skills/builder/SKILL.md and follow its instructions.
-    Context from previous step: {result}
-    ...
-)
-wait_agent(builder_id)
-
-# Step 4: Cleanup
-close_agent(scout_id)
-close_agent(builder_id)
-  Next: Builder
-```
-
----
+`Next` recommends a transition; it does not delegate permission or bypass the hub's routing and project-local availability gates. Spawn mechanics and examples are owned by `nexus/reference/hub-authoring.md`, with host syntax bound through `_common/CLI_COMPATIBILITY.md`.
 
 ## Step Transitions
 

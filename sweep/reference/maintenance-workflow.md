@@ -143,3 +143,15 @@ Track at least:
 | Cleanup velocity | increasing | flat | decreasing |
 
 If alert conditions persist, escalate to Grove for a structural audit.
+
+## Cleanup Health Targets
+
+Record these local targets with observed denominators in `SCAN_BASELINE`; do not treat them as permission to delete a still-reachable file.
+
+| Metric | Target |
+|---|---|
+| Dead Code Rate | <5% |
+| Detection Accuracy | >80% |
+| False Positive Rate | <20% |
+| Time to Cleanup | <2 sprints |
+| Regression Rate After Cleanup | <1% |

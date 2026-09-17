@@ -35,5 +35,4 @@ name it, or when scanning what this skill can consult at all.
 | `reference/reporting-anti-patterns.md` | Actionability, gaming resistance, audience layering, and cadence guardrails. |
 | `reference/retrospective-voice.md` | Data-grounded retrospective voice and narrative frameworks. |
 | `reference/reporting-handoffs.md` | Structured report payloads for Pulse, Canvas, Zen, Sherpa, and Radar. |
-| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Launch-specific Output/Next schema. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the release plan, deciding adaptive thinking depth at rollout staging, or front-loading release type/scope/risk at PLAN. Critical for Launch: P3, P5. |

@@ -163,41 +163,23 @@ ECHO_DEMAND_TO_SAGA_HANDOFF:
     Convert user voices into customer stories.
 ```
 
-
 ---
 
-## Collaboration Patterns and Overlap Boundaries (SKILL.md excerpt)
+## Paste-ready demand prompts
 
-**Receives:** Cast (persona definitions), Voice (real feedback for calibration), Field (research findings), Echo (flow evaluation results), Compete (competitive intelligence)
-**Sends:** Spark (feature request seeds), Rank (user urgency for prioritization), Scribe[unified] (user voice requirements), Scribe (PRD user stories), Saga (narrative material), Cast (PERSONA_FEEDBACK for calibration results and coverage gaps)
+Every request carries `### LLM Instruction Prompt`; every report closes with `## LLM Orchestration Prompt (paste-ready)`. Preserve first-person voice verbatim, persona/demand IDs, acceptance criteria and contradictions. Mark `synthetic: true`; engine agreement is not real-user validation. Carry calibration and observed `engine_concurrence` with the actual usable-engine denominator.
 
-### Collaboration Patterns
+| Verb | Receiving task |
+|---|---|
+| `ANALYZE` | Scope/root cause/market fit; Field, Compete or Rank |
+| `PROPOSE` | Feature hypothesis and KPIs; Spark |
+| `DESIGN` | UX flow or interaction model; Vision/Palette |
+| `DRAFT-SPEC` | PRD/user stories/spec package; Scribe |
+| `PROTOTYPE` | Authorized runnable prototype; Forge/Builder |
+| `REFINE` | Narrow/ground a demand, resolve explicit contradictions; Echo/Field/Voice |
 
-| Pattern | Name | Flow | Purpose |
-|---------|------|------|---------|
-| **A** | Persona Pipeline | Cast → Echo[demand] → Spark | Personas to demands to proposals |
-| **B** | Priority Advocacy | Echo[demand] → Rank | Feed user-felt urgency into priority scoring |
-| **C** | Demand-Validation | Echo[demand] ↔ Echo | Demand generation ↔ existing flow verification |
-| **D** | Reality Calibration | Voice → Echo[demand] | Calibrate synthetic demands with real feedback |
-| **E** | Requirement Enrichment | Echo[demand] → Scribe[unified] | Integrate demands into spec packages |
-| **F** | Research Grounding | Field → Echo[demand] | Generate demands grounded in real research findings |
+Per-request prompt fields: Persona (name/archetype/context/emotion), Demand (ID/title/scene), User voice (verbatim), Why it matters, Acceptance criteria, **Your task** (one verb + expected deliverable), Constraints (synthetic hypothesis; no silent feasibility rejection; flag assumptions and blocking ambiguities).
 
-### Overlap Boundaries
+Per-report prompt fields: Source (scope/personas/demand count), structured Demands with attribution, Cross-persona analysis, Assumption challenges (at least three where the mode requires them), **Your task** (one selected receiving role and artifact), Constraints (synthetic provenance; demand-ID traceability; contradictions retained; unresolved AC ambiguity surfaced before committing to a solution).
 
-| vs | Their domain | Echo[demand]'s domain |
-|----|-------------|---------------|
-| **Voice** | Real customer feedback analysis (NPS, reviews, support tickets) | Synthetic demand generation when real data is absent or biased |
-| **Echo** | Cognitive walkthrough of existing UI (what users feel) | Unmet demand discovery (what is missing) — Echo[demand] verbalizes the demand Echo's friction implies |
-| **Field** | Real-user research design + validation (interviews, surveys, JTBD validation) | Synthetic hypothesis seeding — Echo[demand] outputs `synthetic: true` artifacts that Field validates |
-| **Spark** | Structured feature proposal with hypothesis, KPIs, RICE scoring | Echo[demand] stops at first-person demand verbalization; hands off to Spark for structuring |
-| **Cast** | Persona registry, lifecycle, evolution at `.agents/personas/registry.yaml` | Echo[demand] consumes Cast personas; never generates personas as a primary output (proto-personas are an emergency fallback only) |
-| **Saga** | Customer-centric product narratives and stories | Echo[demand] provides raw user voice that Saga shapes into narrative arcs |
-
-See `_common/PERSONA_CLUSTER_GUIDE.md` for the Cast / Echo[demand] / Voice / Echo cluster taxonomy.
-
-### Handoff Patterns
-
-See `reference/demand-handoffs.md` for full handoff templates.
-
----
-
+Do not repeat every receiving role's job inside the same executable task or treat the prompt itself as authorization to implement/publish. Calibration promotion still requires the cited real-data match in `reference/demand-calibration.md`.

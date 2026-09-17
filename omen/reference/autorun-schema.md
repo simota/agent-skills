@@ -14,7 +14,7 @@ _STEP_COMPLETE:
       critical_rpn_count: "[RPN > 200 or AP=H count]"
       max_rpn: "[highest RPN]"
     tri_engine:                                  # present only when `multi` Recipe ran
-      engines_run: [codex, agy, claude]
+      engines_run: [actual usable engines]  # authorized and actually invoked
       engines_failed: [list or none]
       pattern_type: "D"                          # Divergence-primary
       concurrence_distribution:

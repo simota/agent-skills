@@ -1,5 +1,7 @@
 # Handoff Protocols
 
+Read `reference/premium-conversion-playbook.md` when choosing a conversion strategy, framework, or evidence-backed target.
+
 How `funnel premium` brokers work between stages and how it dispatches each delegate. Every delegate call carries a `PREMIUM_LP_STAGE_BUNDLE`. Every stage exit produces a `STAGE_REPORT`. There is no free-form delegation in `funnel premium`.
 
 ---
@@ -15,7 +17,7 @@ PREMIUM_LP_STAGE_BUNDLE:
   Delegate: <agent name>
   Primary_Promise: <one sentence; locked at UNDERSTAND/RECIPE phase via Two-Promise Probe>
   Target_Persona: <persona ID or summary; from Audience stage onward>
-  CVR_Target: <industry-calibrated value from conversion-playbook.md; from Strategy stage onward>
+  CVR_Target: <evidence-calibrated value per reference/premium-conversion-playbook.md; from Strategy stage onward>
   Brand_System_Ref:
     path: <path to brand system record; mandatory from STRUCTURE onward>
     vision_archetype_locked: true | false
@@ -142,19 +144,20 @@ Required_Output:
   - kpi_tree: primary (CVR) + 3..5 secondary
   - funnel_events: ordered event taxonomy
   - cvr_target:
-      median: <from playbook>
-      top_quartile: <from playbook>
-      top_decile: <from playbook>
-      chosen_target: <usually median × 1.5 → top-quartile>
+      median: <matched, dated source value or unavailable>
+      top_quartile: <matched, dated source value or unavailable>
+      top_decile: <matched, dated source value or unavailable>
+      chosen_target: <justified target; not a promised uplift>
       traffic_source_qualifier: <warm | cold | mixed>   # for lead-magnet, B2B contact, newsletter
-      recipe_alignment_check: <recipe ↔ playbook row identifier>  # MUST match
+      recipe_alignment_check: <recipe/objective ↔ baseline definition and source>  # MUST match
   - north_star_metric
   - mention_rate_target: <for GEO measurement, ≥15% mention in AI-search>
   - citation_rate_target: <baseline + 30% via Growth/Beacon>
 Constraints:
-  industry_baseline_ref: conversion-playbook.md
+  industry_baseline_ref: <actual dated baseline source or unavailable>
   alignment_check: |
-    if Recipe != row.recipe_id in conversion-playbook.md, FAIL fast.
+    if the source objective/denominator does not match Recipe, reject that baseline.
+    Follow reference/premium-conversion-playbook.md for target selection and missing-data handling.
     if traffic_source_qualifier missing for lead-magnet/B2B/newsletter, FAIL fast.
 ```
 

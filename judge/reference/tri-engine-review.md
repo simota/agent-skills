@@ -16,7 +16,7 @@ SCOPE → PREFLIGHT → FAN-OUT (parallel subagents for available engines) → N
 
 ### 1. SCOPE
 
-Define the review target once. All three subagents share the same scope:
+Define the review target once. All selected subagents share the same scope:
 
 - Review mode (PR / Pre-Commit / Commit / `--from-pr`)
 - Base branch or SHA
@@ -111,7 +111,7 @@ Each subagent prompt must require structured JSON output so integration is deter
 
 ### 3. NORMALIZE
 
-Parse the three JSON blobs into a unified finding list. Tag each finding with its source engine. If an engine returns free-form Markdown, ask its subagent to re-emit as JSON before integrating.
+Parse the usable JSON outputs into a unified finding list. Tag each finding with its source engine. If an engine returns free-form Markdown, ask its subagent to re-emit as JSON before integrating.
 
 ### 4. CLUSTER — dedup across engines
 
@@ -189,34 +189,7 @@ Do not include rejected findings in the main list. Do not surface engine-raw out
 
 ## Parallel Subagent Invocation
 
-Use the Agent tool three times **in the same message** for genuine parallel execution. Each subagent should receive a self-contained prompt that:
-
-1. States the engine to run and the exact CLI command (per the engine's usage reference).
-2. Provides the SCOPE artifacts (base branch, SHA, focus areas, REVIEW.md contents).
-3. Requires the JSON output schema above.
-4. Forbids modifying code — this is review-only.
-
-Example prompt skeleton:
-
-```
-You are the {engine} review subagent. Run the following command verbatim
-(no model override, no API key):
-
-    {engine-specific command}
-
-Return findings as JSON matching this exact schema:
-
-{schema}
-
-Scope:
-- Base: {base}
-- Focus: {focus areas}
-- Project guidelines: {REVIEW.md / AGENTS.md contents inline}
-
-Do not modify any files. Do not emit commentary outside the JSON.
-```
-
----
+Use `_common/CLI_COMPATIBILITY.md`'s canonical spawn/capture template once per selected available engine. Include the exact reviewed base/SHA, focus areas and project guidelines (`REVIEW.md` / `AGENTS.md`), require this reference's JSON schema, and prohibit all file modifications. Preserve authentic engine identity and current-run evidence; the main context owns grounding and integration.
 
 ## Engine Availability Modes
 
@@ -233,15 +206,6 @@ Do not modify any files. Do not emit commentary outside the JSON.
 
 ---
 
-## Why This Works
-
-- **Independent contexts eliminate self-bias** — especially when Claude is one engine reviewing potentially-Claude-authored code.
-- **Concurrence filters hallucinations** — engines rarely hallucinate the *same* false positive. A 3/3 cluster is almost never a false alarm.
-- **Grounding catches single-engine errors** — the 1/3 cases are where engines disagree; reading the actual code decides truth.
-- **Filter-out-style preserves SNR** — Judge's most-damaging anti-pattern is noisy output that erodes developer trust. The tri-engine flow is explicitly designed so every finding that ships is worth fixing.
-
----
-
 ## Cross-References
 
 - `codex-review-usage.md` — how `review-codex` subagent invokes Codex
@@ -249,7 +213,6 @@ Do not modify any files. Do not emit commentary outside the JSON.
 - `claude-review-usage.md` — how `review-claude` subagent invokes Claude
 - `codex-integration.md` — severity override rules, report template, multi-agent verification rationale
 - `review-anti-patterns.md` — why filtering noise matters more than maximizing recall
-
 
 ---
 

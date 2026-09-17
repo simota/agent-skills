@@ -1,217 +1,42 @@
-# Output Formats
+# Delivery Checkpoint Format
 
-Purpose: Read this file when Nexus[deliver] must emit `NEXUS_DELIVERY_COMPLETE`, `NEXUS_DELIVERY_PHASE_COMPLETE`, `NEXUS_DELIVERY_STATE`, `_STEP_COMPLETE:`, or `EVOLVE_TO_DISCOVER_HANDOFF`.
-
-## Contents
-
-- `NEXUS_DELIVERY_COMPLETE`
-- `NEXUS_DELIVERY_PHASE_COMPLETE`
-- `NEXUS_DELIVERY_STATE`
-- Decision log linkage
-- AUTORUN step output
-- `EVOLVE_TO_DISCOVER_HANDOFF`
-
-Templates for Nexus[deliver]'s output artifacts.
-
----
-
-## NEXUS_DELIVERY_COMPLETE
-
-Final delivery output when the entire product lifecycle is complete.
-
-```markdown
-## NEXUS_DELIVERY_COMPLETE
-
-### Product Summary
-- **Goal**: [Original user goal, verbatim]
-- **Scope**: [S/M/L/XL]
-- **Phases Completed**: [N/Total]
-- **Duration**: [Phases executed, with timestamps if available]
-
-### SUCCESS_CRITERIA Evaluation
-| Criteria | Target | Actual | Status |
-|----------|--------|--------|--------|
-| [Criteria 1] | [Target metric] | [Achieved metric] | ✅/❌ |
-
-### Deliverables
-| Category | Artifact | Location |
-|----------|----------|----------|
-| Code | [Feature/module name] | [File paths] |
-| Tests | [Test suite name] | [File paths] |
-| Docs | [Document name] | [File paths] |
-| Config | [Config name] | [File paths] |
-
-### Architecture Decisions Summary
-| Decision | Choice | Risk Score | Rationale |
-|----------|--------|------------|-----------|
-| [DEC-001] | [Choice made] | [Score] | [Brief rationale] |
-
-### Quality Metrics
-- **Test coverage**: [N%]
-- **Security audit**: PASS / FAIL (details: [summary])
-- **Performance targets**: MET / UNMET (details: [summary])
-- **Code quality gate**: PASS / FAIL
-
-### Known Limitations
-- [Limitation]: [Reason + mitigation]
-
-### Recommended Next Steps (EVOLVE Phase)
-1. [Action item with priority]
-
-### Risk Log Summary
-- **Total decisions logged**: [N]
-- **High-risk decisions**: [N]
-- **Final risk budget**: [N/100]
-- **User escalations used**: [N/1]
-- **Stall recoveries**: L1:[N] L2:[N] L3:[N] L4:[N]
-```
-
----
-
-## NEXUS_DELIVERY_PHASE_COMPLETE
-
-Output at each phase transition.
-
-```markdown
-## NEXUS_DELIVERY_PHASE_COMPLETE: [PHASE_NAME]
-
-### Phase Summary
-- **Phase**: [Phase N of Total]
-- **Epics completed**: [N/Total]
-- **Agents deployed**: [Agent list]
-- **Duration**: [Start → End]
-
-### Key Decisions
-| Decision | Choice | Risk |
-|----------|--------|------|
-| [DEC-NNN] | [Choice] | [Score] |
-
-### Artifacts Produced
-| Type | File | Description |
-|------|------|-------------|
-| [code/test/doc/config] | [path] | [what it is] |
-
-### Exit Criteria Verification
-| Criteria | Status | Notes |
-|----------|--------|-------|
-| [Criteria 1] | ✅/❌ | [Details if failed] |
-
-### Velocity Report
-- Epic completion rate: [N%]
-- Stall count: [N]
-- Rally usage: [N teams launched]
-
-### Next Phase Preview
-- **Phase**: [Next phase name]
-- **Planned Epics**: [Count]
-- **Key agents**: [Primary agents]
-- **Expected challenges**: [Known risks]
-```
-
----
+Load when persisting/resuming `.agents/nexus-delivery-state.md`. Final output is the **Delivery Report** in `reference/deliver-recipe.md` plus `NEXUS_COMPLETE` from `reference/output-formats.md`; do not emit a second, competing completion protocol.
 
 ## NEXUS_DELIVERY_STATE
 
-Persisted state format (written to `.agents/nexus-delivery-state.md`).
-
 ```markdown
 ## NEXUS_DELIVERY_STATE
-- **Project**: [Project name]
-- **Goal**: [Original user goal, verbatim]
-- **Scope**: S / M / L / XL
-- **Current Phase**: [Phase name]
-- **Phase Progress**: [Current phase N / Total phases]
-- **Epic Progress**: [Completed / Total in current phase]
-- **Risk Budget**: [Cumulative score / 100]
-- **Stall Budget**:
-  - Tactical: [Used / Limit per phase] (Project: [Used / 10])
-  - Operational: [Used / Limit per phase] (Project: [Used / 5])
-  - Strategic: [Used / Limit per phase] (Project: [Used / 3])
-- **SUCCESS_CRITERIA**:
-  - [Criteria 1]: [Target] → [Current status]
-- **Blockers**: [Current blockers or "None"]
-- **Next Action**: [Specific next step]
-- **Decision Log**: [Path to decision log file]
-- **Last Updated**: [YYYY-MM-DD HH:MM]
+- **Project**: [project]
+- **Goal**: [frozen user goal, verbatim]
+- **Scope**: small | medium | epic
+- **Current Phase**: [phase from the selected deliver contract]
+- **Phase Progress**: [completed / applicable phases]
+- **Epic Progress**: [verified / applicable work packages in this phase]
+- **Risk Budget**: [used / authorized limit, or not applicable with reason]
+- **Stall Budget**: [used / limit by applicable recovery tier]
+- **SUCCESS_CRITERIA**: [frozen AC IDs, targets, PASS/FAIL/UNVERIFIED and evidence]
+- **Blockers**: [typed residual ID, dependency, owner and next authorized action]
+- **Next Action**: [specific step and its unmet prerequisites]
+- **Decision Log**: [path and relevant DEC IDs]
+- **Last Updated**: [timestamp with timezone]
 - **Update Trigger**: [epic_complete | phase_transition | decision_recorded | antistall_activated | antistall_resolved | rally_start | rally_complete | magi_verdict | scope_change | session_boundary]
 
 ### Phase Status
 | Phase | Status | Entry Date | Exit Date | Epics |
-|-------|--------|------------|-----------|-------|
-| DISCOVER | ✅/🔄/⏳/⏭️ | [date] | [date] | [N/N] |
-| DEFINE | ... | ... | ... | ... |
-| ARCHITECT | ... | ... | ... | ... |
-| BUILD | ... | ... | ... | ... |
-| HARDEN | ... | ... | ... | ... |
-| VALIDATE | ... | ... | ... | ... |
-| LAUNCH | ... | ... | ... | ... |
-| GROW | ... | ... | ... | ... |
-| EVOLVE | ... | ... | ... | ... |
+|---|---|---|---|---|
+| [applicable phase] | [verified/in-progress/blocked/not-applicable] | [time] | [time] | [verified/total] |
 
 ### Current Roadmap
-#### [Phase name] — [Status]
-- [x] Epic 1: [Description]
-- [ ] Epic 2: [Description] ← CURRENT
-- [ ] Epic 3: [Description]
+#### [phase] — [status]
+- [x] [verified work package and evidence]
+- [ ] [remaining work package, owner, next check]
 ```
 
----
+## Resume and transition rules
 
-## Decision Log
-
-Decision Log format → `reference/delivery-decision-matrix.md`
-
----
-
-## AUTORUN Step Output
-
-`_STEP_COMPLETE.Output` schema → `reference/autorun-schema.md`.
-
-```
-_AGENT_CONTEXT:
-  Role: Nexus[deliver]
-  Phase: [Current phase]
-  Task: [Phase objective]
-  State: [NEXUS_DELIVERY_STATE summary]
-```
-
----
-
-## EVOLVE_TO_DISCOVER_HANDOFF
-
-Structured handoff from EVOLVE phase back to DISCOVER for the next iteration cycle.
-
-```markdown
-## EVOLVE_TO_DISCOVER_HANDOFF
-
-### Iteration Summary
-- **Iteration**: [N] → [N+1]
-- **Duration**: [Start date → End date]
-- **Overall Assessment**: [Summary of iteration outcomes]
-
-### Updated Personas
-| Persona | Changes | Evidence |
-|---------|---------|----------|
-| [Persona name] | [What changed about this persona] | [Feedback/data source] |
-
-### Refined SUCCESS_CRITERIA
-| Original Criteria | Actual Result | Revised Criteria | Rationale |
-|------------------|---------------|-----------------|-----------|
-| [Original target] | [What was achieved] | [Updated target for next iteration] | [Why adjusted] |
-
-### Tech Debt Priorities
-| Item | Severity | Effort | Priority |
-|------|----------|--------|----------|
-| [Tech debt item] | [High/Medium/Low] | [S/M/L] | [P0/P1/P2] |
-
-### Feature Backlog
-| Feature | Source | Priority | Estimated Scope Impact |
-|---------|--------|----------|----------------------|
-| [Feature from feedback] | [Voice/Pulse/Growth] | [P0/P1/P2] | [S/M/L adjustment] |
-
-### Iteration Learnings
-- **What worked**: [Effective patterns, agents, approaches]
-- **What didn't**: [Ineffective approaches, stalls, issues]
-- **Process improvements**: [Recommendations for next cycle]
-- **Agent performance**: [Notable agent effectiveness observations]
-```
+- Update at each work-package/phase boundary and before a session boundary. Store artifact paths, source revision and verification evidence with the corresponding work package; existence/non-empty text alone is not completion.
+- Revalidate the repository revision, artifact evidence, pending approvals and permissions on resume. Stale checkpoints are inputs to reconciliation, not authority to replay side effects.
+- Load risk decisions from `reference/delivery-decision-matrix.md`, bounded recovery from `reference/delivery-anti-stall-engine.md`, and applicable exit checks from `reference/delivery-exit-criteria-validation.md` only when that transition needs them.
+- Preserve diagnosed attempts and consumed recovery budgets; do not repeat an exhausted attempt merely because the executor changed. Two identical failures require diagnosis.
+- An old S/M/L/XL or nine-phase checkpoint must be explicitly reconciled to the selected recipe before continuing. No silent scope conversion, denominator shrinkage, target lowering or completed-state inflation.
+- Phase reports carry produced artifacts, AC evidence, decisions, residuals and next prerequisites using the shared handoff. A next iteration is a newly scoped objective; it cannot retroactively turn this iteration's failed ACs into passes.

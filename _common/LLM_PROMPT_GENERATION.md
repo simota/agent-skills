@@ -140,13 +140,13 @@ The per-agent `fix-prompt-generation.md` (or equivalent) keeps:
 - **Verb selection heuristic** — confidence × scope × escalation flowchart
 - **Domain-specific suppression cases** — beyond the universal list (e.g., Scout: when escalating to Sentinel)
 - **Domain-specific template fields** — reproduction steps, OWASP/CWE, timeline, etc.
-- **Worked example** — paste-ready prompt for a representative finding in the agent's domain
+- **Worked example only when needed** — retain one only when the shared skeleton plus domain fields leaves a failure-prone format ambiguous; do not repeat a fully specified template as fictional findings.
 
 The per-agent reference should explicitly link back to this file:
 
 ```markdown
 > Universal authoring rules and prompt structure: `_common/LLM_PROMPT_GENERATION.md`.
-> This file documents only [agent]-specific verbs, suppression cases, template fields, and an example.
+> This file documents only [agent]-specific verbs, suppression cases, template fields, and any necessary format example.
 ```
 
 ---

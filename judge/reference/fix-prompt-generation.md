@@ -1,21 +1,10 @@
 # Judge LLM Fix Prompt Generation
 
-**Purpose:** Judge-specific action verbs, suppression cases, template fields, and worked example for the `## LLM Fix Prompt` block that pairs each consensus-level Judge finding with a paste-ready instruction prompt for the receiving agent (typically Builder).
+**Purpose:** Judge-specific action verbs, suppression cases, template fields for the `## LLM Fix Prompt` block that pairs each consensus-level Judge finding with a paste-ready instruction prompt for the receiving agent (typically Builder).
 **Read when:** Judge has shipped a VERIFIED finding (3/3 CONFIRMED, 2/3 LIKELY, or 1/3 grounded CANDIDATE that survived FILTER) and the finding warrants downstream action rather than escalation to a specialist.
 
 > Universal authoring rules and prompt structure: `_common/LLM_PROMPT_GENERATION.md`.
-> This file documents only Judge-specific verbs, suppression cases, template fields, and an example.
-
-## Contents
-
-- When Judge emits a Fix Prompt vs suppresses
-- Judge action verbs
-- Verb selection heuristic
-- Judge-specific suppression cases
-- Per-finding fix prompt template (Judge-specific fields)
-- Worked example
-
----
+> This file documents only Judge-specific verbs, suppression cases, template fields.
 
 ## When Judge Emits a Fix Prompt vs Suppresses
 
@@ -212,96 +201,3 @@ For `DOWNGRADE`, the prompt is advisory; soften acceptance criteria to "consider
 ```
 
 ---
-
-## Worked Example (APPLY-FIX)
-
-**Scenario:** Off-by-one error in pagination caused the last result to be silently dropped on the final page. Codex and Gemini both flagged it (2/3 LIKELY); Judge grounded the finding by reading the loop bounds.
-
-````markdown
-## LLM Fix Prompt
-
-```text
-# Your task
-APPLY-FIX the review finding described below.
-
-# Finding context
-- Title: Off-by-one in pagination loop drops the last item on the final page
-- Severity: bug-blocking
-- Classification: HIGH
-- Engine consensus: 2/3 LIKELY (Codex + Antigravity flagged; Claude Code missed)
-- PR: feat(search): add cursor-based pagination to /api/products
-- Diff hunk: src/api/products/paginate.ts:18-46
-
-# Defect
-The pagination loop iterates `for (let i = offset; i < offset + pageSize - 1; i++)`,
-which excludes the last index in the page slice. On every page boundary, the final
-product is silently dropped. The bug only manifests when `total % pageSize != 0`
-(i.e., on the last page of a non-evenly-divisible result set).
-
-Location: `src/api/products/paginate.ts:32` in `paginatePage()`
-
-# Grounding evidence
-Code as it stands today:
-```
-function paginatePage(items: Product[], offset: number, pageSize: number): Product[] {
-  const page: Product[] = [];
-  for (let i = offset; i < offset + pageSize - 1; i++) {
-    if (i >= items.length) break;
-    page.push(items[i]);
-  }
-  return page;
-}
-```
-
-Why this is a defect:
-- The intent is to take `pageSize` items starting at `offset`. The condition
-  `i < offset + pageSize - 1` stops one short, yielding `pageSize - 1` items.
-- Existing test `paginate.test.ts:55` happens to use a result set of size 30
-  with pageSize 10 — exactly divisible, so the off-by-one is masked by the
-  `i >= items.length` break on subsequent pages. Add a test with size 31.
-
-Engine outputs (for traceability — do NOT re-litigate):
-- Codex: "Loop condition appears to be off-by-one; expected `i < offset + pageSize`."
-- Gemini: "Pagination returns pageSize-1 elements; final element dropped."
-- Claude Code: (no finding — likely missed because the existing test passed)
-
-# Recommended action
-Approach: Replace the off-by-one loop with `Array.slice(offset, offset + pageSize)`.
-This is the idiomatic JS pagination primitive and removes the manual loop entirely,
-eliminating the class of bug.
-
-Files to modify:
-- src/api/products/paginate.ts — replace lines 18-46 with `return items.slice(offset, offset + pageSize)`
-- src/api/products/paginate.test.ts — add test case with `total=31, pageSize=10` asserting the last page returns exactly 1 item
-
-Constraints:
-- Public response shape (`{ items, nextCursor }`) must remain unchanged
-- `nextCursor` calculation upstream of this function already accounts for full page
-  size; do not adjust it
-
-# Acceptance criteria
-- [ ] Off-by-one removed from src/api/products/paginate.ts:32
-- [ ] Test case `paginates evenly when total is not a multiple of pageSize` added
-  and passing
-- [ ] Existing tests (`paginate.test.ts`, `products.integration.test.ts`) still pass
-- [ ] No new test failures in the products module
-- [ ] Tri-engine re-run on the patch shows no new findings on this hunk
-
-# Ruled-out alternatives (do not revisit)
-- Patching the condition to `i <= offset + pageSize - 1` — eliminated: equivalent to
-  `i < offset + pageSize`, but keeps the manual loop which is harder to read and
-  invites the same bug class on future edits
-- Adjusting `nextCursor` to compensate — eliminated: hides the bug at the API
-  boundary instead of fixing it; would break clients that paginate via cursor
-- Switching to `Array.from({length: pageSize})` — eliminated: less readable than
-  `slice` and not a JS idiom for pagination
-
-# What NOT to do
-- Do not silence the symptom by changing the test expectation to `pageSize - 1`
-- Do not expand scope to refactor unrelated pagination call sites in this PR
-- Do not re-litigate the Codex/Antigravity findings above — Judge has grounded them
-- Do not bundle copy edits or unrelated refactors into the same PR
-```
-````
-
-This prompt is self-contained: Builder can act on it without seeing the rest of the Judge report or the raw engine outputs.

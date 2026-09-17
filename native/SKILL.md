@@ -218,7 +218,6 @@ Partner list -> CAPABILITIES_SUMMARY block above (`COLLABORATION_PATTERNS`, `BID
 | `reference/android-material3.md` | M3 + M3 Expressive Compose API, design tokens, new components |
 | `reference/patterns.md` | Navigation, state, offline-first, recomposition, platform adaptation |
 | `reference/recipes.md` | Per-Recipe gotchas + runtime thresholds per subcommand |
-| `reference/examples.md` | Representative use cases and output format examples |
 | `reference/handoffs.md` | Incoming / outgoing handoff templates for all partners |
 | `reference/store-compliance.md` | App Store / Play policy, Privacy Manifest, Data Safety, Age Rating, IAP |
 | `reference/release-rollout.md` | Phased/staged rollout, halt-and-hotfix, server-driven flags |

@@ -613,7 +613,7 @@ import { DesignTokenDocBlock } from 'storybook-design-token/dist/doc-blocks';
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
 | `story`, `storybook`, `CSF`, `stories.tsx` | Story creation (CSF 3.0) | Story files + autodocs | `reference/storybook-patterns.md` |
-| `fixture`, `cosmos`, `fixture.tsx` | Cosmos fixture creation | Fixture files + decorators | `reference/react-cosmos-guide.md` |
+| `fixture`, `cosmos`, `fixture.tsx` | Cosmos fixture creation | Fixture files + decorators | `reference/react-cosmos.md` |
 | `audit`, `coverage`, `missing stories` | Story coverage audit | Health report (reuse rate, a11y pass rate, design-code alignment) + action items | `reference/storybook-patterns.md` |
 | `visual regression`, `VRT`, `chromatic`, `screenshot`, `applitools` | Visual regression setup | Test config + CI workflow | `reference/visual-regression.md` |
 | `migrate`, `CSF 2`, `upgrade storybook`, `storybook 9`, `storybook 10`, `ESM migration` | CSF / Storybook version migration (8→9, 9→10 ESM-only) | Updated story files + addon-vitest config + ESM conversion + report | `reference/storybook-patterns.md` |

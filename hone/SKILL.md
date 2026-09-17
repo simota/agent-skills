@@ -131,7 +131,6 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Accept MCP OAuth tokens without RFC 8707 resource indicators.
 - Accept third-party marketplace plugins with auto-update enabled without flagging.
 
-Full rationale and sources for the above → `reference/boundaries-rationale.md`.
 
 ## Workflow
 
@@ -217,7 +216,6 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 | `reference/web-sources.md` | Source tier classification, search queries, or freshness rules. |
 | `reference/proposal-templates.md` | Before/After diff templates for proposals. |
 | `reference/handoffs.md` | Handoff templates for Builder/Judge/Nexus collaboration. |
-| `reference/boundaries-rationale.md` | The full rationale and sources behind the `Never` list. |
 | `reference/phase-details.md` | Full FETCH/AUDIT/PROPOSE phase detail and the complete, current audit item-code list per category. |
 | `reference/hooks/hook-system.md` | Hook event semantics, schemas, matcher behavior, handler types, fields, environment variables, and lifecycle constraints. |
 | `reference/hooks/event-catalog.md` | Full 26-event lifecycle table and event-selection rules. |

@@ -1,136 +1,64 @@
-# Multi-Tenant Database Patterns
+# Multi-Tenant Schema and Isolation Contract
 
-Reference for designing multi-tenant database schemas. Snapshot: 2026-05.
+Read for a multi-tenant schema or `tenant` mode. Select from isolation requirements, restore/deletion boundaries, tenant-specific DDL, workload measurements, and operating cost—not tenant-count folklore or a vendor release table.
 
-> **Scope vs other skills:** Schema[tenant] owns horizontal-distribution topology (Aurora DSQL / Spanner / Citus / Vitess cluster shape and routing). This file focuses on **schema-side decisions**: tenant_id placement, RLS policies, schema-per-tenant DDL, composite-FK enforcement, and partitioning by `tenant_id`.
+## Isolation decision
 
-## Architecture Pattern Comparison
+| Pattern | Select when | Verify before accepting |
+|---|---|---|
+| Database per tenant | Independent restore, placement, credentials, or lifecycle is required | Router authorization, provisioning/migration fleet, backup separation, connection/cost budgets; sharing a server still shares some failure and administration boundaries. |
+| Schema per tenant | Separate DDL/customization is required within a shared database | Qualified identifiers, schema privileges, trusted `search_path`, migration fan-out, pool reuse, restore limitations. A schema name alone is not authorization. |
+| Shared tables + RLS | Uniform schema and shared operation are acceptable | Every tenant-bearing read/write path, application role, policy composition, cross-tenant relationships and pool context. |
+| Shared tables + tenant partitioning + RLS | Measured locality/maintenance needs justify partitions | Partition pruning is a performance mechanism, not isolation. Keep authorization/RLS and measure plans with representative tenants. |
 
-| Pattern | Description | Isolation | Cost | Best for |
-|---------|-------------|-----------|------|----------|
-| **Database per Tenant** | Each tenant has a dedicated database (or Neon project / branch) | Highest — full schema, data, and connection isolation | Highest at scale — one DB per tenant | Regulated industries (HIPAA, SOC 2, PCI-DSS), large enterprise tenants, per-tenant PITR |
-| **Schema per Tenant** | Single cluster, one schema per tenant (PostgreSQL `search_path`); Citus 12+ supports schema-based sharding so each schema can live on a different worker | High — separate DDL, no data sharing | Medium — shared cluster, separate objects | Mid-market SaaS, 10–500 tenants, per-tenant DDL customisation, clean `DROP SCHEMA tenant_x` offboarding |
-| **Shared Schema + RLS** | All tenants in the same tables, isolated by Row Level Security | Medium — policy-enforced, not DDL-enforced | Lowest — fully shared infra | Consumer SaaS, thousands of small tenants, uniform schema |
-| **Shared Schema + Hash Partition by `tenant_id`** | Single tables partitioned by `HASH(tenant_id)` or composite hash-within-range | Medium-high — partition pruning enforces tenant locality at planner level | Low — same as shared, with per-partition VACUUM/index parallelism | High-volume shared-schema SaaS where RLS planner overhead becomes a problem (> 10K tenants, > 100M rows/table) |
+No pattern by itself proves regulatory compliance. Pin applicable controls with Canon. Verify selected managed-engine features and pricing against its current official documentation; no database/model/version mandate is implied here.
 
-### 2026 Managed-Database Considerations
+## RLS and transaction context
 
-| Engine | Tenant-isolation primitive | Notes |
-|--------|----------------------------|-------|
-| Aurora DSQL (GA 2025, 4 regions in 2026 Q1) | Multi-tenant via shared cluster + active-active two-region + witness region | No native branching; no read replicas (distributed by design). DPU-hour pricing. |
-| Spanner | Multi-tenant via interleaved tables + per-tenant directories | Strong consistency via TrueTime + Paxos. Database-per-tenant is rare due to cost. |
-| Citus 13 (Feb 2025, PG 17.2-based) | Distributed extension. Schema-based sharding (12+) for schema-per-tenant on workers; reference tables for shared dimensions | `MERGE` distributed-execution support; available on Azure Database for PostgreSQL Flexible Server (elastic clusters preview). |
-| Neon | Database-per-tenant practical via per-tenant **branching** (copy-on-write) + scale-to-zero | Branching makes DB-per-tenant economically viable for preview / sandbox per tenant; **does not** auto-scale to thousands of always-on tenants. |
-| Tiger Data (TimescaleDB rebrand 2025-06) | Hypertables can partition on UUIDv7 (TimescaleDB ≥ 2.23) — combine time chunking with tenant-prefixed UUIDv7 for tenant-scoped time-series | Use when audit/event volume is the multi-tenant driver. |
-
----
-
-## Row Level Security (RLS) Implementation
-
-### Policy Setup
+- Every tenant-bearing table needs an explicit isolation policy. Enable RLS; use `FORCE ROW LEVEL SECURITY` where owner bypass must be prevented. The runtime role must not be superuser, `BYPASSRLS`, or an uncontrolled owner/definer role. FORCE does not constrain superusers or BYPASSRLS.
+- Authenticate the principal and authorize its tenant membership before setting context. A header, subdomain, URL, JWT claim without signature/audience checks, or UUID obscurity is not authorization. Reject inconsistent tenant sources.
+- Set context **inside the same transaction and connection as all tenant queries**, using the project's existing context key. Example binding, not a complete migration:
 
 ```sql
--- 1. Add tenant_id to every shared table
-ALTER TABLE orders ADD COLUMN tenant_id UUID NOT NULL;
-
--- 2. Enable RLS
-ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
-ALTER TABLE orders FORCE ROW LEVEL SECURITY;  -- applies to table owner too
-
--- 3. Create isolation policy
-CREATE POLICY tenant_isolation ON orders
-  USING (tenant_id = current_setting('app.current_tenant_id')::UUID);
-
--- 4. Set tenant context at connection time (application layer)
--- SET app.current_tenant_id = '<tenant-uuid>';
--- Or via: SELECT set_config('app.current_tenant_id', $1, true);
+BEGIN;
+SELECT set_config('app.current_tenant_id', $1, true);
+-- $1 is the authenticated/authorized tenant ID, bound by the driver.
+-- Execute all tenant reads/writes on this transaction's connection.
+COMMIT;
 ```
 
-### RLS Checklist
+- `true` makes the setting transaction-local. Never rely on a session-scoped `SET` or another pooled connection. Test commit, rollback, errors, cancellation and reuse; prohibit session defaults that restore a previous tenant. Missing/invalid context must deny or error, never select a fallback tenant.
+- A representative predicate is `tenant_id = NULLIF(current_setting('app.current_tenant_id', true), '')::uuid`. Verify both read visibility (`USING`) and proposed writes (`WITH CHECK`) for the actual commands. Keep the existing project key rather than renaming it from this example.
+- An application-set GUC does **not** defend against an attacker who can execute arbitrary SQL with that application's credentials and set another tenant. Document this trust boundary; use stronger independently enforced roles/credentials when required.
+- Review every permissive policy's OR composition, restrictive policies, views, SECURITY DEFINER functions, maintenance roles and cross-tenant analytics paths. RLS does not cover every operation: TRUNCATE and REFERENCES are not filtered by row policies.
+- On versions supporting security-invoker views, verify caller-policy behavior explicitly. Never substitute an unverified auth helper for tenant identity (a user ID is not a tenant ID).
 
-- [ ] `ENABLE ROW LEVEL SECURITY` on every multi-tenant table
-- [ ] `FORCE ROW LEVEL SECURITY` to prevent table-owner bypass
-- [ ] Index on `tenant_id` column for every table (`CREATE INDEX CONCURRENTLY`)
-- [ ] Application layer always sets `app.current_tenant_id` before any query
+## Relational integrity and migration
 
-### Partial Index for Performance
+- Tenant-owned relationships include `tenant_id` on both sides. A composite foreign key `(tenant_id, order_id)` requires a matching unique/primary key `(tenant_id, id)` on the parent; global IDs alone do not enforce same-tenant ownership.
+- Design indexes from actual predicates and plans. Tenant-leading indexes often help scoped queries; neither UUIDs nor putting `tenant_id` first in every index proves authorization or index-only scans.
+- For schema routing, derive the schema from an authorized mapping and quote identifiers through the driver. Exclude untrusted writable schemas from `search_path`; verify prepared statements and pool reuse cannot retain the previous tenant's resolution.
+- Existing rows need an approved tenant mapping and staged backfill before NOT NULL, FK validation and enforcement. Do not copy `ADD tenant_id NOT NULL` onto populated tables or assume a global uniqueness constraint becomes tenant-scoped automatically.
+- Prove no cross-tenant reads/writes before cutover, reconcile tenant-by-tenant counts/checksums, retain a reversible cutover window, and obtain explicit authorization before destructive consolidation or deprovisioning. A guessed calendar duration is not a migration plan.
+- Detailed lifecycle/rollback → `reference/tenant-migration.md` and `reference/tenant-provisioning.md`; runtime quotas/fairness/overage contracts → `reference/tenant-quota-throttling.md`. Do not duplicate their limits here.
 
-```sql
--- Prefix all indexes with tenant_id to avoid cross-tenant scan
-CREATE INDEX idx_orders_tenant_status
-  ON orders(tenant_id, status, created_at DESC);
-```
+## Leakage verification matrix
 
----
+| Surface | Required negative test |
+|---|---|
+| Reads/joins/aggregates | Tenant A cannot observe B through ID lookup, joins, counts, views, export, or shared reporting. |
+| Insert/update/upsert/delete | A cannot create or move a relationship/row into B; test both old-row visibility and new-row checks. |
+| Pool/context | Alternate A/B, missing context, rollback/error/cancel, and concurrent requests; no inherited identity. |
+| Caches/search/files | Tenant namespace plus actual access enforcement; cached responses, search results and signed URLs cannot cross tenants. |
+| Jobs/webhooks | Reauthorize tenant context at execution/delivery, including retries; never trust a copied payload as authorization. |
+| Logs/errors/audit | No other tenant's data in errors/logs; scoped access, redaction and audit provenance are exercised. |
+| Backup/restore/admin | Authorized cross-tenant administration is explicit; a tenant restore/export excludes others. |
 
-## Schema Isolation Pattern (Schema per Tenant)
+Deliver: selected pattern and rejected alternatives, tenant identity authority, DDL/policy/index plan, routing/context protocol, negative-test evidence, migration/rollback boundary, and named unverified surfaces. A checklist assertion without executed evidence is not a passed isolation test.
 
-```sql
--- Create a schema for the tenant
-CREATE SCHEMA tenant_abc123;
+## Canonical specification
 
--- Set search path for the session
-SET search_path TO tenant_abc123, public;
-
--- Provision tenant schema using a template schema
--- (copy DDL from a template, or use a migration tool per-schema)
-CREATE TABLE tenant_abc123.orders (LIKE public.orders_template INCLUDING ALL);
-```
-
-**When to choose schema isolation:**
-- Tenants need different table structures or extensions.
-- Data export / deletion per tenant must be clean (`DROP SCHEMA tenant_abc123 CASCADE`).
-- Regulatory requirement for logical data separation without full database cost.
-
----
-
-## Tenant Column Pattern
-
-**Design rules for shared-schema multi-tenancy:**
-
-1. `tenant_id` must be the **first column** in every composite index to allow index-only scans per tenant.
-2. Use `UUID` for `tenant_id` to avoid enumeration attacks and allow distributed ID generation.
-3. Foreign keys between multi-tenant tables must include `tenant_id`: `FOREIGN KEY (tenant_id, order_id) REFERENCES orders(tenant_id, id)`.
-4. Never expose raw `tenant_id` values in API responses — map to opaque identifiers at the application boundary.
-
-```sql
--- Composite FK that enforces same-tenant integrity
-CREATE TABLE order_items (
-  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  tenant_id  UUID NOT NULL,
-  order_id   UUID NOT NULL,
-  CONSTRAINT fk_order FOREIGN KEY (tenant_id, order_id)
-    REFERENCES orders(tenant_id, id) ON DELETE CASCADE
-);
-
-CREATE INDEX idx_order_items_tenant_order ON order_items(tenant_id, order_id);
-```
-
----
-
-## Pattern Selection Decision Tree (2026 baseline)
-
-```
-Tenant count?
-  ├── 1-50, regulated (HIPAA/PCI/SOC2)
-  │     └── DB-per-tenant. Consider Neon branching for cheap per-tenant preview envs.
-  ├── 50-500, per-tenant DDL needed
-  │     └── Schema-per-tenant. On distributed scale: Citus 13 schema-based sharding.
-  ├── 500-10K, uniform schema, mid-volume
-  │     └── Shared schema + RLS + FORCE ROW LEVEL SECURITY.
-  └── 10K+ or > 100 M rows/table
-        └── Shared schema + HASH partition by tenant_id + RLS as backstop.
-            For globally distributed write: Aurora DSQL or Spanner.
-            For time-series-heavy tenants: Tiger Data hypertable on UUIDv7.
-```
-
-## Design Gate
-
-Before shipping a multi-tenant schema, verify:
-
-- Every table has `tenant_id` and RLS (or resides in a dedicated schema/DB).
-- No query joins across tenants without an explicit `tenant_id` filter.
-- `tenant_id` is the leading column in all composite indexes.
-- Tenant provisioning and deprovisioning are tested (create + delete + data verification).
-- Connection pooling (e.g., PgBouncer) is configured to reset `app.current_tenant_id` between sessions in transaction-mode pooling.
-- On PostgreSQL 18, consider pulling tenant context from a verified OAuth token claim (via `oauth_validator_libraries`) instead of an application-set GUC — closes the bypass via direct app credentials.
+Checked 2026-09-17; select the deployed PostgreSQL version, not necessarily `current`.
+- https://www.postgresql.org/docs/current/ddl-rowsecurity.html — policy composition, bypass roles, command coverage.
+- https://www.postgresql.org/docs/current/functions-admin.html — `current_setting` and transaction-local `set_config`.
+- https://www.postgresql.org/docs/current/ddl-schemas.html — schema privileges and trusted search paths.

@@ -19,8 +19,7 @@ name it, or when scanning what this skill can consult at all.
 | `reference/index-performance-anti-patterns.md` | Reviewing composite indexes, bloat, FK indexes, or index health. |
 | `reference/postgresql18-features.md` | On PostgreSQL 18 (GA 2025-09-25) and need UUIDv7, virtual generated columns (default), temporal `WITHOUT OVERLAPS` / `PERIOD`, `RETURNING OLD.*`/`NEW.*`, B-tree skip scan, async I/O, OAuth, or logical-replication schema maintenance. |
 | `reference/postgresql17-features.md` | On PostgreSQL 17 and need SQL/JSON (`JSON_TABLE`, `JSON_VALUE`, `JSON_QUERY`, `JSON_EXISTS`), partition maintenance, logical-replication failover, or `pg_createsubscriber`. Legacy reference — see `postgresql18-features.md` for current release. |
-| `reference/multi-tenant-patterns.md` | Designing a multi-tenant schema (database/schema/shared-schema with RLS). |
-| `reference/tenant-architecture-patterns.md` | Selecting isolation, RLS, routing, or noisy-neighbor controls for `tenant` mode. |
+| `reference/multi-tenant-patterns.md` | Selecting tenant isolation; authorization, pooled connections, constraints, migration and isolation verification. |
 | `reference/tenant-migration.md` | Rebalancing tenants or upgrading isolation level with zero-downtime cutover and rollback. |
 | `reference/tenant-provisioning.md` | Designing idempotent onboarding, reprovisioning, and deprovisioning lifecycle. |
 | `reference/tenant-quota-throttling.md` | Designing fair-share quotas, burst budgets, overage signals, and billing handoffs. |
@@ -31,5 +30,4 @@ name it, or when scanning what this skill can consult at all.
 | `reference/audit-log-schema.md` | Designing append-only audit-log tables — actor/action/before-after image, retention, WORM, HMAC chain (`audit-log` recipe). |
 | `reference/event-sourcing-schema.md` | Designing event store, projections, snapshots, outbox pattern, or aggregate boundaries (`event-sourcing` recipe). |
 | `reference/soft-delete-patterns.md` | Designing logical deletion (deleted_at / status / tombstone), partial unique indexes, FK cascade, or GDPR right-to-erasure pathway (`soft-delete` recipe). |
-| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Schema-specific Output/Next schema. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the schema/migration spec, deciding adaptive thinking depth at PLAN, or front-loading DB version/multi-tenant flag at AUDIT. Critical for Schema: P3, P5. |

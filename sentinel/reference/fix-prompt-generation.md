@@ -1,21 +1,10 @@
 # Sentinel LLM Fix Prompt Generation
 
-**Purpose:** Sentinel-specific action verbs, suppression cases, template fields, and worked example for the `## LLM Fix Prompt` block when Sentinel hands off remediation to Builder rather than shipping the fix inline.
+**Purpose:** Sentinel-specific action verbs, suppression cases, template fields for the `## LLM Fix Prompt` block when Sentinel hands off remediation to Builder rather than shipping the fix inline.
 **Read when:** Sentinel has identified a finding but is NOT shipping the fix itself (size > 50 lines, breaking change, auth logic, or explicit review-only mode).
 
 > Universal authoring rules and prompt structure: `_common/LLM_PROMPT_GENERATION.md`.
-> This file documents only Sentinel-specific verbs, suppression cases, template fields, and an example.
-
-## Contents
-
-- When Sentinel emits a Fix Prompt vs ships inline
-- Sentinel action verbs
-- Verb selection heuristic
-- Sentinel-specific suppression cases
-- Per-finding fix prompt template (Sentinel-specific fields)
-- Worked example
-
----
+> This file documents only Sentinel-specific verbs, suppression cases, template fields.
 
 ## When Sentinel Emits a Fix Prompt vs Ships Inline
 
@@ -68,7 +57,7 @@ Static-analysis inconclusive (need runtime exploit confirmation) ─→ INVESTIG
 ```
 
 Tiebreakers:
-- `CRITICAL` + secret → always `REVOKE-AND-ROTATE`. Even if Sentinel deletes the file, the secret persists in git history; the operator must revoke at the issuer (cloud provider, API vendor, etc.). Per GitGuardian 2026, 64% of valid secrets from 2022 remained unrevoked in 2026.
+- `CRITICAL` + secret → always `REVOKE-AND-ROTATE`. Even if Sentinel deletes the file, the secret persists in git history; the operator must revoke at the issuer (cloud provider, API vendor, etc.).
 - `AUTH-FIX` always cross-links to Probe for runtime verification — auth fixes that "look right" frequently fail real attacker testing.
 - `BREAKING-FIX` always includes a Launch handoff — breaking changes need release coordination.
 
@@ -108,7 +97,7 @@ Sentinel adds these Sentinel-specific blocks on top of the universal skeleton:
 - Title: [brief description]
 - Severity: [CRITICAL | HIGH | MEDIUM | LOW | ENHANCEMENT]
 - Confidence: [HIGH | MEDIUM | LOW] (Sentinel's static-analysis confidence)
-- OWASP category: [e.g., A05:2025 – Security Misconfiguration]
+- OWASP category: [versioned category ID and name, verified against the selected OWASP edition]
 - CWE: [e.g., CWE-89 SQL Injection]
 - CVSS estimate: [e.g., 9.1 / Critical] (when applicable)
 
@@ -218,104 +207,3 @@ Verbatim secret prefix: `<first 4 chars only — never paste full secret>`
 ````
 
 ---
-
-## Worked Example (SECURE-FIX)
-
-**Scenario:** SQL injection in a search endpoint that builds a query via string concatenation.
-
-````markdown
-## LLM Fix Prompt
-
-```text
-# Your task
-SECURE-FIX the security finding described below.
-
-# Finding context
-- Title: SQL injection in /api/search via unparameterized query
-- Severity: CRITICAL
-- Confidence: HIGH (multi-engine consensus: Semgrep + CodeQL + Sentinel)
-- OWASP category: A03:2025 – Injection
-- CWE: CWE-89 (SQL Injection)
-- CVSS estimate: 9.1 / Critical
-
-# Vulnerability
-The search endpoint constructs the SQL query by concatenating the user-supplied
-`q` query parameter directly into the WHERE canon. An attacker can inject SQL
-to extract arbitrary data from the database, including the users table.
-
-Location: `src/api/search.ts:42` in `searchHandler()`
-
-# Evidence
-Vulnerable code:
-```
-const results = await db.raw(
-  `SELECT id, title FROM products WHERE name LIKE '%${req.query.q}%'`
-);
-```
-
-Exploit pattern (illustrative — do NOT include in fix verification):
-```
-GET /api/search?q=%25%27%20UNION%20SELECT%20id%2C%20password%20FROM%20users--
-```
-
-Scanner output: Semgrep `tainted-sql-string` (HIGH), CodeQL `js/sql-injection`
-(error), Sentinel pattern match.
-
-# Recommended fix
-Approach: Use parameterized query with the database driver's binding mechanism.
-Replace the raw concatenation with a prepared statement and a bound parameter.
-Add Zod validation on `q` to bound length and reject control characters.
-
-Files to modify:
-- src/api/search.ts — replace `db.raw(...)` with `db.select(...).where('name', 'LIKE', ...)`, add Zod schema
-- src/api/search.test.ts — add test cases for injection patterns
-
-Defensive controls:
-- Knex query builder (already in use) — `.where('name', 'LIKE', `%${q}%`)` parameterizes the bound value
-- Zod 3.22+ for input validation — `z.string().max(100).regex(/^[a-zA-Z0-9 .-]+$/)`
-- Rate limiting via `express-rate-limit` (5 req/sec/ip) — already wired in middleware
-
-Constraints:
-- Public response shape must remain `{ id, title }[]` — do not include extra fields
-- Pagination cursor format must remain backward-compatible
-
-# Acceptance criteria
-- [ ] Vulnerable concatenation removed from src/api/search.ts:42
-- [ ] All queries use bound parameters (verified by `grep -r "db.raw" src/`)
-- [ ] Zod schema rejects strings > 100 chars and control characters
-- [ ] Regression test covers UNION SELECT, OR 1=1, and `--` comment patterns
-- [ ] No new test failures in src/api/search.test.ts
-
-# Ruled-out alternatives (do not revisit)
-- WAF-only mitigation — eliminated: WAF rules are bypassed by encoding tricks
-  and do not address the root cause
-- Manual escaping (`q.replace("'", "''")`) — eliminated: manual escaping is
-  fragile and CWE-89 explicitly warns against it
-- Switching to NoSQL — eliminated: out of scope; the existing relational schema
-  is correct, only the query construction is wrong
-
-# What NOT to do
-- Do not silence the symptom by removing the search feature
-- Do not catch-and-ignore SQL exceptions — they are the only signal that the fix is wrong
-- Do not commit any debug code that prints query strings (information disclosure)
-- Do not add a "trusted internal" bypass for the validation
-- Do not bundle unrelated changes (UI tweaks, copy edits) into this security PR
-```
-````
-
-This prompt is self-contained: a coding LLM can act on it without seeing the rest of the Sentinel report.
-
-
-## Verb Table (SKILL.md excerpt)
-
-| Verb | Use when | Receiving agent / operator |
-|------|----------|---------------------------|
-| `SECURE-FIX` | Fix >50 lines, no auth or breaking concern | Builder |
-| `HARDEN` | ENHANCEMENT-class (defense-in-depth, audit logging) | Builder |
-| `MITIGATE` | Compensating control while the real fix is blocked | Builder + Beacon |
-| `BREAKING-FIX` | Requires API shape or response-code change | Builder + Guardian + Launch |
-| `AUTH-FIX` | Touches authn / authz / session / token logic | Builder + Guardian + Probe |
-| `REVOKE-AND-ROTATE` | Hardcoded secret — file removal insufficient | Operator (human) |
-| `INVESTIGATE-FURTHER` | Static analysis inconclusive; needs runtime proof | Probe (DAST) |
-
-

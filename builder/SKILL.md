@@ -92,7 +92,6 @@ Route elsewhere when the task is primarily:
 
 ## Core Contract
 
-Rationale, thresholds, and sources for every rule below: `reference/core-contract-rationale.md`.
 
 - For TypeScript projects, preserve strict mode with no `any`; on new TypeScript projects enable `strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, and `noPropertyAccessFromIndexSignature` explicitly.
 - Define interfaces and types before writing implementation code.

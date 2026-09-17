@@ -1,21 +1,10 @@
 # Attest LLM Fix Prompt Generation
 
-**Purpose:** Attest-specific action verbs, suppression cases, template fields, and worked example for the `## LLM Fix Prompt` block when Attest confirms an AC gap and hands remediation to Builder (or Scribe/Scribe[unified] for spec rewrites).
+**Purpose:** Attest-specific action verbs, suppression cases, template fields for the `## LLM Fix Prompt` block when Attest confirms an AC gap and hands remediation to Builder (or Scribe/Scribe[unified] for spec rewrites).
 **Read when:** Attest has issued a per-criterion verdict of `FAIL` or `PARTIAL` and remediation must be paired with a paste-ready prompt for the receiving agent.
 
 > Universal authoring rules and prompt structure: `_common/LLM_PROMPT_GENERATION.md`.
-> This file documents only Attest-specific verbs, suppression cases, template fields, and an example.
-
-## Contents
-
-- When Attest emits a Fix Prompt vs withholds
-- Attest action verbs
-- Verb selection heuristic
-- Attest-specific suppression cases
-- Per-finding fix prompt template (Attest-specific fields)
-- Worked example
-
----
+> This file documents only Attest-specific verbs, suppression cases, template fields.
 
 ## When Attest Emits a Fix Prompt vs Withholds
 
@@ -193,115 +182,3 @@ Constraints:
 For `INVESTIGATE-FURTHER`, replace "Recommended action" with "Verification plan" (steps to confirm or refute the AC interpretation before changing anything).
 
 ---
-
-## Worked Example (CLOSE-GAP)
-
-**Scenario:** AC requires email-format validation on the registration endpoint, but the implementation accepts any non-empty string, allowing malformed emails to be persisted.
-
-````markdown
-## LLM Fix Prompt
-
-```text
-# Your task
-CLOSE-GAP the acceptance-criterion gap described below.
-
-# AC context
-- AC ID: PRD-REG-AC-012
-- Priority: HIGH
-- Verification verdict: FAIL
-- Confidence: HIGH (static + reproducible failing scenario)
-- Spec source: `docs/prd/registration.md:§3.2`
-
-# AC verbatim
-> The registration endpoint MUST reject email addresses that do not conform
-> to RFC 5322 simplified syntax (local-part@domain with at least one dot in
-> the domain). Rejected requests MUST return HTTP 400 with error code
-> `INVALID_EMAIL_FORMAT`.
-
-# BDD scenario (failing)
-Scenario: Registration rejects malformed email address
-  Given a registration payload with email "notanemail"
-  When the client POSTs to /api/register
-  Then the response status is 400
-  And the response body contains error code "INVALID_EMAIL_FORMAT"
-
-Currently observed: response status is 201 (user created with malformed email).
-
-# Evidence
-The handler validates only that `email` is a non-empty string. No format check
-is applied before persistence.
-
-Implementation location: `src/api/register.ts:48` in `registerHandler()`
-
-Implementation snippet (verbatim):
-```
-const { email, password } = req.body;
-if (!email || !password) {
-  return res.status(400).json({ error: "MISSING_FIELDS" });
-}
-const user = await db.users.insert({ email, password_hash: hash(password) });
-return res.status(201).json({ id: user.id });
-```
-
-Database state after sending `email: "notanemail"`:
-```
-id  | email       | created_at
-----+-------------+--------------------
-42  | notanemail  | 2026-05-01 10:23:01
-```
-
-# Recommended action
-Approach: Add a format-validation step using Zod (already a project dependency)
-between the existence check and the database insert. On validation failure,
-return HTTP 400 with error code `INVALID_EMAIL_FORMAT` per the AC.
-
-Files to modify:
-- src/api/register.ts — insert Zod schema parse before db.users.insert
-- src/api/register.test.ts — add scenarios for "notanemail", "missing@dot",
-  "@nodomain.com", and a passing valid email
-
-Constraints:
-- Public response shape on success must remain `{ id: number }` — do not add fields
-- Error code string must be exactly `INVALID_EMAIL_FORMAT` (matches downstream consumers)
-- Do not modify ACs other than PRD-REG-AC-012 in this change
-
-# Acceptance criteria
-- [ ] BDD scenario above passes (POST with "notanemail" returns 400 + INVALID_EMAIL_FORMAT)
-- [ ] AC PRD-REG-AC-012 reaches verdict `PASS` on Attest re-run
-- [ ] Regression tests added for at least 3 malformed-email patterns
-- [ ] One passing-valid-email test confirms no false-rejection regression
-- [ ] No new test failures in src/api/register.test.ts
-- [ ] No malformed emails inserted in test database after the change
-
-# Ruled-out alternatives (do not revisit)
-- Validate at the database layer (CHECK constraint) — eliminated: AC requires
-  HTTP 400 + specific error code, which a DB constraint cannot produce
-- Custom regex inline — eliminated: Zod is already in use elsewhere; project
-  convention is to centralize validation schemas
-- Reject only at the gateway/WAF — eliminated: AC is a backend contract,
-  gateway-level filtering would not satisfy a direct API consumer test
-
-# What NOT to do
-- Do not silence the symptom (try/catch around the insert and ignore validation errors)
-- Do not expand scope beyond PRD-REG-AC-012; password complexity (PRD-REG-AC-013)
-  and rate limiting (PRD-REG-AC-018) are out of scope for this change
-- Do not modify the spec to match the current permissive behavior — the spec is
-  correct; the implementation is wrong
-- Do not skip the BDD scenario assertion in regression tests
-- Do not bundle unrelated AC fixes into the same change — one verb, one finding
-```
-````
-
-This prompt is self-contained: Builder can act on it without seeing the rest of the Attest compliance report.
-
-
-## Verb Table (SKILL.md excerpt)
-
-| Verb | Use when | Receiving agent |
-|------|----------|----------------|
-| `CLOSE-GAP` | Implementation missing an AC | Builder |
-| `RECONCILE-SPEC` | Implementation correct, spec wrong/outdated | Scribe / Scribe[unified] |
-| `BREAKING-CLOSE` | Fix requires a breaking change | Builder + Guardian + Launch |
-| `INVESTIGATE-FURTHER` | AC interpretation ambiguous | Spec author / Attest re-entry |
-| `WAIVE` | AC not applicable; document waiver | Builder + Scribe |
-

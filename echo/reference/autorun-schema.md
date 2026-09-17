@@ -21,7 +21,7 @@ _STEP_COMPLETE:
     ab_hypotheses: ["[hypothesis descriptions]"]
     latent_needs: ["[JTBD findings]"]
     tri_engine:                                  # present only when `multi` Recipe ran
-      engines_run: [codex, agy, claude]
+      engines_run: [actual usable engines]  # authorized and actually invoked
       engines_failed: [list or none]
       personas_in_matrix: [list of persona_id]
       steps_in_matrix: [list of step_id]
@@ -41,7 +41,7 @@ _STEP_COMPLETE:
         supported: [count]
         hypothesis: [count]
         synthetic-only: [count]
-      dark_pattern_auto_promoted: [count]
+      dark_pattern_auto_promoted: [count]  # >=2-engine walkthrough priority only; not legal confirmation
       rejected: [count + top categories — hallucination / voice-mismatch / already-mitigated / needs-info]
   Next: Palette | Experiment | Growth | Canvas | Spark | Scout | DONE
   Reason: [Why this next step]

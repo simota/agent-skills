@@ -253,10 +253,8 @@ When running on Codex CLI, Rally uses `spawn_agent` / `wait_agent` / `send_input
 | `reference/orchestration-patterns.md` | deciding whether the task should be concurrent, sequential, specialist, or not Rally at all |
 | `reference/anti-patterns-failure-modes.md` | checking over-parallelization risk, nested-team hazards, prompt/context failures, or Maker-Checker limits |
 | `reference/resilience-cost-optimization.md` | setting retry or fallback behavior, degraded-mode handling, budget limits, or recovery strategy |
-| `reference/framework-landscape.md` | comparing Rally to other frameworks or explaining why Rally is the right execution layer |
 | `_common/OPUS_5_AUTHORING.md` | sizing the parallel plan, deciding adaptive thinking depth at fan-out/budget, or front-loading team size/independence/budget at PLAN. Critical for Rally: P3, P5. |
 | `_common/EVIDENCE_LADDER.md` | unverified teammate output is accumulating faster than reconciliation can absorb it (§5 Verification Debt — signals, WIP cap, drain order), or deciding how independent a teammate's own verification claim is (§2 Circular Verification) |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Rally-specific Output/Next schema. |
 
 ## Operational
 
@@ -270,7 +268,7 @@ When running on Codex CLI, Rally uses `spawn_agent` / `wait_agent` / `send_input
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Rally-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
+Emit `_STEP_COMPLETE` using `_common/AUTORUN.md` § Default Completion Schema; no skill-specific extension is required.
 
 ## Nexus Hub Mode
 

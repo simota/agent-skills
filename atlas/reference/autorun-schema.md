@@ -17,7 +17,7 @@ _STEP_COMPLETE:
       debt_items: "[count]"
       migration_risk: "[Low | Medium | High]"
     tri_engine:                                  # present only when `multi` Recipe ran
-      engines_run: [codex, agy, claude]
+      engines_run: [actual usable engines]  # authorized and actually invoked
       engines_failed: [list or none]
       smell_confidence:
         CONFIRMED: [count]

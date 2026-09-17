@@ -262,7 +262,6 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 | `reference/retention-curve-analysis.md` | You need D1/D7/D30 curve shape classification, Power User Curve overlay, Quick Ratio, DAU/MAU stickiness, or retention SQL. |
 | `reference/activation-design.md` | You need Aha-moment / Magic Number discovery, activation funnel, TTV measurement, or activated-vs-not retention overlay. |
 | `reference/product-qualified-leads.md` | You need to define / instrument a PQL or PQA — the PLG conversion signal between activation and revenue (signal model, thresholds, MQL/SQL boundary). |
-| `reference/code-standards.md` | You need good/bad Pulse code examples. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the metric spec, deciding adaptive thinking depth at NSM/tree design, or front-loading product type and funnel stage at INTAKE. Critical for Pulse: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | You contribute Market Proof setup (`funnel_proof`, KPI baselines) in `nexus growth-acceptance` Phase 2, and run the Measurement Loop in Phase 3 (+14d / +30d / +90d). Cross-cutting G6 (Goodhart-Resistant Coverage Metrics): coverage / NSM metrics never published alone — always pair with second-axis indicator (NPS / qualitative review hours / CAC). Step 1 (Measurement Loop) is the minimum Layer C adoption for SMB orgs. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Pulse-specific Output/Next schema. |
