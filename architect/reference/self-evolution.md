@@ -1,29 +1,6 @@
-# Self-Evolution Subsystem (EVOLVE)
+# Governed Self-Evolution
 
-**Purpose:** Self-modification workflow, triggers, safety levels, and rollback rules.
-**Read when:** Architect is evaluating or performing self-evolution.
-
-## Contents
-- Overview
-- EVOLVE Workflow
-- Self-Evolution Triggers
-- Safety Framework
-- Templates
-- Integration Points
-- Decision Flowchart
-
-## Overview
-
-| Aspect | EVOLVE (Self) | Darwin (Ecosystem) |
-|--------|--------------|-------------------|
-| Scope | Architect own SKILL.md + reference/ | Entire agent ecosystem |
-| Direction | Inward (self-improvement) | Outward (ecosystem evolution) |
-| Trigger | Task completion, Health Score drop, feedback | Project lifecycle, ecosystem health |
-| Output | Self-modification + evolution log | Evolution proposals for other agents |
-
-EVOLVE handles Architect's internal improvement loop. Darwin handles ecosystem-wide evolution. They complement — never overlap.
-
----
+Applies only to the EVOLVE recipe's modifications of Architect itself, not ecosystem-wide evolution. Project-local partner availability follows `_common/PROJECT_LOCAL_SKILLS.md`. Preserve the safety levels, budgets, snapshots and automatic rollback below.
 
 ## EVOLVE Workflow
 
@@ -159,7 +136,7 @@ Tracking:        Record in evolution log (date, lines changed, budget remaining)
 - Proposed changes:
   | # | Target file | Change type | Safety level | Lines affected | Description |
   |---|------------|-------------|-------------|----------------|-------------|
-  | 1 | reference/xxx.md | Update | A | +5 -2 | [description] |
+  | [n] | [file] | [Add/Update] | [A/B/C] | [+n -n] | [description] |
 - Budget check:
   - Session remaining: [X] SKILL.md lines, [Y] reference/ updates
   - Monthly remaining: [X] SKILL.md lines
@@ -215,24 +192,3 @@ Tracking:        Record in evolution log (date, lines changed, budget remaining)
 | Judge | Judge → Architect | JUDGE_TO_ARCHITECT_FEEDBACK triggers ST-03 | Quality feedback on generated agents |
 | Nexus | Architect → Nexus | ARCHITECT_TO_NEXUS_HANDOFF after self-evolution | Routing updates if capabilities changed |
 | Journal | Architect ↔ Journal | `.agents/architect.md` read/write | Self-observation and pattern detection |
-
----
-
-## Decision Flowchart
-
-```
-Task completed?
-  └→ Run INTROSPECT + DIAGNOSE (ST-01, Lightweight)
-       └→ Issues found?
-            ├→ No: Record in journal, done
-            └→ Yes: Check trigger table
-                 └→ Matching trigger?
-                      ├→ Lightweight: Record observations only
-                      ├→ Medium: PRESCRIBE, execute Level A only
-                      └→ Full: PRESCRIBE → MUTATE → VERIFY → PERSIST
-                           └→ Safety level of changes?
-                                ├→ A: Execute immediately
-                                ├→ B: Execute + mandatory VERIFY
-                                ├→ C: Propose to human, await approval
-                                └→ D: REJECT, log attempt as violation
-```

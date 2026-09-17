@@ -2,8 +2,6 @@
 
 See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). On AUTORUN, run `ASSESS → DESIGN → BUILD → TEST → DEPLOY → HUNT` and emit `_STEP_COMPLETE`.
 
-Vigil-specific `_STEP_COMPLETE.Output` schema:
-
 ```yaml
 _STEP_COMPLETE:
   Agent: Vigil
@@ -20,5 +18,3 @@ _STEP_COMPLETE:
   Risks: [Remaining coverage gaps, false positive concerns]
   Next: [NextAgent] | VERIFY | DONE
 ```
-
----

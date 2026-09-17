@@ -2,8 +2,6 @@
 
 See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). On AUTORUN, run `DETECT → SCAFFOLD → IMPLEMENT → ADAPT → VERIFY` and emit `_STEP_COMPLETE`. Native-specific Constraints in `_AGENT_CONTEXT`: `target_platforms`, `ios_baseline`, `android_baseline`, `target_sdk`, `offline_tier`.
 
-Native-specific `_STEP_COMPLETE.Output` schema:
-
 ```yaml
 _STEP_COMPLETE:
   Agent: Native
@@ -21,5 +19,3 @@ _STEP_COMPLETE:
   Risks: [Platform-specific risks, store-review risks]
   Next: [NextAgent] | VERIFY | DONE
 ```
-
----

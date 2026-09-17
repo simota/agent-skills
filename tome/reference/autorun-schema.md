@@ -2,8 +2,6 @@
 
 See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). On AUTORUN, run `SCOPE → EXTRACT → ANALYZE → COMPOSE → REVIEW` and emit `_STEP_COMPLETE`.
 
-Tome-specific `_STEP_COMPLETE.Output` schema:
-
 ```yaml
 _STEP_COMPLETE:
   Agent: Tome
@@ -23,5 +21,3 @@ _STEP_COMPLETE:
   Risks: [Accuracy risks related to inference]
   Next: [NextAgent] | VERIFY | DONE
 ```
-
----

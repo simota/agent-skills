@@ -2,8 +2,6 @@
 
 See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). On AUTORUN, run `SCOPE → MODEL → PLAN → EXECUTE → REPORT` and emit `_STEP_COMPLETE`. Breach-specific Constraints in `_AGENT_CONTEXT`: target scope, framework preference, authorization level.
 
-Breach-specific `_STEP_COMPLETE.Output` schema:
-
 ```yaml
 _STEP_COMPLETE:
   Agent: Breach
@@ -21,5 +19,3 @@ _STEP_COMPLETE:
   Next: [NextAgent] | VERIFY | DONE
   Reason: [Why this Status/Next; if BLOCKED/FAILED, what is needed to unblock]
 ```
-
----

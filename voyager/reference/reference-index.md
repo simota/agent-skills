@@ -38,4 +38,4 @@ name it, or when scanning what this skill can consult at all.
 | `reference/recipe-verify-gates.md` | Per-Recipe behavior and the full VERIFY checklist |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the test plan, calibrating effort to risk tier, front-loading journey scope at PLAN. Critical: P3, P6. |
 | `_common/PROOF_CARRYING.md` | Invoked from `nexus acceptance` Phase 2 (UI flows + visual regression, Layer 2 oracles) and Phase 3 (adversarial UI personas). Findings need non-trivial exploration logs — empty ones are rejected. |
-| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Voyager-specific Output/Next schema. |
+| `_common/AUTORUN.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — shared default schema; preserve the `Next` restriction in SKILL.md’s AUTORUN section. |

@@ -1,95 +1,28 @@
-# Stale Comments Cleanup
+# Comment Cleanup Decisions
 
-Reference for Sweep's `comments` recipe. Detect stale TODOs/FIXMEs, commented-out code blocks, divergent JSDoc, version-stale annotations, and dead doc references.
+Load for `comments`; use `reference/cleanup-protocol.md`. Comments may carry types, build directives, licensing, suppression or safety obligations. Check those before confidence scoring; ≥70 is a proposal threshold, not permission to delete.
 
-> Comments do not affect runtime; safe to remove at confidence ≥ 70. But they encode intent and history — verify with `git blame` before bulk removal.
-
----
-
-## 1. Categories of Stale Comments
+## Candidate Bands
 
 | Category | Indicator | Confidence to remove |
 |---|---|---|
 | Aged TODO/FIXME | `// TODO(2023):` or git blame >180 days | 70-85 |
 | Commented-out code | `/* ... */` block of N≥3 lines that was once code | 80-90 |
-| Divergent JSDoc | `@param x: number` but actual signature is `string` | 60-75 (auto-fix safer) |
+| Divergent JSDoc | `@param x: number` but actual signature is `string` | 60-75 (repair may be safer) |
 | Version-stale | `// added in v1.2` and current version is 5.x | 75-85 |
-| Author/date noise | `// John 2018-04-15` | 90+ (no value) |
+| Author/date noise | `// John 2018-04-15` | 90+ only if not an audit trail |
 | Dead reference | `// see docs/old-feature.md` (file deleted) | 85+ |
 | Obvious paraphrase | `i++; // increment i` | 85+ |
 | Outdated workaround | `// workaround for IE11 bug` (IE11 dropped) | 80-90 |
 
----
 
-## 2. Detection Strategies
+Age/version distance only starts investigation. Check linked work items, actual platform support, history and the replacement document before treating a TODO, workaround, `@since` or `@deprecated` note as obsolete. Prefer repairing divergent JSDoc over removing a still-needed contract.
 
-### Aged TODO/FIXME
-```bash
-# Find TODO/FIXME with git blame age
-git ls-files | xargs grep -nE '(TODO|FIXME|HACK|XXX)' 2>/dev/null | while read -r line; do
-  file=$(echo "$line" | cut -d: -f1)
-  lineno=$(echo "$line" | cut -d: -f2)
-  age=$(git log -1 --format=%ci -L "$lineno,$lineno:$file" 2>/dev/null | head -1)
-  echo "$age | $line"
-done | sort
-```
+## Protected Content
 
-Or use `tslint`/`biome`/`ruff` plugins:
-- `eslint-plugin-todo-plz` — fail on undated/stale TODOs
-- `pylint W0511` — warning on TODO comments
+Preserve license headers, compliance author/date trails, active lint/build/compiler directives, type-providing JSDoc, unsafe/concurrency/order invariants (`SAFETY`, `WARN`, `INVARIANT`, `XXX-safety`), regex/algorithm explanations, justified type assertions, vendor quirks and otherwise ambiguous constants. Reference code may be intentional; verify its actual consumer, not merely code-like syntax.
 
-### Commented-out code blocks
-Heuristic: ≥ 3 consecutive lines starting with `//` or inside `/* */` that contain code-like syntax (matched braces, identifiers, semicolons).
-
-```bash
-# Rough detector for commented JS/TS blocks
-grep -rB0 -A20 -nE '^[[:space:]]*//[[:space:]]*\b(if|for|while|function|const|let|var|class|return)\b' --include='*.ts' --include='*.js' src/
-```
-
-Tools:
-- `eslint-plugin-eslint-comments`
-- `dead-code-detection` (custom AST analyzers)
-
-### Divergent JSDoc
-Compare `@param` / `@returns` annotations to actual function signatures.
-- TypeScript: `tsc --noEmit` catches type mismatches when types are inferred from JSDoc
-- ESLint: `jsdoc/check-param-names`, `jsdoc/check-types`
-
-### Version-stale annotations
-```bash
-# Find "added in vX.Y", "since vX.Y", "deprecated in vX.Y"
-grep -rEn '(added in|since|deprecated in)[[:space:]]+v?[0-9]+\.[0-9]+' --include='*.ts' --include='*.js' src/
-```
-
-Compare to current package.json version. If current is N major versions ahead, the annotation is stale.
-
-### Dead doc references
-```bash
-# Find comment links to docs/ files
-grep -rEn 'docs/[a-z0-9_-]+\.md' --include='*.ts' --include='*.js' src/ | while read -r line; do
-  ref=$(echo "$line" | grep -oE 'docs/[a-z0-9_-]+\.md')
-  [ -f "$ref" ] || echo "DEAD: $line"
-done
-```
-
----
-
-## 3. What to KEEP (high false-positive risk)
-
-| Pattern | Reason to keep |
-|---|---|
-| `// SAFETY:` comments in unsafe Rust / unsafe JS | Documents invariants required for soundness |
-| Comments inside complex regex | Regex is opaque; comment is the primary documentation |
-| License headers | Required for compliance |
-| `// eslint-disable-next-line` | Active suppression |
-| Type assertions explained: `// `as Foo` because Bar` | Documents type-system limitation |
-| External API quirk: `// API returns 0 instead of null when X` | Encodes vendor behavior |
-| Race condition / concurrency: `// must be called before lock release` | Documents subtle invariant |
-| Number with no obvious meaning + comment: `2592000 // 30 days in seconds` | Constant explanation |
-
----
-
-## 4. Confidence Scoring Rules
+## Scoring Signals
 
 | Signal | Confidence delta |
 |---|---|
@@ -104,67 +37,13 @@ done
 | Contains `SAFETY` / `WARN` / `INVARIANT` keywords | -50 |
 | License header | -100 (never remove) |
 
-Threshold for auto-removal proposal: ≥ 70.
 
----
+Record applicable signals and evidence. The legacy delta table does not define a base score, cap, or whether overlapping age deltas accumulate; do not invent a numeric confidence from it. Report that ambiguity and require review when it changes eligibility. Preserve the existing delivery bands: ≥80 expedited proposal, 70–79 review-required, below 70 not a removal proposal; neither band bypasses confirmation or protection.
 
-## 5. Verification
+## Verification and Handoff
 
-Comments are runtime-irrelevant, but:
-- Some build tools strip comments → bundle hash may change → trigger CI cache miss (mostly OK)
-- Type-providing JSDoc (in JS-only projects without TS) IS load-bearing — verify via `tsc --noEmit --checkJs`
-- Sourcemaps may shift; integration tests using exact line numbers will break
+Use configured source/JSDoc analysis and git history, not an unverified plugin or filename-unsafe shell loop. Establish JS/JSDoc type-checking baseline (`checkJs` where applicable); re-run the project's type checks, build, tests and lint after implementation. Check sourcemap/line-sensitive tests and emitted artifacts; “comments cannot change behavior” is not a verification result.
 
----
+Report scope, scanned categories, candidate count, expedited/review/protected counts, per-item evidence, license/safety preservation, linked-TODO disposition and actual check results. Builder owns execution; Quill receives annotation-repair work.
 
-## 6. Common Pitfalls
-
-| Pitfall | Avoidance |
-|---|---|
-| Removing JSDoc that provides types in JS-only project | Run `tsc --checkJs` baseline first |
-| Removing `// eslint-disable` comments | Tag suppressions as protected |
-| Removing license headers | Maintain explicit allow-list |
-| Bulk remove `// TODO` from tracked work items | Cross-reference against issue tracker |
-| Removing safety/invariant comments | Keyword filter: SAFETY, INVARIANT, WARN, XXX-safety |
-| Removing comment-out code that's intentional reference | Check git history for "see for reference" pattern |
-| Date comments removed but they document audit trail | Compliance projects keep author+date |
-
----
-
-## 7. Decision Walkthrough Template
-
-```
-Scope: ____ files
-Comment categories scanned:
-  □ Aged TODO/FIXME (>180d)
-  □ Commented-out code blocks
-  □ Divergent JSDoc
-  □ Version-stale annotations
-  □ Dead doc references
-  □ Obvious paraphrase
-
-Findings:
-  Total comment candidates: ____
-  Auto-removable (conf ≥ 80):  ____
-  Review-required (conf 70-79): ____
-  Protected (license/safety):  ____
-
-Verification:
-  □ tsc --checkJs baseline pass (if JS+JSDoc)
-  □ ESLint pass post-removal
-  □ License headers preserved
-  □ TODO items cross-checked vs issue tracker
-
-Handoff:
-  □ Builder for execution
-  □ Quill for JSDoc auto-fix (divergent annotations)
-```
-
----
-
-## 8. References
-- `eslint-plugin-jsdoc` (validate / autofix JSDoc)
-- `eslint-plugin-todo-plz` (require dated TODOs)
-- `pylint W0511`, `ruff TD002` (Python TODO checking)
-- TypeScript `--checkJs` (validate JSDoc types)
-- ESLint comments plugin (manage `eslint-disable` directives)
+Type-bearing JSDoc: https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html (checked 2026-09-17). Confirm the target project's JS checking configuration.

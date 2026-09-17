@@ -121,12 +121,12 @@ Canonical CREATE-mode phase chain; other Modes substitute their own in `## Opera
 
 | Phase | Purpose / Keep Inline | Read When |
 |-------|------------------------|-----------|
-| `UNDERSTAND` | Goal framing — category intent, collaboration surface, requirements. First confirm it should be a skill at all (vs hook/rule/subagent — decision flow in `_common/MECHANISM_SELECTION.md`). **Non-closable gap check**: if the capability performs an act legally restricted to a licensed human (USPTO filing under 37 CFR 11.5, practicing law/medicine, notarization), decline the gap-fill proposal and surface the boundary — a skill may assist with preparatory work but never be the acting party. | `agent-category-guide.md` first-pass; `agent-categories.md` for the full roster; `_common/MECHANISM_SELECTION.md` when unsure skill-vs-hook/rule/subagent |
-| `ENVISION` | Divergent exploration — creative thinking, value-first checklist; mandatory, `20-30%` of design effort | `creative-thinking.md` — question banks, sessions, value templates |
-| `ANALYZE` | Ecosystem fit — overlap scoring, topology checks, anti-pattern detection | `overlap-detection.md`, `ecosystem-architecture-anti-patterns.md`, `multi-agent-system-anti-patterns.md` |
-| `DESIGN` | Specification — section contract, boundaries, naming, collaboration | `skill-template.md`, `naming-conventions.md`, `agent-specification-anti-patterns.md`, `official-design-patterns.md` |
-| `GENERATE` | Package creation — SKILL.md + references, Nexus compatibility, AUTORUN support | `skill-template.md`, `nexus-integration.md` |
-| `VALIDATE` | Quality gate — 16-item checklist, evaluation guardrails; blocks delivery until it passes | `validation-checklist.md`, `agent-evaluation-guardrails.md` |
+| `UNDERSTAND` | Goal framing — category intent, collaboration surface, requirements. First confirm it should be a skill at all (vs hook/rule/subagent — decision flow in `_common/MECHANISM_SELECTION.md`). **Non-closable gap check**: if the capability performs an act legally restricted to a licensed human (USPTO filing under 37 CFR 11.5, practicing law/medicine, notarization), decline the gap-fill proposal and surface the boundary — a skill may assist with preparatory work but never be the acting party. | `_common/BOUNDARIES.md` for primary-output ownership and neighbors; `_common/MECHANISM_SELECTION.md` when unsure skill-vs-hook/rule/subagent |
+| `ENVISION` | Divergent exploration — creative thinking, value-first checklist; mandatory, `20-30%` of design effort | `creative-thinking.md` — three-axis decisions and Value-First record |
+| `ANALYZE` | Ecosystem fit — overlap scoring, topology checks, anti-pattern detection | `overlap-detection.md`, `ecosystem-architecture-anti-patterns.md` |
+| `DESIGN` | Specification — section contract, boundaries, naming, collaboration | `_templates/SKILL_TEMPLATE.md`, `naming-conventions.md`, `official-design-patterns.md` |
+| `GENERATE` | Package creation — SKILL.md + references, Nexus compatibility, AUTORUN support | `_templates/SKILL_TEMPLATE.md`, `nexus-integration.md` |
+| `VALIDATE` | Quality gate — current checklist and runtime evaluation; blocks delivery until it passes | `validation-checklist.md` |
 | `COMPRESS` | Post-phase only; must remain equivalent under the 4-axis check | `context-compression.md` |
 
 ## Operating Flows
@@ -137,9 +137,9 @@ Mode-specific phase chains, folded into the Recipes table's Core Flow column bel
 
 | Recipe | Subcommand | Default? | When to Use | Core Flow | Read First |
 |--------|-----------|---------|-------------|-----------|------------|
-| Create New Skill | `create` | ✓ | New skill generation (from gap analysis through design) | `UNDERSTAND → ENVISION → ANALYZE → DESIGN → GENERATE → VALIDATE` (see Workflow table) | `reference/creative-thinking.md`, `reference/skill-template.md` |
+| Create New Skill | `create` | ✓ | New skill generation (from gap analysis through design) | `UNDERSTAND → ENVISION → ANALYZE → DESIGN → GENERATE → VALIDATE` (see Workflow table) | `reference/creative-thinking.md`, `_templates/SKILL_TEMPLATE.md` |
 | Improve Existing | `improve` | | Improve existing skill (redefine contract/boundary) | `UNDERSTAND → ANALYZE → SCORE → PRIORITIZE → VALIDATE` | `reference/review-loop.md`, `reference/enhancement-framework.md` |
-| Compress | `compress` | | Skill compression (token reduction, preserve 4-axis equivalence) | `SCAN → CLASSIFY → COMPRESS → VERIFY → PROPOSE` | `reference/context-compression.md`, `reference/agent-evaluation-guardrails.md` |
+| Compress | `compress` | | Skill compression (token reduction, preserve 4-axis equivalence) | `SCAN → CLASSIFY → COMPRESS → VERIFY → PROPOSE` | `reference/context-compression.md`, `reference/validation-checklist.md` |
 | Audit Verbosity | `audit-verbosity` | | Score runtime output verbosity against the Output Density Protocol; produce SKILL.md edit proposals | — | `reference/output-audit.md`, `_common/OUTPUT_STYLE.md` |
 | Evolve | `evolve` | | Skill self-evolution (lifecycle-driven self-improvement) | `INTROSPECT → DIAGNOSE → PRESCRIBE → MUTATE → VERIFY → PERSIST` | `reference/self-evolution.md` |
 
@@ -160,9 +160,9 @@ Non-negotiables regardless of Recipe: `create` runs ENVISION at 20-30% effort an
 | Overlap handling | `0-10%` proceed, `10-20%` note, `20-30%` review, `30-49%` ask first, `50%+` reject by default | Use `overlap-detection.md` for scoring, report template, and exception cases |
 | Naming | `1-2` syllables ideal, `3` acceptable, `4+` avoid | Use `naming-conventions.md` for scoring and conflict checks |
 | Validation | All `REQUIRED` items pass; `RECOMMENDED` items pass at `80%+` | Use `validation-checklist.md` |
-| New-skill size | `SKILL.md` under `500` lines / `5000` tokens; `3-7` references | Agent Skills spec ceiling; keep detail in references. **"Minimal does not necessarily mean short"** — target the smallest set of *high-signal* tokens; never cut a threshold, safety rule, or routing surface to hit a number. An over-long skill usually means over-specified prescription — fix by raising altitude, not deleting. → `reference/official-design-patterns.md` |
+| New-skill size | `SKILL.md` under `500` lines / `5000` tokens; references only when needed | Agent Skills spec ceiling; keep detail in references. **"Minimal does not necessarily mean short"** — target the smallest set of *high-signal* tokens; never cut a threshold, safety rule, or routing surface to hit a number. An over-long skill usually means over-specified prescription — fix by raising altitude, not deleting. → `reference/official-design-patterns.md` |
 | Multi-agent justification | Single-agent performance `<45%` on task | Below 45%, multi-agent has the highest marginal return; above it, improve the single agent first |
-| Agent count scaling | Beyond `4` agents, coordination tax outweighs gains without topology | Hierarchy, fan-out/gather, or pipeline; never flat peer networks. `multi-agent-system-anti-patterns.md` |
+| Agent count scaling | Beyond `4` agents, coordination tax outweighs gains without topology | Hierarchy, fan-out/gather, or pipeline; never flat peer networks. `ecosystem-architecture-anti-patterns.md` |
 | Hub-spoke scaling | ≤`7` specialists per orchestrator | Beyond 7, the hub becomes a bottleneck — split into a two-level hierarchy with sub-orchestrators |
 | Workflow step count | `85%` per-step × `10` steps ≈ `20%` end-to-end | Design ≤`5` sequential phases; add checkpoints to reset accuracy |
 | Context utilization | >`60%` utilized before user input | Compress: summarize history → filter retrieval → route tools → compress results |
@@ -200,7 +200,7 @@ Compression rules: analyze section by section before changing anything; preserve
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `new agent`, `create agent`, `design skill` | CREATE flow | Skill package (SKILL.md + references) | `reference/skill-template.md`, `reference/creative-thinking.md` |
+| `new agent`, `create agent`, `design skill` | CREATE flow | Skill package (SKILL.md + references) | `_templates/SKILL_TEMPLATE.md`, `reference/creative-thinking.md` |
 | `improve`, `enhance`, `upgrade skill` | IMPROVE flow | Enhancement proposal + updated SKILL.md | `reference/review-loop.md`, `reference/enhancement-framework.md` |
 | `compress`, `reduce tokens`, `optimize context` | COMPRESS flow | Compressed SKILL.md with equivalence report | `reference/context-compression.md` |
 | `audit-verbosity`, `output too verbose` | audit-verbosity recipe | OUTPUT_AUDIT_REPORT + Output Contract diff | `reference/output-audit.md`, `_common/OUTPUT_STYLE.md` |
@@ -208,7 +208,7 @@ Compression rules: analyze section by section before changing anything; preserve
 | `overlap`, `duplicate agent` | ANALYZE phase | Overlap detection report | `reference/overlap-detection.md` |
 | `validate`, `check skill` | VALIDATE phase | Validation checklist results | `reference/validation-checklist.md` |
 | `name`, `naming` | Naming evaluation | Name scoring and alternatives | `reference/naming-conventions.md` |
-| unclear agent design request | CREATE flow | Skill package | `reference/skill-template.md` |
+| unclear agent design request | CREATE flow | Skill package | `_templates/SKILL_TEMPLATE.md` |
 
 Always read `reference/validation-checklist.md` before delivery, whichever flow ran.
 
@@ -275,12 +275,11 @@ When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical
 
 | File | Read This When |
 |------|----------------|
-| `reference/agent-category-guide.md` | First-pass category selection or category-boundary guidance |
-| `reference/agent-categories.md` | Current roster, per-category summaries, full catalog lookup |
+| `_common/BOUNDARIES.md` | Primary-output ownership and current role boundaries; read the selected skill for its full capabilities |
 | `reference/creative-thinking.md` | Still deciding what should exist, not yet specifying it |
 | `reference/naming-conventions.md` | Naming a new or revised agent |
 | `reference/overlap-detection.md` | Overlap scoring, threshold handling, or differentiation logic |
-| `reference/skill-template.md` | Drafting or checking the canonical generated-skill structure |
+| `_templates/SKILL_TEMPLATE.md` | Drafting or checking the canonical generated-skill structure |
 | `reference/validation-checklist.md` | Validating a generated or improved skill |
 | `reference/context-compression.md` | Compression planning/review — token budget, equivalence rules |
 | `reference/output-audit.md` | `audit-verbosity` — verbosity scoring, Output Contract corrections |
@@ -289,11 +288,8 @@ When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical
 | `reference/enhancement-framework.md` | Improving a skill — prioritization, proposal structure |
 | `reference/nexus-integration.md` | Exact AUTORUN or hub-mode compatibility details |
 | `reference/self-evolution.md` | Evaluating or performing self-modification |
-| `reference/multi-agent-system-anti-patterns.md` | Proposal may be overbuilt, poorly coordinated, or topologically mismatched |
-| `reference/agent-specification-anti-patterns.md` | Spec, prompt structure, tool design, or role definition looks weak |
-| `reference/ecosystem-architecture-anti-patterns.md` | Ecosystem fit, modularity, governance, or discoverability looks risky |
-| `reference/agent-evaluation-guardrails.md` | Production-grade evaluation, guardrails, or validation design |
-| `reference/official-design-patterns.md` | Official use-case categories, skill/composable patterns, simplicity-first design, interoperability, success criteria, Opus 5 authoring (§11). |
+| `reference/ecosystem-architecture-anti-patterns.md` | Proposal may be overbuilt, poorly coordinated, or topologically mismatched |
+| `reference/official-design-patterns.md` | Spec, prompt structure, tool design, or role definition looks weak |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the package, adaptive thinking depth at topology selection, front-loading intent at UNDERSTAND. Critical: P3, P5. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Architect-specific Output/Next schema. |
 

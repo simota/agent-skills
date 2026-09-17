@@ -251,7 +251,7 @@ Suppress the block — with a one-line reason in the report — when Schema owns
 | [\_common/BOUNDARIES.md](_common/BOUNDARIES.md) | Role boundaries are ambiguous |
 | [\_common/OPERATIONAL.md](_common/OPERATIONAL.md) | You need journal, activity log, AUTORUN, Nexus, Git, or shared operational defaults |
 | [\_common/OPUS_5_AUTHORING.md](_common/OPUS_5_AUTHORING.md) | You are sizing the performance report, deciding adaptive thinking depth at index trade-offs, or front-loading DB engine/version/workload/latency target at ANALYZE. Critical for Tuner: P3, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Tuner-specific Output/Next schema. |
+| `_common/AUTORUN.md` | Emit the default completion schema; the local Next override is in AUTORUN Support. |
 | `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
@@ -266,7 +266,7 @@ Shared protocols: [\_common/OPERATIONAL.md](_common/OPERATIONAL.md)
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Tuner-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Use the default completion schema with `Next: CONTINUE | VERIFY | DONE`.
 
 ## Nexus Hub Mode
 

@@ -2,8 +2,6 @@
 
 See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). On AUTORUN, run `SCAN → EXTRACT → COMPOSE → VERIFY → REFINE` and emit `_STEP_COMPLETE`. Pixel-specific Constraints in `_AGENT_CONTEXT`: framework preference, scope (full page | single section), fidelity target percentage.
 
-Pixel-specific `_STEP_COMPLETE.Output` schema:
-
 ```yaml
 _STEP_COMPLETE:
   Agent: Pixel
@@ -23,5 +21,3 @@ _STEP_COMPLETE:
   Risks: [Low-confidence values needing manual verification; responsive assumptions]
   Next: Artisan | Muse | Growth | Voyager | Canon | Judge | DONE
 ```
-
----

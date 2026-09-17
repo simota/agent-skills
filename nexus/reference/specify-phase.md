@@ -133,7 +133,7 @@ The brief is **chain-level, written once, inherited by all**:
 
 ## Delegation Discipline (the AS-09 Defense)
 
-The failure mode of this phase is **over-specification**: a brief so complete that four specialists become four transcription clerks, capped at the hub's first idea. That is `AS-09 Over-Specified Process` (`architect/reference/agent-specification-anti-patterns.md`), and it is the reason `delegated` is a required field rather than an optional one.
+The failure mode of this phase is **over-specification**: a brief so complete that four specialists become four transcription clerks, capped at the hub's first idea. That is `AS-09 Over-Specified Process` (`_common/architect/reference/official-design-patterns.md` § Process Constraint Tiers), and it is the reason `delegated` is a required field rather than an optional one.
 
 A brief with an **empty `delegated` list on a multi-agent chain is a defect**, not a thorough job. If the hub genuinely decided everything, the specialists were not needed and the chain should have been shorter.
 
