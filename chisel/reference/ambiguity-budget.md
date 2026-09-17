@@ -42,7 +42,7 @@ Every `KEEP` row records which of these applied. "Left vague" with no reason is 
 | Wording, naming, section order | Reversible surface choices the executor makes better in context; pinning them adds lines and removes nothing |
 | Candidate generation | A stated count or format biases toward filling the quota rather than toward quality |
 | Approach selection on an unsolved problem | Prescribing the method pre-commits to the author's guess about a solution they do not have |
-| Process whose order carries no correctness | A fixed sequence with no safety, correctness, or auditability rationale is over-specified process (`architect/reference/agent-specification-anti-patterns.md` AS-09, Process Constraint Tiers) |
+| Process whose order carries no correctness | A fixed sequence with no safety, correctness, or auditability rationale is over-specified process (`_common/architect/reference/official-design-patterns.md` § Process Constraint Tiers) |
 
 The inverse also holds: order **is** worth fixing when the sequence itself carries correctness, safety, or auditability — measure before optimizing, reproduce before fixing, snapshot before mutating.
 

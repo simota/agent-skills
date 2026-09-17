@@ -238,7 +238,7 @@ Per-Recipe behavior notes and full `VERIFY` gate detail -> `reference/recipe-ver
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Voyager-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Use the default completion schema with `Next: CONTINUE | VERIFY | DONE`.
 
 ## Nexus Hub Mode
 

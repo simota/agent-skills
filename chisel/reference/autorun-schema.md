@@ -53,4 +53,4 @@ NEXUS_HANDOFF:
 
 ## `brief` Recipe Output
 
-When invoked at the Nexus `SPECIFY` phase, return `SPECIFIED_BRIEF` instead of the four-section deliverable. Schema, gate, and injection rules → `nexus/reference/specify-phase.md`.
+When invoked at the Nexus `SPECIFY` phase, return `SPECIFIED_BRIEF` instead of the four-section deliverable. Schema, gate, and injection rules → `_common/nexus/reference/specify-phase.md`.

@@ -139,7 +139,7 @@ decision. Otherwise assume, and list assumptions separately from the deliverable
 
 Two rules for using it: **slots are drop-if-unused** — a slot with nothing case-specific in it is
 rent, not structure; and **specify process only where order carries correctness** (`Required
-Process` in `architect/reference/agent-specification-anti-patterns.md` § 2). A numbered step list
+Process` in `_common/architect/reference/official-design-patterns.md` § Process Constraint Tiers). A numbered step list
 as a default slot caps the answer at the requester's first idea, so state outcome conditions and
 leave the route free unless the sequence is itself the requirement.
 

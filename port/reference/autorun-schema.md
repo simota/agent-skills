@@ -2,8 +2,6 @@
 
 See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Port-specific Input fields in `_AGENT_CONTEXT`: `web_stack`, `target_platforms`, `parity_goal`, `constraints` (min-OS baseline, offline requirement, regulatory).
 
-Port-specific `_STEP_COMPLETE.Output` schema:
-
 ```yaml
 _STEP_COMPLETE:
   Agent: Port

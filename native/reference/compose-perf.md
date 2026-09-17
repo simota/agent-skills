@@ -2,9 +2,9 @@
 
 Agent-specific slice for **Native** — measurement and optimization for Android Kotlin + Jetpack Compose apps. Baseline assumes Kotlin 2.4+ (K2 compiler) / Compose 1.11 / Material 3 Expressive (BOM 2026.05), as of 2026-07.
 
-This file does **not** duplicate `bolt/reference/kotlin-cheatsheet.md` §13 (JVM/Kotlin-language-level Compose bytecode notes, Flow perf, build performance). Apply `builder/reference/implementation-policy.md` when Kotlin or Compose behavior depends on the detected toolchain. Read it alongside:
+Apply `_common/builder/reference/implementation-policy.md` when Kotlin or Compose behavior depends on the detected toolchain. Load these phase-specific references as needed:
 
-- [`bolt/reference/kotlin-cheatsheet.md`](../../bolt/reference/kotlin-cheatsheet.md) §13 — Bolt's high-level watch list; this file is where Bolt defers to for actual Compose runtime mechanics
+- [`bolt/reference/profiling-tools.md`](../../bolt/reference/profiling-tools.md) — workload/JVM benchmark controls; actual Compose runtime mechanics remain here
 - [`reference/modern-stack.md`](modern-stack.md) § Stable Types & Strong Skipping Mode — the 2026 stability/Strong-Skipping policy this file assumes as baseline
 - [`reference/patterns.md`](patterns.md) § Android — controlling Compose recomposition — code-pattern examples this file does not re-show
 - [`reference/android-material3.md`](android-material3.md) — M3 Expressive component API surface (`LoadingIndicator`/`Carousel`/spring motion have render-cost implications noted here)
@@ -361,7 +361,7 @@ Using `collectAsState()` for a `ViewModel`'s primary state flow is a common sour
 ## 7. Coroutine/Flow perf on Android
 
 - **Dispatcher choice**: `Dispatchers.Main`/`Main.immediate` for UI-state updates and Compose-observed state; `Dispatchers.Default` for CPU-bound work (parsing, diffing, sorting); `Dispatchers.IO` for blocking I/O (disk, network client calls that block a thread). Launching CPU-bound work on `Main` is the coroutine-world equivalent of blocking the UI thread directly.
-- **`flowOn`**: switches the *upstream* dispatcher for everything above it in the chain — place it as close to the actual blocking/CPU-bound operator as possible; a `flowOn` placed too high in the chain drags unrelated cheap operators onto the switched dispatcher for no benefit, and each `flowOn` boundary is a real dispatcher-hop cost (see `bolt/reference/kotlin-cheatsheet.md` §12 for the general Flow-chain cost model this section assumes).
+- **`flowOn`**: switches the *upstream* dispatcher for everything above it in the chain — place it as close to the actual blocking/CPU-bound operator as possible; a `flowOn` placed too high in the chain drags unrelated cheap operators onto the switched dispatcher for no benefit, and each `flowOn` boundary is a real dispatcher-hop cost; verify operator fusion and dispatcher behavior against the target kotlinx.coroutines version rather than assuming a fixed per-operator cost.
 - **`conflate()` / `distinctUntilChanged()`**: `conflate()` drops intermediate emissions when the collector is slower than the producer (appropriate for UI state where only the latest value matters); `distinctUntilChanged()` suppresses recomposition-triggering emissions when the new value structurally equals the previous one — cheap insurance against a producer that emits a new instance with identical content every tick.
 - **`stateIn` sharing strategy**: `SharingStarted.WhileSubscribed(stopTimeoutMillis)` (commonly `5000`) keeps the upstream `Flow` alive briefly after the last collector unsubscribes, absorbing configuration-change churn without restarting expensive upstream work; `SharingStarted.Eagerly` starts immediately and never stops (appropriate for app-lifetime singletons only); `SharingStarted.Lazily` starts on first subscriber but never stops once started.
 - **`repeatOnLifecycle(Lifecycle.State.STARTED)`**: the `Activity`/`Fragment`-side counterpart to `collectAsStateWithLifecycle` for manually-launched collection in a `LaunchedEffect`/coroutine scope outside Compose's own state APIs — restarts collection on each `STARTED` transition, cancels on `STOP`, avoiding both leaked collection and duplicate collectors across configuration changes.
@@ -413,7 +413,7 @@ Firebase Performance Monitoring gives automatic screen-rendering traces (slow/fr
 | Situation | Route to | Why |
 |-----------|----------|-----|
 | Compose recomposition/render/diffing perf, startup/frame/memory on Android | **Native** (this file) | Platform- and framework-specific measurement + fix |
-| Kotlin/JVM language-level perf: coroutine/Flow cost model beyond the UI-collection topics here, bytecode growth from the Compose compiler at a JVM level, generic algorithmic Kotlin perf | **Bolt** (`bolt/reference/kotlin-cheatsheet.md`) | Language/runtime level, not Compose-runtime-specific |
+| Kotlin/JVM language-level perf: coroutine/Flow cost model beyond the UI-collection topics here, bytecode growth from the Compose compiler at a JVM level, generic algorithmic Kotlin perf | **Bolt** (`bolt/reference/profiling-tools.md`) | Language/runtime level, not Compose-runtime-specific |
 | Slow SQL query / Room DAO query plan / index design feeding a `LazyColumn` | **Tuner** (query/index layer) → Native consumes the result | Query plan optimization is Tuner's domain; Native owns the render-side consumption |
 | SLO/alerting on field ANR rate, slow/frozen frame rate, or startup-time regressions over time; dashboarding Firebase Performance / Android vitals aggregates | **Beacon** | Observability/SLO design, not one-off measurement |
 | "This got slower sometime in the last N releases, bisect it" | **Trail** | Git-history/regression bisection is Trail's domain; Native supplies the metric to bisect against |
@@ -440,4 +440,4 @@ Firebase Performance Monitoring gives automatic screen-rendering traces (slow/fr
 - [ANRs — Android Developers (Android vitals)](https://developer.android.com/topic/performance/vitals/anr)
 - [State and Jetpack Compose (`collectAsStateWithLifecycle`) — Android Developers](https://developer.android.com/develop/ui/compose/state)
 - [Enable app optimization with R8 — Android Developers](https://developer.android.com/studio/build/shrink-code)
-- Source of truth: [`bolt/reference/kotlin-cheatsheet.md`](../../bolt/reference/kotlin-cheatsheet.md), [`reference/modern-stack.md`](modern-stack.md), [`reference/patterns.md`](patterns.md), [`reference/adb-cli.md`](adb-cli.md)
+- Source of truth: [`bolt/reference/profiling-tools.md`](../../bolt/reference/profiling-tools.md), [`reference/modern-stack.md`](modern-stack.md), [`reference/patterns.md`](patterns.md), [`reference/adb-cli.md`](adb-cli.md)

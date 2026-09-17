@@ -263,7 +263,7 @@ Read `_common/SUBAGENT.md` section `MULTI_ENGINE` when this mode is requested.
 | `reference/review-report-templates.md` | Exact output anchors or report shapes. |
 | `reference/agent-integrations.md` | Radar, Canvas, Judge, Guardian, AUTORUN, or Nexus collaboration rules. |
 | `reference/typescript-react-patterns.md` | The target is TypeScript, JavaScript, or React. |
-| `reference/language-patterns.md` | The target is Python, Go, Rust, Java, or concurrency-heavy code. |
+| `_common/builder/reference/implementation-policy.md` | Target-language/toolchain grounding before a non-TypeScript refactor; use the actual manifest, compiler and tests rather than cached migration advice. |
 | `reference/refactoring-anti-patterns.md` | Pre-flight checks or anti-pattern avoidance. |
 | `reference/ai-assisted-refactoring.md` | Using Multi-Engine or AI-assisted refactoring. |
 | `reference/cognitive-complexity-research.md` | Complexity is the main issue and you need cognitive-metric guidance. |

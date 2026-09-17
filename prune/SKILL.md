@@ -69,7 +69,7 @@ Route elsewhere when the task is primarily:
 3. **Reversibility first.** Sunset proposals archive the skill under `.archive/<skill-name>/` with re-activation instructions before removal. Minimum 90-day retention window.
 4. **Single owner per concern.** When proposing merge, identify which skill becomes the canonical owner; the merged-in skill is archived (not deleted).
 5. **Conservative sunset thresholds.** Sunset only when **all three** hold: (a) 6+ months without activity in `.agents/PROJECT.md`, (b) clear alternative skill exists, (c) no project depends on it (CLAUDE.md / `.claude/` references checked).
-6. **Boundary protection.** Never propose sunset for `core` Pack members (`nexus`, `sherpa`, `scout`, `builder`, `radar`, `zen`, `guardian`, `compass`, `architect`, `gauge`) or skills marked mandatory in `_common/SKILL_PACKS.md`.
+6. **Boundary protection.** Never propose sunset for current `core` Pack members or mandatory skills in `_common/SKILL_PACKS.md`. Retain Prune's existing additional protection for `architect` and `gauge`; they are not asserted to be current `core` members.
 7. **Impact-aware.** Every proposal includes downstream impact: Pack membership, COLLABORATION_PATTERNS partners, Nexus routing, CLAUDE.md references.
 8. **Explicit handoff.** Merge execution → `Architect` via `PRUNE_TO_ARCHITECT_MERGE`. Sunset execution → user approval via `PRUNE_TO_USER_SUNSET_APPROVAL`. Routing update → `Nexus` via `PRUNE_TO_NEXUS_ROUTING_UPDATE`.
 9. **Audit before bulk.** Bulk proposals (5+ skills) require full ecosystem audit first to avoid cascade effects.
@@ -127,7 +127,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Audit | `audit` | ✓ | Full ecosystem cleanup audit (default) | `reference/retention-criteria.md`, `reference/overlap-matrix.md` |
+| Audit | `audit` | ✓ | Full ecosystem cleanup audit (default) | `reference/retention-criteria.md` |
 | Merge Plan | `merge` | | Propose merge plan for a specific candidate pair or set | `reference/merge-protocol.md` |
 | Sunset Plan | `sunset` | | Propose sunset plan for inactive/superseded skills | `reference/sunset-protocol.md` |
 | Pack Impact | `pack-impact` | | Pre-removal SKILL_PACKS / profile impact analysis | `reference/pack-impact.md` |
@@ -150,9 +150,9 @@ Behavior notes per Recipe:
 
 | Phase | Purpose | Read When |
 |-------|---------|-----------|
-| `SCAN` | Inventory all skills — CAPABILITIES_SUMMARY, COLLABORATION_PATTERNS, journals, PROJECT.md activity logs | `reference/scan-protocol.md` |
+| `SCAN` | Inventory all skills — CAPABILITIES_SUMMARY, COLLABORATION_PATTERNS, journals, PROJECT.md activity logs | `reference/retention-criteria.md` |
 | `SCORE` | 5-axis retention scoring per skill (usage / overlap / uniqueness / coverage / maintenance cost) | `reference/retention-criteria.md` |
-| `CLASSIFY` | Verdict per skill: KEEP / MERGE / SUNSET / DEPRECATE with confidence | `reference/retention-criteria.md` § Classification Rules |
+| `CLASSIFY` | Verdict per skill: KEEP / MERGE / SUNSET / DEPRECATE with confidence | `reference/retention-criteria.md` § Classification Thresholds |
 | `PROPOSE` | Generate proposal with evidence + handoff target + reversibility note | `reference/merge-protocol.md` or `reference/sunset-protocol.md` |
 | `HANDOFF` | Route: Architect (merge) / User (sunset approval) / Nexus (routing update) | `_common/HANDOFF.md` |
 
@@ -202,9 +202,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 | File | Read When |
 |------|-----------|
-| `reference/scan-protocol.md` | Running the inventory scan; sources to read and order |
-| `reference/retention-criteria.md` | Scoring each skill on the 5 axes + classification thresholds |
-| `reference/overlap-matrix.md` | Computing cross-skill responsibility overlap |
+| `reference/retention-criteria.md` | Inventory schema, overlap calculation, five scoring axes and classification gates |
 | `reference/merge-protocol.md` | Generating merge proposals; canonical-owner selection |
 | `reference/sunset-protocol.md` | Generating sunset proposals; archive + re-activation |
 | `reference/pack-impact.md` | Analyzing SKILL_PACKS.md and profile impact before removal |

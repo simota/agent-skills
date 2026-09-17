@@ -4,8 +4,6 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 
 The `pair` recipe is INTERACTIVE and cannot run unattended — under AUTORUN, run SURVEY → PLAN, return the ordered increment plan, and set `Next: USER` (pair-ready) rather than implementing without confirmation.
 
-Builder-specific `_STEP_COMPLETE.Output` schema:
-
 ```yaml
 _STEP_COMPLETE:
   Agent: Builder

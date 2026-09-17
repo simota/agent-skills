@@ -1,79 +1,12 @@
-# Sweep Language-Specific Patterns Reference
+# Language-Specific Reachability Guards
 
-Purpose: language-specific detection tooling, fallback rules, and common false-positive cases.
+Use the SKILL's primary detection tooling; resolve available commands/plugins against the installed version. Cross-language scan protection is in `reference/cleanup-protocol.md`; recovery is there too.
 
-Scope boundary:
-- This file = **per-language tooling** (knip/vulture/staticcheck/cargo-udeps choice and fallback hierarchy).
-- `reference/false-positives.md` = **cross-language detection patterns** (dynamic loading, framework conventions, magic strings, risk matrix).
-- `reference/troubleshooting.md` = **recovery procedures** when tool output misleads (ts-prune/depcheck re-export false-positive flow, backup restore).
-
-## TypeScript / JavaScript
-
-### `knip`-First Strategy
-
-`knip` is the primary tool for TS/JS projects. It replaces `ts-prune`, `depcheck`, and `unimported` for files, exports, dependencies, and types.
-
-```bash
-npx knip --reporter compact
-npx knip --reporter json
-npx knip --include files
-npx knip --include exports
-npx knip --include dependencies
-```
-
-### Fallback Tools
-
-Use these only when `knip` is unavailable, unsupported, or failing:
-
-| Tool | Purpose | When to Use |
-|------|---------|-------------|
-| `ts-prune` | Unused exports | Export-only fallback |
-| `depcheck` | Unused dependencies | Dependency-only fallback |
-| `unimported` | Unused files | File-only fallback |
-
-```bash
-npx ts-prune --error
-npx depcheck --ignores="@types/*,eslint-*"
-```
-
-### Common False Positives
-
-- Dynamic imports with template literals
-- Re-export barrels such as `index.ts`
-- Type-only exports
-- Framework convention files
-
-## Python
-
-| Tool | Purpose | Usage |
-|------|---------|-------|
-| `vulture` | Dead code | `vulture src/ --min-confidence 80` |
-| `autoflake` | Unused imports | `autoflake --check .` |
-| `pip-autoremove` | Package review | `pip-autoremove --list` |
-
-Common false positives:
-- `__init__.py`
-- dunder methods
-- decorator-driven routes and tasks
-
-```bash
-vulture src/ whitelist.py --min-confidence 80
-autoflake --check --remove-all-unused-imports -r .
-```
-
-## Go
-
-| Tool | Purpose | Usage |
-|------|---------|-------|
-| `staticcheck` | Unused code | `staticcheck -checks U1000 ./...` |
-| `deadcode` | Reachability review | `deadcode -test ./...` |
-| `go mod tidy` | Dependency cleanup | `go mod tidy -v` |
-
-Common false positives:
-- interface implementations
-- exported public API
-- `init()` functions
-- CGO glue
+| Language | False-positive guards |
+|---|---|
+| TS/JS | Knip first; use a scoped alternative only when unavailable/incompatible, reporting coverage loss. Preserve framework entries, re-export/public barrels, dynamic imports and type consumers; never suppress all `index` or `@types` findings. Load the imports/types/dependency recipe reference for its specific decision. |
+| Python | Check `__init__.py`, dunder methods, decorator-registered routes/tasks and any deliberate whitelist before treating absent calls as dead code. |
+| Go | Check interface dispatch, external exports, `init()` and CGO consumers. Manifest rewriting is implementation, not a read-only scan. |
 
 ## Rust
 
@@ -112,13 +45,4 @@ Before deletion, verify:
 - Gradle settings, CI task selectors, build-script dependencies, version catalogs, `buildSrc` and convention plugins. Module age is not a deletion signal.
 - Compiler/plugin-generated code and published public APIs across supported targets. A processor migration belongs to a separately scoped migration: confirm processor support and compare generated output before removing kapt configuration.
 
-Language/toolchain claims are subject to `../builder/reference/implementation-policy.md` § Language and Toolchain Grounding.
-
-## Language-Agnostic Risk Patterns
-
-Files frequently misdetected across stacks:
-- entry points such as `main.*`, `index.*`, `app.*`
-- config files such as `*.config.*`, `.*rc`
-- test fixtures and mocks
-- generated code such as `*.generated.*`
-- documentation and docs-linked assets
+Language/toolchain claims are subject to `_common/builder/reference/implementation-policy.md` § Language and Toolchain Grounding.

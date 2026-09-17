@@ -98,7 +98,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Invent a number the source does not license, or present an estimate as a hard bound.
 - Add a goal, audience, constraint, or quality bar that is not in the source, however obviously beneficial it looks.
 - Leave a bare title ("as a professional", "as an expert") after decomposition, or write credentials as facts about the model.
-- Specify what should stay delegated. Fixing an output schema during an exploratory task, or pinning a process whose order carries no correctness, is over-specification — a defect, not thoroughness (`architect/reference/agent-specification-anti-patterns.md` AS-09, Process Constraint Tiers).
+- Specify what should stay delegated. Fixing an output schema during an exploratory task, or pinning a process whose order carries no correctness, is over-specification — a defect, not thoroughness (`architect/reference/official-design-patterns.md` AS-09, Process Constraint Tiers).
 - Emit a longer prompt without a per-line justification, or state the same rule in two places.
 
 ## Workflow

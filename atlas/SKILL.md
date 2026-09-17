@@ -68,11 +68,11 @@ Route elsewhere when the task is primarily:
 - Provide actionable, specific outputs, not abstract guidance.
 - Stay in domain; route unrelated requests to the correct agent.
 - **Frequency-based dependency remediation**: high-frequency bidirectional → merge candidates; long cycles → extract shared logic into a new module; low-frequency cycles → tolerable with async communication.
-- **Technical Debt Ratio (TDR)**: quantify via SQALE or equivalent (remediation cost / development cost). Thresholds: **<5% healthy, 5-10% significant, >10% critical**. Above 5% TDR, allocate ≥15% of development time to debt reduction. Prioritize by Cost of Delay: security > performance > code smell. Stakeholder framing figures → `reference/technical-debt-scoring.md`.
+- **Technical Debt Ratio (TDR)**: quantify via SQALE or equivalent (remediation cost / development cost). Thresholds: **<5% healthy, 5-10% significant, >10% critical**. Above 5% TDR, allocate ≥15% of development time to debt reduction. Prioritize by Cost of Delay: security > performance > code smell. Scoring and repository-grounded ROI → `reference/technical-debt-scoring.md`.
 - **ADR quality bar**: every ADR carries context (forces at play), decision (active voice), status, and consequences (positive **and** negative). Prefer the MADR 4.0.0 template for tradeoff-explicit records; ISO/IEC/IEEE 42010:2022 governs formal architecture descriptions. Review one month post-decision against actual outcomes and set status to Confirmed / Superseded / Deprecated.
 - **ADR immutability**: Once an ADR is accepted, never reopen or edit it — supersede it with a new ADR that references the original. This preserves the decision log as an auditable timeline; rewriting accepted ADRs destroys the historical rationale that future architects need to understand why the system looks the way it does.
 - **ADR narrative is mandatory; the YAML header is optional.** The human-readable narrative (context, forces, considered options, rationale, consequences) is the **primary artifact** and survives any tooling verbatim. A `constraints + affected + tests` YAML header MAY be added for CI fitness wiring, but it is a derived projection and never replaces the narrative — YAML-only ADRs lose the "why" within five years and degrade to a bare enumeration of constraints.
-- **Architecture fitness functions**: recommend CI-integrated tests that objectively assess architectural characteristics (coupling thresholds, complexity limits, layer-violation rules), with concrete targets from `reference/architecture-health-metrics.md`. **Every non-deprecated ADR should map to at least one fitness function** — that is what connects decisions to enforcement; without them drift goes undetected until it cascades. Tooling by language: ArchUnit, dependency-cruiser, NetArchTest, go-arch-lint, or custom AST tests.
+- **Architecture fitness functions**: recommend CI-integrated tests that objectively assess architectural characteristics (coupling thresholds, complexity limits, layer-violation rules), with concrete targets from `reference/coupling-metrics.md`. **Every non-deprecated ADR should map to at least one fitness function** — that is what connects decisions to enforcement; without them drift goes undetected until it cascades. Tooling by language: ArchUnit, dependency-cruiser, NetArchTest, go-arch-lint, or custom AST tests.
 - **Default to Modular Monolith** for new systems and as the target of any microservices retreat — strict boundaries inside one deployable beat a distributed mess. Enforce with Spring Modulith / ArchUnit / dependency-cruiser fitness functions. Reserve true microservices for cases justified by independent scale, language, or compliance.
 - **Vertical Slice Architecture is the default feature organization**; reserve Hexagonal / Clean / Onion for stable cross-feature boundaries. Layer-per-folder (`controllers/`, `services/`, `repositories/`, `dto/`) is the canonical over-engineering pattern AI codegen amplifies — one feature edit touches six files that the context window must span. A slice (`features/cancel-subscription/`) is independently testable and avoids the abstraction cliff.
 - **Edge-first hybrid topology is the default deployment shape** for new web systems: edge for auth, redirect, rate-limit, and short-lived RPC; containers for CRUD and long-lived logic; serverless for batch and async fan-out. An ADR choosing a single tier (pure-container or pure-edge) must justify it against this default.
@@ -117,10 +117,10 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 |-------|-----------------|----------|------|
 | `SURVEY` | Map dependency analysis, structural integrity, scalability risks | Map territory before proposing changes | — |
 | `PLAN` | Draft RFC/ADR, current vs desired state, migration strategy | Draw blueprint with rollback plan | `reference/adr-rfc-templates.md` |
-| `VERIFY` | YAGNI check, Least Surprise test, team maintainability review, fitness function feasibility | Stress test the proposal; recommend CI-integrated fitness functions for key thresholds | `reference/architecture-health-metrics.md` |
-| `PRESENT` | PR with proposal + motivation + plan + trade-offs | Roll out the map | `reference/canvas-integration.md` |
+| `VERIFY` | YAGNI check, Least Surprise test, team maintainability review, fitness function feasibility | Stress test the proposal; recommend CI-integrated fitness functions for key thresholds | `reference/coupling-metrics.md` |
+| `PRESENT` | PR with proposal + motivation + plan + trade-offs | Roll out the map | `reference/handoffs.md` |
 
-Detailed checklists: `reference/daily-process-checklists.md`
+Detailed checklists: `reference/module-boundary-evaluation.md`
 
 ## Recipes
 
@@ -130,7 +130,7 @@ Single source of truth for Recipe definitions. Full phase contracts live in the 
 |--------|-----------|---------|-------------|------------|
 | Architecture Analysis | `analyze` | ✓ | Full analysis — dependency graph + coupling metrics + module boundaries + health score; focus on SURVEY | — |
 | Dependency Audit | `deps` |  | Dependency graph + circular reference and high-frequency bidirectional detection; fix candidates (merge/extract/tolerate) | — |
-| God Class Detection | `godclass` | | God Class / bloated module / SRP-violating module detection; generate ZEN_HANDOFF draft for Zen | `reference/zen-integration.md` |
+| God Class Detection | `godclass` | | God Class / bloated module / SRP-violating module detection; generate ZEN_HANDOFF draft for Zen | `reference/handoffs.md` |
 | ADR Authoring | `adr` | | Author Architecture Decision Record using MADR 4.0 template; always include Considered Options + pros/cons | `reference/adr-rfc-templates.md` |
 | RFC Drafting | `rfc` | | RFC draft for large-scale architectural changes; include migration strategy and rollback plan | `reference/adr-rfc-templates.md` |
 | Cycle Break | `cycle` | | SCC detection with prioritized per-SCC removal (dependency inversion / interface extraction / re-layering / merge); recommend Canvas visualization | `reference/circular-dependency-remediation.md` |
@@ -151,9 +151,9 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `RFC`, `architectural change` | `rfc` |
 | `technical debt`, `debt inventory` | `analyze` (debt-focused; produces inventory + repayment plan via `reference/technical-debt-scoring.md`) |
 | `module boundary`, `restructure` | `boundary` |
-| `architecture health`, `metrics` | `analyze` (health-focused; score card via `reference/architecture-health-metrics.md`) |
+| `architecture health`, `metrics` | `analyze` (health-focused; score card via `reference/coupling-metrics.md`) |
 | `C4 model`, `structurizr`, `quality attribute`, `ATAM` | `c4-model` |
-| `fitness function`, `evolutionary`, `guardrail` | `analyze` (fitness-function-focused; spec + CI integration via `reference/architecture-health-metrics.md`) |
+| `fitness function`, `evolutionary`, `guardrail` | `analyze` (fitness-function-focused; spec + CI integration via `reference/coupling-metrics.md`) |
 | `coupling assessment`, Ca/Ce/I/A/D, Main Sequence | `coupling` |
 | `cycle`, SCC, strongly connected component | `cycle` |
 | `multi-engine`, `tri-engine architecture`, `parallel ADR`, `cross-engine arch review`, `architectural style trade-off` | `multi` |
@@ -208,25 +208,17 @@ Synthesis produces one Consensus + Dissenting Options ADR (extended MADR 4.0, `t
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/adr-rfc-templates.md` | ADR (Full/Lightweight) + RFC templates or status management. |
-| `reference/technical-debt-scoring.md` | Severity matrix, categories, inventory/repayment/ROI templates. |
-| `reference/architecture-health-metrics.md` | Coupling/complexity metrics, health score card, or CI integration. |
-| `reference/canvas-integration.md` | CANVAS_REQUEST templates (4 diagram types) + Mermaid examples. |
-| `reference/zen-integration.md` | ZEN_HANDOFF templates (God Class split, separation, coupling). |
-| `reference/daily-process-checklists.md` | SURVEY/PLAN/VERIFY/PRESENT detailed checklists. |
-| `reference/architecture-decision-anti-patterns.md` | AD-01–07 anti-patterns, document quality traps, decision DoD. |
-| `reference/technical-debt-management-anti-patterns.md` | TM-01–07 anti-patterns, 4-quadrant classification, 5-stage management, AI-era debt. |
-| `reference/dependency-modularization-anti-patterns.md` | DM-01–07 anti-patterns, distributed monolith detection, Modular Monolith reassessment. |
-| `reference/architecture-modernization-anti-patterns.md` | AM-01–07 anti-patterns, Strangler Fig implementation, migration judgment framework. |
+| `reference/adr-rfc-templates.md` | ADR/RFC/lightweight fields, decision completion and modernization proposal checks. |
+| `reference/technical-debt-scoring.md` | Severity/priority/ROI definitions, inventory and funded repayment contract. |
+| `reference/coupling-metrics.md` | Coupling formulas, role/zone targets, architecture health and fitness-function reporting. |
+| `reference/handoffs.md` | Recipient-specific CANVAS_REQUEST or ZEN_HANDOFF payload. |
 | `reference/circular-dependency-remediation.md` | `cycle` recipe — SCC detection and removal strategies (dependency inversion, interface extraction, re-layering, merge). |
-| `reference/coupling-metrics.md` | `coupling` recipe — Martin metrics (Ca/Ce/Instability/Abstractness/Distance) and Main Sequence assessment. |
-| `reference/module-boundary-evaluation.md` | `boundary` recipe — bounded-context fit, cross-boundary leak detection, and anti-corruption layer recommendations. |
+| `reference/module-boundary-evaluation.md` | `boundary` recipe — bounded-context fit, cross-boundary leak detection, and anti-corruption layer recommendations. Also covers Rust/Kotlin/Swift target-grounded boundary evidence. |
 | `reference/tri-engine-architect.md` | Full `multi` Recipe algorithm — fan-out, JSON schema, prompt skeleton, degraded-mode behavior. See ## Multi-Engine Mode. |
 | `_common/SUBAGENT.md` | Base MULTI_ENGINE protocol — engine dispatch, loose prompt rules, fan-out mechanics. Read before authoring `multi` subagent prompts. |
 | `_common/MULTI_ENGINE_RECIPE.md` | Cross-skill multi-engine protocol — Pattern H, PREFLIGHT probe, CLUSTER/SCORE/GROUND/SYNTHESIZE flow, degraded modes. |
 | `_common/OPUS_5_AUTHORING.md` | Scoping SURVEY breadth, deciding adaptive thinking depth at PLAN, or sizing ADR/RFC outputs. Critical for Atlas: P3, P5. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Atlas-specific Output/Next schema. |
-| `reference/kotlin-cheatsheet.md`, `reference/rust-cheatsheet.md`, `reference/swift-cheatsheet.md` | Reviewing Kotlin, Rust, or Swift code respectively. |
 
 ## Operational
 

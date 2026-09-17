@@ -1,8 +1,42 @@
-# Retention Criteria — 5-Axis Scoring
+# Inventory, Retention and Overlap
 
-Score every audited skill on 5 axes, 0-5 each, sum to a 25-point Retention Score that drives the KEEP / MERGE / SUNSET / DEPRECATE verdict.
+Use before SCORE/CLASSIFY. Prune remains read-only/propose-only; `SKILL.md` owns approval, protected-skill and archive requirements.
 
-## Axes
+## Inventory
+
+Resolve the actual host's installed skill root through `_common/CLI_COMPATIBILITY.md`; include project-local sources and distinguish intentional mirrors via `_common/PROJECT_LOCAL_SKILLS.md`. Scan the full roster for hidden dependencies even for TARGETED classification; cache within the session and re-scan for FOLLOWUP. An unavailable log/profile is unknown, never zero use/dependencies.
+
+Read in order: roster; every frontmatter and CAPABILITIES_SUMMARY/COLLABORATION_PATTERNS/BIDIRECTIONAL_PARTNERS/PROJECT_AFFINITY; reference count/size and actual consumers; `.agents/PROJECT.md` activity; per-skill journal; project CLAUDE.md/AGENTS.md and `_common/` dependencies; current `_common/SKILL_PACKS.md`; all actual host profiles; Nexus skill, signal keywords and routing consumers. Use 90 days for usage scoring but inspect the full ≥6-month horizon for sunset evidence. Validate empty/missing fields before scoring.
+
+```yaml
+inventory:
+  - skill: <name>
+    frontmatter:
+      description_chars: <int>
+      description_has_when_clause: <bool>
+    capabilities:
+      count: <int>
+      collaboration_partners_in: [<list>]
+      collaboration_partners_out: [<list>]
+    files:
+      skill_md_lines: <int>
+      references_count: <int>
+      references_total_chars: <int>
+    activity:
+      project_md_entries_90d: <int>
+      journal_last_modified: <YYYY-MM-DD or null>
+      journal_entry_count: <int>
+    dependencies:
+      claude_md_mentions: <int>
+      common_md_mentions: <int>
+      pack_memberships: [<pack-name>]
+      profile_coverage: [<profile-name>]
+      nexus_routing_mentions: <int>
+```
+
+## Scoring Axes
+
+Each axis is 0–5; retain the observed inputs and maximum 25-point sum. Size/reference count are maintenance **signals**, not targets: optional references need no minimum count. Never create references to improve a score.
 
 ### 1. Usage (0-5)
 
@@ -62,43 +96,36 @@ SKILL.md size, reference count, journal freshness.
 
 | Score | Cost signal |
 |-------|-------------|
-| 5 | SKILL.md ≤ 5k tokens, 3-5 references, journal updated < 30 days ago |
+| 5 | SKILL.md ≤ 5k tokens, ≤ 5 references (zero allowed), journal updated < 30 days ago |
 | 4 | ≤ 7k tokens, ≤ 7 references, journal < 60 days |
 | 3 | ≤ 10k tokens, ≤ 10 references |
 | 2 | 10-15k tokens, > 10 references OR stale journal (60-180 days) |
 | 1 | > 15k tokens OR > 15 references OR very stale (180-365 days) |
 | 0 | Unmaintained: > 15k tokens, > 15 references, journal > 365 days |
 
-### Registry Drag (applied after the 5 axes, not as a sixth score)
 
-The five axes measure a skill largely on its own terms — how used, how distinct, how costly to keep. They
-miss the cost a skill imposes on **every other routing decision**, which is paid whether or not the skill is
-ever invoked. A roster's marginal value is:
 
+**Ambiguous bands:** the original Usage table overlaps at one entry, Coverage has overlapping Pack/domain bands, and Maintenance conditions may match more than one row. Expose the eligible score range; do not silently invent a tie policy. Seek a decision if that range changes the verdict. Missing evidence is not a zero score.
+
+## Pairwise Overlap
+
+Normalize declared capabilities to `(verb, object, qualifier)`, then use semantic equivalence checked against description/Recipes/Trigger Guidance. For every pair in the audit scope:
+
+```text
+raw_overlap_pct = 100 × shared_capabilities / max(capabilities_A, capabilities_B)
+boundary_adjusted = raw_overlap_pct − min(20, 5 × explicit_mutual_exclusions)
+pack_adjusted = boundary_adjusted × 1.2 if the pair shares a Pack, otherwise boundary_adjusted
 ```
-value = coverage gained + verification gained + human attention saved
-      − selection ambiguity  − failure/latency cost  − permission surface  − maintenance
-```
 
-Only the last term is scored above. Check the other three explicitly on any skill scoring below KEEP, and on
-every new-skill proposal:
+Keep raw and adjusted results. Empty capability sets require missing-data review, not division by zero. Explicit mutual-exclusion clauses are intentional boundaries; verify each counted exclusion. Use adjusted overlap in axis 2's bands. The written cross-Pack modifier subtracts 0.1 from axis 2 for cross-Pack overlap ≥30%; report it separately rather than silently reversing its sign. Adjusted overlap is a policy index and can exceed 100, not a literal shared-capability percentage.
 
-| Drag | Signal | Consequence |
-|------|--------|-------------|
-| Selection ambiguity | a near-synonym name or description that does not tell the router *when not to* use it; the router mis-picks between it and a sibling | the cost lands on tasks that never call it (`HD-OPAQUE`) |
-| Failure / latency | it fans out, spawns, or calls externally where a narrower skill returns directly | retries and rework accrue to the chain that selected it |
-| Permission surface | it is authorized for effects broader than its contract needs | widens blast radius across every recipe that can reach it (`HD-PERM`) |
+Report only pairs with adjusted overlap ≥30% in the triangular matrix, with matching capabilities, boundary deductions, Pack adjustment and canonical-owner evidence. Do not use invented below-threshold matrix values as examples. ≥50% requires merge investigation; ≥70% requires absorb/sunset investigation, **not** permission to bypass retention/protection gates. Usage and Coverage select the owner through `reference/merge-protocol.md`.
 
-**Rules.**
+For `_common`/reference near-duplicates, the SKILL's `HD-ENTROPY` test is a lossless merge trial with fewer net lines; heading/token similarity alone is not proof.
 
-1. **Three near-synonyms are one skill with an identity problem.** When several entries answer the same
-   request from different angles, the fix is one owner and explicit non-use conditions — not better
-   descriptions on all three.
-2. **Drag is a MERGE argument, not an extra SUNSET path.** It sharpens a borderline verdict; the 3-condition
-   gate below still governs sunset.
-3. **Every addition declares its removal condition.** A proposal that cannot state what would make this skill
-   unnecessary has not been scoped — record it at registration so a later audit has something to test rather
-   than a judgment call to re-litigate.
+## Registry Drag
+
+For below-KEEP scores and new proposals, inspect selection ambiguity (`HD-OPAQUE`), unnecessary external/fan-out latency, and excess permission surface (`HD-PERM`). Use observed routing/rework/authorization evidence. Drag supports a MERGE argument, never a separate SUNSET path. Every addition must declare what would make it unnecessary.
 
 ## Classification Thresholds
 
@@ -110,24 +137,12 @@ Sum the 5 axes (max 25):
 | 15-19 | **KEEP with improvement** | Handoff to Architect IMPROVE recipe |
 | 10-14 | **MERGE candidate** | Apply merge protocol (find canonical owner) |
 | 5-9 | **SUNSET candidate** | Apply 3-condition gate (see Core Rule 5) before proposing |
-| 0-4 | **DEPRECATE** | Immediate sunset proposal; archive within 30 days |
+| 0-4 | **DEPRECATE** | Urgent review; archive within 30 days only if the full sunset gate and approval pass |
+
+
 
 ## 3-Condition Sunset Gate
 
-Before proposing SUNSET, **all three** must hold (from Core Rule 5):
+All three are mandatory, including DEPRECATE candidates: ≥6 months without evidenced activity; a clear capability-covering alternative; and no active project dependency (project CLAUDE.md/AGENTS.md, `_common` and active profiles). Missing evidence or a failed condition means **DEPRECATE-WATCH**, not approval. Scores cannot override this gate.
 
-1. **6+ months without activity** in `.agents/PROJECT.md` (not 90 days — 90 days is a Usage signal, not a sunset condition)
-2. **Clear alternative exists** — another skill covers the unique capabilities
-3. **No project depends on it** — zero mentions in `CLAUDE.md`, `_common/*.md`, or any active Pack profile
-
-If any condition fails, downgrade to DEPRECATE-WATCH (note for future audit, no action).
-
-## Protected Skills
-
-Never propose SUNSET or DEPRECATE for:
-
-- `core` Pack members: `nexus`, `sherpa`, `scout`, `builder`, `radar`, `zen`, `guardian`, `compass`, `architect`, `gauge`
-- Skills marked mandatory in `_common/SKILL_PACKS.md`
-- Skills referenced in repo CLAUDE.md (count as protected even if usage is low)
-
-Score these normally for audit completeness, but apply KEEP regardless of score.
+Apply the protected set from `SKILL.md` and current mandatory Pack membership; project-CLAUDE.md dependencies are protected too. Score for completeness but classify protected skills KEEP. Use `reference/pack-impact.md` before any removal proposal, then `reference/merge-protocol.md` or `reference/sunset-protocol.md` for delivery.

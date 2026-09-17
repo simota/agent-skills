@@ -2,10 +2,10 @@
 
 Agent-specific slice for **Native** — measurement and optimization for iOS/iPadOS/macOS Swift + SwiftUI apps. Baseline assumes Swift 6.3 / Xcode 26 (as of 2026-07).
 
-This file does **not** duplicate `reference/xcrun-cli.md` §3 (`xctrace` CLI mechanics) or `bolt/reference/swift-cheatsheet.md` (ARC/COW/generic-specialization level Swift perf). Read it alongside:
+Load the CLI mechanics and general measurement contract only as needed:
 
 - [`reference/xcrun-cli.md`](xcrun-cli.md) §3 — `xctrace` CLI invocations, `--launch` vs `--attach`, export/parse
-- [`bolt/reference/swift-cheatsheet.md`](../../bolt/reference/swift-cheatsheet.md) — language-level Swift perf (ARC, COW, `@inlinable`, autoreleasepool)
+- [`bolt/reference/profiling-tools.md`](../../bolt/reference/profiling-tools.md) — workload/build controls and language-level profiling handoff
 - [`reference/modern-stack.md`](modern-stack.md) — `@Observable`, Swift 6.2/6.3 Approachable Concurrency, SwiftData baseline facts
 
 The role of this reference: **what to measure before touching code, which SwiftUI/launch/memory/concurrency patterns cause the regressions Native ships, and how to wire perf budgets into field telemetry and CI.**
@@ -202,7 +202,7 @@ Xcode's Memory Graph Debugger (▶ the memory-graph icon while debugging, or `De
 
 ### 5.3 Autorelease behavior
 
-See `bolt/reference/swift-cheatsheet.md` §6 for the full ARC/autoreleasepool treatment — the Native-specific addition is: image-processing and Core Data/SwiftData fetch loops that bridge through Foundation/CoreGraphics types (`UIImage`, `CGImage`, `NSManagedObject` faults) are the most common source of autorelease buildup inside a SwiftUI `.task { }` that iterates, since SwiftUI's own task/render loop does not drain an inner pool for you mid-iteration.
+Check allocation traces for autorelease buildup during image-processing and Core Data/SwiftData fetch loops that bridge through Foundation/CoreGraphics types (`UIImage`, `CGImage`, `NSManagedObject` faults). Verify pool lifetime at the actual synchronous work boundary; do not assume an asynchronous task drains temporary objects during a long inner loop.
 
 ### 5.4 Image/asset memory
 
@@ -266,7 +266,7 @@ func loadFeed() async {
 }
 ```
 
-Wrap any interval you want visible both in local Instruments traces (Time Profiler / os_signpost template correlation) **and** in field `MXSignpostMetric` aggregates — this is the lowest-overhead way to bridge local profiling and production telemetry with the same instrumentation code (see `bolt/reference/swift-cheatsheet.md` §1.1 for the API detail).
+Wrap any interval you want visible both in local Instruments traces (Time Profiler / os_signpost template correlation) **and** in field `MXSignpostMetric` aggregates — this is the lowest-overhead way to bridge local profiling and production telemetry with the same instrumentation code (verify the API signature and MetricKit aggregation behavior against the target SDK).
 
 ### 7.3 Xcode Organizer regressions + CI perf budgets
 
@@ -299,7 +299,7 @@ Wrap any interval you want visible both in local Instruments traces (Time Profil
 | Situation | Route to | Why |
 |-----------|----------|-----|
 | SwiftUI `body`/render/diffing perf, view-graph thrash, launch/hitch/memory on Apple platforms | **Native** (this file) | Platform- and framework-specific measurement + fix |
-| Swift language-level perf: ARC, COW, generic specialization, `@inlinable`, autoreleasepool mechanics, Combine vs AsyncSequence cost model | **Bolt** (`bolt/reference/swift-cheatsheet.md`) | Language/runtime level, not SwiftUI-specific |
+| Swift language-level perf: ARC, COW, generic specialization, `@inlinable`, autoreleasepool mechanics, Combine vs AsyncSequence cost model | **Bolt** (`bolt/reference/profiling-tools.md`) | Language/runtime level, not SwiftUI-specific |
 | Algorithmic complexity, data-structure choice independent of platform | **Bolt** | General profiling discipline, cross-platform |
 | Slow SQL query / Core Data fetch predicate / index design feeding a SwiftUI list | **Tuner** (query/index layer) → Native consumes the result | Query plan optimization is Tuner's domain; Native owns the render-side consumption |
 | SLO/alerting on field launch-time or hitch-ratio regressions, dashboarding MetricKit aggregates over time | **Beacon** | Observability/SLO design, not one-off measurement |
@@ -321,4 +321,4 @@ Wrap any interval you want visible both in local Instruments traces (Time Profil
 - [Optimizing views in SwiftUI using EquatableView — Swift with Majid](https://swiftwithmajid.com/2020/01/22/optimizing-views-in-swiftui-using-equatableview/)
 - [Identifying High Memory Use with Jetsam Event Reports — Apple Developer Documentation](https://developer.apple.com/tutorials/data/documentation/xcode/identifying-high-memory-use-with-jetsam-event-reports.md)
 - [`CGImageSourceCreateThumbnailAtIndex` downsampling technique — Swift Senpai](https://swiftsenpai.com/development/reduce-uiimage-memory-footprint/)
-- Source of truth: [`bolt/reference/swift-cheatsheet.md`](../../bolt/reference/swift-cheatsheet.md), [`reference/modern-stack.md`](modern-stack.md), [`reference/xcrun-cli.md`](xcrun-cli.md)
+- Source of truth: [`bolt/reference/profiling-tools.md`](../../bolt/reference/profiling-tools.md), [`reference/modern-stack.md`](modern-stack.md), [`reference/xcrun-cli.md`](xcrun-cli.md)

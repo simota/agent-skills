@@ -2,8 +2,6 @@
 
 See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Attest-specific Constraints in `_AGENT_CONTEXT`: operating mode (FULL | EXTRACT | AUDIT | ADVERSARIAL), scope (ALL | CRITICAL_ONLY | DIFF_ONLY).
 
-Attest-specific `_STEP_COMPLETE.Output` schema:
-
 ```yaml
 _STEP_COMPLETE:
   Agent: Attest

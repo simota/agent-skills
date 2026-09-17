@@ -2,8 +2,6 @@
 
 See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). On AUTORUN, run `DISCOVER → FRAME → CRAFT → REFINE → DELIVER` and emit `_STEP_COMPLETE`. Saga-specific Constraints in `_AGENT_CONTEXT`: target audience, framework preference, length/format constraints.
 
-Saga-specific `_STEP_COMPLETE.Output` schema:
-
 ```yaml
 _STEP_COMPLETE:
   Agent: Saga
@@ -30,5 +28,3 @@ _STEP_COMPLETE:
   Risks: [Assumptions needing validation]
   Next: [NextAgent] | VERIFY | DONE
 ```
-
----

@@ -1,148 +1,52 @@
-# Sweep Safe Deletion Protocol Reference
+# Cleanup Readiness and Delivery
 
-Purpose: canonical rules for deletion readiness, rollback preparation, confidence scoring, cleanup reporting, and Grove handoff handling.
+Load for every cleanup proposal. Scoring, confirmation, batch limits and test gates are owned by `SKILL.md` § Confidence Gates / Core Contract; this file does not redefine them. Sweep proposes; Builder executes an approved plan.
 
-## Contents
+## Scan Boundary
 
-1. Pre-deletion checklist
-2. Deletion categories
-3. Rollback preparation
-4. Confidence scoring
-5. Cleanup report template
-6. `GROVE_TO_SWEEP_HANDOFF` handling
-7. Dependency report format
+| Exclude from scanning | Patterns |
+|---|---|
+| Dependencies | `node_modules/`, `vendor/`, `.venv/`, `venv/`, `__pycache__/` |
+| VCS | `.git/`, `.svn/`, `.hg/` |
+| Build outputs | `dist/`, `build/`, `out/`, `.next/`, `.nuxt/` |
+| Editor | `.idea/`, `.vscode/`, `*.swp`, `*.swo` |
+| Caches | `.cache/`, `.parcel-cache/`, `.turbo/` |
 
-## Pre-Deletion Checklist
+| Never delete | Patterns |
+|---|---|
+| Project/legal | `LICENSE*`, `LICENCE*`, `CHANGELOG*`, `SECURITY*`, `CONTRIBUTING*` |
+| Lockfiles | `package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`, `Gemfile.lock`, `poetry.lock`, `go.sum` |
+| Environment | `.env*`, `*.local` |
+| Git | `.gitignore`, `.gitattributes`, `.gitmodules` |
+| CI | `.github/`, `.gitlab-ci.yml`, `.circleci/`, `Jenkinsfile` |
 
-Before recommending any deletion, confirm all applicable checks:
+Honor project-specific `.sweepignore` and ownership boundaries. Record each exclusion's scope and reason; do not blanket-ignore diagnostics to make a scan pass. Inspect tracked-artifact metadata without recursively scanning an excluded output tree. Intentional mirrors, generated inputs and symlinks are not disposable duplicates.
 
-- [ ] No active imports or runtime references
-- [ ] No dynamic references or string-based loading
-- [ ] No config, alias, or build-tool references
-- [ ] No test, fixture, or story dependency
-- [ ] Git history reviewed
-- [ ] Not an entry point, exported package target, or public CLI
-- [ ] No external documentation reference
+## Candidate Evidence
 
-## Deletion Categories
+| Category | Required additional check |
+|---|---|
+| Dead Code | Active imports/callers, dynamic or reflective entry points, initialization and side effects |
+| Orphan Asset | CSS/HTML/templates, config, filename stems and extensionless/string-built paths; docs-linked and runtime-loaded assets |
+| Unused Dependency | Load `reference/dependency-cleanup.md` for implicit consumers and manifest/lockfile validation |
+| Build Artifact | Proven reproducible output, tracked status and project retention policy; no deletion inside protected/excluded paths by inference |
+| Duplicate | Content hash, canonical owner, every path consumer and intentional source/mirror relationship |
+| Config Remnant | Actual scripts/build/CI/alias consumers and replacement configuration; protected environment files stay protected |
 
-| Category | Meaning | User Confirmation |
-|----------|---------|-------------------|
-| Safe to Delete | Evidence is strong and reversible | Batch confirmation |
-| Verify Before Delete | Evidence is promising but incomplete | Individual confirmation |
-| Potentially Needed | Signals conflict or context is weak | Detailed review required |
-| Do Not Delete | Safety boundary or active usage exists | Explain why it stays |
+Before proposing deletion, check imports **and** dynamic import/require/glob/registry strings; config aliases/build registration; tests, fixtures and stories; git history; package `main`/`exports`/`bin`; external/public consumers; and documentation references. Zero textual imports is not a reachability proof. Framework-discovered routes (`pages/`, `app/`, file routes), plugins and convention files require the target project's actual discovery configuration, not a cached framework list.
 
-## Rollback Preparation
+Use `reference/language-patterns.md` only for the candidate's language. More than 50% unused exports or more than 10 transitive dependencies warrants module-impact review, not deletion proof; any cycle warrants architecture review. Side effects, shared state and reflection trigger the SKILL's Lava Flow individual-review rule.
 
-Always prepare rollback before any executed cleanup:
+## Proposal and Recovery
 
-```bash
-# Create a restoration branch before cleanup
-git checkout -b backup/pre-cleanup-YYYY-MM-DD
+1. Bind ≥2 independent evidence signals, scope, tool/version, baseline checks and confidence to each candidate. Conflicting or missing coverage means review/keep, not “safe.”
+2. Prepare the backup branch and restoration plan before implementation. Preserve unrelated uncommitted work; a branch alone does not capture it. For dependencies, capture manifest and lockfile together.
+3. Send approved candidates, batch boundaries and verification commands to Builder. Use the SKILL's ≤10-file batch limit, ≥90 batch gate and confirmation exceptions; never infer write permission from a score.
+4. Re-run the same build/tests after each batch. Stop on unexpected references, core/infrastructure ambiguity, repeated delete/restore churn, uncertain authorization or unexplained check failures. Restore only the affected batch, investigate and re-score; do not suppress failures or discard unrelated work.
+5. Report actual verification separately from proposed savings. Load `reference/maintenance-workflow.md` only for baseline/trend updates or Grove handoffs.
 
-# After confirmation, perform cleanup on the working branch
-git checkout original-branch
-```
+## Report Contract
 
-Use the backup branch as the primary restoration path. If cleanup affects dependencies, also snapshot manifest and lockfile changes before continuing.
+Summary: scan date, repository, files scanned, candidate count, estimated space savings; category totals with Count / Size / Risk.
 
-## Confidence Scoring
-
-### Score Calculation
-
-| Factor | Weight | Criteria |
-|--------|--------|----------|
-| Reference Count | 30% | `0 refs = 30`, `1 ref = 15`, `2+ refs = 0` |
-| File Age | 20% | `>1 year = 20`, `6-12 months = 15`, `1-6 months = 5`, `<1 month = 0` |
-| Git Activity | 15% | No recent commits `= 15`, some activity `= 5`, active `= 0` |
-| Tool Agreement | 20% | Multiple tools `= 20`, single tool `= 10`, manual only `= 5` |
-| File Location | 15% | `test/docs = 15`, `utils = 10`, `core/lib = 0` |
-
-### Score Interpretation
-
-| Score | Confidence | Action |
-|-------|------------|--------|
-| `90-100` | Very High | Batch deletion proposal |
-| `70-89` | High | Individual review and confirmation |
-| `50-69` | Medium | Manual review queue |
-| `30-49` | Low | Keep unless manually re-verified |
-| `0-29` | Very Low | Do not delete |
-
-## Cleanup Report Template
-
-### Executive Summary
-
-```markdown
-## Repository Cleanup Report
-
-**Scan Date:** YYYY-MM-DD
-**Repository:** [repo-name]
-**Total Files Scanned:** X
-**Cleanup Candidates Found:** Y
-**Estimated Space Savings:** Z KB/MB
-
-### Summary by Category
-
-| Category | Count | Size | Risk |
-|----------|-------|------|------|
-| Dead Code | X | XX KB | High |
-| Orphan Assets | X | XX KB | Medium |
-| Unused Dependencies | X | - | Low |
-| Build Artifacts | X | XX KB | Low |
-| Duplicates | X | XX KB | Medium |
-| Config Remnants | X | XX KB | Medium |
-| **Total** | **X** | **XX KB** | - |
-```
-
-### Detailed Finding Format
-
-```markdown
-### [CATEGORY-NNN] File/Item Name
-
-- **Path:** `src/path/to/file.ts`
-- **Category:** Dead Code / Orphan Asset / Unused Dependency / Build Artifact / Duplicate / Config Remnant
-- **Size:** XX KB
-- **Risk Level:** Critical / High / Medium / Low
-- **Last Modified:** YYYY-MM-DD (X months ago)
-- **Last Author:** [git author]
-
-**Evidence:**
-- No imports found in the codebase
-- No references in: [files checked]
-- Similar file exists: [if duplicate]
-
-**Recommendation:** Delete / Review / Keep
-**Reason:** [Explanation]
-**Confidence Score:** XX/100
-```
-
-## `GROVE_TO_SWEEP_HANDOFF` Reception
-
-When receiving `GROVE_TO_SWEEP_HANDOFF` from Grove:
-
-1. Parse the YAML payload and extract candidates.
-2. Validate each candidate:
-   - file still exists
-   - primary detection tool agrees
-   - git history is checked
-   - confidence score is calculated
-3. Categorize:
-   - `>=70`: accept into cleanup queue
-   - `50-69`: defer for manual verification
-   - `<50`: return to Grove with a still-referenced note
-4. Tag accepted items with `source: grove-handoff`.
-5. Report processing results back to Grove.
-
-For full scan cadence and baseline updates, see `maintenance-workflow.md`.
-
-## Dependency Report Format
-
-```markdown
-### Unused Dependencies
-
-| Package | Type | Size | Last Used | Recommendation |
-|---------|------|------|-----------|----------------|
-| lodash | prod | 1.2MB | Never imported | Remove |
-| @types/node | dev | 50KB | Type-only, keep | Keep |
-```
+Each finding: stable category ID, Path, Category, Size, Risk Level (`Critical|High|Medium|Low`), Last Modified, Last Author, ≥2 evidence signals, Recommendation (`Delete|Review|Keep`), Reason, Confidence Score. Group as Safe to Delete (batch confirmation), Verify Before Delete (individual confirmation), Potentially Needed (manual review), or Do Not Delete. Record post-implementation build/test outcomes and rollback status. Unknown size/last use stays unknown, not zero.

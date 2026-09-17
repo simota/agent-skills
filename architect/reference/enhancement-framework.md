@@ -1,25 +1,6 @@
-# Enhancement Proposal Framework
+# Enhancement Assessment
 
-**Purpose:** Scoring and proposal framework for improving an existing skill.
-**Read when:** You are evaluating or planning an improvement instead of creating a new skill.
-
-## Contents
-- Overview
-- Health Score Assessment
-- Grade Interpretation
-- Enhancement Proposal Template
-- Priority Classification
-- Improvement Workflow (Detailed)
-- Proposal Presentation Format
-- Integration with Review Loop
-
----
-
-## Overview
-
-The Enhancement Proposal Framework formalizes Architect's "Improve Existing" workflow. It provides structured templates for Health Score assessment, gap analysis, proposal generation, and implementation tracking.
-
----
+Read for IMPROVE or a before/after self-modification assessment. Score observed artifacts, not a plan. These are repository assessment points, not measured execution success. The five component maxima already sum to 100: add points once, do not weight them a second time.
 
 ## Health Score Assessment
 
@@ -33,11 +14,11 @@ HEALTH_SCORE = Structure(30%) + Content(25%) + Integration(20%) + Activity(15%) 
 
 | Check Item | Points | Criteria |
 |-----------|--------|----------|
-| SKILL.md exists and well-formed | 10 | Frontmatter, philosophy, boundaries present |
-| Reference files (3+ files) | 8 | Minimum 3 domain-specific reference files |
-| handoff-formats.md exists | 4 | Dedicated handoff file (ecosystem standard) |
-| Standard sections complete | 5 | All required sections per skill-template.md |
-| Line count in range (400-1400) | 3 | Not too sparse, not too bloated |
+| SKILL.md exists and well-formed | 10 | Valid frontmatter, owned outcome and boundaries present |
+| Reference delivery | 8 | Every needed reference is reachable at its trigger; zero is valid when none is needed |
+| Handoff contract delivery | 4 | Applicable shared envelope and any unique payload are reachable; no dedicated duplicate file required |
+| Standard sections complete | 5 | Required sections per `_templates/SKILL_TEMPLATE.md` and current lint |
+| Entrypoint size | 3 | Under 500 lines; heavy detail remains on demand, without a size minimum |
 
 **Maximum: 30 points**
 
@@ -46,10 +27,10 @@ HEALTH_SCORE = Structure(30%) + Content(25%) + Integration(20%) + Activity(15%) 
 | Check Item | Points | Criteria |
 |-----------|--------|----------|
 | CAPABILITIES_SUMMARY complete | 5 | All capabilities listed for Nexus routing |
-| Boundaries well-defined | 5 | Always (4-8), Ask (2-5), Never (3-6) items |
-| INTERACTION_TRIGGERS with templates | 5 | Table + YAML question templates |
+| Boundaries well-defined | 5 | Explicit mandatory actions, approval gates and prohibitions; no quota |
+| Confirmation coverage | 5 | Required approval gates are actionable; templates only when their format is needed |
 | Domain expertise depth | 5 | Reference files contain actionable knowledge |
-| Daily Process defined | 5 | Step-by-step operational procedure |
+| Workflow defined | 5 | Inputs, decisions and completion checks are executable |
 
 **Maximum: 25 points**
 
@@ -58,7 +39,7 @@ HEALTH_SCORE = Structure(30%) + Content(25%) + Integration(20%) + Activity(15%) 
 | Check Item | Points | Criteria |
 |-----------|--------|----------|
 | BIDIRECTIONAL_PARTNERS defined | 5 | Clear INPUT and OUTPUT partners listed |
-| Collaboration patterns (2+) | 5 | Named patterns with flow diagrams |
+| Collaboration patterns | 5 | Declared partner flows have clear ownership; no diagram quota |
 | Handoff templates complete | 5 | Both inbound and outbound handoffs |
 | AUTORUN support | 3 | _AGENT_CONTEXT and _STEP_COMPLETE defined |
 | Nexus Hub Mode | 2 | NEXUS_HANDOFF format defined |
@@ -69,9 +50,9 @@ HEALTH_SCORE = Structure(30%) + Content(25%) + Integration(20%) + Activity(15%) 
 
 | Check Item | Points | Criteria |
 |-----------|--------|----------|
-| Activity Logging section | 5 | PROJECT.md logging instructions present |
+| Operational logging | 5 | Relevant logging requirements delivered through the operational contract |
 | Journal section | 5 | Agent journal with clear guidelines |
-| Git guidelines reference | 5 | Commit/PR format defined or referenced |
+| Git guidelines reference | 5 | Canonical `_common/GIT_GUIDELINES.md` resolves |
 
 **Maximum: 15 points**
 
@@ -80,7 +61,7 @@ HEALTH_SCORE = Structure(30%) + Content(25%) + Integration(20%) + Activity(15%) 
 | Check Item | Points | Criteria |
 |-----------|--------|----------|
 | Recent updates (< 30 days) | 4 | File modified within last 30 days |
-| Ecosystem alignment | 3 | Agent count, categories match current state |
+| Ecosystem alignment | 3 | Current role boundaries and registry agree; derive counts rather than maintaining copies |
 | No deprecated patterns | 3 | No stale references or outdated formats |
 
 **Maximum: 10 points**
@@ -93,7 +74,7 @@ Applied as a tiebreaker on top of the base 100-point Health Score.
 |-----------|--------|----------|
 | Boilerplate ratio < 15% | 3 | Deduplication applied to common sections |
 | Token budget within target | 3 | Section-level token estimates documented |
-| Ma layout compliance | 2 | Zone 1-4 structure followed |
+| Layout compliance | 2 | Task constraints and completion remain easy to locate in the canonical template order |
 | Compression equivalence verified | 2 | 4-axis verification passed |
 
 **Maximum Bonus: 10 points** (added to base score, used only as tiebreaker for same-grade agents)
@@ -112,7 +93,17 @@ See `reference/context-compression.md` for detailed methodology.
 | 60-69 | D | Priority improvements | < 1 week |
 | < 60 | F | Immediate attention | < 24 hours |
 
----
+## Priority Classification
+
+| Priority | Evidence required |
+|----------|-------------------|
+| P1 | Missing required contract, broken declared partner integration, a component below 50% of its maximum, or a gap blocking downstream execution |
+| P2 | Missing executable workflow/confirmation, uncovered AUTORUN task type, or a non-blocking declared collaboration gap |
+| P3 | A demonstrated improvement that does not block current behavior; do not add files, examples or speculative capabilities merely to increase a score |
+
+## Improvement Workflow
+
+Read the skill, its references and relevant partner contracts; score the five components. Compare with `_templates/SKILL_TEMPLATE.md`, verify reciprocal handoff expectations, and cover every supported AUTORUN task type. Group evidence-backed gaps by dependency and priority. Apply the authorized change, run existing repository checks, then rescore and report actual versus projected improvement. Do not count missing logs or unavailable execution evidence as observed success.
 
 ## Enhancement Proposal Template
 
@@ -160,51 +151,6 @@ ENHANCEMENT_PROPOSAL:
       estimated_files: [count]
 ```
 
----
-
-## Priority Classification
-
-### P1 — Critical Gaps
-
-Criteria (any one qualifies):
-- Missing ecosystem-standard file (e.g., handoff-formats.md)
-- Broken or missing integration with declared partners
-- Health Score component below 50% of maximum
-- Functionality gap that blocks downstream agents
-
-### P2 — Important Improvements
-
-Criteria:
-- Underdeveloped workflow or methodology
-- AUTORUN coverage gap
-- Content depth below peer agents in same category
-- Missing but non-blocking collaboration patterns
-
-### P3 — Nice-to-Have Enhancements
-
-Criteria:
-- Ecosystem-level tooling improvements
-- Automation of manual processes
-- Advanced capabilities beyond core mission
-- Future-proofing for anticipated ecosystem growth
-- Context efficiency optimization (token budget, Ma layout, boilerplate reduction)
-
----
-
-## Improvement Workflow (Detailed)
-
-### Step 1: ASSESS — Calculate Health Score
-
-```
-1. Read SKILL.md and all reference files
-2. Read key collaboration partner SKILL.md files
-3. Score each of the 5 components using the checklist above
-4. Calculate weighted total
-5. Assign grade
-```
-
-Output: Health Score Report
-
 ```yaml
 HEALTH_SCORE_REPORT:
   agent: "[name]"
@@ -222,132 +168,6 @@ HEALTH_SCORE_REPORT:
     - "[Issue 3]"
 ```
 
-### Step 2: GAP — Identify Improvement Points
-
-```
-1. Compare against skill-template.md standard sections
-2. Compare against peer agents in same category
-3. Check bidirectional partner expectations (do partners reference this agent?)
-4. Identify missing handoff templates
-5. Check AUTORUN coverage for all task types
-```
-
-Analysis dimensions:
-- **Structural gaps**: Missing files, sections, or standard patterns
-- **Content gaps**: Shallow methodology, missing templates
-- **Integration gaps**: Broken partner links, missing handoffs
-- **Consistency gaps**: Patterns that differ from ecosystem norms
-
-### Step 3: PLAN — Create Improvement Plan
-
-```
-1. Group gaps into enhancement proposals
-2. Classify priority (P1/P2/P3)
-3. Estimate file changes per proposal
-4. Define implementation order (dependencies)
-5. Project Health Score improvement per phase
-```
-
-### Step 4: IMPLEMENT — Execute Improvements
-
-```
-1. Create new reference files first (no line-number dependencies)
-2. Edit SKILL.md from bottom to top (avoid line shifts)
-3. Use parallel agents for independent file changes
-4. Verify no Japanese in new content (if English-only requested)
-```
-
-Implementation strategies:
-- **New files**: Create complete files via Write tool
-- **SKILL.md edits**: Edit from end of file upward to prevent line number drift
-- **Parallel execution**: Independent files can be edited concurrently via Task agents
-- **Bottom-to-top rule**: When making multiple edits to the same file, start with the highest line number
-
-### Step 5: VALIDATE — Verify Improved Score
-
-```
-1. Run grep checks for key content presence
-2. Scan for language violations (Japanese in English-only content)
-3. Recalculate Health Score
-4. Compare before/after
-5. Report results
-```
-
-Validation checklist:
-- [ ] All proposed changes are present in files
-- [ ] No unintended content removed
-- [ ] New files follow ecosystem conventions
-- [ ] SKILL.md line count still in 400-1400 range
-- [ ] Health Score improved as projected
-
----
-
-## Proposal Presentation Format
-
-When presenting enhancement proposals to users, follow this structure:
-
-```
-## [Agent Name] Enhancement Proposal
-
-### Current Health Score: [X]/100 (Grade [Y])
-
-| Category | Weight | Score | Weighted | Key Issue |
-|---------|--------|-------|----------|-----------|
-| Structure | 30% | ... | ... | ... |
-| Content | 25% | ... | ... | ... |
-| Integration | 20% | ... | ... | ... |
-| Activity | 15% | ... | ... | ... |
-| Freshness | 10% | ... | ... | ... |
-
----
-
-### P1: Critical Gaps
-
-#### Enhancement 1: [Title]
-**Current gap**: [What is missing]
-**Proposed addition**: [What to add]
-
-#### Enhancement 2: [Title]
-...
-
-### P2: Important Improvements
-...
-
-### P3: Nice-to-Have
-...
-
----
-
-### Projected Health Score (after P1): [X]/100 (Grade [Y])
-
-| Category | Current | After P1 | Improvement |
-|---------|---------|----------|-------------|
-| ... | ... | ... | ... |
-
-**Implementation files (P1):**
-| File | Action | Content |
-|------|--------|---------|
-| ... | create/edit | ... |
-```
-
----
-
 ## Integration with Review Loop
 
-The Enhancement Framework connects to the existing Review Loop (`review-loop.md`):
-
-| Review Loop Phase | Enhancement Framework Role |
-|-------------------|---------------------------|
-| PLAN | Use Health Score Assessment to identify targets |
-| DO | Use Improvement Workflow to execute changes |
-| CHECK | Use Validation step to measure improvement |
-| ACT | Feed results back into next Review cycle |
-
-### Trigger Mapping
-
-| Review Trigger | Enhancement Action |
-|----------------|-------------------|
-| SCHEDULED (weekly) | Run batch Health Score on priority agents |
-| ON_AGENT_CREATION | Score new agent 7 days post-creation |
-| ON_ECOSYSTEM_CHANGE | Re-assess changed agents |
-| ON_QUALITY_ALERT | Immediate P1 enhancement proposal |
+The owning cadence and feedback windows remain in `reference/review-loop.md`. Use this rubric at PLAN/CHECK; execute at DO and carry verified results into ACT. SCHEDULED reviews score the selected batch, ON_AGENT_CREATION scores at 7 days, ON_ECOSYSTEM_CHANGE reassesses affected skills, and ON_QUALITY_ALERT requires an immediate P1 proposal.
