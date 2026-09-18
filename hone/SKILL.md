@@ -160,7 +160,7 @@ FETCH collects CLI version/model/config-pattern/deprecation signal; AUDIT evalua
 | Configure Hook | `hook` | | Design or configure a Claude Code hook | `reference/hooks/hook-system.md`, `reference/hooks/hook-recipes.md` |
 | Debug Hook | `hook-debug` | | Diagnose hook failure, latency, or misfire | `reference/hooks/debugging-guide.md` |
 | Personal Environment | `env` |  | Set up dotfiles, shell, editor, and terminal configuration | `reference/personal-environment/dotfile-management.md`, `reference/personal-environment/editor-configs.md` |
-| macOS Automation | `automate` |  | Automate an existing macOS app via AppleScript or JXA |  |
+| macOS Automation | `automate` |  | Automate an existing macOS app via AppleScript or JXA | `reference/personal-environment/applescript-patterns.md`, `reference/personal-environment/jxa-guide.md` |
 
 ## Subcommand Dispatch
 

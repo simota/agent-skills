@@ -13,6 +13,7 @@ name it, or when scanning what this skill can consult at all.
 | `reference/strategies.md` | Versioning, CHANGELOG, release notes, rollback options, hotfix flow, release windows, or command references. |
 | `reference/patterns.md` | Multi-agent release orchestration or handoff payload expectations. |
 | `reference/feature-flag-pitfalls.md` | Feature flag lifecycle rules, debt controls, or cleanup thresholds. |
+| `reference/rollback-anti-patterns.md` | Rollback design, DB migration safety, recovery sequencing, or rolling back an AI feature (prompt / model revision / index / embeddings / adapter / runtime / tool schema). |
 | `reference/hotfix-workflow.md` | `hotfix`: emergency patch playbook, 2h SLA, shortened CI gate, hotfix branch, bundled rollback, and backport-to-main planning. |
 | `reference/canary-rollout.md` | `canary`: progressive traffic shifts (1% → 10% → 50% → 100%), guardrail metrics, automatic abort conditions, and observation windows. |
 | `reference/mobile-release.md` | `mobile`: TestFlight phased release / Play staged rollout, store-compliance gating, App Review / Play Review lead-time planning, server-driven feature flag rollback path, and hotfix submission flow. |

@@ -292,8 +292,8 @@ Need machine-specific configs?
 | `mise`, `asdf`, `homebrew`, `brew` | Package management | Brewfile or mise config | `reference/personal-environment/dotfile-management.md` |
 | `secret`, `leak`, `gitleaks`, `security` | Secret scanning setup | Pre-commit hook config + scan results | `reference/personal-environment/dotfile-security-anti-patterns.md` |
 | `bootstrap`, `new machine`, `onboarding` | Bootstrap automation | Idempotent setup script + verification | `reference/personal-environment/dotfile-management.md` |
-| `applescript`, `jxa`, `osascript`, `apple events`, `mac automation`, `finder`, `system events` | macOS app automation | Runnable script + TCC permission setup |  |
-| `ui scripting`, `gui scripting`, `accessibility`, `no dictionary` | UI scripting fallback | System Events-based script |  |
+| `applescript`, `jxa`, `osascript`, `apple events`, `mac automation`, `finder`, `system events` | macOS app automation | Runnable script + TCC permission setup | `reference/personal-environment/applescript-patterns.md` |
+| `ui scripting`, `gui scripting`, `accessibility`, `no dictionary` | UI scripting fallback | System Events-based script | `reference/personal-environment/ui-scripting.md` |
 | unclear environment request | Environment scan + recommendation | SCAN results + plan | `reference/personal-environment/shell-configs.md` |
 
 Routing rules:
