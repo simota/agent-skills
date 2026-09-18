@@ -12,9 +12,9 @@ what Recipes exist at all.
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
 | OWASP Review | `owasp` | ✓ | OWASP Top 10 / ASVS security standards assessment | `reference/security-standards.md` |
-| WCAG Accessibility | `wcag` | | WCAG 2.2 / WAI-ARIA accessibility assessment | `reference/accessibility-standards.md` |
-| OpenAPI Compliance | `openapi` | | OpenAPI 3.1 / RFC 9110 API standards compliance check | `reference/api-standards.md` |
-| ISO 25010 Quality | `iso` | | ISO/IEC 25010:2023 quality characteristics assessment (SOLID/Clean Code) | `reference/quality-standards.md` |
+| WCAG Accessibility | `wcag` | | WCAG 2.2 / WAI-ARIA accessibility assessment |  |
+| OpenAPI Compliance | `openapi` | | OpenAPI 3.1 / RFC 9110 API standards compliance check |  |
+| ISO 25010 Quality | `iso` | | ISO/IEC 25010:2023 quality characteristics assessment (SOLID/Clean Code) |  |
 | Gap Analysis | `gap` | | Multi-standard gap analysis, audit report generation | `reference/compliance-templates.md` |
 | NIST CSF | `nist` | | NIST CSF 2.0 (Govern/Identify/Protect/Detect/Respond/Recover) Tier and Profile assessment | `reference/nist-csf.md` |
 | PCI-DSS | `pci` | | PCI-DSS v4.0.1 12-Requirement compliance, CDE scoping, SAQ/ROC selection | `reference/pci-dss.md` |
@@ -23,7 +23,7 @@ what Recipes exist at all.
 | SOC 2 Assessment | `soc2` | | Type I/II readiness, TSC mapping, CUECs/CSOCs, operating-effectiveness evidence | `reference/regulatory-frameworks.md` |
 | HIPAA Assessment | `hipaa` | | Administrative, physical, technical safeguards; ePHI/BAA and NPRM readiness | `reference/regulatory-frameworks.md` |
 | ISO 27001 Assessment | `iso27001` | | ISO 27001:2022 Annex A mapping, SoA, and risk-treatment alignment | `reference/regulatory-frameworks.md` |
-| Policy as Code | `policy` | | OPA/Rego, Kyverno, Conftest, and CI/CD compliance gates | `reference/regulatory-policy-as-code.md` |
+| Policy as Code | `policy` | | OPA/Rego, Kyverno, Conftest, and CI/CD compliance gates |  |
 | Audit Readiness | `audit` | | Evidence room, chain of custody, sampling, interviews, findings retest, continuous audit | `reference/regulatory-audit-readiness.md` |
 | Vendor Risk | `vendor` | | Vendor tiering, contracts, questionnaires, SOC 2 review, monitoring, subprocessors | `reference/regulatory-vendor-risk-assessment.md` |
 | Terms of Service | `tos` | | ToS clause coverage, risk, and proposed wording | `reference/legal-document-checklists.md` |

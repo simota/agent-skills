@@ -145,18 +145,17 @@ Templates (SCOPE YAML, LOCATE commands, CHANGE_STORY, REPORT markdown, bisect sc
 | **Impact Analysis** | Need to understand change ripple effects | `diff --stat` + `shortlog` + coverage check. Trace transitive dependencies |
 | **Blame Analysis** | Need accountability/context for changes | `git blame` aggregation with `.git-blame-ignore-revs` filtering (focus on commits, not individuals) |
 
-Full workflows, commands, gotchas → `reference/patterns.md`
 
 ## Output Routing
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `regression`, `broke`, `used to work` | Regression Hunt | Root cause commit + timeline | `reference/patterns.md` |
-| `why`, `history`, `evolved`, `archaeology` | Archaeology | CHANGE_STORY with context | `reference/patterns.md` |
-| `impact`, `ripple`, `change history` | Impact Analysis | Change timeline + affected areas | `reference/patterns.md` |
-| `blame`, `who changed`, `accountability` | Blame Analysis | Commit-focused accountability report | `reference/patterns.md` |
+| `regression`, `broke`, `used to work` | Regression Hunt | Root cause commit + timeline |  |
+| `why`, `history`, `evolved`, `archaeology` | Archaeology | CHANGE_STORY with context |  |
+| `impact`, `ripple`, `change history` | Impact Analysis | Change timeline + affected areas |  |
+| `blame`, `who changed`, `accountability` | Blame Analysis | Commit-focused accountability report |  |
 | `bisect`, `find commit`, `pinpoint` | Regression Hunt with bisect | Breaking commit SHA + evidence | `reference/framework-templates.md` |
-| unclear git history request | Archaeology (default) | Investigation summary | `reference/patterns.md` |
+| unclear git history request | Archaeology (default) | Investigation summary |  |
 
 Routing rules:
 
@@ -173,11 +172,11 @@ Routing rules:
 | Regression Investigation | `regression` | ✓ | Identify regression cause (investigate git-originated breaking commits) | `reference/framework-templates.md` |
 | Git Bisect | `bisect` | | Identify regression commit via binary search | `reference/framework-templates.md` |
 | Blame Walk | `blame` |  | Trace change history for specific lines | — |
-| History Mining | `history` | | Timeline analysis and archive archaeology | `reference/patterns.md` |
+| History Mining | `history` | | Timeline analysis and archive archaeology |  |
 | Flamegraph Regression | `flame` | | Diagnose CPU/memory regressions via differential flamegraph + bisect narrowing | `reference/flamegraph-regression.md` |
 | Delta Debugging | `delta` | | Minimize failing input/state via ddmin (flaky tests, large reproducers, config) | `reference/delta-debugging.md` |
 | Revert Strategy | `revert` | | Choose revert vs reset, handle merge `-m`, partial revert, post-revert verification | `reference/revert-strategies.md` |
-| Static Rules | `static-rules` | | Extract implicit business rules from undocumented legacy code (no history needed); assess migration risk; generate rule inventory + runbook (absorbed from fossil) | `reference/patterns.md` |
+| Static Rules | `static-rules` | | Extract implicit business rules from undocumented legacy code (no history needed); assess migration risk; generate rule inventory + runbook (absorbed from fossil) |  |
 
 ## Subcommand Dispatch
 
@@ -274,9 +273,7 @@ Follow `_common/GIT_GUIDELINES.md`. Conventional Commits, no agent names, <50 ch
 |-----------|----------------|
 | `reference/framework-templates.md` | SCOPE/LOCATE/TRACE/REPORT/RECOMMEND templates, bisect script, or edge case handling. |
 | `reference/output-formats.md` | Timeline visualization or investigation summary templates. |
-| `reference/patterns.md` | Investigation pattern workflows, commands, or gotchas. |
 | `reference/best-practices.md` | Investigation best practices or anti-pattern avoidance. |
-| `reference/non-functional-regression.md` | Performance, memory, bundle size, or startup time regression bisect is needed. |
 | `reference/flamegraph-regression.md` | Flamegraph tool selection, differential flamegraph workflow, hotspot thresholds, or bisect-with-frame-share script for the `flame` subcommand. |
 | `reference/delta-debugging.md` | Ddmin pseudocode, granularity selection, flaky-test minimization tuning, or `git bisect run` integration for the `delta` subcommand. |
 | `reference/revert-strategies.md` | The revert vs reset decision matrix, merge-commit `-m` parent selection, partial revert techniques, post-revert verification checklist, or comms template for the `revert` subcommand. |

@@ -335,7 +335,6 @@ Default headless runs pair with `--permission-mode plan`. For fully unattended C
 - Antigravity CLI review (alternative engine): `antigravity-review-usage.md`.
 - Output interpretation, severity mapping, override rules, false-positive filtering (engine-agnostic): `codex-integration.md`.
 - Framework-specific review prompts: `framework-reviews.md`.
-- AI-generated code review depth and hallucination checks: `ai-review-patterns.md`.
 - PR size cognitive-load thresholds: `review-effectiveness.md`.
 
 ### Official Sources (2026)

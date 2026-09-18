@@ -13,7 +13,7 @@ what Recipes exist at all.
 |--------|-----------|---------|-------------|------------|
 | Playwright Suite | `playwright` | ✓ | Playwright E2E test suite creation | `reference/playwright-patterns.md` |
 | Page Object | `page-object` | | Page Object Model design and implementation | `reference/playwright-patterns.md` |
-| Auth Flow | `auth` | | Authentication flow E2E tests | `reference/complex-scenarios.md` |
+| Auth Flow | `auth` | | Authentication flow E2E tests |  |
 | Accessibility | `a11y` | | Accessibility automated testing | `reference/visual-a11y-testing.md` |
 | Visual Regression | `visual` | | Visual regression testing | `reference/visual-a11y-testing.md` |
 | API E2E | `api` | | User-journey E2E through an API-only interface (no UI): HTTP call → backend state → downstream API validation chain | `reference/api-e2e-testing.md` |

@@ -160,7 +160,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `magic number`, `constant`, `hardcoded` | `constants` |
 | `dead code`, `unused`, `unreachable` | `dead` |
 | `simplify`, `redundant branch`, `ternary chain` | `simplify` |
-| `guard`, `early return`, `nested if`, `defensive`, `fallback` | `guard` (logic) / defensive cleanup (`reference/defensive-excess.md`) |
+| `guard`, `early return`, `nested if`, `defensive`, `fallback` | `guard` (logic) / defensive cleanup |
 | `complexity`, `nesting`, `cognitive` | Review mode + appropriate refactor recipe (`reference/cognitive-complexity-research.md`) |
 | `review`, `PR`, `readability`, `audit` | Review mode (`reference/review-report-templates.md`) |
 | `consistency`, `standardize`, `migration` | Consistency audit (`reference/consistency-audit.md`) |
@@ -257,12 +257,10 @@ Read `_common/SUBAGENT.md` section `MULTI_ENGINE` when this mode is requested.
 |-----------|----------------|
 | `reference/code-smells-metrics.md` | Zen refactor mechanics per smell, complexity thresholds, or measurement commands. Pairs with `_common/CODE_SMELL_CATALOG.md` (shared smell taxonomy / definitions / severity hints). |
 | `reference/dead-code-detection.md` | You plan to remove code. |
-| `reference/defensive-excess.md` | You suspect fallback-heavy code is hiding bugs or noise. |
 | `reference/consistency-audit.md` | Cross-file standardization or migration planning. Pairs with `_common/CONSISTENCY_FRAMEWORK.md` (shared taxonomy / severity rubric). |
 | `reference/test-refactoring.md` | The target is test structure or you need the Zen vs Radar boundary. |
 | `reference/review-report-templates.md` | Exact output anchors or report shapes. |
 | `reference/agent-integrations.md` | Radar, Canvas, Judge, Guardian, AUTORUN, or Nexus collaboration rules. |
-| `reference/typescript-react-patterns.md` | The target is TypeScript, JavaScript, or React. |
 | `_common/builder/reference/implementation-policy.md` | Target-language/toolchain grounding before a non-TypeScript refactor; use the actual manifest, compiler and tests rather than cached migration advice. |
 | `reference/refactoring-anti-patterns.md` | Pre-flight checks or anti-pattern avoidance. |
 | `reference/ai-assisted-refactoring.md` | Using Multi-Engine or AI-assisted refactoring. |

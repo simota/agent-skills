@@ -286,7 +286,6 @@ Spawn condition: task covers 3+ workflow phases with independent data sources. S
 | `reference/cost-governance.md` | Budget alerts, anomaly detection operations, CI/CD cost gates, tag enforcement |
 | `reference/cost-anomaly-detection.md` | Anomaly detection patterns, detection rules, response playbooks |
 | `reference/cost-visibility.md` | Tag strategy, cost allocation, dashboard specs, showback/chargeback |
-| `reference/cloud-pricing-models.md` | AWS/GCP/Azure pricing model comparison, pricing structure reference |
 | `reference/reserved-savings-plans.md` | `ri-sp` subcommand: AWS RI / SP / GCP CUD / Azure RI vendor comparison, coverage targets per workload class, break-even thresholds, expiration ladder, anti-patterns |
 | `reference/ai-gpu-cost.md` | `gpu-cost` subcommand: GPU SKU pricing (H100/H200/A100/L40S/T4), training vs inference profile, spot+checkpoint cadence rule, quantization cost-vs-quality, $/1K-token unitization |
 | `reference/cost-tagging-strategy.md` | `tagging` subcommand: mandatory tag schema, AWS/GCP/Azure enforcement comparison, showback/chargeback model selection, untagged-resource SLA ladder |

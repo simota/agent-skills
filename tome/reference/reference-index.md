@@ -17,7 +17,6 @@ name it, or when scanning what this skill can consult at all.
 | `reference/coding-kata.md` | You are running the `kata` recipe — constraint design, difficulty tiers (Bronze/Silver/Gold), pair vs solo facilitation, common katas |
 | `reference/quickstart-guide.md` | You are running the `quickstart` recipe — 15-minute time budget, prerequisite filtering, success anchors, troubleshooting decision tree |
 | `reference/article-patterns.md` | You are choosing a publication structure: PTISC, tutorial, listicle, retrospective, deep-dive, or announcement. |
-| `reference/article-hook-design.md` | You are drafting or testing the opening 100-300 characters. |
 | `reference/article-headline-patterns.md` | You are generating and scoring platform-specific title variants. |
 | `reference/article-platform-optimization.md` | You are packaging note, Zenn, Qiita, or dev.to metadata, length, canonical URL, and CTA. |
 | `reference/article-series-management.md` | You are designing or updating an article series, index, cross-links, cadence, or series bible. |

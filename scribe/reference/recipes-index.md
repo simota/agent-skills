@@ -20,7 +20,7 @@ what Recipes exist at all.
 | Runbook | `runbook` | | Operational runbook (symptom → triage → recover → verify, escalation, idempotency) | `reference/runbook-writing.md` |
 | API Doc | `api-doc` | | Human-readable API reference from OpenAPI (code samples, error catalog, auth flow, versioning) | `reference/api-documentation.md` |
 | Unified Spec | `unified` | | Full/Standard/Lite cross-team package with staged L0-L4 elaboration | `reference/unified-spec/unified-template.md` |
-| Format Conversion | `convert` |  | Convert a document between Markdown, Word, Excel, PDF, and HTML | `reference/format-conversion/conversion-matrix.md`, `reference/format-conversion/pandoc-recipes.md`, `reference/format-conversion/format-conversion-anti-patterns.md` |
+| Format Conversion | `convert` |  | Convert a document between Markdown, Word, Excel, PDF, and HTML | `reference/format-conversion/conversion-matrix.md`, `reference/format-conversion/format-conversion-anti-patterns.md` |
 
 ---
 

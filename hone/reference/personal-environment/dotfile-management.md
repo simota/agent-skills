@@ -283,9 +283,9 @@ Need machine-specific configs?
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
 | `zsh`, `bash`, `fish`, `shell`, `aliases` | Shell configuration | Shell config files | `reference/personal-environment/shell-configs.md` |
-| `ghostty`, `alacritty`, `kitty`, `wezterm`, `terminal` | Terminal configuration | Terminal config file | `reference/personal-environment/terminal-configs.md` |
+| `ghostty`, `alacritty`, `kitty`, `wezterm`, `terminal` | Terminal configuration | Terminal config file |  |
 | `neovim`, `vim`, `nvim`, `zed`, `editor` | Editor configuration | Editor config files | `reference/personal-environment/editor-configs.md` |
-| `tmux`, `starship`, `powerlevel10k`, `prompt` | Multiplexer/prompt setup | tmux.conf or starship.toml | `reference/personal-environment/tmux-starship.md` |
+| `tmux`, `starship`, `powerlevel10k`, `prompt` | Multiplexer/prompt setup | tmux.conf or starship.toml |  |
 | `dotfiles`, `stow`, `chezmoi`, `yadm` | Dotfile management | Manager config + symlinks | `reference/personal-environment/dotfile-management.md` |
 | `startup`, `slow`, `performance`, `benchmark` | Startup optimization | Benchmark results + optimized config | `reference/personal-environment/shell-config-anti-patterns.md` |
 | `audit`, `anti-pattern`, `review config` | Config audit | Audit report with findings | Domain-specific anti-pattern reference |
@@ -299,7 +299,6 @@ Need machine-specific configs?
 Routing rules:
 
 - If the request mentions shell or startup time, read `reference/personal-environment/shell-configs.md`.
-- If the request mentions a specific terminal emulator, read `reference/personal-environment/terminal-configs.md`.
 - If the request mentions editor or neovim, read `reference/personal-environment/editor-configs.md`.
 - If the request mentions audit or anti-patterns, read the relevant anti-pattern reference.
 - Always run SCAN phase before making changes.

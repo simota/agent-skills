@@ -353,7 +353,7 @@ Thompson Sampling is a Bayesian bandit algorithm that allocates more traffic to 
 - Reward is immediate (not delayed conversion)
 - You want to minimize regret during the experiment
 - Variants are clearly ordered by performance (not complex interactions)
-- See `reference/adaptive-experimentation.md` for full MAB vs A/B selection guide
+- See  for full MAB vs A/B selection guide
 
 ```typescript
 interface ThompsonArm {

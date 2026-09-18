@@ -37,7 +37,7 @@ Each smell ID below maps to a Zen refactor recipe. See the catalog for definitio
 | DISP-004 | Duplicate Code | Extract Method, Pull Up Method, parameterize |
 | DISP-005 | Lazy Class | Inline Class |
 | DISP-006 | Magic Numbers / Strings | Introduce Named Constant |
-| DISP-007 | Defensive Excess | See `reference/defensive-excess.md` |
+| DISP-007 | Defensive Excess | See  |
 | CPL-001 | Feature Envy | Move Method to the envied class |
 | CPL-002 | Inappropriate Intimacy | Move Method, Extract Class, Hide Delegate |
 | CPL-003 | Message Chains | Hide Delegate, Tell-Don't-Ask |

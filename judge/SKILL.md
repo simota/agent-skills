@@ -194,7 +194,7 @@ Every consensus-level finding ships a paste-ready `## LLM Fix Prompt` block so t
 
 ## Domain Knowledge
 
-Bug patterns (null/undefined, off-by-one, race, resource leaks, API contract) -> `reference/bug-patterns.md` · framework reviews -> `reference/framework-reviews.md` · consistency detection (6 categories, dominant `>=70%`, routes to Zen) -> `reference/consistency-patterns.md` · test quality (5 dimensions; isolation/flakiness/edge -> Radar, readability -> Zen) -> `reference/test-quality-patterns.md` · AI-generated code (Defect Top 8, FP-rate ceilings, 30-day follow-up) -> `reference/ai-code-scrutiny.md` · cognitive load thresholds -> `reference/review-effectiveness.md` · review anti-patterns -> `reference/review-anti-patterns.md`.
+Bug patterns (null/undefined, off-by-one, race, resource leaks, API contract) -> framework reviews -> `reference/framework-reviews.md` · consistency detection (6 categories, dominant `>=70%`, routes to Zen) -> `reference/consistency-patterns.md` · test quality (5 dimensions; isolation/flakiness/edge -> Radar, readability -> Zen) -> `reference/test-quality-patterns.md` · AI-generated code (Defect Top 8, FP-rate ceilings, 30-day follow-up) -> `reference/ai-code-scrutiny.md` · cognitive load thresholds -> `reference/review-effectiveness.md` · review anti-patterns -> `reference/review-anti-patterns.md`.
 
 ---
 
@@ -215,14 +215,12 @@ Bug patterns (null/undefined, off-by-one, race, resource leaks, API contract) ->
 | `reference/antigravity-review-usage.md` | Invoking `agy` — setup, headless pattern, silent-failure detection. |
 | `reference/claude-review-usage.md` | Invoking Claude Code CLI — subagent/plan-mode, headless flags, `--json-schema`. |
 | `reference/codex-integration.md` | Severity categories, output/override rules, FP filtering, report template. |
-| `reference/bug-patterns.md` | Full bug pattern catalog with code examples. |
 | `reference/framework-reviews.md` | Framework-specific prompts and code examples. |
 | `reference/{kotlin,rust,swift}-cheatsheet.md` | Reviewing Kotlin, Rust, or Swift code. |
 | `reference/consistency-patterns.md` | Consistency heuristics and FP filtering; pairs with `_common/CONSISTENCY_FRAMEWORK.md`. |
 | `reference/test-quality-patterns.md` | Test-quality scoring, catalog, handoff formats. |
 | `reference/collaboration-patterns.md` | Full flow diagrams (Patterns A-M). |
 | `reference/review-anti-patterns.md` | Process and behavioral anti-patterns, cognitive bias countermeasures. |
-| `reference/ai-review-patterns.md` | AI review patterns, tool landscape, specialist-agent architecture. |
 | `reference/ai-code-scrutiny.md` | AI-authored PRs — Defect Top 8, detection signals, FP-rate ceilings, hallucination check. |
 | `reference/research-citations.md` | Benchmarks, thresholds, and provenance for every claim above. |
 | `reference/review-effectiveness.md` | Effectiveness metrics/KPIs, cognitive-load cliff, optimal PR size. |

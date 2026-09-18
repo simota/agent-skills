@@ -263,7 +263,7 @@ export const TestData = {
 # Run sharded: npx playwright test --shard=1/4
 ```
 
-> See `ci-reporting.md` → "Sharded CI" for full GitHub Actions sharding workflow.
+> See  → "Sharded CI" for full GitHub Actions sharding workflow.
 
 ### Test Isolation
 
@@ -484,7 +484,7 @@ test('modifies API response', async ({ page }) => {
 
 ### Retry Configuration
 
-> See `debug-monitoring.md` → "Smart Retry Strategies" for retry configuration, conditional retry, and per-test overrides.
+> See  → "Smart Retry Strategies" for retry configuration, conditional retry, and per-test overrides.
 
 ### Flaky Test Investigation
 

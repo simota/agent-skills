@@ -222,7 +222,6 @@ Partner list -> CAPABILITIES_SUMMARY block above (`COLLABORATION_PATTERNS`, `BID
 | `reference/store-compliance.md` | App Store / Play policy, Privacy Manifest, Data Safety, Age Rating, IAP |
 | `reference/release-rollout.md` | Phased/staged rollout, halt-and-hotfix, server-driven flags |
 | `reference/mobile-ci-cd.md` | Xcode Cloud / Fastlane / GitHub Actions / Gradle pipeline design |
-| `reference/platform-permissions.md` | iOS / Android permissions, soft pre-prompt UX, degradation |
 | `reference/modern-stack.md` | Full per-layer stack table (both platforms) and deadlines |
 | `reference/apple-perf.md` | Instruments/`xctrace` decision table, render/launch/hitch/memory — iOS perf regression |
 | `reference/compose-perf.md` | Compiler Metrics, Macrobenchmark, Perfetto, JankStats — Android perf regression |

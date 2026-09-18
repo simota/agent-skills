@@ -257,8 +257,6 @@ Bolt receives performance tasks from upstream agents, identifies and implements 
 | `reference/core-web-vitals.md` | LCP/INP/CLS issue-fix details or web-vitals monitoring code. |
 | `reference/profiling-tools.md` | Frontend/backend profiling tools, React Profiler, or Node.js commands. Also covers Rust/Kotlin/Swift target-grounded profiling and benchmark controls. |
 | `reference/optimization-anti-patterns.md` | Optimization anti-patterns (PO-01–10), correct optimization order, 3-layer measurement model, or decision flowchart. |
-| `reference/backend-anti-patterns.md` | Node.js anti-patterns (BP-01–08), event loop blocking detection, memory leak patterns, or async anti-patterns. |
-| `reference/frontend-anti-patterns.md` | React anti-patterns (FP-01–10), React Compiler impact analysis, render optimization priority, or image/third-party management. |
 | `reference/performance-regression-prevention.md` | Performance budget design, CI/CD 3-layer approach, regression detection methodology, or production monitoring strategy. |
 | `reference/memory-optimization.md` | App-process memory footprint reduction: heap snapshot diffing, detached DOM detection, closure/listener leak detection, WeakMap/WeakRef usage, or rising-baseline trending (`memory` recipe). |
 | `reference/network-optimization.md` | Client/server delivery-layer tuning: HTTP/2-3 adoption, Early Hints (103), resource hints, Service Worker caching strategies, CDN cache-control, or Brotli (`network` recipe). |

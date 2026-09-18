@@ -284,7 +284,6 @@ Follow `_common/GIT_GUIDELINES.md`. Use Conventional Commits such as `feat(secur
 | `reference/nuclei-templates.md` | Template-based scanning, custom Nuclei checks, or CI severity gates |
 | `reference/sarif-integration.md` | SARIF output, ZAP-to-SARIF conversion, or GitHub Security upload flow |
 | `reference/security-report-template.md` | Preparing the final report or need the finding schema |
-| `reference/dast-anti-patterns.md` | False-positive control, proof-based scanning rules, or DAST triage stages |
 | `reference/pentest-methodology-pitfalls.md` | Designing a penetration workflow or checking methodology gaps |
 | `reference/owasp-api-top10-2023.md` | API scope exists and you need API1-API10 priorities and test strategy |
 | `reference/security-pipeline-pitfalls.md` | Designing CI/CD security gates, scan stages, or pipeline KPIs |

@@ -136,7 +136,7 @@ Severity hint is a baseline for review reports; individual skills may re-weight 
 
 ### DISP-007: Defensive Excess
 - **Definition:** Fallbacks/validation for scenarios that cannot occur.
-- **Severity hint:** LOW. (See `zen/reference/defensive-excess.md`.)
+- **Severity hint:** LOW.
 
 ---
 

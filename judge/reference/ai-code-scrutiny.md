@@ -47,7 +47,7 @@ Source: arxiv.org/html/2512.05239v1 ; coderabbit.ai/blog/state-of-ai-vs-human-co
 
 ## 3. AI-Generated Code Indicators (detection signals)
 
-When any of these appear during NORMALIZE/CLUSTER, escalate review depth and cross-reference `ai-review-patterns.md`.
+When any of these appear during NORMALIZE/CLUSTER, escalate review depth.
 
 - Repetitive boilerplate without variation
 - Missing edge cases and error boundaries

@@ -255,7 +255,6 @@ Activated by the `multi` Recipe or explicit requests for parallel research desig
 | `reference/research-calibration.md` | DISTILL, adoption tracking, calibration, EVOLUTION_SIGNAL, per-Recipe behavior, secondary thresholds. |
 | `reference/ai-assisted-research.md` | AI in the research workflow, or synthetic users under consideration. |
 | `reference/research-ops-democratization.md` | ResearchOps, repository design, democratization, self-service governance. |
-| `reference/research-anti-patterns-impact.md` | Anti-pattern prevention, ROI framing, stakeholder alignment. |
 | `reference/continuous-discovery-mixed-methods.md` | Continuous discovery cadence, mixed-methods design, triangulation. |
 | `reference/survey-quantitative-design.md` | Survey design, scale selection, sample-size math, order-bias control, reliability. |
 | `reference/diary-longitudinal-study.md` | Diary / longitudinal design, ESM scheduling, fatigue management, media capture. |

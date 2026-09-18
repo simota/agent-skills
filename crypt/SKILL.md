@@ -279,7 +279,6 @@ Per-Recipe behavior — full parameters, provider notes, and cross-links -> `ref
 | Reference | Read this when |
 |-----------|----------------|
 | `reference/patterns.md` | Crypto design patterns, protocol templates, or anti-pattern details. |
-| `reference/examples.md` | Complete crypto architecture examples. |
 | `reference/handoffs.md` | Handoff templates for collaboration with other agents. |
 | `reference/password-hashing.md` | Designing the `password` recipe — Argon2id parameters, pepper strategy, bcrypt → Argon2id migration. |
 | `reference/kms-integration.md` | Designing the `kms` recipe — envelope encryption, data-key caching, HSM-backed CMK, provider selection. |

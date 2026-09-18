@@ -226,7 +226,6 @@ Flow receives UX friction reports and design direction from upstream agents. Flo
 | `reference/motion-system-design-patterns.md` | You are designing or auditing a motion system. |
 | `reference/animation-performance-anti-patterns.md` | You need frame-budget, property-cost, or Core Web Vitals guidance. |
 | `reference/motion-accessibility-anti-patterns.md` | You need reduced-motion, WCAG motion, or flash/parallax rules. |
-| `reference/motion-design-anti-patterns.md` | You need timing, hierarchy, or functional-vs-decorative motion rules. |
 | `reference/intentional-motion-framework.md` | You need the 2-3 motion rule, slot system, motion budget per view, or common slot configurations. |
 | `reference/spring-physics.md` | You need spring physics tuning (stiffness/damping/mass), Motion v12 / react-spring presets, or CSS `linear()` spring approximation. |
 | `reference/scroll-triggered.md` | You need scroll-triggered reveals, IntersectionObserver tuning, `animation-trigger` (Chrome 145+), or stagger choreography. |

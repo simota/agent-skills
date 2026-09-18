@@ -239,7 +239,7 @@ Guardian classifies/structures; Judge evaluates code quality. Guardian recommend
 ## Reference Map
 
 Load only references relevant to the active decision:
-- **Commits/history:** `reference/commit-conventions.md`, `reference/commit-analysis.md`, `reference/history-audit.md`, `reference/history-reshape.md`, `reference/squash-optimization.md`
+- **Commits/history:** `reference/commit-analysis.md`, `reference/history-audit.md`, `reference/history-reshape.md`, `reference/squash-optimization.md`
 - **PR workflow:** `reference/pr-workflow-patterns.md`, `reference/pr-quality-scoring.md`, `reference/pr-split-strategy.md`, `reference/pr-ship-flow.md`, `reference/branching-strategies.md`, `reference/branch-health.md`
 - **Risk/verification:** `reference/risk-assessment.md`, `reference/security-analysis.md`, `reference/predictive-quality-gate.md`, `reference/coverage-integration.md`
 - **Automation/runtime:** `reference/git-recipes.md`, `reference/autorun-mode.md`

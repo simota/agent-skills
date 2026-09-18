@@ -11,9 +11,6 @@ name it, or when scanning what this skill can consult at all.
 | Reference | Read this when |
 |-----------|----------------|
 | `reference/security-standards.md` | Security-standard version selection, canonical sources, OWASP 2025 mapping, and evidence/crosswalk rules. |
-| `reference/accessibility-standards.md` | WCAG, WAI-ARIA, or JIS details. |
-| `reference/api-standards.md` | OpenAPI, JSON Schema, RFC, or GraphQL. |
-| `reference/quality-standards.md` | ISO 25010, 12-Factor, CNCF, or SRE. |
 | `reference/compliance-templates.md` | Compliance report template and capability detail. |
 | `reference/anthropic-skill-standards.md` | SKILL.md compliance — frontmatter validation, description quality, progressive disclosure. |
 | `reference/nist-csf.md` | NIST CSF 2.0 functions/categories, Implementation Tiers, Current vs Target Profile, and audit evidence. |
@@ -21,8 +18,6 @@ name it, or when scanning what this skill can consult at all.
 | `reference/gdpr-compliance.md` | GDPR articles, lawful bases, DPIA triggers, 72h breach notification, DPO threshold, Cloak handoff. |
 | `reference/fix-prompt-generation.md` | Authoring `## LLM Fix Prompt` — verb choice and suppression rules. |
 | `reference/regulatory-frameworks.md`, `reference/regulatory-control-mapping.md` | Framework rules, control owners, evidence, and shared-control mapping. |
-| `reference/regulatory-audit-trail-design.md`, `reference/regulatory-audit-readiness.md` | Immutable logs, evidence rooms, sampling, retest, and continuous audit. |
-| `reference/regulatory-policy-as-code.md`, `reference/regulatory-compliance-reporting.md` | Executable policies, control matrices, gaps, and roadmaps. |
 | `reference/regulatory-gdpr-eu-ai-act.md`, `reference/regulatory-vendor-risk-assessment.md` | Privacy/AI regulation and vendor-risk programs. |
 | `reference/regulatory-handoff-formats.md` | Regulatory evidence and implementation handoffs. |
 | `reference/legal-document-checklists.md` | ToS, privacy, Tokushoho, app-store, and advertising-claim clause coverage. |

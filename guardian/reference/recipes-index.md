@@ -13,7 +13,7 @@ what Recipes exist at all.
 |--------|-----------|---------|-------------|------------|
 | PR Preparation | `pr` | ✓ | PR preparation (title/body/review angles/risk assessment) | `reference/pr-workflow-patterns.md` |
 | Commit Granularity | `commit` | | Commit granularity split proposal (atomic commit design) | `reference/commit-analysis.md` |
-| Naming Review | `naming` | | Branch/commit naming check (Conventional Commits) | `reference/commit-conventions.md` |
+| Naming Review | `naming` | | Branch/commit naming check (Conventional Commits) |  |
 | Merge Strategy | `strategy` | | Merge strategy (squash/rebase/merge) selection | `reference/branching-strategies.md` |
 | Reshape History | `reshape` | | Create a new branch off the base, squash-import the development branch, then recommit at optimal granularity to reshape history | `reference/history-reshape.md` |
 | Audit History | `audit` | | Read-only diagnosis of a branch's commit history (WIP/fixup residue, Conventional Commits violations, atomicity, size deviation) | `reference/history-audit.md` |
