@@ -122,7 +122,6 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Treat surface-level errors (timeout, HTTP 5xx, connection failure) as root causes.
 - Accept "human error" as root cause — it is a symptom of systemic weakness.
 
-Rationale and countermeasures for each: `reference/debugging-anti-patterns.md`.
 
 ## Workflow
 
@@ -249,13 +248,11 @@ Cross-cluster escalation (LENS↔SCOUT, unified confidence scale): `_common/INVE
 | `reference/5whys-rca.md` | `5whys` recipe — why-chain template, stop conditions, examples. |
 | `reference/fishbone-6m.md` | `fishbone` recipe — 6M decomposition guide. |
 | `reference/timeline-reconstruction.md` | `timeline` recipe — incident timeline + detection/response gap analysis. |
-| `reference/debugging-anti-patterns.md` | Investigation is drifting, biased, or changing too many variables. |
 | `reference/observability-debugging.md` | Traces, logs, metrics, profiling, production-safe debugging. |
 | `reference/perf-investigation.md` | `perf` recipe — flamegraph, hot-path isolation, N+1/algorithmic/I/O/lock/GC. |
 | `reference/memory-investigation.md` | `memory` recipe — heap-snapshot diff, retainer paths, OOM/GC pressure. |
 | `reference/flake-investigation.md` | `flake` recipe — reproducibility rate, environment/timing classification. |
 | `reference/advanced-reproduction-triage.md` | Time-travel debugging, flaky-test strategy, `RICE`/`ICE` severity scoring. |
-| `reference/frontend-debugging.md` | Browser rendering, React/Vue behavior, CSS layout, frontend state. |
 | `reference/video-bug-analysis.md` | `video` recipe or `P06` inferred — frame extractor contract, Codex invocation, JSON schema, privacy rules. |
 | `reference/fix-prompt-generation.md` | Authoring `## LLM Fix Prompt`, choosing the verb, or deciding suppression. |
 | `reference/tri-engine-investigate.md` | `multi` recipe — activation, fan-out, CLUSTER/Confidence/Perspective rules, GROUND, SYNTHESIZE, JSON schema, prompts, and degraded mode. |

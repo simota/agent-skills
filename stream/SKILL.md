@@ -233,10 +233,6 @@ Deliver:
 | `reference/dbt-modeling.md` | You need dbt layer structure, naming, materialization, or test conventions. |
 | `reference/data-reliability.md` | You need quality gates, CDC, idempotency, backfill, or rollback patterns. |
 | `reference/patterns.md` | You need partner-agent routing or common orchestration patterns. |
-| `reference/pipeline-design-anti-patterns.md` | You need pipeline architecture anti-pattern IDs `PD-01..07` and test/orchestration guardrails. |
-| `reference/event-streaming-anti-patterns.md` | You need event-streaming anti-pattern IDs `ES-01..07`, Kafka ops guardrails, or outbox rules. |
-| `reference/dbt-warehouse-anti-patterns.md` | You need warehouse anti-pattern IDs `DW-01..07`, layer rules, or semantic-layer thresholds. |
-| `reference/data-observability-anti-patterns.md` | You need observability anti-pattern IDs `DO-01..07`, five-pillar thresholds, or data-contract guidance. |
 | `reference/change-data-capture.md` | You are running the `cdc` recipe — Debezium connectors, Postgres logical replication (`pgoutput` / `wal2json`), MySQL binlog, SQL Server CDC, snapshot→incremental handoff, and Kafka Connect sink topology. |
 | `reference/reverse-etl.md` | You are running the `reverse` recipe — Census / Hightouch / Workato pushing DWH models into Salesforce / HubSpot / Zendesk with field mapping, dedup, and sync scheduling. |
 | `reference/data-quality.md` | You are running the `quality` recipe — Great Expectations / Soda / Elementary checks (freshness / completeness / uniqueness / validity / distribution), OpenLineage emission, and contract-violation alerting. |

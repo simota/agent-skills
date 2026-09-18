@@ -206,7 +206,6 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 | `reference/gha-security-hardening.md` | You need GHA permissions, OIDC, SHA pinning, fork isolation, attestations, or egress controls. |
 | `reference/gha-matrix-strategy.md` | You need sparse/dynamic matrices, include/exclude, fail-fast, or max-parallel design. |
 | `reference/gha-cache-strategy.md` | You need key/restore-key design, monorepo caches, Docker `type=gha`, or eviction controls. |
-| `reference/gha-automation-recipes.md` | You need PR labels, assignment, release automation, or workflow-driven governance. |
 | `reference/docker-patterns.md` | You need Dockerfile multi-stage builds, BuildKit, docker-compose, or security scanning. |
 | `reference/observability.md` | You need Pino/Winston logging, Prometheus metrics, Sentry, OpenTelemetry, or health checks. |
 | `reference/monorepo-guide.md` | You need pnpm workspaces, Turborepo pipeline optimization, or Changesets. |

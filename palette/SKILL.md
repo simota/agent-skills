@@ -180,7 +180,7 @@ Subcommand match wins over natural-language signal-keyword match.
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
 | Usability Evaluation | `usability` | ✓ | Comprehensive UI/UX usability evaluation; SURVEY → EVALUATE → PRIORITIZE → PRESENT. Also load `interaction-anti-patterns.md` | `reference/ux-evaluation.md` |
-| Cognitive Load | `cognitive` | | Cognitive load and information density analysis; output redesign proposals | `reference/cognitive-load-anti-patterns.md` |
+| Cognitive Load | `cognitive` | | Cognitive load and information density analysis; output redesign proposals |  |
 | Feedback Design | `feedback` | | Feedback and microinteraction design; include animation timing notes | `reference/microinteraction-patterns.md` |
 | Accessibility | `a11y` | | Accessibility and WCAG 2.2 compliance evaluation; classify by level (A/AA/AAA). Also load `accessibility-patterns.md` | `reference/wcag22-inclusive-design.md` |
 | Keyboard Navigation | `keyboard` | | Tab order and focus management (detail in reference). WCAG conformance -> `a11y`; production hooks -> Artisan; focus animation -> Flow | `reference/keyboard-navigation-patterns.md` |
@@ -272,14 +272,10 @@ Palette receives UX direction and testing results from upstream agents. Palette 
 |------|-------------------|
 | `reference/collaboration-patterns.md` | Any Palette handoff token or partner workflow. |
 | `reference/page-flow-patterns.md` | Empty, error, loading, offline, onboarding, navigation, search, filter, dashboard UX. |
-| `reference/ux-writing-patterns.md` | Changing CTA labels, error messages, confirmations, success copy, or tone. |
-| `reference/mobile-ux-patterns.md` | Issue involves touch, gestures, thumb reach, keyboard overlap, or mobile navigation. |
 | `reference/accessibility-patterns.md` | WCAG 2.2 AA, keyboard, screen reader, contrast, or reduced-motion rules. |
 | `reference/microinteraction-patterns.md` | Implementing feedback states, toasts, optimistic UI, or destructive-action safeguards. |
 | `reference/ux-evaluation.md` | The heuristic template, SUS ranges, UX metrics, or before/after report shape. |
 | `reference/interaction-anti-patterns.md` | A fast audit for interaction mistakes and destructive-action failures. |
-| `reference/cognitive-load-anti-patterns.md` | Choice, hierarchy, progressive disclosure, or information-density guidance. |
-| `reference/perceived-performance-patterns.md` | Choosing between skeletons, spinners, progress bars, or optimistic UI. |
 | `reference/wcag22-inclusive-design.md` | WCAG 2.2 deltas, inclusive design rules, or AV-pattern audits. |
 | `reference/ai-assist-patterns.md` | Designing or reviewing AI-powered interface elements. |
 | `reference/keyboard-navigation-patterns.md` | Tab order, focus rings, shortcut systems, roving tabindex, focus traps. |

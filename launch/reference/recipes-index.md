@@ -14,7 +14,7 @@ what Recipes exist at all.
 | Release Plan | `plan` | ✓ | Release planning and strategy | `reference/strategies.md` |
 | Changelog | `changelog` | | CHANGELOG generation and updates | `reference/patterns.md` |
 | Release Notes | `notes` | | User-facing release notes | `reference/patterns.md` |
-| Rollback Plan | `rollback` | | Rollback planning and runbook | `reference/rollback-anti-patterns.md` |
+| Rollback Plan | `rollback` | | Rollback planning and runbook |  |
 | Feature Flag | `flag` | | Feature flag management and staged rollout design | `reference/feature-flag-pitfalls.md` |
 | Hotfix Release | `hotfix` | | Emergency patch release (shortened CI / hotfix branch / 2h SLA / rollback bundled / backport to main) | `reference/hotfix-workflow.md` |
 | Canary Rollout | `canary` | | Staged traffic rollout (1%->10%->50%->100%) with automatic guardrails and abort conditions | `reference/canary-rollout.md` |

@@ -172,5 +172,5 @@ Defer to `squash-optimization.md` pairwise scoring for grouping. Audit only flag
 
 - `audit` is **read-only**. No Git state changes, no force-pushes, no branch creation.
 - Output routes to subsequent Guardian Recipes (`commit` / `reshape` / `split` / `pr`) or external tools (`git rebase --autosquash`).
-- Integrates with `squash-optimization.md` (pairwise), `commit-analysis.md` (atomicity), `commit-conventions.md` (format rules).
+- Integrates with `squash-optimization.md` (pairwise), `commit-analysis.md` (atomicity).
 - Can be chained before `pr` as a pre-flight check; a failing audit should not auto-block unless `quality_score < 35` (F grade).

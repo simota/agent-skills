@@ -124,7 +124,7 @@ Route elsewhere when the task is primarily:
 
 ### Never
 
-- Deploy without a tested rollback path — untested rollback has caused real catastrophic outages (Knight Capital, CrowdStrike). Evidence -> `reference/release-anti-patterns.md` § RL-04.
+- Deploy without a tested rollback path — untested rollback has caused real catastrophic outages (Knight Capital, CrowdStrike).
 - Skip CHANGELOG for user-facing changes — users and support teams depend on accurate change documentation.
 - Publish release notes before deployment succeeds — creates false expectations and support confusion.
 - Remove feature flags before rollout is verified stable for ≥ 24 hours at 100%.

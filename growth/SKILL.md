@@ -142,7 +142,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | `AUDIT` | Hunt opportunities: missing meta/headings/alt/canonicals, missing OG/Twitter cards, weak CTAs/form friction, missing stacked schema, poor INP/LCP/CLS, no GEO readiness | Data-driven opportunity selection | `reference/seo-checklist.md` |
 | `HACK` | Choose daily lever: highest impact on traffic/conversion/AI citation, clear deliverable scope | One high-impact change per session | `reference/cro-patterns.md` |
 | `LAUNCH` | Implement: semantic crawler-friendly code, stacked JSON-LD, above-fold optimization, E-E-A-T signals | Mobile-first, no dark patterns | Domain-specific reference |
-| `VERIFY` | Check metrics: Lighthouse SEO ≥90/Best Practices ≥90, Google Rich Results Test, Social Preview Debugger, INP <200ms/LCP ≤2.5s/CLS <0.1 | Measure impact, not just delivery | `reference/core-web-vitals.md` |
+| `VERIFY` | Check metrics: Lighthouse SEO ≥90/Best Practices ≥90, Google Rich Results Test, Social Preview Debugger, INP <200ms/LCP ≤2.5s/CLS <0.1 | Measure impact, not just delivery |  |
 
 ## Recipes
 
@@ -187,7 +187,7 @@ Behavior notes per Recipe:
 | `heading`, `h1`, `h2`, `hierarchy` | Heading audit | Heading structure fix | `reference/seo-checklist.md` |
 | `OG`, `Open Graph`, `Twitter Card`, `social` | Social sharing | OGP/Twitter Card meta | `reference/ogp-twitter-card-guide.md` |
 | `JSON-LD`, `structured data`, `Schema.org` | Structured data | JSON-LD implementation | `reference/json-ld-templates.md` |
-| `LCP`, `INP`, `CLS`, `Core Web Vitals`, `performance` | Core Web Vitals | Ranking impact + p75 measurement gap (CrUX vs Lighthouse); remediation code → `bolt/reference/core-web-vitals.md` | `reference/core-web-vitals.md` |
+| `LCP`, `INP`, `CLS`, `Core Web Vitals`, `performance` | Core Web Vitals | Ranking impact + p75 measurement gap (CrUX vs Lighthouse); remediation code → `bolt/reference/core-web-vitals.md` |  |
 | `AI Overviews`, `AI Mode`, `GEO`, `AI search`, `citation` | Generative Engine Optimization | Triple schema stack + E-E-A-T + inline citations + platform-specific optimization (ChatGPT/Perplexity/Gemini/Claude/Copilot) | `reference/geo-optimization.md` |
 | `E-E-A-T`, `author`, `expertise`, `trust` | E-E-A-T signals | Author markup, credential schema, experience indicators | `reference/seo-checklist.md` |
 | `CTA`, `conversion`, `signup`, `checkout` | CRO optimization | CTA/form improvement | `reference/cro-patterns.md` |
@@ -197,7 +197,7 @@ Behavior notes per Recipe:
 Routing rules:
 
 - If the signal is SEO-related, read `reference/seo-checklist.md` first.
-- If the signal is Core Web Vitals or performance, read `reference/core-web-vitals.md`.
+- If the signal is Core Web Vitals or performance, read `bolt/reference/core-web-vitals.md` (canonical remediation; ranking signal is CrUX p75, not Lighthouse).
 - If the signal is CRO, form, or exit-intent, read `reference/cro-patterns.md`.
 - If the signal is OGP or social sharing, read `reference/ogp-twitter-card-guide.md`.
 - If the signal is GEO or AI search, read `reference/geo-optimization.md` first (four-signal framework + AI bot taxonomy + KPIs), then `reference/json-ld-templates.md` (stacked schema) + `reference/seo-checklist.md`.
@@ -247,7 +247,6 @@ Growth receives data and insights from upstream agents. Growth sends hypotheses,
 | `reference/seo-checklist.md` | You need SEO quick checklist (per-page + technical). |
 | `reference/ogp-twitter-card-guide.md` | Page-sharing metadata, installed-framework serialization, public image safety and crawler/preview verification. |
 | `reference/json-ld-templates.md` | You need JSON-LD templates (Product/Article/FAQ/Breadcrumb/Org/Local/SoftwareApp). |
-| `reference/core-web-vitals.md` | You need CWV ranking impact, CrUX-vs-Lighthouse measurement gap, or SEO verification checklist (remediation code lives in `bolt/reference/core-web-vitals.md`). |
 | `reference/core-web-vitals-deep.md` | You are running the `vitals` recipe — LCP/INP/CLS root-cause analysis at p75 (RUM not lab) with targeted fix patterns (priority hints, long-task breakup, layout reservation). |
 | `reference/cro-patterns.md` | You need CRO patterns (CTA/forms/exit-intent/social proof) + 2026 benchmarks (Baymard cart abandonment, form-field cliffs, Statsig/OpenAI tooling note). |
 | `reference/keyword-research.md` | You are running the `keyword` recipe — search intent classification, query clustering, SERP overlap, AI prompt mining. |

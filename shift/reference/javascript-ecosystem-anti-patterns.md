@@ -119,7 +119,7 @@ Dependency security measures:
 Usage within `radar`:
   1. Screen for JE-01 through JE-07 during the ASSESS phase
   2. Run an ecosystem audit in coordination with dependency-health-scan.md
-  3. Optimize size in coordination with bundle-size-analysis.md
+  3. Optimize size against the bundle budget (≤170KB initial JS, compressed)
   4. Build a PoC for alternative packages during the PREPARE phase
 
 Quality gates:

@@ -29,5 +29,5 @@ what Recipes exist at all.
 | Image Cinematic | `image-cinematic` | | Camera, lens, lighting, film-stock, and composition prompt design | `reference/image-generation-cinematic-prompts.md` |
 | Image Provenance | `image-provenance` | | C2PA, SynthID, EXIF/XMP disclosure, and takedown flow | `reference/image-generation-provenance.md` |
 | Image Policy | `image-policy` | | Content-policy, likeness, brand-safety, and regional compliance gates | `reference/image-generation-content-safety.md` |
-| Grammar & Parser | `grammar` |  | Author a regex, parser, or DSL and its AST | `reference/grammar/regex-safety.md`, `reference/grammar/parser-generators.md`, `reference/grammar/dsl-design.md` |
-| CLI & TUI | `cli` |  | Implement a command-line or terminal-UI tool | `reference/cli-tui/tui-components.md`, `reference/cli-tui/cli-design-anti-patterns.md`, `reference/cli-tui/cross-platform.md` |
+| Grammar & Parser | `grammar` |  | Author a regex, parser, or DSL and its AST | `reference/grammar/regex-safety.md`, `reference/grammar/parser-generators.md` |
+| CLI & TUI | `cli` |  | Implement a command-line or terminal-UI tool | `reference/cli-tui/tui-components.md`, `reference/cli-tui/cli-design-anti-patterns.md` |

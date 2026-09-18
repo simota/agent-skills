@@ -15,8 +15,6 @@ name it, or when scanning what this skill can consult at all.
 | `reference/schema-examples.md` | Concrete schema, migration, ORM, or ER diagram examples. |
 | `reference/schema-design-anti-patterns.md` | Reviewing table structure, constraints, naming, or data-type choices. |
 | `reference/data-modeling-anti-patterns.md` | Evaluating EAV, polymorphic relations, denormalization, or temporal design. |
-| `reference/migration-deployment-anti-patterns.md` | Planning a risky migration, zero-downtime rollout, or rollback strategy. |
-| `reference/index-performance-anti-patterns.md` | Reviewing composite indexes, bloat, FK indexes, or index health. |
 | `reference/postgresql18-features.md` | On PostgreSQL 18 (GA 2025-09-25) and need UUIDv7, virtual generated columns (default), temporal `WITHOUT OVERLAPS` / `PERIOD`, `RETURNING OLD.*`/`NEW.*`, B-tree skip scan, async I/O, OAuth, or logical-replication schema maintenance. |
 | `reference/postgresql17-features.md` | On PostgreSQL 17 and need SQL/JSON (`JSON_TABLE`, `JSON_VALUE`, `JSON_QUERY`, `JSON_EXISTS`), partition maintenance, logical-replication failover, or `pg_createsubscriber`. Legacy reference — see `postgresql18-features.md` for current release. |
 | `reference/multi-tenant-patterns.md` | Selecting tenant isolation; authorization, pooled connections, constraints, migration and isolation verification. |

@@ -239,7 +239,6 @@ Muse receives design direction and token extraction from upstream agents. Muse s
 | `reference/design-system-construction.md` | You need to build or restructure a design system foundation. |
 | `reference/figma-sync.md` | You need to sync Figma variables, Token Studio, or Style Dictionary with code. |
 | `reference/token-anti-patterns.md` | Token naming, hierarchy, reuse, or versioning quality is unclear. |
-| `reference/design-system-governance-anti-patterns.md` | Adoption, ownership, or documentation drift becomes the problem. |
 | `reference/color-dark-mode-anti-patterns.md` | Dark mode, glare, contrast, or color semantics break down. |
 | `reference/css-token-architecture-anti-patterns.md` | CSS token structure, scoping, or theming architecture is unstable. |
 | `reference/typography-selection-guide.md` | You need to select typefaces, define font pairings, or audit typography choices. |

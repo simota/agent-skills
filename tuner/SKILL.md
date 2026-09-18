@@ -113,7 +113,6 @@ Agent role boundaries: [\_common/BOUNDARIES.md](_common/BOUNDARIES.md)
 - Use `OFFSET` pagination on tables exceeding a few thousand rows — recommend keyset/cursor pagination instead.
 - Use `NOT IN (SELECT ...)` on subqueries returning many rows — rewrite as `NOT EXISTS` or a LEFT JOIN / `IS NULL` anti-join.
 
-Full rationale, benchmarks, and case examples for each rule: `reference/boundaries-detail.md`.
 
 ## Critical Thresholds
 
@@ -227,7 +226,6 @@ Suppress the block — with a one-line reason in the report — when Schema owns
 | File | Read this when... |
 |------|-------------------|
 | [workflow-detail.md](reference/workflow-detail.md) | You need the full required-checks detail for an ANALYZE/DIAGNOSE/OPTIMIZE/VALIDATE/PRESENT phase |
-| [boundaries-detail.md](reference/boundaries-detail.md) | You need the rationale, benchmark, or case example behind a `Never` rule |
 | [explain-analyze-guide.md](reference/explain-analyze-guide.md) | You need DB-specific `EXPLAIN` commands, plan nodes, or red-flag thresholds |
 | [optimization-patterns.md](reference/optimization-patterns.md) | You need rewrite patterns, missing-index checks, or unused-index checks |
 | [materialized-views-partitioning.md](reference/materialized-views-partitioning.md) | You need MV or partitioning decision rules, DDL, or maintenance guidance |

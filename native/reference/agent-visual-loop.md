@@ -64,7 +64,6 @@ Pick the lowest-ceremony option that closes the loop for the task at hand.
 
 `RenderPreview` is the piece that changes the economics: it closes the visual feedback loop **without a simulator boot or a developer switching to the canvas**. Agents discover the target window via `XcodeListWindows` before operating. [rudrank.com](https://rudrank.com/exploring-xcode-using-mcp-tools-cursor-external-clients) · [Xcode 26.3 teardown](https://awesomeagents.ai/news/xcode-26-3-agentic-coding-teardown/)
 
-Full `simctl` / `devicectl` / `xctrace` command surface → `reference/xcrun-cli.md`.
 
 ---
 
@@ -166,7 +165,6 @@ Observed in practice; treat each as a standing guard, not a hypothetical.
 
 ## 8. Cross-References
 
-- `reference/xcrun-cli.md` — full `simctl` / `devicectl` / `xctrace` / `xcresulttool` surface, status-bar override, recording recipes.
 - `reference/adb-cli.md` — full `adb` surface, screencap / screenrecord / input / Perfetto.
 - `reference/patterns.md` — where snapshot tooling sits in the overall per-platform test matrix.
 - `voyager/reference/ios-identifier-strategy.md` — accessibility identifier taxonomy (the §1 prerequisite) and per-framework assignment rules.

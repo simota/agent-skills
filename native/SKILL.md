@@ -161,7 +161,7 @@ Three core architecture decisions per feature — full tables and code samples �
 | Privacy Manifest | `privacy` | | Apple Privacy Manifest + Google Data Safety form | `reference/store-compliance.md` |
 | Staged Rollout | `rollout` | | Phased/staged rollout + feature flags + halt-hotfix | `reference/release-rollout.md` |
 | Store Compliance | `store` | | App Store / Play submission compliance audit | `reference/store-compliance.md` |
-| CLI Tooling | `cli` | | Terminal automation — `xcrun` + `adb` | `reference/xcrun-cli.md`, `reference/adb-cli.md` |
+| CLI Tooling | `cli` | | Terminal automation — `xcrun` + `adb` | `reference/adb-cli.md` |
 | Agent Visual Loop | `visualloop` | | Screen implementation against a reference — numeric oracle, ≤3-pass cap | `reference/agent-visual-loop.md` |
 | macOS App | `macos` | (macOS default) | Mac app — scenes, AppKit interop, menu bar, sidebar/toolbar/inspector, HIG | `reference/macos-modern-stack.md`, `reference/scenes.md` |
 | macOS Distribution | `macdist` | | Sandbox + entitlements + notarytool + Sparkle | `reference/sandbox-entitlements.md`, `reference/distribution.md` |
@@ -183,7 +183,7 @@ Per-Recipe behavior notes (key gotchas + thresholds) → `reference/recipes.md`.
 | Performance regression | Profile cold start, re-render / recomposition, memory | `reference/apple-perf.md`, `reference/compose-perf.md` |
 | Store submission / phased release | Compliance audit + Privacy Manifest / Data Safety + staged rollout | `reference/store-compliance.md`, `reference/release-rollout.md` |
 | Cross-platform UI framework (RN/Flutter/KMP/CMP) | Out of scope — route to Forge for prototyping | — |
-| Terminal tooling (`xcrun`/`adb`) | `cli` Recipe, scoped to the tool named | `reference/xcrun-cli.md`, `reference/adb-cli.md` |
+| Terminal tooling (`xcrun`/`adb`) | `cli` Recipe, scoped to the tool named | `reference/adb-cli.md` |
 | "Match this design" / screenshot as target | `visualloop` — accessibility tree first, pixel score, 3-pass cap | `reference/agent-visual-loop.md` |
 
 ## Output Requirements
@@ -222,7 +222,6 @@ Partner list -> CAPABILITIES_SUMMARY block above (`COLLABORATION_PATTERNS`, `BID
 | `reference/store-compliance.md` | App Store / Play policy, Privacy Manifest, Data Safety, Age Rating, IAP |
 | `reference/release-rollout.md` | Phased/staged rollout, halt-and-hotfix, server-driven flags |
 | `reference/mobile-ci-cd.md` | Xcode Cloud / Fastlane / GitHub Actions / Gradle pipeline design |
-| `reference/platform-permissions.md` | iOS / Android permissions, soft pre-prompt UX, degradation |
 | `reference/modern-stack.md` | Full per-layer stack table (both platforms) and deadlines |
 | `reference/apple-perf.md` | Instruments/`xctrace` decision table, render/launch/hitch/memory — iOS perf regression |
 | `reference/compose-perf.md` | Compiler Metrics, Macrobenchmark, Perfetto, JankStats — Android perf regression |
@@ -230,7 +229,6 @@ Partner list -> CAPABILITIES_SUMMARY block above (`COLLABORATION_PATTERNS`, `BID
 | `reference/push-notifications.md` | APNs (Live Activities) + FCM (Channels), token lifecycle, payload, quota |
 | `reference/deeplink-routing.md` | Universal Links (AASA), App Links (assetlinks.json), routing, attribution |
 | `reference/bg-execution.md` | BGTaskScheduler, WorkManager, Doze / App Standby, Foreground Service Types |
-| `reference/xcrun-cli.md` | `xcrun` toolchain — simctl/devicectl/xctrace/notarytool/atos |
 | `reference/adb-cli.md` | `adb` — pm/am/logcat/dumpsys/Perfetto and the iOS↔Android command map |
 | `reference/agent-visual-loop.md` | Agent-in-the-loop screen work — loop contract + pass cap, tool layer, numeric oracle |
 | `reference/macos-modern-stack.md` | macOS stack baseline — SwiftUI for Mac, Liquid Glass chrome, deployment |

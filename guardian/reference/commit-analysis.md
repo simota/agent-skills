@@ -14,7 +14,7 @@ Purpose: Score commit messages, detect weak sequences, and prepare safe rewrite 
 
 ## Message Structure Analysis
 
-Conventional Commits format spec (type list, scope rules, subject/body conventions, length limits) lives in `commit-conventions.md` § Conventional Commits and § Atomic Commit Rules. This file extends that spec with scoring rules below — score each component (Type, Scope, Subject, Body, Footer) against the rules in `commit-conventions.md` and aggregate per the rubrics that follow.
+Conventional Commits format spec (type list, scope rules, subject/body conventions, length limits) is the public Conventional Commits specification. This file extends that spec with scoring rules below — score each component (Type, Scope, Subject, Body, Footer) against the Conventional Commits rules and aggregate per the rubrics that follow.
 
 ## Commit Sequence Analysis
 

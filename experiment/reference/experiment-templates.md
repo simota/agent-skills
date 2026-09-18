@@ -223,10 +223,10 @@ Beyond primary/secondary metrics, EwL metrics capture *what we learned* — not 
 | `results`, `significance`, `analyze` | Statistical analysis | Experiment report | `reference/statistical-methods.md` |
 | `sequential`, `early stopping` | Sequential testing design | Alpha spending plan | `reference/statistical-methods.md` |
 | `multivariate`, `factorial` | Multivariate test design | Factorial design doc | `reference/statistical-methods.md` |
-| `bandit`, `MAB`, `adaptive` | Adaptive experimentation design | MAB/Thompson Sampling plan | `reference/adaptive-experimentation.md` |
+| `bandit`, `MAB`, `adaptive` | Adaptive experimentation design | MAB/Thompson Sampling plan |  |
 | `interleaving`, `ranking test` | Interleaving test design | Interleaving test plan | `reference/interleaving-tests.md` |
 | `CUPED`, `variance reduction`, `sensitivity`, `winsorization`, `outlier capping` | CUPED/CUPAC/Winsorization variance reduction design | Variance reduction plan | `reference/statistical-methods.md` |
 | `SRM`, `sample ratio`, `broken split` | SRM diagnosis and root cause analysis | SRM diagnosis report | `reference/srm-detection.md` |
 | `switchback`, `marketplace test`, `network effect` | Switchback experiment design | Switchback test plan | `reference/switchback-design.md` |
-| `cluster`, `interference`, `marketplace randomization` | Cluster randomization design | Cluster experiment plan | `reference/common-pitfalls.md` |
+| `cluster`, `interference`, `marketplace randomization` | Cluster randomization design | Cluster experiment plan |  |
 | `canary`, `observability`, `experiment diagnostics` | Observability-native experiment diagnostics | Canary test plan with guardrail integration | `reference/feature-flag-patterns.md` |

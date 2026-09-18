@@ -154,8 +154,8 @@ Single source of truth for Recipe definitions. Behavior notes (scope boundaries,
 | Injection Check | `injection` | | SQL/XSS/command/NoSQL/prompt injection focus; heightened scrutiny on AI-generated code. | `reference/vulnerability-patterns.md`, `reference/owasp-2025-checklist.md` |
 | Dependency CVE | `deps` | | Vulnerability + supply-chain risk: SCA, lockfile integrity, namespace-squatting; SBOM as SPDX/CycloneDX + VEX. | `reference/supply-chain-security.md` |
 | Headers Audit | `headers` | | CSP/CORS/HSTS/Permissions-Policy audit. Start report-only, enforce incrementally. | `reference/defensive-controls.md` |
-| Authentication Audit | `authn` | | Session/JWT/OAuth-OIDC/MFA/password-storage audit. **Scope**: algorithm/key design → `Crypt`, exploitability → `Probe`. | `reference/authn-audit.md`, `reference/api-security.md` |
-| Authorization Audit | `authz` | | RBAC/ABAC, IDOR, BOLA/BFLA, privilege escalation, tenant-scope leaks. Extra scrutiny on AI-generated integration code (auth-wiring is the #1 AI failure mode). **Scope**: `Probe` confirms exploitability. | `reference/authz-audit.md`, `reference/api-security.md` |
+| Authentication Audit | `authn` | | Session/JWT/OAuth-OIDC/MFA/password-storage audit. **Scope**: algorithm/key design → `Crypt`, exploitability → `Probe`. | `reference/authn-audit.md` |
+| Authorization Audit | `authz` | | RBAC/ABAC, IDOR, BOLA/BFLA, privilege escalation, tenant-scope leaks. Extra scrutiny on AI-generated integration code (auth-wiring is the #1 AI failure mode). **Scope**: `Probe` confirms exploitability. | `reference/authz-audit.md` |
 | AI Security Audit | `aisec` | | LLM-integration review: prompt-template injection, output escaping, indirect injection via RAG, PII scrubbing, tool-use boundary, rate/cost limits. **Scope**: jailbreak validation → `Breach`. | `reference/ai-security.md`, `reference/ai-code-security.md` |
 | Mobile Security | `mobile` | | MASVS v2.1.0 + MAS Checklist across 8 categories, MASWE mapping, MobSF SAST/DAST in CI. **Scope**: exploit → `Probe`, keys → `Crypt`, privacy → `Cloak`, fixes → `Native`. | `reference/mobile-security.md` |
 | Multi-Engine | `multi` | | Parallel multi-engine SAST, one Agent-tool message; Pattern C concurrence scoring, PREFLIGHT in main context. Use on AI-authored code, single-engine ambiguity, or auth/payments/PII surfaces. | `reference/tri-engine-scan.md`, `_common/MULTI_ENGINE_RECIPE.md` |
@@ -234,7 +234,6 @@ Receives security-flagged artifacts upstream, performs static analysis, routes f
 | `reference/ai-security.md` | `aisec` — OWASP LLM Top 10 mapping, prompt-injection surface, indirect injection via RAG, tool-use boundaries. |
 | `reference/authn-audit.md` | `authn` — session / JWT / OAuth-OIDC / MFA / password-storage checks. |
 | `reference/authz-audit.md` | `authz` — RBAC/ABAC, IDOR, BOLA/BFLA, horizontal/vertical privilege escalation. |
-| `reference/api-security.md` | Target is an HTTP API, GraphQL endpoint, OAuth flow, or SSRF/BOLA/BFLA risk |
 | `reference/fix-prompt-generation.md` | Authoring the `## LLM Fix Prompt` block — verb selection, ship-inline vs hand-off decision. |
 | `_common/LLM_PROMPT_GENERATION.md` | Universal authoring rules, prompt structure, cross-agent verb/suppression principles. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the report, adaptive thinking depth at PRIORITIZE/FILTER, front-loading scope at SCAN. Critical: P2, P5. |

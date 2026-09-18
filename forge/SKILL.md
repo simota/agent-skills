@@ -187,7 +187,6 @@ Forge receives concepts and direction from upstream agents, builds rapid prototy
 | Reference | Read this when |
 |-----------|----------------|
 | `reference/api-mocking.md` | You need inline mocks, MSW, json-server, or error simulation. |
-| `reference/data-generation.md` | You need realistic sample data, factories, or fixed fixtures. |
 | `reference/backend-poc.md` | You need a minimal Express/Fastify CRUD server or a socket PoC. |
 | `reference/builder-integration.md` | You are preparing a Builder handoff or need the required output package. |
 | `reference/muse-integration.md` | You need a style-polish handoff to Muse. |

@@ -365,8 +365,8 @@ Date next = ce.getNextValidTimeAfter(new Date());
 - [ ] Overlap policy declared (platform config + app-level lock if needed).
 - [ ] dom/dow combination semantics verified for the platform.
 - [ ] Validated via crontab.guru or equivalent.
-- [ ] Paired with retry policy (see `retry-strategies.md`).
-- [ ] Paired with idempotency key (see `retry-strategies.md`).
+- [ ] Paired with retry policy.
+- [ ] Paired with idempotency key.
 
 
 ---

@@ -147,7 +147,7 @@ Load only the "Read First" files at the initial step. Full behavior detail -> `r
 | Unit Test Design | `unit` | | Design unit-test architecture from scratch across the major runners | Enforce AAA, pick the right test double (**fake > stub > mock > spy** in that order), isolate at the unit boundary, keep tests deterministic (no clock, network, or filesystem without injection). Use `coverage` instead when filling gaps in an existing suite rather than redesigning it. | `reference/unit-testing.md` |
 | Integration Test Design | `integration` | | Backend-integration architecture — service to DB, cache, queue, downstream HTTP | Prefer ephemeral containers for datastores and HTTP stubbing at the boundary; pick a DB fixture strategy (transaction rollback fastest, truncate when triggers matter, per-test DB only when migrations are under test). Browser-level E2E routes to Voyager. | `reference/integration-testing.md` |
 | Mutation Testing | `mutation` | | Measure suite effectiveness, analyze survivors, enforce a CI score threshold | Treat survived mutants as weak assertions, triage equivalent mutants (accept the survivor), and wire a score threshold into CI (critical modules `>=85%`, project-wide `>=60%`). Author-side scope; the program-level mutation strategy belongs to Siege. | `reference/mutation-testing.md` |
-| Test Data & Fixtures | `fixtures` |  | Design factories, boundary data, and seed sets for a suite | Type-safe factories matching the project schema, FK-consistent relations, idempotent seeds. Boundary values reuse the `edge` analysis; mask production data before reuse. | `reference/test-data/factory-patterns.md`, `reference/test-data/boundary-values.md`, `reference/test-data/seed-management.md` |
+| Test Data & Fixtures | `fixtures` |  | Design factories, boundary data, and seed sets for a suite | Type-safe factories matching the project schema, FK-consistent relations, idempotent seeds. Boundary values reuse the `edge` analysis; mask production data before reuse. | `reference/test-data/factory-patterns.md` |
 
 ## Subcommand Dispatch
 
@@ -267,12 +267,10 @@ Mode-specific additions:
 | `reference/coverage-strategy.md` | Setting coverage targets, ratchets, and diff rules |
 | `reference/contract-multiservice-testing.md` | Testing API contracts and multi-service integrations |
 | `reference/async-testing-patterns.md` | Testing async flows, streams, races, and timeout-heavy code |
-| `reference/framework-deep-patterns.md` | Using advanced framework-specific features |
 | `reference/testing-anti-patterns.md` | Auditing test quality and common test smells |
 | `reference/recipe-verify-gates.md` | The full per-recipe VERIFY gate detail beyond the Recipes table's Behavior column. |
 | `reference/ai-assisted-testing.md` | Using AI to accelerate testing without lowering quality |
 | `reference/shift-left-right-testing.md` | Connecting Radar to observability, QAOps, or production feedback loops |
-| `reference/modern-testing-dx.md` | Optimizing test DX, feedback loops, and team maturity |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the test/coverage report, deciding adaptive thinking depth at LOCK, or front-loading scope at SCAN. Critical for Radar: P2, P5. |
 | `_common/PROOF_CARRYING.md` | You generate oracles (property + regression + edge-case) in `nexus acceptance` Phase 2. Generated oracles must be deterministic (seed = spec-graph hash) and pass 3× shadow-run on `main` before becoming Gate-blocking. Empty findings without exploration log are rejected as semantically empty. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Radar-specific Output/Next schema. |

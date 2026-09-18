@@ -177,13 +177,13 @@ Single source of truth for Recipe definitions. Behavior depth lives in the "Beha
 | Recipe | Subcommand | Default? | When to Use | Behavior | Read First |
 |--------|-----------|---------|-------------|----------|------------|
 | State Design | `design` | ✓ | State transition design | General state-machine design. Transition table + reachability + deadlock check. | `reference/state-machine-patterns.md` |
-| Saga Pattern | `saga` | | Saga pattern distributed transactions | Top-level Saga shape (orchestration vs choreography, participants, boundary). For per-step compensation depth, switch to `compensation`. | `reference/saga-patterns.md` |
+| Saga Pattern | `saga` | | Saga pattern distributed transactions | Top-level Saga shape (orchestration vs choreography, participants, boundary). For per-step compensation depth, switch to `compensation`. |  |
 | Approval Flow | `approval` | | Approval flow design | Approval flow with BPMN 2.0 boundary timer + escalation (never error events). Includes SLA, delegation, and audit trail. | `reference/approval-flow-patterns.md` |
 | Invalid Transition Detection | `detect` | | Invalid transition detection | Scan existing transition tables / code for invalid or missing transitions. | `reference/state-machine-patterns.md` |
 | Retry State Machine | `retry` | | Exponential backoff, jitter, max-attempt cap, DLQ terminal state, idempotency contract | Exponential backoff (base × 2^n), jitter (full/equal/decorrelated), max-attempt cap, DLQ as terminal state, retriable-vs-non-retriable classification, idempotency key. Pair with the `schedule` Recipe for cron timing, Beacon for retry-exhaustion alerts. | `reference/retry-state-machine.md` |
 | Timeout / TTL / Deadline | `timeout` | | TTL state design, deadline propagation, grace-period transitions, stuck-state recovery | Per-state timeout from business SLA, deadline propagation (context.deadline), grace-period transitions, stuck-state escape, soft-timeout (warn) vs hard-timeout (abort). Switch to the `schedule` Recipe for cron integration. | `reference/timeout-ttl-design.md` |
 | Compensation Transactions | `compensation` | | Saga compensation per forward step, idempotency keys, compensation-of-compensation, ordering | Per-forward-step compensation; each idempotent, LIFO-ordered by default, handles compensation-of-compensation. Emit compensation table with idempotency keys, ordering, and failure-of-compensation escalation (hand off to Triage). | `reference/compensation-transactions.md` |
-| Schedule Design | `schedule` |  | Design cron, timezone, business-calendar, and backfill behavior | UTC at the boundary, IANA identifiers in storage, a stated policy for DST-ambiguous times, catchup vs skip-forward with an explicit watermark. Runner/queue infra routes to Gear or Scaffold. | `reference/scheduling/cron-patterns.md`, `reference/scheduling/timezone-safety.md`, `reference/scheduling/business-calendar.md` |
+| Schedule Design | `schedule` |  | Design cron, timezone, business-calendar, and backfill behavior | UTC at the boundary, IANA identifiers in storage, a stated policy for DST-ambiguous times, catchup vs skip-forward with an explicit watermark. Runner/queue infra routes to Gear or Scaffold. | `reference/scheduling/cron-patterns.md`, `reference/scheduling/business-calendar.md` |
 
 ### Signal Keywords → Recipe
 
@@ -291,7 +291,6 @@ SAGA_STEP:
   idempotency_key: "[key expression]"
 ```
 
-Details → `reference/saga-patterns.md`
 
 ---
 
@@ -372,10 +371,8 @@ Inbound (`USER_TO_WEAVE`, `SCRIBE_TO_WEAVE`, `ATLAS_TO_WEAVE`) and outbound (`WE
 | File | Content |
 |------|---------|
 | `reference/state-machine-patterns.md` | FSM / Statechart / XState pattern catalog, verification algorithms, anti-patterns |
-| `reference/saga-patterns.md` | Orchestration / Choreography templates, compensation design rules, error-handling strategies |
 | `reference/approval-flow-patterns.md` | Approval-flow archetypes, delegation / recall / audit-trail templates |
 | `reference/engine-selection.md` | Selection guide across Temporal / Step Functions / Inngest / XState; non-functional checklist |
-| `reference/event-driven-workflows.md` | Event Sourcing / CQRS / Process Manager / Outbox / DLQ / idempotency patterns |
 | `reference/handoffs.md` | All handoff templates (Inbound: User / Scribe / Atlas / Nexus; Outbound: Builder / Canvas / Radar / Scribe / Judge) |
 | `reference/retry-state-machine.md` | Running the `retry` Recipe |
 | `reference/timeout-ttl-design.md` | Running the `timeout` Recipe |

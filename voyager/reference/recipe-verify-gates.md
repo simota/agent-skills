@@ -73,16 +73,16 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `visual regression`, `screenshot`, `pixel diff` | `visual` |
 | `accessibility`, `a11y`, `axe`, `WCAG` | `a11y` |
 | `auth flow`, `login test`, `session` | `auth` |
-| `CI`, `pipeline`, `sharding`, `parallel` | `playwright` (CI scope — read `ci-reporting.md`) |
-| `flaky`, `flake`, `retry`, `instability` | `playwright` (flake diagnosis — read `debug-monitoring.md`) |
+| `CI`, `pipeline`, `sharding`, `parallel` | `playwright` (CI scope) |
+| `flaky`, `flake`, `retry`, `instability` | `playwright` (flake diagnosis) |
 | `mobile emulation`, `mobile viewport`, `responsive E2E`, `PWA mobile` | `playwright` (mobile emulation — read `mobile-testing.md`) |
 | `native mobile E2E`, `appium`, `detox`, `maestro`, `xcuitest`, `espresso`, `.ipa`, `.apk`, `.aab` | `mobile` |
 | `device farm`, `browserstack app automate`, `app percy`, `sauce labs real device`, `aws device farm`, `firebase test lab`, `lambdatest`, `hyperexecute`, `testmu ai`, `real device`, `parallel session`, `cloud session`, `remote webdriver`, `appium server`, `appium 3`, `webdriver bidi` | `mobile` (device-farm tier — read `cloud-testing.md` + `mobile-testing.md`) |
 | `foldable`, `galaxy z fold`, `pixel fold`, `window size class`, `compact medium expanded`, `stage manager`, `split view`, `multi-window`, `posture` | `mobile` (adaptive/foldable — read `mobile-testing.md`) |
 | `privacy manifest`, `PrivacyInfo.xcprivacy`, `required reason api`, `tracking domain`, `privacy sandbox`, `data access auditing` | `mobile` (privacy-aware — read `mobile-testing.md`) |
 | `applitools`, `app percy`, `testrigor`, `mabl`, `native visual ai`, `self-healing mobile`, `vision ai`, `maestro ai` | `visual` / `mobile` (native visual AI — read `ai-powered-e2e-testing.md` + `mobile-testing.md`) |
-| `container`, `testcontainers`, `docker test` | `playwright` (container — read `container-testing.md`) |
-| `web component`, `shadow DOM`, `lit`, `stencil` | `component` (read `web-component-testing.md`) |
+| `container`, `testcontainers`, `docker test` | `playwright` (container) |
+| `web component`, `shadow DOM`, `lit`, `stencil` | `component` |
 | `AI test`, `MCP`, `self-healing`, `codegen`, `playwright cli` | `playwright` (AI lifecycle — read `ai-powered-e2e-testing.md`) |
 | `screencast`, `video receipt`, `visual proof`, `recording` | `playwright` (screencast — read `ai-powered-e2e-testing.md`) |
 | `API test`, `request context`, `backend verify` | `api` |

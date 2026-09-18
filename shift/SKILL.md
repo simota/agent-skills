@@ -159,7 +159,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | Language Migration | `lang` | | Language/runtime migration (JS→TS, staged TS `strict`, Python, Node LTS bumps, Go toolchain, Java majors) | `reference/language-migration.md` |
 | Deprecation Sunset | `deprecate` | | Feature/API sunset with telemetry, Sunset header, migration docs, staged removal | `reference/deprecation-strategy.md`, `reference/deprecation-lifecycle.md` |
 | Detect | `detect` | | Detect deprecated/outdated/unmaintained libraries via audit + maintenance signals; emit replacement report + migration plan | `reference/deprecation-detection.md`, `reference/deprecated-library-catalog.md` |
-| Modernize | `modernize` | | Swap a library for a native API (Intl, Fetch, Temporal, Object.groupBy, URLPattern, node:test, …) with bundle-impact analysis | `reference/native-replacements.md`, `reference/native-api-replacement-guide.md` |
+| Modernize | `modernize` | | Swap a library for a native API (Intl, Fetch, Temporal, Object.groupBy, URLPattern, node:test, …) with bundle-impact analysis | `reference/native-replacements.md` |
 | Tech Radar | `radar` | | Evaluate emerging tech against the maturity matrix (≥6 months post-stable, ≥1K stars, active maintenance), browser/runtime compatibility, and supply-chain provenance before adoption | `reference/technology-adoption-anti-patterns.md`, `reference/browser-compatibility-matrix.md` |
 
 ## Subcommand Dispatch
@@ -234,13 +234,11 @@ vs Launch, Schema, Builder, Sentinel, Chain, Magi → `reference/migration-strat
 | `reference/deprecated-library-catalog.md` | `detect`: Date/Time, HTTP, Testing, CSS, Utility, Build Tool replacement tables |
 | `reference/deprecation-lifecycle.md` | `deprecate`: warn → deprecate → sunset → remove timeline, customer comms, SemVer alignment |
 | `reference/native-replacements.md` | `modernize`: library-to-native API replacement table with bundle-impact estimates |
-| `reference/native-api-replacement-guide.md` | `modernize`: Intl, Fetch, Dialog, Observers, BroadcastChannel, Crypto API examples |
 | `reference/strangler-fig-migration.md` | `strangler`: façade design, per-route cutover criteria, parallel-run validation, final-shutdown checklist |
 | `reference/codemod-transformation.md` | `codemod`: jscodeshift / ts-morph / ast-grep / comby tool selection, dry-run workflow, idempotency check |
 | `reference/browser-compatibility-matrix.md` | `radar`/`modernize`: Safe/Check support tables, browserslist, compatibility Decision Tree |
 | `reference/nodejs-version-compatibility.md` | `lang`/`radar` for Node.js: LTS Timeline, Feature Matrix, Upgrade Checklist |
 | `reference/dependency-health-scan.md` | `detect`: scan commands, Health Check Script, Matrix, Checklist |
-| `reference/bundle-size-analysis.md` | `modernize` — analysis tools, budget enforcement (≤170KB initial JS compressed), Vite config |
 | `reference/migration-patterns.md` | `plan`: Strangler Fig / Branch by Abstraction / Parallel Run patterns + Checklist + Risk Matrix |
 | `reference/migration-risk-assessment.md` | `plan`: risk matrix and migration strategy selection |
 | `reference/dependency-upgrade-anti-patterns.md` | `detect` — DU-01 to DU-07, staged update strategy, SemVer criteria |

@@ -251,8 +251,6 @@ Add these when relevant:
 | `reference/terraform-compliance.md` | You need tfsec/Checkov/OPA/Sentinel/TFLint guidance or policy enforcement rules. |
 | `reference/terraform-iac-anti-patterns.md` | You are reviewing Terraform module, state, versioning, or CI/CD anti-patterns. |
 | `reference/docker-environment-anti-patterns.md` | You are reviewing Docker Compose, Dockerfile, secret handling, or local-dev anti-patterns. |
-| `reference/cloud-infrastructure-anti-patterns.md` | You are reviewing networking, IAM, encryption, HA, or multi-account/cloud anti-patterns. |
-| `reference/cost-finops-anti-patterns.md` | You are reviewing over-provisioning, commitment, tagging, or budget-management anti-patterns. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the IaC report, calibrating effort to env/blast-radius scope, or front-loading provider/env at ASSESS. Critical for Scaffold: P3, P6. |
 | `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 

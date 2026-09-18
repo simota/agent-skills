@@ -285,7 +285,7 @@ CREATE TABLE orders (
 - **migration**: Draft step-by-step migration DDL with rollback; load `migration-patterns.md`; flag zero-downtime risks.
 - **er**: Generate Mermaid ER diagram from schema description or codebase; load `schema-examples.md`.
 - **normalize**: Assess NF level and propose denormalization trade-offs; apply the gates in `data-modeling-anti-patterns.md`.
-- **index**: Analyze query patterns and propose covering/partial indexes; load `index-strategies.md` + `index-performance-anti-patterns.md`.
+- **index**: Analyze query patterns and propose covering/partial indexes; load `index-strategies.md`.
 - **rollback**: Provide reverse migration DDL, dual-write windows, backfill scripts, and safe alternatives for destructive changes (DROP COLUMN / data conversion). Ask First: destructive change without rollback path.
 - **tenant**: Compare the 4 strategies (shared-DB / schema-per-tenant / DB-per-tenant / shard-based) against tenant count, isolation requirements, and cost constraints. Includes RLS / connection routing / per-tenant backup strategies. Coordinates with the Schema[tenant] agent.
 - **index**: Query patterns → covering / partial / expression index design. Existing `index-strategies.md`.

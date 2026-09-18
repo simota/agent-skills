@@ -181,10 +181,10 @@ CANON_QUESTION:
 | Category | Standards | Reference |
 |----------|----------|-----------|
 | Security | OWASP Top 10:2025, OWASP API Security Top 10:2023, OWASP ASVS 5.0, NIST CSF 2.0, CIS Controls v8.1, CWE Top 25 (2025), NIST SSDF v1.1 | `reference/security-standards.md` |
-| Accessibility | WCAG 2.2 (ISO/IEC 40500:2025), WAI-ARIA 1.2, JIS X 8341-3, European Accessibility Act, WCAG 3.0 (Working Draft — track only) | `reference/accessibility-standards.md` |
-| API / Data | OpenAPI 3.1.2 / 3.2, JSON Schema, RFC 9110 (supersedes 7231), GraphQL Spec | `reference/api-standards.md` |
-| Quality | ISO/IEC 25010:2023 (9 chars incl. Safety), ISO/IEC 25019:2023 (Quality-in-Use), IEEE 29148 (supersedes 830), Clean Code, SOLID | `reference/quality-standards.md` |
-| Infrastructure | 12-Factor App, CNCF Best Practices, SRE Principles | `reference/quality-standards.md` |
+| Accessibility | WCAG 2.2 (ISO/IEC 40500:2025), WAI-ARIA 1.2, JIS X 8341-3, European Accessibility Act, WCAG 3.0 (Working Draft — track only) |  |
+| API / Data | OpenAPI 3.1.2 / 3.2, JSON Schema, RFC 9110 (supersedes 7231), GraphQL Spec |  |
+| Quality | ISO/IEC 25010:2023 (9 chars incl. Safety), ISO/IEC 25019:2023 (Quality-in-Use), IEEE 29148 (supersedes 830), Clean Code, SOLID |  |
+| Infrastructure | 12-Factor App, CNCF Best Practices, SRE Principles |  |
 | AI Agent Skill | Anthropic Skill Specification (2025) | `reference/anthropic-skill-standards.md` |
 | AI Agent Security | OWASP Top 10 for Agentic Applications (2026), OWASP LLM Top 10:2025, OWASP MCP Top 10 (2025), NIST SP 800-53 AI Overlays, MAESTRO | `reference/security-standards.md` |
 | AI Governance | ISO/IEC 42001:2023 (AI Management System), EU AI Act alignment | `reference/security-standards.md` |

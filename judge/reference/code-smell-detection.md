@@ -12,7 +12,7 @@ heuristics, severity weighting, and routing.
 
 ```
 Judge's detection layers:
-  Layer 1: Bug patterns        → bug-patterns.md
+  Layer 1: Bug patterns
   Layer 2: Consistency issues  → consistency-patterns.md
   Layer 3: Code smells         → this file + _common/CODE_SMELL_CATALOG.md
   Layer 4: Test quality        → test-quality-patterns.md
@@ -124,7 +124,7 @@ In addition to Catalog Section 8, Judge applies the following additional checks 
 ```
 React:
   - Prop drilling 3+ levels deep → recommend Context/State management
-  - Missing/incomplete useEffect dependency array → route to bug-patterns.md
+  - Missing/incomplete useEffect dependency array → bug pattern (Layer 1)
   - Component bloat (300+ lines) → recommend splitting (Route: Zen)
 
 Express / API:

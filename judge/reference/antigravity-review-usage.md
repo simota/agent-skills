@@ -116,7 +116,6 @@ Apply `_common/MULTI_ENGINE_RECIPE.md` §3.5. Record actual process/tool status 
 - Claude Code CLI review (alternative engine, subagent/plan-mode required): `claude-review-usage.md`.
 - Output interpretation, severity mapping, override rules, false-positive filtering (engine-agnostic): `codex-integration.md`.
 - Framework-specific review prompts: `framework-reviews.md`.
-- AI-generated code review depth: `ai-review-patterns.md`.
 - PR size cognitive-load thresholds: `review-effectiveness.md`.
 
 ### Official Sources (2026)

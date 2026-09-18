@@ -368,7 +368,7 @@ Compose: `Surface(tonalElevation = ..., shadowElevation = ...)`. M3 prefers **to
 
 - Minimal screens (3-5 max); skip-by-default.
 - Honor reduced animations.
-- Never gate core app entry on permission grants — use soft pre-prompt + graceful degradation (see `reference/platform-permissions.md`).
+- Never gate core app entry on permission grants — use soft pre-prompt + graceful degradation.
 
 ### Empty states
 

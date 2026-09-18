@@ -4,7 +4,7 @@ Agent-specific slice for **Native** — measurement and optimization for iOS/iPa
 
 Load the CLI mechanics and general measurement contract only as needed:
 
-- [`reference/xcrun-cli.md`](xcrun-cli.md) §3 — `xctrace` CLI invocations, `--launch` vs `--attach`, export/parse
+-  §3 — `xctrace` CLI invocations, `--launch` vs `--attach`, export/parse
 - [`bolt/reference/profiling-tools.md`](../../bolt/reference/profiling-tools.md) — workload/build controls and language-level profiling handoff
 - [`reference/modern-stack.md`](modern-stack.md) — `@Observable`, Swift 6.2/6.3 Approachable Concurrency, SwiftData baseline facts
 
@@ -35,7 +35,6 @@ The role of this reference: **what to measure before touching code, which SwiftU
 
 ### 1.2 CLI capture
 
-Cross-reference `reference/xcrun-cli.md` §3 for full `xctrace` mechanics (`--launch` vs `--attach`, `export --xpath`). Quick pointers specific to the templates above:
 
 ```bash
 # App launch trace (fresh process, not attach)
@@ -271,7 +270,7 @@ Wrap any interval you want visible both in local Instruments traces (Time Profil
 ### 7.3 Xcode Organizer regressions + CI perf budgets
 
 - Xcode Organizer's **Launch Time**, **Hangs**, and **Disk Writes** reports aggregate real App Store user data without any MetricKit integration work — check these on every release, not just when a user files a complaint.
-- Treat cold-start / hitch-ratio / memory-footprint targets as **CI gates**, not aspirational docs: a scripted UI test that launches the app, captures an `App Launch` or `Animation Hitches` trace via `xctrace`, and fails the build if the measured value regresses past a checked-in baseline is the only reliable way to prevent silent perf drift across a team. Pair with `reference/xcrun-cli.md` §3's `xctrace export --xpath` for parsing the trace into a comparable number in CI.
+- Treat cold-start / hitch-ratio / memory-footprint targets as **CI gates**, not aspirational docs: a scripted UI test that launches the app, captures an `App Launch` or `Animation Hitches` trace via `xctrace`, and fails the build if the measured value regresses past a checked-in baseline is the only reliable way to prevent silent perf drift across a team. Pair with  §3's `xctrace export --xpath` for parsing the trace into a comparable number in CI.
 
 ---
 
@@ -321,4 +320,4 @@ Wrap any interval you want visible both in local Instruments traces (Time Profil
 - [Optimizing views in SwiftUI using EquatableView — Swift with Majid](https://swiftwithmajid.com/2020/01/22/optimizing-views-in-swiftui-using-equatableview/)
 - [Identifying High Memory Use with Jetsam Event Reports — Apple Developer Documentation](https://developer.apple.com/tutorials/data/documentation/xcode/identifying-high-memory-use-with-jetsam-event-reports.md)
 - [`CGImageSourceCreateThumbnailAtIndex` downsampling technique — Swift Senpai](https://swiftsenpai.com/development/reduce-uiimage-memory-footprint/)
-- Source of truth: [`bolt/reference/profiling-tools.md`](../../bolt/reference/profiling-tools.md), [`reference/modern-stack.md`](modern-stack.md), [`reference/xcrun-cli.md`](xcrun-cli.md)
+- Source of truth: [`bolt/reference/profiling-tools.md`](../../bolt/reference/profiling-tools.md), [`reference/modern-stack.md`](modern-stack.md)

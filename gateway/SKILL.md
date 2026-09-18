@@ -239,10 +239,7 @@ Receives data models, implementation needs, and security requirements upstream; 
 | `reference/error-pagination.md` | Error format/catalog or offset/cursor pagination. (For rate-limit, see `rate-limit-patterns.md`.) |
 | `reference/api-decision-tree.md` | REST vs GraphQL vs gRPC selection flowchart. |
 | `reference/output-format-template.md` | The standard API design output template. |
-| `reference/api-design-anti-patterns.md` | REST API design anti-patterns: URL/HTTP method/error/pagination/response design. |
 | `reference/api-security-anti-patterns.md` | API security anti-patterns: OWASP Top 10/auth/CORS/rate limiting/defense-in-depth. |
-| `reference/versioning-governance-anti-patterns.md` | Versioning/governance anti-patterns — breaking-change management, spec drift, contract testing. |
-| `reference/graphql-spec-anti-patterns.md` | GraphQL/OpenAPI spec anti-patterns: schema design/N+1/type safety/Design-First. |
 | `reference/ai-api-patterns.md` | AI/LLM API design — SSE streaming, tool use, structured output, AI-endpoint errors. |
 | `reference/rest-api-design.md` | `rest` — resource modeling, URI design, status taxonomy, ETag, cursor pagination, RMM, RFC 9457. |
 | `reference/graphql-design.md` | `graphql` — schema-first vs code-first, DataLoader, persisted queries, depth limits, Federation/Gateway, subscriptions. |

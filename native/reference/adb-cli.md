@@ -2,7 +2,7 @@
 
 Production-grade reference for `adb` (Android Debug Bridge) covering the subcommands a native Android developer or CI script actually uses. Focus: app management, device control, logging, state simulation, and performance tracing.
 
-> Scope: Android development from terminal or CI — installs, instrumentation runs, debugging, demo recording, Doze / network state simulation, Perfetto tracing. Use this alongside `reference/xcrun-cli.md` for iOS / Android symmetric tooling.
+> Scope: Android development from terminal or CI — installs, instrumentation runs, debugging, demo recording, Doze / network state simulation, Perfetto tracing. Use this alongside  for iOS / Android symmetric tooling.
 
 ---
 
@@ -267,7 +267,6 @@ adb logcat --pid=$(adb shell pidof com.example.app) -v color
 - `reference/mobile-ci-cd.md` — Gradle / fastlane / GitHub Actions integration with `adb install` and `connectedAndroidTest`
 - `reference/bg-execution.md` — Doze / WorkManager scenarios that `dumpsys deviceidle` exercises
 - `reference/release-rollout.md` — Play staged rollout that consumes `bundletool` + signed AAB
-- `reference/xcrun-cli.md` — iOS counterpart
 
 ### iOS ↔ Android command map (cross-platform quick reference)
 
