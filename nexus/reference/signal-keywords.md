@@ -76,10 +76,10 @@
 | `value proposition canvas`, `VPC`, `jobs pains gains`, `pain relievers`, `gain creators`, `problem-solution fit` | `VALUE_PROP_CANVAS` (Spark) |
 | `business model canvas`, `BMC`, `lean canvas`, `business model design`, `9 building blocks` | `BUSINESS_MODEL_CANVAS` (Magi) |
 | `PQL`, `product-qualified lead`, `PQA`, `product-qualified account`, `PLG conversion signal` | `PQL_MODELING` (Pulse) |
-| `Fogg behavior model`, `B=MAP`, `behavior design`, `tiny habits`, `motivation ability prompt` | `BEHAVIOR_DESIGN` (Growth — `habit-formation.md`) |
+| `Fogg behavior model`, `B=MAP`, `behavior design`, `tiny habits`, `motivation ability prompt` | `BEHAVIOR_DESIGN` (Growth) |
 | `pillar-cluster`, `topic cluster`, `content architecture`, `keyword cannibalization`, `internal linking strategy` | `CONTENT_ARCHITECTURE` (Growth) |
 | `Bullseye`, `19 traction channels`, `channel selection`, `See-Think-Do-Care`, `RACE planning`, `lifecycle marketing plan` | `CHANNEL_LIFECYCLE` (Growth) |
-| `CBBE`, `brand equity`, `Keller pyramid`, `brand salience`, `brand resonance`, `brand strength` | `BRAND_EQUITY` (Compete — `brand-equity.md`) |
+| `CBBE`, `brand equity`, `Keller pyramid`, `brand salience`, `brand resonance`, `brand strength` | `BRAND_EQUITY` (Compete) |
 | `pre-mortem`, `premortem`, `FMEA`, `failure modes`, `RPN`, `AP`, `failure scenario enumeration`, `what could go wrong` | `PREMORTEM` (Omen → Ripple) |
 | `manual QA`, `TestRail`, `Xray`, `Zephyr`, `Qase`, `test case design`, `BVA`, `equivalence class`, `decision table`, `exploratory charter`, `manual test procedure` | `MANUAL_QA` (Matrix) |
 | `test pyramid`, `trophy`, `honeycomb`, `coverage heatmap`, `flake dashboard`, `Wilson lower-bound`, `mutation overlay`, `junit.xml visualize`, `lcov visualize`, `test shape` | `TEST_INTELLIGENCE` (Canvas/Pulse) |

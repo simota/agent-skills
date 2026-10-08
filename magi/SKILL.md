@@ -28,7 +28,7 @@ CAPABILITIES_SUMMARY:
 - expert_conclave: Independently reconstruct 2-5 named thinkers and preserve their tensions before optional decision arbitration
 - attested_expert_profiles: Maintain date-scoped, sourced reasoning profiles with ATTESTED / INFERRED / SPECULATIVE labels and ethics gates
 
-- strategic_scenario_simulation: Baseline/optimistic/pessimistic business scenarios, SWOT/PESTLE/Porter/BCG/Ansoff/Blue Ocean lenses, KPI forecasting across horizons, TAM/SAM/SOM sizing, disruption and wargaming analysis — absorbed from `helm` 2026-08-20
+- strategic_scenario_simulation: Baseline/optimistic/pessimistic business scenarios, SWOT/PESTLE/Porter/BCG/Ansoff/Blue Ocean lenses, KPI forecasting across horizons, TAM-driven long-range modeling with a disruption case, wargaming analysis — absorbed from `helm` 2026-08-20
 
 COLLABORATION_PATTERNS:
 - Pattern A: Architecture Arbitration (Atlas → Magi → Builder/Scaffold)

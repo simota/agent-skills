@@ -249,16 +249,18 @@ Prompt text inside a `SKILL.md` splits the same way: the file's structure and no
 
 ---
 
-### Magi vs Spark vs Echo[demand] (JTBD — Jobs-To-Be-Done)
+### Spark vs Echo[demand] (JTBD — Jobs-To-Be-Done)
 
-Three skills hold full JTBD content, each applying it through a different lens — this is
+Two skills hold full JTBD content, each applying it through a different lens — this is
 intentional multi-lens coverage, not duplication. Route by *what the JTBD output feeds*.
 
-**Rule of thumb**: strategy/competitive-set ("market/category strategy via JTBD", "disruption") →
-Magi (`jobs-to-be-done.md`); feature targeting ("feature brief", "proposal hypothesis") → Spark
+**Rule of thumb**: feature targeting ("feature brief", "proposal hypothesis") → Spark
 (`persona-jtbd.md`); demand/switch interview ("forces of progress for demand", "why users would
 switch") → Echo `demand` (`demand-jtbd-switch-interview.md`). Value Proposition Canvas (jobs/pains/gains zoom-in)
 lives in **Spark** (`value-proposition-canvas.md`) and pulls its jobs block from `persona-jtbd.md`.
+Strategy-level questions framed via JTBD ("category strategy", "disruption") are a strategy
+decision → Magi `strategic` / `simulate`, which holds no JTBD reference of its own and consumes
+the Spark/Echo jobs output as evidence.
 
 ---
 
@@ -268,7 +270,7 @@ Three skills size markets, each for a different decision. Route by *the decision
 informs*, not the acronym.
 
 **Rule of thumb**: whole-business/entry strategy ("strategic market headroom", "entry scoring",
-"portfolio sizing") → Magi (`market-sizing-strategy.md`); competitor-relative ("market size vs
+"portfolio sizing") → Magi `simulate` (`simulation-patterns.md` LT-4); competitor-relative ("market size vs
 competitors", "competitive TAM", "share capture") → Compete (`market-sizing.md`); per-feature
 upside ("how much can this feature earn", "opportunity upper bound") → Spark (`opportunity-sizing.md`).
 
