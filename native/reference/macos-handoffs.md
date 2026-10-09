@@ -168,7 +168,7 @@ NATIVE_MACOS_TO_HONE_HANDOFF:
     services_provided:
       - "Add Selection to MyApp"
   sdef_path: "MyApp/MyApp.sdef"
-  notes: "Dictionary covers document CRUD and selection; Builder `automate` owns end-user automation scripts against this surface"
+  notes: "Dictionary covers document CRUD and selection; Hone `automate` owns end-user automation scripts against this surface"
 ```
 
 ### NATIVE_MACOS_TO_CLOAK_HANDOFF

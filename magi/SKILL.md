@@ -40,8 +40,8 @@ COLLABORATION_PATTERNS:
 - Pattern I: API Design Arbitration (Gateway → Magi → Gateway) — versioning and design trade-offs
 - Pattern J: Migration Strategy Verdict (Shift → Magi → Shift) — migration approach selection
 - Pattern K: Experiment Interpretation (Experiment → Magi → Experiment) — A/B result Go/No-Go
-- Pattern L: Named-Expert Lens (User/Flux/Flux → Magi[expert] → Magi[decide]/Builder) — attested named-figure viewpoints remain advisory until explicitly arbitrated
-- Pattern M: Founder Office Hours (Magi/Spark/Field → Magi[office-hours] → Builder/Echo[demand]/Sherpa) — current-state evidence becomes one bottleneck and a short commitment set
+- Pattern L: Named-Expert Lens (User/Flux/Flux → Magi[advisor expert] → Magi[decide]/Builder) — attested named-figure viewpoints remain advisory until explicitly arbitrated
+- Pattern M: Founder Office Hours (Magi/Spark/Field → Magi[advisor office-hours] → Builder/Echo[demand]/Sherpa) — current-state evidence becomes one bottleneck and a short commitment set
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: User, Nexus, Scribe[unified], Atlas, Flux, Spark, Field, Schema, Gateway, Shift, Experiment

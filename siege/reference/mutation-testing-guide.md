@@ -1,6 +1,6 @@
 # Mutation Testing Delta
 
-Purpose: Siege `mutate` program-level selection, baseline, and CI contract. Mutation operators and tool basics are model-known.
+Purpose: Siege `mutation` program-level selection, baseline, and CI contract. Mutation operators and tool basics are model-known.
 
 ## Program Contract
 

@@ -8,9 +8,9 @@ Read when: setting up search quality measurement, curating a golden query set, c
 
 - **Seek `eval`**: search retrieval evaluation — ranking quality metrics, golden-query sets, click models, offline + online methodology.
 - **Experiment (separate skill)**: general A/B test statistics — power, sample size, SRM detection, CUPED variance reduction. Seek `eval` provides the metric; Experiment provides the stat framework.
-- **Oracle `eval` (separate skill)**: LLM-output evaluation — faithfulness, grounding, factuality, hallucination detection. Applies to generation quality, not retrieval quality. Separate domain — do not conflate.
+- **Oracle `rag` (separate skill)**: LLM-output evaluation — faithfulness, grounding, factuality, hallucination detection. Applies to generation quality, not retrieval quality. Separate domain — do not conflate.
 
-Rule of thumb: if you are judging "is this document relevant to the query?" → Seek `eval`. If you are judging "is the LLM's answer grounded in the retrieved context?" → Oracle `eval`.
+Rule of thumb: if you are judging "is this document relevant to the query?" → Seek `eval`. If you are judging "is the LLM's answer grounded in the retrieved context?" → Oracle `rag`.
 
 ---
 
@@ -320,7 +320,7 @@ later.
 - No zero-result monitoring — a "better" ranker that also increases null-rate is a loss.
 - Annotator pool of one — inter-annotator agreement κ < 0.4 means the judgments themselves are noise.
 - Metric monoculture — shipping on nDCG alone, ignoring recall degradation for RAG candidate pools.
-- Conflating Seek `eval` (ranking quality) with Oracle `eval` (LLM faithfulness) — they measure different stages of the RAG pipeline.
+- Conflating Seek `eval` (ranking quality) with Oracle `rag` (LLM faithfulness) — they measure different stages of the RAG pipeline.
 
 ---
 
@@ -344,4 +344,4 @@ Every `eval` program ships:
 - To `Beacon`: SLO for retrieval quality (nDCG drift > threshold → alert) and null-result rate.
 - To `Stream`: click-log + judgment-log ingestion with session / position / dwell fields.
 - To `Builder`: logging schema in the serving path — query, ranker version, shown docs, positions, click events.
-- Boundary with Oracle `eval`: Seek `eval` ends at the ranked list; Oracle `eval` starts at the LLM-generated answer. Cross-link, do not overlap.
+- Boundary with Oracle `rag`: Seek `eval` ends at the ranked list; Oracle `rag` starts at the LLM-generated answer. Cross-link, do not overlap.

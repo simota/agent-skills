@@ -342,6 +342,30 @@ class TestRoutingSurface(CheckerCase):
             "routing-oracle.py", "Gateway[audit]", "--severity", "error"
         )
 
+    def test_a_scope_boundary_pointer_to_a_retired_subcommand_fails(self):
+        """RO-10. `**Shift `migrate`**` survived the rename to `plan` in a
+        reference file RO-9 never read; Shift would fall back to its default."""
+        self.edit(
+            "shift/reference/framework-migration.md",
+            "**Shift `plan` (default)**",
+            "**Shift `migrate` (default)**",
+        )
+        self.expect_caught(
+            "routing-oracle.py", "`migrate` is not a shift subcommand", "--severity", "error"
+        )
+
+    def test_a_recipe_mode_in_subcommand_position_fails(self):
+        """RO-10. `expert` is a mode of Magi's `advisor`, not a subcommand:
+        `Magi[expert]` dispatches on `expert` and falls back."""
+        self.edit(
+            "magi/SKILL.md",
+            "→ Magi[advisor expert] →",
+            "→ Magi[expert] →",
+        )
+        self.expect_caught(
+            "routing-oracle.py", "write `Magi[advisor expert]`", "--severity", "error"
+        )
+
 
 class TestLessonsRegister(CheckerCase):
     """`lint-lessons.py`. The register's entire value is what it refuses, so

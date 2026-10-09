@@ -2,7 +2,7 @@
 """
 Routing Oracle — mechanical reliability checks for Nexus's routing machinery.
 
-Nine checks, with fail-open execution (S4: a script crash prints a warning
+Ten checks, with fail-open execution (S4: a script crash prints a warning
 and the remaining checks still run). Warning/error modes do not block on an
 internal crash; strict mode blocks on every warning, including incomplete checks:
 
@@ -75,6 +75,34 @@ internal crash; strict mode blocks on every warning, including incomplete checks
        `Radar[safety-net characterization]`) are not single tokens and are
        not checked.
 
+  RO-10 Corpus-wide subcommand references
+       RO-9's rule, applied outside the routing matrix, but only to the two
+       forms that are unambiguous across the whole corpus (every SKILL.md and
+       reference/*.md of a live skill, plus _common/*.md; fenced examples and
+       CHANGELOG.md excluded):
+         (a) a bold lead-in `**Skill `token`**` / `**Skill `token mode`**`
+             — the Scope Boundary convention, where the backticked first token
+             names the skill's Recipe. Found live: `**Shift `migrate`**`,
+             `**Siege `mutate`**`, `**echo `request`**` (a `demand` mode
+             written in subcommand position), `**Oracle `eval`**`.
+         (b) `Skill[mode]` where `mode` is not a subcommand but is declared in
+             that skill's SKILL.md as the second token of one (`advisor
+             expert`). Found live: `Magi[expert]`, `Magi[office-hours]` —
+             the dispatch reads `expert` as the first token and falls back.
+       Other bracket forms (`Atlas[architecture]`, `Builder[codex]`,
+       `canon[legal]`) are role / engine / domain annotations outside the
+       routing matrix and are deliberately not checked here.
+       Complexity Budget (`_common/HARNESS_DEBT.md` 3b):
+         failure  — a cross-skill pointer names a subcommand the target does
+                    not dispatch, so following it silently runs the default
+                    Recipe; RO-9 only covered routing-matrix.md
+         effect   — the two forms above cannot drift. Does NOT check free
+                    `Skill[token]` annotations or plain-prose mentions
+         owner    — gauge (it owns the checker suite)
+         removal  — delete when skill pointers become structured data resolved
+                    at load time instead of prose, or fold into RO-9 when the
+                    corpus adopts one hint notation everywhere
+
 Usage:
   python3 _common/scripts/routing-oracle.py [--severity warning|error|strict]
 
@@ -101,7 +129,7 @@ import traceback
 from pathlib import Path
 
 import _corpus
-from _markdown import fenced_blocks, markdown_section as read_markdown_section
+from _markdown import fenced_blocks, markdown_section as read_markdown_section, without_fenced_examples
 from _recipes import active_text, dispatch_allowlist, recipe_cells
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -509,12 +537,9 @@ def _dispatchable_tokens(skill_md: Path) -> set[str] | None:
     return tokens or None
 
 
-def check_recipe_hint_subcommands(findings: list[Finding]):
-    """RO-9: single-token `Skill[token]` hints in routing-matrix.md's Primary
-    Chain / Recipe Hints columns must name a subcommand the skill dispatches."""
-    if not ROUTING_MATRIX.is_file():
-        findings.append(Finding("RO-9", "WARNING", "routing-matrix.md not found — recipe-hint check skipped"))
-        return
+def _live_skills() -> dict[str, Path]:
+    """Lower-cased live skill name -> SKILL.md: owned top-level skills, then
+    the canonical project-local `.claude/skills/` copies (never the mirror)."""
     skills: dict[str, Path] = {}
     for d in _corpus.iter_skill_dirs(REPO_ROOT):
         skills[d.name.lower()] = d / "SKILL.md"
@@ -523,6 +548,16 @@ def check_recipe_hint_subcommands(findings: list[Finding]):
         for d in sorted(local.iterdir()):
             if (d / "SKILL.md").is_file():
                 skills.setdefault(d.name.lower(), d / "SKILL.md")
+    return skills
+
+
+def check_recipe_hint_subcommands(findings: list[Finding]):
+    """RO-9: single-token `Skill[token]` hints in routing-matrix.md's Primary
+    Chain / Recipe Hints columns must name a subcommand the skill dispatches."""
+    if not ROUTING_MATRIX.is_file():
+        findings.append(Finding("RO-9", "WARNING", "routing-matrix.md not found — recipe-hint check skipped"))
+        return
+    skills = _live_skills()
     allow_cache: dict[str, set[str] | None] = {}
     checked = 0
     bad = []
@@ -555,6 +590,72 @@ def check_recipe_hint_subcommands(findings: list[Finding]):
         findings.append(Finding("RO-9", "WARNING", "no single-token Skill[token] hints found — recipe-hint check may be stale vs table format"))
 
 
+# RO-10 form (a): `**Skill `token`` or `**Skill `token mode ...``. The tail is
+# kebab words only, so `**Native `git --update-refs`` (an adjective plus a
+# command line) does not read as a skill pointer.
+BOLD_SUBCOMMAND_RE = re.compile(
+    r"\*\*([A-Za-z][A-Za-z0-9]*) `([a-z0-9][a-z0-9-]*)(?: [a-z0-9][a-z0-9-]*)*`")
+# A backticked `subcommand mode` pair inside a skill's own SKILL.md.
+MODE_PAIR_RE = re.compile(r"`([a-z0-9][a-z0-9-]*) ([a-z][a-z0-9-]*)`")
+
+
+def check_corpus_subcommand_references(findings: list[Finding]):
+    """RO-10: unambiguous cross-skill subcommand pointers outside the routing
+    matrix must name a token the target skill dispatches."""
+    skills = _live_skills()
+    allowed: dict[str, set[str]] = {}
+    modes: dict[str, dict[str, str]] = {}  # skill -> {mode: owning subcommand}
+    for name, skill_md in skills.items():
+        tokens = _dispatchable_tokens(skill_md)
+        if tokens is None:
+            continue
+        allowed[name] = tokens
+        text = without_fenced_examples(skill_md.read_text(encoding="utf-8"))
+        modes[name] = {}
+        for m in MODE_PAIR_RE.finditer(text):
+            if m.group(1) in tokens and m.group(2) not in tokens:
+                modes[name].setdefault(m.group(2), m.group(1))
+
+    files: list[Path] = []
+    for skill_md in skills.values():
+        files.append(skill_md)
+        reference = skill_md.parent / "reference"
+        if reference.is_dir():
+            files.extend(sorted(reference.glob("*.md")))
+    files.extend(sorted((REPO_ROOT / "_common").glob("*.md")))
+
+    checked = 0
+    bad: list[str] = []
+    for path in files:
+        if path.name == "CHANGELOG.md" or _corpus.is_excluded_path(path, REPO_ROOT):
+            continue
+        rel = path.relative_to(REPO_ROOT)
+        text = without_fenced_examples(path.read_text(encoding="utf-8"))
+        for number, line in enumerate(text.splitlines(), 1):
+            for match in BOLD_SUBCOMMAND_RE.finditer(line):
+                name, token = match.group(1).lower(), match.group(2)
+                if name not in allowed:
+                    continue
+                checked += 1
+                if token not in allowed[name]:
+                    bad.append(f"{rel}:{number}: `{match.group(0)}` — `{token}` is not a {name} subcommand")
+            for match in RECIPE_HINT_RE.finditer(line):
+                name, token = match.group(1).lower(), match.group(2)
+                if name not in allowed or token in allowed[name] or token not in modes[name]:
+                    continue
+                owner = modes[name][token]
+                bad.append(f"{rel}:{number}: `{match.group(0)}` — `{token}` is a mode of "
+                           f"`{owner}`, write `{match.group(1)}[{owner} {token}]`")
+    if bad:
+        findings.append(Finding(
+            "RO-10", "ERROR",
+            "subcommand reference(s) the target skill does not dispatch "
+            "(following them silently runs its default Recipe): " + "; ".join(bad),
+        ))
+    if checked == 0:
+        findings.append(Finding("RO-10", "WARNING", "no `**Skill `token`` references found — corpus check may be stale vs prose format"))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--severity", choices=("warning", "error", "strict"), default="warning")
@@ -570,6 +671,7 @@ def main() -> int:
     safe_check(check_retired_reference_residue, findings)
     safe_check(check_confidence_gate_shape, findings)
     safe_check(check_recipe_hint_subcommands, findings)
+    safe_check(check_corpus_subcommand_references, findings)
 
     errors = [f for f in findings if f.level == "ERROR"]
     warnings = [f for f in findings if f.level == "WARNING"]

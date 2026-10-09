@@ -4,10 +4,10 @@ Purpose: Drive past surface symptoms to the true unmet need by iteratively askin
 
 ## Scope Boundary
 
-- **echo `5whys`**: iterative why-chain on a stated user request, ending in a root-cause demand (not a feature). Outputs cause-tree + restated unmet need.
-- **echo `request` (default)**: collects requests as stated. Use `5whys` when a request feels solution-flavored or shallow.
-- **echo `need`**: surveys multiple blind spots laterally. `5whys` drills vertically into one.
-- **echo `jtbd`**: structures the job around forces and stages. `5whys` is faster, lighter, and complementary — often used to clean up a request *before* JTBD modeling.
+- **echo `demand 5whys`**: iterative why-chain on a stated user request, ending in a root-cause demand (not a feature). Outputs cause-tree + restated unmet need.
+- **echo `demand request` (default)**: collects requests as stated. Use `5whys` when a request feels solution-flavored or shallow.
+- **echo `demand need`**: surveys multiple blind spots laterally. `5whys` drills vertically into one.
+- **echo `demand jtbd`**: structures the job around forces and stages. `5whys` is faster, lighter, and complementary — often used to clean up a request *before* JTBD modeling.
 - **Field (elsewhere)**: owns root-cause analysis grounded in real interview transcripts. Echo[demand] generates synthetic why-chains as hypothesis; Field validates.
 - **Scout (elsewhere)**: applies 5 Whys to *bug* root causes. Echo[demand] applies it to *demand* root causes — symptom is "user said X," not "system did Y."
 - **Voice (elsewhere)**: real feedback. 5 Whys on real review text is Voice + Field; 5 Whys on hypothetical user voice is Echo[demand].

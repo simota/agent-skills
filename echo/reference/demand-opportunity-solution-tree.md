@@ -4,11 +4,11 @@ Purpose: Connect a single business outcome to the experiments that move it, via 
 
 ## Scope Boundary
 
-- **echo `opportunity`**: builds an OST anchored on a stated outcome. Outputs the four-layer hierarchy (Outcome → Opportunity → Solution → Experiment) populated with synthetic content.
-- **echo `request` (default)**: list of feature requests, not structured into a tree. Use OST when the question is "where should we invest discovery effort?" rather than "what do users want?"
-- **echo `need`**: lateral blind-spot scan. OST is hierarchical and outcome-anchored.
-- **echo `jtbd`**: a JTBD analysis is upstream of OST — the job statement often becomes the outcome or first-level opportunity. JTBD is forces-and-stages; OST is hierarchy-and-experiments.
-- **echo `5whys`**: cleans up a single request into a root need. OST organizes *many* needs against *one* outcome.
+- **echo `demand opportunity`**: builds an OST anchored on a stated outcome. Outputs the four-layer hierarchy (Outcome → Opportunity → Solution → Experiment) populated with synthetic content.
+- **echo `demand request` (default)**: list of feature requests, not structured into a tree. Use OST when the question is "where should we invest discovery effort?" rather than "what do users want?"
+- **echo `demand need`**: lateral blind-spot scan. OST is hierarchical and outcome-anchored.
+- **echo `demand jtbd`**: a JTBD analysis is upstream of OST — the job statement often becomes the outcome or first-level opportunity. JTBD is forces-and-stages; OST is hierarchy-and-experiments.
+- **echo `demand 5whys`**: cleans up a single request into a root need. OST organizes *many* needs against *one* outcome.
 - **Field (elsewhere)**: real-user OST evidence. Field runs ongoing interviews and populates real opportunities from transcripts. Echo[demand] generates a synthetic seed tree to compare against.
 - **Spark (elsewhere)**: takes a chosen solution branch and produces a feature spec. Echo[demand] stops at the experiment level — Spark elaborates the solution into shippable scope.
 - **Experiment (elsewhere)**: designs and runs the actual test. Echo[demand] drafts experiment hypotheses; Experiment owns sample size, instrumentation, and analysis.

@@ -4,10 +4,10 @@ Purpose: Generate synthetic JTBD artifacts (Switch interview transcripts, four-f
 
 ## Scope Boundary
 
-- **echo `jtbd`**: synthetic Switch interview, four-forces table, Job Map, and competing-job analysis from a stated job. Outputs are hypotheses framed in user voice.
-- **echo `request` (default)**: persona-led feature requests. Use when the question is "what do users want?" rather than "what progress are they hiring for?"
-- **echo `need`**: surfaces team blind spots via curse-of-knowledge patterns — broader than one job.
-- **echo `challenge` / `roleplay`**: assumption pushback / deep persona embodiment — not job-anchored.
+- **echo `demand jtbd`**: synthetic Switch interview, four-forces table, Job Map, and competing-job analysis from a stated job. Outputs are hypotheses framed in user voice.
+- **echo `demand request` (default)**: persona-led feature requests. Use when the question is "what do users want?" rather than "what progress are they hiring for?"
+- **echo `demand need`**: surfaces team blind spots via curse-of-knowledge patterns — broader than one job.
+- **echo `demand challenge` / `roleplay`**: assumption pushback / deep persona embodiment — not job-anchored.
 - **Field (elsewhere)**: owns *real-user* JTBD. Real Switch interviews, video coding, and forces ranking from live transcripts are Field's domain. Echo[demand] generates *synthetic* JTBD as a hypothesis seed — Field validates with humans.
 - **Spark (elsewhere)**: turns JTBD into feature spec. Echo[demand] stops at "the job and the forces"; Spark designs the solution.
 - **Voice (elsewhere)**: real feedback analysis. Voice tells you what users said; Echo[demand] simulates what users *would* say if interviewed under the Switch protocol.
