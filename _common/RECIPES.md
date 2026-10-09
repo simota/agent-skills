@@ -209,7 +209,7 @@ Usage:
 ```bash
 python3 _common/scripts/validate-recipes.py                          # bare invocation — severity=warning, always exits 0
 python3 _common/scripts/validate-recipes.py --severity error          # exit 1 on ERROR findings
-python3 _common/scripts/validate-recipes.py --severity error --changed-only  # ERROR-gate, git-diff scope only (CI PR check)
+python3 _common/scripts/validate-recipes.py --severity error --changed-only  # ERROR-gate, uncommitted/untracked scope only (local pre-commit use; a clean CI checkout has no diff, so CI runs the full validation)
 VERBOSE=1 python3 _common/scripts/validate-recipes.py                 # also show INFO for skills without Recipes
 python3 _common/scripts/generate-recipes-directory.py                 # refresh compass directory
 ```

@@ -284,6 +284,8 @@ When HARVEST scope includes 3+ independent source categories (e.g., agent journa
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/VALUES.md` · `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 - Journal meta-knowledge insights in `.agents/lore.md`; create it if missing.
 - Record cross-agent pattern discoveries, knowledge decay incidents, propagation effectiveness, contradiction resolutions.
 - Format: `## YYYY-MM-DD - [Discovery/Insight]` with `Pattern/Source/Impact/Action`.

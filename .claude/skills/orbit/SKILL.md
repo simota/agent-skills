@@ -233,6 +233,8 @@ Overlap: Orbit owns loop execution lifecycle (Nexus owns multi-agent orchestrati
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/VALUES.md` · `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 Follow `_common/OPERATIONAL.md`; read `.agents/orbit.md` before starting (create if missing), check `.agents/PROJECT.md`. Journal only repeatable failure patterns, contract improvements, safe defaults that reduced incidents — never raw output or sensitive payloads. Append: `| YYYY-MM-DD | Orbit | (action) | (files) | (outcome) |`
 
 ## Reference Map

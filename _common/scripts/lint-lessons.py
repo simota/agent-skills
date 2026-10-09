@@ -60,7 +60,23 @@ INTENTION_PHRASES = (
     "keep in mind", "don't forget", "do not forget", "take care to", "be sure to",
     "we should", "one should", "agents should", "should always", "should remember",
     "aim to", "strive to", "be mindful", "pay attention", "bear in mind",
+    # Bare "should" (LS-2 above) -- "reviewers should run the checker" names who
+    # ought to act, not what catches the failure. Matched as a whole word.
+    "should",
 )
+
+
+def intention_phrase(mechanism: str) -> str | None:
+    """The first intention phrasing in `mechanism`, ignoring code spans.
+
+    Whitespace is collapsed first, so a doubled space or a line wrap inside a
+    phrase ("be  careful") cannot slip past a literal substring match.
+    """
+    lowered = re.sub(r"\s+", " ", strip_code(mechanism)).lower()
+    for phrase in INTENTION_PHRASES:
+        if re.search(r"(?<![a-z])" + re.escape(phrase) + r"(?![a-z])", lowered):
+            return phrase
+    return None
 
 
 def strip_code(text: str) -> str:
@@ -129,15 +145,13 @@ def check(text: str) -> list[tuple[str, str, str]]:
                 f"find the check, or delete the row and admit nobody is keeping it",
             ))
         else:
-            lowered = strip_code(mechanism).lower()
-            for phrase in INTENTION_PHRASES:
-                if phrase in lowered:
-                    findings.append((
-                        "P0", "LS-2",
-                        f"{ident}: mechanism reads as an intention ({phrase!r}), not a check. "
-                        f"Either something enforces it or the row does not belong here",
-                    ))
-                    break
+            phrase = intention_phrase(mechanism)
+            if phrase is not None:
+                findings.append((
+                    "P0", "LS-2",
+                    f"{ident}: mechanism reads as an intention ({phrase!r}), not a check. "
+                    f"Either something enforces it or the row does not belong here",
+                ))
 
         if not where:
             findings.append(("P1", "LS-3", f"{ident}: no `Where` -- name the file that carries the mechanism"))
