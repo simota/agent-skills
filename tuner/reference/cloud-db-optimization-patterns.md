@@ -48,23 +48,22 @@ ORDER BY plan_created DESC;
 
 ### aurora_stat_plans
 
-`aurora_stat_plans` extends `pg_stat_statements` with plan-level statistics unique to Aurora.
+`aurora_stat_plans(showtext)` is a function (Aurora PostgreSQL 14.10+ / 15.5+) that returns `aurora_stat_statements` columns plus plan-level ones; it requires `aurora_compute_plan_id` enabled and `pg_stat_statements` preloaded.
 
 ```sql
 -- Plans with highest total cost
 SELECT queryid, planid,
-       total_time / calls AS avg_ms,
-       plan_hash,
+       total_exec_time / calls AS avg_ms,
        calls
-FROM aurora_stat_plans
-ORDER BY total_time DESC
+FROM aurora_stat_plans(true)
+ORDER BY total_exec_time DESC
 LIMIT 20;
 
 -- Detect plan changes for a specific query
-SELECT queryid, planid, plan_created, calls
-FROM aurora_stat_plans
+SELECT queryid, planid, plan_captured_time, calls, explain_plan
+FROM aurora_stat_plans(true)
 WHERE queryid = '<target_queryid>'
-ORDER BY plan_created DESC;
+ORDER BY plan_captured_time DESC;
 ```
 
 ### Reader Instance Optimization
@@ -76,7 +75,7 @@ ORDER BY plan_created DESC;
 -- reader: cluster-xxx.cluster-ro-rds.amazonaws.com
 
 -- Identify read-heavy queries for reader offload
-SELECT query, calls, total_time / calls AS avg_ms
+SELECT query, calls, total_exec_time / calls AS avg_ms
 FROM pg_stat_statements
 WHERE query NOT ILIKE '%insert%'
   AND query NOT ILIKE '%update%'

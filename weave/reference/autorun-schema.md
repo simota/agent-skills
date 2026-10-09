@@ -1,6 +1,6 @@
 # Weave — AUTORUN `_STEP_COMPLETE` Schema
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). On AUTORUN, run `CAPTURE → MODEL → VALIDATE → HANDOFF` and emit `_STEP_COMPLETE`.
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). On AUTORUN, run `CAPTURE → MODEL → VALIDATE → REFINE → HANDOFF` and emit `_STEP_COMPLETE`.
 
 ```yaml
 _STEP_COMPLETE:

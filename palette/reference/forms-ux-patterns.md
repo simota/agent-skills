@@ -115,7 +115,7 @@ Rules:
 
 | Rule | Why |
 |------|-----|
-| Show progress (1 of 4, stepper, progress bar) | WCAG 2.2 SC 3.2.6 (consistent help); reduces abandonment |
+| Show progress (1 of 4, stepper, progress bar) | Orients users and reduces abandonment; if a help mechanism is offered, keep it in the same place on every step (WCAG 2.2 SC 3.2.6 Consistent Help) |
 | Save progress on each step | Browser refresh must not wipe the form |
 | Allow back-navigation without losing data | Users need to verify prior entries |
 | Summarize on final step before submit | "Review & submit" reduces error-correction round trips |

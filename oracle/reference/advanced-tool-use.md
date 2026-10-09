@@ -39,7 +39,7 @@ Support varies **per tool and per tool version** — never infer it from a model
 
 | Gotcha | Detail |
 |--------|--------|
-| `web_fetch` on Opus 5 | **Not supported.** The tool is GA and un-renamed; Opus 5 is simply absent from its model list. `web_search` *is* supported on Opus 5 |
+| `web_fetch` / `web_search` versions | The dynamic-filtering versions (`web_fetch_20260209` / `web_search_20260209`) require Opus 4.6+ / Sonnet 4.6+ (Opus 5 included); older models use the basic `web_fetch_20250910` / `web_search_20250305` |
 | Tool search on Sonnet 5 | Sonnet 5 is **absent** from the published tool-search compatibility table (Fable 5, Mythos 5, Opus 5, Opus 4.8/4.7/4.6/4.5, Sonnet 4.6, Sonnet 4.5, Haiku 4.5 are listed). #TODO(agent): re-verify — if accurate, a Sonnet 5 executor cannot defer tool loading |
 | Opus 4.1 and earlier | No tool search support |
 | Bedrock | Server-side tool search only via `InvokeModel`, not the Converse API. Web search unavailable; web fetch unavailable |
@@ -124,7 +124,7 @@ Beta header: `advisor-tool-2026-03-01`.
 | Executor | Valid advisors |
 |----------|----------------|
 | Haiku 4.5 · Sonnet 4.6 | Fable 5, Mythos 5, Opus 5, Opus 4.8/4.7/4.6, Sonnet 4.6 |
-| Sonnet 5 | Fable 5, Mythos 5, Opus 5, Opus 4.8/4.7 |
+| Sonnet 5 | Fable 5, Mythos 5, Opus 5, Opus 4.8/4.7, Sonnet 5 |
 | Opus 5 | Fable 5, Mythos 5, Opus 5 |
 | Fable 5 | Fable 5, Opus 5 |
 
@@ -144,5 +144,5 @@ Beta header: `advisor-tool-2026-03-01`.
 | Many sequential calls over the same tool; large intermediate payloads | Programmatic tool calling (§3) |
 | Right tool chosen, arguments malformed | `input_examples` (§3.5) — cheapest fix, largest accuracy delta |
 | Cheap model does the work well but plans badly | Advisor tool (§4) |
-| Need page/PDF content on Opus 5 | `web_search` + citations, or model that one step on Sonnet 5 / Fable 5 (§1) |
+| Need page/PDF content | `web_fetch` (on a URL already in the conversation) or `web_search` + citations (§1) |
 | < 10 small tools, all used every turn | Plain tool calling — none of the above |

@@ -147,7 +147,7 @@ leave the route free unless the sequence is itself the requirement.
 
 ### Adaptive Thinking
 
-On Opus 5 and Sonnet 5 adaptive thinking is **on by default**; the model decides depth per step, calibrated by `effort` and query complexity. Budget control lives in `effort` — `budget_tokens` is deprecated. `thinking:{type:"disabled"}` is accepted only at effort `high` or below on Opus 5; pairing it with `xhigh`/`max` returns a 400 error.
+On Opus 5 and Sonnet 5 adaptive thinking is **on by default**; the model decides depth per step, calibrated by `effort` and query complexity. Budget control lives in `effort` — `budget_tokens` is removed on Opus 5 / Sonnet 5 (a `400`). `thinking:{type:"disabled"}` is accepted only at effort `high` or below on Opus 5; pairing it with `xhigh`/`max` returns a 400 error.
 
 | Effort | Use case |
 |--------|----------|

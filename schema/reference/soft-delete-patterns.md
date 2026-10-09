@@ -112,7 +112,7 @@ Belt-and-suspenders: combine RLS + view for defense in depth.
 
 ## GDPR Right-to-Erasure (2026-05 stance)
 
-Soft delete preserves PII. GDPR Article 17 (right to erasure) generally requires actual erasure within one month of a valid request — the soft-delete-only model is **not compliant** for production EU/UK data. Combine soft-delete-for-UX with a scheduled hard-erasure pathway. The same posture applies under CCPA/CPRA "right to delete" (15-day acknowledge + 45-day fulfil) and Japan's APPI consent-withdrawal requests.
+Soft delete preserves PII. GDPR Article 17 (right to erasure) generally requires actual erasure within one month of a valid request — the soft-delete-only model is **not compliant** for production EU/UK data. Combine soft-delete-for-UX with a scheduled hard-erasure pathway. The same posture applies under CCPA/CPRA "right to delete" (10-business-day acknowledge + 45-calendar-day fulfil) and Japan's APPI consent-withdrawal requests.
 
 ### Three-stage pathway
 

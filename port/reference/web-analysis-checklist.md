@@ -130,7 +130,7 @@ For every dependency in `package.json` or external `<script>` tag, classify:
 | a11y baseline | aria-\*, focus management, keyboard nav, axe report |
 | PWA features | Service worker, manifest, install prompt, push, background sync |
 
-**Output:** Performance budget data (cold load, FID/INP), lazy-route count (informs feature modules), i18n locale list, a11y baseline.
+**Output:** Performance budget data (cold load, INP — FID was retired as a Core Web Vital in 2024-03), lazy-route count (informs feature modules), i18n locale list, a11y baseline.
 
 ---
 

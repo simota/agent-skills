@@ -85,10 +85,10 @@ Cache correctness is an invalidation problem, not a storage problem.
 Stampede guard for hot keys (TTL expiry on popular item causes thundering herd):
 
 ```ts
-// Probabilistic early expiration
+// Probabilistic early expiration (XFetch: recompute when now - delta*beta*ln(rand) >= expiry)
 function shouldRecompute(ttlRemaining: number, beta = 1.0): boolean {
   const delta = computeCostSeconds; // estimate of DB fetch cost
-  return Math.random() < Math.exp(-beta * ttlRemaining / delta);
+  return Math.random() < Math.exp(-ttlRemaining / (delta * beta)); // beta > 1 favors earlier recompute
 }
 ```
 

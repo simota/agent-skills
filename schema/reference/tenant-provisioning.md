@@ -120,7 +120,7 @@ Default to eager + hybrid for non-trivial templates. Lazy-only causes "empty wor
 | Backup snapshots | Pruned per backup retention (separate policy) | Document — backups outlive primary |
 | Derived analytics | Aggregate-only after deprovision | Anonymize or drop tenant-scoped granularity |
 
-GDPR Article 17 (right to erasure) requires honoring deletion requests within 30 days. But "erase from primary, keep in legal-hold" is a legitimate exception — document which class each table falls into *before* the deletion request arrives.
+GDPR Article 17 (right to erasure) requires honoring deletion requests without undue delay and within one month (Art. 12(3); extendable by two months for complex requests). But "erase from primary, keep in legal-hold" is a legitimate exception — document which class each table falls into *before* the deletion request arrives.
 
 ## Per-Tenant IaC Pattern
 

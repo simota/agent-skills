@@ -26,4 +26,4 @@ Purpose: Stage `visual` decision, accessibility, and theme-handoff contract. Gen
 
 ## Deliverable
 
-Provide polarity rationale, role-based typography and palette tokens, measured contrast, grid/safe-area rules, image/icon/code policies, accessibility/export checks, and prototype-slide evidence. Hand off to Stage `theme` only after the visual system passes on representative slides.
+Provide polarity rationale, role-based typography and palette tokens, measured contrast, grid/safe-area rules, image/icon/code policies, accessibility/export checks, and prototype-slide evidence. Hand off to theming in the target format's Stage recipe (`marp` / `reveal` / `slidev`) only after the visual system passes on representative slides.

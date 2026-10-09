@@ -7,7 +7,7 @@ The headline is the only thing 80% of social-feed scrollers will see. A perfect 
 ## Scope Boundary
 
 - IN scope: title formula generation, variant ranking, platform-specific length tuning, A/B candidate scoring, anti-clickbait calibration.
-- OUT of scope: opening hook (`hook-design.md`), SEO keyword placement (delegate to `growth`), social card / OG text (delegate to `growth`), in-body H2 wording (covered by `article-patterns.md`).
+- OUT of scope: opening hook (SKILL.md DRAFT step), SEO keyword placement (delegate to `growth`), social card / OG text (delegate to `growth`), in-body H2 wording (covered by `article-patterns.md`).
 
 ## Core Concepts
 

@@ -23,7 +23,7 @@
 | Branching | A few decision points | Genuine branching / parallelism |
 | When | Straight chain, no fan-out (any length) | Any branching, fan-out, or convergence |
 
-The discriminator is **shape, not step count**. If the task is a straight chain, design it as a recipe (`recipe-design.md`) regardless of length. Promote to a workflow the moment coordination, branching, or fan-out is real — even below 5 steps.
+The discriminator is **shape, not step count**. If the task is a straight chain, design it as a recipe (`operating-layer-recipe-design.md`) regardless of length. Promote to a workflow the moment coordination, branching, or fan-out is real — even below 5 steps.
 
 ---
 

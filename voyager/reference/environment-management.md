@@ -66,7 +66,13 @@ until curl -sf http://localhost:3000/api/health > /dev/null 2>&1; do
   RETRY_COUNT=$((RETRY_COUNT + 1))
   if [ $RETRY_COUNT -ge $MAX_RETRIES ]; then
     echo "ERROR: App failed to start after $MAX_RETRIES attempts"
-# ...
+    docker compose -f docker-compose.e2e.yml logs
+    exit 1
+  fi
+  sleep 2
+done
+
+echo "E2E environment is ready"
 ```
 
 ---

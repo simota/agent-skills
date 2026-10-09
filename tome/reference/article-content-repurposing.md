@@ -49,7 +49,7 @@ Real repurposing **adapts**:
 | Code samples | dev.to may include English comments; Zenn keeps Japanese; note often hides verbose code in 折りたたみ |
 | Hook | Hook reset for each platform's audience expectation |
 | CTA | note → "次回記事を購読" / dev.to → "follow me on X" / LinkedIn → "what's your experience?" |
-| Title | Per-platform tone (see `headline-patterns.md`) |
+| Title | Per-platform tone (see `article-headline-patterns.md`) |
 | Length budget | Each platform's no-ellipsis title cap |
 | Tags | Different taxonomy per platform |
 | Image | OGP / cover image / thumbnail varies per platform |
