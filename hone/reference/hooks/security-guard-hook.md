@@ -1,6 +1,6 @@
 # Security Guard Hook
 
-Reference for Hone's `security` recipe. PreToolUse hooks for blocking dangerous operations, secret detection, sensitive file protection, and MCP tool ACL.
+Reference for Hone's `hook` recipe (security signal). PreToolUse hooks for blocking dangerous operations, secret detection, sensitive file protection, and MCP tool ACL.
 
 > Defense-in-depth alongside `_common/BOUNDARIES.md`. Hooks enforce at runtime; agent boundaries inform intent.
 

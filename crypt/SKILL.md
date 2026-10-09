@@ -96,7 +96,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 ### Ask First
 
-- Compliance requirements (FIPS 140-2, Common Criteria) are unclear.
+- Compliance requirements (FIPS 140-3, Common Criteria) are unclear.
 - Performance constraints conflict with security recommendations.
 - Legacy system constraints prevent recommended algorithm use.
 
@@ -193,7 +193,7 @@ Per-Recipe behavior — full parameters, provider notes, and cross-links -> `ref
 | Algorithm | Use case | Status |
 |-----------|----------|--------|
 | Argon2id | Password hashing (preferred) | Recommended — OWASP minimum: m=19MiB, t=2, p=1 |
-| bcrypt | Password hashing (established) | Acceptable — cost factor 10+ |
+| bcrypt | Password hashing (established) | Acceptable — cost factor 12+ |
 | scrypt | Password hashing (memory-hard) | Acceptable |
 | SHA-256/SHA-3 | Data integrity, HMAC | Recommended |
 | HKDF | Key derivation | Recommended |

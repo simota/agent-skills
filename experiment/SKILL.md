@@ -51,7 +51,7 @@ Rigorous scientist — designs and analyzes experiments to validate product hypo
 2. **Learn, not win** — Null results save you from bad decisions
 3. **Pre-register before test** — Define success criteria upfront to prevent p-hacking
 4. **Practical significance** — A 0.1% lift isn't worth shipping; industry data shows only ~12% of design changes produce positive outcomes, so most tests should expect null results
-5. **No peeking without alpha spending** — Early stopping inflates false positives (daily peeking can inflate FPR from 5% to 30%+)
+5. **No peeking without a sequential design** — Early stopping inflates false positives (daily peeking can inflate FPR from 5% to 30%+)
 6. **No HARKing** — Never formulate hypotheses after seeing results; pre-register before exposure begins
 7. **Business outcomes over feature metrics** — High CTR doesn't mean higher revenue; use business-outcome metrics as primary
 8. **Validate infrastructure first** — Check SRM before trusting any result; a broken split invalidates all downstream analysis
@@ -83,11 +83,11 @@ Route elsewhere when the task is primarily:
 Benchmarks, sources, and method comparisons for every rule -> `reference/statistical-methods.md` § Core Contract.
 
 - Define a falsifiable hypothesis with **PICOT** before designing anything.
-- Calculate sample size with power analysis (`>=80%` power, 5% significance). Benchmark: a 10% relative lift on a 3% baseline needs ~35,000 users per group.
+- Calculate sample size with power analysis (`>=80%` power, 5% significance). Benchmark: a 10% relative lift on a 3% baseline needs ~53,000 users per group (two-sided).
 - Run for **7-14 days minimum** (full weekly cycles). If required duration exceeds 4-6 weeks, the MDE is probably too small to be practically significant.
 - Use control groups and pre-register primary metrics before launch; document baseline, MDE, duration, and variants first.
-- Apply **anytime-valid sequential testing** (confidence sequences / mSPRT) when early stopping is needed — not classical alpha spending. Sequential tests detect losers early; they are not designed to declare winners ahead of schedule.
-- Run an **SRM check** (chi-squared, `p < 0.01`) before analyzing; halt and investigate on detection.
+- Never stop early on a fixed-horizon test; when early stopping is needed, use a sequential design — **anytime-valid** methods (confidence sequences / mSPRT) are preferred for continuous monitoring; group sequential α-spending (Pocock / O'Brien-Fleming / Lan-DeMets) when interim looks are pre-specified (`sequential` recipe). Sequential tests detect losers early; they are not designed to declare winners ahead of schedule.
+- Run an **SRM check** (chi-squared, `p < 0.001`) before analyzing; halt and investigate on detection.
 - Recommend **CUPED/CUPAC** when pre-experiment covariates exist (~50% variance reduction, effectively halving sample size; 7-day pre-exposure window; ineffective for new users). For heavy-tailed metrics use Winsorization — but **never Winsorize revenue when whale users (`<2%`) drive the majority of it**, as capping biases the treatment effect.
 - Use **switchback** designs when network effects or interference invalidate user-level randomization. For *sustained* (not time-varying) interference prefer **cluster randomization** with delta-method variance on cluster-aggregated ratio metrics.
 - Prefer **per-user over per-session metrics** when the randomization unit is the user — session metrics violate independence and create denominator bias toward the worse variation.
@@ -115,7 +115,7 @@ Experiments on critical flows (checkout, signup); experiments with negative UX i
 
 ### Never
 
-- Stop early without alpha spending (peeking).
+- Stop early without a sequential design (anytime-valid or α-spending) — peeking.
 - Change parameters mid-flight.
 - Run overlapping experiments on same population without interaction analysis.
 - Ignore guardrail violations.
@@ -194,10 +194,7 @@ Per-Recipe behavior — full notes, platform landscape, and citations -> `refere
 
 ## Output Routing
 
-Map the user's signal to an approach: `hypothesis`/`what to test` -> hypothesis doc · `A/B test`/`experiment design` -> full design · `sample size`/`power analysis` -> power report · `feature flag`/`rollout`/`toggle` -> flag setup · `results`/`significance`/`analyze` -> experiment report · `sequential`/`early stopping` -> alpha-spending plan · `multivariate`/`factorial` -> factorial design · `bandit`/`MAB`/`adaptive` -> MAB/Thompson Sampling plan · `interleaving`/`ranking test` -> interleaving plan · `CUPED`/`variance reduction`/`winsorization` -> variance-reduction plan · `SRM`/`sample ratio`/`broken split` -> SRM diagnosis · `switchback`/`marketplace test`/`network effect` -> switchback plan · `cluster`/`interference` -> cluster design · `canary`/`observability` -> canary plan with guardrail integration. Full table with per-signal references -> `reference/experiment-templates.md`.
-
-Routing rules:
-
+Map the user's signal to an approach: `hypothesis`/`what to test` -> hypothesis doc · `A/B test`/`experiment design` -> full design · `sample size`/`power analysis` -> power report · `feature flag`/`rollout`/`toggle` -> flag setup · `results`/`significance`/`analyze` -> experiment report · `sequential`/`early stopping` -> sequential-testing plan (anytime-valid or α-spending) · `multivariate`/`factorial` -> factorial design · `bandit`/`MAB`/`adaptive` -> MAB/Thompson Sampling plan · `interleaving`/`ranking test` -> interleaving plan · `CUPED`/`variance reduction`/`winsorization` -> variance-reduction plan · `SRM`/`sample ratio`/`broken split` -> SRM diagnosis · `switchback`/`marketplace test`/`network effect` -> switchback plan · `cluster`/`interference` -> cluster design · `canary`/`observability` -> canary plan with guardrail integration. Full table with per-signal references -> `reference/experiment-templates.md`.
 
 ## Output Requirements
 

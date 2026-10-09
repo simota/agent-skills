@@ -57,10 +57,10 @@ Use Hone when the user needs:
 - AGENTS.md/GEMINI.md/CLAUDE.md density, rules, progressive disclosure, or prompt-cache hierarchy audits
 - MCP least privilege, transport/OAuth, version pinning, tool-poisoning, or resource-binding reviews
 - Claude Code hook structural audits or explicit hook proposal, configuration, debugging, and maintenance
+- personal dev environment config (dotfiles, shell, editor, terminal) or macOS app automation (`env` / `automate` recipes)
 - lifecycle automation, quality/security gates, MCP governance, input modification, plugin hooks, or hook performance tuning
 
 Route elsewhere when the task is primarily:
-- personal dev environment config (shell, editor, terminal): `Hone` (`env` recipe)
 - code review via codex review: `Judge`
 - industry standard compliance (OWASP, WCAG): `Canon`
 - SKILL.md normalization audit: `Gauge`
@@ -126,7 +126,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Skip MCP OAuth endpoint validation (CVE-2025-6514).
 - Trust FastMCP OAuth proxy callbacks without consent verification (CVE-2026-27124).
 - Recommend `allow: ["*"]` or equivalent wildcard permissions.
-- Accept CLAUDE.md files >300 lines without flagging.
+- Accept CLAUDE.md files >200 lines without flagging (P1 >200, P0 >400 per `reference/key-thresholds.md`).
 - Accept MCP Dynamic Client Registration (DCR) endpoints without verification.
 - Accept MCP OAuth tokens without RFC 8707 resource indicators.
 - Accept third-party marketplace plugins with auto-update enabled without flagging.
@@ -172,7 +172,7 @@ Behavior notes per Recipe:
 - `audit`: Auto-detect the target CLI for comprehensive audit. FETCH (fetch official docs, T1-T4 source tiering) → AUDIT (evaluate all checklist items) → PROPOSE (generate Before/After diff with P0-P3 priority).
 - `codex`: Codex CLI only. Targets config.toml, AGENTS.md, rules/, instructions.md. Always flag wire_api = "chat" deprecation errors (from Feb 2026) as P0.
 - `agy`: Antigravity CLI only. Targets `~/.gemini/antigravity-cli/settings.json`, `AGENTS.md` + `GEMINI.md` (precedence: `GEMINI.md` > `AGENTS.md` on conflict), `mcp_config.json` (independent file — verify `serverUrl` field, not legacy `url`), plugins, and skills (`~/.gemini/antigravity-cli/skills/`). Evaluate: safety thresholds, OAuth authentication, progressive disclosure (`@file.md` imports) for large `GEMINI.md`, permission mode default (`request-review` recommended; `always-proceed` flagged as production-forbidden), `~/.gemini/GEMINI.md` rule-leak risk (Issue #16058 — keep file scoped to agy-specific overrides only), WSL authentication persistence (known bug — flag if `~/.gemini/antigravity-cli/` indicates WSL environment), `/usage` non-live update workaround for >20 min tasks (recommend `agy -p` one-shot + cron/loop), and `agy plugin import gemini` migration completeness (custom themes are not migrated). See `_common/CLI_COMPATIBILITY.md` for the full Claude Code / Codex CLI / agy matrix.
-- `claude`: Claude Code only. Targets ~/.claude/settings.json, CLAUDE.md, .claude/commands/, hooks. Detect CLAUDE.md over 300 lines as P0, MCP broad-scope PAT as P0. Includes RFC 8707 resource-indicator validation.
+- `claude`: Claude Code only. Targets ~/.claude/settings.json, CLAUDE.md, .claude/commands/, hooks. Flag CLAUDE.md over 200 lines as P1 and over 400 lines as P0 (`reference/key-thresholds.md`), MCP broad-scope PAT as P0. Includes RFC 8707 resource-indicator validation.
 - `diff`: Compare two config snapshots (before/after) and analyze the diff. Attach impact assessment and safety classification (safe/ask-first/risky).
 - `hook` / `hook-debug`: Use the hook workflow, not FETCH → AUDIT → PROPOSE. Modify only the `hooks` section and required scripts. Route notification, SessionStart, security, quarantine, CLAUDE.md proposer, and telemetry signals through `hook` and load their named reference from `reference/hooks/`. Select the narrowest event, confirm blocking behavior when required, validate with `/hooks`, `claude --debug`, and manual stdin tests, then require a session restart.
 

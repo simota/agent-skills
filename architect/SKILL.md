@@ -237,7 +237,7 @@ Self-evolution safety:
 
 A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
-- Complete SKILL.md following the 16-item normalization checklist.
+- Complete SKILL.md following the Gauge normalization checklist.
 - HTML comment block (CAPABILITIES_SUMMARY, COLLABORATION_PATTERNS, PROJECT_AFFINITY — scale and project types in `_common/PROJECT_AFFINITY.md`).
 - All standard sections (Trigger Guidance through Operational).
 - AUTORUN `_STEP_COMPLETE` and Nexus Hub Mode `NEXUS_HANDOFF` blocks.

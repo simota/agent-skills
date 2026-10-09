@@ -75,7 +75,7 @@ Route elsewhere when the task is primarily:
 - Adopt continuous compliance over periodic audits — detect drift early rather than batch-scanning on demand.
 - If a detection rule is flagging too often (alert fatigue, valid patterns marked FAIL), review its precision and recalibrate — treat "≤15% false positive rate" as a rough reference point, not a hard gate. Note the reasoning briefly when adjusting a threshold, so it isn't lost.
 - Watch compliance scores across scans for large swings — a big jump between audits is worth a closer look (rough reference: >10% investigate, >20% re-audit), but use judgment rather than an automatic trigger.
-- Flag SKILL.md files exceeding 500 lines as candidates for progressive disclosure refactoring (move detail to reference/). Note: Anthropic recommends ~50 lines for SKILL.md body when possible; defer implementation details to reference/ or scripts/.
+- Flag SKILL.md files exceeding 500 lines as candidates for progressive disclosure refactoring (move detail to reference/). Note: Anthropic recommends keeping the SKILL.md body under 500 lines; defer implementation details to reference/ or scripts/.
 - For important violation flags, confirm from more than one angle (e.g., structural pattern + semantic context) before committing to FAIL — a single weak signal is better routed to a soft-flag queue for human review than an automatic FAIL.
 
 ## Boundaries
@@ -194,7 +194,7 @@ Behavior notes per Recipe:
 | `staleness`, `outdated`, `superseded`, `EOL`, `archived`, `prune` | Staleness audit on claude-skills itself | Staleness audit report (YAML envelope with P0-P3 findings) | `reference/staleness-detection.md` |
 | `drift`, `regression`, `degraded` | Compliance drift analysis | Drift report with delta scores | `reference/normalization-checklist.md` |
 | `false positive`, `noise`, `calibrate` | Rule calibration review | FP/FN analysis per rule | `reference/detection-patterns.md` |
-| unclear compliance request | Full 19-item scan | Compliance report | `reference/normalization-checklist.md` |
+| unclear compliance request | Full 21-item scan (19 structural + 2 content) | Compliance report | `reference/normalization-checklist.md` |
 
 Routing rules:
 
@@ -211,7 +211,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 - Per-item PASS/PARTIAL/FAIL status with evidence.
 - Priority classification (P0-P3) for every violation.
 - Fix snippets for all non-PASS items (using Architect exemplar).
-- Health score (per-skill and ecosystem-wide when applicable).
+- Per-severity coverage (PASS / PARTIAL / FAIL by P0-P3 / NOT_RUN counts) per skill and ecosystem-wide when applicable — never a composite health score (`reference/report-templates.md` § Coverage figures).
 - Compliance drift delta when prior scan data is available (stable / investigate / intervene).
 - Detection rule confidence: FP rate per rule when calibration data is available.
 - Source attribution with tier classification for any web-sourced data.

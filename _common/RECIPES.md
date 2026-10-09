@@ -12,7 +12,7 @@ A **Recipe** is a named preset within one skill that pre-selects a workflow mode
 
 Key properties:
 - Scope is **strictly one skill**. Recipes do not cross skill boundaries.
-- One skill should define 2-7 Recipes (recommended for dispatch-table scannability). 8-10 is an accepted corpus-norm band (INFO); 11+ triggers a consolidation review (WARNING). Hub skills (e.g. `nexus`) are exempt — recipe breadth is by design — and so is a skill whose review is on record and whose count has not grown since (see **Reviewed recipe count**).
+- One skill should define 3-7 Recipes (recommended for dispatch-table scannability). 8-10 is an accepted corpus-norm band (INFO); 11+ triggers a consolidation review (WARNING). Hub skills (e.g. `nexus`) are exempt — recipe breadth is by design — and so is a skill whose review is on record and whose count has not grown since (see **Reviewed recipe count**).
 - Backward compatibility requires exactly one fallback owner: either one `Default? = ✓` Recipe or an explicit `Default dispatch` phase/workflow outside the Recipe table. Unmatched input falls through to that owner without dropping free text.
 
 ---
@@ -209,7 +209,7 @@ Usage:
 ```bash
 python3 _common/scripts/validate-recipes.py                          # bare invocation — severity=warning, always exits 0
 python3 _common/scripts/validate-recipes.py --severity error          # exit 1 on ERROR findings
-python3 _common/scripts/validate-recipes.py --severity error --changed-only  # ERROR-gate, git-diff scope only (CI PR check)
+python3 _common/scripts/validate-recipes.py --severity error --changed-only  # ERROR-gate, uncommitted/untracked scope only (local pre-commit use; a clean CI checkout has no diff, so CI runs the full validation)
 VERBOSE=1 python3 _common/scripts/validate-recipes.py                 # also show INFO for skills without Recipes
 python3 _common/scripts/generate-recipes-directory.py                 # refresh compass directory
 ```

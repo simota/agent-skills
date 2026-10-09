@@ -187,7 +187,7 @@ The canonical AP-1 through AP-9 checklist is: Feature Dump / Hero Product / Miss
 |--------|-----------|---------|-------------|------------|
 | Customer Story | `story` | ✓ | Feature-level customer-centric story (use cases, transformation arc). Apply JTBD or StoryBrand SB7; customer is the hero, product is the guide. AP-1~AP-9 required. **Use Case Story 300-800 chars.** | `reference/templates.md` |
 | Scenario Story | `scenario` | | Persona-based scenario stories. Load Cast persona registry first. **Scenario Narrative 400-1000 chars/persona.** | `reference/templates.md` |
-| Product Narrative | `narrative` |  | Product-level positioning / brand narrative. Define Controlling Idea first; choose Promised Land or StoryBrand SB7. For pitches and LPs. **Product Narrative 500-1500 chars, Pitch Story 200-500 chars, Promised Land 500-1500 chars.** Default when narrative request is unclear. | — |
+| Product Narrative | `narrative` |  | Product-level positioning / brand narrative. Define Controlling Idea first; choose Promised Land or StoryBrand SB7. For pitches and LPs. **Product Narrative 500-1500 chars, Pitch Story 200-500 chars, Promised Land 500-1500 chars.** | — |
 | Customer Journey | `customer` | | Customer experience narrative centered on observable/measurable Before→After transformation arc. Consider Hero's Journey. **Customer Success Story 800-2000 chars.** | `reference/templates.md` |
 | Hero's Journey | `hero-journey` | | Campbell 12-stage monomyth. For major case studies, high stakes, profound transformation. | `reference/hero-journey.md` |
 | Before-After-Bridge | `bab` | | BAB copywriting structure: Before (current pain), After (ideal state), Bridge (product as connector). LPs, email, CTA-driven narratives. **Length 200-500 chars.** | `reference/before-after-bridge.md` |
@@ -214,7 +214,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `audit`, `review`, `narrative quality`, `anti-pattern check` | `audit` |
 | `micro-narrative`, `social`, `episodic`, `platform-tailored` | `micro` |
 | `multi-engine`, `tri-engine narrative`, `parallel story arc`, `cross-engine narrative`, `A/B/C narrative`, `multi`, `archetype portfolio` | `multi` |
-| unclear narrative request | `narrative` |
+| unclear narrative request | `story` (default) |
 
 ## Subcommand Dispatch
 

@@ -191,7 +191,7 @@ Map to CI: critical / serious always block; moderate warns; minor logs.
 Combine `play` functions with a11y to test keyboard / focus flow:
 
 ```ts
-import { userEvent, within } from '@storybook/test';
+import { userEvent, within } from 'storybook/test';
 import { expect } from '@storybook/jest';
 
 export const KeyboardOpen: Story = {

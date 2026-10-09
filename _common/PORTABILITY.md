@@ -184,7 +184,7 @@ grep -P ...             # No POSIX; unavailable on stock macOS (BSD grep)
 find ... -printf ...    # GNU find extension; not on macOS
 stat -c ...             # GNU stat; use file_mtime() helper instead
 stat -f ...             # BSD stat; use file_mtime() helper instead (alone)
-shasum -a 256 ...       # BSD only; use sha256_hash() helper
+shasum -a 256 ...       # not guaranteed on Linux; use sha256_hash() helper
 sha256sum ...           # GNU only; use sha256_hash() helper
 timeout N cmd           # GNU only; use run_with_timeout() helper
 echo -e "..."           # Unreliable across shells; use printf '%b\n' "..."
@@ -193,7 +193,7 @@ date -d "..."           # GNU date; fails on macOS
 readlink -f ...         # GNU coreutils; unreliable on macOS
 xargs -r                # GNU only; use conditional [ -s ] && xargs
 ls --color=auto         # GNU ls; use -G on macOS or branch
-base64 -w0              # GNU only; use tr -d '\n' | base64 pattern
+base64 -w0              # GNU only; use base64 | tr -d '\n' pattern
 ```
 
 ---

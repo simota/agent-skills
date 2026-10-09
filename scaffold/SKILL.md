@@ -53,7 +53,7 @@ Route elsewhere when the task is primarily:
 - Application code deployment without infrastructure changes → `Builder` + `Gear`
 - Security audit of existing infrastructure → `Sentinel` (static) or `Probe` (dynamic)
 - Architecture decision records or dependency analysis → `Atlas`
-- Cost optimization strategy without IaC work → `Beacon`
+- Cost optimization / FinOps strategy without IaC work → `Ledger`
 
 ## Core Contract
 
@@ -62,7 +62,7 @@ Route elsewhere when the task is primarily:
 - Default to reproducible, tagged, remote-state-backed infrastructure with state encryption enabled (OpenTofu native or backend-level).
 - Prefer least privilege, private networking, encryption, and environment separation. A single over-permissive role or stale token has cascaded into nine-figure financial losses (e.g., Bybit $1.5B, 2025).
 - Keep local environments close enough to production to catch integration issues without copying production risk blindly.
-- Support OpenTofu as a first-class alternative to Terraform (BSL 1.1 vs CNCF-graduated open-source — licensing/version/feature detail and adoption stats in `reference/terraform-modules.md` § Engine Selection). Evaluate licensing implications before recommending one over the other — BSL restricts embedding, managed-service offering, and resale without a commercial license.
+- Support OpenTofu as a first-class alternative to Terraform (BSL 1.1 vs MPL-2.0 open-source (CNCF Sandbox project since 2025) — licensing/version/feature detail and adoption stats in `reference/terraform-modules.md` § Engine Selection). Evaluate licensing implications before recommending one over the other — BSL restricts embedding, managed-service offering, and resale without a commercial license.
 - Prefer ephemeral values/resources for short-lived credentials (tokens, temporary keys). Use state encryption for data that must persist. Combine both strategies: ephemeral prevents storage, encryption protects what must be stored.
 - Keep modules focused with single responsibility. Flag modules exceeding ~200 HCL lines or managing resources across multiple concern domains for split review.
 - Avoid monolithic state files ("terralith"). Split state by environment, service boundary, or blast-radius domain. A single state file managing an entire environment slows plan/apply, increases lock contention, and amplifies the blast radius of any change. Prefer one state per deployable unit.
@@ -93,7 +93,7 @@ Route elsewhere when the task is primarily:
 ### Never
 - Commit secrets or credentials — exploitation windows have collapsed to ~48 hours from disclosure (CVE-2025-55182 precedent)
 - Create untagged resources — 68% of IT leaders cite misconfiguration as top cloud risk; untagged resources become shadow assets and breach footholds
-- Deploy to production without staging validation — cloud misconfigurations caused $400M+ losses at Marks & Spencer (2025)
+- Deploy to production without staging validation — untested changes reaching production are a leading cause of outages; staging is where misconfiguration is cheap to catch
 - Hardcode IPs, resource IDs, or long-lived credentials — stale tokens and abandoned infrastructure are more dangerous than active systems
 - Store Terraform state without encryption — use OpenTofu client-side state encryption or backend-native encryption; state files contain sensitive outputs and resource attributes
 - Output secrets (database passwords, API keys, certificates) as Terraform/OpenTofu outputs — outputs persist in plaintext in the state file even when state encryption is enabled at rest; write secrets directly to a secrets manager (Vault, AWS Secrets Manager, GCP Secret Manager) during apply instead
@@ -111,9 +111,9 @@ Route elsewhere when the task is primarily:
 | Phase | Focus | Required output / Read |
 |------|------|-----------------------|
 | `ASSESS` | Provider, environment, workload, risk, cost drivers | Provider/environment assumptions, resource list, ask-first items / `reference/` |
-| `DESIGN` | Tool choice, module boundaries, network/security topology | IaC layout, state strategy, tagging/security plan / `reference/` |
-| `IMPLEMENT` | Focused modules and configs | Modules/resources, variables, outputs, env config, local stack if needed / `reference/` |
-| `VERIFY` | Safety, compliance, cost, drift, startup | Validation commands, policy results, cost note, drift/state note, health checks / `reference/` |
+| `DESIGN` | Tool choice, module boundaries, network/security topology | IaC layout, state strategy, tagging/security plan / `reference/terraform-modules.md` |
+| `IMPLEMENT` | Focused modules and configs | Modules/resources, variables, outputs, env config, local stack if needed / `reference/terraform-modules.md` |
+| `VERIFY` | Safety, compliance, cost, drift, startup | Validation commands, policy results, cost note, drift/state note, health checks / `reference/terraform-compliance.md`, `reference/cost-estimation.md` |
 | `HANDOFF` | Downstream execution or review | Gear/Sentinel/Canvas/Quill package as needed / `reference/` |
 
 ## Mode Selection

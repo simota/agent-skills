@@ -154,14 +154,8 @@ guidelines, not fixed thresholds.
 
 ### Configuration by Task Type
 
-| Task Type | Default Level | Pre-checks | Post-checks | Escalate On |
-|-----------|--------------|------------|-------------|-------------|
-| FEATURE | L2 | — | tests_pass, build_success | test_failure > 50%, security_critical |
-| SECURITY | L2 | sentinel_scan | no_new_vulnerabilities, tests_pass | any_security_issue |
-| REFACTOR | L2 | — | tests_unchanged, no_behavior_change | test_failure_any |
-| API_BREAKING | L3 | ripple_impact_analysis | consumers_updated, migration_ready | consumer_not_updated |
-| INCIDENT | L3 | — | service_restored, no_regression | service_not_restored |
-| INFRA | L3 | dry_run_if_available | health_checks_pass | health_check_fail |
+Defined in `nexus/reference/guardrails.md` § Guardrail Configuration by Task Type — default level, pre-checks and
+post-checks per task type. Not restated here, for the same reason as the levels above.
 
 ### Mandatory Checkpoints
 
@@ -304,7 +298,7 @@ CLASSIFY → CHAIN_SELECT → (first inference starts immediately)
 |---|---|
 | Start CLASSIFY/CHAIN_SELECT without waiting for agent readiness | Reduces time-to-first-token |
 | Spawn agents only when their step is next | Avoids unnecessary resource allocation for steps that may be skipped |
-| Use `model: haiku` for investigation steps, `model: opus` for critical steps | Right-size compute per step |
+| Inherit the authorized model/effort; deviate only per `_common/CLI_COMPATIBILITY.md` §4 | Right-size compute without unauthorized escalation |
 
 **In practice:** Nexus should complete CLASSIFY and CHAIN_SELECT in its own context before spawning any Agent. Do not pre-spawn agents "just in case."
 

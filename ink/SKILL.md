@@ -55,12 +55,12 @@ Route elsewhere when the task is primarily:
 
 ## Core Contract
 
-- Deliver clean SVG code, never raster images or binary files.
+- Deliver clean SVG code, never raster images or binary files — except the PNG export variants the `logo` recipe derives from its SVG master.
 - Establish a grid system (16x16, 20x20, or 24x24) before drawing any icon.
 - Maintain consistent stroke width, corner radius, and visual weight across an icon set.
 - Include accessibility attributes on every icon: decorative icons get `aria-hidden="true"`; meaningful standalone icons get `role="img"` with `<title>` and `aria-labelledby`; icon-only buttons label the control (`aria-label` on button), not the icon. Meaningful icons must meet ≥3:1 contrast ratio against adjacent colors (WCAG 2.2 SC 1.4.11 Non-text Contrast).
 - Use `currentColor` for fill/stroke by default to support theming.
-- Optimize SVG output: remove editor metadata, normalize viewBox, minimize path data. Target ≤4KB per icon after SVGO (inline-safe threshold). Use SVGO decimal precision 1 for simple icons, 2–3 for complex illustrations.
+- Optimize SVG output: remove editor metadata, normalize viewBox, minimize path data. Target ≤4KB per icon after SVGO (inline-safe threshold). Use SVGO decimal precision 2 for icons, 3 for illustrations with smooth curves (`reference/svg-optimization.md`).
 - Provide icons as both inline SVG and symbol-reference formats. Prefer sprites for icon sets of 10+ icons to reduce bundle size.
 - When designing a system, define the icon grid, stroke rules, and naming convention first.
 - Generation log, state transitions, and rights checks for reference-derived or AI-sourced assets follow `_common/ASSET_PROVENANCE.md`; logo typeface EULA clearance stays in `reference/logo-construction.md`.
@@ -124,7 +124,7 @@ Behavior notes per Recipe:
 - `animate`: Author CSS-primary animation for loaders, status transitions, and microinteractions. Use SMIL only for portable standalone SVG (works in `<img src>`). Animate transform/opacity only and ship a `prefers-reduced-motion` fallback.
 - `theme`: Theme icons via `currentColor` and CSS custom properties. Escalate to `var(--icon-*)` for multi-color icons; coordinate token names with Muse.
 - `a11y`: Annotate with ARIA / `<title>` / `<desc>`. Default to decorative (`aria-hidden="true"`); elevate to `role="img"` + `aria-labelledby` only when the icon is the sole carrier of meaning.
-- `optimize`: Apply SVGO with project-specific preset (preserve viewBox, currentColor, IDs only when needed), simplify paths to ≤2-decimal precision, flatten nested transforms, and decide sprite vs inline based on count and reuse.
+- `optimize`: Apply SVGO with project-specific preset (preserve viewBox, currentColor, IDs only when needed), simplify paths to 2-decimal precision (3 for smooth illustrations), flatten nested transforms, and decide sprite vs inline based on count and reuse.
 - `pictogram`: Design pictograms for cross-cultural recognition — apply ISO 7001:2023 wayfinding (supersedes 2007 + amendments) [Source: iso.org/standard/77442.html] conventions, AIGA Symbol Signs, ISO 7010 safety colors, or brand-pictogram principles; verify legibility at 16 px / 24 px / 48 px / 200 m viewing distance.
 - `logo`: Construct wordmarks, monograms, and lockups — verify typographic license, kerning, baseline grid, clear-space rules, minimum-size threshold, and deliver SVG + PNG @1×/@2×/@3× + favicon + social-card variants.
 

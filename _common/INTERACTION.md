@@ -251,7 +251,7 @@ Escalation when interaction cannot resolve issues.
 
 ## AGENT_TRIGGER_REGISTRY (Common Trigger Patterns)
 
-Agents define their interaction triggers by name. Below are common trigger patterns reused across agents. Each agent's SKILL.md lists only trigger names and timing; the YAML templates live here or in `reference/interaction-triggers.md`.
+Agents define their interaction triggers by name. Below are common trigger patterns reused across agents. Each agent's SKILL.md lists only trigger names and timing; the YAML templates live here or in the skill's own reference file (e.g. `echo/reference/question-templates.md`).
 
 ### Completion / Handoff Triggers
 
@@ -302,7 +302,7 @@ option-driven `AskUserQuestion` turn using the per-dimension question seeds ther
 | ON_VULNERABILITY_FOUND | ON_DISCOVERY | Security vulnerability discovered during work |
 | ON_PATTERN_DETECTED | ON_DISCOVERY | Recurring pattern detected across codebase |
 
-Agents with custom triggers should define YAML templates in their own `reference/interaction-triggers.md`.
+Agents with custom triggers should define YAML templates in their own reference file (e.g. `echo/reference/question-templates.md`).
 
 ---
 

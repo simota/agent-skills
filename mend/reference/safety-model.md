@@ -200,6 +200,6 @@ By 2026 the dominant industry pattern is **autonomous investigation + governed r
 
 - **Adopt the Resolve AI Dynamic Knowledge Graph pattern** for runbook input. Connect Pod state, Grafana panels, GitHub, and Jenkins into a graph that the remediation agent reads before action; carry multiple hypothesis branches with their own evidence lists. Pure runbook execution without live topology blind-spots ~30-40% of safe-tier classifications. [Source: resolve.ai/product/ai-sre]
 
-- **Enforce Autonomy with Guardrails on every remediation action.** Investigation may be autonomous; *action* must pass through an explicit policy layer with named approvers tied to tier (T1 auto / T2 single approver / T3 dual approver / T4 incident-commander gate). When agent confidence is below the tier threshold, the correct verb is `pause` and `request_approval`, not `continue with caution`. [Source: tldrecap.tech/posts/2026/conf42-sre/autonomous-agent-safety/]
+- **Enforce Autonomy with Guardrails on every remediation action.** Investigation may be autonomous; *action* must pass through an explicit policy layer with gates tied to tier (T1 auto / T2 notify / T3 approve with a named approver / T4 prohibited — escalate, never executed). When agent confidence is below the tier threshold, the correct verb is `pause` and `request_approval`, not `continue with caution`. [Source: tldrecap.tech/posts/2026/conf42-sre/autonomous-agent-safety/]
 
 - Validate runbook freshness (< 90 days since last review) and infrastructure drift before automated execution.

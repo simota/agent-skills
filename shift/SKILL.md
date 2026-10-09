@@ -128,7 +128,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | Svelte 4 → 5 | Medium | Runes reactivity model, slots→snippets; `npx sv migrate svelte-5` official migrator | `reference/framework-migration.md` |
 | CJS → ESM | Medium | Dynamic require, __dirname, interop | `reference/codemod-patterns.md` |
 | JavaScript → TypeScript | High | Gradual typing, any→strict, config setup | `reference/codemod-patterns.md` |
-| Spring Boot 3 → 4 | High | Needs Java 21+, Spring Framework 7 / Jakarta EE 11, Security 7; OpenRewrite `UpgradeSpringBoot_4_0` | `reference/framework-migration.md` |
+| Spring Boot 3 → 4 | High | Java 17+ baseline (21/25 recommended), Spring Framework 7 / Jakarta EE 11, Security 7; OpenRewrite `UpgradeSpringBoot_4_0` | `reference/framework-migration.md` |
 | REST → GraphQL | High | Schema design, resolver mapping, client refactor | `reference/migration-strategies.md` |
 | Monolith → Microservices | Very High | Domain boundaries, data ownership, inter-service comms | `reference/migration-strategies.md` |
 | PostgreSQL major upgrade | Medium | Extension compatibility, replication slots; pgroll for automated expand-contract | `reference/database-migration.md` |

@@ -337,6 +337,20 @@ def check_resolution(skills: list[Path], findings: list) -> None:
                 )
 
 
+#: Canonical copies of this repository's project-local skills. They are owned here and
+#: run under the same spine, so delivery is checked for them too. The `.agents/skills`
+#: mirror is byte-identical (`lint-project-local.py` PL-2) and is not walked twice.
+PROJECT_LOCAL = REPO_ROOT / ".claude" / "skills"
+
+
+def owned_skills() -> list[Path]:
+    """Global skills at the repo root plus project-local skills under `.claude/skills`."""
+    skills = list(_corpus.iter_skill_dirs(REPO_ROOT))
+    if PROJECT_LOCAL.is_dir():
+        skills += list(_corpus.iter_skill_dirs(PROJECT_LOCAL))
+    return skills
+
+
 def check_tier_declarations(tiers: dict[str, str | None], findings: list) -> None:
     """CD-6."""
     for name, tier in sorted(tiers.items()):
@@ -367,7 +381,7 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    skills = list(_corpus.iter_skill_dirs(REPO_ROOT))
+    skills = owned_skills()
     graph = Graph()
     tiers = declared_tiers()
     findings: list[tuple[str, str, str]] = []

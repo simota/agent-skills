@@ -1,6 +1,6 @@
 # Nexus Layer Recipe Reference
 
-**Purpose:** Analyze a repository and design **its operating layer** — the coordinated set of project-local skills, repo-tailored recipes, and skill-and-agent workflows it should have, plus a routing map — by driving **Loom** (design), then delegating skill-body authoring to **Sigil** and recipe/workflow/routing registration to **Nexus**. The deliverable is a working operating layer; `design-only` stops at the blueprint.
+**Purpose:** Analyze a repository and design **its operating layer** — the coordinated set of project-local skills, repo-tailored recipes, and skill-and-agent workflows it should have, plus a routing map — by driving **Sigil `blueprint`** (design), then delegating skill-body authoring to **Sigil** and recipe/workflow/routing registration to **Nexus**. The deliverable is a working operating layer; `design-only` stops at the blueprint.
 **Read when:** User invokes `/nexus layer`, or asks to "design this repo's agents, recipes, and workflows together", "set up the project's operating layer", or "give this repo a project skill suite". For authoring **one** skill body, use `sigil` (SKILL_GEN); for a team + work plan, use `charter`.
 
 ## Contents

@@ -31,7 +31,7 @@ CAPABILITIES_SUMMARY:
 
 COLLABORATION_PATTERNS:
 - Forge -> Builder: Prototype conversion to production code
-- Plan -> Builder: Execute planned implementation
+- Sherpa -> Builder: Execute planned implementation
 - Scout -> Builder: Bug fix based on investigation results
 - Builder -> Radar: Test skeleton handoff for coverage
 - Builder -> Guardian: PR preparation and commit structuring
@@ -47,7 +47,7 @@ COLLABORATION_PATTERNS:
 - Builder -> Vitrine: Generated assets for catalogs and stories
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Forge (prototype), Guardian (commit structure), Scout (bug investigation), Plan (implementation plan), Vision (image direction), Growth (marketing assets), Quill (illustrations)
+- INPUT: Forge (prototype), Guardian (commit structure), Scout (bug investigation), Sherpa (implementation plan), Vision (image direction), Growth (marketing assets), Quill (illustrations)
 - OUTPUT: Radar (tests), Guardian (PR prep), Judge (review), Tuner (performance), Sentinel (security), Canvas (diagrams/images), Muse (design-system assets), Vitrine (catalog assets), Growth (marketing assets)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Dashboard(H) API(H) CLI(M) Library(M) Mobile(M)

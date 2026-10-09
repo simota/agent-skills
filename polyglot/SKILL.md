@@ -110,7 +110,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Hardcode text in UI components.
 - Translate technical identifiers/variable names/API keys.
 - Use generic keys like `common.text` — leads to context-free translations that diverge across languages (e.g., "Save" as noun vs verb).
-- Assume English pluralization rules — Russian has 6 plural forms, Arabic has 6 (not 2); always use ICU `{count, plural, ...}` with CLDR categories (`zero`, `one`, `two`, `few`, `many`, `other`).
+- Assume English pluralization rules — Russian has 4 plural categories (one/few/many/other), Arabic has 6 (not 2); always use ICU `{count, plural, ...}` with CLDR categories (`zero`, `one`, `two`, `few`, `many`, `other`).
 - Concatenate translated fragments — Facebook's Arabic AI mistranslated a concatenated greeting as "attack them," causing false arrests in Israel.
 - Use hardcoded locale in `toLocaleDateString('en-US')` — always derive from user preference or `navigator.language`.
 - Ship a locale with < 100% key coverage without explicit fallback chain configured.

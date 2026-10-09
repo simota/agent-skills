@@ -1,6 +1,6 @@
 # SessionStart Hook
 
-Reference for Hone's `sessionstart` recipe. Configure the SessionStart event for context preloading, env validation, and per-project warm-up.
+Reference for Hone's `hook` recipe (sessionstart signal). Configure the SessionStart event for context preloading, env validation, and per-project warm-up.
 
 ---
 

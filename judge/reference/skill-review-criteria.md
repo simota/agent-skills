@@ -172,4 +172,4 @@ Remediation: [Sigil | Architect | Gauge]
 | Description quality issue | Sigil (improve description) |
 | Instruction structure issue | Sigil (restructure) |
 | Progressive Disclosure issue | Architect (design reference separation) |
-| Ecosystem internal standards violation | Gauge (16-item checklist) |
+| Ecosystem internal standards violation | Gauge (normalization checklist) |

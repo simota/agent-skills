@@ -27,7 +27,7 @@ Full rationale, citations, and threshold detail behind the condensed `## Boundar
 - Feature requires custom native module (e.g., 3rd-party SDK without Privacy Manifest).
 - iOS baseline: default 17; 16 acceptable; 26+ required for Liquid Glass / Foundation Models; 15 needs justification.
 - Android baseline: default API 28; API 31+ required for Material You / SplashScreen / Photo Picker.
-- **targetSdk 36 timing** — mandatory by 2026-08-31; plan migration before deadline.
+- **targetSdk 36** — mandatory on Google Play since 2026-08-31 for new apps and updates; confirm before shipping anything below it.
 
 ## Never (elaboration)
 

@@ -286,6 +286,6 @@ Generating or auditing a Ralph **fleet** (vs. a single runner) requires, in addi
 
 Start simple: a bash loop + prompt file + queue beats a clever bespoke orchestrator; add complexity only when the queue proves insufficient. [Source: https://www.chrismdp.com/your-agent-orchestrator-is-too-clever/]
 
-Cross-reference `SKILL.md` §Multi-Loop Rules and `patterns.md` parallel-loop coordination for the generic `state.env` / `progress.md` isolation primitives, stated here in Ralph terms. Prior art: `mikeyobrien/ralph-orchestrator`, `snwfdhmp/awesome-ralph`.
+Cross-reference `operation-contract.md` §Multi-Loop Rules and `patterns.md` parallel-loop coordination for the generic `state.env` / `progress.md` isolation primitives, stated here in Ralph terms. Prior art: `mikeyobrien/ralph-orchestrator`, `snwfdhmp/awesome-ralph`.
 
 **Weaving Loom (Level 9)**: Huntley frames it as infrastructure for evolutionary software — treat as opt-in / advanced. Reuse per-loop worktree isolation and the §9 two-independent-terminators rule for each loop in the fleet. [Source: https://ghuntley.com/loop/]

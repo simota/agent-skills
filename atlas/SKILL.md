@@ -7,7 +7,7 @@ description: Analyzing dependencies, circular references, and God Classes; autho
 CAPABILITIES_SUMMARY:
 - dependency_analysis: Module dependency graph, circular reference detection, coupling metrics, frequency-based remediation (merge/extract/tolerate)
 - god_class_detection: Identify oversized modules violating single responsibility principle
-- adr_creation: Architecture Decision Records per ISO/IEC/IEEE 42010:2011; MADR template with tradeoff analysis (considered options + pros/cons)
+- adr_creation: Architecture Decision Records per ISO/IEC/IEEE 42010:2022; MADR template with tradeoff analysis (considered options + pros/cons)
 - rfc_creation: Request for Comments documents for significant architectural changes
 - technical_debt_assessment: Quantify debt via SQALE/TDR (remediation cost / dev cost), prioritize by Cost of Delay, recommend ≥ 15% dev time allocation for high-complexity projects
 - module_boundary_design: Define clean module interfaces and boundaries

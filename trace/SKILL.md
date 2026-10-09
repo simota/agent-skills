@@ -8,7 +8,7 @@ CAPABILITIES_SUMMARY:
 - session_replay_analysis: Analyze click/scroll/navigation patterns from session recordings to extract behavioral insights
 - persona_segmentation: Segment sessions by persona definitions and build behavior-based cohorts
 - behavior_pattern_extraction: Classify and quantify recurring user behavior patterns across sessions
-- frustration_detection: Detect rage clicks (≥3 clicks/1.5s), dead clicks (≤600ms no feedback), error clicks, back loops, scroll thrashing, mouse thrashing; correlate with INP (Interaction to Next Paint) >200ms as predictive frustration signal
+- frustration_detection: Detect rage clicks (≥3 clicks/1s), dead clicks (≤600ms no feedback), error clicks, back loops, scroll thrashing, mouse thrashing; correlate with INP (Interaction to Next Paint) >200ms as predictive frustration signal
 - journey_reconstruction: Reconstruct user journeys as evidence-based narratives from logs and event streams
 - heatmap_specification: Specify heatmap and flow analysis requirements for visualization tools
 - anomaly_detection: Identify behavioral anomalies and deviations from expected user flows
@@ -53,7 +53,7 @@ Behavioral archaeologist analyzing real user session data to uncover stories beh
 
 Use Trace when the user needs:
 - session replay analysis or user behavior pattern extraction
-- frustration signal detection (rage clicks ≥3 clicks/1.5s, dead clicks ≤600ms no feedback, error clicks, back loops, scroll thrashing, mouse thrashing)
+- frustration signal detection (rage clicks ≥3 clicks/1s, dead clicks ≤600ms no feedback, error clicks, back loops, scroll thrashing, mouse thrashing)
 - persona-based session segmentation and behavior-based cohort building
 - user journey reconstruction from logs, event streams, or replay data
 - UX problem storytelling with evidence-based narratives explaining WHY users struggle
@@ -75,7 +75,7 @@ Route elsewhere when the task is primarily:
 ## Core Contract
 
 - Segment all analysis by persona before drawing conclusions.
-- Detect and score frustration signals: rage clicks (repeated clicks on the same element within a short window are a sign of frustration, not intent — as a reference, roughly ≥3 clicks within ~1.5s, clustered close together), dead clicks (click with no visual feedback or navigation change within 600ms), error clicks (click that triggers a client-side error), back loops (≥3 returns to same page within a flow), scroll thrashing (rapid direction reversals ≥3 within 3s), mouse thrashing (rapid back-and-forth cursor movement).
+- Detect and score frustration signals: rage clicks (repeated clicks on the same element within a short window are a sign of frustration, not intent — as a reference, roughly ≥3 clicks within ~1s, clustered close together), dead clicks (click with no visual feedback or navigation change within 600ms), error clicks (click that triggers a client-side error), back loops (≥3 returns to same page within a flow), scroll thrashing (rapid direction reversals ≥3 within 3s), mouse thrashing (rapid back-and-forth cursor movement).
 - Benchmark frustration rates against industry baselines (e.g., rage clicks in ~5.3% of retail sessions; checkout rage-click conversion drops from 4.1% to 0.9%). Mobile taps are less precise than desktop clicks, so cluster repeated taps with a wider position tolerance on mobile than desktop (as a reference, ~50px mobile / ~30px desktop). On mobile, verify touch targets meet Material Design's 48×48 CSS-pixel minimum — undersized targets generate systematic mis-taps that appear as rage clicks on adjacent elements (Source: web.dev — Core Web Vitals; material.io).
 - Correlate frustration signals with Core Web Vitals Interaction to Next Paint (INP). INP ≤200ms at p75 is the official "good" threshold; >500ms is "poor" (Google Core Web Vitals, March 2024). Pages with INP >200ms show significantly higher rage-click density — treat INP regression as a **predictive** frustration signal, not just a reactive one, and escalate to Bolt/Beacon before users complain (Source: web.dev/articles/inp; inspectlet.com 2026 rage-click guide).
 - Treat session replay privacy compliance as a litigation risk, not just a policy concern — 1,853 wiretapping/pen-register cases were filed in the US (Feb 2022–Mar 2025), 83% in California, with expansion to FL/IL/PA (Source: Loeb & Loeb LLP, insideclassactions.com).
@@ -246,7 +246,7 @@ During **ANALYZE** phase, when actual behavior deviates from expected persona pa
 | `reference/rageclick-detection.md` | Rage/dead/shake/thrash thresholds, false-positive filters, rage-vs-dead distinction, or session-replay tool comparison. |
 | `reference/funnel-dropoff.md` | Funnel step schema, cohort slicing guidance, friction scoring, or baseline-vs-experiment comparison. |
 | `reference/heatmap-synthesis.md` | Heatmap type selection, density computation, hotspot clustering, scroll-depth curves, or heatmap tool comparison. |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the replay report, deciding adaptive thinking depth at signal detection/segmentation, or front-loading persona/window/milestone at LOAD. Critical for Trace: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the replay report, deciding adaptive thinking depth at signal detection/segmentation, or front-loading persona/window/milestone at COLLECT. Critical for Trace: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | You contribute `source_proof` evidence (session-replay-based behavioral observations) to the Insight Ledger queue in `nexus growth-acceptance` Phase 0. G11 mandatory: replay-derived insights are submitted to Research Lead merge queue; AI cannot directly mutate Ledger. Used in Phase 3 post-launch for `ux_task_proof` regression detection (carry-over from Tier B). |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Trace-specific Output/Next schema. |
 

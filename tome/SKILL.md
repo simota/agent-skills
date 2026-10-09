@@ -366,10 +366,7 @@ All handoff templates → `reference/handoffs.md`
 
 ## Reference Map
 
-**Full index** → **`reference/reference-index.md`** — every `reference/` file and its read-trigger. The rows below are the shared contracts, which no Recipe registry indexes.
-
-| File | Read When |
-|------|-----------|
+**Full index** → **`reference/reference-index.md`** — every `reference/` file and its read-trigger.
 
 ---
 

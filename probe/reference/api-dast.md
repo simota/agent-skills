@@ -25,10 +25,10 @@ If the question is "does the spec say X?" â†’ Gateway. "Does the code say X?" â†
 |------|------|-----------------------|
 | API1 | BOLA (Broken Object-Level Auth) | Swap object IDs across authenticated identities; ~40% of API attacks (Wallarm Q2 2025) |
 | API2 | Broken Authentication | JWT alg=none, weak secret, expired-token accept, refresh-token abuse |
-| API3 | Broken Object Property-Level Auth / Excessive Data Exposure | Compare API response to documented DTO; diff for hidden fields |
+| API3 | Broken Object Property-Level Auth (BOPLA: excessive data exposure + mass assignment) | Compare API response to documented DTO; diff for hidden fields; POST unexpected fields (`isAdmin`, `role`, `verified`) and check persistence |
 | API4 | Unrestricted Resource Consumption | Rate limit, payload size, nested depth, compression bombs |
 | API5 | BFLA (Broken Function-Level Auth) | Call admin endpoints as standard user; method override (`X-HTTP-Method-Override`) |
-| API6 | Mass Assignment | POST unexpected fields (`isAdmin`, `role`, `verified`) and check persistence |
+| API6 | Unrestricted Access to Sensitive Business Flows | Replay/automate business flows (checkout, coupon, signup) at scale; check bot/rate controls |
 | API7 | SSRF | Submit internal URLs (`169.254.169.254`, `localhost`, `file://`) to URL parameters |
 | API8 | Security Misconfiguration | Default creds, verbose errors, CORS wildcard, missing headers |
 | API9 | Improper Inventory | Shadow / zombie endpoints, `/v1` alongside `/v2`, staging leaked to prod |
@@ -38,7 +38,7 @@ If the question is "does the spec say X?" â†’ Gateway. "Does the code say X?" â†
 
 | Tool | Role | Notes |
 |------|------|-------|
-| `schemathesis` | Property-based fuzzing from OpenAPI / GraphQL schema | Strong for API3/API4/API6; generates counterexamples |
+| `schemathesis` | Property-based fuzzing from OpenAPI / GraphQL schema | Strong for API3/API4/API8; generates counterexamples |
 | `restler-fuzzer` (MS) | Stateful REST fuzzing, dependency inference | Best-in-class for sequence-dependent bugs |
 | `graphql-cop` | GraphQL audit (introspection, field suggestions, batching) | Non-intrusive; run first on GraphQL |
 | `clairvoyance` | GraphQL schema recovery when introspection is off | Field-name brute force â€” coordinate with scope |

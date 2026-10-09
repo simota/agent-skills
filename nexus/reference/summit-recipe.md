@@ -481,7 +481,7 @@ loop_iteration:
 
 **Agents:**
 1. Guardian[PR-prep] — classify changes, recommend granularity, prepare commit strategy
-2. Launch[release-plan] — versioning, CHANGELOG, release notes, rollback plan
+2. Launch[plan] — versioning, CHANGELOG, release notes, rollback plan
 
 **Output:** `NEXUS_COMPLETE` with the full evidence trail:
 

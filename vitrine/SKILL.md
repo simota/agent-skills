@@ -90,7 +90,7 @@ Route elsewhere when the task is primarily:
 - In play functions prefer accessible queries (`getByRole`, `getByLabelText`, `getByText`) over `data-testid` — they validate the accessibility contract at the same time; fall back only when no semantic query is viable.
 - For AI agent integration, expose component manifests via the MCP addon and trim the manifest by tag-excluding irrelevant stories and docs to cut token overhead.
 - RSC stories require module mocking (`sb.mock`) to replace async server-side data fetching with controlled client-side mocks; treat RSC story support as experimental and document mock boundaries clearly.
-- **Per-recipe authoring rules** (full text -> `reference/storybook-patterns.md`): `interaction` imports test utilities exclusively from the unified `@storybook/test` package, always `await`s `userEvent`, scopes queries via `within(canvasElement)`, prefers `findBy*`/`waitFor` over timeouts, and stops play functions at the component boundary (cross-page flows go to Voyager). `mdx` starts every component on Autodocs and promotes to hand-authored MDX only for narrative or custom JSX, binding via `<Meta of={meta} />` and embedding with `<Canvas of={Story} />` — never re-defining stories inline. `cosmos` suits React-only projects wanting minimal config and fastest hot reload where Chromatic/MCP/MDX/multi-framework support are not required; designate one tool as primary to avoid drift, and wire external interaction and VRT tooling since Cosmos has neither.
+- **Per-recipe authoring rules** (full text -> `reference/storybook-patterns.md`): `interaction` imports test utilities exclusively from `storybook/test` (Storybook 9+; `@storybook/test` only on Storybook 8), always `await`s `userEvent`, scopes queries via `within(canvasElement)`, prefers `findBy*`/`waitFor` over timeouts, and stops play functions at the component boundary (cross-page flows go to Voyager). `mdx` starts every component on Autodocs and promotes to hand-authored MDX only for narrative or custom JSX, binding via `<Meta of={meta} />` and embedding with `<Canvas of={Story} />` — never re-defining stories inline. `cosmos` suits React-only projects wanting minimal config and fastest hot reload where Chromatic/MCP/MDX/multi-framework support are not required; designate one tool as primary to avoid drift, and wire external interaction and VRT tooling since Cosmos has neither.
 ## Boundaries
 
 Agent role boundaries → `_common/BOUNDARIES.md`
@@ -141,7 +141,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | Catalog Management | `catalog` | | Component catalog maintenance | `reference/storybook-patterns.md` |
 | Visual Regression | `vrt` | | Visual Regression Test integration | `reference/visual-regression.md` |
 | CSF 3.0 Migration | `csf3` | | Conversion to CSF 3.0 | `reference/storybook-patterns.md` |
-| Storybook Interactions | `interaction` | | Play function authoring with `@storybook/test`, addon-vitest integration | `reference/storybook-interactions.md` |
+| Storybook Interactions | `interaction` | | Play function authoring with `storybook/test`, addon-vitest integration | `reference/storybook-interactions.md` |
 | MDX Documentation | `mdx` | | Hand-authored MDX docs with Doc Blocks, Autodocs vs MDX trade-off | `reference/mdx-docs.md` |
 | React Cosmos | `cosmos` | | React Cosmos fixture authoring, Storybook vs Cosmos decision | `reference/react-cosmos.md` |
 | Accessibility Addon | `a11y` | | Storybook addon-a11y wiring (axe-core), per-story rules, CI failure thresholds, role-aware keyboard testing | `reference/a11y-addon.md` |
@@ -246,10 +246,10 @@ Vitrine receives components and design context from upstream agents. Vitrine sen
 | `reference/react-cosmos.md` | Installed Cosmos integration, fixture exports, decorators, mocked state and export verification. |
 | `reference/visual-regression.md` | Chromatic, Playwright, Lost Pixel setup and CI |
 | `reference/framework-alternatives.md` | Histoire, Ladle, tool comparison |
-| `reference/storybook-interactions.md` | Play function authoring, `@storybook/test` API, addon-vitest integration, Interactions panel debugging |
+| `reference/storybook-interactions.md` | Play function authoring, `storybook/test` API, addon-vitest integration, Interactions panel debugging |
 | `reference/mdx-docs.md` | MDX 3 + Storybook 10 Doc Blocks, Autodocs vs hand-authored MDX trade-off, multi-page docs structure |
 | `_common/UX_TRENDS_2026.md` | 2025-2026 component catalogue context — token-layer linkage (§1), framework state (React 19.2 / Svelte 5 / Vue 3.6, §3), and case studies for Radix Themes 3.0 / Primer / Polaris Unified. Read §1 Design and §3 Frontend. |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the story plan, deciding adaptive thinking depth at PLAN, or front-loading target component/coverage tier at SCAN. Critical for Vitrine: P3, P5 |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the story plan, deciding adaptive thinking depth at PLAN, or front-loading target component/coverage tier at SURVEY. Critical for Vitrine: P3, P5 |
 | `_common/PROOF_CARRYING.md` | You generate `vrt_proof` (visual regression diff within tolerance per Matrix Sampling Policy PD-2) in `nexus acceptance` Phase 2B. Use matrix-sampled stories (pairwise default for Tier-A, full pairwise + critical-path full-coverage for Tier-S). New story-set additions pass shadow-run for ≥3 weeks before becoming Gate-blocking. Pixel-match snapshot ≠ translation quality (PD-2 locale semantic note). |
 
 ## Operational

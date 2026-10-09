@@ -232,6 +232,7 @@ When input contains `## NEXUS_ROUTING`, do not call other agents directly. Retur
 - Key findings / decisions:
   - [domain-specific items]
 - Artifacts: [file paths or "none"]
+- Verified: [claim + evidence object per `_common/HANDOFF.md` § Completed vs Verified; omit if no pass/done claim]
 - Risks: [identified risks]
 - Open questions (blocking/non-blocking):
   - [blocking: yes/no] [question]
@@ -242,7 +243,7 @@ When input contains `## NEXUS_ROUTING`, do not call other agents directly. Retur
   - Recommended: [Recommended option]
 - User Confirmations:
   - Q: [Previous question] → A: [User's answer]
-- Suggested next agent: [AgentName] (reason)
+- Next: [AgentName] (reason)
 - Next action: CONTINUE | VERIFY | DONE
 ```
 

@@ -38,7 +38,7 @@ Capture is **clone's Phase 0.5 + Phase 1, run once per source**, producing one s
 
 - **Per-source research sweep** — each source gets its own web Evidence Ledger (`reference/research-grounding.md`), **scoped to the slice it contributes** to the fusion, so each adopted slice's completeness denominator + exact values are research-grounded. Plus **one fusion-level** competitive/positioning sweep (`+Compete`) that informs the **Fusion Thesis** (Phase 0) and the **Conflict Ledger** rationale (§3a) — knowing *why* each product designed a contested element the way it did sharpens the reconciliation decision.
 
-- **Per-source capture strategy** — each source picks its own clone strategy (`extract-and-rebuild` default | `scaffold-from-source` if you own/license it | `incremental` | …) and its own capture-source binding by `target_type` (web=Vector/Voyager, desktop=Builder `automate`/external harness, has-source=Lens, api=Schema, …).
+- **Per-source capture strategy** — each source picks its own clone strategy (`extract-and-rebuild` default | `scaffold-from-source` if you own/license it | `incremental` | …) and its own capture-source binding by `target_type` (web=Vector/Voyager, desktop=Hone `automate`/external harness, has-source=Lens, api=Schema, …).
 - **Per-source provenance stamp** (clone §3b) — every source baseline is stamped with *its* target version/build, capture date, environment, locale, pinned account/seed. The Fusion Report (§7) lists **one stamp per source**; a source baseline without a stamp is rejected at the Phase 2 gate exactly as in clone.
 - **Per-source coverage** — clone's Capture Completeness Gate (clone §3a) applies per source *for the surface area that source contributes to the fusion*. You need not capture all of Product B if only B's billing flow is being adopted — but you must capture **every screen/state/flow of B's billing flow** (coverage gate scoped to the adopted slice), and the Fusion Map must declare that scoping so the un-captured remainder of B is an explicit, named non-goal, never a silent omission.
 - **Drift** — clone's drift re-check (clone §3b) runs per source before SHIP; a source that shipped a new version mid-fusion re-stamps and re-captures *its adopted slice*, never re-tunes the fused product toward a moved source.
@@ -190,7 +190,7 @@ Each gate below states its own failure mode in full (§3a Fusion Map, §3b Selec
 - `+Hone[automate]` / `+Voyager[ios]` — desktop / native-mobile source capture (mixed-platform fusion).
 - `+Sherpa` — decompose a large fusion into atomic per-element build steps.
 - `+Siege` — when the fused product must meet a performance envelope drawn from either source.
-- `+Sentinel` / `+Canon[legal]` — when the multi-source IP/trade-dress posture (§3d) needs a security/legal-surface pass before sign-off.
+- `+Sentinel` / `+Canon[legal-gap]` — when the multi-source IP/trade-dress posture (§3d) needs a security/legal-surface pass before sign-off.
 
 ## 7. Output
 

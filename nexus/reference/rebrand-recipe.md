@@ -60,7 +60,7 @@ INVENTORY  (Lens[enumerate ALL brand touchpoints: UI / LP / docs / emails / erro
 → ATTEST   (consistency score all surfaces = 3 + completeness proof:
             counter complete AND residue 2× zero AND all surface axes touched)
 → DECOMMISSION (old assets / old tokens / old redirects removal — GATED on ATTEST;
-            Sweep[detect] → Ripple+Lens[residual refs == 0 on latest tree] → cut → Radar green)
+            Sweep[dead] → Ripple+Lens[residual refs == 0 on latest tree] → cut → Radar green)
 → Guardian (phased per-surface commits + Consistency Attestation; decommission as a SEPARATE revertible PR)
 ```
 
@@ -127,4 +127,4 @@ Brand change request?
 
 ## Add-ons
 
-+Growth for OGP/JSON-LD/SEO metadata surfaces and redirect strategy · +Canon[legal] when the rename has legal/ToS surface (company name in policies) · +Vector/vitrine for Before/After visual-evidence capture in the Consistency Attestation · +Frame when a Figma library is a brand touchpoint (design-file side of the sweep) · +Launch for the public cutover announcement + rollback plan on big-bang runs.
++Growth for OGP/JSON-LD/SEO metadata surfaces and redirect strategy · +Canon[legal-gap] when the rename has legal/ToS surface (company name in policies) · +Vector/vitrine for Before/After visual-evidence capture in the Consistency Attestation · +Frame when a Figma library is a brand touchpoint (design-file side of the sweep) · +Launch for the public cutover announcement + rollback plan on big-bang runs.

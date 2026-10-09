@@ -46,7 +46,7 @@ Translate the web architecture surfaced in `web-analysis-checklist.md` into **tw
       │    └─ Repository (interface + impl)
       ├─ Services
       │    ├─ Network (Ktor or Retrofit + OkHttp)
-      │    ├─ Auth (AppAuth + Custom Tabs + EncryptedSharedPreferences)
+      │    ├─ Auth (AppAuth + Custom Tabs + Tink-encrypted DataStore/Keystore)
       │    ├─ Storage (Room + DataStore)
       │    └─ Push, Analytics, Logger, FeatureFlags
       └─ Design System (Material 3 theme, Tokens, Components)

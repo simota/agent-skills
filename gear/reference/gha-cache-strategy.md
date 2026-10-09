@@ -90,7 +90,7 @@ For independent package layers (Turbo, Nx), key each layer separately and keep f
 Language `setup-*` actions ship built-in caching that handles key construction for you:
 
 ```yaml
-- uses: actions/setup-node@v4
+- uses: actions/setup-node@v5
   with:
     node-version: 22
     cache: pnpm

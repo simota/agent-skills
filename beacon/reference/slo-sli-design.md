@@ -158,7 +158,7 @@ Canonical tier table (matches SKILL.md Core Contract — `alerting-strategy.md` 
 |-------|-----------|-------------|--------------|-----------------|
 | **Fast burn (page)** | 14.4x | 1h | 5min | ~2% in 1h |
 | **Medium burn (page)** | 6x | 6h | 30min | ~5% in 6h |
-| **Slow burn (ticket)** | 3x | 3d | 6h | ~10% in 3d |
+| **Slow burn (ticket)** | 1x | 3d | 6h | ~10% in 3d |
 | **Baseline (trend)** | 1x | 30d | — | 100% at SLO window end |
 
 ```yaml
@@ -422,7 +422,7 @@ Sloth auto-generates two MWMB alert rules per SLO:
 |-------|-------------|-----------|--------------|
 | Page (critical) | 1h + 5m | 14× | 2% budget consumed in 1h |
 | Ticket (warning) | 6h + 30m | 6× | 5% budget consumed in 6h |
-| Ticket (low) | 3d + 6h | 3× | 10% budget consumed in 3d |
+| Ticket (low) | 3d + 6h | 1× | 10% budget consumed in 3d |
 
 #### CLI Mode (CI validation)
 

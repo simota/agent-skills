@@ -26,7 +26,7 @@ This file defines **11 Packs** (overlapping subsets of the ecosystem) so that an
 
 ## Active-pack profiles
 
-Each profile sets the Claude Code `skills` field. Use one at a time per workspace; switch with `/nexus pack <name>` (planned subcommand) or by editing `settings.json` directly.
+Each profile sets the Claude Code `skills` field. Use one at a time per workspace; switch with `/nexus pack <name>` or by editing `settings.json` directly.
 
 | Profile | Packs active | Total skills (approx) |
 |---------|-------------|----------------------|
@@ -38,6 +38,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 | `research` | `core + research` | 26 |
 | `package-author` | `core + package-gen + design + research` | 47 |
 | `skill-meta` | `core + skill-meta` | 12 |
+| `ai-eval` | `core + ai-eval` | 20 |
 | `incident-response` | `core + chain` | 9 |
 | `legal-jp` | `core + canon` | 9 |
 | `personal-env` | `core + hone` | 9 |

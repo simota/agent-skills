@@ -413,7 +413,7 @@ Compose: `Surface(tonalElevation = ..., shadowElevation = ...)`. M3 prefers **to
 | **Navigation Compose** | **2.8** + (Type-safe routes) |
 | **AGP** | **8.5.1** + (16KB native libs) |
 | **NDK** | **r28** + (default-aligned 16KB) |
-| **Target SDK** | **36** mandatory by 2026-08-31 (Play) |
+| **Target SDK** | **36** mandatory since 2026-08-31 (Play) |
 
 ### State and lifecycle
 
@@ -480,7 +480,7 @@ Native scope is iOS + Android mobile. Wear / TV / Auto are not Native's default 
 
 - **Google I/O** annually (May) — Material updates typically announced here.
 - **Compose BOM** updated quarterly — track via `androidx.compose:compose-bom-alpha` for previews.
-- **Target SDK 36** mandatory on Google Play from **2026-08-31** for new apps and updates.
+- **Target SDK 36** mandatory on Google Play since **2026-08-31** for new apps and updates.
 - **16KB native lib alignment** required on new releases since **2025-11-01**.
 - **Material 3 Expressive stable** — confirmed in Compose Material 3 1.4+; APIs marked `@ExperimentalMaterial3ExpressiveApi` on earlier alphas; graduates to stable per-component.
 

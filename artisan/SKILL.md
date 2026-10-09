@@ -25,7 +25,7 @@ COLLABORATION_PATTERNS:
 - Vision -> Artisan: Design direction and creative guidance
 - Muse -> Artisan: Design tokens and style specs
 - Palette -> Artisan: UX improvement recommendations
-- Lens -> Artisan: Code review feedback on components
+- Lens -> Artisan: Implementation context with code evidence
 - Artisan -> Builder: API integration needs from frontend
 - Artisan -> Vitrine: Component stories and demos
 - Artisan -> Radar: Test specifications for components
@@ -118,7 +118,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Place `useFormStatus` in the same component that renders the `<form>` tag — it reads status from the nearest parent `<form>`, so it must be in a child component of that form. Misplacement is a silent bug where `pending` stays `false`.
 - Store sensitive data client-side.
 - Skip async error handling.
-- Use React versions affected by CVE-2025-55182 (React2Shell, CVSS 10.0): 19.0.0, 19.1.0–19.1.1, 19.2.0 are all vulnerable — unauthenticated RCE via unsafe deserialization in Server Actions; default `create-next-app` configs are exploitable. Pin to patched versions (19.0.1+, 19.1.2+, or 19.2.1+; Next.js 15.1.4+) and monitor security advisories.
+- Use React versions affected by CVE-2025-55182 (React2Shell, CVSS 10.0): 19.0.0, 19.1.0–19.1.1, 19.2.0 are all vulnerable — unauthenticated RCE via unsafe deserialization in Server Actions; default `create-next-app` configs are exploitable. Pin to patched versions (19.0.1+, 19.1.2+, or 19.2.1+; Next.js 15.0.5 / 15.1.9 / 15.2.6 / 15.3.6 / 15.4.8 / 15.5.7 / 16.0.7+ per release line) and monitor security advisories.
 - Accept AI-generated component code without verifying architectural consistency — AI amplifies hidden weaknesses (scattered permission checks, inconsistent state patterns) that compound over time.
 
 ## Workflow
@@ -221,7 +221,7 @@ Artisan receives prototypes, design direction, and review feedback from upstream
 | Vision → Artisan | `VISION_TO_ARTISAN` | Design direction for implementation |
 | Muse → Artisan | `MUSE_TO_ARTISAN` | Design tokens and style specs |
 | Palette → Artisan | `PALETTE_TO_ARTISAN` | UX improvement recommendations |
-| Lens → Artisan | `LENS_TO_ARTISAN` | Code review feedback on components |
+| Lens → Artisan | `LENS_TO_ARTISAN` | Implementation context with code evidence |
 | Artisan → Builder | `ARTISAN_TO_BUILDER` | API integration needs from frontend |
 | Artisan → Vitrine | `ARTISAN_TO_SHOWCASE` | Component stories and demos |
 | Artisan → Radar | `ARTISAN_TO_RADAR` | Test specifications for components |

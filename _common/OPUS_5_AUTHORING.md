@@ -8,7 +8,7 @@ The filename `OPUS_5_AUTHORING.md` and P1–P12 identifiers are retained for con
 
 Keep instructions that change a skilled executor's behavior: the objective, missing context, constraints, tool-use conditions, domain traps, and observable acceptance criteria. Remove generic encouragement, narrated thinking, duplicated methodology, and workarounds that no longer apply to the detected runtime. Do not turn a known local failure into a permanent rule for every model.
 
-## The Eleven Principles
+## The Principles (P1–P12)
 
 P1–P11 retain their identifiers; P12 is the cross-cutting context rule. All apply by task need rather than vendor identity.
 

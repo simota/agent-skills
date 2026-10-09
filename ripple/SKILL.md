@@ -194,7 +194,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 ## Subcommand Dispatch
 Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
-- Otherwise → default Recipe (`impact` = Impact Analysis). Apply normal INGEST → MAP → ANALYZE → ASSESS → REPORT workflow.
+- Otherwise → default Recipe (`impact` = Impact Analysis). Apply normal SCOPE → VERTICAL → HORIZONTAL → RISK_SCORE → RECOMMEND workflow.
 
 Behavior notes per Recipe:
 - `impact`: Analyze both vertical (dependency graph) and horizontal (pattern consistency) and output breaking changes, side effects, and risks in an integrated report.

@@ -52,16 +52,22 @@ INSTRUCTION_FILES = ["AGENTS.md", "CLAUDE.md"]
 # The qualifier is captured rather than skipped: it decides which count the claim is
 # measured against. Numbered list markers ("1) 担当スキル") do not match, because ") 担当"
 # is not in the qualifier set.
+#
+# Also recognised: an open-ended "90+ skills", a Japanese counter ("90 個のスキル",
+# "90件のスキル"), "agent"/"repository-local" qualifiers, and comma-grouped numbers
+# ("1,234 skills" is 1234, never 234). The lookbehind stops a match from starting
+# in the middle of a longer number.
 COUNT_PATTERN = re.compile(
-    r"(\d{1,4})\s*(?:の)?\s*"
-    r"((?:(?:global|specialist|project-local|グローバル|プロジェクトローカル|専用の?)\s*)*)"
+    r"(?<![\d,.])(\d{1,3}(?:,\d{3})+|\d{1,4})\+?\s*(?:個|件|本)?\s*(?:の)?\s*"
+    r"((?:(?:global|specialist|agent|project-local|repository-local|repo-local"
+    r"|グローバル|プロジェクトローカル|専用の?)\s*)*)"
     r"(?:skill\s+agents?|skills?|スキルエージェント|スキル)",
     re.I,
 )
 
 # Words that, in the 24 characters before the number or inside the qualifier, mark the
 # claim as counting project-local skills rather than global ones.
-LOCAL_MARKERS = ("project-local", "プロジェクトローカル", "専用", ".claude/skills", ".agents/skills")
+LOCAL_MARKERS = ("project-local", "repository-local", "repo-local", "プロジェクトローカル", "専用", ".claude/skills", ".agents/skills")
 
 # Project-local skills live here; `_common/PROJECT_LOCAL_SKILLS.md` is their contract.
 LOCAL_SKILLS_DIR = ".claude/skills"
@@ -98,7 +104,7 @@ def check_counts(path: Path, text: str, actual: int) -> list[tuple[str, str, str
     local_actual = actual_local_skill_count()
     previous_claim_end = 0
     for m in COUNT_PATTERN.finditer(text):
-        claimed = int(m.group(1))
+        claimed = int(m.group(1).replace(",", ""))
         # The preceding claim's qualifier cannot scope this one: in
         # "3 project-local skills and 90 skills", only the first count is local.
         before = text[max(previous_claim_end, m.start() - 24) : m.start()]

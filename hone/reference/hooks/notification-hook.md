@@ -1,6 +1,6 @@
 # Notification Hook
 
-Reference for Hone's `notification` recipe. Configure the Notification event for desktop, Slack, Discord, and sound alerts on permission requests, idle warnings, and sub-agent completion.
+Reference for Hone's `hook` recipe (notification signal). Configure the Notification event for desktop, Slack, Discord, and sound alerts on permission requests, idle warnings, and sub-agent completion.
 
 ---
 

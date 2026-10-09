@@ -1,6 +1,6 @@
 # SCAMPER Delta
 
-Purpose: Flux `scamper` dialogue and convergence contract. The seven SCAMPER lenses are model-known.
+Purpose: Flux `ideate scamper` dialogue and convergence contract. The seven SCAMPER lenses are model-known.
 
 ## Protocol
 
@@ -26,6 +26,6 @@ Include the seed, lenses run, strongest variations with their originating lens, 
 
 - Feature-ready variation -> Spark.
 - Formal choice -> Magi.
-- Stress test -> Flux `steelman`.
-- More rapid divergence -> Flux `crazy8`.
+- Stress test -> Flux `ideate steelman`.
+- More rapid divergence -> Flux `ideate crazy8`.
 - Packed hybrid -> Void for scope review.

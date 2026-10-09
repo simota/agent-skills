@@ -10,7 +10,7 @@ Comprehensive CSF 3.0 templates, Storybook 8.5+ features, and best practices.
 
 ```typescript
 import type { Meta, StoryObj } from '@storybook/react';
-import { within, userEvent, expect } from '@storybook/test';
+import { within, userEvent, expect } from 'storybook/test';
 import { ComponentName } from './ComponentName';
 
 const meta = {
@@ -31,7 +31,7 @@ const meta = {
 
 ```typescript
 import type { Meta, StoryObj } from '@storybook/react';
-import { within, userEvent, expect } from '@storybook/test';
+import { within, userEvent, expect } from 'storybook/test';
 import { Input } from './Input';
 
 const meta = {
@@ -94,10 +94,10 @@ export default meta;
 // ...
 ```
 
-### @storybook/test (Unified Testing)
+### storybook/test (Unified Testing)
 
 ```typescript
-import { fn, expect, within, userEvent, waitFor } from '@storybook/test';
+import { fn, expect, within, userEvent, waitFor } from 'storybook/test';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Form } from './Form';
 
@@ -140,7 +140,7 @@ export const Primary: Story = {
 
 ```typescript
 import type { Meta, StoryObj } from '@storybook/react';
-import { within, userEvent } from '@storybook/test';
+import { within, userEvent } from 'storybook/test';
 import { Modal } from './Modal';
 
 const meta = {
@@ -601,7 +601,7 @@ import { DesignTokenDocBlock } from 'storybook-design-token/dist/doc-blocks';
 
 ## Per-Recipe Authoring Rules (SKILL.md excerpt)
 
-- For `interaction` recipe: import test utilities exclusively from `@storybook/test` (Storybook 8+ unified package) — never from deprecated `@storybook/jest` or `@storybook/testing-library`. Always `await` `userEvent` calls (v14+ is async), scope queries via `within(canvasElement)`, and prefer `findBy*`/`waitFor` over `waitForTimeout`. Use `step()` to group multi-stage flows for the Interactions panel. Stop play functions at the component boundary; cross-page flows hand off to Voyager.
+- For `interaction` recipe: import test utilities exclusively from `storybook/test` (Storybook 9+ core subpath; `@storybook/test` only on Storybook 8) — never from deprecated `@storybook/jest` or `@storybook/testing-library`. Always `await` `userEvent` calls (v14+ is async), scope queries via `within(canvasElement)`, and prefer `findBy*`/`waitFor` over `waitForTimeout`. Use `step()` to group multi-stage flows for the Interactions panel. Stop play functions at the component boundary; cross-page flows hand off to Voyager.
 
 - For `mdx` recipe: start every component with Autodocs (`tags: ['autodocs']`); promote to hand-authored MDX only when narrative, multi-page guides, or custom JSX is required. Always bind via `<Meta of={meta} />`, embed stories with `<Canvas of={Story} />` (never re-define stories inline — Storybook 7+ deprecates `<Story name="...">` with JSX children), and register `'../src/**/*.mdx'` in `.storybook/main.ts`. Generate prop tables with `<ArgTypes>` rather than hand-written Markdown.
 

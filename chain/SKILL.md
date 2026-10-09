@@ -65,7 +65,7 @@ Route elsewhere when the task is primarily:
 - CI/CD pipeline hardening, dependency CVE scanning: `gear`
 - GitHub Actions workflow security: `gear[gha]`
 - hook design and PreToolUse policy: `hone[hook]`
-- SKILL.md formatting / 16-item style audit: `gauge`
+- SKILL.md formatting / Gauge-checklist style audit: `gauge`
 - runtime exploitation / dynamic testing: `probe`
 - incident command, severity coordination, or stakeholder communications after compromise is confirmed: `triage`
 
@@ -194,7 +194,7 @@ full matrix, with the escalation target per row -> `reference/audit-decision-mat
 | `chmod +x` on a script then `.exec` | escalation prep |
 | `sed -i ... settings.json` | settings hijack (AP-20 class) |
 | `nc -e`, `bash -i >& /dev/tcp` | reverse shell |
-| `\xE0\x80\x80` byte sequence in SKILL.md | Unicode Tag prefix |
+| `\xF3\xA0\x80\x80`–`\xF3\xA0\x81\xBF` byte sequences in SKILL.md | Unicode Tag block (U+E0000–U+E007F) |
 | frontmatter contains `tools:`, `capabilities:`, `required_*:` | custom-key drift from official spec |
 
 ## Output Routing
@@ -246,7 +246,7 @@ Chain receives intake and compromise requests from User, Sentinel, Gauge, Hone, 
 | Agent | Chain owns | They own |
 |-------|------------|----------|
 | Sentinel | Skill/plugin/MCP intake plus live campaign IoC matching and safe recovery design | application-side SAST, dependency CVE scanning, slopsquat discovery |
-| Gauge | capability declaration + custom-frontmatter rejection | SKILL.md formatting style audit (16-item checklist) |
+| Gauge | capability declaration + custom-frontmatter rejection | SKILL.md formatting style audit (Gauge normalization checklist) |
 | Hone | what to check at PreToolUse for skill load | hook authoring and lifecycle event design |
 | Gear | MCP install runbook + tool description pinning | CI/CD config, container hardening, dependency mgmt |
 | Triage | confirmed-compromised escalation handoff | incident response after compromise confirmed |

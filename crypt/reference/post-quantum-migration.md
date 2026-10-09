@@ -5,7 +5,7 @@ Purpose: Plan the migration from classical public-key cryptography (RSA, ECDSA, 
 ## Scope Boundary
 
 - **Crypt `pqc`**: the migration plan itself — inventory, timeline, hybrid-scheme selection, rollout sequencing, rollback.
-- **Crypt `algo`** (default): selects the current-best algorithm for a new use case; will flag quantum-vulnerability but does not own the migration program.
+- **Crypt `algorithm`** (default): selects the current-best algorithm for a new use case; will flag quantum-vulnerability but does not own the migration program.
 - **Crypt `tls`**: TLS/mTLS configuration. TLS 1.3 hybrid key exchange (X25519MLKEM768) is a `pqc` topic that `tls` applies — the migration decision lives here, the cipher-suite wiring lives there.
 - **Canon[regulatory]**: maps regulatory mandates (CNSA 2.0, BSI TR-02102, ANSSI, MAS) that drive the timeline — `pqc` consumes those requirements.
 

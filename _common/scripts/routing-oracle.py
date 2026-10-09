@@ -2,7 +2,7 @@
 """
 Routing Oracle — mechanical reliability checks for Nexus's routing machinery.
 
-Eight checks, with fail-open execution (S4: a script crash prints a warning
+Nine checks, with fail-open execution (S4: a script crash prints a warning
 and the remaining checks still run). Warning/error modes do not block on an
 internal crash; strict mode blocks on every warning, including incomplete checks:
 
@@ -63,6 +63,18 @@ internal crash; strict mode blocks on every warning, including incomplete checks
        evidence bands, and must not reintroduce the retired source-weight
        arithmetic or fixed clarification bonuses.
 
+  RO-9 Recipe-hint subcommand existence
+       In routing-matrix.md's Primary Chain and Recipe Hints columns, every
+       single-token hint `Skill[token]` naming a live skill must name a token
+       that skill actually dispatches (its `## Recipes` allowlist / table, or
+       an alias declared on an `alias` line of that section). `_common/RECIPES.md` defines the
+       hint as the exact Subcommand token, and a token the skill does not
+       know silently falls back to its default Recipe (found live:
+       `Pixel[gap-report]` ran Pixel's code-generating `reproduce`).
+       Descriptive annotations (`Scout[RCA+defect-confirm]`,
+       `Radar[safety-net characterization]`) are not single tokens and are
+       not checked.
+
 Usage:
   python3 _common/scripts/routing-oracle.py [--severity warning|error|strict]
 
@@ -90,7 +102,7 @@ from pathlib import Path
 
 import _corpus
 from _markdown import fenced_blocks, markdown_section as read_markdown_section
-from _recipes import active_text, dispatch_allowlist
+from _recipes import active_text, dispatch_allowlist, recipe_cells
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 NEXUS_DIR = REPO_ROOT / "nexus"
@@ -251,12 +263,8 @@ def check_ladder_token_order(findings: list[Finding]):
 RO3_REVIEWED_EXCEPTIONS = {
     # Pixel re-measures its own fidelity gap after remediation (gap -> verify
     # is the same specialist re-running its own audit instrument, matching
-    # DESIGN_AUDIT's documented gap-report -> remediation -> re-audit loop).
+    # DESIGN_AUDIT's documented gap -> remediation -> re-audit loop).
     ("DESIGN_AUDIT", "Pixel"),
-    # Bolt's auto-tuning loop re-profiles after each parameter change
-    # (profile -> tuning-loop -> verify), matching OPTIMIZE's own documented
-    # ITERATE re-profile pattern rather than a missing independent verifier.
-    ("AUTO_TUNING", "Bolt"),
 }
 
 
@@ -478,6 +486,75 @@ def check_confidence_gate_shape(findings: list[Finding]):
         findings.append(Finding("RO-8", "ERROR", "; ".join(parts)))
 
 
+RECIPE_HINT_RE = re.compile(r"(?<![A-Za-z0-9])([A-Za-z][A-Za-z0-9]*)\[([a-z0-9][a-z0-9-]*)\]")
+
+
+def _dispatchable_tokens(skill_md: Path) -> set[str] | None:
+    """Tokens a skill dispatches: its labelled allowlist, its Recipe-table
+    Subcommand column, and backticked tokens on `alias` lines of `## Recipes`.
+    None when the skill has no Recipes section (nothing to check against)."""
+    recipes = read_markdown_section(skill_md.read_text(encoding="utf-8"), "Recipes")
+    if recipes is None:
+        return None
+    tokens = set(dispatch_allowlist(recipes) or [])
+    for cells in recipe_cells(recipes):
+        if len(cells) >= 2:
+            tokens.update(re.findall(r"`([a-z0-9][a-z0-9-]*)`", cells[1]))
+    # Prose tokens count only on a line that declares them as aliases (e.g.
+    # Tome's "first-token aliases for `article <platform>`"); keyword tables
+    # and descriptive prose also carry backticked words that are not subcommands.
+    for line in active_text(recipes).splitlines():
+        if re.search(r"\balias", line, re.IGNORECASE):
+            tokens.update(re.findall(r"`([a-z0-9][a-z0-9-]*)`", line))
+    return tokens or None
+
+
+def check_recipe_hint_subcommands(findings: list[Finding]):
+    """RO-9: single-token `Skill[token]` hints in routing-matrix.md's Primary
+    Chain / Recipe Hints columns must name a subcommand the skill dispatches."""
+    if not ROUTING_MATRIX.is_file():
+        findings.append(Finding("RO-9", "WARNING", "routing-matrix.md not found — recipe-hint check skipped"))
+        return
+    skills: dict[str, Path] = {}
+    for d in _corpus.iter_skill_dirs(REPO_ROOT):
+        skills[d.name.lower()] = d / "SKILL.md"
+    local = REPO_ROOT / ".claude" / "skills"
+    if local.is_dir():
+        for d in sorted(local.iterdir()):
+            if (d / "SKILL.md").is_file():
+                skills.setdefault(d.name.lower(), d / "SKILL.md")
+    allow_cache: dict[str, set[str] | None] = {}
+    checked = 0
+    bad = []
+    for line in active_text(ROUTING_MATRIX.read_text(encoding="utf-8")).splitlines():
+        if not line.startswith("|") or line.strip().startswith("|---") or "Recipe Hints" in line:
+            continue
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if len(cells) < 3:
+            continue
+        for column in (cells[1], cells[2]):
+            for agent, token in RECIPE_HINT_RE.findall(column):
+                skill_md = skills.get(agent.lower())
+                if skill_md is None:
+                    continue
+                if agent.lower() not in allow_cache:
+                    allow_cache[agent.lower()] = _dispatchable_tokens(skill_md)
+                allowed = allow_cache[agent.lower()]
+                if allowed is None:
+                    continue
+                checked += 1
+                if token not in allowed:
+                    bad.append(f"{cells[0]}: `{agent}[{token}]`")
+    if bad:
+        findings.append(Finding(
+            "RO-9", "ERROR",
+            "routing-matrix.md hints name subcommand(s) the target skill does not dispatch "
+            "(the skill would silently fall back to its default Recipe): " + "; ".join(sorted(set(bad))),
+        ))
+    if checked == 0:
+        findings.append(Finding("RO-9", "WARNING", "no single-token Skill[token] hints found — recipe-hint check may be stale vs table format"))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--severity", choices=("warning", "error", "strict"), default="warning")
@@ -492,6 +569,7 @@ def main() -> int:
     safe_check(check_bare_subcommand_dispatch, findings)
     safe_check(check_retired_reference_residue, findings)
     safe_check(check_confidence_gate_shape, findings)
+    safe_check(check_recipe_hint_subcommands, findings)
 
     errors = [f for f in findings if f.level == "ERROR"]
     warnings = [f for f in findings if f.level == "WARNING"]

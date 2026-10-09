@@ -1,11 +1,11 @@
 # fastlane snapshot Pipeline
 
-Purpose: Configure fastlane `snapshot` to generate App Store screenshots across a device and language matrix, reusing the same XCUITest target and Screen Objects Voyager[ios] already authored — not a parallel test suite. Covers `Voyager[ios]file`, `Voyager[ios]shotHelper.swift`, the dedicated screenshot scheme, the clean-status-bar pre-script, the device/language matrix, and `frameit` for marketing frames.
+Purpose: Configure fastlane `snapshot` to generate App Store screenshots across a device and language matrix, reusing the same XCUITest target and Screen Objects Voyager[ios] already authored — not a parallel test suite. Covers `Snapfile`, `SnapshotHelper.swift`, the dedicated screenshot scheme, the clean-status-bar pre-script, the device/language matrix, and `frameit` for marketing frames.
 
 Contents:
 - Pipeline shape and scheme separation
-- `Voyager[ios]file` configuration
-- `Voyager[ios]shotHelper.swift` integration
+- `Snapfile` configuration
+- `SnapshotHelper.swift` integration
 - Writing `snapshot()` calls (reusing existing Screen Objects)
 - Status-bar override before capture
 - Device / language matrix and cost management
@@ -30,10 +30,10 @@ MyApp.xcworkspace
 - Reuse Page Objects and identifiers from `reference/xcuitest-patterns.md` and `reference/ios-identifier-strategy.md` inside `ScreenshotTests.swift` — do not duplicate query logic.
 - The `Screenshots` scheme's test plan/target membership includes only the screenshot test class(es); the PR-gating scheme excludes them via `-skip-testing:MyAppUITests/ScreenshotTests`.
 
-## `Voyager[ios]file` Configuration
+## `Snapfile` Configuration
 
 ```ruby
-# fastlane/Voyager[ios]file
+# fastlane/Snapfile
 
 # Devices to capture (App Store Connect device-size buckets)
 devices([
@@ -65,9 +65,9 @@ launch_arguments(["-ui-testing", "-snapshot-mode", "-disable-animations"])
 - `concurrent_simulators(true)` parallelizes across the simulator pool; watch host machine RAM/CPU headroom in CI runners before enabling on a resource-constrained runner.
 - `stop_after_first_error(false)` so one locale's failure does not abort the whole matrix run — review all failures in one pass instead of fixing-and-rerunning serially.
 
-## `Voyager[ios]shotHelper.swift` Integration
+## `SnapshotHelper.swift` Integration
 
-fastlane generates `Voyager[ios]shotHelper.swift` (`fastlane snapshot init`); drop it into the UI test target and call `setupVoyager[ios]shot(app)` before `app.launch()`:
+fastlane generates `SnapshotHelper.swift` (`fastlane snapshot init`); drop it into the UI test target and call `setupSnapshot(app)` before `app.launch()`:
 
 ```swift
 import XCTest
@@ -78,13 +78,13 @@ final class ScreenshotTests: XCTestCase {
     override func setUpWithError() throws {
         continueAfterFailure = false
         app = XCUIApplication()
-        setupVoyager[ios]shot(app) // must run BEFORE launch — configures locale + launch args
+        setupSnapshot(app) // must run BEFORE launch — configures locale + launch args
         app.launch()
     }
 }
 ```
 
-- `setupVoyager[ios]shot(app)` injects the current language/locale launch arguments fastlane is driving for this matrix cell — calling it after `app.launch()` is a no-op and silently produces screenshots in the wrong locale.
+- `setupSnapshot(app)` injects the current language/locale launch arguments fastlane is driving for this matrix cell — calling it after `app.launch()` is a no-op and silently produces screenshots in the wrong locale.
 - Re-run `fastlane snapshot init` after any major Xcode upgrade; Apple/fastlane periodically revise the helper for new Swift/Xcode compatibility.
 
 ## Writing `snapshot()` Calls

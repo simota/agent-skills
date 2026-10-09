@@ -169,7 +169,7 @@ Inline Recipes (`kaizen`, `essential`, `killer`, `trim`) have no top-level refer
 
 ## Execution Model
 
-**Orchestrator detection** — establish the host runtime and advertised delegation capabilities before the first spawn; discover actual schemas rather than identifying a host solely from a familiar tool name. Bind the runtime adapter and authorized model choice. Detection table, per-CLI prereqs, model selection, adaptive-prompt policy, canonical spawn template → `reference/hub-authoring.md` § Execution Model + `reference/execution-layers.md`.
+**Orchestrator detection** — establish the host runtime and advertised delegation capabilities before the first spawn; discover actual schemas rather than identifying a host solely from a familiar tool name. Bind the runtime adapter and authorized model choice. Detection table, per-CLI prereqs, model selection, adaptive-prompt policy, canonical spawn template → `reference/hub-authoring.md` § Execution-Layer Key Rules + `reference/execution-layers.md`.
 
 **Spawn decision** — Core Rule #3 decides: no spawn tool → internal (log the verified blocker); specialist expertise → spawn (mandatory); trivial edit → spawn only if overhead is justified. Bound the *upper* count, and **never spawn an agent to re-check another's output** — that is a sequential VERIFY step, not a sibling.
 

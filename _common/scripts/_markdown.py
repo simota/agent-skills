@@ -5,7 +5,10 @@ from __future__ import annotations
 import re
 
 
-INLINE_CODE = re.compile(r"(?<!`)(`+)(?!`)(.*?)(?<!`)\1(?!`)", re.DOTALL)
+# A code span cannot cross a blank line (paragraph boundary): one literal
+# backtick in prose must not pair with a backtick paragraphs later and mask
+# every heading and comment in between.
+INLINE_CODE = re.compile(r"(?<!`)(`+)(?!`)((?:(?!\n[ \t]*\n).)*?)(?<!`)\1(?!`)", re.DOTALL)
 FENCE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
 
 

@@ -30,7 +30,7 @@ Periodically audit all scaffolding components using this protocol:
    - **Persistence**: Can the agent use file-based memory (memory folders) instead of in-context accumulation?
 4. **Propose simplification** — If the assumption no longer holds, feed into the HE evaluation cycle (below) for measured simplification
 
-This protocol makes the implicit logic behind HE-01 through HE-06 explicit and systematic. Run it aligned with Darwin's 30-day review cycle (ET-06).
+This protocol makes the implicit logic behind HE-01 through HE-06 explicit and systematic. Run it aligned with the 30-day cadence shared by Nexus LT-06 (`nexus/reference/routing-learning.md`) and Architect ST-06.
 
 ### Interface Stability over Implementation
 
@@ -53,11 +53,11 @@ Orchestrators (Nexus, Rally) should be stateless and replaceable. Session state 
 
 | Metric | Full Name | Formula | Purpose |
 |--------|-----------|---------|---------|
-| **CES** | Chain Effectiveness Score | `Success_Rate(0.35) + Recovery_Efficiency(0.20) + Step_Economy(0.20) + User_Satisfaction(0.25)` | Overall chain quality (defined in Nexus SKILL.md) |
+| **CES** | Chain Effectiveness Score | `Success_Rate(0.35) + Recovery_Efficiency(0.20) + Step_Economy(0.20) + User_Satisfaction(0.25)` | Overall chain quality (defined in `nexus/reference/routing-learning.md`) |
 | **TES** | Token Efficiency Score | `output_information_tokens / total_tokens_consumed` — **specified, not implemented** | Cost efficiency — detects context bloat and unnecessary verbosity. **Do not cite TES as a measured value or use it as a gate.** No code computes `output_information_tokens`, and this repository's transcripts neither expose nor derive it (`_common/TOKEN_ECONOMY.md` §6). The formula is retained as a specification for a future evaluator pipeline; until one persists the numerator, use the turn-index rule of `TOKEN_ECONOMY.md` §2, which `token-economy.py` can actually check. |
 | **UQS** | Unified Quality Score | `Σ (normalized_agent_score × weight)` → 0-100. Canonical definition and weights: `nexus/reference/quality-iteration.md` § Unified Quality Score | Evaluator-derived deliverable quality. **Not** a human satisfaction rating — user satisfaction enters the ecosystem through the `User_Satisfaction` term of CES, and the two must never be substituted for one another |
 
-**Grading (CES — 0-1 scale):** A (>= 0.85), B (>= 0.70), C (>= 0.55), D (< 0.55). TES takes no grade while it is unimplemented; a band applied to a quantity nothing computes reads as a measurement and is how an unmeasured number becomes a gate. UQS is on a 0-100 scale and uses its own bands (90-100 Excellent · 80-89 Good · 70-79 Acceptable · 60-69 Fair · <60 Poor); do not read it against this table.
+**Grading (CES — 0-1 scale):** A (≥ 0.90), B (≥ 0.80), C (≥ 0.70), D (≥ 0.60), F (< 0.60) — canonical: `nexus/reference/routing-learning.md` § Grading. TES takes no grade while it is unimplemented; a band applied to a quantity nothing computes reads as a measurement and is how an unmeasured number becomes a gate. UQS is on a 0-100 scale and uses its own bands (90-100 Excellent · 80-89 Good · 70-79 Acceptable · 60-69 Fair · <60 Poor); do not read it against this table.
 
 ---
 
@@ -76,13 +76,13 @@ Orchestrators (Nexus, Rally) should be stateless and replaceable. Session state 
 
 ## Evaluation Cycle
 
-**Frequency:** Aligned with Darwin ET-06 (30-day ecosystem review cycle).
+**Frequency:** 30-day cycle, aligned with Nexus LT-06 (`nexus/reference/routing-learning.md`) and Architect ST-06.
 
-**Trigger (mechanical, not prose):** This 30-day cadence, Darwin's LT-06/ET-06, and Architect's ST-06 all cite "30+ days since last review" but historically depended on someone remembering to run it. Wire the tick itself: register a recurring routine via the **`schedule`** skill (Claude Code's built-in scheduled-cloud-agent mechanism — prefer it over a raw `CronCreate` call so the schedule is visible/manageable through the same interface a user would use to inspect or cancel it) with a 30-day interval that runs, in order:
+**Trigger (mechanical, not prose):** This 30-day cadence, Nexus's LT-06, and Architect's ST-06 all cite "30+ days since last review" but historically depended on someone remembering to run it. Wire the tick itself: register a recurring routine via the **`schedule`** skill (Claude Code's built-in scheduled-cloud-agent mechanism — prefer it over a raw `CronCreate` call so the schedule is visible/manageable through the same interface a user would use to inspect or cancel it) with a 30-day interval that runs, in order:
 1. `python3 _common/scripts/lint-frontmatter.py --severity warning` and `python3 _common/scripts/validate-recipes.py --severity warning` — full-corpus health snapshot, reusing the exact scripts already wired into `.github/workflows/skill-lint.yml` (no new checker code).
 2. `python3 _common/scripts/lint-instructions.py --severity warning` — instruction-file drift snapshot (skill-count drift in `AGENTS.md`/`CLAUDE.md`, dead path references, rule duplication).
 3. `python3 _common/scripts/routing-oracle.py --severity warning` and `python3 _common/scripts/task-battery-check.py --severity warning` — routing-machinery snapshot (dead-refs, ladder order, producer/verifier, roster completeness, task-battery mechanical assertions).
-3b. `python3 _common/scripts/token-economy.py --severity warning` — token-economy snapshot (`_common/TOKEN_ECONOMY.md`). A P0 (`TE-INTEGRITY`) finding means a billed transcript record lost its `requestId`/usage or has conflicting duplicate usage — treat it as a data-integrity bug in the transcript pipeline, not a cost signal, and investigate before trusting any total from this run. A P1 (`TE-CONCENTRATION`) or P2 (`TE-LONGTAIL`) finding means session length is driving cost (`TOKEN_ECONOMY.md` §2) — feed it into the handoff-timing check in step 6. Do not answer it with a SKILL.md body-size change: §1 of that doc requires session length to be fixed first and the corpus re-measured before body size is judged worth touching, because body cost scales with the turns that follow the load.
+3b. `python3 _common/scripts/token-economy.py --severity warning` — token-economy snapshot (`_common/TOKEN_ECONOMY.md`). A P0 (`TE-INTEGRITY`) finding means a billed transcript record lost its `requestId`/usage or has conflicting duplicate usage — treat it as a data-integrity bug in the transcript pipeline, not a cost signal, and investigate before trusting any total from this run. A P1 (`TE-CONCENTRATION`) or P2 (`TE-LONGTAIL`) finding means session length is driving cost (`TOKEN_ECONOMY.md` §2) — feed it into step 4's EFS review. Do not answer it with a SKILL.md body-size change: §1 of that doc requires session length to be fixed first and the corpus re-measured before body size is judged worth touching, because body cost scales with the turns that follow the load.
 3c. `python3 _common/scripts/lint-contracts.py --severity warning --report` — contract-delivery snapshot (`_common/scripts/lint-contracts.py`). This is the only check that asks whether a contract can reach a running agent at all, so it is where a corpus-wide edit shows up first: a spine contract whose direct-naming count fell means skills stopped loading it without any of them changing behaviour visibly. Compare the depth table against the previous cycle's, not against zero — the count that matters is the *delta*.
 4. Invoke `darwin`'s EFS scoring recipe against that snapshot.
 5. If EFS or compliance drift crosses `gauge`'s stability-index thresholds (<10% stable / 10-20% investigate / >20% intervene — `gauge/SKILL.md` CAPABILITIES_SUMMARY), kick a skill-evolve run bounded by explicit `MAX_ITERATIONS`/`CIRCUIT_BREAKER` guards rather than an unbounded new loop.
@@ -90,7 +90,7 @@ Orchestrators (Nexus, Rally) should be stateless and replaceable. Session state 
 
 This is additive scheduling only (no new script, no new loop, no new agent) — a `schedule`-registered routine pointed at machinery that already exists and is already tested, closing the "prescribed vs. wired" gap between this document's prose cadence and an actually-firing trigger.
 
-**Bootstrap clause:** on the first session in this repo, verify the 30-day audit routine actually exists (`CronList`); if missing, register it per this section (`schedule` skill, 30-day interval, the 5-step sequence above). This turns the prescription into a self-checking precondition instead of a one-time setup step someone has to remember.
+**Bootstrap clause:** on the first session in this repo, verify the 30-day audit routine actually exists by listing routines through the `schedule` skill (`CronList` shows only session-local `CronCreate` jobs and will not see it); if missing, register it per this section (`schedule` skill, 30-day interval, the step sequence above). This turns the prescription into a self-checking precondition instead of a one-time setup step someone has to remember.
 
 **Process:**
 
@@ -231,9 +231,3 @@ Record harness evolution decisions in `.agents/nexus.md` journal:
 ```
 
 Integration with Darwin: Harness evolution findings are reported as `EVOLUTION_SIGNAL` type `DRIFT` for ecosystem-wide tracking. Darwin may incorporate these signals into its Ecosystem Fitness Score (EFS) assessment.
-
----
-
-## Open Follow-ups
-
-#TODO(agent) — opened 2026-07 · owner: `darwin` · expires: next 30-day audit cycle after 2026-08-17 (if unclaimed by then, retire this marker rather than carrying it further): Fold the most recent Scaffold Audit cycle results back into `nexus/SKILL.md` and `_common/AUTORUN.md`. (The 2026-07 audit corrected cross-model retirement scaffolding and version drift in `_common/`; the next cycle should re-verify HE-01 L1-L4 checkpoint trigger frequency against the current model generation and simplify per the Evaluation Cycle if the condition is met.)

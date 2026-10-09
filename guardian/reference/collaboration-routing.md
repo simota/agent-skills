@@ -108,7 +108,7 @@ Rule:
 
 | Partner | Handoff token | Purpose |
 |---------|---------------|---------|
-| Plan | `PLAN_TO_GUARDIAN_HANDOFF` | convert plan into branch and commit strategy |
+| Sherpa | `SHERPA_TO_GUARDIAN_HANDOFF` | convert plan into branch and commit strategy |
 | Builder | `BUILDER_TO_GUARDIAN_HANDOFF` | prepare PR-ready structure from finished code |
 | Judge | `JUDGE_TO_GUARDIAN_HANDOFF` | incorporate review findings |
 | Judge | `JUDGE_TO_GUARDIAN_FEEDBACK` | calibrate prediction accuracy |

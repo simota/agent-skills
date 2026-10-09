@@ -1,6 +1,6 @@
 # Crazy 8s Delta
 
-Purpose: Flux `crazy8` interaction and output contract. The ideation method itself is model-known.
+Purpose: Flux `ideate crazy8` interaction and output contract. The ideation method itself is model-known.
 
 ## Protocol
 
@@ -27,7 +27,7 @@ If the user needs looser or multi-axis exploration, route to `scamper` instead o
 
 ## Routing
 
-- Deepen one pick -> Flux `propose`.
-- Stress-test one pick -> Flux `steelman`.
+- Deepen one pick -> Flux `ideate propose`.
+- Stress-test one pick -> Flux `ideate steelman`.
 - Choose among picks -> Magi.
 - Feature-shaped pick -> Spark or Scribe[unified].

@@ -198,7 +198,7 @@ Behavior notes per Recipe:
 | `reference/cost-of-delay.md` | CD3 = CoD / Duration, four-component CoD, CoD curve patterns, CD3-vs-WSJF distinction (`cod` recipe) |
 | `reference/value-effort-matrix.md` | 2x2 quadrant definitions, axis-scoring rubrics, workshop facilitation, upgrade paths to RICE/WSJF (`value-effort` recipe) |
 | `reference/priority-poker.md` | Wideband Delphi mechanics, Fibonacci scale, calibration anchors, dispersion-rule thresholds, online tool options (`pokerplan` recipe) |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the ranking report, deciding adaptive thinking depth at framework selection, or front-loading item universe/criteria/maturity at INTAKE. Critical for Rank: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the ranking report, deciding adaptive thinking depth at framework selection, or front-loading item universe/criteria/maturity at COLLECT. Critical for Rank: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Rank-specific Output/Next schema. |
 
 ## Operational

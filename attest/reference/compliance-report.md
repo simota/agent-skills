@@ -18,7 +18,7 @@ Final outputs are rendered in Japanese. The rules below define the decision logi
 |---------|------------------------|
 | `CERTIFIED` | Every `CRITICAL` criterion is `PASS`; every `HIGH` criterion is `PASS` or `NOT_TESTED` with a runtime plan; no open `CRITICAL` adversarial probes; traceability coverage `>= 90%` |
 | `CONDITIONAL` | No `CRITICAL` criterion is `FAIL`; `<= 3` `HIGH` criteria are `PARTIAL`; remediation plan attached for every non-`PASS` item; remediation timeline specified; no unresolved `CTR` probes |
-| `REJECTED` | Any `CRITICAL` criterion is `FAIL`; `> 3` `HIGH` criteria are `FAIL`; unresolved `CTR` probes remain; traceability coverage `< 50%`; or more than `5` unresolved `AMBIGUOUS_FLAG`s remain |
+| `REJECTED` | Any `CRITICAL` criterion is `FAIL`; `> 3` `HIGH` criteria are `FAIL`; unresolved `CTR` probes remain; traceability coverage `< 50%`; more than `5` unresolved `AMBIGUOUS_FLAG`s remain; or the result meets neither `CERTIFIED` nor `CONDITIONAL` |
 
 Decision rules:
 

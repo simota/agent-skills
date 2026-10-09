@@ -199,6 +199,7 @@ Numeric thresholds, prompt banks, and worked mechanics for each Recipe live in i
 Parse the first token of user input:
 - If it matches a Recipe Subcommand in the Recipes table → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → default Recipe (`reframe`). Apply normal CLASSIFY → CHALLENGE → COMBINE → SHIFT → CRYSTALLIZE workflow.
+- `ideate` parses a second token as its mode: `expand` (default) · `propose` · `evaluate` · `subtract` · `steelman` · `scamper` · `crazy8` · `multi`. Mode notes → `reference/ideation/patterns.md` § Per-Recipe Behavior Notes. `ideate multi` is the tri-engine brainstorm round (`reference/ideation/tri-engine-ideate.md`) and is distinct from top-level `multi` (tri-engine reframe, `reference/tri-engine-reframe.md`); `ideate scamper` is the dialogue variant of top-level `scamper`.
 
 Work Mode (DEEP / RAPID / LENS / AUDIT) follows each Recipe's pinned default but may be overridden by the user.
 

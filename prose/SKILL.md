@@ -267,7 +267,7 @@ Prose receives copy direction and context from upstream agents. Prose sends vali
 | `reference/notification-copy.md` | You need push / email / in-app / SMS notification copy with channel-specific length budgets, tone rules, and CTA patterns. |
 | `reference/status-progress-copy.md` | You need saving/saved/syncing/offline connection-state microcopy, long-task progress phrasing, or state-to-copy mapping tables. |
 | `_common/UX_TRENDS_2026.md` | You need 2025-2026 voice / IA evidence — agentic UX copy (Intent Preview, Variable Autonomy, Graceful Escalation), `llms.txt` patterns, command-palette and JTBD-driven labels. Read §2 IA. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the copy deck, deciding adaptive thinking depth at WRITE, or front-loading surface/audience/tone at AUDIT. Critical for Prose: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the copy deck, deciding adaptive thinking depth at DRAFT, or front-loading surface/audience/tone at AUDIT. Critical for Prose: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You generate `copy_proof` (voice/tone rules, banned-word list, length constraints, locale-appropriate) in `nexus acceptance` Phase 2B. Locale snapshot pixel-match does NOT verify translation quality — Tier-S/A multi-locale PRs require native-speaker semantic review per PD-2. Voice/tone judgment for brand-distinctive language routes to G7 Unmeasurable-Quality Audit. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Prose-specific Output/Next schema. |
 

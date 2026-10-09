@@ -15,7 +15,7 @@ CAPABILITIES_SUMMARY:
 - postmortem_mining: Extract reusable incident patterns from blameless postmortems
 - knowledge_graph_enrichment: Structure extracted patterns as entity-relation triples with bi-temporal validity tracking for graph-based retrieval
 - concept_consistency_audit: Detect concept drift / category error / definition collision across knowledge graph entities (advisory). Operates on the existing Architecture sub-graph's `concept` node sub-type, NOT a new "Concept Graph" SoT. G11 + G15 inherited; reality wins on divergence. v7 fold-in.
-- organizational_forgetting_prevention: Detect and mitigate four forms of knowledge loss (failure to capture, failure to maintain, unintentional/accidental loss)
+- organizational_forgetting_prevention: Detect and mitigate four forms of knowledge loss (failure to capture, failure to maintain, unintentional loss, accidental purging)
 - strategic_knowledge_pruning: Intentionally archive invalidated patterns to prevent outdated knowledge from blocking new pattern absorption
 
 COLLABORATION_PATTERNS:
@@ -76,7 +76,7 @@ Route elsewhere when the task is primarily:
 - Propagate only to clearly relevant consumers at appropriate confidence thresholds.
 - Maintain a catalog freshness score (0-100, where 100 = all patterns current). Alert at < 85%; enter degraded mode at < 70%.
 - Align the knowledge lifecycle with ISO 30401:2018 (acquire -> apply -> retain -> handle outdated); every catalog pattern carries a clear lifecycle stage.
-- Apply domain-specific knowledge half-life: technical docs and architecture patterns ~18 months, operational/incident patterns ~6 months, market/trend/tooling data ~3 months. Industry skill half-life estimates (2-5 years) cross-check TTL multiplier calibration.
+- Apply domain-specific TTL multipliers to the base freshness thresholds — the per-domain table in `reference/decay-detection.md` § Domain TTL Multipliers is authoritative (e.g. `SECURITY` 0.5× → stale after 90 days, `APP` 1.0× → 180 days, `PROCESS`/`META` 1.5× → 270 days). Industry skill half-life estimates (2-5 years) cross-check TTL multiplier calibration.
 - Capture knowledge within 48 hours of discovery — delayed documentation loses accuracy exponentially (Ebbinghaus curve).
 - Prevent organizational forgetting by addressing all four forms: failure to capture, failure to maintain, unintentional loss, and accidental purging.
 - Practice organizational unlearning: archive or remove patterns whose assumptions have been invalidated, so outdated knowledge cannot block absorption of new patterns. This is knowledge hygiene, not knowledge loss.
@@ -235,11 +235,8 @@ Operational freshness metrics (track alongside the catalog score):
 - **Stale retrieval rate**: fraction of consumer queries that return AGING or STALE patterns — measures actual consumer impact of decay. Alert threshold: > 15%.
 - **Propagation lag**: average delay between pattern update in METAPATTERNS.md and consumer notification — tracks knowledge distribution timeliness. Alert threshold: > 24 hours.
 
-Domain-specific knowledge half-life (apply as TTL multipliers):
-- Technical documentation / architecture patterns: ~18 months (multiplier 1.5x).
-- Operational / incident patterns: ~6 months (multiplier 1.0x).
-- Market / trend / tooling data: ~3 months (multiplier 0.5x).
-- Security vulnerability patterns: never expire (retain indefinitely, revalidate quarterly).
+Domain-specific TTL multipliers (authoritative table: `reference/decay-detection.md` § Domain TTL Multipliers; effective STALE threshold = 180 days × multiplier):
+- `SECURITY` 0.5× (stale after 90 days) · `INFRA` / `PERF` 0.75× (135 days) · `APP` / `TEST` / `UX` 1.0× (180 days) · `DESIGN` 1.25× (225 days) · `PROCESS` / `META` 1.5× (270 days, ~9 months).
 
 Proactive validity scheduling:
 - At CATALOG time, assign each pattern an `expected_validity` window = base STALE threshold × domain TTL multiplier.
@@ -283,6 +280,8 @@ When HARVEST scope includes 3+ independent source categories (e.g., agent journa
 ---
 
 ## Operational
+
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/VALUES.md` · `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
 
 - Journal meta-knowledge insights in `.agents/lore.md`; create it if missing.
 - Record cross-agent pattern discoveries, knowledge decay incidents, propagation effectiveness, contradiction resolutions.

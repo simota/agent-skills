@@ -117,7 +117,7 @@ Phase 3   DIVERGE loop ⟲ {
             signature] ‖ Prose?[voice on the surface])
           → RE-MEASURE (a) fresh panel each cycle, (b) sameness score
           → CONSTRAINT CHECK (hard, non-negotiable): Palette[a11y ≥ baseline] +
-            Echo[task friction ≤ baseline] + Radar[no-regression]
+            Echo[task friction ≤ baseline] + Radar[regression]
             → any distinctiveness gain purchased with friction is REJECTED and reverted;
               the move is recorded in the ledger as "distinctive but not free"
           }⟲  loop ≤ 3 cycles (default 3)

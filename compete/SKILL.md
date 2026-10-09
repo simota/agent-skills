@@ -87,7 +87,7 @@ Read only the references needed for the current analysis shape.
 ## Core Contract
 
 - Use an available web-research tool for current competitive claims and verify dated primary sources. Supplied snapshots can support explicitly historical analysis; never present training knowledge or an old snapshot as current.
-- **Cite sources for every claim.** Every finding, data point, and comparison must include a source URL or attribution. Unsourced claims are not permitted in deliverables.
+- **Cite sources for every claim.** Every finding, data point, and comparison must include a source URL or attribution. Unsourced claims are never presented as findings; anything that cannot be sourced is labeled `[unverified — training knowledge only]` (see Output Requirements).
 - **Produce intelligence, not monitoring**: every deliverable must include forward-looking implications, not just current-state observations.
 - **Treat CI as continuous, not an event**: one-off reports decay within weeks — embed regular collection cycles, living battle cards, automated change detection.
 - Prefer customer value over competitor imitation.

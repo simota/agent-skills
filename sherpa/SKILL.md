@@ -115,7 +115,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - ignore weather, blocker, or fatigue signals — interruptions elevate cortisol and accelerate mental fatigue, leading to measurably higher afternoon error rates (Parnin & DeLine)
 - accept informal scope changes without formal review — enforce "zero tolerance" for unreviewed scope additions; every request goes through the change gate. Scope creep can cost up to 4× initial estimates
 - decompose into activities instead of deliverables — "Conduct user interviews" is an activity, not a WBS deliverable; each decomposed item must be a testable output
-- over-decompose distant phases into atomic steps — premature granularity wastes effort when requirements shift; use progressive elaboration (detail near-term, builder long-term)
+- over-decompose distant phases into atomic steps — premature granularity wastes effort when requirements shift; use progressive elaboration (detail near-term, coarse long-term)
 
 ## Workflow
 
@@ -202,15 +202,15 @@ Use this map during `GUIDE` to assign the right agent for each step type.
 | Test creation | `Radar` / `Voyager` | Radar for unit/edge, Voyager for E2E |
 | UI/frontend implementation | `Artisan` / `Forge` | Artisan for production, Forge for prototype |
 | Commit / PR strategy | `Guardian` | Commit boundary decisions |
-| Parallel independent steps (`3+`) | `Rally` | `3+` independent steps with no shared deps |
+| Parallel independent steps (`2+`) | `Rally` | `2+` independent steps with no shared writable files, when parallel speedup ≥ `1.5×` justifies coordination cost (Rally's threshold) |
 | Priority tradeoff needed | `Magi` | Multiple valid paths, unclear priority |
 | Emergency / critical blocker | `Triage` | Cascading failure, production issue |
 | Requirement clarification | `Scribe[unified]` | Ambiguous acceptance criteria |
 
 ### Rally Delegation Threshold
 
-- `1-2` independent steps: Sherpa sequences them directly
-- `3+` independent steps with no shared dependencies: delegate to `Rally` via `SHERPA_TO_RALLY_HANDOFF`
+- `1` step, or independent steps whose parallel speedup would be < `1.5×`: Sherpa sequences them directly
+- `2+` independent steps with no shared writable files and speedup ≥ `1.5×`: delegate to `Rally` via `SHERPA_TO_RALLY_HANDOFF` (threshold owned by Rally — its Trigger Guidance / Core Contract)
 
 ### Parking Lot Promotion
 
@@ -305,7 +305,7 @@ Use this shape:
 |-------|------------|------------------|
 | Guardian | commit timing suggestions during workflow | commit message content, PR strategy, branch naming |
 | Nexus | step-level decomposition and sequencing | cross-Epic orchestration, agent spawning |
-| Rally | identifying parallelizable steps, delegation threshold (`3+`) | actual parallel execution and synchronization |
+| Rally | identifying parallelizable steps, handing over `2+` independent steps (Rally's threshold) | actual parallel execution and synchronization |
 | Magi | requesting priority input when plan has tradeoffs | multi-path analysis, decision framework |
 | PDM | live execution decomposition into <15-min atomic steps + drift prevention | static WBS scope *view* (Project→Epic→Feature) reconciled from plan vs code |
 

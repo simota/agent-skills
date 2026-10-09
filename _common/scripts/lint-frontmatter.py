@@ -36,7 +36,7 @@ Severity tiers:
 Usage:
   python3 _common/scripts/lint-frontmatter.py [--severity warning|error|strict]
                                               [--paths skill1 skill2 ...]
-                                              [--changed-only]   # only lint paths under git diff
+                                              [--changed-only]   # only changed or new (untracked) SKILL.md
                                               [--json]           # machine-readable output
 
 Exit codes:
@@ -66,7 +66,9 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 FRONTMATTER_KEY_ALLOWLIST = {"name", "description"}
 RESERVED_PREFIXES = {"anthropic", "claude"}
 NAME_PATTERN = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
-JAPANESE_PATTERN = re.compile(r"[぀-ゟ゠-ヿ一-鿿]")
+# CJK punctuation, kana (incl. phonetic extensions), CJK Ext A, unified ideographs,
+# and half/full-width forms. Kana+kanji alone let 、。「」 and ｽｷﾙ through.
+JAPANESE_PATTERN = re.compile(r"[\u3000-\u30ff\u31f0-\u31ff\u3400-\u4dbf\u4e00-\u9fff\uff00-\uffef]")
 XML_TAG_PATTERN = re.compile(r"<[a-zA-Z/!?][^>]*>")
 WHEN_PHRASES = (
     "when",
@@ -406,10 +408,19 @@ def lint_skill(skill_dir: Path, report: Report) -> None:
 
 
 def changed_paths() -> list[Path]:
-    out = subprocess.run(
-        ["git", "diff", "--name-only", "-z", "HEAD"],
-        cwd=str(REPO_ROOT), check=True, capture_output=True, text=True,
-    ).stdout.split("\0")
+    """SKILL.md files changed vs HEAD, including new untracked skills.
+
+    `git diff HEAD` alone never lists an untracked file, so a brand-new skill
+    reported `OK ... 0 skill(s)` until it was staged.
+    """
+    def git(*args: str) -> list[str]:
+        return subprocess.run(
+            ["git", *args],
+            cwd=str(REPO_ROOT), check=True, capture_output=True, text=True,
+        ).stdout.split("\0")
+
+    out = git("diff", "--name-only", "-z", "HEAD") + git(
+        "ls-files", "--others", "--exclude-standard", "-z")
     paths = []
     for p in out:
         path = REPO_ROOT / p
@@ -440,7 +451,7 @@ def main() -> int:
     parser.add_argument("--paths", nargs="+", default=None,
                         help="explicit skill folders or SKILL.md paths to lint")
     parser.add_argument("--changed-only", action="store_true",
-                        help="lint only SKILL.md files modified vs HEAD")
+                        help="lint only SKILL.md files modified vs HEAD or newly added (untracked)")
     parser.add_argument("--json", action="store_true",
                         help="emit JSON instead of text")
     args = parser.parse_args()

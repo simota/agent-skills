@@ -73,7 +73,7 @@ When routing a task:
 
 1. Read `.agents/ECOSYSTEM.md` → Dynamic Affinity Override section
 2. For each agent in the proposed chain:
-   - If an override exists and is not expired (< 90 days old):
+   - If an override exists and has not been retired under § Override Expiry (its removal condition still holds):
      - Use override value instead of base PROJECT_AFFINITY
    - Else:
      - Use base PROJECT_AFFINITY as normal

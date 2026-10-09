@@ -187,10 +187,10 @@ Each row is a **deviation** from the `routing-matrix.md` default for that task t
 | MOCKUP | figma | Frame → Pixel → Radar |
 | MOCKUP | full | Frame → Pixel → Muse → Artisan → Radar |
 | MOCKUP | responsive | Pixel → Matrix → Artisan → Radar |
-| DESIGN_AUDIT | basic | Pixel[gap-report] → Artisan |
-| DESIGN_AUDIT | a11y | Pixel[gap-report] → Canon → Artisan |
-| DESIGN_AUDIT | review | Pixel[gap-report] → Judge |
-| DESIGN_AUDIT | full | Pixel[gap-report] → Canon → Judge → Artisan → Voyager |
+| DESIGN_AUDIT | basic | Pixel[gap] → Artisan |
+| DESIGN_AUDIT | a11y | Pixel[gap] → Canon → Artisan |
+| DESIGN_AUDIT | review | Pixel[gap] → Judge |
+| DESIGN_AUDIT | full | Pixel[gap] → Canon → Judge → Artisan → Voyager |
 | BRANDING | full | Compete[brand] → Growth → Prose → Quill → Canvas |
 | BRANDING | portfolio | Compete[brand] → Launch[weekly] → Quill |
 | FIGURE_CHANNELING | critique | Magi[advisor] → User/Builder |
@@ -259,12 +259,12 @@ Builder then applies:
 - Red team assessment requested → Add Breach after Sentinel
 - Detection rules needed → Add Vigil
 - Problem framing stuck → Add Flux for perspective shift
-- User names a real notable figure ("what would <figure> do here?", "critique this as <figure>") → Use Magi[channel/critique] for the advisory reading; invoke Magi[decide] only when a verdict is requested
+- User names a real notable figure ("what would <figure> do here?", "critique this as <figure>") → Use Magi[advisor expert|critique] for the advisory reading; invoke Magi[decide] only when a verdict is requested
 - A decision panel keeps producing the same in-house viewpoints → Add Magi[advisor] before Magi[decide] to inject named-expert mental models
 - Ideation has gone flat with generic ideas → Add Magi[advisor] before Flux so expert frameworks seed the brainstorm
 - Figma design available → Add Frame before Artisan
 - Mockup/screenshot to code → Add Pixel (faithful reproduction from image)
-- Detailed design-to-code gap analysis / fidelity audit / design review requested → Add Pixel[gap-report]; chain to Canon for WCAG mapping when a11y is in scope, Judge for report quality review, Artisan for remediation
+- Detailed design-to-code gap analysis / fidelity audit / design review requested → Add Pixel[gap]; chain to Canon for WCAG mapping when a11y is in scope, Judge for report quality review, Artisan for remediation
 - Personal branding or portfolio → Add Compete[brand]
 - Combinatorial testing needed → Add Matrix before Radar
 - Feature has 3+ independent dimensions or variants → Add Matrix after Spark

@@ -173,7 +173,7 @@ Brief summary; full rubric → `reference/retention-criteria.md`.
 - 15-19: KEEP with improvement proposal (handoff Architect)
 - 10-14: MERGE candidate (find canonical owner)
 - 5-9: SUNSET candidate (subject to 3-condition gate)
-- < 5: DEPRECATE (immediate sunset proposal)
+- < 5: DEPRECATE (urgent sunset review — the 3-condition gate still applies; a failed condition means DEPRECATE-WATCH)
 
 ## Output Requirements
 

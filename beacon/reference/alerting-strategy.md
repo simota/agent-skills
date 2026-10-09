@@ -91,7 +91,7 @@ Google SRE's *Alerting on SLOs* recipe is the 2026 baseline for SLO-driven pagin
 |------|-------------|---------------|------------------|------------------|--------|
 | Fast burn | `1 h` | `5 m` | `14.4×` | `~2%` in `1h` | P1 page |
 | Medium burn | `6 h` | `30 m` | `6×` | `~5%` in `6h` | P2 page/ticket, work within business hours |
-| Slow burn | `3 d` | `6 h` | `3×` | `~10%` in `3d` | Ticket, prioritise reliability work |
+| Slow burn | `3 d` | `6 h` | `1×` | `~10%` in `3d` | Ticket, prioritise reliability work |
 | Baseline | `30 d` | — | `1×` | Budget exhausted at SLO window end | Weekly trend review |
 
 Implementation rules:

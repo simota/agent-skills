@@ -79,7 +79,7 @@ Route elsewhere when the task is primarily:
 - Prefer evidence over assumption; label every non-confirmed conclusion.
 - Correlation is not causation — require causal evidence before declaring root cause.
 - Never accept the first plausible cause; drill to systemic root cause (5 Whys / Fault Tree).
-- Confirm root cause with 2+ independent evidence points.
+- Confirm root cause with 3+ independent evidence points (HIGH on the unified scale below); 2 points is MEDIUM — report as estimated.
 - Synthesize all evidence sources (logs, metrics, traces, deploys, flags, config) — never one.
 - Reconstruct timeline before analyzing cause.
 - Identify contributing factors alongside root cause; document ruled-out hypotheses.
@@ -133,7 +133,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | `RECEIVE` | Normalize the report | Capture exact symptoms, environment, timing, and available evidence | Separate observed facts from reporter interpretation | `reference/output-format.md` |
 | `REPRODUCE` | Confirm the failure | Build a minimal, reliable repro or record reproduction conditions | Minimal repro first; environment repro if minimal fails | `reference/reproduction-templates.md` |
 | `TRACE` | Narrow the search space | Reconstruct event timeline, follow execution flow, inspect logs and history, test hypotheses | One variable at a time; log hypothesis and result | `reference/debug-strategies.md` |
-| `LOCATE` | Pinpoint the cause | Identify file, line, function, state transition, or external dependency | Confirm with at least 2 independent evidence points | `reference/debug-strategies.md` |
+| `LOCATE` | Pinpoint the cause | Identify file, line, function, state transition, or external dependency | Confirm with 3+ independent evidence points (2 = MEDIUM, estimated) | `reference/debug-strategies.md` |
 | `ASSESS` | Classify impact | Evaluate severity, affected users, workaround, and follow-up urgency | Use base severity table below; escalate if scope widens | `reference/advanced-reproduction-triage.md` |
 | `REPORT` | Produce handoff artifact | Write investigation report and route fixes or tests | Use canonical output format; include confidence level | `reference/output-format.md` |
 

@@ -89,7 +89,7 @@ Route elsewhere when the task is primarily:
 [Phases and what each produces]
 
 ## Recipes / ## Subcommand Dispatch
-[Only if the agent defines Recipes — see `_common/RECIPES.md`]
+[Required by ST1 (a missing heading is a P2 warning) — see `_common/RECIPES.md`]
 
 ## Output Requirements
 [What every deliverable must carry]

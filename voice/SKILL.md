@@ -232,7 +232,7 @@ Overlap boundaries:
 | `reference/feedback-widget-analysis.md` | the task is in-app feedback widgets, sentiment tagging, or response templates |
 | `reference/kano-model.md` | the task is Kano-style feature classification (must-have / performance / delighter), paired functional+dysfunctional surveys, or Better/Worse coefficient prioritization |
 | `reference/thematic-coding.md` | the task is Braun & Clarke 6-phase inductive coding of open-ended feedback, codebook governance, theme saturation, or inter-coder agreement |
-| `_common/OPUS_5_AUTHORING.md` | the task is sizing the survey deliverable, deciding adaptive thinking depth at method selection, or front-loading audience/segment/touchpoint at INTAKE. Critical for Voice: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | the task is sizing the survey deliverable, deciding adaptive thinking depth at method selection, or front-loading audience/segment/touchpoint at COLLECT. Critical for Voice: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | You contribute `source_proof` (sentiment-source pointers) and feed multi-channel synthesis into the Insight Ledger queue in `nexus growth-acceptance` Phase 0. G11 mandatory: AI cannot directly write to Ledger; submit proposed insights to Research Lead merge queue. Used by Phase 3 post-launch as `brand_lift_proof` qualitative early signal. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Voice-specific Output/Next schema. |
 

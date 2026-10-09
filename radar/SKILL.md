@@ -164,7 +164,7 @@ Each Recipe's `**VERIFY**:` gate applies **in addition to** Radar's universal di
 
 | Phase | Goal | Output | Read |
 |-------|------|--------|------|
-| `SCAN` | Find blind spots, flaky signals, or expensive suites | Candidate list with risk and evidence; quarantine any test flaking > 10% over 30 days out of the blocking gate (with a root-cause ticket) | `reference/coverage-strategy.md`, `reference/flaky-test-guide.md` |
+| `SCAN` | Find blind spots, flaky signals, or expensive suites | Candidate list with risk and evidence; quarantine any test confirmed flaky by rerun statistics out of the blocking gate immediately (with a root-cause ticket — `reference/flaky-test-guide.md` § Quarantine-First Policy) | `reference/coverage-strategy.md`, `reference/flaky-test-guide.md` |
 | `LOCK` | Choose the smallest high-value target | Explicit test scope and success condition, ranked by risk × blast-radius × uncovered-branch count | `reference/testing-patterns.md` |
 | `PING` | Implement or refine tests | Focused tests using project-native patterns; for regression/bug-repro, confirm the test fails on unpatched code first (fail-first) | `reference/multi-language-testing.md` |
 | `VERIFY` | Run targeted tests, then broader confirmation | Commands, results, coverage + mutation delta, zero tautological/assertion-free tests, residual risk | `reference/mutation-testing.md` |
@@ -223,7 +223,7 @@ Additional layers:
 | `mutation test`, `weak assertions`, `test strength` | Default + mutation focus | Mutation score analysis and assertion hardening | `reference/advanced-techniques.md` |
 | `quarantine`, `flaky pipeline`, `CI blocked` | FLAKY mode + quarantine | Quarantine strategy and stabilization plan | `reference/flaky-test-guide.md` |
 | complex multi-agent task | Nexus-routed execution | Structured handoff | `_common/BOUNDARIES.md` |
-| unclear request | Clarify scope and route | Scoped analysis | `reference/` |
+| unclear request | Clarify scope and route | Scoped analysis | `reference/testing-patterns.md` |
 
 Routing rules:
 
@@ -249,7 +249,7 @@ Mode-specific additions:
 ## Collaboration
 
 **Receives:** Scout (bug repro needing a regression net), Builder (new feature or API), Judge (weak tests or missing assertions), Guardian (coverage gaps), Zen (pre/post refactor safety), Flow (timing-sensitive UI), Vitrine (component coverage gaps), Oracle (AI-assisted generation strategy), Sentinel (security-critical paths).
-**Sends:** Voyager (browser-level flows), Gear (CI selection, caching, sharding, runner config), Builder (test infrastructure or fixtures), Judge (adversarial review or quality scoring), Zen (test-code readability once behavior is secured). Handoff tokens follow `<FROM>_TO_<TO>_HANDOFF`; full table -> `reference/testing-patterns.md`.
+**Sends:** Voyager (browser-level flows), Gear (CI selection, caching, sharding, runner config), Builder (test infrastructure or fixtures), Judge (adversarial review or quality scoring), Zen (test-code readability once behavior is secured). Handoff tokens follow `<FROM>_TO_<TO>_HANDOFF`; envelope schema -> `_common/HANDOFF.md`.
 
 
 ## Reference Map

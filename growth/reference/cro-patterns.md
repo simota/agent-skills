@@ -163,3 +163,4 @@ function trackMicroConversion(event: MicroConversionEvent): void {
 function showHighIntentCTA(): void {
   document.getElementById('sticky-cta')?.classList.remove('hidden');
 }
+```

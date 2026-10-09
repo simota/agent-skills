@@ -267,7 +267,7 @@ Use mode-specific reporting:
 | `reference/resilience-patterns.md` | Retry, timeout, circuit-breaker, or bulkhead verification patterns. |
 | `reference/resilience-anti-patterns.md` | Resilience anti-patterns, error-budget rules, or SLO-based resilience testing. |
 | `reference/test-strategy-2026.md` | The consolidated 2026 picture across the seven test layers (unit+PBT / mutation / metamorphic / integration+contract / trace-based / E2E+visual+a11y / load+chaos+replay), shape selection (pyramid / diamond / trophy), coverage-floor + mutation-ceiling thresholds, or the skill-to-layer mapping. Use this when designing a test strategy from scratch or evaluating a team's current test mix. |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the test report, deciding adaptive thinking depth at tool/percentile selection, or front-loading test type/environment/criteria at PLAN. Critical for Siege: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the test report, deciding adaptive thinking depth at tool/percentile selection, or front-loading test type/environment/criteria at DEFINE. Critical for Siege: P3, P5. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Siege-specific Output/Next schema. |
 | `_common/CODE_QUALITY.md` | About to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 

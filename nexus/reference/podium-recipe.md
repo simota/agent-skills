@@ -544,7 +544,7 @@ loop_iteration:
 1. **Image materialization (conditional)** — if `--materialize-images` flag AND `image_generation_code/` exists from Track B Visual: run the Builder-authored scripts under the user's `GEMINI_API_KEY` to produce final `assets/<anchor>.png`. Owned by Nexus (Bash execution), not a separate spawned agent. If the flag is omitted, the code is kept as-is and a `#TODO(user): execute image_generation_code/*` note is added to the execution report.
 2. Scribe[convert] — produce all target formats (MD/DOCX/PPTX/PDF/HTML) and bundle. Runs AFTER image materialization so that final imagery is embedded in PPTX/PDF (otherwise placeholders ship).
 3. Guardian[PR-prep] — when artifact is committed to repo: classify changes, commit strategy
-4. Launch[release-plan] — when artifact is a release announcement: versioning, CHANGELOG section, embargo handling
+4. Launch[plan] — when artifact is a release announcement: versioning, CHANGELOG section, embargo handling
 
 **Output:** `NEXUS_COMPLETE` with the full evidence trail:
 

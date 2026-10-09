@@ -36,7 +36,7 @@ Phase 3: Enhancement
 | Project skeleton | Xcode workspace + SPM packages, App target, Widget target if applicable | Gradle multi-module, `:app` + `:core:*` + `:feature:*` | `Scaffold` |
 | CI/CD | GitHub Actions / Xcode Cloud / Fastlane Match for signing | GitHub Actions / Fastlane / Gradle Play Publisher | `Gear` |
 | Design system primitives | DesignSystem package: tokens, base components, typography, color | `:core:designsystem` module: M3 theme, tokens | `Muse` + `Vision` |
-| Networking + auth scaffolding | URLSession client + Keychain + interceptor + refresh logic | Retrofit + OkHttp + EncryptedSharedPreferences + Auth Interceptor | `Native` |
+| Networking + auth scaffolding | URLSession client + Keychain + interceptor + refresh logic | Retrofit + OkHttp + Tink-encrypted DataStore (Keystore) + Auth Interceptor | `Native` |
 | Crash reporting | Firebase Crashlytics or Sentry | Same | `Native` |
 | Analytics | Configurable SDK | Configurable SDK | `Pulse` + `Native` |
 | Feature flags | LaunchDarkly / Unleash / native | Same | `Native` |

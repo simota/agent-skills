@@ -23,7 +23,7 @@
 | Partial Pre-rendering APIs | `prerender({prelude, postponed})` → `resume()` / `resumeAndPrerender()` for static shell + dynamic resume |
 | Performance Tracks | Chrome DevTools "Scheduler ⚛" and "Components ⚛" custom tracks |
 | `useId` prefix change | Default `:r:` → `_r_` (valid `view-transition-name` / XML 1.0 name) |
-> **Security:** CVE-2025-55182 (React2Shell, CVSS 10.0) affects 19.0.0, 19.1.0–19.1.1, and 19.2.0 — unauthenticated RCE via unsafe deserialization in Server Actions. Pin to 19.0.1+, 19.1.2+, or 19.2.1+ (Next.js 15.1.4+ / 16+).
+> **Security:** CVE-2025-55182 (React2Shell, CVSS 10.0) affects 19.0.0, 19.1.0–19.1.1, and 19.2.0 — unauthenticated RCE via unsafe deserialization in Server Actions. Pin to 19.0.1+, 19.1.2+, or 19.2.1+ (Next.js 15.0.5 / 15.1.9 / 15.2.6 / 15.3.6 / 15.4.8 / 15.5.7 / 16.0.7+ per release line).
 ---
 ## 6. React Compiler (v1.0 Stable — October 2025)
 | Before | With React Compiler |

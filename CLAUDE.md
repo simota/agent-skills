@@ -31,7 +31,7 @@
 
 ## 検査
 - `make validate` — 全チェッカーを blocking severity で実行
-- `make test` — チェッカーが実際に落ちることを証明する（repoを1箇所ずつ壊す。~20秒）
+- `make test` — 全回帰テスト。チェッカーが実際に落ちることの証明（repoを1箇所ずつ壊す）を含む
 - `make check` — 上記2つ。CI が走らせるもの
 - `make hooks` — clone ごとに1回。pre-commit で `validate` を、`_common/scripts/` に触れたコミットでは `check` を走らせる
 - 本リポは main へ直接コミットするため、**hook が実質の強制点**

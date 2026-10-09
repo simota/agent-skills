@@ -1,6 +1,6 @@
 # Storybook Interactions / Play Function Reference
 
-Purpose: Embed user-flow tests directly inside stories via the `play` function. Interactions execute in a real browser, validate behavior with `@storybook/test` (Storybook 8+, replaces `@storybook/jest` + `@storybook/testing-library`), and integrate with addon-vitest for CI runs and the Interactions panel for in-UI debugging. Stories become double-duty artifacts: living documentation and component-level tests.
+Purpose: Embed user-flow tests directly inside stories via the `play` function. Interactions execute in a real browser, validate behavior with `storybook/test` (Storybook 8+, replaces `@storybook/jest` + `@storybook/testing-library`), and integrate with addon-vitest for CI runs and the Interactions panel for in-UI debugging. Stories become double-duty artifacts: living documentation and component-level tests.
 
 ## Scope Boundary
 
@@ -23,7 +23,7 @@ SCAN     →  inventory stories with interactive elements (forms, buttons, dropd
 PLAN     →  pick the primary user flow per component (1 happy path, 1-2 critical edges)
          →  decide query strategy: getByRole > getByLabelText > getByText > getByTestId
 
-WRITE    →  import { within, userEvent, expect } from '@storybook/test'
+WRITE    →  import { within, userEvent, expect } from 'storybook/test'
          →  scope queries to canvasElement; await every userEvent; assert visible state
 
 VERIFY   →  run in Storybook UI → check Interactions panel for step trace
@@ -32,7 +32,7 @@ VERIFY   →  run in Storybook UI → check Interactions panel for step trace
 HANDOFF  →  pass coverage delta to Radar; flag cross-page flows for Voyager
 ```
 
-## API Surface (Storybook 10 / `@storybook/test`)
+## API Surface (Storybook 10 / `storybook/test`)
 
 | Import | Purpose | Replaces (legacy) |
 |--------|---------|-------------------|
@@ -64,7 +64,7 @@ HANDOFF  →  pass coverage delta to Radar; flag cross-page flows for Voyager
 - Forgetting `await` on `userEvent` calls — userEvent v14+ is async. Missing `await` swallows assertions silently and produces false-green results.
 - Asserting on implementation details (class names, prop values via DOM attributes) — assert on visible output the user perceives. Class assertions break on style refactors.
 - Skipping the Interactions panel during authoring — debugging blind via stack traces wastes hours; the panel offers step-through with DOM snapshots per step.
-- Mixing `@storybook/jest` + `@storybook/testing-library` imports in Storybook 8+ — both are deprecated; consolidate to `@storybook/test`.
+- Mixing `@storybook/jest` + `@storybook/testing-library` imports in Storybook 8+ — both are deprecated; consolidate to `storybook/test`.
 - Reusing a play function across visual-regression and interaction roles without tagging — VRT runs capture only the final DOM; interaction tests capture every step. Tag with `play-test` vs `visual-test` to route correctly.
 
 ## Integration with addon-vitest (Storybook 10)

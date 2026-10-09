@@ -40,6 +40,7 @@ Use [Conventional Commits](https://www.conventionalcommits.org/) format:
 1. **DO NOT include agent names** in commit messages
    - ❌ `feat: Builder implements user validation`
    - ✅ `feat(user): add input validation`
+   - In a repository whose deliverables are skills, the edited skill as scope (`feat(magi): …`) is the subject of the change, not its actor, and is allowed.
 
 2. **Keep subject line under 50 characters**
    - ❌ `feat: add user profile editing feature with name email and avatar support`

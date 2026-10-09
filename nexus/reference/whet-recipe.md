@@ -80,7 +80,7 @@ Corrected score is `Killed / (Total − Equivalent) × 100`. Declaring a survivo
 
 Three rules, and none is waivable:
 
-1. **The test author never ratifies equivalence** for a mutant in their own scope — `_common/FINDING_LEDGER.md` §6.1 applied where it bites hardest. `Siege` adjudicates; `Magi` on dispute.
+1. **The test author never ratifies equivalence** for a mutant in their own scope — `_common/FINDING_LEDGER.md` §6 applied where it bites hardest. `Siege` adjudicates; `Magi` on dispute.
 2. **Refute polarity** (§6.2): the adjudicator must attempt to **construct a distinguishing test** and fail, recording *why* no observable difference exists, citing the matching pattern in `siege/reference/mutation-testing-advanced.md` § Equivalent Mutants. "Looks equivalent" is `NEEDS-INFO`, and `NEEDS-INFO` stays `OPEN`.
 3. **The equivalence rate is reported, per cycle, in the Ledger.** A run whose score rose mainly through a growing `Equivalent` count did not strengthen the suite, and the Whet Ledger must make that visible rather than reporting the corrected score alone.
 
@@ -144,7 +144,7 @@ BASELINE  Radar[suite green + flake check]  →  un-stabilizable flake ⇒ BLOCK
 │               with a failed distinguishing-test attempt recorded (§4.1)      │
 │  FIX ∥      per class, file-ownership partitioned (_common/PARALLEL.md):     │
 │             killable       → Radar[behavior test]                            │
-│             dead-code      → Void[justify] + Sweep[remove]  ⇒ CLOSED-BY-     │
+│             dead-code      → Void[question] + Sweep[dead]  ⇒ CLOSED-BY-     │
 │                              REMOVAL, never counted as a kill (§4.3)         │
 │             structural     → Zen[extract so the branch becomes testable]     │
 │             ★ behavior-changing removal ⇒ DEFERRED, never applied            │

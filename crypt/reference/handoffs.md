@@ -23,7 +23,7 @@ SENTINEL_TO_CRYPT_HANDOFF:
 COMPLY_TO_CRYPT_HANDOFF:
   source: Canon[regulatory]
   content:
-    regulation: "[FIPS 140-2 | PCI-DSS | HIPAA | GDPR]"
+    regulation: "[FIPS 140-3 | PCI-DSS | HIPAA | GDPR]"
     crypto_requirements:
       - requirement: "[specific crypto requirement]"
         section: "[regulation section reference]"

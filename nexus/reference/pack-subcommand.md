@@ -24,7 +24,7 @@ Companion: `_common/SKILL_PACKS.md` (Pack definitions, profile catalog).
 ## Available `<name>` values
 
 Discovered dynamically from `~/.claude/profiles/*.json`. Default-shipped profiles per `_common/SKILL_PACKS.md`:
-`web` / `mobile` / `security` / `growth` / `infra` / `research` / `ai-eval` / `package-author` / `skill-meta` / `incident-response` / `legal-jp` / `personal-env` / `ai-cli-admin` / `gemini-image` / `all`.
+`web-dev` / `mobile-dev` / `security` / `growth` / `infra-ops` / `research` / `ai-eval` / `package-author` / `skill-meta` / `incident-response` / `legal-jp` / `personal-env` / `ai-cli-admin` / `all`.
 
 ## Phase Contract
 

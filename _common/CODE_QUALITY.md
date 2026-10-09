@@ -181,7 +181,7 @@ const rateLimits = new Map<string, number>()
 await redis.incrWithExpiry(`rl:${userId}`, WINDOW_SECONDS)
 ```
 
-Sources: [AWS Well-Architected — Reliability pillar design principles (scale horizontally, automatically recover from failure)](https://aws.amazon.com/architecture/well-architected/) · [AWS Well-Architected — Horizontal scaling concept](https://wa.aws.amazon.com/wellarchitected/2020-07-02T19-33-23/wat.concept.horizontal-scaling.en.html) · [The Twelve-Factor App § VI Processes / § VIII Concurrency](https://12factor.net/processes). Multi-tenant isolation is `shard`; SLO/observability design is `beacon`.
+Sources: [AWS Well-Architected — Reliability pillar design principles (scale horizontally, automatically recover from failure)](https://aws.amazon.com/architecture/well-architected/) · [AWS Well-Architected — Horizontal scaling concept](https://wa.aws.amazon.com/wellarchitected/2020-07-02T19-33-23/wat.concept.horizontal-scaling.en.html) · [The Twelve-Factor App § VI Processes / § VIII Concurrency](https://12factor.net/processes). Multi-tenant isolation is `schema`; SLO/observability design is `beacon`.
 
 ---
 

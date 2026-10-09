@@ -84,7 +84,7 @@ Condensed; full elaboration → `reference/boundaries.md`.
 
 - Target platform ambiguous · offline tier unclear · IAP receipt-validation scope · custom native module without a Privacy Manifest.
 - iOS baseline below 17 or above 26 · Android baseline below API 28 or above 31.
-- **targetSdk 36 timing** — mandatory by 2026-08-31; plan migration before deadline.
+- **targetSdk 36** — mandatory on Google Play since 2026-08-31 for new apps and updates; confirm before shipping anything below it.
 
 ### Never
 
@@ -131,7 +131,7 @@ DETECT → SCAFFOLD → IMPLEMENT → ADAPT → VERIFY
 Full per-layer table with citations, deprecated APIs, and deadlines → `reference/modern-stack.md`.
 
 - **iOS**: Swift 6.3 + SwiftUI + `@Observable`/MVVM-C, SwiftData day-one `VersionedSchema`, iOS 17 default. **Xcode 26 + iOS 26 SDK required from 2026-04-28.**
-- **Android**: Kotlin 2.4+ (K2) + Compose/M3 Expressive, Room 2.8+, API 28 default. **16KB native libs since 2025-11-01; targetSdk 36 mandatory by 2026-08-31.**
+- **Android**: Kotlin 2.4+ (K2) + Compose/M3 Expressive, Room 2.8+, API 28 default. **16KB native libs since 2025-11-01; targetSdk 36 mandatory since 2026-08-31.**
 
 ---
 

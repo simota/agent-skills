@@ -81,6 +81,32 @@ class CatalogDataTests(unittest.TestCase):
         translations = run_javascript(source + "console.log(JSON.stringify(AGENT_DESC_EN));")
         self.assertEqual({name.lower() for name in translations}, self.global_skills | self.local_skills)
 
+    def test_subcommand_descriptions_keep_their_inline_markup_whole(self):
+        # Descriptions are copied from recipes-index.md tables, where `\|` escapes a pipe
+        # inside inline code. Splitting on that pipe truncated two rows mid-span.
+        for name, rows in self.data["subs"].items():
+            for row in rows:
+                with self.subTest(skill=name, subcommand=row["n"]):
+                    self.assertEqual(row["d"].count("`") % 2, 0, row["d"])
+                    self.assertFalse(row["d"].rstrip().endswith("\\"), row["d"])
+
+    def test_public_count_claims_match_the_roster(self):
+        # The roster counts are repeated across READMEs and the page's meta, hero and
+        # footer strings; any one of them can drift when a skill is added or retired.
+        claims = {
+            len(self.global_skills): re.compile(
+                r"(\d{1,4})\s*(?:の)?\s*(?:global|グローバル)|Global_Agents-(\d{1,4})", re.I),
+            len(self.local_skills): re.compile(
+                r"(\d{1,4})\s*(?:つの)?\s*(?:project-local|プロジェクトローカル)", re.I),
+        }
+        for name in ("README.md", "README_ja.md", "index.html"):
+            text = (ROOT / name).read_text(encoding="utf-8")
+            for expected, pattern in claims.items():
+                found = [int(next(g for g in m.groups() if g)) for m in pattern.finditer(text)]
+                with self.subTest(file=name, pattern=pattern.pattern):
+                    self.assertTrue(found, "no count claim matched; the pattern has gone stale")
+                    self.assertEqual(set(found), {expected})
+
 
 class LanguagePreferenceTests(unittest.TestCase):
     def run_switch(self, stored=None, read_error=None, write_error=None, switches=None):
