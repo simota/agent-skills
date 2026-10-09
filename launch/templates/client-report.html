@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>作業報告書</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
   <style>
     /* ============================================
        Base & Print Settings
@@ -531,14 +531,20 @@
         labels: {{CATEGORY_LABELS}},
         datasets: [{
           data: {{CATEGORY_DATA}},
+          // One distinct color per category the generator can emit (9);
+          // Chart.js loops a shorter list, giving two categories one color.
           backgroundColor: [
             'rgba(39, 174, 96, 0.85)',
-            'rgba(243, 156, 18, 0.85)'
+            'rgba(243, 156, 18, 0.85)',
+            'rgba(41, 128, 185, 0.85)',
+            'rgba(192, 57, 43, 0.85)',
+            'rgba(142, 68, 173, 0.85)',
+            'rgba(22, 160, 133, 0.85)',
+            'rgba(211, 84, 0, 0.85)',
+            'rgba(52, 73, 94, 0.85)',
+            'rgba(149, 165, 166, 0.85)'
           ],
-          borderColor: [
-            'rgba(39, 174, 96, 1)',
-            'rgba(243, 156, 18, 1)'
-          ],
+          borderColor: '#ffffff',
           borderWidth: 2
         }]
       },

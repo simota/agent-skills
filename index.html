@@ -1589,8 +1589,8 @@ function readLanguagePreference() {
   try {
     return localStorage.getItem('lang') === 'en' ? 'en' : 'ja';
   } catch (error) {
-    // Browsers can block persistent storage while allowing the page to run.
-    if (error.name !== 'SecurityError') throw error;
+    // Browsers can block persistent storage while allowing the page to run:
+    // a SecurityError, or a null localStorage when storage is disabled.
     return 'ja';
   }
 }
@@ -1774,8 +1774,8 @@ function setLanguage(lang) {
   try {
     localStorage.setItem('lang', lang);
   } catch (error) {
-    // Saving a preference is optional; translation still works without storage.
-    if (error.name !== 'SecurityError' && error.name !== 'QuotaExceededError') throw error;
+    // Saving a preference is optional; translation still works without storage
+    // (blocked, full, or disabled so that localStorage is null).
   }
   document.documentElement.lang = lang;
 

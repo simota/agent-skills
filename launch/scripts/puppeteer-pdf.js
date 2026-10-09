@@ -9,6 +9,20 @@ const fs = require('fs');
 const path = require('path');
 const { pathToFileURL } = require('url');
 
+// `npm install puppeteer` is run in the caller's project, but Node resolves a
+// bare require() from this script's own directory. Look in the working
+// directory first, then fall back to the normal resolution (NODE_PATH, global).
+function loadPuppeteer() {
+  let resolved;
+  try {
+    resolved = require.resolve('puppeteer', { paths: [process.cwd()] });
+  } catch (error) {
+    if (error.code !== 'MODULE_NOT_FOUND') throw error;
+    resolved = 'puppeteer';
+  }
+  return require(resolved);
+}
+
 async function htmlToPdf(inputPath, outputPath) {
   const absolutePath = path.resolve(inputPath);
   if (!fs.statSync(absolutePath).isFile()) throw new Error('Input must be a file');
@@ -19,7 +33,7 @@ async function htmlToPdf(inputPath, outputPath) {
       throw new Error('Input and output must be different files');
     }
   }
-  const puppeteer = require('puppeteer');
+  const puppeteer = loadPuppeteer();
   const destination = path.resolve(outputPath);
   const workDir = fs.mkdtempSync(path.join(path.dirname(destination), '.puppeteer-pdf.'));
   const stagedPath = path.join(workDir, 'report.pdf');
