@@ -64,10 +64,10 @@ Phase 2  TOURNAMENT ‖ 3 orthogonal directions [brand-led / usability-led / tre
          → judge panel = Echo×personas ‖ Palette ‖ Magi[brand-fit], scoring vs the frozen Rubric
          → winner + salvage list (informal cherry-pick from runners-up, fed to Phase 3 cycle 1)
    ▼
-Phase 3  CONVERGE ⟲{ IMPLEMENT (Artisan[components/styles] ‖ Flow?[motion] ‖ Muse[token-first]
+Phase 3  CONVERGE ⟲{ IMPLEMENT (Artisan[component] ‖ Flow?[transition] ‖ Muse[tokens]
                      ‖ Ink?[icons/assets])
                      → EVALUATE (Echo[re-walkthrough vs rubric] + Palette[a11y ≥ baseline]
-                     + Radar[no-regression]) }⟲  loop ≤ 3 cycles (default 3)
+                     + Radar[regression]) }⟲  loop ≤ 3 cycles (default 3)
    ▼
 Phase 4  VERIFY (Voyager?[visual regression + responsive] + Judge[multi-engine diff review])
    ▼

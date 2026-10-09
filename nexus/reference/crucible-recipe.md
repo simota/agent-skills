@@ -111,7 +111,7 @@ Phase 3   TRIAL loop ⟲ {
                              max-length label · RTL · long localized string]
                              → Voyager/Pixel[render + complete the task against each fixture]
           → FAILURE LEDGER (cell, task, condition, where it broke, repro)
-          → REMEDIATE (Artisan ‖ Palette ‖ Prose[copy that overflows] ‖ Flow[motion/reduced-motion]
+          → REMEDIATE (Artisan ‖ Palette ‖ Prose[copy that overflows] ‖ Flow[transition + reduced-motion]
             ‖ Muse[token fix] ‖ Polyglot?[l10n string handling])
           → RE-RUN failed cells only
           }⟲  loop ≤ 3 cycles (default 3)

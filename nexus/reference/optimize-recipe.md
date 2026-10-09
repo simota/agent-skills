@@ -15,7 +15,7 @@ Performance work has one law — **measure, don't guess**. `optimize` exists bec
 | Not this | Route to | Why |
 |----------|----------|-----|
 | Slowness caused by a **defect** (N+1 from a change, unbounded loop, missing await, accidental quadratic, **memory leak**) | `bug` | Root-cause the defect; do not tune around it |
-| Continuous parameter self-tuning (GC / threadpool / connection pool / cache-size loop) | `AUTO_TUNING` | Standing self-measurement loop, not a one-shot fix |
+| Continuous parameter self-tuning (GC / threadpool / connection pool / cache-size loop) | `AUTO_TUNING` | Standing tuning loop, not a one-shot fix |
 | Multi-axis improvement of one feature (perf **+** UX **+** code quality) | `kaizen` | `optimize` is perf-only |
 | Internal restructure with no perf number | `refactor` | Behavior-preserving cleanup, not a measured win |
 | Undiagnosed design weaknesses across the codebase | `anneal` | Design sweep, not a measured hotspot |
@@ -106,7 +106,7 @@ The phases above drive **one target to one number**. `mode=to-zero` drives a **s
 
 | Slot | `optimize mode=to-zero` |
 |------|-------------------------|
-| **(a) Evaluator** | the measurement harness — Lighthouse CI · bundle-size checker · `EXPLAIN ANALYZE` · k6/Siege thresholds · profiler — run by `Radar`/`Beacon`, **independent of the optimizer**. This mode does **not** inherit `AUTO_TUNING`'s reviewed self-measurement exception: a sweep over dozens of noisy targets is exactly where self-measurement fails |
+| **(a) Evaluator** | the measurement harness — Lighthouse CI · bundle-size checker · `EXPLAIN ANALYZE` · k6/Siege thresholds · profiler — run by `Radar`/`Beacon`, **independent of the optimizer**. No self-measurement exception applies: a sweep over dozens of noisy targets is exactly where self-measurement fails |
 | **(b) Frozen scope** | the **budget set**: `target × budget × metric`, frozen at BASELINE with the measurement conditions (build, dataset, concurrency, device/network profile, sample count) |
 | **(c) Identity** | **derived** — `sha1(budget_id ⊕ target_id ⊕ metric)`. **The measured value and the run timestamp are excluded**: the number changes on every run by construction, so a value-keyed ledger reports the entire budget set as new every cycle |
 | **(d) Validity gate** | **Measurement-Integrity Gate**, every cycle: identical declared conditions · measured variance within the declared band · the correctness suite green · **no cross-budget regression** (fixing route A's bundle must not blow route B's) |

@@ -318,6 +318,30 @@ class TestRoutingSurface(CheckerCase):
         )
         self.expect_reported("routing-oracle.py", "RO-2", "--severity", "error")
 
+    def test_a_recipe_hint_naming_an_unknown_subcommand_fails(self):
+        """RO-9. `Pixel[gap-report]` read as a hint but Pixel has no such
+        Recipe, so dispatch fell back to the code-generating default."""
+        self.edit(
+            "nexus/reference/routing-matrix.md",
+            "| DESIGN_AUDIT | Pixel[gap] → Canon/Judge |",
+            "| DESIGN_AUDIT | Pixel[gap-report] → Canon/Judge |",
+        )
+        self.expect_caught(
+            "routing-oracle.py", "Pixel[gap-report]", "--severity", "error"
+        )
+
+    def test_a_recipe_hint_found_only_in_a_keyword_table_fails(self):
+        """RO-9. `audit` is backticked in Gateway's Signal Keywords table but is
+        not a Gateway subcommand; a keyword mention must not pass as one."""
+        self.edit(
+            "nexus/reference/routing-matrix.md",
+            "| API | Gateway → Builder → Radar | Gateway[design],",
+            "| API | Gateway → Builder → Radar | Gateway[audit],",
+        )
+        self.expect_caught(
+            "routing-oracle.py", "Gateway[audit]", "--severity", "error"
+        )
+
 
 class TestLessonsRegister(CheckerCase):
     """`lint-lessons.py`. The register's entire value is what it refuses, so

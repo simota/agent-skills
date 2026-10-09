@@ -145,7 +145,7 @@ Both are project-local extensions. Apply `_common/PROJECT_LOCAL_SKILLS.md` befor
 | "Reframe this", "shift perspective", single-shot analysis | **Flux[reframe]** | One-time perspective shift |
 | "Bounce ideas", "brainstorm with me", "rubber-duck session", iterative dialogue | **Flux[ideate]** | Multi-turn interactive exploration |
 | "Which should we pick?", "Go/No-Go", verdict needed | **Magi** | Structured decision with vote |
-| **A real person is named** — "what would Feynman do here?", "critique this as Christensen would", "panel of Buffett + Munger on this" | **Magi[channel/conclave]** | Named-figure documented thinking as an advisory lens |
+| **A real person is named** — "what would Feynman do here?", "critique this as Christensen would", "panel of Buffett + Munger on this" | **Magi[advisor expert|conclave]** | Named-figure documented thinking as an advisory lens |
 | User wants to explore before knowing what to decide | **Flux[ideate]** | Open-ended exploration first |
 | User is stuck and needs a new frame, not a conversation | **Flux[reframe]** | Break the frame, then move on |
 | User has options and needs a verdict, not more ideas | **Magi** | Converge and decide |
@@ -153,7 +153,7 @@ Both are project-local extensions. Apply `_common/PROJECT_LOCAL_SKILLS.md` befor
 
 **Rule of thumb**: "Help me think about this" → Flux[ideate]. "Help me see this differently" → Flux[reframe]. "Help me decide" → Magi[decide]. **"Help me see this as _<named person>_" → Magi[advisor].**
 
-**The named-figure Recipe boundary is a documented individual.** A real, *named* person → Magi[channel/conclave/critique]. A school/movement/collective, or no person at all → Flux. A synthetic user persona → Cast. A fixed founder-mentor archetype (no name) → Magi[advisor]. Named-figure Recipes produce a **reading, not a verdict** — every claim is tagged `ATTESTED` / `INFERRED` / `SPECULATIVE`; a requested decision continues to Magi[decide].
+**The named-figure Recipe boundary is a documented individual.** A real, *named* person → Magi[advisor expert|conclave|critique]. A school/movement/collective, or no person at all → Flux. A synthetic user persona → Cast. A fixed founder-mentor archetype (no name) → Magi[advisor office-hours]. Named-figure Recipes produce a **reading, not a verdict** — every claim is tagged `ATTESTED` / `INFERRED` / `SPECULATIVE`; a requested decision continues to Magi[decide].
 
 **Chain patterns**:
 - Flux[reframe] (new frame) → Flux[ideate] (explore it) → Magi (decide) → Builder (implement)

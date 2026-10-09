@@ -34,7 +34,7 @@ Classify a missing/empty artifact **before** assigning an error level:
 | Artifact and transcript both empty, no log file at all | pty was not allocated | Not an agent error — re-spawn under `python3 pty.spawn` (`script -q /dev/null` does **not** work). Does not count against the L1 retry budget |
 | Artifact present and sentinel present, but content fails the step's acceptance check | Genuine task failure | Fall through to L1-L5 below as normal |
 
-**Rule:** an agy step is never escalated past L0 on the strength of empty stdout alone, and the exit code is never the deciding signal — the artifact is. Capture failure is also **not** a REVISE signal in an evaluator loop (`orchestration-patterns.md` § Pattern H → agy Implementation).
+**Rule:** an agy step is never escalated past L0 on the strength of empty stdout alone, and the exit code is never the deciding signal — the artifact is. Capture failure is also **not** a REVISE signal in an evaluator loop (`orchestration-patterns.md` § Pattern H, agy-specific loop rules).
 
 ### Failure Signature (identity of a repeated failure)
 

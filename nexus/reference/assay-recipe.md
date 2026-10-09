@@ -161,7 +161,7 @@ Phase 5    APPLY ★Confirm-before-launch (apply=true only; preconditions ①-�
            apply ONLY experiment-proven-safe changes (zero-diff removals on adequate elements;
            REWRITE winners that passed the identical suite; ASSERT `constraint-gap` rule
            amendments)
-           → Radar[no-regression] + Guardian → Hone?[Drift Sentinel: the ASSERT fitness
+           → Radar[regression] + Guardian → Hone?[Drift Sentinel: the ASSERT fitness
              functions become CI checks so the proof does not decay]
    ▼
 Phase 6    DELIVER — Design Proof + handoff of every REFUTED claim to `anneal` as a

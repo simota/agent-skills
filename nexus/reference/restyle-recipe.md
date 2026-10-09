@@ -29,7 +29,7 @@ AUDIT    (Echo[persona walkthrough + friction score] ‖ Palette[usability heuri
 → DIRECT (Vision[design direction + Design Brief: rubric axes + target scores]
           +Flux?[reframe when the current design's premise is the problem])
 → ✓direction-gate
-→ ⟲{ IMPLEMENT (Artisan[components/styles] ‖ Flow?[motion/transitions] ‖ Prose?[microcopy]
+→ ⟲{ IMPLEMENT (Artisan[component] ‖ Flow?[motion/transitions] ‖ Prose?[microcopy]
                 ‖ Muse?[tokenize before ad-hoc styles] ‖ Ink?[icons/assets])
      → VERIFY  (Echo[re-walkthrough vs rubric] + Palette[a11y re-check ≥ baseline]
                 + Radar[no-regression on behavior]) }⟲  loop ≤ 3 cycles (default 3)

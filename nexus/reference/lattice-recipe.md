@@ -101,7 +101,7 @@ Phase 3   RECONCILE loop ⟲ {  per batch
           justified  → record reason + owner in the ledger; the surface is NOT changed
           → APPEARANCE PARITY (the safety oracle, per _common/DIFFERENTIAL_PARITY.md):
             Voyager[visual regression, diff within the declared tolerance] +
-            Radar[no-regression] + Palette[a11y ≥ baseline]
+            Radar[regression] + Palette[a11y ≥ baseline]
             → a conformance fix that changes what renders is a DEFECT: revert, re-classify
               as `gap` (the token was not equivalent after all)
           }⟲  loop ≤ 3 cycles (default 3)
@@ -113,7 +113,7 @@ Phase 4   RESIDUE-GATE — INDEPENDENT re-scan of the FULL frozen inventory (pro
    ▼
 Phase 5   DECOMMISSION ★Ask First (destructive; gated on the Phase 4 proof)
           remove now-orphaned one-off components, duplicate tokens, dead theme entries
-          → Radar[no-regression] + Voyager[visual regression] after the cut
+          → Radar[regression] + Voyager[visual regression] after the cut
    ▼
 Phase 6   DELIVER — Coherence Proof + Drift Sentinel handoff + Guardian
           Hone?[a CI/pre-commit hook derived from the ledger so the proof does not decay —
