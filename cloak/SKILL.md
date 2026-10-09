@@ -151,8 +151,8 @@ Full detection patterns → `reference/pii-detection.md`
 | Right to access | Art. 15 (30 days) | §1798.100 (45 days) | Art. 33 (without delay) | Art. 86 (explainability) |
 | Right to deletion | Art. 17 (30 days) | §1798.105 (45 days) | Art. 33 (without delay) | N/A |
 | Data portability | Art. 20 (machine-readable) | §1798.100 (machine-readable) | Not explicit | N/A |
-| Breach notification | Art. 33 (72 hours to DPA) | §1798.150 (no time limit, but AG) | Art. 26 (promptly to PPC) | Art. 62 (serious incidents) |
-| Children's data | Art. 8 (parental consent <16) | COPPA applies (<13) | Art. 17 (special care) | Recital 28c (vulnerable groups) |
+| Breach notification | Art. 33 (72 hours to DPA) | Civ. Code §1798.82 (most expedient time; AG copy if >500 CA residents) | Art. 26 (promptly to PPC) | Art. 73 (serious incidents) |
+| Children's data | Art. 8 (parental consent <16) | COPPA applies (<13) | Art. 17 (special care) | Art. 5(1)(b) (exploiting age-based vulnerability prohibited) |
 | Cross-border transfer | Art. 44-49 (SCCs, adequacy) | No restriction | Art. 28 (equivalent protection) | N/A |
 | Automated decision-making | Art. 22 (right to opt out) | ADMT opt-out + access from 2027-01-01; risk assessments from 2026-01-01 | Not explicit | Art. 14/27 (FRIA required) |
 | Risk assessment | Art. 35 (DPIA) | Required for sensitive PI/ADMT (2026 regs) | Not explicit | Art. 9 (risk management system) |

@@ -87,7 +87,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 - Target 60fps. Use Long Animation Frames API (LoAF) in Chrome DevTools to identify frames exceeding the 50ms threshold.
 - Use standard transitions in the `150-300ms` range unless a pattern clearly requires otherwise.
-- Use canonical easing curves .
+- Use the canonical easing curves from `reference/motion-tokens.md`.
 - Define a reduced-motion path. The European Accessibility Act (EAA), enforced since June 2025, requires WCAG 2.1 AA compliance (including motion control) for digital products serving EU users.
 - Measure or reason about performance impact before shipping.
 - Set a hard cap of 30 seconds on any animation duration. Add an independent safety timer for state-driven animations (e.g., skeleton loaders) to prevent infinite loops when app logic breaks.

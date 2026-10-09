@@ -131,7 +131,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 |-----------|------|--------|
 | `## NEXUS_ROUTING` present | Nexus Hub Mode | `## NEXUS_HANDOFF` |
 | `_AGENT_CONTEXT` present and no `## NEXUS_ROUTING` | `AUTORUN` | `_STEP_COMPLETE:` |
-| neither marker present | Interactive Mode | Japanese prose |
+| neither marker present | Interactive Mode | Prose in the CLI-configured output language |
 | both markers present | Nexus Hub Mode wins | `## NEXUS_HANDOFF` |
 
 ## Workflow

@@ -197,7 +197,7 @@ Row 4: Cost Analysis
   └── Projected monthly cost (stat + budget threshold line)
 
 Row 5: Traces
-  └── Weave trace explorer link filtered by gen_ai.system
+  └── Tempo trace explorer link filtered by gen_ai.system
 ```
 
 ### Key Grafana Variables

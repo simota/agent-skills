@@ -170,6 +170,7 @@ Parse the first token of user input and activate the matching Recipe. If the tok
 | `keyword` | Keyword |
 | `audit` | Audit |
 | `vitals` | Vitals |
+| `retention` | Retention & Re-engagement |
 | _(no match)_ | SEO (default) |
 
 Behavior notes per Recipe:
@@ -192,7 +193,7 @@ Behavior notes per Recipe:
 | `E-E-A-T`, `author`, `expertise`, `trust` | E-E-A-T signals | Author markup, credential schema, experience indicators | `reference/seo-checklist.md` |
 | `CTA`, `conversion`, `signup`, `checkout` | CRO optimization | CTA/form improvement | `reference/cro-patterns.md` |
 | `form`, `validation`, `field`, `submit` | Form optimization | Form UX improvement | `reference/cro-patterns.md` |
-| `exit intent`, `bounce`, `retention` | Exit prevention | Retention pattern | `reference/cro-patterns.md` |
+| `exit intent`, `bounce` | Exit prevention | Retention pattern | `reference/cro-patterns.md` |
 
 Routing rules:
 

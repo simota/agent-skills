@@ -174,7 +174,7 @@ permissions:
   id-token: write   # required for OIDC
   contents: read
 steps:
-  - uses: actions/setup-node@v4
+  - uses: actions/setup-node@v5
     with: { node-version: '22', registry-url: 'https://registry.npmjs.org' }
   - run: npm ci
   - run: npm publish   # provenance attestation auto-generated

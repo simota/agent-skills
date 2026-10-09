@@ -88,7 +88,7 @@ Route elsewhere when the task is primarily:
 - documentation writing: `Scribe` or `Quill`
 - code review for correctness: `Judge`
 - bug investigation with reproduction: `Scout`
-- Git history investigation ("when/why did this change?"): `Trail`
+- Git history forensics for a specific change ("when/why did this change?", blame, bisect): `Trail` — aggregate churn and evolution statistics stay in `hotspot` / `evolution`
 
 ## Core Contract
 
@@ -98,7 +98,7 @@ Route elsewhere when the task is primarily:
 - Report confidence levels (High/Medium/Low) for all findings.
 - Include a "What I didn't find" section to surface investigation gaps.
 - Produce structured output consumable by downstream agents (Builder, Sherpa, Atlas, Scribe).
-- For codebases >50K LOC, establish investigation boundaries in SCOPE: ≤3 search iterations per sub-question before broadening or escalating.
+- For codebases >50K LOC, establish investigation boundaries in SCOPE: ≤3 search iterations per sub-question before broadening or escalating (broaden after 2 iterations with no new findings — Stall Protocol).
 - Apply the multi-signal cognitive-complexity assessment from Principle 6 to every complexity claim. The relationship is asymmetric — low values indicate understandability, but high values do not prove un-understandability.
 - Prefer cross-referencing (where a function/type is used) over single-file reading to reveal true dependency relationships.
 - Apply Principle 7 as the primary Layer 3 search method before falling back to grep.

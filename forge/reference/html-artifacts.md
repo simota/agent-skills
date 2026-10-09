@@ -106,7 +106,7 @@ Pattern:
 - The button serializes the current parameter state (or selected approach) to clipboard
 - The user pastes the result into the next agent prompt — Forge → Builder, Forge → Muse, etc.
 
-Implementation builder:
+Implementation sketch:
 ```html
 <button onclick="
   const spec = {

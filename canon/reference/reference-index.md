@@ -24,5 +24,7 @@ name it, or when scanning what this skill can consult at all.
 | `reference/legal-review-patterns.md`, `reference/legal-review-examples.md` | Cross-document/pre-launch patterns and jurisdiction-appropriate report examples. |
 | `reference/dpa-review.md`, `reference/eula-review.md`, `reference/cookie-consent.md` | DPA, software-license, and cookie-banner/policy deep review mechanics. |
 | `reference/legal-review-handoffs.md` | Legal findings handoffs to Builder, Native, Cloak, Prose, and Scribe. |
+| `reference/regulatory-audit-readiness.md` | `audit` recipe and the EVIDENCE phase — evidence room, chain of custody, sampling, findings retest. |
+| `reference/regulatory-compliance-reporting.md` | VERIFY phase for regulatory work and multi-framework compliance reports. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Canon-specific Output/Next schema. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the report, thinking depth at version pinning, front-loading standard/scope at ASSESS. Critical: P3, P5. |

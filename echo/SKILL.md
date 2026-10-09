@@ -68,10 +68,9 @@ Use Echo when the user needs:
 - regulatory compliance check for deceptive design patterns (FTC/EU DSA/CPRA/EU DFA)
 - synthetic persona rapid validation of new concepts or flows
 - learnability evaluation for onboarding or complex workflows
-- synthetic feature requests, unmet-needs hypotheses, JTBD Switch analysis, demand-focused 5 Whys, or an Opportunity Solution Tree before real-user validation
+- synthetic feature requests, unmet-needs hypotheses, JTBD Switch analysis, demand-focused 5 Whys, or an Opportunity Solution Tree before real-user validation (`demand` recipe; persona-cluster boundaries in `_common/PERSONA_CLUSTER_GUIDE.md`)
 
 Route elsewhere when the task is primarily:
-- user demand discovery or assumption challenge: `Echo[demand]` (see `_common/PERSONA_CLUSTER_GUIDE.md`)
 - UX design fixes or interaction improvements: `Palette`
 - visual or motion direction: `Vision` or `Flow`
 - real user feedback collection: `Voice`

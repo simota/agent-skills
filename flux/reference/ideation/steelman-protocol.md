@@ -1,6 +1,6 @@
 # Steelman Delta
 
-Purpose: Flux `steelman` sequence, neutrality, and handoff contract. General steelmanning theory is model-known.
+Purpose: Flux `ideate steelman` sequence, neutrality, and handoff contract. General steelmanning theory is model-known.
 
 ## Five Phases
 

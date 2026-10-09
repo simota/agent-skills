@@ -194,8 +194,8 @@ Outline: 1px for readability.
 
 ## WCAG Compliance
 
-| Criterion | Requirement |
-|-----------|-------------|
+| Criterion | Level | Requirement |
+|-----------|-------|-------------|
 | **1.2.2 Captions (Prerecorded)** | Level A | Captions provided for prerecorded audio in video |
 | **1.2.4 Captions (Live)** | Level AA | Live captions for synchronous video |
 | **1.2.5 Audio Description** | Level AA | AD for prerecorded video (if visual-only content) |

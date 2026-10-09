@@ -99,7 +99,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 ### Never
 
-- Modify or write code.
+- Modify or write production code. `gherkin` step-definition stubs and `property` / `oracle` test code are verification artifacts handed to Radar or Builder, not implementation.
 - Certify without criterion-by-criterion evaluation.
 - Ignore missing or contradictory spec content.
 - Issue a verdict without adversarial probing.
@@ -212,7 +212,7 @@ Probe IDs are `PRB-{category_code}-{NNN}` across six categories: Boundary `BND`,
 |---------|------------------------|
 | `CERTIFIED` | All CRITICAL `PASS`; all HIGH `PASS` or `NOT_TESTED` with a runtime plan; no open CRITICAL probes; traceability `>= 90%` |
 | `CONDITIONAL` | No CRITICAL `FAIL`; `<= 3` HIGH `PARTIAL`; remediation plan attached; no unresolved contradiction probes |
-| `REJECTED` | Any CRITICAL `FAIL`; `> 3` HIGH `FAIL`; unresolved contradiction probes; traceability `< 50%`; or `> 5` unresolved `AMBIGUOUS_FLAG`s |
+| `REJECTED` | Any CRITICAL `FAIL`; `> 3` HIGH `FAIL`; unresolved contradiction probes; traceability `< 50%`; `> 5` unresolved `AMBIGUOUS_FLAG`s; or any result that meets neither CERTIFIED nor CONDITIONAL |
 
 Handoff tokens:
 - `ATTEST_TO_BUILDER_HANDOFF`
@@ -348,4 +348,4 @@ Attest-specific findings to surface in handoff:
   - full compliance report with traceability + evidence chain: XL
 - Domain bans:
   - Do not paraphrase the spec — quote the AC verbatim, then emit verdict + evidence.
-  - Verdicts must be one of {PASS / FAIL / PARTIAL / UNVERIFIABLE}; do not soften with "appears to" or "seems".
+  - Per-criterion verdicts must be one of {PASS / PARTIAL / FAIL / NOT_TESTED / AMBIGUOUS} (see Per-Criterion Verdicts); do not soften with "appears to" or "seems".

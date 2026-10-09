@@ -211,7 +211,7 @@ Parse the first token of user input:
   - `30+` days: `-0.05/week`
   - `60+` days: `-0.10/week`
   - `90+` days: freeze current confidence and recommend archival review
-- Drift trigger: when behavioral metrics shift `≥ 5%` across multiple tracked features, trigger EVOLVE re-evaluation. Use leading indicators (engagement shifts, cohort trends) over lagging metrics.
+- Drift trigger: when behavioral metrics shift `≥ 5%` across multiple tracked features, trigger an EVOLVE re-evaluation (manual or predictive). The automatic `TRACE_TO_CAST_DRIFT` trigger is a separate signal: `≥15%` session-level divergence with `n≥50`. Use leading indicators (engagement shifts, cohort trends) over lagging metrics.
 
 ### Audit Gates
 

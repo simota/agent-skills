@@ -34,5 +34,6 @@ name it, or when scanning what this skill can consult at all.
 | `reference/multi-platform-bio.md` | One-source biography variants with platform-specific length and tone constraints |
 | `reference/tri-engine-compete.md` | `multi` engine-bias rationale, scoring, degraded modes, algorithm, JSON schema, CLUSTER rules, SYNTHESIZE patterns, and prompts |
 | `reference/benchmarks-thresholds.md` | Numeric thresholds — calibration, battlecard adoption, win-rate, GEO, seller adoption |
+| `reference/competitive-analysis-framework.md` | Fan-out research across many competitors (RESEARCH_FAN_OUT team pattern). |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Compete-specific Output/Next schema. |
 | `_common/OPUS_5_AUTHORING.md` | Report sizing, thinking depth at SHARPEN, INTAKE front-loading. Critical: P3, P5 |

@@ -107,7 +107,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `SCAFFOLD` | Define hypothesis, isolate slice, pick Throwaway vs Evolutionary, choose mock strategy, set time-box (≤ 4h total); for UI slices, builder the target as an ASCII wireframe (`_common/ASCII_PREVIEW.md`) before STRIKE | Default to Throwaway when requirement is still a hypothesis | `reference/prototype-to-production.md`, `_common/ASCII_PREVIEW.md` |
+| `SCAFFOLD` | Define hypothesis, isolate slice, pick Throwaway vs Evolutionary, choose mock strategy, set time-box (≤ 4h total); for UI slices, sketch the target as an ASCII wireframe (`_common/ASCII_PREVIEW.md`) before STRIKE | Default to Throwaway when requirement is still a hypothesis | `reference/prototype-to-production.md`, `_common/ASCII_PREVIEW.md` |
 | `STRIKE` | Build minimum structure, wire events, connect mock data, make happy path demoable. Leverage AI scaffolding tools (Cursor, v0, Bolt.new, Lovable, Google Stitch) where appropriate but review generated code for OWASP Top 10 vulnerabilities (2.74× higher rate than human code). Hand-code auth/payment/encryption — never delegate these to AI scaffolding | Keep scope to one slice; prefer the project's existing components before adding scaffolding | `reference/api-mocking.md` |
 | `COOL` | Run compile/render/interaction checks, verify concept clarity, note blockers and debt. Security spot-check AI-generated auth/input handling — specifically check for happy-path-only logic: AI often generates code that works for valid users but omits role checks, rate limits, and abuse prevention. Verify all AI-suggested dependencies exist in the official registry (slopsquatting check). Scan AI-generated files for hardcoded secrets/API keys/tokens (3.2% leak rate) | Self-check at least every 30 minutes; if not demoable at 75% of time-box, re-scope | `reference/prototyping-anti-patterns.md` |
 | `PRESENT` | Demo result, decide ADOPT/ITERATE/DISCARD, prepare next handoff. Include explicit risk assessment for production conversion | Mandatory before expanding scope | `reference/builder-integration.md` |
@@ -143,7 +143,7 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `moodboard`, `visual direction`, `design exploration` | Moodboard mode | 3+ moodboard variants + evaluation | `reference/moodboard-workflow.md`, `_common/CANDIDATE_SELECTION.md` |
+| `moodboard`, `design exploration` (coded variants; direction-only work → Vision) | Moodboard mode | 3+ moodboard variants + evaluation | `reference/moodboard-workflow.md`, `_common/CANDIDATE_SELECTION.md` |
 | `component`, `widget`, `state pattern` | UI Component mode | Component file + mock data | `reference/prototyping-anti-patterns.md` |
 | `page`, `flow`, `journey`, `screen` | Page/Flow mode | Route/page + minimal states | `reference/rapid-iteration-methodology.md` |
 | `api mock`, `MSW`, `mock server` | API Mock mode | handlers.ts or mock fetch wrapper | `reference/api-mocking.md` |

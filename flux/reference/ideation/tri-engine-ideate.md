@@ -2,9 +2,9 @@
 
 Shared engine selection, capability/authorization gates, dispatch, capture, attribution and degraded-mode policy: `_common/MULTI_ENGINE_RECIPE.md` and `_common/CLI_COMPATIBILITY.md`. This reference defines only the domain payload and integration rules.
 
-Implementation notes for `/flux multi`. Reads as a delta on `_common/MULTI_ENGINE_RECIPE.md` — this document only states what is **Flux[ideate]-specific**. Read the common protocol first.
+Implementation notes for `/flux ideate multi` (distinct from top-level `/flux multi`, which runs `reference/tri-engine-reframe.md`). Reads as a delta on `_common/MULTI_ENGINE_RECIPE.md` — this document only states what is **Flux[ideate]-specific**. Read the common protocol first.
 
-**Pattern type**: D (Divergence-primary). **Verb**: `flux`. **Subagent names**: `riff-codex` + `riff-claude` (dual-engine baseline) + `riff-agy` (when AVAILABLE).
+**Pattern type**: D (Divergence-primary). **Verb**: `flux`. **Subagent names**: `flux-ideate-codex` + `flux-ideate-claude` (dual-engine baseline) + `flux-ideate-agy` (when AVAILABLE).
 
 **Dialogue posture.** Unlike Spark/Echo[demand], Flux[ideate] is **interactive**. `multi` is positioned as a **single "parallel brainstorm round"** dropped into an ongoing dialogue — the 9 / 12 outputs become **seed ideas for the next dialogue turn**, not a final deliverable. Flux[ideate] never replaces dialogue with multi; multi accelerates one divergence step inside dialogue.
 
@@ -90,7 +90,7 @@ Flux[ideate] is Pattern D (Divergence-primary). Apply the base D rubric per `_co
 | 2 / 3 | `LIKELY` | Two engines concur. Surface the dissenting engine's alternative angle alongside. |
 | 1 / 3 (post-ground) | `VERIFIED-DIVERGENT` | Only one engine surfaced this. For Flux[ideate] this is often the breakthrough — the angle the others' training data did not point at. Never auto-deprioritize. |
 
-**Critical Riff-only inversion**: in EXPAND mode, an UNIVERSAL idea is **suspect of being the obvious framing** the user could have arrived at alone — Flux[ideate]'s whole job is to surface non-obvious angles. Surface UNIVERSAL EXPAND ideas, but lead the dialogue with VERIFIED-DIVERGENT ones. In SUBTRACT mode, the inversion is gentler — UNIVERSAL "this is excess" signals tend to be correct.
+**Critical Ideate-only inversion**: in EXPAND mode, an UNIVERSAL idea is **suspect of being the obvious framing** the user could have arrived at alone — Flux[ideate]'s whole job is to surface non-obvious angles. Surface UNIVERSAL EXPAND ideas, but lead the dialogue with VERIFIED-DIVERGENT ones. In SUBTRACT mode, the inversion is gentler — UNIVERSAL "this is excess" signals tend to be correct.
 
 ---
 
@@ -208,4 +208,4 @@ Loose-prompt rule applies — do NOT pass the SCAMPER lens taxonomy, Crazy-8 axi
 - `_common/SUBAGENT.md §MULTI_ENGINE` — engine dispatch mechanics
 - `spark/reference/tri-engine-proposal.md` — canonical Pattern D implementation (mirror this structure)
 - `echo/reference/tri-engine-demand.md` — Pattern D with calibration (Flux[ideate] does NOT calibrate but the dialogue-integration pattern is similar)
-- `flux/reference/patterns.md` — mode definitions and transition signals (referenced when interpreting which mode `multi` should default to)
+- `flux/reference/ideation/patterns.md` — mode definitions and transition signals (referenced when interpreting which mode `multi` should default to)

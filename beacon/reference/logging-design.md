@@ -5,7 +5,7 @@ Purpose: Design a structured logging contract — schema, correlation strategy, 
 ## Scope Boundary
 
 - **Beacon `log`**: log schema design, correlation ID strategy, level policy, source-side sampling policy, PII scrub rules, OpenTelemetry Logs signal adoption decision.
-- **Gear `log`**: logging library setup (zap / zerolog / structlog / winston), log pipeline config (Fluent Bit, Vector, Loki, Datadog, CloudWatch), agent deployment, storage tier.
+- **Gear `logs`**: logging library setup (zap / zerolog / structlog / winston), log pipeline config (Fluent Bit, Vector, Loki, Datadog, CloudWatch), agent deployment, storage tier.
 
 If the request is "what fields must every log record carry?" → `log`. If it is "how do I configure Fluent Bit to ship JSON logs to Loki?" → hand off to `Gear`.
 
@@ -107,4 +107,4 @@ When the log design is accepted, hand off to `Gear` with:
 - `tracing` — correlation-ID propagation and resource attribute consistency.
 - `slo` — ERROR-level records feeding SLI error counts.
 - `alerts` — ERROR rate burn-rate alerts and runbook links.
-- Gear `log` — implementation of this design.
+- Gear `logs` — implementation of this design.

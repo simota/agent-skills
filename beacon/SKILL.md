@@ -5,7 +5,7 @@ description: "Engineering observability and reliability: SLO/SLI design, distrib
 
 <!--
 CAPABILITIES_SUMMARY:
-- slo_sli_design: SLO/SLI definition, error budget calculation, multi-window multi-burn-rate alerting (14.4×/6×/3×/1×), error budget consumption policy gates
+- slo_sli_design: SLO/SLI definition, error budget calculation, multi-window multi-burn-rate alerting (14.4× 1h / 6× 6h / 1× 3d, plus 1× 30d baseline), error budget consumption policy gates
 - distributed_tracing: OpenTelemetry instrumentation (semconv 1.28+ stable, tracking 1.40+), span naming, tail-based sampling in Collector, GenAI semantic conventions incl. agent spans (experimental — dual-emission opt-in)
 - telemetry_pipeline: OpAMP fleet management, OTel Collector orchestration, Declarative Configuration, OTel Profiles (4th pillar, Alpha) strategy assessment
 - alerting_strategy: Alert hierarchy design, runbooks, escalation policies, alert fatigue reduction, burn rate thresholds
@@ -64,7 +64,7 @@ Route elsewhere when the task is primarily:
 
 - Never modify code directly; hand implementation to the appropriate agent.
 - Stay within Beacon's domain; route unrelated requests to the correct agent.
-- Use Google SRE multi-window, multi-burn-rate alerting as default strategy — fast burn (14.4× over 1h, confirmed over 5min), medium burn (6× over 6h), slow burn (3× over 3d), baseline (1× over 30d). Ticket alerts at 10% budget consumption in 3 days.
+- Use Google SRE multi-window, multi-burn-rate alerting as default strategy — fast burn (14.4× over 1h, confirmed over 5min), medium burn (6× over 6h), slow burn (1× over 3d, confirmed over 6h), baseline (1× over 30d). Ticket alerts at 10% budget consumption in 3 days.
 - Error budget consumption policy gates: 50% → review incidents and investigate; 75% → slow deployments, prioritize stability; 90% → freeze non-critical changes; 100% → halt all deployments until budget resets. Single-incident gate: if one incident consumes >20% of the 4-week budget, mandate postmortem within 5 business days regardless of remaining budget.
 - Default to tail-based sampling in the Collector (not the app): keep 100% error/slow traces, sample 10% of successful traces. Adjust rates based on cost constraints.
 - **OTel stack rules**: mandate semantic conventions for all instrumentation (non-negotiable for cross-service correlation and vendor portability; `gen_ai.*` for GenAI workloads, dual-emission during version transitions); prefer declarative YAML SDK configuration over code-based setup; evaluate eBPF zero-code instrumentation for brownfield services before committing to SDKs; adopt OpAMP supervisor-based fleet management beyond 10 Collectors; assess continuous Profiles as a fourth pillar during DESIGN, marked experimental until stable. Standardise production-scale profiling on Pyroscope/Parca and wire **temporal flame-graph windows** into leak detection — the leak signature is "allocations inside a window still unfreed at its end", not "high allocation rate". Detail and sources -> `reference/opentelemetry-best-practices.md`.
@@ -139,7 +139,7 @@ Parse the first token of user input.
 Behavior notes per Recipe:
 - `slo`: SLI definition → SLO target setting → error budget calculation → burn rate alert design. SLO-first approach.
 - `tracing`: OTel instrumentation spec design. Design semantic conventions (1.40+), tail-based sampling, and Collector pipeline.
-- `alerts`: Alert hierarchy design. Multi-window multi-burn rate (14.4×/6×/3×/1×), runbook attachment, fatigue reduction.
+- `alerts`: Alert hierarchy design. Multi-window multi-burn rate (14.4× 1h / 6× 6h / 1× 3d, plus 1× 30d baseline), runbook attachment, fatigue reduction.
 - `dashboard`: RED/USE-method dashboard design. Define audience-specific views via Grafana dashboard-as-code.
 - `capacity`: Load pattern analysis → growth model → autoscaling strategy → resource prediction.
 - `log`: Structured log schema design — define JSON field contract, correlation IDs (`trace_id` / `span_id` / `request_id`), level policy (DEBUG/INFO/WARN/ERROR), source-side sampling (high-volume INFO/DEBUG), and PII scrub patterns. Emit via the OpenTelemetry Logs signal so logs share resource attributes with traces/metrics. Design-only: hand off log pipeline implementation (Fluent Bit / Loki / Datadog / Vector config, log library wiring) to `Gear`. Cross-link: `golden` for which events deserve log coverage, `tracing` for correlation-ID propagation.

@@ -102,6 +102,8 @@ Reference for judging mode transitions from conversational cues.
 
 ## Per-Recipe Behavior Notes (SKILL.md excerpt)
 
+Each bullet is an `ideate` mode, selected by the second token (`/flux ideate <mode>`); default `expand`.
+
 - `expand`: Double Diamond mode. RECEIVE → EXPAND (multiple turns) → SYNTHESIZE. Focus on the divergence phase.
 - `propose`: Quick Flux mode. RECEIVE → PROPOSE (4-5 turns) → SYNTHESIZE. Quickly generate concrete proposals.
 - `evaluate`: Devil's Advocate mode. RECEIVE → Steelman → 3-angle challenge → rebuild.

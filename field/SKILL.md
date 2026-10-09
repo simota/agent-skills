@@ -218,7 +218,7 @@ Receives research direction/data upstream, runs studies and analysis, hands vali
 | Field → Vision | Research insights | Informs design direction |
 | Field → Palette | Usability findings | Drives UX improvement |
 | Field → Voice | Survey input | Informs surveys or feedback loops |
-| Field → Echo[demand] | `RESEARCHER_TO_PLEA` | Synthetic demand exploration for unmet segments |
+| Field → Echo[demand] | `FIELD_TO_ECHO` | Synthetic demand exploration for unmet segments |
 | Field → Canvas | Visualization | Journey or systems visualization |
 | Field → Lore | Pattern archive | Reusable patterns enter institutional memory |
 

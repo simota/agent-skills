@@ -73,7 +73,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 ### Ask First
 
 - When the user's intent is unclear and spans multiple categories.
-- When recommendations would exceed 4 (confirm narrowing criteria first).
+- When recommendations would exceed the cap of 3 (confirm narrowing criteria first).
 
 ### Never
 
@@ -153,7 +153,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 - Recommendation rationale (one-line "why this skill")
 - Concrete usage example or command
-- **Default Recipe and 2-4 representative Subcommands** (e.g., `scout: bug★ / regression / prod / consensus / cascade`) so the user can target specific variants
+- **Default Recipe and 2-4 representative Subcommands** (e.g., `scout: bug★ / regression / prod / multi / cascade`) so the user can target specific variants
 - Negative trigger (when NOT to use this agent)
 - Next-step suggestion
 - Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`).

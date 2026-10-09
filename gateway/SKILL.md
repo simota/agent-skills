@@ -203,11 +203,11 @@ Receives data models, implementation needs, and security requirements upstream; 
 | Schema → Gateway | `SCHEMA_TO_GATEWAY` | Data models for API resource design |
 | Builder → Gateway | `BUILDER_TO_GATEWAY` | Implementation constraints and integration needs |
 | Sentinel → Gateway | `SENTINEL_TO_GATEWAY` | Security requirements for API design |
-| Scribe[unified] → Gateway | `SCRIBE_TO_GATEWAY` | Governance and compliance constraints |
+| Scribe[unified] → Gateway | `SCRIBE_TO_GATEWAY` | Cross-team unified-spec constraints on the API contract |
 | Gateway → Builder | `GATEWAY_TO_BUILDER` | Completed API spec for implementation |
-| Gateway → Canon | `GATEWAY_TO_CANON` | API contract for canonical source of truth |
+| Gateway → Canon | `GATEWAY_TO_CANON` | API contract for standards-compliance assessment (OpenAPI, RFC 9457, OWASP API Top 10) |
 | Gateway → Scribe | `GATEWAY_TO_SCRIBE` | OpenAPI spec for documentation generation |
-| Gateway → Lens | `GATEWAY_TO_LENS` | API design for visual diagram |
+| Gateway → Canvas | `GATEWAY_TO_CANVAS` | API design for visual diagram |
 | Gateway → Judge | `GATEWAY_TO_JUDGE` | API spec for design review |
 | Gateway → Sentinel | `GATEWAY_TO_SENTINEL` | Security configuration for audit |
 | Gateway → Voyager | `GATEWAY_TO_VOYAGER` | API spec for E2E test generation |
@@ -220,8 +220,8 @@ Receives data models, implementation needs, and security requirements upstream; 
 |-------|-------------|----------|
 | Sentinel | API-layer security design (OAuth scope, rate limiting, CORS headers) | Broad security audit, threat modeling, penetration testing |
 | Builder | API specification, OpenAPI/GraphQL SDL, versioning strategy | API implementation code, route handlers, middleware logic |
-| Canon | API design decisions and rationale | Canonical source of truth maintenance, cross-team standards |
-| Scribe[unified] | API contract authoring | Governance enforcement, compliance validation, policy management |
+| Canon | API design decisions and rationale | Standards-compliance assessment of the API contract |
+| Scribe[unified] | API contract authoring | Cross-team unified specification packages that embed the API contract |
 | Scribe | OpenAPI spec and API design docs | General documentation, tutorials, changelog narration |
 | Siege | API latency SLAs and rate limit thresholds | Load test execution, chaos engineering, resilience validation |
 | Beacon | API SLO/SLI definitions from spec | Observability implementation, alerting, dashboard creation |

@@ -29,4 +29,5 @@ name it, or when scanning what this skill can consult at all.
 | `reference/image-generation-codex.md` | Codex built-in image-generation guidance when subscription-based operation is preferred over API billing. |
 | `reference/grammar/` | Authoring a regex, parser, DSL, or AST transform (absorbed from `grok`) |
 | `reference/cli-tui/` | Implementing a CLI or terminal UI (absorbed from `anvil`) |
+| `reference/handoffs.md` | Per-direction purposes for the `<SOURCE>_TO_<TARGET>` handoff tokens. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the report, effort-level for codegen, front-loading constraints at PLAN. Critical: P3, P6. |

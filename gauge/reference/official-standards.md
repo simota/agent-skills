@@ -107,7 +107,7 @@ description: "Does things
 | Skill folder | kebab-case | `notion-project-setup` ✅, `Notion Project Setup` ❌ |
 | No README.md | Inside skill folder | Documentation in `SKILL.md` or `reference/` only |
 
-> **Note**: The ecosystem's `normalization-checklist.md` uses a 16-item internal standard, while this official checklist is Anthropic's official quality standard. Meeting both is ideal.
+> **Note**: The ecosystem's `normalization-checklist.md` uses the 21-item internal standard (19 structural + 2 content items), while this official checklist is Anthropic's official quality standard. Meeting both is ideal.
 
 ---
 

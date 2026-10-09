@@ -56,7 +56,7 @@ SKELETON = (
     "three-quarter view, soft rim light, 50mm lens, "
     "matte finish, no text, no watermark"
 )
-# style_token is produced by `builder style` and pinned here.
+# style_token is produced by `builder image-style` and pinned here.
 ```
 
 ## Parallel API Calls and Rate Limits

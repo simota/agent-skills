@@ -109,8 +109,8 @@ Apply the following rules. A skill may be triggered by multiple signals; combine
 
 | Trigger | Skills (H) | Skills (M) |
 |---------|------------|------------|
-| Rust | builder, builder | crypt, siege |
-| Go | builder, builder | beacon, gateway |
+| Rust | builder | crypt, siege |
+| Go | builder | beacon, gateway |
 | Node + TypeScript backend (Hono, Express, Fastify) | builder, gateway | bolt |
 | Python + Django/Flask/FastAPI | builder, gateway, schema | bolt |
 | Ruby on Rails | builder, gateway, schema | radar |
@@ -168,7 +168,7 @@ Apply the following rules. A skill may be triggered by multiple signals; combine
 
 | Trigger | Skills (H) | Skills (M) |
 |---------|------------|------------|
-| Jest / Vitest / pytest / RSpec | radar | radar |
+| Jest / Vitest / pytest / RSpec | radar | — |
 | Playwright / Cypress / WebdriverIO | voyager | radar |
 | Storybook | vitrine | radar |
 | k6 / Artillery / Gatling | siege | beacon |
@@ -184,7 +184,7 @@ Apply the following rules. A skill may be triggered by multiple signals; combine
 | Founder office hours / startup advisory / "what should I focus on" | magi[advisor] | sherpa, echo[demand] |
 | Game (Phaser, Three.js, Unity, Godot) | forge | builder[image] |
 | CMS / Headless CMS | builder | scribe |
-| Payment (Stripe, Square) | crypt, ledger | canon[legal] |
+| Payment (Stripe, Square) | crypt, ledger | canon[legal-gap] |
 
 ### Project intent (from CLAUDE.md / repo name)
 

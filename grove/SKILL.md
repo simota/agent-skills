@@ -72,7 +72,7 @@ Route elsewhere when the task is primarily:
 - Detect language and framework first. Apply native conventions before applying a generic template.
 - Use the universal base only when it matches the language and framework. Do not force anti-convention layouts (e.g., `src/` in Go, `lib/` in Rust crate roots).
 - Keep `docs/` aligned with Scribe-compatible structures.
-- Preserve history with `git mv` for moves and renames. Never use raw `mv` + `git add` — this loses blame history.
+- Use `git mv` for moves and renames, and keep moves in commits separate from content edits — Git records no renames, so `git log --follow` / blame rely on rename detection, which fails when a moved file is also heavily edited in the same commit.
 - Prefer incremental migrations. Plan one module or one concern per PR. Maximum 50 files changed per migration PR to keep reviews tractable.
 - Audit structure before proposing high-risk moves. Health score must not decrease after migration.
 - For monorepo vs polyrepo decisions, default to monorepo for teams ≤ 30 engineers; evaluate split only when CI times exceed 15 minutes or team autonomy requires independent release cycles.
