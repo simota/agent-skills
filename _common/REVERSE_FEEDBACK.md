@@ -1,6 +1,6 @@
 # Reverse Feedback Protocol
 
-> **Tier:** `authoring` — activates when creating or auditing skills, not during user work. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+> **Tier:** `orchestration` — activates from the hub, a recipe, or on engine detection. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
 
 Standard protocol for downstream-to-upstream feedback between agents. This enables a self-correcting ecosystem where quality issues flow back to the agent best positioned to fix them.
 

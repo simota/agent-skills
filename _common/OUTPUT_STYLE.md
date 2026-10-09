@@ -28,7 +28,7 @@ This file defines **what to remove** and **what to choose instead**, with measur
 
 ## Output Tiers
 
-Every skill has a default tier — declared in its `## Output Contract`, or inherited as `M` when it has none (§ Inherited default). A skill MUST pick the smallest tier that fully answers the task.
+Every skill has a default tier — declared in its `## Output Contract`, or inherited as `M` when it has none (§ Inherited default). A skill MUST pick the smallest tier that fully answers the task. The line ranges are targets for each tier's typical output, not a partition of every possible length: choose the tier by the Use For column, then aim for its range — a 4-line answer is an `S` that ran long, not a tierless one.
 
 | Tier | Lines | Use For | Example |
 |------|-------|---------|---------|

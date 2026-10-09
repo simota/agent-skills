@@ -19,7 +19,7 @@ How individual agents learn from their own experience. Complements `EVOLUTION.md
 |------|-----|------|---------|
 | **Tier 1: Context Loading** | All agents | Read prior context before starting work | Every task start |
 | **Tier 2: Calibration Loop** | Agents with learning loops (19+) | Post-task effectiveness measurement & adjustment | Calibration Triggers (CT-01–06) |
-| **Tier 3: Self-Modification** | Architect (+ future qualified agents) | Modify own SKILL.md / references | 30+ data points + Safety Level framework |
+| **Tier 3: Self-Modification** | Architect, Gauge (+ future qualified agents) | Modify own SKILL.md / references | 30+ data points + Safety Level framework |
 
 ---
 
@@ -43,7 +43,7 @@ Before starting any task, load prior context to avoid repeating mistakes and lev
 
 ### Rules
 
-- Check file existence before reading (journals/ECOSYSTEM.md may not exist yet)
+- Check file existence before reading (`.agents/ECOSYSTEM.md` may not exist yet)
 - Read selectively — only entries relevant to the current task type
 - Complete within seconds — context loading must not delay task execution
 - Do NOT modify any files during context loading
@@ -92,7 +92,7 @@ OBSERVE → MEASURE → EXTRACT → ADAPT → SAFEGUARD → PERSIST
 | Orbit | REFINE | OBSERVE | MEASURE | ANALYZE | IMPROVE | SAFEGUARD | JOURNAL |
 | Sherpa | CALIBRATE | RECORD | COMPARE | — | ADJUST | — | PERSIST |
 | Magi, Compete | FORESIGHT/SHARPEN | TRACK | VALIDATE | — | CALIBRATE | — | PROPAGATE |
-| Scribe, Quill, Scribe | INSCRIBE/CHRONICLE/TRANSMUTE/UNIFY | RECORD | EVALUATE | — | CALIBRATE | — | PROPAGATE |
+| Scribe, Quill | INSCRIBE/CHRONICLE/TRANSMUTE/UNIFY | RECORD | EVALUATE | — | CALIBRATE | — | PROPAGATE |
 | Cast | EVOLVE | DETECT | ASSESS | — | APPLY | — | LOG+PROPAGATE |
 | Architect | EVOLVE | INTROSPECT | DIAGNOSE | PRESCRIBE | MUTATE | VERIFY | PERSIST |
 | Darwin | (framework) | SENSE | ASSESS | — | EVOLVE | VERIFY | PERSIST |
@@ -206,7 +206,7 @@ denominator, the dismissal count is reported with the metric).
 
 | ID | Trigger | Scope | Priority |
 |----|---------|-------|----------|
-| CT-01 | Task completion | **Lightweight** (OBSERVE + MEASURE only) | Normal |
+| CT-01 | Task completion | **Lightweight** (OBSERVE + MEASURE + PERSIST) | Normal |
 | CT-02 | Same pattern fails 3+ times | **Full cycle** | High |
 | CT-03 | User override / correction | **Full cycle** | Highest |
 | CT-04 | Judge/Nexus quality feedback | **Medium** (OBSERVE → EXTRACT → PERSIST) | High |
@@ -261,7 +261,7 @@ denominator, the dismissal count is reported with the metric).
 
 ## Tier 3: Self-Modification
 
-Direct modification of own SKILL.md and references. Currently implemented by Architect only.
+Direct modification of own SKILL.md and references. Currently implemented by Architect and Gauge.
 
 ### Safety Level Framework
 

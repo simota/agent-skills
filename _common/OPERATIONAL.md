@@ -258,7 +258,7 @@ This is `_common/VALUES.md` § 4 applied to the one case where the decay is cert
 
 ## Completion Contract
 
-Every skill inherits the completion discipline of **`nexus/reference/autonomy-quality-protocol.md`** — it is not Nexus-only machinery. A directly-invoked skill runs it at its own scale. The five rules below bind without reading that file.
+Every skill inherits the completion discipline of **`nexus/reference/autonomy-quality-protocol.md`** — it is not Nexus-only machinery. A directly-invoked skill runs it at its own scale. The rules below bind without reading that file.
 
 - **The acceptance criteria are frozen, and they are the only termination oracle.** Done is measured against the goal + ACs fixed at the planning tier (§ Pre-Execution Planning) — never against "looks done" or the agent's own summary. Rewriting a criterion, relaxing a threshold, or narrowing a check so the output passes is a goalpost move: it is recorded as an explicit decision and the criterion is reported `partial`, never met (Q1 / Q3 / Q20).
 - **Claims are bound to evidence.** A verification claim names the command that ran and its output, the diff, or the measurement. "Should work" / "likely passes" is forbidden vocabulary; any path not actually exercised is labeled `UNVERIFIED` (Q10).
@@ -272,7 +272,7 @@ Every skill inherits the completion discipline of **`nexus/reference/autonomy-qu
 
 | Tier | Completion contract |
 |------|---------------------|
-| **Skip** | ACs may stay implicit in the answer; evidence-binding and no-inflation still bind. No ledger, no sweep. `WORK_GATE` emits only the axes that are not `pass`. |
+| **Skip** | ACs may stay implicit in the answer; evidence-binding and no-inflation still bind. No ledger, no sweep. `WORK_GATE` emits only `RSK: risk` and any axis at ★★☆☆☆ or below; all-good emits nothing. |
 | **Light** | ACs stated; residuals listed inline; sweep run over the touched files. Full `WORK_GATE`. |
 | **Full** | Full protocol, including independent verification — the producer is never the sole verifier (Q9). Full `WORK_GATE`, with the evidence behind each `pass`. |
 
@@ -312,10 +312,10 @@ For cross-platform portability (macOS BSD ↔ Linux GNU), use the approved helpe
 |---------|-------------|-------------|---------------|
 | `sed -i` | `sed -i '' 's/a/b/' f` | `sed -i 's/a/b/' f` | Use `sed -i.bak ... && rm f.bak` or write to a temp file |
 | `date -d` | unsupported | `date -d '1 day ago'` | Use `date -v-1d` (BSD) or branch on `uname` |
-| `readlink -f` | unsupported pre-12.3 | supported | Use `python3 -c "import os; print(os.path.realpath('$f'))"` |
+| `readlink -f` | unsupported pre-12.3 | supported | Use `python3 -c 'import os, sys; print(os.path.realpath(sys.argv[1]))' "$f"` |
 | `stat -c` | `stat -f` | `stat -c` | Branch on `uname` or use `gstat` |
 | `mktemp` | requires template arg variant | tolerant | Always pass an explicit template |
-| `xargs -r` | unsupported | supported | Gear[gha] through `[ -s ] && xargs` instead |
+| `xargs -r` | unsupported | supported | Pipe through `[ -s file ] && xargs` instead |
 | `tar --xattrs` | different defaults | GNU defaults | Specify flags explicitly |
 
 **When generating shell commands for the user:**

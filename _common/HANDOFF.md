@@ -85,8 +85,8 @@ A handoff that has all its fields can still be wrong. Check the relations:
 | V4 | Every load-bearing claim in `Summary` appears in `Verified` or is labeled `UNVERIFIED` | Prose asserts more than the evidence supports |
 | V5 | `Do not repeat` survived any compaction between attempt and handoff | The next agent re-runs a known dead end |
 
-**Staleness rule:** if HEAD moves after the handoff is written, the handoff is `STALE` — regardless of how
-complete it looks. The receiver re-derives rather than trusting it (`_common/OPERATIONAL.md` §
+**Staleness rule:** if HEAD moves after the handoff is written, every claim bound to the Version clock (below)
+is `STALE` — regardless of how complete the handoff looks. The receiver re-derives rather than trusting it (`_common/OPERATIONAL.md` §
 *Post-Handoff Rehydration*).
 
 ### Freshness is four clocks, not one
@@ -194,7 +194,7 @@ A handoff is **admitted or sent back** by the *receiver*, at intake, before it d
 is the only point where rework is cheap — once the receiver has built on a bad input, the cost of
 unwinding exceeds the cost of the original redo.
 
-`_common/REVERSE_FEEDBACK.md` is advisory-only and `authoring` tier — it never refuses anything.
+`_common/REVERSE_FEEDBACK.md` is advisory-only — it never refuses anything.
 This section owns the refusal end to end: when it is mandatory, when it is forbidden, how it
 terminates, and what the message carries.
 
@@ -228,7 +228,7 @@ of its work.
 
 ### Never refuse on these
 
-- **The sender's own star ratings on `FIT`, `EVD`, `CLR`, or `CST`.** Those axes are self-assigned
+- **The sender's own star ratings on `FIT`, `EVD`, `CLR`, or `OUT`.** Those axes are self-assigned
   testimony with no external check (`_common/WORK_GATE.md` § Complexity Budget states this
   plainly). Wiring a self-certified figure into a gate is what `_common/TOKEN_ECONOMY.md` §6
   forbids: *a formula with no data source is never presented with a grade band or wired into a
@@ -277,7 +277,7 @@ Refusal costs the sender a full rerun, so it is not free to issue.
 
 When a handoff carries durable state, a reusable insight, or a notable decision, precede it with:
 
-1. Appending one row to `.agents/PROJECT.md` (or BLOCKED if write fails)
+1. Appending one row to `.agents/PROJECT.md` (if the write fails, note it in the handoff and continue — `_common/OPERATIONAL.md` § Activity Log)
 2. Adding a journal entry to `.agents/{agent}.md` when a reusable insight was generated
 3. Listing both file paths in the handoff `Artifacts` field
 
@@ -311,7 +311,7 @@ Based on the Managed Agents virtualization pattern (Anthropic), session state (t
 
 | Data | Persist (journal/PROJECT.md) | Pass inline (prompt) |
 |------|------------------------------|---------------------|
-| Step completion status | Always | Always |
+| Step completion status | When the chain is 4+ steps (checkpoint) or the step is non-trivial | Always |
 | File paths modified | Always | Always |
 | Detailed investigation notes | Always | Summary only |
 | Full error traces | Always | Key error + file:line only |

@@ -6,7 +6,7 @@ Cross-skill discipline for deciding **how much independent evidence a change mus
 
 **Read when:** planning what to verify before implementing; selecting the evidence set for a change; auditing whether a green test suite actually proves anything; deciding whether an AI-written test is admissible evidence for AI-written code.
 
-**Audience:** `radar`, `voyager`, `siege`, `attest`, `radar`, `judge`, `guardian`, `sentinel`, `beacon`, `mend`, `nexus[acceptance]`, `nexus[apex]`, `rally`.
+**Audience:** `radar`, `voyager`, `siege`, `attest`, `judge`, `guardian`, `sentinel`, `beacon`, `mend`, `nexus[acceptance]`, `nexus[apex]`, `rally`.
 
 **Prerequisites:** none. **Composes with:** `_common/PROOF_CARRYING.md` (which criticality tier of PR gets a full evidence package — *orthogonal*: PROOF_CARRYING answers *which PRs are gated and by whom*, this file answers *how far up the evidence stack one change must climb*), `_common/DIFFERENTIAL_PARITY.md` (E4's differential mechanism), `_common/TRACEABILITY.md` (AC IDs).
 
@@ -21,7 +21,7 @@ Seven levels. What rises as you climb is not effort — it is **distance from th
 | `E0` | **Model Assertion** | change explanation, self-review, reasoning trace | **No.** Weakest rung. Useful to start, never to ship. |
 | `E1` | **Static Evidence** | types, compiler, lint, SAST, architecture/dependency rules | Partially — an external rule engine, but only over syntax and declared contracts. |
 | `E2` | **Local Execution** | build, reproduce, smoke | Partially — the runtime disagrees with the model, but only on paths actually run. |
-| `E3` | **Automated Tests** | unit, integration, contract | **Only if the oracle is independent** (§3). A test written from the same context as the code is E0 wearing a green check. |
+| `E3` | **Automated Tests** | unit, integration, contract | **Only if the oracle is independent** (§2). A test written from the same context as the code is E0 wearing a green check. |
 | `E4` | **Independent Test** | property, metamorphic, mutation, fuzz, differential | **Yes** — each derives its expectation from a source other than the implementation. |
 | `E5` | **Integration Evidence** | preview env, policy check, attestation, canary | Yes — the real integration surface rejects what local mocks accepted. |
 | `E6` | **Production Observation** | SLO, trace, incident, user outcome, reconciliation | Yes — the only rung measuring the real input distribution. |

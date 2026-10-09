@@ -48,9 +48,11 @@ for cli in codex agy claude; do
   if command -v "$cli" >/dev/null 2>&1; then
     echo "$cli: $(command -v $cli) ($($cli --version 2>&1 | head -1))"
   else
+    found=
     for p in "$HOME/.bun/bin/$cli" "$HOME/.local/bin/$cli" "/usr/local/bin/$cli" "/opt/homebrew/bin/$cli"; do
-      if [ -x "$p" ]; then echo "$cli: $p ($($p --version 2>&1 | head -1))"; break; fi
-    done || echo "$cli: NOT FOUND"
+      if [ -x "$p" ]; then echo "$cli: $p ($($p --version 2>&1 | head -1))"; found=1; break; fi
+    done
+    [ -n "$found" ] || echo "$cli: NOT FOUND"
   fi
 done
 ```

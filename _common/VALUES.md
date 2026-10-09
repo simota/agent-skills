@@ -54,7 +54,7 @@ When it fires, loosen. Proportionality clauses exist across this corpus for exac
 
 ## Using this file
 
-- These are **tie-breakers, not rules**. They do work only in a conflict. Where the contracts already decide, they decide — invoking a value to overrule a contract is out of order (that is § Contract Precedence's job, and this file sits at rank 4 with the rest of the spine).
+- These are **tie-breakers, not rules**. They do work only in a conflict. Where the contracts already decide, they decide — invoking a value to overrule a contract is out of order (that is § Contract Precedence's job, and this file is a class-3 shared contract with the rest of the spine).
 - Cite the value when a Decision Ledger entry rests on one: `DEC-2 — chose the narrower fix over the complete one (VALUES §6: the full sweep would cost more than the defect)`.
 - A conflict that recurs is a corpus defect, not a judgement call. File it as `HD-DOC` so the next run does not re-derive the same trade-off.
 
