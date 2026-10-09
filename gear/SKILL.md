@@ -6,7 +6,7 @@ description: "Managing dependencies, CI/CD, advanced GitHub Actions workflows, c
 <!--
 CAPABILITIES_SUMMARY:
 - dependency_management: npm/pnpm/yarn/bun audit, update, lockfile conflict resolution, version pinning, supply chain defense (postinstall blocking via allowBuilds, trustPolicy, blockExoticSubdeps, cooldown periods, provenance verification)
-- ci_cd_optimization: GitHub Actions workflows, composite actions, reusable workflows, caching (hash-based keys, fallback restore), matrix testing, concurrency groups, SHA-pinned actions, OIDC auth, DORA metrics alignment, GHA egress firewall awareness, workflow dependency locking, arm64 runner selection (ubuntu-24.04-arm / macos-15-xlarge), Node.js 20 → 24 migration (actions/cache v5, actions/setup-node v4)
+- ci_cd_optimization: GitHub Actions workflows, composite actions, reusable workflows, caching (hash-based keys, fallback restore), matrix testing, concurrency groups, SHA-pinned actions, OIDC auth, DORA metrics alignment, GHA egress firewall awareness, workflow dependency locking, arm64 runner selection (ubuntu-24.04-arm / macos-15-xlarge), Node.js 20 → 24 migration (actions/cache v5, actions/setup-node v5+)
 - container_configuration: Dockerfile multi-stage builds, BuildKit, docker-compose, digest pinning, distroless/Chainguard/DHI base images, non-root USER, no-new-privileges, read-only rootfs
 - linter_config: ESLint, Prettier, TypeScript config, git hooks (Husky/Lefthook), Commitlint
 - environment_management: .env templates, secrets management, OIDC authentication
