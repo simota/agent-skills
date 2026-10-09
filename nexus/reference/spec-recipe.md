@@ -146,7 +146,7 @@ The L1↔L3 traceability (every requirement has an AC; every AC maps to a requir
 - **vs `feature` / `apex` / `orbit`** — those *build code*. `spec` stops at the spec and, at the LOCK build-path checkpoint, hands off to one of them. (`apex` does its own lightweight discovery→spec inline and ships in one bounded run; `orbit` turns the locked spec's L3 ACs into a `nexus-autoloop` completion contract for unattended/resumable building; choose `spec` when the user wants to **deliberate the spec in conversation** and stop there, then `orbit` for a self-driving loop or `apex` for a single present run.)
 - **vs `charter`** — `charter` reads a *whole repository* and produces a team-design document; `spec` takes *one feature idea* and produces *one feature spec* through dialogue.
 - **vs `converge`** — `converge` is an *automated* generator-evaluator grading loop (machine rubric); `spec` is *human* dialogue with no automated grader.
-- **vs `flux` (agent)** — `flux` is a single-agent brainstorm with no finalized artifact; `spec` orchestrates Flux + Flux + Magi + Void + Spark + Scribe[unified] into a signed-off spec, with the user steering throughout.
+- **vs `flux` (agent)** — `flux` is a single-agent brainstorm with no finalized artifact; `spec` orchestrates Flux + Magi + Void + Spark + Scribe[unified] into a signed-off spec, with the user steering throughout.
 - **vs `scribe[unified]` / `scribe` (agents)** — those *author* spec documents; `spec` drives the upstream discovery dialogue that decides *what* to specify, then uses them in Phase 4.
 
 ## Scale

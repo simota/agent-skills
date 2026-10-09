@@ -798,7 +798,7 @@ Phase-triggered failures — release-critical shipped without human sign-off, a 
 
 ```
 Is the goal a single narrow content task with no cross-format need?
-  └─ YES → single skill (tome / stage / scribe / quill / scribe)
+  └─ YES → single skill (tome / stage / scribe / quill)
   └─ NO ↓
 
 Is the goal a UI design + code pipeline?

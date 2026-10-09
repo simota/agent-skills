@@ -30,7 +30,7 @@ VERIFY  →  test runner discovers all files, no orphan helpers, fixtures resolv
         →  CI tier-split (unit-fast / integration-medium / e2e-slow) maps to directories
 
 PRESENT →  layout diagram, naming rules, migration steps for legacy tests
-        →  hand off content to Radar / Radar / Voyager
+        →  hand off content to Radar / Voyager
 ```
 
 ## Test Taxonomy

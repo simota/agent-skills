@@ -85,7 +85,7 @@ Every Tier-S/A PR must attach:
 | `intent` | Change purpose in 1-3 sentences | author / `scribe` |
 | `scope` | Affected files, modules, user journeys | `ripple` |
 | `spec_diff` | Diff of spec graph nodes touched | `attest` / `scribe[unified]` |
-| `generated_tests` | Auto-generated contract / property / fuzz / E2E / a11y / VRT | `radar` / `voyager` / `radar` / `matrix` (qa-scenario) |
+| `generated_tests` | Auto-generated contract / property / fuzz / E2E / a11y / VRT | `radar` / `voyager` / `matrix` (qa-scenario) |
 | `execution_log` | Full test run output (pass / fail / coverage) | CI |
 | `ui_trace` | Playwright / CUA trace for UI changes | `voyager` / `vector` |
 | `screenshot_diff` | Before/after with diff% | `voyager` (visual comparison) |

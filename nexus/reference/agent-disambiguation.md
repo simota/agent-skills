@@ -476,7 +476,7 @@ Orbit is project-local. Apply `_common/PROJECT_LOCAL_SKILLS.md`; when unavailabl
 | "REST/GraphQL API design, OpenAPI spec" | **Gateway** | HTTP API contract |
 | "Database schema, migration, ER diagram" | **Schema** | Persistence schema |
 | "General business logic implementation" | **Builder** | General implementation |
-| "Log parsing with builder patterns (Logstash)" | **Builder** | Pattern engine migration/design |
+| "Log parsing with grok patterns (Logstash)" | **Builder** | Pattern engine migration/design |
 | "Static security scan of shipped regex" | **Sentinel** | Post-ship audit, not design |
 | "Fuzz testing against a parser" | **Radar** | Test execution, not grammar design |
 

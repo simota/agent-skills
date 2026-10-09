@@ -141,7 +141,7 @@ These agents may be invoked at any stage based on signal, not stage:
 | **cue** | Demo video of the LP for sales enablement / onboarding |
 | **vector** | Quick browser checks during Build (visual sanity, console errors) |
 
-**Fan-out cap discipline**: cross-stage specialists count toward the 5-concurrent cap. If a stage already runs 5 primary delegates (e.g., VERIFY = Judge + Voyager + Attest + Sentinel + Echo) and PII / Tokushoho / a11y compliance requires Cloak + Canon + Canon, sequence those after the primary batch — never run 6–8 concurrently.
+**Fan-out cap discipline**: cross-stage specialists count toward the 5-concurrent cap. If a stage already runs 5 primary delegates (e.g., VERIFY = Judge + Voyager + Attest + Sentinel + Echo) and PII / Tokushoho / a11y compliance requires Cloak + Canon, sequence those after the primary batch — never run 6–8 concurrently.
 
 ---
 
