@@ -601,8 +601,11 @@ def check_recipe_hint_subcommands(findings: list[Finding]):
 # command line) does not read as a skill pointer.
 BOLD_SUBCOMMAND_RE = re.compile(
     r"\*\*([A-Za-z][A-Za-z0-9]*) `([a-z0-9][a-z0-9-]*)(?: [a-z0-9][a-z0-9-]*)*`")
-# A backticked `subcommand mode` pair inside a skill's own SKILL.md.
-MODE_PAIR_RE = re.compile(r"`([a-z0-9][a-z0-9-]*) ([a-z][a-z0-9-]*)`")
+# A backticked `subcommand mode` pair declared in a skill's Recipes or Subcommand
+# Dispatch section. A pair that is itself mapped somewhere (`security review` ->
+# security focus) or sits in a table's first, trigger-keyword cell is an input
+# phrase, not a mode declaration, and is skipped.
+MODE_PAIR_RE = re.compile(r"`([a-z0-9][a-z0-9-]*) ([a-z][a-z0-9-]*)`(?!\s*(?:->|→))")
 # RO-10 form (c): a code span that is exactly `skill[token]`, skill lower-case.
 CODE_HINT_RE = re.compile(r"(?<!`)`([a-z][a-z0-9]*)\[([a-z0-9][a-z0-9-]*)\]`(?!`)")
 
@@ -618,11 +621,16 @@ def check_corpus_subcommand_references(findings: list[Finding]):
         if tokens is None:
             continue
         allowed[name] = tokens
-        text = without_fenced_examples(skill_md.read_text(encoding="utf-8"))
+        skill_text = without_fenced_examples(skill_md.read_text(encoding="utf-8"))
+        text = "\n".join(read_markdown_section(skill_text, section) or ""
+                         for section in ("Recipes", "Subcommand Dispatch"))
         modes[name] = {}
-        for m in MODE_PAIR_RE.finditer(text):
-            if m.group(1) in tokens and m.group(2) not in tokens:
-                modes[name].setdefault(m.group(2), m.group(1))
+        for line in text.splitlines():
+            if line.lstrip().startswith("|"):
+                line = "|".join(line.split("|")[2:])  # drop the trigger cell
+            for m in MODE_PAIR_RE.finditer(line):
+                if m.group(1) in tokens and m.group(2) not in tokens:
+                    modes[name].setdefault(m.group(2), m.group(1))
 
     files: list[Path] = []
     for skill_md in skills.values():

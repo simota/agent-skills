@@ -366,6 +366,13 @@ class TestRoutingSurface(CheckerCase):
             "routing-oracle.py", "write `Magi[advisor expert]`", "--severity", "error"
         )
 
+    def test_a_trigger_phrase_is_not_read_as_a_mode_declaration(self):
+        """RO-10. Judge maps the input phrase `security review` -> security
+        focus; that must not make `review` a mode of `security`, or an ordinary
+        `Judge[review]` annotation would be rejected."""
+        self.append("judge/reference/codex-review-usage.md", "\nSee Judge[review] for the default pass.\n")
+        self.expect_clean("routing-oracle.py", "--severity", "error")
+
     def test_an_invocation_shaped_pointer_to_a_missing_subcommand_fails(self):
         """RO-10. `canon[legal]` read as a Canon invocation at ~22 sites, but
         Canon has no `legal` Recipe; every one fell back to `owasp`."""

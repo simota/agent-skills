@@ -80,6 +80,15 @@ class TokenEconomyDefaults(TempDir):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(json.loads(result.stdout)["grand_total"], 10)
 
+    def test_explicit_repo_root_never_falls_back_to_the_legacy_dir(self):
+        # Only the legacy directory exists: an explicit --repo-root that has no
+        # transcripts must fail rather than report this repository's usage.
+        legacy = self.work / "home/.claude/projects/-Users-simota--claude-skills"
+        (self.work / "home/.claude/projects" / self.name).rename(legacy)
+        result = self.economy("--repo-root", str(self.repo))
+        self.assertEqual(result.returncode, 2, result.stdout)
+        self.assertIn("project dir not found", result.stderr)
+
     def test_project_dir_name_with_leading_dash_is_accepted(self):
         result = self.economy("--project-dir", self.name)
         self.assertEqual(result.returncode, 0, result.stderr)

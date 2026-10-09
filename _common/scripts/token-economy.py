@@ -779,13 +779,17 @@ def project_dir_name(repo_root: Path) -> str:
     return re.sub(r"[^A-Za-z0-9]", "-", str(repo_root))
 
 
-def default_project_dirs(projects_root: Path, repo_root: Path) -> list[Path]:
+def default_project_dirs(projects_root: Path, repo_root: Path,
+                         include_legacy: bool = True) -> list[Path]:
+    # The legacy name is this repository's original checkout; it must never stand
+    # in for an explicitly chosen --repo-root, or another repo's usage is reported.
     names: list[str] = []
     for root in (repo_root.absolute(), repo_root.resolve()):
         name = project_dir_name(root)
         if name not in names:
             names.append(name)
-    names.append(LEGACY_PROJECT_DIR)
+    if include_legacy:
+        names.append(LEGACY_PROJECT_DIR)
     return [projects_root / name for name in names]
 
 
@@ -824,7 +828,8 @@ def main() -> int:
     projects_root = Path.home() / ".claude" / "projects"
     if args.project_dir is None:
         candidates = default_project_dirs(
-            projects_root, Path(args.repo_root) if args.repo_root else REPO_ROOT)
+            projects_root, Path(args.repo_root) if args.repo_root else REPO_ROOT,
+            include_legacy=args.repo_root is None)
         project_dir = next((c for c in candidates if c.is_dir()), candidates[0])
     else:
         project_dir = Path(args.project_dir)
