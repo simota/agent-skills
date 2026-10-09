@@ -88,7 +88,7 @@ Codexのスキル配置先は `~/.agents/skills`、設定は引き続き `~/.cod
 | **Architect** | _"Every agent is a possibility. Every SKILL.md is a birth certificate."_ - 新しいスキルエージェントを設計・生成するメタデザイナー。エコシステムギャップ分析、重複検出、SKILL.md生成 | SKILL.md、references |
 | **Rally** | _"One task, many hands. Parallel by design."_ - マルチセッション並列オーケストレーター。Claude Code Agent Teams APIで複数Claudeインスタンスを生成・管理し、並行タスク実行を実現 | チーム管理、並列実行 |
 | **Sigil** | _"Every project has patterns waiting to become power."_ - プロジェクト運用レイヤー設計・生成。スキル、レシピ、ワークフロー、ルーティングマップを作成 | プロジェクト固有スキル |
-| **Gauge** | _"What gets measured gets managed. What gets audited gets normalized."_ - SKILL.md正規化監査・自己進化エージェント。19項目チェックリストに基づくコンプライアンススキャン、修正提案、Webベースのベストプラクティス自動取得 | コンプライアンスレポート、修正プラン |
+| **Gauge** | _"What gets measured gets managed. What gets audited gets normalized."_ - SKILL.md正規化監査・自己進化エージェント。21項目チェックリストに基づくコンプライアンススキャン、修正提案、Webベースのベストプラクティス自動取得 | コンプライアンスレポート、修正プラン |
 | **Orbit** *(project-local)* | _"Give me a goal. I'll give you a runner that finishes."_ - このリポジトリのNexus-autoloop完走スクリプト生成・運用契約設計・監査を担当 | ランナースクリプト、契約 |
 | **Darwin** *(project-local)* | _"Ecosystems that cannot sense themselves cannot evolve themselves."_ - `.agents/ECOSYSTEM.md`へ永続化する、このリポジトリ専用のエコシステム進化オーケストレーター | エコシステムフィットネススコア、進化提案 |
 | **Lore** *(project-local)* | _"Forgotten lessons are lessons repeated. Institutional memory is the compound interest of experience."_ - `.agents/*.md`を`METAPATTERNS.md`へ統合する、このリポジトリ専用の知識キュレーター | METAPATTERNS.md、知識インサイト |
@@ -134,6 +134,7 @@ Codexのスキル配置先は `~/.agents/skills`、設定は引き続き `~/.cod
 | **Guardian** | _"Every commit tells a story. Make it worth reading."_ - Git/PRの番人。変更のSignal/Noise分析、コミット粒度最適化、ブランチ命名、PR戦略提案 | 分析レポート、PR準備 |
 | **Launch** | _"Shipping is not the end. It's the beginning of accountability."_ - リリース管理に、GitHub PRのread-only収集、週次/月次/client report、DORA/SPACE指標、retrospective、PDF出力を統合 | リリース計画、CHANGELOG、デリバリーレポート |
 | **Trail** | _"Every bug has a birthday. Every regression has a parent commit. Find them."_ - Git履歴調査・リグレッション原因分析・コード考古学。時間を遡って真相を解明 | 履歴調査レポート |
+
 **Guardian → Judge → Zen の連携**：Guardian（PR準備）→ Judge（レビュー）→ Zen（修正）
 **Guardian → Launch の連携**：Guardian（変更分析）→ Launch（リリース計画）
 **Trail → Scout の連携**：Trail（リグレッション特定）→ Scout（詳細調査）
@@ -240,11 +241,6 @@ Codexのスキル配置先は `~/.agents/skills`、設定は引き続き `~/.cod
 | **Seek** | _"The right result at the right time in the right order."_ - 検索エンジン・ベクトルDB設計エージェント。全文検索/ベクトル検索/ハイブリッド検索の設計・インデックス最適化・RAG Retrieval層実装 | コード、設定 |
 | **Crypt** | _"Trust no channel. Verify every key."_ - 暗号アーキテクチャ設計。アルゴリズム選定、鍵管理、E2E暗号化、KMS統合、TLS設定 | 暗号設計仕様 |
 
-### コミュニケーション
-
-| エージェント | 説明 | 出力 |
-|------------|------|------|
-
 **Gateway → Builder → Radar の連携**：Gateway（メッセージング設計）→ Builder（実装）→ Radar（テスト）
 **Gateway の連携**：Gateway（Webhook API仕様）→ Gateway（ハンドラ設計）
 
@@ -308,7 +304,9 @@ Codexのスキル配置先は `~/.agents/skills`、設定は引き続き `~/.cod
 |------------|------|------|
 | **Vector** | _"The browser is a stage. Every click is a scene."_ - Playwright/Chrome DevToolsによるブラウザ操作自動化。データ収集、フォーム操作、スクリーンショット取得、ネットワーク監視、クロールシステム設計（`crawl` Recipe） | 自動化スクリプト |
 
-**Cue の役割**: ブラウザ（Web UI）のデモ動画（Playwright、.webm出力）
+**Cue と Vitrine の役割分担**:
+- **Cue**: ブラウザ（Web UI）のデモ動画（Playwright、.webm出力）
+- **Vitrine**: コンポーネントカタログと Storybook ストーリー、ビジュアルリグレッション連携
 
 ## ワークフロー
 
@@ -324,8 +322,9 @@ Codexのスキル配置先は `~/.agents/skills`、設定は引き続き `~/.cod
 
 | モード | トリガー | 動作 | 対話 |
 |--------|----------|------|------|
-| **Full Auto** | `## NEXUS_AUTORUN` + 単純タスク | 完全自動実行 | エラー時のみ |
-| **Guided** | `## NEXUS_GUIDED` またはデフォルト | 判断ポイントで確認 | 選択肢形式で対話 |
+| **Full Auto**（デフォルト） | マーカーなし、または `## NEXUS_AUTORUN_FULL` | ガードレール付きで全タスクを実行 | Ask First / エラー時のみ |
+| **Auto** | `## NEXUS_AUTORUN` | 単純タスクのみ実行、複雑なタスクは Guided に切替 | エラー時のみ |
+| **Guided** | `## NEXUS_GUIDED` | 判断ポイントで確認 | 選択肢形式で対話 |
 | **Interactive** | `## NEXUS_INTERACTIVE` | 各ステップで確認 | 常に対話 |
 | **Continue** | `## NEXUS_HANDOFF` | 結果の引き継ぎ | 必要に応じて対話 |
 
@@ -485,6 +484,8 @@ questions:
 |--------|------|----------|
 | DECISION/arch | アーキテクチャ選定 | Magi → Builder/Zen |
 | DECISION/strategy | 戦略的判断 | Magi → Spark |
+| DECISION/office-hours | 創業者向けオフィスアワー相談 | Magi → Builder/Echo[demand]/Sherpa |
+| DECISION/retro | 直近の意思決定・結果の振り返り | Magi |
 
 #### 分析
 
@@ -517,6 +518,12 @@ questions:
 | DOCS/report | PR報告書 | Launch → Scribe |
 | DOCS/learning | 変更ベース学習資料 | Tome |
 | DOCS/onboarding | オンボーディング教材 | Trail → Tome |
+
+#### デモ・録画
+
+| タスク | 説明 | チェーン |
+|--------|------|----------|
+| DEMO/prototype | プロトタイプのデモ | Forge → Cue → Growth |
 
 #### インフラ・DevOps
 
@@ -640,82 +647,16 @@ questions:
 ## ディレクトリ構成
 
 ```
-skills/
-├── _common/
-│   └── INTERACTION.md  # 対話ルール共通定義
-├── _templates/
-│   └── PROJECT.md      # プロジェクト知識テンプレート
-├── architect/SKILL.md  # エージェント設計メタデザイナー
-├── artisan/SKILL.md    # フロントエンド実装
-├── atelier/SKILL.md    # デザイン-実装パイプラインオーケストレーター
-├── atlas/SKILL.md      # アーキテクチャ
-├── attest/SKILL.md     # 仕様適合検証
-├── beacon/SKILL.md     # 可観測性/SRE
-├── bolt/SKILL.md       # パフォーマンス
-├── builder/SKILL.md    # 本番実装
-├── canvas/SKILL.md     # 可視化
-├── canon/SKILL.md      # 世界標準・業界標準準拠検証
-├── cast/SKILL.md       # ペルソナキャスティング＆レジストリ管理
-├── compass/SKILL.md    # スキルエコシステムナビゲーター・オンボーディングガイド
-├── compete/SKILL.md    # 競合調査
-├── .claude/skills/darwin/SKILL.md  # project-localエコシステム進化
-├── echo/SKILL.md       # ペルソナ検証
-├── experiment/SKILL.md # A/Bテスト設計
-├── flow/SKILL.md       # アニメーション
-├── forge/SKILL.md      # プロトタイプ
-├── funnel/SKILL.md     # LP構造設計・コンバージョン戦略
-├── frame/SKILL.md      # Figmaデザイン・コード変換ブリッジ
-├── gauge/SKILL.md      # SKILL.md正規化監査・自己進化
-├── gateway/SKILL.md    # API設計
-├── gear/SKILL.md       # DevOps
-├── grove/SKILL.md      # リポジトリ構造設計
-├── growth/SKILL.md     # SEO/CRO
-├── guardian/SKILL.md   # Git/PR管理
-├── hone/SKILL.md       # Codex CLI設定監査・最適化
-├── judge/SKILL.md      # コードレビュー（codex review）
-├── launch/SKILL.md     # リリース管理
-├── lens/SKILL.md       # コードベース理解・調査
-├── .claude/skills/lore/SKILL.md    # project-local知識キュレーター
-├── magi/SKILL.md       # 多角的意思決定
-├── matrix/SKILL.md     # ユニバーサル多次元分析
-├── mend/SKILL.md       # 既知障害パターン自動修復
-├── muse/SKILL.md       # デザイン
-├── vector/SKILL.md  # ブラウザ自動化
-├── nexus/SKILL.md      # オーケストレーター
-├── oracle/SKILL.md     # AI/ML設計・評価
-├── .claude/skills/orbit/SKILL.md   # project-local Nexus-autoloop拡張
-├── palette/SKILL.md    # UX
-├── polyglot/SKILL.md   # i18n
-├── probe/SKILL.md      # セキュリティ動的テスト（DAST）
-├── prose/SKILL.md      # UXライティング＆コンテンツ戦略
-├── pulse/SKILL.md      # メトリクス設計
-├── quill/SKILL.md      # ドキュメント
-├── radar/SKILL.md      # テスト
-├── rally/SKILL.md      # マルチセッション並列オーケストレーター
-├── field/SKILL.md # ユーザーリサーチ
-├── ripple/SKILL.md     # 変更前影響分析
-├── trail/SKILL.md     # Git履歴調査
-├── scaffold/SKILL.md   # インフラ
-├── schema/SKILL.md     # DBスキーマ設計
-├── scribe/SKILL.md     # プロジェクトドキュメント（PRD/SRS/設計書）
-├── scout/SKILL.md      # バグ調査
-├── sentinel/SKILL.md   # セキュリティ静的分析（SAST）
-├── sherpa/SKILL.md     # タスク分解
-├── sigil/SKILL.md      # 動的プロジェクト固有スキル生成
-├── vitrine/SKILL.md   # Storybookストーリー管理
-├── spark/SKILL.md      # 機能提案
-├── siege/SKILL.md      # 高度テスト（負荷/契約/カオス/ミューテーション/並行性）
-├── stream/SKILL.md     # データパイプライン
-├── sweep/SKILL.md      # 不要コード検出
-├── tome/SKILL.md       # 変更→学習ドキュメント変換
-├── trace/SKILL.md      # セッションリプレイ分析
-├── triage/SKILL.md     # 障害対応
-├── tuner/SKILL.md      # DBパフォーマンス最適化
-├── vision/SKILL.md     # クリエイティブディレクション
-├── void/SKILL.md       # YAGNI検証・複雑性削減
-├── voice/SKILL.md      # ユーザーフィードバック
-├── voyager/SKILL.md    # E2Eテスト
-└── zen/SKILL.md        # リファクタリング
+agent-skills/
+├── <skill>/                # グローバルスキルごとに1ディレクトリ（エージェント一覧を参照）
+│   ├── SKILL.md            # エントリポイント：frontmatter、境界、レシピ
+│   └── reference/          # 必要時に読み込む参照資料（任意）
+├── .claude/skills/         # project-localスキル：darwin、lore、orbit（正本）
+├── .agents/skills/         # .claude/skills/ の同期ミラー
+├── _common/                # 共通プロトコル（BOUNDARIES.md、HANDOFF.md など）
+│   └── scripts/            # `make validate` / `make test` の検査スクリプト
+├── _templates/             # SKILL_TEMPLATE.md、PROJECT.md、キット
+└── Makefile                # link / unlink / status / validate / test / check / hooks
 ```
 
 ## 使用例

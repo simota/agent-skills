@@ -91,7 +91,7 @@ The active repository surface is therefore **90 global + 3 project-local = 93 di
 | **Orbit** *(project-local)* | _"Give me a goal. I'll give you a runner that finishes."_ - Nexus-autoloop completion specialist for this repository. Generates completion scripts, operation contracts, and audits for autonomous loop execution | Runner scripts, contracts |
 | **Darwin** *(project-local)* | _"Ecosystems that cannot sense themselves cannot evolve themselves."_ - Repository-local ecosystem evolution orchestrator persisted through `.agents/ECOSYSTEM.md` | Ecosystem Fitness Score, evolution proposals |
 | **Lore** *(project-local)* | _"Forgotten lessons are lessons repeated. Institutional memory is the compound interest of experience."_ - Repository-local curator that synthesizes `.agents/*.md` into `METAPATTERNS.md` | METAPATTERNS.md, knowledge insights |
-| **Gauge** | _"What gets measured gets managed. What gets audited gets normalized."_ - SKILL.md normalization auditor and self-evolving compliance agent. Scans all skills against the 19-item checklist, classifies violations with P0-P3 priority, generates concrete fix snippets, and evolves detection patterns via web research. No code written | Compliance reports, fix plans, dashboards |
+| **Gauge** | _"What gets measured gets managed. What gets audited gets normalized."_ - SKILL.md normalization auditor and self-evolving compliance agent. Scans all skills against the 21-item checklist, classifies violations with P0-P3 priority, generates concrete fix snippets, and evolves detection patterns via web research. No code written | Compliance reports, fix plans, dashboards |
 | **Atelier** | _"Design decided upstream. Assets produced downstream. atelier is the studio floor in between."_ - Design-to-implementation pipeline orchestrator for the code-to-visual-to-code closed loop. Coordinates Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas to deliver design extraction, prototypes, visual assets, slides, and production together while persisting a project design system across downstream agents | Design system package, integrated deliverables |
 | **Compass** | _"When in doubt, ask Compass. It finds the right skill for the task."_ - Skill ecosystem navigator and onboarding guide. Lists global agents and available project-local extensions, recommends best fit, and helps newcomers discover the right specialist | Recommendations, agent maps |
 | **Prune** | _"A garden grows by what you cut, not what you plant."_ - Ecosystem cleanup auditor. Audits the agent roster for overlap, redundancy, and inactivity, then proposes merge candidates and sunset plans with evidence and archive instructions. Propose-only, no execution | Merge/sunset proposals, archive instructions |
@@ -243,11 +243,6 @@ The active repository surface is therefore **90 global + 3 project-local = 93 di
 | **Seek** | _"The right result at the right time in the right order."_ - Search engine and vector DB design specialist. Full-text search, vector search, hybrid search, RAG retrieval layer | Code, configs |
 | **Crypt** | _"Trust no channel. Verify every key."_ - Cryptographic architecture design: algorithm selection, key management, E2E encryption, KMS integration, TLS configuration | Crypto design specs |
 
-### Communication
-
-| Agent | Description | Output |
-|-------|-------------|--------|
-
 **Gateway > Builder > Radar chain**: Gateway (messaging design) > Builder (implementation) > Radar (tests)
 **Gateway > Gateway chain**: Gateway (webhook API spec) > Gateway (handler design)
 
@@ -329,8 +324,9 @@ Use **Nexus** for complex tasks. Nexus operates in the following modes:
 
 | Mode | Trigger | Behavior | Interaction |
 |------|---------|----------|-------------|
-| **Full Auto** | `## NEXUS_AUTORUN` + simple task | Fully automatic execution | Only on errors |
-| **Guided** | `## NEXUS_GUIDED` or default | Confirms at decision points | Option-based interaction |
+| **Full Auto** (default) | no marker, or `## NEXUS_AUTORUN_FULL` | Executes all tasks with guardrails | Only on Ask First / errors |
+| **Auto** | `## NEXUS_AUTORUN` | Executes simple tasks only; complex tasks fall back to Guided | Only on errors |
+| **Guided** | `## NEXUS_GUIDED` | Confirms at decision points | Option-based interaction |
 | **Interactive** | `## NEXUS_INTERACTIVE` | Confirms at each step | Always interactive |
 | **Continue** | `## NEXUS_HANDOFF` | Result handoff | Interaction as needed |
 
@@ -566,11 +562,6 @@ See `_common/INTERACTION.md` for details.
 | STRATEGY/ab-test | A/B test design | Experiment > Builder > Radar |
 | STRATEGY/data | Data pipeline | Stream > Schema > Builder > Radar |
 
-#### Game Development
-
-| Task | Description | Chain |
-|------|-------------|-------|
-
 #### Parallel Execution (Rally Integration)
 
 For large-scale tasks where parallel execution is beneficial, Nexus escalates to Rally.
@@ -658,82 +649,16 @@ All agents follow these principles:
 ## Directory Structure
 
 ```
-skills/
-├── _common/
-│   └── INTERACTION.md  # Shared interaction rules
-├── _templates/
-│   └── PROJECT.md      # Project knowledge template
-├── architect/SKILL.md  # Agent design meta-designer
-├── artisan/SKILL.md    # Frontend implementation
-├── atelier/SKILL.md    # Design-to-implementation pipeline orchestrator
-├── atlas/SKILL.md      # Architecture
-├── attest/SKILL.md     # Specification compliance verification
-├── beacon/SKILL.md     # Observability/SRE
-├── bolt/SKILL.md       # Performance
-├── builder/SKILL.md    # Production implementation
-├── canon/SKILL.md      # Standards compliance (OWASP/WCAG/OpenAPI/ISO)
-├── canvas/SKILL.md     # Visualization
-├── cast/SKILL.md       # Persona casting & registry management
-├── compass/SKILL.md    # Skill ecosystem navigator and onboarding guide
-├── compete/SKILL.md    # Competitive research
-├── .claude/skills/darwin/SKILL.md  # Project-local ecosystem evolution
-├── echo/SKILL.md       # Persona validation
-├── experiment/SKILL.md # A/B test design
-├── flow/SKILL.md       # Animation
-├── forge/SKILL.md      # Prototyping
-├── funnel/SKILL.md     # LP structure design and conversion strategy
-├── frame/SKILL.md      # Figma design-to-code bridge
-├── gauge/SKILL.md      # SKILL.md normalization audit & self-evolution
-├── gateway/SKILL.md    # API design
-├── gear/SKILL.md       # DevOps
-├── grove/SKILL.md      # Repository structure design
-├── growth/SKILL.md     # SEO/CRO
-├── guardian/SKILL.md   # Git/PR management
-├── hone/SKILL.md       # Codex CLI config audit & optimization
-├── judge/SKILL.md      # Code review (codex review)
-├── launch/SKILL.md     # Release management
-├── lens/SKILL.md       # Codebase comprehension & investigation
-├── .claude/skills/lore/SKILL.md    # Project-local knowledge curator
-├── magi/SKILL.md       # Multi-perspective decision making
-├── matrix/SKILL.md     # Universal multi-dimensional analysis
-├── mend/SKILL.md       # Known failure auto-repair
-├── muse/SKILL.md       # Design
-├── vector/SKILL.md  # Browser automation
-├── nexus/SKILL.md      # Orchestrator
-├── .claude/skills/orbit/SKILL.md   # Project-local Nexus-autoloop extension
-├── oracle/SKILL.md     # AI/ML design & evaluation
-├── palette/SKILL.md    # UX
-├── polyglot/SKILL.md   # i18n
-├── prose/SKILL.md      # UX writing & content strategy
-├── probe/SKILL.md      # Dynamic security testing (DAST)
-├── pulse/SKILL.md      # Metrics design
-├── quill/SKILL.md      # Documentation
-├── radar/SKILL.md      # Testing
-├── rally/SKILL.md      # Multi-session parallel orchestrator
-├── field/SKILL.md # User research
-├── ripple/SKILL.md     # Pre-change impact analysis
-├── trail/SKILL.md     # Git history investigation
-├── scaffold/SKILL.md   # Infrastructure
-├── schema/SKILL.md     # DB schema design
-├── siege/SKILL.md      # Advanced testing (load/contract/chaos/mutation)
-├── scribe/SKILL.md     # Project documentation (PRD/SRS/design docs)
-├── scout/SKILL.md      # Bug investigation
-├── sentinel/SKILL.md   # Static security analysis (SAST)
-├── sherpa/SKILL.md     # Task decomposition
-├── sigil/SKILL.md      # Dynamic project-specific skill generation
-├── vitrine/SKILL.md   # Storybook story management
-├── spark/SKILL.md      # Feature proposals
-├── stream/SKILL.md     # Data pipelines
-├── sweep/SKILL.md      # Dead code detection
-├── tome/SKILL.md       # Change-to-learning documentation
-├── trace/SKILL.md      # Session replay analysis
-├── triage/SKILL.md     # Incident response
-├── tuner/SKILL.md      # DB performance optimization
-├── vision/SKILL.md     # Creative direction
-├── void/SKILL.md       # YAGNI enforcement & complexity reduction
-├── voice/SKILL.md      # User feedback
-├── voyager/SKILL.md    # E2E testing
-└── zen/SKILL.md        # Refactoring
+agent-skills/
+├── <skill>/                # one directory per global skill (see Agent Catalog)
+│   ├── SKILL.md            # entry point: frontmatter, boundaries, recipes
+│   └── reference/          # optional on-demand references
+├── .claude/skills/         # project-local skills: darwin, lore, orbit (canonical)
+├── .agents/skills/         # synchronized mirror of .claude/skills/
+├── _common/                # shared protocols (BOUNDARIES.md, HANDOFF.md, ...)
+│   └── scripts/            # checkers behind `make validate` / `make test`
+├── _templates/             # SKILL_TEMPLATE.md, PROJECT.md, kits
+└── Makefile                # link / unlink / status / validate / test / check / hooks
 ```
 
 ## Usage Examples

@@ -25,6 +25,7 @@ body:
       options:
         - Claude Code
         - Codex CLI
+        - Antigravity CLI (agy)
         - Gemini CLI
         - Other
     validations:

@@ -79,7 +79,7 @@ Authoritative: [`_common/GIT_GUIDELINES.md`](_common/GIT_GUIDELINES.md). Summary
 - **Scope = skill name** for skill-scoped changes (e.g. `feat(chain): add agy IoC paths`).
 - **Imperative mood**, subject ≤50 chars.
 - **Never include agent names** in commit messages, PR titles, or PR descriptions.
-- **Never** add `Claude Code signatures`, `Co-Authored-By` lines, or **session/tool metadata trailers** — `Claude-Session:`, `Generated with …`, any assistant session URL or run ID. This holds even when a harness or CLI default instructs otherwise: the repo convention wins for anything committed here.
+- **Never** add `Claude Code signatures`, `Co-Authored-By` lines naming an AI or tool (a human co-author is fine), or **session/tool metadata trailers** — `Claude-Session:`, `Generated with …`, any assistant session URL or run ID. This holds even when a harness or CLI default instructs otherwise: the repo convention wins for anything committed here.
 - Body explains "why", not "what".
 
 ---
