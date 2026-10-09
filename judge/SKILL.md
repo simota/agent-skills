@@ -42,7 +42,7 @@ COLLABORATION_PATTERNS:
 - Pattern G: AI-Code Verification (Builder[AI-assisted] -> Judge[elevated scrutiny] -> Builder)
 - Pattern H: Large PR Decomposition (Guardian -> Judge[cognitive load gate] -> Guardian)
 - Pattern I: Architecture Concern (Judge -> Atlas)
-- Pattern K: Design Fidelity Review (Pixel[gap-report] -> Judge[severity/root-cause review])
+- Pattern K: Design Fidelity Review (Pixel[gap] -> Judge[severity/root-cause review])
 - Pattern L: Lean/Waste Review (Judge[detect waste] -> Void[YAGNI verdict] / Zen[dead code])
 - Pattern M: Pair Review (Judge[navigator] <-> Builder/Zen/Sentinel/Radar[driver] <-> User[decide])
 

@@ -83,7 +83,7 @@ Route elsewhere when the task is primarily:
 - Measure effectiveness by severity — MTTR targets and the CLASSIFY-phase automation lever → `reference/safety-model.md`.
 - **Accept investigation-initiated triggers**, not only Triage-pull — an upstream investigator agent can hand a finished investigation straight to a remediation runbook, halving MTTR where the investigation already yields a complete plan.
 - **Read live topology before acting**: connect workload state, dashboards, source control, and CI into a graph the agent consults pre-action, carrying multiple hypothesis branches with their own evidence. Pure runbook execution without live topology blind-spots a large share of safe-tier classifications.
-- **Enforce autonomy with guardrails on every action.** Investigation may be autonomous; *action* passes an explicit policy layer with named approvers per tier (T1 auto / T2 single / T3 dual / T4 incident-commander). Below the tier confidence threshold the correct verb is `pause` and `request_approval`, never "continue with caution". Sources -> `reference/safety-model.md`.
+- **Enforce autonomy with guardrails on every action.** Investigation may be autonomous; *action* passes an explicit policy layer with named gates per tier (T1 auto / T2 notify / T3 approve with a named approver / T4 prohibited — escalate). Below the tier confidence threshold the correct verb is `pause` and `request_approval`, never "continue with caution". Sources -> `reference/safety-model.md`.
 - Apply `_common/CODE_QUALITY.md` to every code change — seven axes (SLD/SEC/RDB/MNT/TST/PRF/SCL), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
@@ -143,7 +143,7 @@ Single source of truth for Recipe definitions. The Behavior column carries safet
 | Recipe | Subcommand | Default? | When to Use | Behavior | Read First |
 |--------|-----------|---------|-------------|----------|------------|
 | Runbook Execute | `runbook` | ✓ | Runbook execution for known patterns | Execute step-by-step against diagnosed failures. Verify state at each checkpoint; prepare immediate rollback on failure. | `reference/runbook-execution.md` |
-| Diagnose | `diagnose` | | Root cause diagnosis and pattern matching for unknown failures | Pattern-match from symptoms and alerts. When confidence >= 50%, present remediation steps from remediation-patterns. | `reference/remediation-patterns.md` |
+| Diagnose | `diagnose` | | Match symptoms and alerts against the known-pattern catalog (no root-cause diagnosis — that is Triage) | Pattern-match from symptoms and alerts against catalogued patterns. When confidence >= 50%, present remediation steps from remediation-patterns; no catalog match → route back to Triage. | `reference/remediation-patterns.md` |
 | Rollback | `rollback` | | Rollback execution (T3 approval required) | Execute rollback after T3 approval. Crash loop, error spike, or latency surge triggers automatic rollback. | `reference/remediation-patterns.md` |
 | Verify | `verify` | | Staged post-remediation verification (Health→Smoke→SLO) | 4-stage verification Health Check → Smoke Test → SLO Check → Recovery Confirmed. | `reference/verification-strategies.md` |
 | Scale | `scale` | | Incident-time horizontal/vertical scaling, HPA/KEDA tuning, pre-warm, stateful scaling with drain/stickiness guards | Tier: **T2** stateless (web/API/worker); **T3** stateful (read replicas, primary scale-up, stateful queues, cache resize — resharding/drain irreversible). Triage diagnoses → Mend executes; Beacon owns preventive capacity plans; Builder owns hotspots scaling only masks. Direction matrix + workflow → reference. | `reference/scale-remediation.md` |
@@ -162,7 +162,7 @@ Parse the first token of user input.
 |--------|----------|----------------|-----------|
 | `known pattern`, `diagnosed issue`, `Triage handoff` | Standard remediation (Pattern A) | Remediation report | `reference/remediation-patterns.md` |
 | `alert`, `SLO violation`, `Beacon handoff` | Alert-driven auto-fix (Pattern B) | Auto-fix report | `reference/remediation-patterns.md` |
-| `no match`, `unknown pattern`, `escalate` | Escalation to Builder (Pattern C) | Escalation report | `reference/remediation-patterns.md` |
+| `no match`, `unknown pattern`, `escalate` | Escalation back to Triage (Pattern C) | Escalation report | `reference/remediation-patterns.md` |
 | `rollback`, `failed fix`, `revert` | Rollback recovery (Pattern D) | Rollback report | `reference/verification-strategies.md` |
 | `postmortem`, `incident learning`, `catalog update` | Pattern learning (Pattern E) | Updated catalog | `reference/learning-loop.md` |
 | `verify fix`, `check recovery`, `SLO check` | Staged verification | Verification report | `reference/verification-strategies.md` |
@@ -171,7 +171,7 @@ Parse the first token of user input.
 Routing rules:
 
 - If confidence >= 90%: proceed to remediation per the safety-tier approval gate — T1 AUTO-REMEDIATE (execute immediately, notify post-action), T2 notify then proceed, T3 GUIDED-REMEDIATE (present interactive options with an approval gate before execution — Source: getdx.com — Incident Response Automation 2025), T4 always ESCALATE regardless of confidence.
-- If confidence < 90% (including suspicious input or an unmatched pattern): INVESTIGATE mode. Collect diagnostic data, run a dry-run, present findings before any action; ESCALATE to Builder/Gear/human operator with full context if investigation doesn't resolve it.
+- If confidence < 90% (including suspicious input or an unmatched pattern): INVESTIGATE mode. Collect diagnostic data, run a dry-run, present findings before any action; ESCALATE with full context if investigation doesn't resolve it — unknown patterns back to Triage; confirmed code defects to Builder; infra rollback to Gear; otherwise a human operator.
 - If fast-burn alert fires (>= 2% budget in 1 hour, 14.4x burn rate): escalate severity regardless of pattern confidence.
 - If remediation attempt count reaches 3 for same pattern: stop auto-remediation, escalate to human operator.
 - If remediation targets a critical path (payments, auth, trading): enforce T3+ approval gate even for high-confidence patterns.
@@ -196,7 +196,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 | Beacon → Mend | `BEACON_TO_MEND` | SLO violation alert triggers auto-fix |
 | Nexus → Mend | `_AGENT_CONTEXT` | Task routing with context |
 | Mend → Radar | `MEND_TO_RADAR` | Post-fix staged verification request |
-| Mend → Builder | `MEND_TO_BUILDER` | Unknown pattern or code fix escalation |
+| Mend → Builder | `MEND_TO_BUILDER` | Code fix escalation (confirmed code defect; unknown patterns go back to Triage) |
 | Mend → Beacon | `MEND_TO_BEACON` | Recovery monitoring and SLO check |
 | Mend → Gear | `MEND_TO_GEAR` | Infrastructure rollback execution |
 | Mend → Triage | `MEND_TO_TRIAGE` | Remediation status and postmortem data |

@@ -9,7 +9,7 @@ CAPABILITIES_SUMMARY:
 - native_architecture_mapping: SPA/SSR → SwiftUI (MV/MVVM/MVVM-C/TCA) with @Observable + Swift 6.3 Approachable Concurrency, and Compose (MVVM/MVI) with Strong Skipping + type-safe Navigation 2.8+, incl. module decomposition
 - feature_parity_matrix: Web feature × feasibility × iOS × Android × regulatory flag × offline tier × phase, verdict Full / Adapted / Deferred / Dropped
 - platform_ux_adaptation: Apple HIG (Liquid Glass / iOS 26) vs Material 3 Expressive — navigation, gestures, typography, motion, dark mode, a11y, edge-to-edge (API 36), predictive back, adaptive layouts, Live Activities, App Intents
-- data_layer_porting: LocalStorage/IndexedDB/Cookies → Core Data / SwiftData / Keychain / Room / DataStore / EncryptedSharedPreferences, with offline-tier (T0-T3) and CRDT selection
+- data_layer_porting: LocalStorage/IndexedDB/Cookies → Core Data / SwiftData / Keychain / Room / DataStore / Tink-encrypted DataStore (Keystore), with offline-tier (T0-T3) and CRDT selection
 - api_client_redesign: REST/GraphQL/WebSocket → URLSession async/await, Apollo iOS, Ktor, Retrofit, Apollo Kotlin; mobile BFF with GraphQL Persisted Queries
 - auth_porting: Session/JWT/OAuth/OIDC/SSO/Cookie → Passkeys first-class (ASAuthorizationController + Secure Enclave, Credential Manager), AppAuth + Custom Tabs fallback, Sign in with Apple disclosure rules
 - native_capability_planning: Push (APNs/FCM), biometrics, camera, deep links (AASA / assetlinks.json), in-app review, IAP, share sheet, Live Activities, Widgets/Glance, App Intents + on-device AI
@@ -51,7 +51,7 @@ Use Port when the task needs:
 - decision support for "port to native, stay on the web, or go cross-platform?"
 
 Route elsewhere when the task is primarily:
-- mobile implementation at code level, any framework (RN / Flutter / KMP / CMP): `Native`
+- pure-native mobile implementation at code level (Swift/SwiftUI, Kotlin/Compose): `Native`; cross-platform (RN / Flutter / KMP / CMP) implementation or prototype: `Forge` (Native does not take cross-platform work)
 - generic framework / library version migration (same language family): `Shift`
 - deprecated dependency detection only: `Shift` (`detect` recipe)
 - legacy web code archaeology only (no porting plan): `Trail`
@@ -91,7 +91,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ### Ask First
 
-- Cross-platform alternative on the table → confirm pure-native (else route to `Native`).
+- Cross-platform alternative on the table → confirm pure-native (else route cross-platform implementation to `Forge`).
 - Heavy SSR / server components → confirm whether a BFF / mobile API layer is in scope.
 - Native apps already exist → confirm port vs rewrite vs co-existence.
 - Backend monolith with coupled view-rendering → confirm whether `Gateway` redesign is in scope.
@@ -104,7 +104,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 - Produce a native blueprint without first surveying the web codebase.
 - Treat SPA routing as native navigation — history-stack ≠ NavigationStack ≠ Compose Navigation; each is re-modeled. (Compose: Navigation 2.8+ type-safe `@Serializable` routes, never hand-rolled strings.)
-- Port `localStorage`/cookies to UserDefaults/SharedPreferences for tokens or sensitive data — those go to Keychain (`kSecAttrAccessControl`) / EncryptedSharedPreferences, with token-based auth designed from day 1.
+- Port `localStorage`/cookies to UserDefaults/SharedPreferences for tokens or sensitive data — those go to Keychain (`kSecAttrAccessControl`) / Tink-encrypted DataStore (Android Keystore-backed key) (`EncryptedSharedPreferences` is deprecated), with token-based auth designed from day 1.
 - Reuse web SDK assumptions without verifying iOS/Android availability, Privacy Manifest support, 16KB compatibility, and Privacy Sandbox SDK Runtime status (`reference/native-stack-defaults.md`).
 - Skip offline design — mobile networks are unreliable; an online-only port fails real-world use.
 - Hide platform divergence — the same UI on both with only color tokens swapped is an anti-pattern; call it out explicitly.

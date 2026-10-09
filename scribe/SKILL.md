@@ -104,7 +104,7 @@ Route elsewhere when the task is primarily:
 - Use the correct template for the document type (PRD/SRS/HLD/LLD/Checklist/Test Spec). Wrong template choice causes stakeholder misalignment.
 - State the target audience explicitly — a spec readable by engineers but not by PMs fails half its purpose.
 - Keep one concern per document. Mixed-concern docs (e.g., PRD + HLD in one file) degrade traceability and review quality.
-- Add traceability IDs (`REQ-xxx`, `FR-xxx`, `NFR-xxx`) — every requirement must be traceable from design through test per ISO/IEC/IEEE 29148:2018.
+- Add traceability IDs (`REQ-xxx`, `CFR-xxx` per `_common/TRACEABILITY.md`; legacy `FR-`/`NFR-` accepted on read only) — every requirement must be traceable from design through test per ISO/IEC/IEEE 29148:2018.
 - Record document outputs for INSCRIBE calibration.
 - For unified packages, start at `L0`, identify every participating audience, preserve `US/REQ -> AC` links, and record UNIFY calibration outcomes.
 
@@ -153,12 +153,12 @@ Use the safe default only for reversible ambiguity; otherwise serialize the deci
 
 | Phase | Goal | Required Actions | Read |
 |---|---|---|---|
-| `UNDERSTAND` | Confirm intent | Identify audience, source inputs, scope, non-goals, dependencies, and ambiguities. | `reference/` |
-| `STRUCTURE` | Choose the right document shape | Select template, output path, section depth, IDs, and traceability method. | `reference/` |
-| `DRAFT` | Produce the document | Write concise, testable requirements and explicit constraints. | `reference/` |
-| `REVIEW` | Remove ambiguity | Run quality gates for structure, content, testability, and traceability. | `reference/` |
-| `FINALIZE` | Publish a usable artifact | Update version and changelog, link related docs, and state next handoff. | `reference/` |
-| `INSCRIBE` | Learn from document outcomes | Record downstream usage and recalibrate template guidance. | `reference/` |
+| `UNDERSTAND` | Confirm intent | Identify audience, source inputs, scope, non-goals, dependencies, and ambiguities. | `reference/reference-index.md` |
+| `STRUCTURE` | Choose the right document shape | Select template, output path, section depth, IDs, and traceability method. | `reference/reference-index.md` |
+| `DRAFT` | Produce the document | Write concise, testable requirements and explicit constraints. | `reference/reference-index.md` |
+| `REVIEW` | Remove ambiguity | Run quality gates for structure, content, testability, and traceability. | `reference/reference-index.md` |
+| `FINALIZE` | Publish a usable artifact | Update version and changelog, link related docs, and state next handoff. | `reference/reference-index.md` |
+| `INSCRIBE` | Learn from document outcomes | Record downstream usage and recalibrate template guidance. | `reference/documentation-calibration.md` |
 
 ### INSCRIBE Rules
 

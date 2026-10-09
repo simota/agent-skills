@@ -128,13 +128,13 @@ Parse the first token of user input.
 Behavior notes per Recipe:
 - `prompt`: Prompt design, versioning, testing. Includes XML tag structure, few-shot examples, caching strategy.
 - `rag`: RAG architecture design. Set chunking strategy, Hybrid Search, Recall@5 / Faithfulness thresholds.
-- `eval`: LLM-as-judge, regression tests, Golden Test Set design. Includes bias detection and TNR thresholds.
 - `safety`: OWASP LLM Top 10 2025 compliance. Prompt Injection defense, PII handling, guardrail layering.
 - `mlops`: MLOps pipeline design. Includes model routing, canary rollout, and cost optimization.
 - `agent`: Application-level LLM agent design — tool-use loops, schemas, memory, delegation, termination, failure modes. Scope: agents INSIDE the user's product, not the skill ecosystem itself (→ `Architect`). Details, compounding-failure math → `reference/agent-design.md`.
 - `cost`: LLM-API spend tuning — token budget, prompt caching TTL choice, model tier routing, batch vs streaming, context compression. Scope ends at the LLM provider bill; cloud infra FinOps → `Ledger`. Details → `reference/cost-optimization.md`.
 - `review`: Design review of an AI-embedding system — 12 lenses, risk tiers R0–R3 setting depth, conditional approval with exit criteria, re-review triggers (notably proposal → command). Reviews the architecture, never the model choice; code review → `Judge`, standards conformance → `Canon`. Details → `reference/architecture-review.md`.
 - `embed`: RAG embedding pipeline deep dive — chunking, embedding model, vector index, re-ranking, hybrid retrieval. Zooms into the layer `rag` assembles end-to-end; full-system search architecture → `Seek`. Details → `reference/embedding-strategy.md`.
+- `tooling`: Scaling an Anthropic-API tool catalog — tool search + `defer_loading`, programmatic tool calling, advisor tool, per-tool/per-version model support. Details → `reference/advanced-tool-use.md`.
 
 ## Operating Modes
 
@@ -164,10 +164,10 @@ Behavior notes per Recipe:
 
 | Phase      | Action                                                                   | Gate                                                                           | Read |
 | ---------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | -----|
-| `ASSESS`   | Inspect current prompts, retrieval, safety, evaluation, and cost posture | Identify RP / EV / LP / LA / MA / AA gaps                                      | `reference/` |
-| `DESIGN`   | Choose prompt, RAG, agent, and guardrail patterns                        | Block unsafe or unmeasured designs                                             | `reference/` |
-| `EVALUATE` | Define metrics, stable test sets, rollout checks, and observability      | Require baseline and regression gates                                          | `reference/` |
-| `SPECIFY`  | Prepare implementation-facing contracts                                  | Include schemas, model abstraction, guardrails, eval gates, and cost ceilings  | `reference/` |
+| `ASSESS`   | Inspect current prompts, retrieval, safety, evaluation, and cost posture | Identify RP / EV / LP / LA / MA / AA gaps                                      | `reference/reference-index.md` |
+| `DESIGN`   | Choose prompt, RAG, agent, and guardrail patterns                        | Block unsafe or unmeasured designs                                             | `reference/reference-index.md` |
+| `EVALUATE` | Define metrics, stable test sets, rollout checks, and observability      | Require baseline and regression gates                                          | `reference/evaluation-observability.md` |
+| `SPECIFY`  | Prepare implementation-facing contracts                                  | Include schemas, model abstraction, guardrails, eval gates, and cost ceilings  | `reference/reference-index.md` |
 
 ## Routing And Handoffs
 
@@ -184,9 +184,9 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| default request | Standard Oracle workflow | analysis / recommendation | `reference/` |
+| default request | Standard Oracle workflow | analysis / recommendation | `reference/reference-index.md` |
 | complex multi-agent task | Nexus-routed execution | structured handoff | `_common/BOUNDARIES.md` |
-| unclear request | Clarify scope and route | scoped analysis | `reference/` |
+| unclear request | Clarify scope and route | scoped analysis | `reference/reference-index.md` |
 
 Routing rules:
 
@@ -213,10 +213,7 @@ Routing rules:
 
 ## Reference Map
 
-**Full index** → **`reference/reference-index.md`** — every `reference/` file and its read-trigger. The rows below are the shared contracts, which no Recipe registry indexes.
-
-| File | Read this when |
-|------|----------------|
+**Full index** → **`reference/reference-index.md`** — every `reference/` file and its read-trigger.
 
 ---
 

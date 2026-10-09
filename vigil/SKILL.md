@@ -75,9 +75,9 @@ Route elsewhere when the task is primarily:
 - Pair detection rules with recommended response actions (SOC playbook steps).
 - Treat detection rules as living code: version-controlled, peer-reviewed, CI/CD-deployed, and continuously tuned based on production feedback.
 - Apply Detection-as-Code (DaC) principles: detection logic is testable, repeatable, and integrated with development workflows — not UI-driven manual processes. Align DaC pipelines with NIST SP 800-204D for DevSecOps integration and OWASP CI/CD Top 10 for pipeline security hardening.
-- Use Sigma Specification v2.1+ as the default rule format (correlation rules for multi-event sequences, cidr/regex/time modifiers, Sigma Filters for centralized FP exclusion). Toolchain baseline: **sigma-cli 2.0.1** and **pySigma ≥ 1.3.0** — 1.3.0 patched a code-execution vulnerability, so pin `≥ 1.3.0` in every DaC pipeline. Backend versions and sources → `reference/detection-as-code.md` § Toolchain Baseline.
+- Use Sigma Specification v2.1+ as the default rule format (correlation rules for multi-event sequences, cidr/regex/time modifiers, Sigma Filters for centralized FP exclusion). Toolchain baseline: **sigma-cli 2.0.1** and **pySigma ≥ 1.3.0** — 1.3.0 patched a code-execution vulnerability, so pin `≥ 1.3.0` in every DaC pipeline. Backend versions and sources → `reference/detection-as-code.md` § SKILL.md Excerpts (moved detail).
 - Align detection coverage mapping with MITRE ATT&CK v18+ Detection Strategies and Analytics — the framework now provides per-technique detection guidance replacing legacy Detections/Data Sources, giving structured blueprints for what to detect and how.
-- ATT&CK v19 (2026-04-28) splits Defense Evasion into **Stealth** (TA0005) and net-new **Defense Impairment** (TA0112); T1562's sub-techniques merged into T1685 under TA0112. Any rule or report referencing TA0005 alone has tactic-level blind spots — audit every T1562-parent detection and realign. Detail → `reference/detection-as-code.md` § ATT&CK v19 Migration.
+- ATT&CK v19 (2026-04-28) splits Defense Evasion into **Stealth** (TA0005) and net-new **Defense Impairment** (TA0112); T1562's sub-techniques merged into T1685 under TA0112. Any rule or report referencing TA0005 alone has tactic-level blind spots — audit every T1562-parent detection and realign. Detail → `reference/detection-as-code.md` § SKILL.md Excerpts (moved detail).
 - Harden DaC pipelines: pin third-party actions to a full commit SHA, authenticate to cloud via OIDC (never static secrets), set job-level `permissions:` least-privilege, never run untrusted PR code under `pull_request_target`, enable secret scanning + push protection, sign artifacts with Sigstore/Cosign.
 
 ---
@@ -200,7 +200,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `snort`, `suricata`, `network detection`, `EVE JSON`, `ET Open` | `snort` |
 | `playbook`, `runbook`, `phishing IR`, `ransomware IR`, `BEC IR`, `SOAR`, `D3FEND` | `playbook` |
 | `ioc`, `STIX`, `TAXII`, `MISP`, `indicator lifecycle` | `ioc` |
-| unclear detection request | `coverage` (coverage report + priority rules) — default fallback |
+| unclear detection request | `sigma` (default) |
 
 ## Subcommand Dispatch
 
@@ -251,7 +251,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 | `reference/playbook-incident-response.md` | Authoring SOC playbooks for phishing / credential / ransomware / BEC incidents, SOAR automation, or D3FEND mapping. |
 | `reference/ioc-threat-intel.md` | Managing IoC lifecycle (STIX 2.1 / TAXII 2.1 / MISP), feed deduplication, indicator expiry, or FP dispositioning. |
 | `reference/handoffs.md` | Handoff templates for Breach, Sentinel, Radar, Gear, or other agent collaboration. |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the detection package, deciding adaptive thinking depth at FP calibration, or front-loading platform/scope/analyst-load at SURVEY. Critical for Vigil: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the detection package, deciding adaptive thinking depth at FP calibration, or front-loading platform/scope/analyst-load at ASSESS. Critical for Vigil: P3, P5. |
 | `_common/PROOF_CARRYING.md` | The security-attacker persona in `nexus acceptance` Phase 3 (Layer 3 adversarial explorer). Defines G1 cross-engine diversity (Tier-S runs you on Claude, separate from the agy-based oracle generator and Codex-based implementer) and the semantic non-emptiness rule (non-trivial exploration log required even when no findings — "no findings" without log = rejected). |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Vigil-specific Output/Next schema. |
 

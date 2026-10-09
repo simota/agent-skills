@@ -149,7 +149,7 @@ defer { url.stopAccessingSecurityScopedResource() }
 - Entitlement: `com.apple.security.application-groups` (array of group identifiers, e.g. `group.com.example.myapp`).
 - Grants a shared container directory (`FileManager.default.containerURL(forSecurityApplicationGroupIdentifier:)`) reachable by every sandboxed process (main app, XPC services, extensions) in the same group — the standard channel for sharing files or a SQLite store between an app and its helper.
 - Shared preferences: `UserDefaults(suiteName: "group.com.example.myapp")` reads/writes a preferences domain scoped to the group rather than the individual bundle ID — use this instead of `com.apple.security.temporary-exception.shared-preference.read-write` when both processes are yours.
-- App groups are the standard IPC substrate feeding XPC services and `SMAppService` helpers — see `reference/xpc-helpers.md` § app-group-backed communication.
+- App groups are the standard IPC substrate feeding XPC services and `SMAppService` helpers — see `reference/xpc-helpers.md` § 1 (XPC services) and § 3 (`SMAppService`), which consume these containers.
 
 ---
 

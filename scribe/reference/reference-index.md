@@ -35,6 +35,7 @@ name it, or when scanning what this skill can consult at all.
 | `reference/unified-spec/user-story-mapping.md` | Building story-map backbones, walking skeletons, and release slices. |
 | `reference/unified-spec/stakeholder-map.md` | Mapping Power × Interest and engagement/information flows. |
 | `reference/unified-spec/raci-matrix.md` | Assigning RACI/DACI/RAPID responsibility and decision rights. |
+| `reference/document-types.md` | Choosing among the twelve document types — use-when condition and output path for each. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Scribe-specific Output/Next schema. |
 | `reference/format-conversion/` | Converting between Markdown, Word, Excel, PDF, HTML (absorbed from `morph`) |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the spec, thinking depth at PLAN, front-loading doc type/audience at SCAN. Critical: P3, P5. |

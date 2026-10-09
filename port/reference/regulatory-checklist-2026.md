@@ -263,7 +263,7 @@ Run this before any TestFlight External / Play Closed Testing build.
 
 ### Android
 
-- [ ] targetSdk = 35 currently; **36 from 2026-08-31**
+- [ ] targetSdk = **36** (mandatory since 2026-08-31)
 - [ ] 16KB-aligned native libraries (hard cutoff **2026-05-31**)
 - [ ] Edge-to-edge layout (no opt-out at API 36)
 - [ ] Predictive back wired via `BackHandler` / `OnBackPressedDispatcher`

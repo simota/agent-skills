@@ -134,7 +134,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | OKLCH gamut bounds | When defining OKLCH tokens, keep chroma within gamut limits: sRGB `C <= 0.37`, Display P3 `C <= 0.5`. Out-of-gamut values clip unpredictably on narrow-gamut displays. Lock lightness (L) for text tokens to ensure contrast-safe palette generation. Browser support: Chrome 111+, Safari 15.4+, Firefox 113+. |
 | CSS architecture   | Keep `var()` nesting to `<= 2` steps. If `:root` token count exceeds `100`, move component tokens into local scope.                                                                       |
 | DTCG compliance    | New token files should use DTCG v2025.10 format (`$value`, `$type`, `$description`) with `.tokens` or `.tokens.json` extension. Use `.resolver.json` for theming contexts (light/dark/brand). Style Dictionary v5+ for multi-platform builds; v5 supports DTCG 2025.10 dimension object values and all 14 DTCG color spaces in object format (`colorSpace`, `components`, `alpha`), but resolver module support is still in progress — verify feature coverage before relying on resolver merging. |
-| WCAG readiness     | Target WCAG 2.2 AA minimum (legal standard for ADA/EAA as of 2026). WCAG 3.0 remains Working Draft (Recommendation expected 2028-2030); APCA (Lc-value contrast) is proposed but not yet in a published draft — track but do not depend on it. Practical dual-target: enforce WCAG 2.2 AA ratios for legal compliance, use APCA Lc values as a supplementary UX readability metric where tooling supports it. Only ~13% of criteria are auto-detectable — manual contrast/token audits remain essential. |
+| WCAG readiness     | Target WCAG 2.2 AA minimum (a superset of WCAG 2.1 AA, which is what the ADA Title II rule and EN 301 549 / EAA reference as of 2026). WCAG 3.0 remains Working Draft (Recommendation expected 2028-2030); APCA (Lc-value contrast) is proposed but not yet in a published draft — track but do not depend on it. Practical dual-target: enforce WCAG 2.2 AA ratios for legal compliance, use APCA Lc values as a supplementary UX readability metric where tooling supports it. Only ~13% of criteria are auto-detectable — manual contrast/token audits remain essential. |
 
 ## Output Routing
 
@@ -193,7 +193,7 @@ Parse the first token of user input.
 
 Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`).
 
-- **Token specification**: token name with semantic path, value (primitive + resolved), DTCG type (`color`, `dimension`, `fontFamily`, etc.), lifecycle status (`DRAFT`/`ADOPT`/`STABLE`/`DEPRECATED`), affected files list, dark/light mode value pair (or "theme-independent" note).
+- **Token specification**: token name with semantic path, value (primitive + resolved), DTCG type (`color`, `dimension`, `fontFamily`, etc.), lifecycle status (`PROPOSE`/`ADOPT`/`STABLE`/`DEPRECATE`/`REMOVE`, per `reference/token-lifecycle.md`), affected files list, dark/light mode value pair (or "theme-independent" note).
 - **Token audit report**: token coverage percentage (hardcoded vs. tokenized), off-grid spacing violations with file locations, contrast ratio results (WCAG 2.2 AA: normal `4.5:1`, large `3:1`), unresolved risks or follow-up actions.
 - **Migration deliverable**: before/after token mapping table, breaking change flag and impact scope, migration guide for downstream consumers, deprecation timeline (minimum `2 sprints` active).
 - **Dark mode verification**: theme switching test results (System/Light/Dark), contrast compliance per theme, accent saturation adjustments applied, pure-black avoidance confirmation.
@@ -249,7 +249,7 @@ Muse receives design direction and token extraction from upstream agents. Muse s
 | `_common/ASSET_PROVENANCE.md` | You need rights and provenance discipline for fonts, icons, or images the design system references. |
 | `_common/PROPORTION_AND_SPACING.md` | You need sourced numbers or justification for spacing scales, container widths, type scales, grids, line-height, or touch targets — published system values (Material 3 / HIG / Tailwind / Carbon / Radix / Bootstrap), WCAG spacing + target-size criteria, decision defaults (§9), and evidence tiers separating spec from craft convention from folklore (golden ratio, Z-pattern). Cite §1 tier when justifying a token value to a reviewer. |
 | `_common/UX_TRENDS_2026.md` | You need 2025-2026 token foundation standards — DTCG first stable spec (2025-10-28), OKLCH + Display P3 pipelines, dark-mode-as-first-class-context, token-sprawl anti-patterns. Read §1 Design. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the token spec, deciding adaptive thinking depth at STRUCTURE, or front-loading token category/scope at AUDIT. Critical for Muse: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the token spec, deciding adaptive thinking depth at STRUCTURE, or front-loading token category/scope at SCAN. Critical for Muse: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You generate `token_proof` (color / spacing / radii / shadows / typography token allow-list compliance) in `nexus acceptance` Phase 2B. Emit ESLint custom rule + token allow-list extraction. Token-not-in-allow-list = G9 Layer 1 (AST) FAIL. Required prerequisite for Design Proof adoption: organization runs design tokens via Style Dictionary or Tokens Studio. |
 
 ## Operational

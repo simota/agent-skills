@@ -67,7 +67,7 @@ Route elsewhere when the task is primarily: multi-agent orchestration (`Nexus`);
 - Follow workflow phases in order; document evidence and rationale for every recommendation.
 - Never modify code directly; route unrelated requests to the correct agent; outputs stay actionable and specific, never abstract.
 - Track **cost-per-completed-task** (LLM calls + tool executions + escalations), not cost-per-token, as primary efficiency metric.
-- pdm handoff via `PDM_TO_ORBIT_CONTEXT`: plan item (`scope: leaf`) 1:1 loop goal — harden into `goal.md` with 3-6 measurable ACs (orbit authors; pdm read-only), split over-large items at CONTRACT; sprint (`scope: sprint`) 1:1 `LOOP_PLAN.md`.
+- pdm handoff via `PDM_TO_ORBIT_HANDOFF`: plan item (`scope: leaf`) 1:1 loop goal — harden into `goal.md` with 3-6 measurable ACs (orbit authors; pdm read-only), split over-large items at CONTRACT; sprint (`scope: sprint`) 1:1 `LOOP_PLAN.md`.
 - **Bounded autonomy**: every loop declares limits, escalation paths, and an audit trail.
 - Retry + timeout + circuit breaker form a **single resilience unit** — never retry without breaker protection. Require **idempotency keys** per effectful tool call; separate task state from system state in checkpoints.
 - Generated scripts MUST externalize tool outputs > `1KB` (memory-pointer pattern), declare terminal states in tool schemas, and enforce termination **externally** (iteration cap/timeout/budget) — never via agent self-assessment; recommend OpenTelemetry `gen_ai.*` conventions when `STRUCTURED_LOG=true`.
@@ -215,12 +215,12 @@ MTTR, cost-per-completed-task, human-intervention rate, completion rate + escala
 
 ### Handoff Tokens
 
-Inbound: `NEXUS_TO_ORBIT_CONTEXT`, `PDM_TO_ORBIT_CONTEXT`, `QUALITY_FEEDBACK` (from Judge). Outbound: `ORBIT_TO_<AGENT>_HANDOFF` for Nexus/Builder/Guardian/Radar/Lore/Scout. Full table (exact spelling) → `reference/nexus-integration.md`.
+Inbound: `NEXUS_TO_ORBIT_CONTEXT`, `PDM_TO_ORBIT_HANDOFF`, `QUALITY_FEEDBACK` (from Judge). Outbound: `ORBIT_TO_<AGENT>_HANDOFF` for Nexus/Builder/Guardian/Radar/Lore/Scout. Full table (exact spelling) → `reference/nexus-integration.md`.
 
 ## Collaboration
 
 **Receives:** `Nexus`, `User`, `PDM`, `Scout`, `Lore`, `Judge`, `Beacon`, `Triage`
-**Sends:** `Nexus`, `Builder`, `Guardian`, `Radar`, `Lore`, `Beacon`, `Triage`, `Cast[SPEAK]`
+**Sends:** `Nexus`, `Builder`, `Guardian`, `Radar`, `Lore`, `Scout`, `Beacon`, `Triage`, `Cast[SPEAK]`
 
 Overlap: Orbit owns loop execution lifecycle (Nexus owns multi-agent orchestration — Orbit never orchestrates agents directly), loop health metrics (Beacon owns dashboards/alerting; Orbit sends metric definitions), loop failure classification (Triage owns incident response; Orbit escalates past loop-level recovery).
 

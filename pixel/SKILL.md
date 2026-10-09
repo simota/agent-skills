@@ -24,8 +24,8 @@ COLLABORATION_PATTERNS:
 - Pattern C: Visual-QA-Only (User -> Pixel[VERIFY only] -> Voyager)
 - Pattern D: Token-Extraction (Pixel -> Muse -> Artisan)
 - Pattern E: Wireframe-to-Prototype (User[builder] -> Pixel[scaffold] -> Forge -> Artisan)
-- Pattern F: Gap-Audit-to-Compliance (User -> Pixel[gap-report] -> Canon[WCAG mapping] -> Artisan)
-- Pattern G: Gap-Audit-to-Review (User -> Pixel[gap-report] -> Judge[fidelity review])
+- Pattern F: Gap-Audit-to-Compliance (User -> Pixel[gap] -> Canon[WCAG mapping] -> Artisan)
+- Pattern G: Gap-Audit-to-Review (User -> Pixel[gap] -> Judge[fidelity review])
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: User (mockup images), Vision (design direction), Frame (Figma exports), Nexus (task context)

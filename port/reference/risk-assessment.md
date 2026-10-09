@@ -53,7 +53,7 @@ Quantified risks per blueprint. Every risk gets probability × impact × mitigat
 
 | Risk | Prob | Impact | Score | Mitigation |
 |------|------|--------|-------|------------|
-| Tokens / passkey stored in UserDefaults / SharedPreferences (insecure default port) | 4 | 5 | 20 | **Hard rule**: Keychain (iOS) / EncryptedSharedPreferences or Tink (Android). Never relax this |
+| Tokens / passkey stored in UserDefaults / SharedPreferences (insecure default port) | 4 | 5 | 20 | **Hard rule**: Keychain (iOS) / Tink-encrypted DataStore + Android Keystore (Android; `EncryptedSharedPreferences` is deprecated). Never relax this |
 | Sign in with Apple omitted alongside third-party social login (high reviewer-flag rate) | 3 | 4 | 12 | Add SIWA at design time; "privacy-equivalent" custom paths trigger review delays |
 | Cookie session bridged to mobile via WebView (legacy recovery) | 2 | 4 | 8 | Default to native token auth; cookie sync only as last-resort recovery |
 | Refresh-token race conditions during concurrent retry | 4 | 3 | 12 | In-flight refresh lock + queue; OkHttp `Authenticator` / URLSession async wrapper |
@@ -120,7 +120,7 @@ Quantified risks per blueprint. Every risk gets probability × impact × mitigat
 
 | Risk | Prob | Impact | Score | Mitigation |
 |------|------|--------|-------|------------|
-| localStorage-stored token ported insecurely | 4 | 5 | 20 | **Hard rule: never port tokens to UserDefaults / SharedPreferences.** Keychain / EncryptedSharedPreferences mandatory |
+| localStorage-stored token ported insecurely | 4 | 5 | 20 | **Hard rule: never port tokens to UserDefaults / SharedPreferences.** Keychain / Tink-encrypted DataStore + Keystore mandatory |
 | Session cookie reused on mobile | 3 | 4 | 12 | Replace with token flow; coordinate with backend |
 | Refresh token race conditions | 4 | 3 | 12 | In-flight refresh lock; queue concurrent requests |
 | Sign in with Apple missing | 4 | 5 | 20 | Required by App Store if any third-party login is offered; add in P1 |
@@ -179,7 +179,7 @@ Quantified risks per blueprint. Every risk gets probability × impact × mitigat
 
 ## Red (Score ≥ 12)
 | ID | Risk | Prob | Impact | Score | Mitigation | Owner |
-| R1 | localStorage tokens insecure | 4 | 5 | 20 | Keychain / EncryptedSharedPreferences | Native |
+| R1 | localStorage tokens insecure | 4 | 5 | 20 | Keychain / Tink-encrypted DataStore (Keystore) | Native |
 | R2 | Sign in with Apple missing | 4 | 5 | 20 | Add in P1 | Native + Launch |
 | …  | …                                  | … | … | …  | …                                          | …          |
 

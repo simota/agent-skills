@@ -30,7 +30,7 @@ Port action:
 - iOS: **SwiftData** (iOS 17+) is the new default for object persistence in new projects when SwiftUI-centric. Use Core Data when iOS 16 support, advanced predicates, `NSFetchedResultsController`, or performance-critical paths are needed.
 - iOS: Privacy Manifest **Required Reasons API** declarations needed for `UserDefaults`, `FileTimestamp`, `SystemBootTime`, `DiskSpace`, `ActiveKeyboards` — see `regulatory-checklist-2026.md`.
 - Android: **Room 2.7** (released 2025-04) brought stable Kotlin Multiplatform support across Android / iOS / Desktop, KSP2, and Kotlin codegen by default. **Room 3.0 (alpha 2026-03)** is a breaking next-gen rewrite: new package `androidx.room3:room3-runtime`, **Kotlin-only codegen**, coroutines-first APIs, fully backed by `androidx.sqlite` driver APIs, KMP across Android / iOS / JVM / **JavaScript / Wasm**, and KSP-required (no kapt). New projects targeting KMP should start on Room 2.7 stable until Room 3.0 GA, then plan a migration window — Room 3.0 does not auto-migrate from 2.x.
-- Android: **DataStore** (Preferences + Proto) is the standard for non-secret prefs. SharedPreferences is legacy. Sensitive data → EncryptedSharedPreferences (or Tink-encrypted DataStore).
+- Android: **DataStore** (Preferences + Proto) is the standard for non-secret prefs. SharedPreferences is legacy. Sensitive data → Tink-encrypted DataStore (Android Keystore-backed key); `EncryptedSharedPreferences` is deprecated (security-crypto 1.1.0-alpha07).
 
 ### CRDT / sync engine choice (2026 default)
 
@@ -89,7 +89,7 @@ Hand off to `Gateway` for OpenAPI / GraphQL SDL specification.
 | Step | iOS | Android |
 |------|-----|---------|
 | Server-side token revocation | API call | API call |
-| Secure storage clear | Keychain item delete | EncryptedSharedPreferences clear |
+| Secure storage clear | Keychain item delete | Encrypted DataStore clear + Keystore key delete |
 | Local cache wipe (optional) | Core Data / SwiftData wipe | Room database delete |
 | Push token unregister | APNs token unregistered server-side | FCM token unregistered server-side |
 | Analytics user reset | Analytics SDK reset | Analytics SDK reset |
@@ -106,7 +106,7 @@ Classify every web storage usage from `web-analysis-checklist.md` Section 5 into
 
 | Class | Examples | iOS target | Android target |
 |-------|----------|------------|----------------|
-| **Secret** | Auth tokens, refresh tokens, OAuth client secrets, payment tokens, biometric-protected data | Keychain (`kSecClassGenericPassword`, optional `kSecAttrAccessControl` with biometry) | EncryptedSharedPreferences or Tink-encrypted DataStore; biometric gating via BiometricPrompt |
+| **Secret** | Auth tokens, refresh tokens, OAuth client secrets, payment tokens, biometric-protected data | Keychain (`kSecClassGenericPassword`, optional `kSecAttrAccessControl` with biometry) | Tink-encrypted DataStore (Android Keystore-backed key); biometric gating via BiometricPrompt |
 | **Personal** | User profile, drafts, app-specific user-generated content | Core Data / SwiftData (encrypted at rest via NSFileProtection) | Room with SQLCipher if regulated, otherwise default Room |
 | **Cache** | API responses, images, search results, server-state cache | URLCache + per-feature `FileManager` cache dir; SDImage / Kingfisher for images | OkHttp cache + Coil/Glide for images; Room as feature cache |
 | **Preference** | User-selected settings (theme, locale, notification toggles) | UserDefaults (or `@AppStorage`) | DataStore Preferences |
@@ -155,7 +155,7 @@ If the web uses HTTP-only cookies and a server-rendered session:
 
 1. **Do not reuse the cookie on mobile.** Cookies on mobile webviews are fragile and inconsistent.
 2. Add a token-based mobile login flow on the backend (or BFF). Issue access + refresh tokens.
-3. Store tokens in Keychain (iOS) / EncryptedSharedPreferences (Android).
+3. Store tokens in Keychain (iOS) / Tink-encrypted DataStore (Android Keystore-backed key) (Android).
 4. Add `Authorization: Bearer <token>` to API client requests.
 5. Implement refresh-on-401 with locking (refresh in-flight, queue concurrent requests).
 
@@ -198,7 +198,7 @@ Use biometrics for **re-authentication**, not initial login.
 | iOS | Android |
 |-----|---------|
 | LocalAuthentication: `LAContext.evaluatePolicy` | BiometricPrompt |
-| Keychain item with `kSecAttrAccessControl` and `.biometryAny` or `.biometryCurrentSet` | EncryptedSharedPreferences with BiometricPrompt-gated access |
+| Keychain item with `kSecAttrAccessControl` and `.biometryAny` or `.biometryCurrentSet` | Keystore key with `setUserAuthenticationRequired` + BiometricPrompt-gated access to Tink-encrypted DataStore |
 | Fallback: device passcode | Fallback: device credential |
 
 Never bypass platform biometric APIs with custom UI; reject any "tap fingerprint" mockups.
@@ -208,7 +208,7 @@ Never bypass platform biometric APIs with custom UI; reject any "tap fingerprint
 | Step | iOS | Android |
 |------|-----|---------|
 | Revoke server token | API call | API call |
-| Clear secure storage | Keychain item delete | EncryptedSharedPreferences clear |
+| Clear secure storage | Keychain item delete | Encrypted DataStore clear + Keystore key delete |
 | Clear local cache (optional) | Core Data wipe | Room database delete |
 | Clear push token registration | Unregister APNs token from server | Unregister FCM token |
 | Reset analytics user ID | Analytics SDK reset | Analytics SDK reset |
@@ -333,7 +333,7 @@ Routing strategy:
 ## Auth Flow
 - Provider: …
 - Web pattern: …
-- Mobile redesign: tokens in Keychain / EncryptedSharedPreferences
+- Mobile redesign: tokens in Keychain / Tink-encrypted DataStore + Android Keystore
 - OAuth/OIDC + PKCE
 - Sign in with Apple: required ✓
 - Magic link: Universal Link / App Link

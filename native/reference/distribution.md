@@ -20,7 +20,7 @@ Production reference for taking a macOS app from build to a user's Dock: channel
 | Discoverability | App Store search/browse | Self-driven (website, launch marketing) |
 | XPC/System Extension reach | Sandbox-constrained | Broader — Endpoint Security, unsandboxed helpers reachable (still each has its own entitlement/approval gate) |
 
-**Both as separate targets** is common: one target with `app-sandbox = true` + Mac App Distribution signing for the Store, one target with hardened runtime + Developer ID signing for direct download, sharing the same source and differing only in entitlements/scheme. Decide this at `DETECT`, not after the sandbox entitlement set is already locked in — retrofitting sandbox onto a Developer-ID-first app is a real rework cost (see `reference/sandbox-entitlements.md` § 9 for what breaks).
+**Both as separate targets** is common: one target with `app-sandbox = true` + Mac App Distribution signing for the Store, one target with hardened runtime + Developer ID signing for direct download, sharing the same source and differing only in entitlements/scheme. Decide this at `DETECT`, not after the sandbox entitlement set is already locked in — retrofitting sandbox onto a Developer-ID-first app is a real rework cost (see `reference/sandbox-entitlements.md` § 10 for what breaks).
 
 ---
 
@@ -183,7 +183,7 @@ Sparkle is the de facto standard for Developer-ID-distributed Mac apps that need
 - **TestFlight for macOS** is available the same as iOS — internal/external testers, build expiration, matching entitlement/sandbox constraints as the eventual Store build (a TestFlight build that isn't sandboxed will not later pass Store review unmodified).
 - **Phased release**: Store updates can roll out over 7 days to a growing percentage of existing users (opt-in per release in App Store Connect) — use for high-risk updates; pair with crash-rate monitoring during the rollout window.
 - In-app purchase (if used) must go through StoreKit/Apple IAP — this is the primary constraint that pushes apps with existing payment infrastructure toward Developer ID instead (§ 1).
-- App Sandbox is non-negotiable for this channel — if `reference/sandbox-entitlements.md` § 9's "sandbox-incompatible feature" list intersects the app's core functionality, Developer ID is the only viable channel, not a preference.
+- App Sandbox is non-negotiable for this channel — if `reference/sandbox-entitlements.md` § 10's "sandbox-incompatible feature" list intersects the app's core functionality, Developer ID is the only viable channel, not a preference.
 
 ---
 

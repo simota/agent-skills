@@ -74,7 +74,7 @@ Use this checklist to audit a web codebase before producing any native architect
 |-----------|-------------|----------------------------|
 | `localStorage` | Plaintext, persistent | UserDefaults (iOS, non-secret) / DataStore (Android, non-secret) |
 | `sessionStorage` | Plaintext, tab-scoped | In-memory state only |
-| `cookies` (HTTP-only) | Server-managed | Translate to token-in-Keychain / EncryptedSharedPreferences |
+| `cookies` (HTTP-only) | Server-managed | Translate to token-in-Keychain / Tink-encrypted DataStore (Keystore) |
 | `cookies` (JS-readable) | Mixed | **Never reuse**; redesign as token storage |
 | `IndexedDB` | Plaintext (queryable) | Core Data / SwiftData (iOS), Room (Android) |
 | `Cache API` / Service Worker | HTTP responses | URLCache / OkHttp cache, plus Tier-T1+ for offline |
@@ -99,7 +99,7 @@ Use this checklist to audit a web codebase before producing any native architect
 
 **Output:** Auth flow diagram (textual is fine), with token-storage location and lifecycle.
 
-> **Critical:** If auth uses `localStorage`-stored JWT, this **must** move to Keychain / EncryptedSharedPreferences in the port. Never replicate insecure web patterns.
+> **Critical:** If auth uses `localStorage`-stored JWT, this **must** move to Keychain / Tink-encrypted DataStore (Keystore) in the port. Never replicate insecure web patterns.
 
 ---
 

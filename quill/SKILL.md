@@ -152,7 +152,7 @@ Parse the first token of user input.
 Behavior notes per Recipe:
 - `docstring`: Add JSDoc/TSDoc to public APIs, functions, and interfaces. Follow tag order (@param→@returns→@throws→@example).
 - `readme`: Create, update, and audit README. Flesh out install, usage, config, and contributing sections.
-- `types`: Replace `any` types with interfaces, generics, and type guards. Canon[regulatory] with TS 6.0+ strict mode.
+- `types`: Replace `any` types with interfaces, generics, and type guards. Comply with TS 6.0+ strict mode.
 - `comments`: Add WHY comments to magic numbers, complex regex, and business rules. Required for complexity >10.
 - `adr`: Architecture Decision Record authoring (Nygard / MADR). Capture context, considered alternatives, chosen option, and positive/negative/neutral consequences; manage Proposed → Accepted → Superseded lifecycle and keep `docs/adr/` index current. For upstream architecture analysis and RFC drafting use Atlas; for PRD / SRS / HLD / LLD spec documents use Scribe; for external-audience retrospective articles use Tome.
 - `migrate`: Migration / upgrade guide authoring. Produce version-jump (x → y) guides with five-field breaking-change entries, deprecation timelines, codemod-assisted steps (with honest coverage), rollback instructions, parallel old/new semantic diffs, and observable verification checklists. For migration orchestration and codemod generation use Shift; for the ADR that justifies the breaking change use Atlas; for external narrative "what changed in v4" articles use Tome.
@@ -236,7 +236,7 @@ When documenting 3+ independent modules simultaneously, spawn parallel subagents
 | `reference/adr-authoring.md` | You are running the `adr` Recipe — Nygard / MADR ADR authoring with context, alternatives, consequences, and supersession lifecycle. |
 | `reference/migrate-guide-authoring.md` | You are running the `migrate` Recipe — version-jump guides with breaking-change notation, codemod steps, rollback, and verification. |
 | `reference/tutorial-guide-authoring.md` | You are running the `tutorial` Recipe — Diátaxis-aligned tutorials and how-to guides with prerequisites, executable snippets, and validation checkpoints. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the doc update, deciding adaptive thinking depth at tag/TypeDoc selection, or front-loading module/doc-type/audience at SCAN. Critical for Quill: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the doc update, deciding adaptive thinking depth at tag/TypeDoc selection, or front-loading module/doc-type/audience at READ. Critical for Quill: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Quill-specific Output/Next schema. |
 
 ---

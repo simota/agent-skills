@@ -255,7 +255,7 @@ Full mechanics, scoring, JSON schema, prompt skeletons, and degraded modes -> `r
 | `_common/MULTI_ENGINE_RECIPE.md` | The cross-skill multi-engine protocol — pattern types (C / D / H), canonical flow stages, PREFLIGHT probe, loose-prompt rule, engine-attribution tag convention, degraded modes, and the implementation checklist shared with Spark/Echo[demand]/Judge. Read before authoring or extending Omen's `multi` Recipe. |
 | `_common/SUBAGENT.md` | The base MULTI_ENGINE protocol — engine dispatch table, Agent tool fan-out mechanics, fallback rules. Read alongside `MULTI_ENGINE_RECIPE.md` when authoring `multi` Recipe subagent prompts. |
 | `_common/LLM_PROMPT_GENERATION.md` | Universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Trail/Sentinel. |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the pre-mortem report, deciding adaptive thinking depth at scoring/severity, or front-loading scope/stakeholders/horizon at FRAME. Critical for Omen: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the pre-mortem report, deciding adaptive thinking depth at scoring/severity, or front-loading scope/stakeholders/horizon at SCOPE. Critical for Omen: P3, P5. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Omen-specific Output/Next schema. |
 | `reference/ai-production-failure-atlas.md` | Pre-mortem scope includes an AI-generation or agentic-write step — 22-mode catalog (F-01–F-22) pre-tagged by Context/Workflow/Evaluation/System/Governance layer, cross-referenced to `_common/CANDIDATE_SELECTION.md` §9 and `_common/ASSET_PROVENANCE.md` §8 for mitigation detail. |
 

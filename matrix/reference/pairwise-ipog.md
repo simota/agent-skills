@@ -25,7 +25,7 @@ GENERATE   →  apply algorithm → minimum 2-way covering set
 
 VALIDATE   →  report reduction ratio vs exhaustive
            →  list uncovered ≥3-way tuples (expected — 2-way does not cover these)
-           →  warn if any parameter value appears in < 10% of test cases
+           →  warn if any parameter value appears in < 0.5 × 1/|values| of test cases
 
 PRIORITIZE →  seed priority ordering (critical cases first)
            →  hand off to Radar / Voyager / Siege
@@ -111,7 +111,7 @@ Matrix defaults to pairwise for general business logic; switch to `High-Strength
 Constraints (invalid pairs, requires, excludes) reduce the effective space. IPOG accepts hard constraints; verify:
 
 1. **Constraint exclusion rate** must be < 30%. Above 30%, warn. Above 40%, recommend redesign.
-2. **Every parameter value** must appear in ≥ 10% of the final test suite (anti-skew rule).
+2. **Every parameter value** must appear in ≥ 0.5 × 1/|values| of the final test suite — half its uniform share (anti-skew rule).
 3. **No single test case** should combine multiple invalid values — one defect per negative case.
 
 ## Output Template
@@ -173,7 +173,7 @@ When `pairwise` completes, emit:
 - **Method chosen** (IPOG / IPOG-F / OATS) with rationale.
 - **Test case table** (2-way 100% covering).
 - **Reduction ratio** vs exhaustive.
-- **Parameter-value appearance audit** (no value < 10%).
+- **Parameter-value appearance audit** (no value below 0.5 × 1/|values|).
 - **Uncovered ≥3-way tuple note** (expected for 2-way; escalate if critical).
 - **Warnings** (constraint rate, domain mismatch, skew).
 - **Handoff target** (Radar / Voyager / Siege / Scaffold).

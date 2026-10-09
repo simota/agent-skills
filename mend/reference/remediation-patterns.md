@@ -299,7 +299,7 @@ Patterns that haven't been matched recently lose confidence over time to prevent
 | ≥ 90% | High confidence | Auto-execute (if T1/T2) |
 | 70-89% | Medium confidence | Notify + execute |
 | 50-69% | Low confidence | Request approval |
-| < 50% | No match | Escalate to Builder |
+| < 50% | No match | Escalate back to Triage |
 
 ### Multi-Pattern Scenarios
 

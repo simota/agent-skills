@@ -236,7 +236,7 @@ Deliver:
 | `reference/change-data-capture.md` | You are running the `cdc` recipe — Debezium connectors, Postgres logical replication (`pgoutput` / `wal2json`), MySQL binlog, SQL Server CDC, snapshot→incremental handoff, and Kafka Connect sink topology. |
 | `reference/reverse-etl.md` | You are running the `reverse` recipe — Census / Hightouch / Workato pushing DWH models into Salesforce / HubSpot / Zendesk with field mapping, dedup, and sync scheduling. |
 | `reference/data-quality.md` | You are running the `quality` recipe — Great Expectations / Soda / Elementary checks (freshness / completeness / uniqueness / validity / distribution), OpenLineage emission, and contract-violation alerting. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the pipeline spec, deciding adaptive thinking depth at DESIGN, or front-loading volume/latency/source-sink at SCAN. Critical for Stream: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the pipeline spec, deciding adaptive thinking depth at LAYOUT, or front-loading volume/latency/source-sink at FRAME. Critical for Stream: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Stream-specific Output/Next schema. |
 | `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 

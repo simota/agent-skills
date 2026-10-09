@@ -124,7 +124,7 @@ Read `reference/response-workflow.md` for containment options, mitigation templa
 | PIR | Customers, partners, executives | After `SEV1/SEV2` resolution |
 | Executive Summary | Quick sharing | On request |
 
-- Required sections: Summary, Timeline, Root Cause (`5 Whys`), Detection & Response, Action Items (`P0/P1/P2` priority **× class**), Lessons Learned.
+- Required sections: Summary, Timeline, Root Cause / contributing factors (Howie narrative for SEV1/SEV2; `5 Whys` as supplementary analysis), Detection & Response, Action Items (`P0/P1/P2` priority **× class**), Lessons Learned.
 - Action item classes: `Containment | Detection | Diagnosis | Recovery | Prevention | Governance | Learning` — priority says *when*, class says *what leverage*. Class definitions and the repeat-incident check → `reference/scale-and-action-items.md`.
 - Deadlines: `SEV1: 24h` · `SEV2: 48h` · `SEV3/4: 1 week (if warranted)`.
 - Read `reference/postmortem-templates.md` when drafting postmortems, PIRs, or executive summaries.
@@ -230,7 +230,7 @@ Per-Recipe behavior notes -> `reference/first-response.md` § Per-Recipe Behavio
 |--------|----------|----------------|-----------|
 | Active production incident | Full incident workflow (DETECT→LEARN) | Incident report + timeline + action items | `reference/response-workflow.md` |
 | SEV1/SEV2 with security indicators | Security incident flow (Pattern C) | Security incident report + Sentinel handoff | `reference/runbooks-communication.md` |
-| Post-resolution review requested | Postmortem authoring (Pattern D) | Blameless postmortem with 5 Whys + action items | `reference/postmortem-templates.md` |
+| Post-resolution review requested | Postmortem authoring (Pattern D) | Blameless postmortem (Howie narrative for SEV1/SEV2, 5 Whys supplementary) + action items | `reference/postmortem-templates.md` |
 | Multiple services degraded | Multi-service coordination (Pattern F) | Per-service impact map + parallel Scout handoffs | `reference/collaboration-flows.md` |
 | Severity re-assessment needed | Re-triage with new evidence | Updated severity + revised containment plan | `reference/runbooks-communication.md` |
 | High false-positive alert volume (>25% critical, >50% high) | Alert fatigue remediation | Beacon handoff for alert tuning + threshold review | `reference/runbooks-communication.md` |

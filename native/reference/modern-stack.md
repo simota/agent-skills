@@ -423,11 +423,11 @@ fun MyScreen(onBack: () -> Unit) {
 
 On API 35+, `dataSync` / `mediaProcessing` are capped at **6 hours per 24 hours**. Starting a foreground service from background is forbidden in principle since API 31+.
 
-### Room 2.7+ (2026)
+### Room 2.8+ (2026)
 
-- Room 2.7+ supports KMP (when needed). Even in pure-native, Room is the Android standard.
+- Room 2.8+ supports KMP (when needed). Even in pure-native, Room is the Android standard.
 - DataStore (Preferences + Proto) is the standard. SharedPreferences is legacy.
-- Sensitive data → EncryptedSharedPreferences or Tink-encrypted DataStore + Android Keystore.
+- Sensitive data → Tink-encrypted DataStore + Android Keystore (`EncryptedSharedPreferences` is deprecated — do not use).
 
 ### Jetpack Glance (App Widgets)
 
@@ -513,7 +513,7 @@ For new widgets, prefer Glance (Compose runtime). Hand-written RemoteViews are l
 | Adaptive | NavigationSplitView + Window Size Classes | Compose Adaptive 1.2+; WSC (compact/medium/expanded/large/extra-large) |
 | Privacy | **`PrivacyInfo.xcprivacy`** Required Reasons API (3rd-party SDKs since 2025-02-12) | **Data Safety form** (all tracks) |
 | Build | Xcode 26 + SPM (iOS 26 SDK required 2026-04-28) | Gradle + Kotlin DSL + **AGP 8.5.1+ / NDK r28+**; **16KB native libs required since 2025-11-01** |
-| Min-OS / target | iOS 17 default (iOS 16 acceptable) | API 28 default; **targetSdk 36 mandatory by 2026-08-31** (edge-to-edge enforced, predictive back default ON, sw600dp+ forces resizeable) |
+| Min-OS / target | iOS 17 default (iOS 16 acceptable) | API 28 default; **targetSdk 36 mandatory since 2026-08-31** (edge-to-edge enforced, predictive back default ON, sw600dp+ forces resizeable) |
 
 ---
 

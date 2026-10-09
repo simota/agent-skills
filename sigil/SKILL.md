@@ -250,10 +250,7 @@ Use the canonical schema in `_common/HANDOFF.md` for all inter-agent communicati
 
 ## Reference Map
 
-**Full index** → **`reference/reference-index.md`** — every `reference/` file and its read-trigger. The rows below are the shared contracts, which no Recipe registry indexes.
-
-| Reference | Read this when |
-|-----------|----------------|
+**Full index** → **`reference/reference-index.md`** — every `reference/` file and its read-trigger.
 
 ---
 

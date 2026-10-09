@@ -105,7 +105,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Treat contradictory constraints as solved without surfacing them.
 - Over-constrain the parameter space for convenience — excluding "unlikely" combinations removes the very interactions that reveal latent faults. Only exclude combinations that are technically impossible or violate business rules.
 - Invent downstream execution results.
-- Ignore parameter distribution skew — constraint-heavy models can systematically under-test certain parameter values, creating blind spots. Always verify that no parameter value appears in fewer than 10% of the optimized set.
+- Ignore parameter distribution skew — constraint-heavy models can systematically under-test certain parameter values, creating blind spots. Always verify that every value of a parameter appears in at least half of its uniform share of the optimized set (`>= 0.5 × 1/|values|` of rows — e.g. `>= 10%` for a 5-value parameter); a fixed percentage floor is unsatisfiable for parameters with many values.
 - Combine multiple invalid values in a single test case — input masking causes the first detected invalid value to prevent testing of subsequent invalid values, hiding real defects. Generate separate negative test cases with only one invalid value each (NIST SP 800-142; Microsoft pairwise testing guidance).
 
 ## Planning Modes
@@ -125,10 +125,10 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Phase      | Goal                                                              | Required output                          | Read next       |
 | ---------- | ----------------------------------------------------------------- | ---------------------------------------- | --------------- |
-| `PARSE`    | Extract domain, axes, values, constraints, priorities, and budget | Validated matrix model                   | `reference/`   |
-| `EXPAND`   | Compute the raw space size                                        | Total combination count                  | `reference/`   |
-| `OPTIMIZE` | Choose the smallest defensible set                                | Method, optimized count, reduction rate  | `reference/`   |
-| `PLAN`     | Prepare the execution handoff                                     | Prioritized execution set and next agent | `reference/`   |
+| `PARSE`    | Extract domain, axes, values, constraints, priorities, and budget | Validated matrix model                   | `reference/input-schema.md`   |
+| `EXPAND`   | Compute the raw space size                                        | Total combination count                  | `reference/combination-methods.md`   |
+| `OPTIMIZE` | Choose the smallest defensible set                                | Method, optimized count, reduction rate  | `reference/optimization-algorithms.md`   |
+| `PLAN`     | Prepare the execution handoff                                     | Prioritized execution set and next agent | `reference/output-templates.md`   |
 
 ## Delivery Loop
 
@@ -266,7 +266,7 @@ When results are already available (Remap mode), also include:
 | `reference/pairwise-ipog.md` | IPOG/IPOG-F walk-through, OATS selection rubric, pairwise vs n-wise trade-offs. |
 | `reference/equiv-class-bva.md` | Axes are input ranges — equivalence partitioning, BVA, one-defect-per-negative-case discipline. |
 | `reference/risk-weighted-coverage.md` | Prioritizing by RPN / Action Priority or integrating FMEA output from omen. |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the plan, thinking depth at t-way strength, front-loading domain/axes at SCAN. Critical: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the plan, thinking depth at t-way strength, front-loading domain/axes at PARSE. Critical: P3, P5. |
 | `_common/PROOF_CARRYING.md` | Generating pairwise / orthogonal-array story sets for `vrt_proof` in `acceptance` Phase 2B. Default 2-way; full N-way only for Tier-S paths; story count `<=5,000` per build; bulk-approve over 10 diffs forbidden. |
 
 

@@ -193,9 +193,9 @@ Is it used now?
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| default request | Standard Void workflow | analysis / recommendation | `reference/` |
+| default request | Standard Void workflow | analysis / recommendation | `reference/evaluation-criteria.md` |
 | complex multi-agent task | Nexus-routed execution | structured handoff | `_common/BOUNDARIES.md` |
-| unclear request | Clarify scope and route | scoped analysis | `reference/` |
+| unclear request | Clarify scope and route | scoped analysis | `reference/evaluation-criteria.md` |
 
 Routing rules:
 

@@ -17,7 +17,7 @@ Canonical inbound/outbound handoff token vocabulary for Orbit. Preserve token sp
 | Direction | Token |
 |-----------|-------|
 | Nexus -> Orbit | `NEXUS_TO_ORBIT_CONTEXT` |
-| PDM -> Orbit | `PDM_TO_ORBIT_CONTEXT` |
+| PDM -> Orbit | `PDM_TO_ORBIT_HANDOFF` |
 | Orbit -> Nexus | `ORBIT_TO_NEXUS_HANDOFF` |
 | Orbit -> Builder | `ORBIT_TO_BUILDER_HANDOFF` |
 | Orbit -> Guardian | `ORBIT_TO_GUARDIAN_HANDOFF` |

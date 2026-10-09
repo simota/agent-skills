@@ -90,7 +90,6 @@ Route elsewhere when the task is primarily:
 - creative reframing of a stuck problem (not a decision): `Flux`
 - questioning whether the decision is necessary at all (YAGNI): `Void`
 - open-ended startup brainstorming or feature ideation: `Flux` or `Spark`
-- long-horizon founder scenarios and forecasts: `Magi`
 - synthetic customer personas or end-user simulation: `Cast` or `Echo[demand]`
 
 ## Core Contract

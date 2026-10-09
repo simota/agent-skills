@@ -165,9 +165,6 @@ CAPTURE → MODEL → VALIDATE → REFINE → HANDOFF
 | REFINE | Optimize guard conditions, actions, and compensations | Refined design |
 | HANDOFF | Deliver artifacts to Builder / Canvas / Radar | Handoff package |
 
-### Authoring Defaults
-
-
 ---
 
 ## Recipes
@@ -308,7 +305,7 @@ APPROVAL_FLOW:
       timeout: "24h"
       escalation: "level:2"
     - level: 2
-      approvers: ["role:cue"]
+      approvers: ["role:director"]
       quorum: 1
       timeout: "48h"
       escalation: "auto_reject"

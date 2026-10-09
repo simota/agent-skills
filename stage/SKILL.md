@@ -158,12 +158,12 @@ Parse the first token of user input.
 
 Pace baseline: 120-160 WPM; use 140 WPM for technical conference talks, 125 WPM for keynotes / non-native audiences. Word budget = duration × WPM. 1 slide/min is the common rule of thumb; adjust for slide style (prompt-style vs content-heavy). Dense academic / equation slides: 60-180s/slide.
 
-| Format | Duration | Slides | Pace | Word budget (140 WPM) |
+| Format | Duration | Slides | Pace | Word budget (140 WPM unless noted) |
 |--------|----------|--------|------|----------------------|
 | Lightning Talk | 5 min | 8-12 | 25-35 sec/slide | ~700 words |
 | Short Talk | 15 min | 15-25 | 35-50 sec/slide | ~2,100 words |
 | Regular Talk | 30 min | 30-45 | 40-60 sec/slide | ~4,200 words |
-| Keynote | 45-60 min | 45-70 | 50-70 sec/slide | ~6,300-8,400 words |
+| Keynote | 45-60 min | 45-70 | 50-70 sec/slide | ~5,600-7,500 words (keynote pace: 125 WPM) |
 
 ## Output Requirements
 

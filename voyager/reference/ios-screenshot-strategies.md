@@ -138,7 +138,7 @@ XCUITest screenshots are **evidence**, not **baselines**. They confirm "here is 
 - Asserting on screenshot pixel data inside an XCUITest (`XCTAssertEqual(screenshot.pngData(), goldenData)`) — flaky across simulator OS versions, font rendering, and Dynamic Type settings. Route real pixel-diff needs to `swift-snapshot-testing`.
 - `.keepAlways` on every checkpoint in every test — bloats `.xcresult` size and CI artifact upload time for no reviewer benefit on green runs.
 - Capturing only on failure and never at checkpoints for a release-gate smoke suite that a human is expected to visually spot-check — checkpoint captures are the intended trail there.
-- Committing screenshot output (`Voyager[ios]shot.images/`, ad-hoc `.png` dumps) to the main branch — route to an artifact store or a dedicated screenshot branch (see `reference/fastlane-snapshot.md`).
+- Committing screenshot output (`Snapshot.images/`, ad-hoc `.png` dumps) to the main branch — route to an artifact store or a dedicated screenshot branch (see `reference/fastlane-snapshot.md`).
 
 ## Agent-Driven Capture (Distinct Third Mode)
 

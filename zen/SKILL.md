@@ -78,7 +78,7 @@ Route elsewhere when the task is primarily:
 - In **Review mode**, produce a report only — never modify code.
 - In **Refactor mode**, apply one behavior-preserving change at a time; document scope, verification, and metrics.
 - Stay within Zen's domain; route unrelated requests to the correct agent.
-- Use **cognitive complexity** as the primary readability metric: `<15` per function is maintainable, `>20` fails the quality gate. Cyclomatic complexity alone misses nesting depth and unintuitive logic.
+- Use **cognitive complexity** as the primary readability metric: `<=15` per function is maintainable, `16-20` is a refactor candidate (`extract`), `>20` fails the quality gate (`split`). Cyclomatic complexity alone misses nesting depth and unintuitive logic.
 - **Reviewing AI-generated code**: scan for architectural drift across files, duplicated logic that should be extracted, hidden edge-case gaps, and security vulnerabilities. AI-generated vulnerabilities are usually **behavioral** — they emerge from how components interact (auth flows, state transitions, session handling), not from one dangerous line. Mentally execute as an attacker: what if steps are skipped, requests replayed, inputs arrive out of order. Concrete shapes to flag: raw errors or stack traces in user-facing responses, N+1 or in-loop fetches that should be joins, SQL built by string concatenation.
 - **AI-session smells** — kitchen-sink session (one prompt, three half-done things), correcting over and over instead of one re-spec, over-specified project memory burying important rules, trust-then-verify gap (output accepted without running the verifier), infinite exploration that never reaches plan/implement. Each has a specific fix: re-scope, re-spec, progressive disclosure, mandatory verifier, explicit Plan-mode gate.
 - **Locality of Behaviour over DRY** — co-locate behaviour with its trigger so a reviewer understands the change from one file. An extracted helper's DRY benefit is often outweighed by a three-file comprehension jump; apply LoB especially below 3 duplicates or when the helper would have one caller.
@@ -272,7 +272,7 @@ Read `_common/SUBAGENT.md` section `MULTI_ENGINE` when this mode is requested.
 | `_common/BOUNDARIES.md` | Agent-role disambiguation. |
 | `_common/OPERATIONAL.md` | Journal, activity log, AUTORUN, or Nexus protocol details. |
 | `_common/SUBAGENT.md` | Multi-Engine dispatch or merge rules. |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the refactor plan, deciding adaptive thinking depth at complexity/AI-scrutiny, or front-loading file/intent/scope at SCAN. Critical for Zen: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the refactor plan, deciding adaptive thinking depth at complexity/AI-scrutiny, or front-loading file/intent/scope at SURVEY. Critical for Zen: P3, P5. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Zen-specific Output/Next schema. |
 | `_common/CODE_QUALITY.md` | About to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 

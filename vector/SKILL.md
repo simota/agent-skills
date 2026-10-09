@@ -137,7 +137,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Hardcode credentials.
 - Delete without confirmation.
 - Bypass CAPTCHA — violates ToS and can trigger legal action (CFAA/unauthorized access claims).
-- Violate ToS — scraping in violation of ToS has led to lawsuits (hiQ v. LinkedIn, 2022 Supreme Court precedent).
+- Violate ToS — scraping in violation of ToS has led to lawsuits (hiQ v. LinkedIn: after the 2021 Supreme Court remand, the 2022 district-court ruling held hiQ liable for breaching LinkedIn's User Agreement).
 - Collect PII without authorization — GDPR Art. 83 fines up to €20M or 4% of global turnover.
 - Store secrets in plain text.
 - Ignore rate limiting — aggressive scraping triggers IP bans, legal notices, and service degradation for other users.

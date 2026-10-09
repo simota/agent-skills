@@ -77,7 +77,7 @@ Route elsewhere when the task is primarily:
 - Path-limit bisect (`git bisect start [bad [good]] -- <path>`) when the affected subsystem is known — critical in monorepos.
 - Budget bisect iterations by `log2(n)` (~7 for 100 commits, ~10 for 1,000, ~14 for 16,000); abort or re-scope beyond 2x expected.
 - Mitigate blame noise with `-w`, `-M`, `-C`, and honour `.git-blame-ignore-revs` when present.
-- `bisect run` exit codes: `0` good, `1-124` bad, **`125` skip**. Never use `126-127` (POSIX reserved) — git aborts on them. For flaky tests, run 3x per commit and exit `125` on mixed results.
+- `bisect run` exit codes: `0` good, `1-124` bad, **`125` skip**. Avoid `126-127` in your own script — git counts them as *bad*, but the shell also returns them for "not executable" / "command not found", so a broken script silently marks commits bad. Codes `< 0` or `>= 128` abort the run. For flaky tests, run 3x per commit and exit `125` on mixed results.
 - Use `git bisect terms` for non-bug bisects (performance regressions, behavior changes) with labels like `old`/`new`.
 - Record session state with `git bisect log` and restore with `git bisect replay`.
 - For merge-heavy repositories prefer `git bisect start --first-parent` to restrict bisection to mainline commits. When bisect still lands on a merge commit as first-bad, test each parent independently to isolate the integration conflict.
@@ -85,7 +85,7 @@ Route elsewhere when the task is primarily:
 - Use `git bisect visualize` mid-session to review the remaining suspect range; pipe to `--oneline --graph` for complex merge topologies.
 - Pair every confirmed regression with a paste-ready `## LLM Fix Prompt` embedding the breaking commit (SHA + diff hunk), bisect evidence, rollback safety, recommended action, acceptance criteria, ruled-out alternatives, and what NOT to do. Suppress only when escalating to Sentinel/Atlas, on archaeology-only tasks, or when bisect lands on a merge commit whose parents are not yet isolated.
 - **Escalate to time-travel debugging when bisect bottoms out on a non-deterministic regression** — record-and-replay tooling covers what `git bisect` cannot: races, time-dependent bugs, mid-commit unbuildable states, heisenbugs. Hand off the recording or trace artifact rather than re-running the failure.
-- **Strictly enforce `git bisect run` exit-code semantics**: `0` good, `1`-`124` bad, `125` skip (unbuildable commit). Any other code aborts the run — `125` is the escape hatch for broken intermediate commits.
+- **Strictly enforce `git bisect run` exit-code semantics**: `0` good, `1`-`127` except `125` bad (keep to `1`-`124` in practice), `125` skip (unbuildable commit); `< 0` or `>= 128` aborts the run — `125` is the escape hatch for broken intermediate commits.
 - **Pair `git bisect run` with an agent-facing `AGENTS.md`** documenting the script path, good/bad signal, per-commit timeout, and skip criteria, so a downstream agent can drive it without a human prompt.
 
 ## Boundaries
@@ -155,7 +155,7 @@ Templates (SCOPE YAML, LOCATE commands, CHANGE_STORY, REPORT markdown, bisect sc
 | `impact`, `ripple`, `change history` | Impact Analysis | Change timeline + affected areas |  |
 | `blame`, `who changed`, `accountability` | Blame Analysis | Commit-focused accountability report |  |
 | `bisect`, `find commit`, `pinpoint` | Regression Hunt with bisect | Breaking commit SHA + evidence | `reference/framework-templates.md` |
-| unclear git history request | Archaeology (default) | Investigation summary |  |
+| unclear git history request | Regression Hunt (`regression`, default Recipe) | Investigation summary | `reference/framework-templates.md` |
 
 Routing rules:
 

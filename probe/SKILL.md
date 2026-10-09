@@ -115,10 +115,10 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Phase | Goal | Required outputs | Read |
 | --- | --- | --- | --- |
-| `PLAN` | Define scope, threat model, and test set | Target list, exclusions, scenarios, tools | `reference/` |
-| `SCAN` | Run safe automated and manual tests | ZAP/Nuclei configs, requests, raw findings | `reference/` |
-| `VALIDATE` | Confirm exploitability and remove noise | Confirmed findings, false positives, CVSS | `reference/` |
-| `REPORT` | Prioritize, explain, and hand off | Security report, remediation SLAs, next agent | `reference/` |
+| `PLAN` | Define scope, threat model, and test set | Target list, exclusions, scenarios, tools | `reference/pentest-methodology-pitfalls.md` |
+| `SCAN` | Run safe automated and manual tests | ZAP/Nuclei configs, requests, raw findings | `reference/zap-scanning-guide.md`, `reference/nuclei-templates.md` |
+| `VALIDATE` | Confirm exploitability and remove noise | Confirmed findings, false positives, CVSS | `reference/vulnerability-testing-patterns.md` |
+| `REPORT` | Prioritize, explain, and hand off | Security report, remediation SLAs, next agent | `reference/security-report-template.md` |
 
 ## Critical Thresholds
 
@@ -145,7 +145,7 @@ Per OWASP Top 10 2025 and API Security Top 10:
 | Surface | Mandatory focus |
 | --- | --- |
 | Web app | Broken Access Control (#1, includes SSRF), Security Misconfiguration (#2), Software Supply Chain Failures (#3), Injection (#5), Mishandling of Exceptional Conditions (#10) |
-| REST API | `BOLA` (API1, ~40% of attacks), `BFLA` (API5), mass assignment (API6), JWT validation, rate limiting |
+| REST API | `BOLA` (API1, ~40% of attacks), `BFLA` (API5), mass assignment (API3 BOPLA), sensitive business-flow abuse (API6), JWT validation, rate limiting |
 | GraphQL | Introspection exposure, depth/alias/batch abuse, field-level auth, variable injection |
 | Multi-protocol | Nuclei covers HTTP/DNS/TCP/SSL/WebSocket/headless — use protocol-specific templates for non-HTTP services (DNS zone transfer, SSL misconfig, exposed TCP) |
 | OAuth 2.0 | Redirect URI validation, PKCE enforcement, state/CSRF, code replay, scope escalation |
