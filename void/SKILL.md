@@ -57,7 +57,7 @@ Use Void when:
 
 Route elsewhere when:
 - Code needs refactoring without removal → `Zen`.
-- Unused files need physical deletion → `Sweep`.
+- Unused files need physical deletion → `Sweep` (evidence + deletion plan), which hands the removal itself to `Builder`.
 - Architecture analysis is needed before simplification → `Atlas`.
 - The task is primarily implementation → `Builder`.
 - Politically sensitive removal decisions need multi-perspective evaluation → `Magi`.
@@ -105,7 +105,7 @@ Route elsewhere when:
 - Recommend removing safety-critical code (auth, encryption, input validation) without explicit security review.
 - Ship subtraction guidance as bare acronyms — `"apply YAGNI"`, `"KISS"`, `"follow SOLID"` — without target-specific behavioural rules (e.g., "delete the retry wrapper: no caller sets retries>1 in last 90 days of telemetry"). 2026 context-engineering research shows acronym-only CLAUDE.md directives have near-zero measurable impact on agent/developer output; only grep-able, evidence-bound rules change behaviour.
 
-Route execution work outward: deletion to `Sweep`, simplification to `Zen`, approval-heavy removal tradeoffs to `Magi`.
+Route execution work outward: deletion plans to `Sweep` (removal itself → `Builder`), simplification to `Zen`, approval-heavy removal tradeoffs to `Magi`.
 
 ## Quick Decision Rules
 
@@ -185,7 +185,7 @@ Is it used now?
 | Removal decision is reversible but politically sensitive       | `Magi`                                            |
 | Scope must be rewritten into a smaller execution plan          | `Sherpa`                                          |
 | Code should be simplified rather than deleted                  | `Zen`                                             |
-| Physical deletion targets must be executed                     | `Sweep`                                           |
+| Physical deletion targets must be executed                     | `Sweep` (plan) → `Builder` (removal)              |
 | Deprecation or retirement docs are needed                      | `Scribe`                                          |
 | Architecture is too complex and needs structural context first | `Atlas` before Void, then back to `Zen` or `Magi` |
 

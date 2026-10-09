@@ -1,6 +1,6 @@
 # Documentation Types & Templates
 
-Purpose: Read this when Quill must scaffold or update changelogs, contributing guides, or OpenAPI examples. For ADR authoring, use `reference/adr-authoring.md` (the `adr` recipe's dedicated MADR-aligned reference) instead.
+Purpose: Read this when Quill must scaffold or update changelogs, contributing guides, or OpenAPI examples. For ADR upkeep, use `reference/adr-authoring.md` (the `adr` recipe's dedicated MADR-aligned reference) instead; new ADRs are authored by Atlas (architecture) or Scribe (other decisions).
 
 Contents:
 - `CHANGELOG.md (Keep a Changelog format)`: release-note structure

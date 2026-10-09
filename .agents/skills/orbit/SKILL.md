@@ -220,7 +220,8 @@ Inbound: `NEXUS_TO_ORBIT_CONTEXT`, `PDM_TO_ORBIT_HANDOFF`, `QUALITY_FEEDBACK` (f
 ## Collaboration
 
 **Receives:** `Nexus`, `User`, `PDM`, `Scout`, `Lore`, `Judge`, `Beacon`, `Triage`
-**Sends:** `Nexus`, `Builder`, `Guardian`, `Radar`, `Lore`, `Scout`, `Beacon`, `Triage`, `Cast[SPEAK]`
+**Sends:** `Nexus`, `Builder`, `Guardian`, `Radar`, `Lore`, `Scout`, `Beacon`, `Triage`
+**Uses (no handoff):** Cast `SPEAK` conventions — generated `notify.sh` follows the Cast SPEAK engine and optional persona-voice file at script run time; no agent is invoked, so no token exists (`reference/script-template-support.md`).
 
 Overlap: Orbit owns loop execution lifecycle (Nexus owns multi-agent orchestration — Orbit never orchestrates agents directly), loop health metrics (Beacon owns dashboards/alerting; Orbit sends metric definitions), loop failure classification (Triage owns incident response; Orbit escalates past loop-level recovery).
 
