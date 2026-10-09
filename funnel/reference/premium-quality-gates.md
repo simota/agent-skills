@@ -75,7 +75,7 @@ When repairing axis A causes axis B to regress in the same stage, do NOT use the
 ## Stage 3 · STRATEGY Gate
 
 **Criteria**:
-- CVR target locked (Median / Top Quartile / Top Decile + chosen target + traffic-source qualifier), calibrated against `conversion-playbook.md` industry baseline; `recipe_alignment_check` PASS
+- CVR target locked (Median / Top Quartile / Top Decile + chosen target + traffic-source qualifier), calibrated against `premium-conversion-playbook.md` industry baseline; `recipe_alignment_check` PASS
 - KPI tree: primary (CVR) + 3–5 secondary metrics (Pulse)
 - Funnel event taxonomy: page_view → engagement → CTA_click → form_start → form_submit → success (Pulse)
 - North-Star metric named and consistent with KPI tree
@@ -98,8 +98,8 @@ When repairing axis A causes axis B to regress in the same stage, do NOT use the
 ## Stage 4 · STRUCTURE Gate
 
 **Criteria**:
-- **Primary scan pattern locked** (F / Z / Layer-cake / Centered axis / Card grid) per `ia-blueprint.md §1.2`
-- **Navigation pattern decided** (no-nav / utility bar / sticky CTA / anchor TOC / mobile bottom bar / exit-intent) per `ia-blueprint.md §1.6`
+- **Primary scan pattern locked** (F / Z / Layer-cake / Centered axis / Card grid) per `premium-ia-blueprint.md §1.2`
+- **Navigation pattern decided** (no-nav / utility bar / sticky CTA / anchor TOC / mobile bottom bar / exit-intent) per `premium-ia-blueprint.md §1.6`
 - Wireframe outline: hero + 5–7 sections (Funnel)
 - **Above-fold component set explicit**: headline + sub-headline + hero CTA + (optional secondary CTA) + hero asset + (optional trust strip) — each present-or-absent decision logged
 - Copy v1 covering: headline, sub-headline, hero CTA, 3–5 benefits, 1+ objection handling, social proof block, FAQ (3–5 Q), final CTA (Funnel + Prose)
@@ -242,14 +242,14 @@ Composite gate enforced at the DESIGN exit (Design / Animation / Branding rubric
 
 | Axis | Rubric | Threshold | Owner | Source |
 |------|--------|-----------|-------|--------|
-| **Design** | Visual Hierarchy Rubric (9 criteria × 3 points; Hero-Contract Legibility added) | ≥ 20/27 | Vision + Muse + Palette + `funnel premium` (or Atelier — rubric still enforced) | `craft-standards.md` § Design Discipline |
-| **Animation** | Motion Quality Rubric (5 criteria × 4 points) — INP ≤50ms is hard ceiling, NOT a rubric criterion | ≥ 15/20 | Flow + Muse + Bolt | `craft-standards.md` § Animation Discipline |
-| **Branding** | Brand Quality Rubric (6 criteria × 4 points; Trust-Signal Density added) | ≥ 17/24 | Vision + Saga + Compete + Prose | `craft-standards.md` § Branding Discipline |
-| **Marketing** | CVR target + messaging hierarchy + variant queued | CVR target met (industry-calibrated, recipe-aligned, traffic-source qualified); first A/B variant designed; analytics events live | Funnel + Pulse + Growth + Experiment + Magi | `conversion-playbook.md` |
-| **SEO (Technical)** | Technical SEO Audit Checklist (extended set) | 100% checked | Growth + Bolt + Polyglot | `ia-blueprint.md` § 2 |
-| **SEO (Content)** | Intent alignment + keyword discipline + E-E-A-T signals + Author entity | Intent matched (incl. Answer-Engine intent if applicable); primary keyword aligned across title/H1/first paragraph; ≥ 2 E-E-A-T signals visible; Author entity with sameAs to authoritative profiles | Growth + Prose | `ia-blueprint.md` § 3 |
-| **GEO** | GEO Quality Rubric (5 criteria × 4 points) on /20 scale only | ≥ 15/20 | Growth | `ia-blueprint.md` § 4 |
-| **IA** | IA Quality Rubric (5 criteria × 4 points) | ≥ 15/20 | Funnel + Canvas + Echo + Prose | `ia-blueprint.md` § 1 |
+| **Design** | Visual Hierarchy Rubric (9 criteria × 3 points; Hero-Contract Legibility added) | ≥ 20/27 | Vision + Muse + Palette + `funnel premium` (or Atelier — rubric still enforced) | `premium-craft-standards.md` § Design Discipline |
+| **Animation** | Motion Quality Rubric (5 criteria × 4 points) — INP ≤50ms is hard ceiling, NOT a rubric criterion | ≥ 15/20 | Flow + Muse + Bolt | `premium-craft-standards.md` § Animation Discipline |
+| **Branding** | Brand Quality Rubric (6 criteria × 4 points; Trust-Signal Density added) | ≥ 17/24 | Vision + Saga + Compete + Prose | `premium-craft-standards.md` § Branding Discipline |
+| **Marketing** | CVR target + messaging hierarchy + variant queued | CVR target met (industry-calibrated, recipe-aligned, traffic-source qualified); first A/B variant designed; analytics events live | Funnel + Pulse + Growth + Experiment + Magi | `premium-conversion-playbook.md` |
+| **SEO (Technical)** | Technical SEO Audit Checklist (extended set) | 100% checked | Growth + Bolt + Polyglot | `premium-ia-blueprint.md` § 2 |
+| **SEO (Content)** | Intent alignment + keyword discipline + E-E-A-T signals + Author entity | Intent matched (incl. Answer-Engine intent if applicable); primary keyword aligned across title/H1/first paragraph; ≥ 2 E-E-A-T signals visible; Author entity with sameAs to authoritative profiles | Growth + Prose | `premium-ia-blueprint.md` § 3 |
+| **GEO** | GEO Quality Rubric (5 criteria × 4 points) on /20 scale only | ≥ 15/20 | Growth | `premium-ia-blueprint.md` § 4 |
+| **IA** | IA Quality Rubric (5 criteria × 4 points) | ≥ 15/20 | Funnel + Canvas + Echo + Prose | `premium-ia-blueprint.md` § 1 |
 
 ### Axis Repair Workflow
 

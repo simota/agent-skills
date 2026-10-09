@@ -4,7 +4,7 @@
 
 The 2026 privacy landscape compresses three trends into a single operating reality:
 
-- **EU AI Act** — high-risk obligations (Annex III) bind on **2 Aug 2026**; the GDPR penalty regime applies *concurrently*. New penalty ceiling adds `€35M / 7%` of global turnover for prohibited practices, `€15M / 3%` for high-risk non-compliance. See `canon/reference/regulatory-gdpr-eu-ai-act.md` § EU AI Act Enforcement Timeline for the full timeline.
+- **EU AI Act** — high-risk obligations (Annex III) bind on **2 Dec 2027** (deferred from 2 Aug 2026 by the Digital Omnibus on AI, in force 27 Jul 2026); the GDPR penalty regime applies *concurrently*. New penalty ceiling adds `€35M / 7%` of global turnover for prohibited practices, `€15M / 3%` for high-risk non-compliance. See `canon/reference/regulatory-gdpr-eu-ai-act.md` § EU AI Act Enforcement Timeline for the full timeline.
 - **US state laws fragmenting** — `19+` US states have comprehensive privacy laws in effect by Jan 2026 (Indiana, Kentucky, Rhode Island added in Jan 2026; Texas Responsible AI Governance Act and Colorado AI Act follow). Treat "is this a CCPA-only project?" as obsolete framing; any consumer-facing US product needs a state-by-state applicability matrix.
 - **GDPR fines hit €7.1B cumulative** — the regulators are *enforcing*, not warning. Treat 72-hour breach notification and DPIA-before-launch as hard deadlines, not aspirational ones.
 
@@ -200,11 +200,11 @@ When a project triggers more than one regime, **penalties apply concurrently** �
 
 ## 2026 Regulatory Landscape (SKILL.md excerpt)
 
-**EU AI Act (full enforcement August 2026):** High-risk AI systems processing personal data trigger both a Fundamental Rights Impact Assessment (FRIA, Art. 27) and a GDPR DPIA (Art. 35). Data governance requirements (Art. 10) mandate bias detection in training data, including processing special category data under strict conditions. Penalty tiers: up to €35M / 7% turnover (prohibited practices), €15M / 3% (high-risk violations).
+**EU AI Act (Annex III high-risk obligations from 2 Dec 2027 after the Digital Omnibus deferral):** High-risk AI systems processing personal data trigger both a Fundamental Rights Impact Assessment (FRIA, Art. 27) and a GDPR DPIA (Art. 35). Data governance requirements (Art. 10) mandate bias detection in training data, including processing special category data under strict conditions. Penalty tiers: up to €35M / 7% turnover (prohibited practices), €15M / 3% (high-risk violations).
 
 **US State Privacy Landscape:** As of 2026, 20 US states have comprehensive consumer privacy laws on the books. Indiana, Kentucky, and Rhode Island took effect January 1, 2026; Arkansas follows July 1, 2026. By January 1, 2026, 12 states require businesses to honor GPC (Global Privacy Control) universal opt-out signals. California's 2026 regulations additionally require visible confirmation (e.g., "Opt-Out Request Honored") when a GPC signal is processed. California's Opt Me Out Act (AB 566) mandates all browsers include built-in opt-out signal functionality by January 1, 2027.
 
-**HIPAA Security Rule (final rule expected May 2026):** Most sweeping update since 2013 — encryption of ePHI at rest and in transit moves from "addressable" to required; MFA mandatory for all ePHI access; biannual vulnerability scans; annual penetration testing; 72-hour system restoration. Critical for HealthTech projects.
+**HIPAA Security Rule (NPRM Jan 2025; final rule not issued — HHS target moved from May 2026 to July 2027):** Proposed changes are the most sweeping update since 2013 — encryption of ePHI at rest and in transit moves from "addressable" to required; MFA mandatory for all ePHI access; biannual vulnerability scans; annual penetration testing; 72-hour system restoration. Critical for HealthTech projects.
 
 **Frameworks:** NIST Privacy Framework 1.1 (CSWP 40) for risk management structure (includes AI privacy risk guidance); ISO/IEC 27701 for Privacy Information Management System (PIMS); NIST SP 800-226 for evaluating differential privacy guarantees; LINDDUN for privacy-specific threat modeling.
 

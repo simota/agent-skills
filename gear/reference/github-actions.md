@@ -1,6 +1,6 @@
 # GitHub Actions Templates
 
-> **Note:** For advanced GHA workflow design (trigger strategy, security hardening, performance optimization, PR automation, Reusable/Composite design, monorepo CI, self-hosted runners), see the **Gear[gha]** agent (`pipe/SKILL.md`).
+> **Note:** For advanced GHA workflow design (trigger strategy, security hardening, performance optimization, PR automation, Reusable/Composite design, monorepo CI, self-hosted runners), see the **Gear[gha]** agent (`reference/gha-*.md`).
 
 CI/CD workflow templates, composite actions, reusable workflows, OIDC authentication, and security scanning.
 
@@ -138,7 +138,7 @@ description: 'Common setup for Node.js projects with pnpm'
 inputs:
   node-version:
     description: 'Node.js version'
-    default: '20'
+    default: '24'
   install-deps:
     description: 'Run pnpm install'
     default: 'true'
@@ -153,7 +153,7 @@ Usage in workflows:
 ```yaml
 - uses: ./.github/actions/setup-node-pnpm
   with:
-    node-version: '20'
+    node-version: '24'
 ```
 
 ---
@@ -169,7 +169,7 @@ on:
     inputs:
       node-version:
         type: string
-        default: '20'
+        default: '24'
       run-e2e:
         type: boolean
         default: false
@@ -190,13 +190,13 @@ permissions:
   contents: read
 
 steps:
-  - uses: aws-actions/configure-aws-credentials@v4
+  - uses: aws-actions/configure-aws-credentials@v6
     with:
       role-to-assume: arn:aws:iam::123456789:role/github-actions
       aws-region: ap-northeast-1
 
 # GCP without secrets
-  - uses: google-github-actions/auth@v2
+  - uses: google-github-actions/auth@v3
     with:
       workload_identity_provider: 'projects/123/locations/global/workloadIdentityPools/github/providers/github'
 # ...
@@ -254,7 +254,7 @@ steps:
 
 Canonical detail behind the Core Contract bullet in `SKILL.md`.
 
-- **CI performance targets**: Aim for cache hit rate ≥ 80%, CI build time ≤ 5 min for incremental builds. Dependency caching reduces Node.js job times by 60–80%. Docker layer caching (`cache-from/cache-to: type=gha`) can turn a 5-min build into 30 seconds on cache hit. Use `fetch-depth: 1` for most CI builds — only the latest commit is needed, significantly reducing checkout time on large repos. Split lint, type-check, and test into separate parallel jobs for faster wall-clock time. Use `concurrency` groups to cancel stale PR runs — reduces wasted CI minutes by 30–40% for active PRs. Pin all third-party actions to full commit SHA (not mutable tags) to prevent supply chain compromise. Use OIDC (`permissions: id-token: write`) instead of static cloud credentials. Set explicit `permissions` at the job level (least privilege). **arm64 runners GA** (2024-09-03): use `ubuntu-24.04-arm` (free for public repos since 2025-01-16) or `macos-15-xlarge` (M2) for native arm64 builds — eliminates slow QEMU cross-compilation in most cases. [Source: [arm64 runners GA](https://github.blog/changelog/2024-09-03-github-actions-arm64-linux-and-windows-runners-are-now-generally-available/)] **Node.js 20 deprecated in GHA** (2025-09-19): runners default to Node 24 since 2026-06-16; Node 20 removed 2026-09-16. Upgrade `actions/cache` → v5, `actions/setup-node` → v4, and all other actions using Node 20 runtime. [Source: [Node 20 deprecation](https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/)] **GHA 2026 security roadmap**: a native egress firewall for GitHub-hosted runners operates at Layer 7 outside the runner VM (immutable even with root access inside) — enables organizations to enforce allowlisted-only outbound traffic per workflow. A `dependencies:` section in workflow YAML (like Go's `go.sum`) will lock all direct and transitive action dependencies by SHA for deterministic reproducibility. Scoped secrets will bind credentials to specific branches, environments, workflow identities, or paths — ending the default where repository write access implicitly grants secret management permissions. Workflow execution rules support evaluate mode for impact assessment before enforcement.
+- **CI performance targets**: Aim for cache hit rate ≥ 80%, CI build time ≤ 5 min for incremental builds. Dependency caching reduces Node.js job times by 60–80%. Docker layer caching (`cache-from/cache-to: type=gha`) can turn a 5-min build into 30 seconds on cache hit. Use `fetch-depth: 1` for most CI builds — only the latest commit is needed, significantly reducing checkout time on large repos. Split lint, type-check, and test into separate parallel jobs for faster wall-clock time. Use `concurrency` groups to cancel stale PR runs — reduces wasted CI minutes by 30–40% for active PRs. Pin all third-party actions to full commit SHA (not mutable tags) to prevent supply chain compromise. Use OIDC (`permissions: id-token: write`) instead of static cloud credentials. Set explicit `permissions` at the job level (least privilege). **arm64 runners GA** (2024-09-03): use `ubuntu-24.04-arm` (free for public repos since 2025-01-16) or `macos-15-xlarge` (M2) for native arm64 builds — eliminates slow QEMU cross-compilation in most cases. [Source: [arm64 runners GA](https://github.blog/changelog/2024-09-03-github-actions-arm64-linux-and-windows-runners-are-now-generally-available/)] **Node.js 20 deprecated in GHA** (2025-09-19): runners default to Node 24 since 2026-06-16; Node 20 removed 2026-09-16. Upgrade `actions/cache` → v5, `actions/setup-node` → v5+, and all other actions using Node 20 runtime. [Source: [Node 20 deprecation](https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/)] **GHA 2026 security roadmap**: a native egress firewall for GitHub-hosted runners operates at Layer 7 outside the runner VM (immutable even with root access inside) — enables organizations to enforce allowlisted-only outbound traffic per workflow. A `dependencies:` section in workflow YAML (like Go's `go.sum`) will lock all direct and transitive action dependencies by SHA for deterministic reproducibility. Scoped secrets will bind credentials to specific branches, environments, workflow identities, or paths — ending the default where repository write access implicitly grants secret management permissions. Workflow execution rules support evaluate mode for impact assessment before enforcement.
 
 ## DORA Alignment
 

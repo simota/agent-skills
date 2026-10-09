@@ -74,16 +74,20 @@ const valid = await argon2.verify(hash, password);
 ### Secure JWT Configuration
 
 ```typescript
+// `jose` — `jsonwebtoken` does not support EdDSA
+import { SignJWT, jwtVerify } from 'jose';
+
 // Signing (Ed25519 recommended)
-const token = jwt.sign(payload, privateKey, {
-  algorithm: 'EdDSA',
-  expiresIn: '15m',     // Short-lived access tokens
-  issuer: 'your-app',
-  audience: 'your-api',
-});
+const token = await new SignJWT(payload)
+  .setProtectedHeader({ alg: 'EdDSA' })
+  .setIssuer('your-app')
+  .setAudience('your-api')
+  .setIssuedAt()
+  .setExpirationTime('15m')   // Short-lived access tokens
+  .sign(privateKey);
 
 // Verification (always validate)
-const verified = jwt.verify(token, publicKey, {
+const { payload: verified } = await jwtVerify(token, publicKey, {
   algorithms: ['EdDSA'],  // Whitelist allowed algorithms
   issuer: 'your-app',
   audience: 'your-api',

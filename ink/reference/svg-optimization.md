@@ -189,7 +189,7 @@ Pre / post commit checklist per icon:
 
 | Metric | Target |
 |--------|--------|
-| File size | ≤ 2 KB (icon) / ≤ 8 KB (illustration) / ≤ 200 B per symbol in sprite |
+| File size | ≤ 4 KB (icon) / ≤ 8 KB (illustration) / ≤ 200 B per symbol in sprite |
 | Path count | Minimum needed |
 | Decimal precision | 2 (icons) / 3 (illustrations) |
 | viewBox preserved | yes |
@@ -264,7 +264,7 @@ svg_optimization:
   per_icon_target_bytes: 200_to_600
   build_pipeline:
     tool: vite_plugin_svgo
-    ci_check: file_size_under_2kb_per_icon
+    ci_check: file_size_under_4kb_per_icon
   cache:
     hash_versioned: yes
     cache_control: max-age=31536000

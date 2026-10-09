@@ -16,7 +16,7 @@ Overlap with Gear `secret` is intentional: the same platform (e.g., Vault) serve
 | Provider | Pick when | Skip when |
 |----------|-----------|-----------|
 | AWS KMS | Already on AWS, envelope + S3/EBS/RDS integration | Multi-cloud; per-operation KMS cost unacceptable at your QPS |
-| AWS KMS (CloudHSM-backed CMK) | FIPS 140-2 Level 3, tenant-isolated HSM required | Cost-sensitive workloads |
+| AWS KMS (CloudHSM-backed CMK) | FIPS 140-3 Level 3, tenant-isolated HSM required | Cost-sensitive workloads |
 | GCP Cloud KMS | Already on GCP, Cloud HSM tier for HSM-backed keys | AWS-native ecosystem |
 | Azure Key Vault (Managed HSM) | Azure-native, FIPS 140-3 Level 3 HSM required | Non-Azure stacks |
 | HashiCorp Vault Transit | Multi-cloud / on-prem, encryption-as-a-service without exposing keys | No team to operate Vault HA |

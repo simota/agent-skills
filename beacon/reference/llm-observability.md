@@ -12,23 +12,22 @@ OpenTelemetry defines standardized attribute names for AI/LLM telemetry under th
 
 | Attribute | Type | Description |
 |-----------|------|-------------|
-| `gen_ai.system` | string | Provider name (e.g., `openai`, `anthropic`, `vertex_ai`) |
+| `gen_ai.provider.name` | string | Provider name (e.g., `openai`, `anthropic`, `gcp.vertex_ai`). Replaced the deprecated `gen_ai.system` in v1.37; older instrumentations may still emit the old name, so match both while migrating |
 | `gen_ai.operation.name` | string | Operation type (`chat`, `text_completion`, `embeddings`) |
 | `gen_ai.request.model` | string | Requested model ID (e.g., `gpt-5.6`, `claude-opus-5`) |
 | `gen_ai.response.model` | string | Model actually used in response |
 | `gen_ai.usage.input_tokens` | int | Number of input/prompt tokens consumed |
 | `gen_ai.usage.output_tokens` | int | Number of output/completion tokens generated |
-| `gen_ai.usage.total_tokens` | int | Total tokens (input + output) |
 | `gen_ai.request.temperature` | double | Sampling temperature |
 | `gen_ai.request.max_tokens` | int | Token limit set in request |
-| `gen_ai.response.finish_reason` | string | Completion reason (`stop`, `length`, `tool_calls`, `content_filter`) |
+| `gen_ai.response.finish_reasons` | string[] | Completion reason per choice (`stop`, `length`, `tool_calls`, `content_filter`) |
 | `gen_ai.response.id` | string | Response identifier from provider |
 
 ### Key Metrics
 
 | Metric | Unit | Description |
 |--------|------|-------------|
-| `gen_ai.client.token.usage` | `{token}` | Histogram of token usage per request (split by `token.type`) |
+| `gen_ai.client.token.usage` | `{token}` | Histogram of token usage per request (split by `gen_ai.token.type`: `input` / `output`) |
 | `gen_ai.client.operation.duration` | `s` | Histogram of LLM call duration |
 | `gen_ai.server.request.duration` | `s` | Server-side request duration (for self-hosted models) |
 | `gen_ai.server.time_to_first_token` | `s` | Time from request to first token in streaming response |
@@ -38,9 +37,12 @@ OpenTelemetry defines standardized attribute names for AI/LLM telemetry under th
 Do NOT include prompt content or response content as span attributes — they are high-cardinality and may contain PII. Use span events instead for optional, sampled capture.
 
 ```python
-# Correct: use span events for prompt content (opt-in, sampled)
-span.add_event("gen_ai.content.prompt", {"gen_ai.prompt": prompt_text})
-span.add_event("gen_ai.content.completion", {"gen_ai.completion": response_text})
+# Correct: opt-in, sampled content capture on the v1.37+ event
+# (the per-message gen_ai.content.prompt / gen_ai.content.completion events are deprecated)
+span.add_event("gen_ai.client.inference.operation.details", {
+    "gen_ai.input.messages": json.dumps(input_messages),
+    "gen_ai.output.messages": json.dumps(output_messages),
+})
 ```
 
 ---
@@ -102,19 +104,18 @@ Derive cost as a computed metric in the collector or Grafana:
 
 ```yaml
 # Prometheus recording rule example
-# NOTE: per-token multipliers below (0.000003 / 0.000015) equal claude-sonnet-5's
-# standard post-2026-09-01 rate ($3.00 / $15.00 per 1M tokens; see the pricing
-# table above). The intro rate through 2026-08-31 is lower ($2.00 / $10.00 per
-# 1M, i.e. 0.000002 / 0.000010) — swap multipliers on that date if this rule
-# must track intro pricing until then.
+# NOTE: per-token multipliers below (0.000002 / 0.000010) equal claude-sonnet-5's
+# first-party list rate as of 2026-10 ($2.00 / $10.00 per 1M input / output
+# tokens). Re-check the vendor pricing page before use; cache reads/writes and
+# partner-platform (Bedrock / Vertex) rates differ.
 - record: llm_request_cost_usd
   expr: |
     (
-      gen_ai_client_token_usage_total{token_type="input", gen_ai_system="anthropic", gen_ai_request_model="claude-sonnet-5"}
-      * 0.000003
+      gen_ai_client_token_usage_sum{gen_ai_token_type="input", gen_ai_provider_name="anthropic", gen_ai_request_model="claude-sonnet-5"}
+      * 0.000002
     ) + (
-      gen_ai_client_token_usage_total{token_type="output", gen_ai_system="anthropic", gen_ai_request_model="claude-sonnet-5"}
-      * 0.000015
+      gen_ai_client_token_usage_sum{gen_ai_token_type="output", gen_ai_provider_name="anthropic", gen_ai_request_model="claude-sonnet-5"}
+      * 0.000010
     )
 ```
 
@@ -145,7 +146,7 @@ Derive cost as a computed metric in the collector or Grafana:
 | **Relevance score** | How relevant the response is to the input intent | Embedding cosine similarity or LLM scoring |
 | **Faithfulness** | Whether the response is grounded in provided context (RAG) | RAG evaluation framework (RAGAS, DeepEval) |
 | **Latency P50/P95/P99** | Response time distribution | `gen_ai.client.operation.duration` histogram |
-| **Refusal rate** | Proportion of requests refused by content filter | `gen_ai.response.finish_reason=content_filter` |
+| **Refusal rate** | Proportion of requests refused by content filter | `gen_ai.response.finish_reasons` contains `content_filter` |
 | **Tool call success rate** | Success ratio of agent tool invocations | Custom span attribute + error flag |
 | **Retry rate** | How often LLM calls are retried due to errors | Custom counter |
 
@@ -197,19 +198,19 @@ Row 4: Cost Analysis
   └── Projected monthly cost (stat + budget threshold line)
 
 Row 5: Traces
-  └── Tempo trace explorer link filtered by gen_ai.system
+  └── Tempo trace explorer link filtered by gen_ai.provider.name
 ```
 
 ### Key Grafana Variables
 
 ```yaml
 variables:
-  - name: gen_ai_system
-    query: label_values(gen_ai_client_token_usage_total, gen_ai_system)
+  - name: gen_ai_provider_name
+    query: label_values(gen_ai_client_token_usage_sum, gen_ai_provider_name)
   - name: model
-    query: label_values(gen_ai_client_token_usage_total{gen_ai_system="$gen_ai_system"}, gen_ai_request_model)
+    query: label_values(gen_ai_client_token_usage_sum{gen_ai_provider_name="$gen_ai_provider_name"}, gen_ai_request_model)
   - name: environment
-    query: label_values(gen_ai_client_token_usage_total, environment)
+    query: label_values(gen_ai_client_token_usage_sum, environment)
 ```
 
 ---

@@ -160,7 +160,7 @@ These agents may be invoked at any stage based on signal, not stage:
 
 ## Axis Ownership Map
 
-Six quality axes mapped to agent clusters. `funnel premium` is the conductor; each axis has a lead and supporting cast. Rubrics live in `craft-standards.md` and `ia-blueprint.md`.
+Six quality axes mapped to agent clusters. `funnel premium` is the conductor; each axis has a lead and supporting cast. Rubrics live in `premium-craft-standards.md` and `premium-ia-blueprint.md`.
 
 ### Design Axis
 

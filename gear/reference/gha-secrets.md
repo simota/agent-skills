@@ -23,7 +23,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: aws-actions/configure-aws-credentials@v4
+      - uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: arn:aws:iam::111122223333:role/gha-deploy
           aws-region: us-east-1
@@ -41,7 +41,7 @@ Trust policy condition example (scope to repo, branch, environment):
 ### GCP
 
 ```yaml
-- uses: google-github-actions/auth@v2
+- uses: google-github-actions/auth@v3
   with:
     workload_identity_provider: projects/123/locations/global/workloadIdentityPools/gha/providers/github
     service_account: gha@project.iam.gserviceaccount.com

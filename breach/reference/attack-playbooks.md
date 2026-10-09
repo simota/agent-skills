@@ -6,20 +6,22 @@
 
 ---
 
-## OWASP Top 10 (2021/2025) Attack Playbook
+## OWASP Top 10 (2025) Attack Playbook
+
+IDs follow OWASP Top 10:2025. The 2021 numbering differs (2021 A10 SSRF is folded into 2025 A01; 2021 A06 Vulnerable Components broadened into 2025 A03).
 
 | # | Vulnerability | Attack Technique | Test Approach |
 |---|--------------|------------------|---------------|
-| A01 | Broken Access Control | IDOR, forced browsing, privilege escalation, JWT manipulation | Enumerate resources with different auth levels; test horizontal/vertical access |
-| A02 | Cryptographic Failures | Weak algorithms, missing encryption, key exposure | Check TLS config, storage encryption, key management |
-| A03 | Injection | SQLi, NoSQLi, Command injection, LDAP injection | Parameterized input testing with payloads across all input vectors |
-| A04 | Insecure Design | Business logic flaws, missing rate limits, abuse cases | Threat model the design; test business logic edge cases |
-| A05 | Security Misconfiguration | Default credentials, verbose errors, unnecessary features | Configuration audit against CIS benchmarks |
-| A06 | Vulnerable Components | Known CVEs in dependencies, outdated libraries | Dependency scanning, version checking, exploit verification |
-| A07 | Auth Failures | Credential stuffing, brute force, session fixation | Test auth flows, session management, password policies |
-| A08 | Data Integrity Failures | Insecure deserialization, unsigned updates, CI/CD compromise | Test serialization, verify update integrity, audit pipeline |
-| A09 | Logging Failures | Missing security logs, log injection, monitoring gaps | Verify critical events are logged; test log integrity |
-| A10 | SSRF | Internal service access, cloud metadata, port scanning | Test URL inputs for internal resource access |
+| A01 | Broken Access Control (incl. SSRF) | IDOR, forced browsing, privilege escalation, JWT manipulation, SSRF to internal services / cloud metadata | Enumerate resources with different auth levels; test horizontal/vertical access; test URL inputs for internal resource access |
+| A02 | Security Misconfiguration | Default credentials, verbose errors, unnecessary features | Configuration audit against CIS benchmarks |
+| A03 | Software Supply Chain Failures | Known CVEs in dependencies, outdated libraries, compromised packages / build pipeline | Dependency scanning, version checking, exploit verification, CI/CD audit |
+| A04 | Cryptographic Failures | Weak algorithms, missing encryption, key exposure | Check TLS config, storage encryption, key management |
+| A05 | Injection | SQLi, NoSQLi, Command injection, LDAP injection | Parameterized input testing with payloads across all input vectors |
+| A06 | Insecure Design | Business logic flaws, missing rate limits, abuse cases | Threat model the design; test business logic edge cases |
+| A07 | Authentication Failures | Credential stuffing, brute force, session fixation | Test auth flows, session management, password policies |
+| A08 | Software or Data Integrity Failures | Insecure deserialization, unsigned updates | Test serialization, verify update integrity |
+| A09 | Security Logging and Alerting Failures | Missing security logs, log injection, monitoring gaps | Verify critical events are logged and alerted; test log integrity |
+| A10 | Mishandling of Exceptional Conditions | Fail-open error paths, unhandled exceptions leaking state, resource exhaustion on error | Force error paths (malformed input, timeouts, dependency failure); verify fail-closed behavior |
 
 ---
 

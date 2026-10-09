@@ -434,10 +434,12 @@ StatusLine JSON input fields: `workspace`, `model`, `cost`, `context_window`, `s
 
 | Model | ID | Recommendation |
 |-------|-----|----------------|
-| Claude Fable 5 | `claude-fable-5` | Highest capability; frontier reasoning, long-running agents. Effort defaults to `high` |
-| Claude Opus 5 | `claude-opus-5` | Complex agentic coding and enterprise work; 1M context. Effort defaults to **`high`** on Claude Code — set `xhigh` explicitly for coding/agentic work |
-| Claude Sonnet 5 | `claude-sonnet-5` | Balanced performance and speed; effort defaults to `high` |
-| Claude Haiku 4.5 | `claude-haiku-4-5-20251001` | Fast; simple tasks |
+| Claude Fable 5.1 | `claude-fable-5-1` | Highest capability; frontier reasoning, long-running agents. Thinking always on; effort defaults to `high` |
+| Claude Opus 5.5 | `claude-opus-5-5` | Complex agentic coding and enterprise work; 1M context. API effort defaults to **`medium`** (one level below Opus 5) — set `high`/`xhigh` explicitly for coding/agentic work |
+| Claude Sonnet 5.5 | `claude-sonnet-5-5` | Balanced performance and speed; effort defaults to `high` |
+| Claude Haiku 5.5 | `claude-haiku-5-5` | Fast; simple tasks. Effort defaults to `medium` |
+
+Previous generation still served: `claude-fable-5`, `claude-opus-5`, `claude-sonnet-5`, `claude-haiku-4-5` (model list as of 2026-10; verify with `GET /v1/models`).
 
 > `ultracode` in the Claude Code effort menu is not an API effort level — it pairs `xhigh` with standing permission to launch multi-agent workflows.
 

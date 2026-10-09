@@ -40,16 +40,16 @@ If the question is "what article applies and what evidence does the DPA expect?"
 
 General-purpose AI (GPAI) models have separate transparency + copyright obligations from August 2025; systemic-risk GPAI adds evaluation, incident reporting, and cybersecurity duties.
 
-### EU AI Act Enforcement Timeline (2026-05 anchor)
+### EU AI Act Enforcement Timeline (2026-10 anchor, as amended by the Digital Omnibus on AI)
 
 | Phase | Date | What is binding |
 |-------|------|------------------|
 | Prohibited practices (Art. 5) | **In force since Feb 2025** | Social scoring, real-time public biometric ID, workplace emotion recognition — no grace period |
 | GPAI transparency + copyright (Art. 53-55) | **In force since 2 Aug 2025** | Technical documentation to EU AI Office, downstream-provider support packs, copyright respect, training-data summaries |
-| **Annex III high-risk AI systems** | **2 Aug 2026** | Conformity assessment, FRIA, EU database registration, post-market monitoring, human oversight, robustness + accuracy + cybersecurity controls |
-| AI systems embedded in regulated products | 2 Aug 2027 | Full application across product-safety regulated sectors |
+| **Annex III high-risk AI systems** | **2 Dec 2027** (deferred from 2 Aug 2026) | Conformity assessment, FRIA, EU database registration, post-market monitoring, human oversight, robustness + accuracy + cybersecurity controls |
+| AI systems embedded in regulated products (Annex I) | 2 Aug 2028 (deferred from 2 Aug 2027) | Full application across product-safety regulated sectors |
 
-The European Commission's *Digital Omnibus* package (proposed late 2025) may push Annex III high-risk obligations to **December 2027**, but the extension is not guaranteed. **Plan against `2026-08-02` as the binding deadline** and treat any extension as a windfall — vendor-procurement gates and customer due diligence already assume the August 2026 date.
+The *Digital Omnibus on AI* (proposed Nov 2025; published in the Official Journal 24 Jul 2026, in force 27 Jul 2026) deferred the high-risk dates above. It moved dates only — the high-risk obligations themselves are unchanged. Not deferred: Art. 5 prohibitions, GPAI obligations, and Art. 50 transparency (applicable from 2 Aug 2026). Plan against `2027-12-02` for Annex III, and expect customer due diligence written before the Omnibus to still cite August 2026.
 
 ### Penalty Ladder (Art. 99)
 
@@ -130,7 +130,7 @@ RESPOND   →  send within 30 days; communicate free of charge unless manifestly
 - Using Art. 49 derogations as an ongoing transfer basis instead of a one-off exception.
 - "Legitimate interest" applied to AI training on user data without LIA documentation or opt-out path — the UK ICO and EDPB have both pushed back on this pattern.
 - DPIA written after launch — Art. 35(1) requires it **prior to** processing.
-- Treating EU AI Act obligations as 2027 work — prohibited-use bans were enforceable from Feb 2025, GPAI transparency obligations from Aug 2025, Annex III high-risk obligations from **2 Aug 2026**. The Digital Omnibus extension to Dec 2027 is a *possibility*, never an *assumption* — vendor procurement gates already price in the August 2026 date.
+- Treating EU AI Act obligations as 2027 work — prohibited-use bans were enforceable from Feb 2025, GPAI transparency obligations from Aug 2025, Art. 50 transparency from 2 Aug 2026, and Annex III high-risk obligations from **2 Dec 2027** (deferred by the Digital Omnibus on AI, in force 27 Jul 2026). Deferred is not removed: conformity assessment work for a Dec 2027 launch starts now.
 - Confusing DPA (controller-processor contract, Art. 28) with DPIA (impact assessment, Art. 35) — they are different instruments.
 - Running DSAR search only against the primary database and missing logs, backups, analytics warehouses, and subprocessor systems.
 

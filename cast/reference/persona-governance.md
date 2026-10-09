@@ -123,7 +123,7 @@ EU AI Act milestones to keep on the calendar (high-risk and GPAI scope):
 
 - **2025-08-02**: GPAI obligations + AI Office operational.
 - **2026-08-02**: GPAI penalties applicable.
-- **2026-08-02**: High-risk AI systems obligations enter into force (most provisions of Title III).
+- **2027-12-02**: Annex III high-risk AI system obligations apply (deferred from 2026-08-02 by the Digital Omnibus on AI, in force 2026-07-27); Annex I product-embedded systems follow on 2028-08-02.
 - **2027-08-02**: Pre-existing GPAI models (placed on market before 2025-08-02) full compliance.
 
 When a persona set materially feeds an EU-scope AI system, schedule a governance review aligned with the next applicable milestone.

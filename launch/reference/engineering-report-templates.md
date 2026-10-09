@@ -202,7 +202,7 @@ jq -r '
 
 ## AI Reviewer Caveat (2026)
 
-GitHub Copilot Code Review reached GA in 2025-04 (`docs.github.com/en/copilot/concepts/agents/code-review`) and starting 2026-06-01 will consume GitHub Actions minutes (`github.blog/changelog/2026-04-27-...`). When Launch reports include review-cycle or approval data:
+GitHub Copilot Code Review reached GA in 2025-04 (`docs.github.com/en/copilot/concepts/agents/code-review`) and since 2026-06-01 consumes GitHub Actions minutes (`github.blog/changelog/2026-04-27-...`). When Launch reports include review-cycle or approval data:
 - Tag reviews authored by `@copilot` or the Copilot reviewer account separately from human reviewers.
 - Do not count Copilot review comments as human approval — Copilot leaves a "Comment" review only, never "Approve" or "Request changes", and it does not satisfy required-approval branch protection.
 - For quality-trend reports comparing pre/post-Copilot adoption windows, follow the same caveat pattern as the DORA AI period note in `engineering-metrics-pitfalls.md`.
