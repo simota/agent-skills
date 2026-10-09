@@ -42,7 +42,7 @@ Stop and ask (per Boundaries → Ask First) if no stack/conventions are detectab
 
 ## MAP: task → mechanism
 
-For each recurring task or pain point from SURVEY, pick the cheapest mechanism that solves it. Use `_common/MECHANISM_SELECTION.md` for the hook / scoped rule / subagent / skill choice; `recipe` and `workflow` are **Sigil[blueprint]-local mechanisms** defined here and in `recipe-design.md` / `workflow-design.md` (the `_common` file does not cover them). Combined summary:
+For each recurring task or pain point from SURVEY, pick the cheapest mechanism that solves it. Use `_common/MECHANISM_SELECTION.md` for the hook / scoped rule / subagent / skill choice; `recipe` and `workflow` are **Sigil[blueprint]-local mechanisms** defined here and in `operating-layer-recipe-design.md` / `operating-layer-workflow-design.md` (the `_common` file does not cover them). Combined summary:
 
 | The task is... | Mechanism | Owner (delegate to) |
 |----------------|-----------|---------------------|
@@ -76,7 +76,7 @@ The MAP deliverable. One row per recurring task.
 
 ## Suite Plan format
 
-The DESIGN deliverable skeleton (detail filled by `recipe-design.md` / `workflow-design.md`).
+The DESIGN deliverable skeleton (detail filled by `operating-layer-recipe-design.md` / `operating-layer-workflow-design.md`).
 
 ```yaml
 suite_plan:

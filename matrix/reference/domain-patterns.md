@@ -147,7 +147,7 @@ Typical axes:
 
 | Axis | Common values | Priority |
 |---|---|---|
-| runtime_version | Node.js 20, 22, 24 (Node 18 reached EOL 2025-04) / Python 3.11, 3.12, 3.13 (Python 3.9 EOL 2025-10, 3.10 EOL 2026-10) | high |
+| runtime_version | Node.js 22, 24 (Node 18 reached EOL 2025-04, Node 20 EOL 2026-04) / Python 3.11, 3.12, 3.13, 3.14 (Python 3.9 EOL 2025-10, 3.10 EOL 2026-10) | high |
 | dependency_version | react@18, react@19 (react@17 is two majors behind; only include for legacy migration matrices) | high |
 | os | ubuntu-22.04, ubuntu-24.04, macos-14, macos-15 | medium |
 | architecture | x86_64, arm64 | medium |

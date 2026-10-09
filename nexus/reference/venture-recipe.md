@@ -155,7 +155,7 @@ Each track receives the framing contract + canonical feature_id table. Tracks wr
 | Marketing | 06 | `funnel`/`funnel[premium]` (GTM/channels) ‖ `pulse` (metrics) ‖ `experiment` (`growth_experiments.md`) | go_to_market_strategy, channel_strategy, pricing_strategy, content_marketing_plan, launch_plan, social_posts (30-day), email_sequences, pr_plan, sales_material_outline, growth_experiments |
 | Tech | 07 | `atlas` (architecture+Mermaid) → `schema` (`database_schema.sql`) ‖ `gateway` (`api_design_openapi.yaml`) ‖ `beacon` (monitoring) ‖ `gear` (CI/CD) ‖ `crypt`? (auth/crypto) | system_architecture, tech_stack, data_model, database_schema.sql, api_design_openapi.yaml, data_pipeline, auth_and_permissions, security_privacy, monitoring_observability, infrastructure_plan, ci_cd_plan, technical_risks |
 | AI Policy | 08 | `oracle` (AI usage, prompts, eval, guardrails, human review, logging) | ai_usage_policy, prompt_design, evaluation_policy, hallucination_risk_controls, human_review_workflow, model_selection, ai_logging_policy, ai_disclaimer_templates |
-| Legal/Risk | 09 | `canon[legal]` (ToS/Privacy/Cookie drafts) ‖ `cloak` (privacy/PII) ‖ `canon[regulatory]`? (compliance_checklist) ‖ `omen`+`ripple` (`risk_register.md`) | legal_considerations, data_rights_policy, privacy_policy_draft, terms_of_service_draft, cookie_policy_draft, risk_register, compliance_checklist |
+| Legal/Risk | 09 | `canon[tos]`/`canon[privacy]`/`canon[cookie]` (ToS/Privacy/Cookie drafts) ‖ `cloak` (privacy/PII) ‖ `canon[regulatory]`? (compliance_checklist) ‖ `omen`+`ripple` (`risk_register.md`) | legal_considerations, data_rights_policy, privacy_policy_draft, terms_of_service_draft, cookie_policy_draft, risk_register, compliance_checklist |
 | Testing | 10 | `matrix` qa-scenario (`test_cases.csv` TC-001…, mapped to feature_id) ‖ `radar` (strategy + `ai_evaluation_cases.csv`) | test_strategy, test_cases.csv, qa_checklist, ai_evaluation_cases.csv, performance_test_plan, security_test_plan, accessibility_test_plan, release_checklist |
 | PM | 11 | `sherpa` (`backlog.csv` BL-001…, mapped to feature_id) ‖ `rank` (priority) ‖ `scribe` (RACI/milestones) | backlog.csv, milestones, team_structure, budget_estimate, raci_matrix, decision_log, meeting_cadence, outsourcing_plan |
 | Mock Data | 12 | `radar` (fictional sample data only) | sample_users.json, sample_events.json, sample_content.csv, sample_notifications.json, sample_settings.json, sample_logs.json |
@@ -246,7 +246,7 @@ Nexus AUTORUN venture idea="<X>" depth=<...> mode=<...>
   ‖ [Tech]   atlas(arch+mermaid) → schema(schema.sql) ‖ gateway(openapi.yaml)
                                   ‖ beacon ‖ gear ‖ crypt?
   ‖ [AI]     oracle(policy+prompts+eval+guardrails+human_review)
-  ‖ [Legal]  canon[legal](ToS/Privacy/Cookie) ‖ cloak ‖ canon[regulatory]? ‖ omen+ripple(risk_register)
+  ‖ [Legal]  canon[tos]+canon[privacy]+canon[cookie](ToS/Privacy/Cookie) ‖ cloak ‖ canon[regulatory]? ‖ omen+ripple(risk_register)
   ‖ [Test]   matrix qa-scenario(test_cases.csv TC-001 ↔ F-id) ‖ radar(strategy + ai_eval_cases.csv)
   ‖ [PM]     sherpa(backlog.csv BL-001 ↔ F-id) ‖ rank ‖ scribe(raci/milestones)
   ‖ [Mock]   radar(sample_*.json/csv — fictional only)

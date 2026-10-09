@@ -271,7 +271,7 @@ A finished clone is rarely the end — it is the starting point for the product 
 |-------|---------|-------------|
 | `sdr` | the locked Stack Decision Record incl. accepted stack-vs-fidelity tradeoffs **and their parity ceilings** | `feature`/`apex` (every new feature is built on this stack, and a ceiling is a standing constraint, not a bug) |
 | `parity_harness` | the re-runnable comparator suite (screenshot diffs + behavior fixtures + feature matrix + perf flows) | `migrate`/`refactor`/`optimize` — the harness becomes the regression net for any later change to the clone |
-| `rights_record` | authorization basis + asset license posture + PII handling | `launch` (ship-time review), `canon[legal]` (any later distribution question) |
+| `rights_record` | authorization basis + asset license posture + PII handling | `launch` (ship-time review), qualified legal counsel (outside skill coverage) (any later distribution question) |
 | `provenance_stamp` | target version/build, capture date, environment, locale, seed | a later re-capture / drift re-check compares against this, not a fresh guess |
 | `coverage_gaps` | deferred, capture-blocked, and `UNVERIFIED` surfaces, each named | `feature` backlog — the honest list of what the clone does **not** yet reproduce |
 | `parity_ceilings` | per-dimension limits imposed by the stack choice | `optimize` (a perf ceiling that is stack-imposed is not an optimization target), `restyle` (a visual ceiling is not a design defect) |

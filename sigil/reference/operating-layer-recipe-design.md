@@ -50,7 +50,7 @@ recipe:
   rollback: "Abandon branch; no merge performed"
 ```
 
-The discriminator is **shape, not step count**: a straight chain is a recipe regardless of length; any genuine branching, fan-out, or convergence makes it a **workflow** — design it with `workflow-design.md` and a formal topology instead, even below 5 steps. Keep recipe chains short for readability, but length alone never forces promotion.
+The discriminator is **shape, not step count**: a straight chain is a recipe regardless of length; any genuine branching, fan-out, or convergence makes it a **workflow** — design it with `operating-layer-workflow-design.md` and a formal topology instead, even below 5 steps. Keep recipe chains short for readability, but length alone never forces promotion.
 
 ---
 

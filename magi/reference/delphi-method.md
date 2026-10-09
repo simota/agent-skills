@@ -35,7 +35,7 @@ REPORT   →  final median + IQR + dissent rationales; Kendall's W for ranking c
 
 | Aspect | Classic Delphi | Real-Time Delphi |
 |--------|---------------|------------------|
-| Weave | Days-to-weeks per round | Minutes-to-hours; live dashboard |
+| Tempo | Days-to-weeks per round | Minutes-to-hours; live dashboard |
 | Format | Async questionnaire | Live anonymous platform |
 | Anonymity | Strong (between rounds) | Strong (live) |
 | Feedback timing | Between rounds, batched | Continuous, on-demand |

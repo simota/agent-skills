@@ -244,7 +244,6 @@ The active repository surface is therefore **90 global + 3 project-local = 93 di
 | **Crypt** | _"Trust no channel. Verify every key."_ - Cryptographic architecture design: algorithm selection, key management, E2E encryption, KMS integration, TLS configuration | Crypto design specs |
 
 **Gateway > Builder > Radar chain**: Gateway (messaging design) > Builder (implementation) > Radar (tests)
-**Gateway > Gateway chain**: Gateway (webhook API spec) > Gateway (handler design)
 
 ### Data
 
@@ -604,7 +603,7 @@ For large-scale tasks where parallel execution is beneficial, Nexus escalates to
 | Task | Description | Chain |
 |------|-------------|-------|
 | MESSAGING/bot | Bot development | Gateway > Builder > Radar |
-| MESSAGING/webhook | Webhook handler | Gateway > Gateway > Builder > Radar |
+| MESSAGING/webhook | Webhook handler | Gateway > Builder > Radar |
 | MESSAGING/realtime | Real-time communication | Gateway > Scaffold > Builder > Radar |
 | MESSAGING/multi-channel | Multi-channel integration | Gateway > Builder > Radar |
 

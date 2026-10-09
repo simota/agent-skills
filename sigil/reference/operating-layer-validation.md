@@ -24,7 +24,7 @@
 ### Coverage (REQUIRED)
 
 - [ ] **L1** Every recurring task from SURVEY has a mechanism decision in the coverage matrix (skill / recipe / workflow / hook / scoped rule / none). No task left unmapped.
-- [ ] **L2** Each chosen mechanism is the cheapest that solves the task (no skill where a hook/rule suffices; no workflow where a recipe suffices). Cross-checked against `_common/MECHANISM_SELECTION.md` (hook/rule/subagent/skill) and `recipe-design.md` / `workflow-design.md` (recipe/workflow — Sigil[blueprint]-local mechanisms).
+- [ ] **L2** Each chosen mechanism is the cheapest that solves the task (no skill where a hook/rule suffices; no workflow where a recipe suffices). Cross-checked against `_common/MECHANISM_SELECTION.md` (hook/rule/subagent/skill) and `operating-layer-recipe-design.md` / `operating-layer-workflow-design.md` (recipe/workflow — Sigil[blueprint]-local mechanisms).
 - [ ] **L3** Grounded in real signals — every proposed component traces to an observed task, pain point, or convention in SURVEY, not a generic stack template.
 
 ### Overlap (REQUIRED)

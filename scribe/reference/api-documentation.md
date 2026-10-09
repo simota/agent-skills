@@ -142,6 +142,6 @@ Pulled from Speakeasy / FastMCP best practice (2026):
 - AsyncAPI 3.1 Specification — https://www.asyncapi.com/docs/reference/specification/v3.1.0
 - Model Context Protocol (Anthropic) — https://modelcontextprotocol.io/
 - RFC 2119 — MUST / SHOULD / MAY for capability and error-handling language.
-- RFC 7807 — Problem Details for HTTP APIs (error response shape).
+- RFC 9457 — Problem Details for HTTP APIs (error response shape; obsoletes RFC 7807).
 - RFC 6749 / OAuth 2.1 draft — auth flow reference for OAuth-based APIs.
 - Google API Design Guide, AIP-193 — error model conventions.

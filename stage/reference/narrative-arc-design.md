@@ -32,4 +32,4 @@ narrative_design:
 - The governing idea survives when slide titles are read alone.
 - Tension resolves through evidence rather than rhetoric.
 - Format-specific rules such as PechaKucha or Ignite are verified against the event's current primary documentation.
-- Hand off to Stage `draft` only after the outline and claims are stable.
+- Hand off to slide drafting in the target format's Stage recipe (`marp` / `reveal` / `slidev`) only after the outline and claims are stable.

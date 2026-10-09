@@ -71,7 +71,6 @@ Complete mapping of all 57 deployment roles across 9 product lifecycle phases.
 | Triage | Investigation | S | — | — | — | — | — | — | — | — |
 | Polyglot | Internationalization | — | — | — | — | — | — | — | P | — |
 | Growth | Growth | — | — | — | — | — | — | — | P | — |
-| Growth | Growth | — | — | — | — | — | — | — | P | — |
 | Pulse | Analytics | — | P | — | — | — | — | — | P | — |
 | Experiment | Analytics | — | — | — | — | — | P | — | S | — |
 | Vector | Browser | — | — | — | — | — | S | — | — | — |

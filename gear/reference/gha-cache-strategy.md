@@ -13,14 +13,14 @@ Purpose: Design `actions/cache` entries that maximize hit rate while staying und
 - Idle eviction: entries not accessed for **7 days** are removed.
 - Entries are keyed per branch with fallback to the default branch — PR caches read from the base branch automatically.
 - Cross-OS entries are incompatible; the OS token in the key prevents silent corruption.
-- `actions/cache@v4` uses Azure blob storage (migrated from the legacy backend — plan for `v4` everywhere; `v3` was EOL'd).
+- `actions/cache@v4`+ uses the new cache service backend (the legacy backend is retired; `v3` was EOL'd). Plan for `v5` everywhere — `v4` runs on the Node 20 runtime, which GitHub removed from runners on 2026-09-16.
 
 ## Key Design
 
 The key must be **deterministic and payload-specific**:
 
 ```yaml
-- uses: actions/cache@v4
+- uses: actions/cache@v5
   with:
     path: ~/.pnpm-store
     key: pnpm-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -64,14 +64,14 @@ Matrix caches with shared lockfiles still need per-OS keys because native module
 key: deps-${{ matrix.os }}-${{ matrix.node }}-${{ hashFiles('**/pnpm-lock.yaml') }}
 ```
 
-For Windows-specific path separators, prefer `actions/cache@v4` which handles them automatically. Avoid caching absolute paths that bake in the runner user's home directory.
+For Windows-specific path separators, prefer `actions/cache@v5` which handles them automatically. Avoid caching absolute paths that bake in the runner user's home directory.
 
 ## Monorepo Multi-Cache
 
 Cache each package-manager root separately to prevent cross-package invalidation:
 
 ```yaml
-- uses: actions/cache@v4
+- uses: actions/cache@v5
   with:
     path: |
       ~/.pnpm-store
@@ -112,7 +112,7 @@ Never stack `setup-node` cache + overlapping `actions/cache` on the same path �
 ```yaml
 - name: Cache deps
   id: cache
-  uses: actions/cache@v4
+  uses: actions/cache@v5
   with:
     path: ~/.pnpm-store
     key: pnpm-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}

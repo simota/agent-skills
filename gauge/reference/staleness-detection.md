@@ -36,7 +36,7 @@ Each pattern ships with a grep command and the verification step that must run b
 
 ```bash
 # Add new archived projects here as the ecosystem changes.
-grep -rln -E 'Stack Graphs|SpecFlow\b|Beyla\b(?!.*OBI)' SKILL_GLOBS \
+grep -rln -P 'Stack Graphs|SpecFlow\b|Beyla\b(?!.*OBI)' SKILL_GLOBS \
   | xargs -I{} grep -L 'archived\|superseded\|deprecated\|donated' {} 2>/dev/null
 ```
 
@@ -58,17 +58,17 @@ EOL dates as of 2026-08 (update via Self-Update Protocol):
 
 | Runtime | EOL date | Action when found alone |
 |---------|----------|--------------------------|
-| Node.js 20 | 2026-03 | Replace with Node 24 LTS; keep Node 22 only when the project supports it |
-| Node.js 18 | 2025-03 | Replace with Node 24 LTS |
-| Node.js 16 | 2023-08 | Hard reject — long past EOL |
+| Node.js 20 | 2026-04 | Replace with Node 24 LTS; keep Node 22 only when the project supports it |
+| Node.js 18 | 2025-04 | Replace with Node 24 LTS |
+| Node.js 16 | 2023-09 | Hard reject — long past EOL |
 | Python 3.9 | 2025-10 | Replace with 3.12 / 3.13 |
 | Python 3.10 | 2026-10 | Annotate as approaching EOL |
-| Go ≤ 1.21 | 2024-08 (1.22 GA, 1.20 EOL) | Replace with current minor |
-| Ruby 3.0 | 2024-03 | Replace with 3.2+ |
-| Java 8 | 2025-12 (Oracle premier) | Replace with 17 / 21 LTS |
+| Go ≤ 1.24 | 2026-02 (1.26 GA, 1.24 EOL) | Replace with current minor |
+| Ruby ≤ 3.2 | 2026-03 (3.2 EOL) | Replace with 3.4+ |
+| Java 8 | 2022-03 (Oracle Premier; Extended to 2030-12) | Replace with 21 / 25 LTS |
 
 ```bash
-grep -rln -E 'Node(\.js)? (16|18|20)\b|Python 3\.9\b|Ruby 3\.0\b|Java 8\b' SKILL_GLOBS
+grep -rln -E 'Node(\.js)? (16|18|20)\b|Python 3\.9\b|Ruby 3\.[0-2]\b|Go 1\.(1[0-9]|2[0-4])\b|Java 8\b' SKILL_GLOBS
 ```
 
 Verification: matches inside migration-guide context (`shift`, `port`, `quill`, `trail` static-rules) are PASS — they describe the source side of a migration and SHOULD reference the old version. Matches inside min-version baselines (`iOS X+`, `Node Y+`) with the "+" suffix are PASS. Bare references in bootstrap / setup / recommended-runtime tables are FAILS.
@@ -122,7 +122,7 @@ Verification: most matches will be valid historical references (XZ Utils CVE-202
 
 ```bash
 # Pre-current-generation model IDs (update the "current" side whenever canon changes:
-# current is claude-fable-5 / claude-opus-5 / claude-sonnet-5 / claude-haiku-4-5-20251001 /
+# current is claude-fable-5-1 / claude-opus-5-5 / claude-sonnet-5-5 / claude-haiku-5-5 /
 # gpt-5.6-sol|terra|luna / current Gemini 3 families).
 grep -rln -E 'claude-3-5-sonnet|claude-3-opus|claude-instant|gpt-4-turbo|text-davinci-00[0-9]|claude-opus-4-[0-8]\b|claude-sonnet-4-[0-7]\b|claude-haiku-3(-[0-9]+)?\b|claude-haiku-4-[0-4]\b|gemini-1\.[0-9]|gemini-2\.[0-9]' SKILL_GLOBS
 ```

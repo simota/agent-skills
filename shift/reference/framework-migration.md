@@ -5,7 +5,7 @@ Purpose: Execute a major framework version jump or cross-framework port with pre
 ## Scope Boundary
 
 - **Shift `framework`**: executes a specific framework migration with a feature-parity checklist, incremental adapter pattern, and dual-run validation.
-- **Shift `migrate` (default)**: general migration planning — picks Strangler Fig vs Branch by Abstraction at an architectural level, no framework-specific gotchas.
+- **Shift `plan` (default)**: general migration planning — picks Strangler Fig vs Branch by Abstraction at an architectural level, no framework-specific gotchas.
 - **`detect` Recipe**: detects deprecated libraries/frameworks and suggests replacements — it produces the *input* for `framework`; it does not execute the migration.
 - **Zen**: refactor within a framework — does not cross versions.
 - **Launch**: plans the release where the migrated code ships; `framework` owns the code transition.

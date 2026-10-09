@@ -8,16 +8,16 @@ Purpose: Map Sentinel findings to OWASP Top 10 (2025), run checklist-driven audi
 
 | Rank | Category | Change from 2021 | CWEs |
 |------|----------|------------------|------|
-| `A01` | Broken Access Control | Kept #1; SSRF folded in | 37 |
-| `A02` | Security Misconfiguration | Moved up from #5 | 11 |
+| `A01` | Broken Access Control | Kept #1; SSRF folded in | 40 |
+| `A02` | Security Misconfiguration | Moved up from #5 | 16 |
 | `A03` | Software Supply Chain Failures | **New** (expands A06:2021 Vulnerable Components) | 5 |
-| `A04` | Cryptographic Failures | Moved down from #2 | 11 |
-| `A05` | Injection | Moved down from #3; Prompt Injection added | 7 |
-| `A06` | Insecure Design | Moved down from #4 | 14 |
-| `A07` | Authentication Failures | Kept #7 | 10 |
-| `A08` | Software or Data Integrity Failures | Kept #8 | 6 |
-| `A09` | Logging & Alerting Failures | Renamed from Monitoring | 4 |
-| `A10` | Mishandling of Exceptional Conditions | **New** (24 CWEs) | 24 |
+| `A04` | Cryptographic Failures | Moved down from #2 | 32 |
+| `A05` | Injection | Moved down from #3 (LLM prompt injection is covered separately by the OWASP LLM Top 10, LLM01:2025) | 38 |
+| `A06` | Insecure Design | Moved down from #4 | 39 |
+| `A07` | Authentication Failures | Kept #7 | 36 |
+| `A08` | Software or Data Integrity Failures | Kept #8 | 14 |
+| `A09` | Logging & Alerting Failures | Renamed from Monitoring | 5 |
+| `A10` | Mishandling of Exceptional Conditions | **New** | 24 |
 
 Key methodology change: 589 CWEs analyzed (up from ~400 in 2021). Focus on root causes over symptoms.
 

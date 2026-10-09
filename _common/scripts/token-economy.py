@@ -79,11 +79,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from dataclasses import dataclass, field, asdict
 from pathlib import Path
 
-DEFAULT_PROJECT_DIR = "-Users-simota--claude-skills"
+REPO_ROOT = Path(__file__).absolute().parents[2]
+# The maintainer's checkout; tried last so existing setups keep working.
+LEGACY_PROJECT_DIR = "-Users-simota--claude-skills"
 LONGTAIL_INDEX = 100
 LONGTAIL_SHARE_THRESHOLD = 0.40
 CONCENTRATION_SHARE_THRESHOLD = 0.15
@@ -770,25 +773,68 @@ def render_json(stats_d: dict, sle_d: dict, agent_spawns: int, missing: int, ski
     return json.dumps(payload, indent=2, ensure_ascii=False)
 
 
+def project_dir_name(repo_root: Path) -> str:
+    """Claude Code names a project's transcript directory after its absolute
+    path with every non-alphanumeric character replaced by `-`."""
+    return re.sub(r"[^A-Za-z0-9]", "-", str(repo_root))
+
+
+def default_project_dirs(projects_root: Path, repo_root: Path,
+                         include_legacy: bool = True) -> list[Path]:
+    # The legacy name is this repository's original checkout; it must never stand
+    # in for an explicitly chosen --repo-root, or another repo's usage is reported.
+    names: list[str] = []
+    for root in (repo_root.absolute(), repo_root.resolve()):
+        name = project_dir_name(root)
+        if name not in names:
+            names.append(name)
+    if include_legacy:
+        names.append(LEGACY_PROJECT_DIR)
+    return [projects_root / name for name in names]
+
+
+def join_dash_values(argv: list[str]) -> list[str]:
+    """Every real project directory name starts with `-`, which argparse would
+    take for an option in `--project-dir NAME`; bind it as `--project-dir=NAME`."""
+    joined: list[str] = []
+    i = 0
+    while i < len(argv):
+        if argv[i] in ("--project-dir", "--repo-root") and i + 1 < len(argv) \
+                and argv[i + 1].startswith("-") and argv[i + 1] != "--":
+            joined.append(f"{argv[i]}={argv[i + 1]}")
+            i += 2
+            continue
+        joined.append(argv[i])
+        i += 1
+    return joined
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--project-dir", default=DEFAULT_PROJECT_DIR,
+    parser.add_argument("--project-dir", default=None,
                         help="Claude Code project directory name under "
-                             "~/.claude/projects/ (default: this repo's)")
+                             "~/.claude/projects/, or an absolute path "
+                             "(default: derived from --repo-root)")
     parser.add_argument("--repo-root", default=None,
-                        help="repo root, reserved for future repo-file checks "
-                             "(unused by the current checks)")
+                        help="repository whose transcripts to read when "
+                             "--project-dir is omitted (default: this repo)")
     parser.add_argument("--severity", choices=("warning", "error"), default="warning")
     parser.add_argument("--json", action="store_true", help="emit JSON instead of text")
     parser.add_argument("--redact-sessions", action="store_true",
                         help="replace session UUIDs with stable short indices "
                              "(session-01, ...) -- the safe-to-paste output form")
-    args = parser.parse_args()
+    args = parser.parse_args(join_dash_values(sys.argv[1:]))
 
     projects_root = Path.home() / ".claude" / "projects"
-    project_dir = Path(args.project_dir)
-    if not project_dir.is_absolute():
-        project_dir = projects_root / args.project_dir
+    if args.project_dir is None:
+        candidates = default_project_dirs(
+            projects_root, Path(args.repo_root) if args.repo_root else REPO_ROOT,
+            include_legacy=args.repo_root is None)
+        project_dir = next((c for c in candidates if c.is_dir()), candidates[0])
+    else:
+        project_dir = Path(args.project_dir)
+        if not project_dir.is_absolute():
+            project_dir = projects_root / args.project_dir
     if not project_dir.is_dir():
         print(f"error: project dir not found: {project_dir}", file=sys.stderr)
         return 2

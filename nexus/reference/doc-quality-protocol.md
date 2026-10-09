@@ -2,7 +2,7 @@
 
 **Purpose:** The shared discipline for maximizing quality when the deliverable is a **document** (or a document package) rather than code. Code has tests; documents have readers — so quality means: the declared reader can make the declared decision from the artifact alone, every externally-checkable fact is grounded, and the document set is internally coherent. Completes the protocol trio: `dialogue-protocol.md` (elicit intent), `autonomy-quality-protocol.md` (execute faithfully), this file (write artifacts worth trusting).
 
-**Read when:** any run whose deliverable includes documents — `package` (all presets, incl. `venture`), `charter`, `layer`, `spec`/`delve` final artifacts, `gedanken` reports, `podium` content, and any chain step where Scribe/Scribe[unified]/Quill/Tome/Scribe authors a doc. Cites — never re-derives — `reference/package-recipe.md` (Universal Grounding Gate, traceability anchors), `reference/autonomy-quality-protocol.md` (Q10 evidence, Q11 artifact gate, Q15 provenance).
+**Read when:** any run whose deliverable includes documents — `package` (all presets, incl. `venture`), `charter`, `layer`, `spec`/`delve` final artifacts, `gedanken` reports, `podium` content, and any chain step where Scribe/Scribe[unified]/Quill/Tome authors a doc. Cites — never re-derives — `reference/package-recipe.md` (Universal Grounding Gate, traceability anchors), `reference/autonomy-quality-protocol.md` (Q10 evidence, Q11 artifact gate, Q15 provenance).
 
 ---
 
@@ -72,7 +72,7 @@ Reviewer ≠ author (Q9). The Reader-path check is run **as the W1 reader** — 
 - **`charter` / `layer`** — the self-containment check IS the reader-path test (reader = `enact` / the executing team); W5 is charter Phase 1's UNKNOWN rule, generalized.
 - **`spec` / `delve`** — their quality gates add the W dimensions they lack (W3 freshness, W10–W11 readability); grounding of external facts in EXPAND/EXCAVATE research follows W4.
 - **`podium`** — Verification + Improvement teams subsume W12; W1/W2 feed Phase 0 framing.
-- **Any chain step authoring a doc** (Scribe/Scribe[unified]/Quill/Tome/Scribe) — the spawn prompt carries the W1 reader contract, the W4–W5 grounding duty, and the **W11b artifact limits** in its output envelope; the hub runs W12 at VERIFY.
+- **Any chain step authoring a doc** (Scribe/Scribe[unified]/Quill/Tome) — the spawn prompt carries the W1 reader contract, the W4–W5 grounding duty, and the **W11b artifact limits** in its output envelope; the hub runs W12 at VERIFY.
 - **Multi-file document recipes** (`chronicle`, `cartograph`, `package`) justify splits by reader navigation, ownership or actual runtime limits. Set purpose and limits per artifact; verify the available context instead of assuming any model family always provides a particular window.
 
 This protocol governs **document deliverables**; the run that produces them still follows `autonomy-quality-protocol.md` (Q1–Q15) end-to-end — W rules specialize, never replace, the Q rules.

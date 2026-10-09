@@ -453,8 +453,8 @@ For new widgets, prefer Glance (Compose runtime). Hand-written RemoteViews are l
 | Item | Value |
 |------|-------|
 | Recommended minimum API | **API 28 (Android 9)** default / API 31+ if Material You / Photo Picker |
-| targetSdk (current) | **35 mandatory since 2025-08-31** |
-| targetSdk (mandatory) | **36 starting 2026-04** for all new app submissions and updates on Google Play |
+| targetSdk (previous floor) | **35** — mandatory 2025-08-31 → 2026-08-30 |
+| targetSdk (mandatory) | **36 since 2026-08-31** for all new app submissions and updates on Google Play (Wear OS / TV / Auto stay on 35) |
 | 16KB Page Size | **Required for all submissions starting 2025-11-01**; Google Play **rejects** non-compliant new submissions and updates after **2026-05-31**. Set `useLegacyPackaging = false` in Gradle and rebuild every NDK dep |
 | Edge-to-edge enforcement | **API 36 removes the opt-out** — `enableEdgeToEdge()` is mandatory; `R.attr#windowOptOutEdgeToEdgeEnforcement` is deprecated and inert |
 | Predictive Back default ON | **API 36** — `KeyEvent.KEYCODE_BACK` no longer dispatched, `onBackPressed()` no longer called. Use `OnBackPressedDispatcher` or Compose `BackHandler` |

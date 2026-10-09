@@ -139,7 +139,7 @@ Post-task CHRONICLE: `RECORD → EVALUATE → CALIBRATE → PROPAGATE`. Read `re
 | README Update | `readme` | | README updates and structure | `reference/readme-templates.md` |
 | Type Definitions | `types` | | Replace any types with concrete types | `reference/type-improvement-strategies.md` |
 | High-Value Comments | `comments` | | Add intent comments to complex logic | `reference/documentation-patterns.md` |
-| ADR Authoring | `adr` | | Record an architectural decision (Nygard / MADR) with context, alternatives, consequences, and supersession lifecycle | `reference/adr-authoring.md` |
+| ADR Upkeep | `adr` | | Keep the code-adjacent ADR log usable: `docs/adr/` index, status/supersession cross-links, links from README/JSDoc to the governing ADR. New ADR content → Atlas `adr` (architecture) / Scribe `adr` (other decisions) | `reference/adr-authoring.md` |
 | Migration Guide | `migrate` | | Author version-jump upgrade guides with breaking-change notation, codemod steps, rollback, and verification | `reference/migrate-guide-authoring.md` |
 | Tutorial / How-To | `tutorial` | | Write Diátaxis-aligned tutorials and how-to guides with prerequisites, executable snippets, and validation checkpoints | `reference/tutorial-guide-authoring.md` |
 
@@ -154,7 +154,7 @@ Behavior notes per Recipe:
 - `readme`: Create, update, and audit README. Flesh out install, usage, config, and contributing sections.
 - `types`: Replace `any` types with interfaces, generics, and type guards. Comply with TS 6.0+ strict mode.
 - `comments`: Add WHY comments to magic numbers, complex regex, and business rules. Required for complexity >10.
-- `adr`: Architecture Decision Record authoring (Nygard / MADR). Capture context, considered alternatives, chosen option, and positive/negative/neutral consequences; manage Proposed → Accepted → Superseded lifecycle and keep `docs/adr/` index current. For upstream architecture analysis and RFC drafting use Atlas; for PRD / SRS / HLD / LLD spec documents use Scribe; for external-audience retrospective articles use Tome.
+- `adr`: Code-adjacent ADR upkeep, not ADR authoring. Keep the `docs/adr/` index current, reflect Proposed → Accepted → Superseded transitions as two-way links, validate an existing record against the Nygard / MADR template, and link README / JSDoc / `@deprecated` notes to the governing ADR. Writing a new ADR routes out: architecture decisions (tradeoff analysis + record) → Atlas `adr`; any other already-made decision (tool, process, policy) → Scribe `adr`; for external-audience retrospective articles use Tome.
 - `migrate`: Migration / upgrade guide authoring. Produce version-jump (x → y) guides with five-field breaking-change entries, deprecation timelines, codemod-assisted steps (with honest coverage), rollback instructions, parallel old/new semantic diffs, and observable verification checklists. For migration orchestration and codemod generation use Shift; for the ADR that justifies the breaking change use Atlas; for external narrative "what changed in v4" articles use Tome.
 - `tutorial`: Tutorial / how-to guide authoring along Diátaxis quadrants (tutorial vs how-to vs reference vs explanation). Apply progressive disclosure, state prerequisites (required / recommended / not needed), ship self-contained copy-pasteable snippets with expected output, place validation checkpoints every 3–5 steps, and choose screenshots only when text cannot carry the lesson. For PRD / SRS / HLD / LLD spec documents use Scribe; for RFC / ADR material use Atlas; for external publication articles (note / Zenn / Qiita / dev.to) use Tome; for end-user microcopy use Prose.
 
@@ -233,7 +233,7 @@ When documenting 3+ independent modules simultaneously, spawn parallel subagents
 | `reference/api-doc-generation.md` | You are documenting TypeDoc, OpenAPI / swagger-jsdoc, or GraphQL surfaces. |
 | `reference/doc-templates.md` | You need CHANGELOG, CONTRIBUTING, OpenAPI, or ADR template material. |
 | `reference/documentation-effectiveness.md` | You are running CHRONICLE, tracking rot, calibrating patterns, or preparing Lore feedback. |
-| `reference/adr-authoring.md` | You are running the `adr` Recipe — Nygard / MADR ADR authoring with context, alternatives, consequences, and supersession lifecycle. |
+| `reference/adr-authoring.md` | You are running the `adr` Recipe — ADR index, supersession links, and template conformance of existing records (new ADRs: Atlas / Scribe). |
 | `reference/migrate-guide-authoring.md` | You are running the `migrate` Recipe — version-jump guides with breaking-change notation, codemod steps, rollback, and verification. |
 | `reference/tutorial-guide-authoring.md` | You are running the `tutorial` Recipe — Diátaxis-aligned tutorials and how-to guides with prerequisites, executable snippets, and validation checkpoints. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the doc update, deciding adaptive thinking depth at tag/TypeDoc selection, or front-loading module/doc-type/audience at READ. Critical for Quill: P3, P5. |

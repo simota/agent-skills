@@ -1,16 +1,18 @@
-# ADR Authoring Reference
+# ADR Upkeep Reference
 
 Purpose: Capture an architectural decision with enough context, alternatives, and consequences that a reader in six months can reconstruct the reasoning without interviewing the author. An ADR is a lightweight, code-adjacent artifact — one decision, one file, immutable once accepted.
 
 ## Scope Boundary
 
-- **Quill `adr`**: code-adjacent ADR file creation (Nygard / MADR template), supersession lifecycle, index maintenance, cross-linking from JSDoc / README.
-- **Atlas (elsewhere)**: the upstream architecture analysis, RFC drafting, dependency / coupling evaluation that *produces* the decision Quill records.
-- **Scribe (elsewhere)**: PRD / SRS / HLD / LLD specification documents that describe the product and design surface, not a single decision point.
+- **Quill `adr`**: upkeep of the code-adjacent ADR log — `docs/adr/` index maintenance, supersession lifecycle links, template conformance of existing records, cross-linking from JSDoc / README. Quill does not author new ADR content.
+- **Atlas (elsewhere)**: architecture decisions — the tradeoff analysis, RFC drafting, and the ADR that records them (`_common/BOUNDARIES.md`: Atlas = "ADR creation").
+- **Scribe (elsewhere)**: `adr` for any other already-made decision (tool, process, policy — `scribe/reference/adr-writing.md`), plus PRD / SRS / HLD / LLD specification documents.
 - **Tome (elsewhere)**: external-audience tech-blog article series discussing decisions after the fact, for publication on note / Zenn / Qiita / dev.to.
 - **Shift (elsewhere)**: orchestrating the migration that an accepted ADR unlocks.
 
-If the task is "decide between Postgres and DynamoDB" → Atlas. If the decision is already made and must be recorded → `adr`. If the decision needs a narrative blog post for external readers → Tome.
+If the task is "decide between Postgres and DynamoDB" → Atlas. If a non-architecture decision is already made and must be written up → Scribe `adr`. If accepted ADRs exist and the index, supersession links, or code-side references are stale → Quill `adr`. If the decision needs a narrative blog post for external readers → Tome.
+
+The template guidance below is what Quill checks existing records against; the authoring owner applies it when writing.
 
 ## Template Selection
 

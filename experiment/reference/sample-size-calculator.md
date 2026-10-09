@@ -57,11 +57,11 @@ const sampleSize = calculateSampleSize({
 
 | Baseline | 5% Lift | 10% Lift | 20% Lift |
 |----------|---------|----------|----------|
-| 1% | 1.6M | 400K | 100K |
-| 5% | 310K | 78K | 20K |
-| 10% | 150K | 38K | 9.5K |
-| 20% | 68K | 17K | 4.3K |
-| 50% | 16K | 4K | 1K |
+| 1% | 640K | 160K | 43K |
+| 5% | 120K | 31K | 8.2K |
+| 10% | 58K | 15K | 3.8K |
+| 20% | 26K | 6.5K | 1.7K |
+| 50% | 6.3K | 1.6K | 390 |
 
 *Sample size per variant, 80% power, 5% significance, two-tailed*
 

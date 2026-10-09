@@ -14,7 +14,7 @@ CAPABILITIES_SUMMARY:
 - reframed_problem_generation: 3-5 problem statements with insight maps
 - blind_spot_detection: Surface cognitive biases (incl. bias blind spot) and hidden constraints
 - anti_pattern_guard: Detect superficial reframing, framework abuse, false insights, assumption padding
-- collaboration_bridging: Package breakthroughs for Magi/Spark/Magi/Atlas/Oracle handoff
+- collaboration_bridging: Package breakthroughs for Magi/Spark/Atlas/Oracle handoff
 - cognitive_bias_audit: Dedicated mode for anchoring, sunk cost, confirmation bias, groupthink, IKEA effect, and 15+ patterns with debiasing recommendations
 - contradiction_resolution: TRIZ contradiction matrix (classical 39x40, Matrix 2003, Matrix 2022) with LLM-assisted tooling when available
 - tri_engine_reframe: `multi` Recipe — parallel assumption-inversion across Codex + Antigravity + Claude; Pattern D top-bills `VERIFIED-DIVERGENT x HIGH`; Portfolio-only merge; assumption_root grouping keeps same-assumption-inverted-differently separate
@@ -29,7 +29,7 @@ COLLABORATION_PATTERNS:
 - Pattern E Bias-Aware Reframing (Flux -> Oracle -> Flux): output validated against bias detection
 - Pattern F Market Reframe (Flux -> Compete): market assumptions to differentiation axes
 - Flux -> Field / Breach / Shift / Scribe[unified]: research design, attacker perspective, migration approach, requirement assumption challenges
-- Flux -> Magi[expert]: reframed problem handed to a documented named-expert lens (`FLUX_TO_MAGI_EXPERT`)
+- Flux -> Magi[advisor expert]: reframed problem handed to a documented named-expert lens (`FLUX_TO_MAGI_EXPERT`)
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: User, Nexus, Magi, Scribe[unified], Oracle
@@ -213,7 +213,7 @@ Routes on user-signal keywords (natural language); a subcommand match wins if bo
 | `what if`, `different angle`, `another way` | RAPID | Perspective-shift report | User |
 | `assumptions`, `taking for granted`, `first principles` | LENS (CHALLENGE) | Assumption Map | Magi/User |
 | `combine`, `cross-domain`, `analogy` | LENS (COMBINE) | Cross-domain insight report | Spark or User |
-| `reframe`, `rethink the problem` | DEEP | Full reframing package | Magi or Magi |
+| `reframe`, `rethink the problem` | DEEP | Full reframing package | Magi |
 | `contradiction`, `trade-off`, `improving X breaks Y` | LENS (TRIZ) | Contradiction resolution + inventive principles | Builder/User |
 | `pre-mortem`, `what could go wrong`, `blind spots` | RAPID | Assumption vulnerability + Blind Spot Report | Magi/User |
 | `complexity paralysis`, `too many options` | DEEP | Cynefin classification + prioritized reframing set | Sherpa or User |

@@ -60,7 +60,7 @@ Sigil[blueprint] states *what* the skill must do and *which conventions* to mirr
 ```yaml
 nexus_registration:
   routing_map: <the map above>
-  recipes:   [<recipe definitions from recipe-design.md>]
+  recipes:   [<recipe definitions from operating-layer-recipe-design.md>]
   workflows: [<workflow definitions with topology + phases>]
 ```
 

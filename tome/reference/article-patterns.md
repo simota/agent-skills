@@ -24,7 +24,7 @@
 
 ```
 1. HOOK (100-300 chars)
-   - See hook-design.md for the five hook patterns
+   - Draft three hook candidates and pick one (SKILL.md DRAFT step)
      (contradiction / number / scene / question / stake),
      formulas, anti-patterns, and per-platform tuning.
 
@@ -51,7 +51,7 @@
    - Optional: link to follow-up article in series
 ```
 
-**Pattern-1 specific guidance:** the HOOK→PROBLEM seam is the load-bearing transition. The hook foreshadows the contradiction; the PROBLEM section grounds it in concrete pain (specific incident, code path, metric). Pick a hook pattern in `hook-design.md`, then write PROBLEM so it reads as the next sentence after the hook — not a restart.
+**Pattern-1 specific guidance:** the HOOK→PROBLEM seam is the load-bearing transition. The hook foreshadows the contradiction; the PROBLEM section grounds it in concrete pain (specific incident, code path, metric). Pick the hook, then write PROBLEM so it reads as the next sentence after the hook — not a restart.
 
 **Anti-pattern:** Skipping TENSION. Going straight from PROBLEM → SOLUTION reads like documentation, not an article. The tension is what makes readers keep scrolling.
 

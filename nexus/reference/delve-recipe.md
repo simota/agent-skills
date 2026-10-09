@@ -107,7 +107,7 @@ Axis per neighbor; the routing itself lives in the Decision tree below.
 | `spec` | a **new** (often vague) idea converged to a locked, buildable spec ↔ an **existing shipped** feature excavated for evolution directions |
 | `gedanken` | reasons about an **abstract** question/hypothesis inside a *constructed* hypothetical ↔ excavates a **concrete existing feature** grounded in its real code and usage (both Reason-family, no code, orchestrating `magi`/`flux`/`omen`) |
 | `essential` / `killer` / `trim` | a *verdict* on which ONE feature to build or remove (single closing AskUserQuestion) ↔ a *map of directions* for ONE existing feature |
-| `spark` / `flux` / `flux` (agents) | a single-agent proposal, a divergence pass, or one reframing move — each is one *phase* of `delve` ↔ the grounded excavation→insight→direction dialogue with a refutation gate that wraps them |
+| `spark` / `flux` (agents) | a single-agent proposal, a divergence pass, or one reframing move — each is one *phase* of `delve` ↔ the grounded excavation→insight→direction dialogue with a refutation gate that wraps them |
 | `converge` | an *automated* generator-evaluator loop graded against a machine rubric ↔ EXCAVATE↔SURFACE is an exploratory "dig deeper if insight-thin" heuristic with no rubric and no automated grader (its independent quality check is REFUTE, not the loop) |
 
 **Decision tree:**

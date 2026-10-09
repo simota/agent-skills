@@ -17,7 +17,7 @@ If the question is "does our workforce click, report, or escalate?" → `phishin
 
 | Pattern | Pretext shape | Primary goal | Key risk if misused |
 |---------|---------------|--------------|--------------------|
-| Credential launch | Password-reset / shared-doc / HR portal | Measure click + credential-submit rate | Real creds leaked to test infra — use one-way hash + instant revoke |
+| Credential harvest | Password-reset / shared-doc / HR portal | Measure click + credential-submit rate | Real creds leaked to test infra — use one-way hash + instant revoke |
 | Session-token theft | OAuth consent / device-code grant | Validate session-binding, MFA trust | Token persistence beyond test window |
 | MFA fatigue / push-bombing | Repeated push prompts + voice pretext | Measure push-accept rate under pressure | Locking real accounts — rate-limit and pre-notify IT |
 | Quishing (QR) | Printed QR / email-embedded QR | Measure mobile out-of-band susceptibility | QR on shared media — scope to controlled distribution |

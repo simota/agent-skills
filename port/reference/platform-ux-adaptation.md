@@ -96,7 +96,7 @@ New / updated components:
 | iOS | **17** (SwiftData, `@Observable`, latest SwiftUI APIs) | iOS 26 (Liquid Glass + Foundation Models) | iOS 16 (Core Data, no SwiftData) |
 | Android | API 28 (Android 9) | API 31 (Material You / SplashScreen / Photo Picker) | API 24 (legacy Java time APIs, more polyfills) |
 
-`targetSdk` (Android): 35 mandatory since 2025-08-31, expect 36 during 2026.
+`targetSdk` (Android): 36 mandatory since 2026-08-31 for new apps and updates (35 was the floor from 2025-08-31).
 
 ---
 

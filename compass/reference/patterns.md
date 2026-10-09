@@ -213,7 +213,7 @@ A reverse lookup to prevent common mistakes.
 | Web → mobile porting | Native | Port | Native implements; Port produces blueprint and parity matrix |
 | Idea ideation (divergent) | Magi | Flux | Magi advises or decides; Flux is divergent brainstorming |
 | Strategic decision | Magi[advisor] | Magi[decide] | Advisory pressure-testing and a binding verdict are separate Magi Recipes |
-| Long-term scenarios | Magi | Magi | Magi handles a bounded decision; Magi handles quarterly+ scenarios |
+| Long-term scenarios | Magi[decide] | Magi[simulate] | A bounded decision is `decide`; quarterly+ scenario planning is `simulate` |
 
 When in doubt, ask "Does this skill change code?":
 - Changes code: Builder, Zen, Artisan, Bolt

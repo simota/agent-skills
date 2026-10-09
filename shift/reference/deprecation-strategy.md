@@ -8,7 +8,7 @@ Purpose: Orchestrate the sunset phase of a feature, API, or public interface —
 - **Void**: proposes *what* to cut (YAGNI, scope trimming). Void's output is the input to `deprecate` when the candidate is a shipped/public surface.
 - **Launch**: owns release/version strategy — semver decisions, CHANGELOG, release notes. `deprecate` feeds Launch the deprecation-notice content and the removal-release target.
 - **`detect` Recipe**: detects *our own* reliance on deprecated third-party surfaces. `deprecate` governs *our* surfaces that others rely on.
-- **Shift `migrate` / `framework` / `lang`**: execute the caller-side migration away from something deprecated. `deprecate` runs the provider-side sunset.
+- **Shift `plan` / `framework` / `lang`**: execute the caller-side migration away from something deprecated. `deprecate` runs the provider-side sunset.
 
 If the question is "should we delete this?" → Void. If it is "we decided to delete it, how do we wind it down without breaking callers?" → `deprecate`.
 
@@ -103,7 +103,7 @@ Abort criteria: any previously-silent caller surfaces with >0.1% error rate attr
 - Removing on the announced date regardless of remaining usage ("we warned them") — causes outages and is almost always cheaper to postpone.
 - Shipping the `Sunset` header with a date in the past or <30 days out — callers cannot react.
 - Leaving "deprecated" comments in code with no registry entry, no date, no telemetry — zombie deprecation.
-- Using deprecation as a substitute for a real migration plan for callers you control — if you own both sides, run `migrate` / `framework` / `lang` instead.
+- Using deprecation as a substitute for a real migration plan for callers you control — if you own both sides, run `plan` / `framework` / `lang` instead.
 - Removing the code but leaving the route / symbol returning a generic 404/undefined — return a structured error with the migration link.
 
 ## Handoff
@@ -113,4 +113,4 @@ Abort criteria: any previously-silent caller surfaces with >0.1% error rate attr
 - → `Radar`: test that deprecated surface emits warnings; test that removal with flag-off returns the migration-link error; test that flag-on restores behavior.
 - → `Gear`: telemetry dashboard, alert rules on sustained deprecated-usage.
 - ← `Void`: YAGNI / scope-cut proposals for surfaces that are already shipped.
-- ← `detect`: our-side mirror — when a third party deprecates something we use, `detect` triggers `framework`/`lang`/`migrate`, not `deprecate`.
+- ← `detect`: our-side mirror — when a third party deprecates something we use, `detect` triggers `framework`/`lang`/`plan`, not `deprecate`.

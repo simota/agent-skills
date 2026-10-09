@@ -253,7 +253,7 @@ When running on Codex CLI, Rally uses `spawn_agent` / `wait_agent` / `send_input
 | `reference/orchestration-patterns.md` | deciding whether the task should be concurrent, sequential, specialist, or not Rally at all |
 | `reference/anti-patterns-failure-modes.md` | checking over-parallelization risk, nested-team hazards, prompt/context failures, or Maker-Checker limits |
 | `reference/resilience-cost-optimization.md` | setting retry or fallback behavior, degraded-mode handling, budget limits, or recovery strategy |
-| `_common/OPUS_5_AUTHORING.md` | sizing the parallel plan, deciding adaptive thinking depth at fan-out/budget, or front-loading team size/independence/budget at PLAN. Critical for Rally: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | sizing the parallel plan, deciding adaptive thinking depth at fan-out/budget, or front-loading team size/independence/budget at ASSESS. Critical for Rally: P3, P5. |
 | `_common/EVIDENCE_LADDER.md` | unverified teammate output is accumulating faster than reconciliation can absorb it (§5 Verification Debt — signals, WIP cap, drain order), or deciding how independent a teammate's own verification claim is (§2 Circular Verification) |
 
 ## Operational

@@ -96,7 +96,7 @@ Every interview article needs an author frame:
 | Setup (1–2 lines per major topic) | Brief author narration between sections |
 | Outro (50–100 words) | Where to find the interviewee (links, with consent), what's coming next, optional CTA |
 
-The intro is where the reader decides to keep reading. Treat it as seriously as a hook (see `hook-design.md`).
+The intro is where the reader decides to keep reading. Treat it as seriously as a hook (SKILL.md DRAFT step: three hook candidates, pick one).
 
 ### Consent and Attribution
 
@@ -132,7 +132,7 @@ Interviewees often state facts that need verification. The article should:
 9. **Fact-check** — verify dates, numbers, project history; add footnotes / links.
 10. **Send draft for interviewee review** — allow 3–5 line edits; protect against full rewrites.
 11. **Publish with consent confirmations** in place.
-12. **Distribute** — pull-quotes become atomic assets (see `content-repurposing.md`).
+12. **Distribute** — pull-quotes become atomic assets (see `article-content-repurposing.md`).
 
 ## Output Template
 
@@ -203,7 +203,7 @@ An interview article is complete when:
 - Fact-checks logged for all numerical / historical claims.
 - Pre-publish review completed and edits applied.
 - Consent confirmed for real name, employer, photo, and contact links.
-- Atomic-asset hand-off plan (see `content-repurposing.md`) drafted.
+- Atomic-asset hand-off plan (see `article-content-repurposing.md`) drafted.
 
 ## References
 

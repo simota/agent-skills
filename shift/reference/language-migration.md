@@ -5,7 +5,7 @@ Purpose: Execute a language-level transition — adding or strengthening a type 
 ## Scope Boundary
 
 - **Shift `lang`**: executes a specific language / runtime transition with inference strategy, staged strictness, and runtime-behavior-diff verification.
-- **Shift `migrate` (default)**: general migration planning at the architectural layer.
+- **Shift `plan` (default)**: general migration planning at the architectural layer.
 - **Shift `framework`**: framework version jumps — may trigger a `lang` follow-up (e.g., Spring Boot 3 requires Java 17+).
 - **Zen**: refactor within the current language version — no runtime or type-system change.
 - **`detect` Recipe**: detects end-of-life runtimes — produces the input, does not execute.

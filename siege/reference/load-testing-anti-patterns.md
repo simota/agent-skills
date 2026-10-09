@@ -53,7 +53,7 @@ Purpose: Use this file to prevent unrealistic load tests, select performance bud
 | Resource | Budget example | Measurement |
 | --- | --- | --- |
 | API latency | `p95 < 200ms`, `p99 < 500ms` | k6 thresholds |
-| Page load | `LCP < 2.5s`, `FID < 100ms` | Lighthouse CI |
+| Page load | `LCP < 2.5s`, `INP < 200ms` (field; Lighthouse CI is lab-only, so gate TBT as the INP proxy) | Lighthouse CI |
 | Bundle size | JS `< 200KB gzip` | bundle-size tools |
 | DB activity | `<= 5` queries/request | ORM query counter |
 | Memory | `<= 512MB / pod` | metrics and alerts |

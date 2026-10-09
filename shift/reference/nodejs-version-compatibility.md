@@ -29,7 +29,7 @@ Node 18 and 20 are listed for legacy reference only — both are EOL as of 2026-
 | Native WebSocket client (stable in 22.4+) | ❌ | ✅ | ✅ | ws |
 | `fs.glob` / `fs.promises.glob` | ❌ | ✅ | ✅ (stable) | glob package |
 | `URLPattern` (global) | ❌ | ❌ | ✅ | path-to-regexp |
-| TypeScript stripping (`.ts` direct exec) | ❌ | ❌ (flag) | ✅ (default for erasable syntax) | ts-node, tsx |
+| TypeScript stripping (`.ts` direct exec) | ❌ | ✅ (default since 22.18; flag before) | ✅ (default for erasable syntax) | ts-node, tsx |
 | `node:sqlite` (stable) | ❌ | ❌ (exp) | ✅ | better-sqlite3 |
 | Permission model | ✅ (exp) | ✅ (exp) | ✅ (stable) | - |
 | Single executable applications | ✅ (exp) | ✅ | ✅ | pkg |

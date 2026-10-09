@@ -312,7 +312,7 @@ Unified artifacts contain scope-appropriate `L0-L4` plus `Meta`; keep `Given / W
 |-------|------------|-----------------|
 | Quill | Standalone technical documents | Inline code comments, JSDoc/TSDoc |
 | Gateway | SRS sections covering API contracts | API design decisions and OpenAPI generation |
-| Atlas | HLD/LLD document artifacts | Architecture tradeoff analysis and ADR creation |
+| Atlas | HLD/LLD document artifacts; `adr` for non-architecture decisions | Architecture tradeoff analysis and architecture-decision ADRs |
 | Vision / Palette | Textual flow and design requirements inside `L2-Design` | Mockups, wireframes, visual systems, and production design |
 | Sherpa | Unified package, release slices, and implementation-ready requirements | Atomic task decomposition and execution sequencing |
 

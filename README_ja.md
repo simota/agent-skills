@@ -242,7 +242,6 @@ Codexのスキル配置先は `~/.agents/skills`、設定は引き続き `~/.cod
 | **Crypt** | _"Trust no channel. Verify every key."_ - 暗号アーキテクチャ設計。アルゴリズム選定、鍵管理、E2E暗号化、KMS統合、TLS設定 | 暗号設計仕様 |
 
 **Gateway → Builder → Radar の連携**：Gateway（メッセージング設計）→ Builder（実装）→ Radar（テスト）
-**Gateway の連携**：Gateway（Webhook API仕様）→ Gateway（ハンドラ設計）
 
 ### データ
 

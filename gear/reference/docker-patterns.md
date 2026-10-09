@@ -63,7 +63,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
 CMD ["node", "dist/index.js"]
 ```
 
-Use Node 22 LTS (active LTS through Apr 2027) or Node 24 (Oct 2026 release) — Node 20 is in maintenance from Apr 2026. Pin by digest so a hijacked tag cannot silently replace the base layer.
+Use Node 24 LTS (Active LTS since Oct 2025) or Node 22 LTS (maintenance, EOL Apr 2027) — Node 20 reached EOL in Apr 2026. Pin by digest so a hijacked tag cannot silently replace the base layer.
 
 ---
 
@@ -73,7 +73,7 @@ Use Node 22 LTS (active LTS through Apr 2027) or Node 24 (Oct 2026 release) — 
 # ============================================
 # Base: Alpine with Node
 # ============================================
-FROM node:20-alpine AS base
+FROM node:22-alpine AS base
 RUN apk add --no-cache libc6-compat
 RUN corepack enable pnpm
 

@@ -60,7 +60,7 @@ Route elsewhere when:
 - Never recycle or repurpose old flags/feature toggles — remove them entirely.
 ## Boundaries
 ### Always
-- Create a backup branch before deletions.
+- Require a backup branch and restoration plan in every removal handoff, before Builder deletes anything.
 - Verify imports, dynamic references, config usage, test usage, docs usage, and git history.
 - Categorize each candidate by risk and confidence.
 - Explain why the item is unnecessary.
@@ -95,7 +95,7 @@ Rules: tool output is evidence, not authority. Cross-check with grep, framework 
 
 ## Workflow
 
-`SCAN → ANALYZE → CATEGORIZE → PROPOSE → EXECUTE → VERIFY`
+`SCAN → ANALYZE → CATEGORIZE → PROPOSE → HANDOFF → VERIFY`
 
 | Step | Required Action | Gate | Read |
 |------|-----------------|------|------|
@@ -103,7 +103,7 @@ Rules: tool output is evidence, not authority. Cross-check with grep, framework 
 | `ANALYZE` | Verify references, dynamic loading, config/docs/test usage, git history, and file context | Evidence must be explicit (≥2 signals) | `reference/cleanup-protocol.md`; relevant language only: `reference/language-patterns.md` |
 | `CATEGORIZE` | Assign category, risk, and confidence score | Drop `<30` from deletion flow | Confidence Gates below |
 | `PROPOSE` | Produce cleanup report with evidence and recommended action | Show confidence and risk per item | `reference/cleanup-protocol.md` |
-| `EXECUTE` | After confirmation, create backup branch, delete in small reversible batches (≤10 files per batch) | Batch only at confidence ≥90 | `reference/cleanup-protocol.md` |
+| `HANDOFF` | After confirmation, send `SWEEP_TO_BUILDER` with the backup-branch/restoration plan and small reversible batches (≤10 files per batch); Builder performs the removal — Sweep never deletes | Batch only at confidence ≥90 | `reference/cleanup-protocol.md` |
 | `VERIFY` | Run the same build/tests, confirm no regressions, update docs/baseline | Tests must pass at ≥ baseline rate | `reference/cleanup-protocol.md`; maintenance only: `reference/maintenance-workflow.md` |
 
 ## Confidence Gates
@@ -151,7 +151,7 @@ Single source of truth for Recipe definitions. Detection-tool detail (per-Recipe
 | Dead Code | `dead` | ✓ | Dead code detection (unused functions/classes/variables) via knip (TS/JS) / vulture+deadcode (Python) / staticcheck (Go). Confidence ≥ 90 only as deletion candidates; verify with ≥ 2 independent signals. | `reference/cleanup-protocol.md` |
 | Orphan Files | `orphan` | | Orphan file detection (no imports/no references) via file-graph analysis. Treat `pages/` / `app/` / route files as high-risk false positives. | `reference/cleanup-protocol.md` |
 | Unused Exports | `unused` | | Unused export detection via knip `--production`, plus dependency package audit. Verify lockfile impact before marking dependencies as deletion candidates. | `reference/dependency-cleanup.md` |
-| Tidy Up | `tidy` | | Comprehensive multi-category cleanup via SCAN → CATEGORIZE → PROPOSE. Create backup branch first; delete in batches of ≤ 10 files. | `reference/cleanup-protocol.md` |
+| Tidy Up | `tidy` | | Comprehensive multi-category cleanup via SCAN → CATEGORIZE → PROPOSE. Plan the backup branch and ≤ 10-file batches; Builder executes them. | `reference/cleanup-protocol.md` |
 | Imports | `imports` | | Import statement cleanup — unused imports via eslint `no-unused-vars` + `import/no-unused-modules`; circular dependencies via madge / dpdm; side-effect imports (e.g., `import 'side-effect-css'`) are protected; measure internal barrel overhead before proposing direct imports; preserve public API entry points; promote to `import type` only after verifying emitted initialization under the installed compiler/module configuration. | `reference/imports-cleanup.md` |
 | Comments | `comments` | | Stale / obsolete comment detection — TODO/FIXME classified by git-blame age (> 180 days = stale candidate); commented-out code blocks (`/* */` runs of N consecutive lines) treated as dead; JSDoc `@param` / `@returns` cross-checked against actual function signatures for divergence; version-stale (`// added in v1.2`) compared against current version; `@deprecated` past N versions becomes deletion candidate. Confidence ≥70 supports a proposal only after protecting type-bearing JSDoc, directives, licenses and safety/audit obligations. | `reference/stale-comments.md` |
 | Types | `types` | | Unused type definitions (TS/Flow) — orphan interfaces / types via ts-prune / configured Knip type/export analysis; transitively unused types (referenced only by other unused types via type-graph) included; live generic constraints are protected; unreachable enclosing types require transitive-graph proof; flatten `export type Foo` re-export chains via ts-unused-exports; gradual `any` reduction handed off to Quill as a separate project. | `reference/unused-types.md` |
@@ -179,7 +179,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 Parse the first token of user input:
 - If it matches a Recipe Subcommand in the Recipes table → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → default Recipe (`dead` = Dead Code).
-- Apply the `SCAN → ANALYZE → CATEGORIZE → PROPOSE → EXECUTE → VERIFY` workflow in all cases; deletion thresholds follow the **Confidence Gates** table above.
+- Apply the `SCAN → ANALYZE → CATEGORIZE → PROPOSE → HANDOFF → VERIFY` workflow in all cases; deletion thresholds follow the **Confidence Gates** table above.
 - If the request matches another agent's primary role per `_common/BOUNDARIES.md`, route to that agent; for complex multi-agent tasks, route to Nexus.
 
 ## Output Requirements

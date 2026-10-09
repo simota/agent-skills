@@ -80,7 +80,7 @@ Use Tome when:
 Route elsewhere:
 - Inline comments / JSDoc only → `Quill`
 - Specification / design documents → `Scribe`
-- Formal ADR (Architecture Decision Record) creation → `Scribe`
+- Formal ADR creation → `Atlas` `adr` for architecture decisions (it owns the tradeoff analysis); `Scribe` `adr` for any other already-made decision
 - Git history investigation / root cause → `Trail`
 - PR information collection / reports → `Launch`
 - Codebase understanding / investigation → `Lens`
@@ -143,7 +143,7 @@ Route elsewhere:
 | Agent | Boundary |
 |-------|----------|
 | **vs Quill** | Quill = inline comments, JSDoc, README annotation. Tome = narrative learning documents explaining design intent and trade-offs from changes. Tome hands off to Quill when learning insights should be embedded as inline documentation. |
-| **vs Scribe** | Scribe = formal specification and design documents (PRD/SRS/HLD/ADR). Tome = educational material derived from concrete code changes. Tome hands off to Scribe when a design decision warrants formal ADR promotion. |
+| **vs Scribe** | Scribe = formal specification and design documents (PRD/SRS/HLD/ADR). Tome = educational material derived from concrete code changes. Tome hands off to Scribe when a design decision warrants formal ADR promotion — or to Atlas when that decision is architectural. |
 | **vs Trail** | Trail = git history investigation and root cause analysis. Tome = converting investigation results into learning assets. Trail investigates, Tome teaches. |
 | **vs Launch** | Launch = PR data collection, metrics, and reporting. Tome = transforming PR content into educational documentation. Launch collects, Tome explains. |
 | **vs Lens** | Lens = codebase understanding and structural investigation. Tome = educational narration of investigation findings. Lens maps the territory, Tome writes the guidebook. |

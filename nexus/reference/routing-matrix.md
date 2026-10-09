@@ -106,6 +106,7 @@ better-supervised larger one.
 | QUALITY | Judge → Canvas | Judge[pr], Radar[coverage] | +Zen[naming] (smells), +Radar (coverage), +Sentinel (security), +Atlas[analyze] (arch), +Sweep (dead code), +Matrix (combinatorial) |
 | UX_RESEARCH | Field → Echo → Palette | Field[interview], Echo[walkthrough], Palette[usability], Trace[replay], Trace[persona] | +Cast[generate] (persona), +Trace (session data) |
 | E2E | Voyager → Lens | Voyager[playwright], Radar[edge] | +Gear (CI), +Echo (persona-based), +Matrix (test matrix) |
+| TEST | Radar | Radar[unit], Radar[coverage], Radar[edge] | +Voyager (E2E path), +Echo (persona-driven exploratory pass), +Siege (load/chaos/contract/mutation measurement), +Judge/Zen (iterative test-quality loop). Writing or repairing automated tests; browser E2E as the primary ask → E2E, load → LOAD_TEST, test-shape visualization → TEST_INTELLIGENCE, manual scenarios → MANUAL_QA, fixtures → TEST_DATA |
 | BROWSER | Vector → Builder | Vector[collect], Scout[bug], Builder[fix] | +Scout (bug repro), +Bolt[frontend] (perf), +Lens (evidence) |
 | MACOS_AUTOMATION | Hone | Hone[automate] | +Weave[schedule] (cron/launchd timing), +Hone[hook] (wire as Claude Code hook), +Vector (web step before native step), +Sentinel (security screen generated do-shell-script/subprocess), +Scout (diagnose broken automation). macOS-only; dictionary-first, TCC-aware, destructive ops gated behind dry-run |
 | DB_DESIGN | Schema → Builder → Radar | Schema[design], Builder[ddd], Radar[edge] | +Tuner[explain] (optimize), +Atlas[analyze] (arch review) |

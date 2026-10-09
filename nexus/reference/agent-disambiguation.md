@@ -190,7 +190,7 @@ Both are project-local extensions. Apply `_common/PROJECT_LOCAL_SKILLS.md` befor
 
 ### Atlas vs Ripple (Architecture Analysis)
 
-**Rule of thumb**: "What IS the architecture?" → Atlas (dependency graphs, God Classes, module decomposition, "create ADR" → Magi). "What HAPPENS IF we change it?" → Ripple ("is this change safe?", "will renaming this break anything?").
+**Rule of thumb**: "What IS the architecture?" → Atlas (dependency graphs, God Classes, module decomposition, "create an architecture ADR"; deliberating a contested choice before it is recorded → Magi; a non-architecture ADR → Scribe `adr`). "What HAPPENS IF we change it?" → Ripple ("is this change safe?", "will renaming this break anything?").
 
 ---
 
@@ -220,7 +220,7 @@ Both are project-local extensions. Apply `_common/PROJECT_LOCAL_SKILLS.md` befor
 
 ### Void vs Zen vs Sweep (Necessity / Quality / Cleanup)
 
-**Rule of thumb**: "Is it necessary?" → Void ("YAGNI", "over-engineering", "do we need this process?" — includes non-code assets). "Is it clean?" → Zen ("make it more readable"). "Is it being used?" → Sweep ("dead code", "unused files"). An outdated document → Void (validate necessity) → Sweep (remove).
+**Rule of thumb**: "Is it necessary?" → Void ("YAGNI", "over-engineering", "do we need this process?" — includes non-code assets). "Is it clean?" → Zen ("make it more readable"). "Is it being used?" → Sweep ("dead code", "unused files"). An outdated document → Void (validate necessity) → Sweep (deletion plan) → Builder (remove).
 
 ### Chisel vs Oracle vs Scribe vs Attest (Prompt Language / Prompt System / Spec / Conformance)
 
@@ -476,7 +476,7 @@ Orbit is project-local. Apply `_common/PROJECT_LOCAL_SKILLS.md`; when unavailabl
 | "REST/GraphQL API design, OpenAPI spec" | **Gateway** | HTTP API contract |
 | "Database schema, migration, ER diagram" | **Schema** | Persistence schema |
 | "General business logic implementation" | **Builder** | General implementation |
-| "Log parsing with builder patterns (Logstash)" | **Builder** | Pattern engine migration/design |
+| "Log parsing with grok patterns (Logstash)" | **Builder** | Pattern engine migration/design |
 | "Static security scan of shipped regex" | **Sentinel** | Post-ship audit, not design |
 | "Fuzz testing against a parser" | **Radar** | Test execution, not grammar design |
 

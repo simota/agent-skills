@@ -275,8 +275,8 @@ L4:
 **Rules**:
 - `reversibility` MUST be present for any L0 Vision change. Missing field = Phase 2 merge block.
 - `learning.hypothesis` MUST be testable (state a specific metric and direction). Vague hypotheses ("improve UX") are rejected.
-- `learning.fail_threshold` is mandatory — scribe without explicit failure condition becomes Insight Ledger pollution (Magi v4 Sophia S-4).
-- `disqualification.conditions[]` lists hard-fail conditions. An scribe with empty disqualification list is allowed but generates a `WARNING: no machine-checkable failure path` advisory.
+- `learning.fail_threshold` is mandatory — accord without explicit failure condition becomes Insight Ledger pollution (Magi v4 Sophia S-4).
+- `disqualification.conditions[]` lists hard-fail conditions. An accord with empty disqualification list is allowed but generates a `WARNING: no machine-checkable failure path` advisory.
 - All three fields feed Phase 3 post-launch Measurement Loop in `nexus growth-acceptance` recipe (when Org Tier = Enterprise + Step 1+ adopted).
 
 Canonical package shape:

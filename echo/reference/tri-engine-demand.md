@@ -164,7 +164,7 @@ Every demand that ships must carry both an `engine_concurrence` tag AND a calibr
 
 ### 10. DELIVER — output structure
 
-Output structure follows the existing Echo[demand] Demand Report template (`echo/SKILL.md §Output Format`) with these tri-engine additions:
+Output structure follows the existing Echo[demand] Demand Report template (`echo/SKILL.md` § Output Requirements) with these tri-engine additions:
 
 - **Header summary table** gains engine-status line and concurrence stats (`UNIVERSAL: N / LIKELY: N / VERIFIED-DIVERGENT: N / CROSS-PERSONA: N`)
 - **Cross-Persona Analysis** section is mandatory in multi mode (single-engine mode treats it as optional)

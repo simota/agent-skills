@@ -89,4 +89,4 @@ GenAI now generates scenarios at near-zero marginal cost (per `wargaming-simulat
 | Hallucinated probabilities | Model attaches confident `P=...%` without evidence | Strip model-emitted probabilities; reassign via human-assessed Delphi or Magi panel |
 | Narrative homogeneity | Same protagonist archetype across scenarios | Specify divergent actor roles (incumbent / disruptor / regulator / non-consumer) per scenario before generation |
 
-Treat GenAI scenario output as Tier 4 (external default) per `data-inputs.md` — usable with disclosure, never authoritative.
+Treat GenAI scenario output as an external-default input (the lowest input tier) — usable with disclosure, never authoritative.

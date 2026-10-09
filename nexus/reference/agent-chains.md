@@ -3,7 +3,7 @@
 **Purpose:** Chain **modifications** only — complexity/sub-type variants that differ from the default chain, dynamic addition/skip triggers, and Rally parallel escalation.
 **Read when:** You already know the task type and need a variant, or you need to adjust an in-flight chain.
 
-**Scope boundary (post-cleanup):** **Base chains live in `routing-matrix.md`** — it is the single source of truth for "which agents fire for task type X", including Recipe Hints and conditional Additions. This file holds only the *delta*: rows whose chain differs from that default. A row that merely restated the routing-matrix default has been removed; if a task type is absent here, use `routing-matrix.md` unchanged. Task types unique to this file (QA, TEST, COMPARE, UX_DESIGN) have no routing-matrix row and are fully owned here.
+**Scope boundary (post-cleanup):** **Base chains live in `routing-matrix.md`** — it is the single source of truth for "which agents fire for task type X", including Recipe Hints and conditional Additions. This file holds only the *delta*: rows whose chain differs from that default. A row that merely restated the routing-matrix default has been removed; if a task type is absent here, use `routing-matrix.md` unchanged. Every variant family keys to a routing-matrix task type, because CLASSIFY's SELECT picks the type from the matrix first. Exception: COMPARE has no matrix row, so SELECT cannot reach it; its purpose is undefined and its fate is an open decision.
 
 ## Contents
 - Chain Variants by Task Type (deltas from routing-matrix defaults)
@@ -17,7 +17,7 @@
 
 Each row is a **deviation** from the `routing-matrix.md` default for that task type. Read the default there first; apply the variant here when its complexity/sub-type key matches.
 
-**Rows are work-phase deltas, not full ship chains.** They deliberately omit the terminal **Guardian** (SHIP) step that `routing-matrix.md`'s default chains end with: Guardian still runs after the variant whenever the task type's matrix row includes it, and is simply not repeated on every row. Rows for types with no matrix row (QA, TEST, COMPARE, UX_DESIGN) and rows whose deliverable is not a code change (advisory, strategy, document packages) end where they are written — no Guardian is implied there.
+**Rows are work-phase deltas, not full ship chains.** They deliberately omit the terminal **Guardian** (SHIP) step that `routing-matrix.md`'s default chains end with: Guardian still runs after the variant whenever the task type's matrix row includes it, and is simply not repeated on every row. Rows for COMPARE (no matrix row) and rows whose deliverable is not a code change (advisory, strategy, document packages) end where they are written — no Guardian is implied there.
 
 | Type | Complexity | Chain Template |
 |------|------------|----------------|
@@ -57,8 +57,8 @@ Each row is a **deviation** from the `routing-matrix.md` default for that task t
 | DOCS | convert | Scribe |
 | DOCS | report | Launch[weekly] → Scribe |
 | INFRA | local | Scaffold → Radar |
-| QA | - | Lens → Echo → Radar |
-| QA | e2e | Voyager → Lens → Radar |
+| TEST | exploratory-qa | Lens → Echo → Radar |
+| TEST | e2e | Voyager → Lens → Radar |
 | REVIEW | PR | Judge → Builder/Zen/Sentinel (based on findings) → Radar |
 | REVIEW | pre-commit | Judge → Builder (if CRITICAL) |
 | REVIEW | quick-scan | Judge |
@@ -86,14 +86,14 @@ Each row is a **deviation** from the `routing-matrix.md` default for that task t
 | MODERNIZE | stack | Lens → Shift (detect+modernize) → Sherpa → Builder → Radar |
 | MODERNIZE | i18n | Polyglot → Artisan → Radar |
 | MODERNIZE | structure | Grove → Sherpa → Zen → Radar |
-| UX_DESIGN | flow | Flow → Artisan → Radar |
-| UX_DESIGN | creative | Vision → Muse → Forge → Artisan → Radar |
-| UX_DESIGN | audit | Palette → Artisan → Radar |
-| UX_DESIGN | storybook | Vitrine → Quill |
-| UX_DESIGN | demo | Cue[demo] → Voyager |
-| UX_DESIGN | session | Trace → Echo → Palette |
-| UX_DESIGN | content-first | Prose → Vision → Sherpa → Muse → Forge → Artisan |
-| UX_DESIGN | motion-intentional | Vision → Flow → Artisan → Radar |
+| DESIGN | flow | Flow → Artisan → Radar |
+| DESIGN | creative | Vision → Muse → Forge → Artisan → Radar |
+| DESIGN | usability-audit | Palette → Artisan → Radar |
+| DESIGN_SYSTEM_DOCS | storybook | Vitrine → Quill |
+| DEMO | verified | Cue[demo] → Voyager |
+| UX_RESEARCH | session-lite | Trace → Echo → Palette |
+| DESIGN | content-first | Prose → Vision → Sherpa → Muse → Forge → Artisan |
+| DESIGN | motion-intentional | Vision → Flow → Artisan → Radar |
 | TEST | quality | Judge → Zen → Radar (iterative PDCA via Nexus) |
 | STRATEGY | seo | Growth → Artisan → Radar |
 | STRATEGY | compete | Compete → Spark → Builder → Radar |

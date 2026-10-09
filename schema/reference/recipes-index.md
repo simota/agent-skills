@@ -15,7 +15,7 @@ what Recipes exist at all.
 | Migration Plan | `migration` | | Schema change and migration design | `reference/migration-patterns.md` |
 | ER Diagram | `er` | | ER diagram generation and review | `reference/schema-examples.md` |
 | Normalization | `normalize` |  | Normalization vs denormalization decisions | — |
-| Index Strategy | `index` | | Index design and optimization | `reference/index-strategies.md` |
+| Index Strategy | `index` | | Design-time index design from access patterns and the migration that ships it; EXPLAIN-backed tuning of an observed slow workload → Tuner `index` | `reference/index-strategies.md` |
 | Migration Rollback | `rollback` | | Reverse-operation design for destructive migrations (reverse DDL / dual-write / backfill / alternatives to destructive changes) | `reference/migration-rollback.md` |
 | Multi-Tenant Design | `tenant` | | Tenant isolation, RLS, routing, migration, provisioning, quota, or cross-tenant security; select `isolation|rls|routing|scale|migration|provisioning|quota` mode from the request | `reference/multi-tenant-patterns.md`, matching `reference/tenant-*.md` |
 | Partitioning | `partition` | | range / list / hash / time-based partition design (pruning / maintenance / migration) | `reference/partition-strategies.md` |

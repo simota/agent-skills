@@ -105,7 +105,7 @@ Key mandates enforced:
 | Transmission security (e)(1) | Integrity controls, encryption for ePHI in transit | Required |
 
 ### HIPAA Security Rule NPRM — Proposed Changes (2025-2026)
-NPRM published January 6 2025 in the Federal Register. Comment period closed March 7 2025 (~5,000 comments received). Finalization tracked on OCR's regulatory agenda targeting May 2026; exact date not confirmed. The Trump administration has not withdrawn the NPRM. Factor proposed changes into readiness assessments now.
+NPRM published January 6 2025 in the Federal Register. Comment period closed March 7 2025 (~5,000 comments received). Not finalized as of 2026-10: the Spring 2026 regulatory agenda moved the target from May 2026 to July 2027 and reclassified it as a long-term action (agency timetables are not binding). The Trump administration has not withdrawn the NPRM. Factor proposed changes into readiness assessments now.
 
 Key proposed changes:
 - Eliminate required/addressable distinction — all safeguards become mandatory
@@ -113,7 +113,7 @@ Key proposed changes:
 - Business associates must report security incidents to covered entities within 24 hours
 - Mandatory technology asset inventory and network map (annual update)
 - Vulnerability scanning every 6 months; penetration testing annually
-- Anticipated compliance window: 60-day effective date + 180-day compliance period after final rule (~Q4 2026 if finalized May 2026)
+- Anticipated compliance window: 60-day effective date + 180-day compliance period after final rule (~early 2028 if finalized July 2027)
 
 Sources: [Federal Register NPRM (2025-01-06)](https://www.federalregister.gov/documents/2025/01/06/2024-30983/hipaa-security-rule-to-strengthen-the-cybersecurity-of-electronic-protected-health-information) | [HHS HIPAA Security Rule NPRM](https://www.hhs.gov/hipaa/for-professionals/security/hipaa-security-rule-nprm/index.html) | [Alston & Bird: Still on Track (Nov 2025)](https://www.alston.com/en/insights/publications/2025/11/hipaa-security-rule-overhaul)
 

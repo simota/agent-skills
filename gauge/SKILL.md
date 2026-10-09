@@ -130,6 +130,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Language distribution in body vs description (L1)
 - HTML comment blocks: CAPABILITIES_SUMMARY, COLLABORATION_PATTERNS, PROJECT_AFFINITY (H1-H3)
 - Section headings and their content completeness (S1-S9)
+- Body line/token size (S10) and backticked `reference/` / `_common/` citations to resolve (S11)
 - AUTORUN and Nexus Hub Mode blocks (A1-A2)
 
 **CLASSIFY** evaluates:

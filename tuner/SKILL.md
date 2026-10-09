@@ -157,7 +157,7 @@ Tuner receives performance issues and context from upstream agents. Tuner sends 
 
 | Agent | Tuner owns | They own |
 |-------|------------|----------|
-| Schema | Query execution optimization, slow query rewriting, EXPLAIN ANALYZE | Index design from access patterns, schema DDL, migrations |
+| Schema | Query execution optimization, slow query rewriting, EXPLAIN ANALYZE, plan-evidence index recommendations for an existing workload | Design-time index design from access patterns, schema DDL, migrations |
 | Builder | Query performance analysis, ORM hot-path tuning | Application code rewrites, repository/service layer changes |
 | Bolt | DB-side latency, connection pool tuning | Application-level caching, non-DB performance work |
 | Scout | Optimization recommendations after bottleneck identified | Root cause investigation, unknown performance regression |
@@ -171,7 +171,7 @@ Single source of truth for Recipe definitions. Subcommand match wins over natura
 |--------|-----------|---------|-------------|------------|
 | Explain Analyze | `explain` | ✓ | EXPLAIN ANALYZE analysis — annotate plan nodes, identify bottleneck nodes, propose improvements | `reference/explain-analyze-guide.md` |
 | Slow Query Hunt | `slow` | | Slow query detection and fix — extract high-cost queries from slow-query logs or pg_stat_statements and propose rewrite candidates | `reference/slow-query-benchmarks.md` |
-| Index Recommendation | `index` | | Index recommendation — analyze access patterns and produce DDL for covering, partial, and composite indexes | `reference/query-index-anti-patterns.md` |
+| Index Recommendation | `index` | | Plan-evidence index recommendation for an observed slow query or workload — EXPLAIN-backed covering / partial / composite candidates with read/write trade-off and `CREATE INDEX CONCURRENTLY` DDL. Scope: runtime evidence. Schema owns design-time index plans from access patterns (Schema `index`) and the migration that ships the DDL (`ADD-INDEX` → Schema) | `reference/query-index-anti-patterns.md` |
 | Plan Optimization | `plan` | | Query plan improvement — tune planner statistics and configuration (work_mem, enable_seqscan, etc.) to steer the planner | `reference/optimization-patterns.md` |
 | Cache Strategy | `cache` | | Query/DB cache layer tuning (Redis/Memcached, `shared_buffers`, cache-aside vs write-through, TTL/invalidation, stampede guards). Scope: app/query cache layer. Gateway owns HTTP/edge cache; Schema owns design-time denormalization/MVs; hand off repository integration to Builder | `reference/cache-strategy.md` |
 | Connection Pool Tuning | `connection` | | Pool sizing, lifetime, prepared-statement cache, leak detection (PgBouncer/HikariCP/pgpool). Scope: DB-side pool. Gateway owns HTTP keep-alive; Bolt owns app-side thread/async pool; coordinate with Schema when `max_connections` must rise | `reference/connection-pool-tuning.md` |
