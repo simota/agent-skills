@@ -366,6 +366,18 @@ class TestRoutingSurface(CheckerCase):
             "routing-oracle.py", "write `Magi[advisor expert]`", "--severity", "error"
         )
 
+    def test_an_invocation_shaped_pointer_to_a_missing_subcommand_fails(self):
+        """RO-10. `canon[legal]` read as a Canon invocation at ~22 sites, but
+        Canon has no `legal` Recipe; every one fell back to `owasp`."""
+        self.edit(
+            "_common/GROWTH_BRAND_PROOF.md",
+            "| `canon[claims]` + `canon[regulatory]` validators |",
+            "| `canon[legal]` + `canon[regulatory]` validators |",
+        )
+        self.expect_caught(
+            "routing-oracle.py", "`legal` is not a canon subcommand", "--severity", "error"
+        )
+
 
 class TestLessonsRegister(CheckerCase):
     """`lint-lessons.py`. The register's entire value is what it refuses, so

@@ -256,7 +256,7 @@ parallel:
     output: design_analysis.json
 ```
 
-**Synthesis:** `magi[arbitrate-tri-engine]` runs Logos / Pathos / Sophia perspectives across all three engine reports.
+**Synthesis:** `magi[arbitrate]` runs Logos / Pathos / Sophia perspectives across all three engine reports.
 
 **Output:** `analysis_consensus.md`
 ```yaml

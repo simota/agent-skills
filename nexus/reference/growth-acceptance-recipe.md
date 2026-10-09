@@ -78,7 +78,7 @@ Do **not** invoke when:
 3. **`compete`** — cannibalization estimation
 4. **`funnel` + `funnel[premium]`** — channel-fit rationale and LP coherence
 5. **`vision` + `prose`** — Brand Compiler **B.tone advisory** layer (LLM-as-judge, non-blocking)
-6. **`canon[legal]` + `canon[regulatory]` + `cloak` + `vigil`** — G14 Regulatory Envelope Pre-Flight: verify `regulatory_jurisdiction` toggles, brand-safety placement exclusions
+6. **`canon[claims]` + `canon[regulatory]` + `cloak` + `vigil`** — G14 Regulatory Envelope Pre-Flight: verify `regulatory_jurisdiction` toggles, brand-safety placement exclusions
 
 **Gate (G14 mandatory)**:
 - Regulatory jurisdiction declared; per-jurisdiction toggle (auto-scale / auto-generate / holdout test) verified
@@ -158,7 +158,7 @@ Phase 2 (Ship-Time, parallel):
   ‖ compete[cannibalization estimation]
   ‖ funnel + funnel[premium: channel-fit + LP coherence]
   ‖ vision + prose[B.tone advisory, non-blocking]
-  ‖ canon[legal] + canon[regulatory] + cloak + vigil[G14 Regulatory Pre-Flight]
+  ‖ canon[claims] + canon[regulatory] + cloak + vigil[G14 Regulatory Pre-Flight]
   ‖ experiment[pre-register + control-validity/SRM check, per § Pre-Registration sub-gate]
   → Gate: regulatory toggle verified + statistical power adequate + analysis plan frozen + control valid
   → if FAIL: block ship; route to remediation

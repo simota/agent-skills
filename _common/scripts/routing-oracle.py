@@ -89,9 +89,15 @@ internal crash; strict mode blocks on every warning, including incomplete checks
              that skill's SKILL.md as the second token of one (`advisor
              expert`). Found live: `Magi[expert]`, `Magi[office-hours]` —
              the dispatch reads `expert` as the first token and falls back.
-       Other bracket forms (`Atlas[architecture]`, `Builder[codex]`,
-       `canon[legal]`) are role / engine / domain annotations outside the
-       routing matrix and are deliberately not checked here.
+         (c) a code span holding exactly a lower-case `skill[token]` — the
+             invocation-shaped spelling, which the corpus uses only for real
+             subcommands. Found live: `canon[legal]` (~22 sites; Canon has no
+             `legal` Recipe, so each fell back to `owasp`) and
+             `magi[arbitrate-tri-engine]`.
+       Bare bracket forms in prose (`Atlas[architecture]`, `Builder[codex]`,
+       `Nexus[classify]`) are role / engine / phase annotations outside the
+       routing matrix and are deliberately not checked here: nothing in their
+       spelling separates them from a mistyped subcommand.
        Complexity Budget (`_common/HARNESS_DEBT.md` 3b):
          failure  — a cross-skill pointer names a subcommand the target does
                     not dispatch, so following it silently runs the default
@@ -597,6 +603,8 @@ BOLD_SUBCOMMAND_RE = re.compile(
     r"\*\*([A-Za-z][A-Za-z0-9]*) `([a-z0-9][a-z0-9-]*)(?: [a-z0-9][a-z0-9-]*)*`")
 # A backticked `subcommand mode` pair inside a skill's own SKILL.md.
 MODE_PAIR_RE = re.compile(r"`([a-z0-9][a-z0-9-]*) ([a-z][a-z0-9-]*)`")
+# RO-10 form (c): a code span that is exactly `skill[token]`, skill lower-case.
+CODE_HINT_RE = re.compile(r"(?<!`)`([a-z][a-z0-9]*)\[([a-z0-9][a-z0-9-]*)\]`(?!`)")
 
 
 def check_corpus_subcommand_references(findings: list[Finding]):
@@ -639,8 +647,22 @@ def check_corpus_subcommand_references(findings: list[Finding]):
                 checked += 1
                 if token not in allowed[name]:
                     bad.append(f"{rel}:{number}: `{match.group(0)}` — `{token}` is not a {name} subcommand")
+            code_spans = []
+            for match in CODE_HINT_RE.finditer(line):
+                name, token = match.group(1), match.group(2)
+                if name not in allowed:
+                    continue
+                checked += 1
+                code_spans.append(match.span())
+                if token in allowed[name]:
+                    continue
+                hint = (f"; `{token}` is a mode of `{modes[name][token]}`"
+                        if token in modes[name] else "")
+                bad.append(f"{rel}:{number}: {match.group(0)} — `{token}` is not a {name} subcommand{hint}")
             for match in RECIPE_HINT_RE.finditer(line):
                 name, token = match.group(1).lower(), match.group(2)
+                if any(start <= match.start() < end for start, end in code_spans):
+                    continue  # already judged as form (c)
                 if name not in allowed or token in allowed[name] or token not in modes[name]:
                     continue
                 owner = modes[name][token]
@@ -653,7 +675,7 @@ def check_corpus_subcommand_references(findings: list[Finding]):
             "(following them silently runs its default Recipe): " + "; ".join(bad),
         ))
     if checked == 0:
-        findings.append(Finding("RO-10", "WARNING", "no `**Skill `token`` references found — corpus check may be stale vs prose format"))
+        findings.append(Finding("RO-10", "WARNING", "no `**Skill `token`` / `skill[token]` references found — corpus check may be stale vs prose format"))
 
 
 def main() -> int:
