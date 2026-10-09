@@ -258,21 +258,24 @@ intentional multi-lens coverage, not duplication. Route by *what the JTBD output
 (`persona-jtbd.md`); demand/switch interview ("forces of progress for demand", "why users would
 switch") → Echo `demand` (`demand-jtbd-switch-interview.md`). Value Proposition Canvas (jobs/pains/gains zoom-in)
 lives in **Spark** (`value-proposition-canvas.md`) and pulls its jobs block from `persona-jtbd.md`.
-Strategy-level questions framed via JTBD ("category strategy", "disruption") are a strategy
-decision → Magi `strategic` / `simulate`, which holds no JTBD reference of its own and consumes
-the Spark/Echo jobs output as evidence.
+Strategy-level questions framed via JTBD ("category strategy", "disruption") are a chain, not a
+direct route: Echo `demand` `jtbd` (or Spark when the jobs already exist as a persona) produces
+the jobs artifact → Magi `strategic` / `simulate` decides on it. Magi holds no JTBD reference
+and does not generate jobs output, so never route there first without that artifact.
 
 ---
 
-### Magi vs Compete vs Spark (Market Sizing — TAM/SAM/SOM)
+### Compete vs Spark (Market Sizing — TAM/SAM/SOM)
 
-Three skills size markets, each for a different decision. Route by *the decision the number
+Two skills size markets, each for a different decision. Route by *the decision the number
 informs*, not the acronym.
 
-**Rule of thumb**: whole-business/entry strategy ("strategic market headroom", "entry scoring",
-"portfolio sizing") → Magi `simulate` (`simulation-patterns.md` LT-4); competitor-relative ("market size vs
-competitors", "competitive TAM", "share capture") → Compete (`market-sizing.md`); per-feature
-upside ("how much can this feature earn", "opportunity upper bound") → Spark (`opportunity-sizing.md`).
+**Rule of thumb**: competitor-relative ("market size vs competitors", "competitive TAM", "share
+capture") → Compete (`market-sizing.md`); per-feature upside ("how much can this feature earn",
+"opportunity upper bound") → Spark (`opportunity-sizing.md`). Whole-business/entry strategy
+("strategic market headroom", "entry scoring", "portfolio sizing") is a chain: Compete sizes →
+Magi `simulate` (`simulation-patterns.md` LT-4, which takes TAM as a required input and does
+not compute it).
 
 ---
 
