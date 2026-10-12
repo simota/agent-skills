@@ -63,7 +63,7 @@ Route elsewhere when the task is primarily:
 - feature implementation or logic changes: `Builder`
 - documentation generation: `Quill`
 - complexity visualization: `Canvas`
-- dead file or unused file detection: `Sweep`
+- dead code, unused export, or unused file detection across the codebase: `Sweep`
 
 ## Roles
 
@@ -144,7 +144,7 @@ Single source of truth for Recipe definitions. Use `Read First` column files at 
 | Naming Improvement | `naming` |  | Focused | Variable and function name improvements only | Naming only, scope fixed at Focused. Public-API rename is Ask First. **VERIFY**: change is purely identifier-level (no logic/control-flow touched); project naming convention followed; public/exported symbols gated Ask First; tests stay green. | — |
 | Extract Function | `extract` |  | Focused | Split and extract long functions | Extract one function from a long method; prioritize cognitive complexity > 15. **VERIFY**: exactly one extraction per pass; behavior preserved; cognitive complexity measurably reduced; coverage ≥ baseline. | — |
 | Magic Constants | `constants` |  | Focused → Module | Replace magic numbers with named constants | Find magic numbers and replace with named constants; add type annotations. **VERIFY**: every replaced literal maps to a named constant of the **same value** (no off-by-one); type annotation added; zero behavior change. | — |
-| Dead Code Removal | `dead` | | Focused → Module | Unused code removal | Start from local/private; verify exports and dynamic use before removing. Boundary with Sweep: file-level deletion → Sweep. TypeScript/JS: prefer `knip` (ts-prune archived 2025-09). **VERIFY**: local/private dead code removed without ceremony; exports / public-API / dynamic / reflective use confirmed-unused (tool evidence) before removal; file-level deletion routed to Sweep; tests green. | `reference/dead-code-detection.md` |
+| Dead Code Removal | `dead` | | Focused → Module | Unused code removal | Start from local/private; verify exports and dynamic use before removing. Boundary: codebase-wide detection → Sweep; whole-file and dependency deletion → Builder. TypeScript/JS: prefer `knip` (ts-prune archived 2025-09). **VERIFY**: local/private dead code removed without ceremony; exports / public-API / dynamic / reflective use confirmed-unused (tool evidence) before removal; whole-file deletion routed to Builder; tests green. | `reference/dead-code-detection.md` |
 | Simplify Logic | `simplify` | | Focused | Compress redundant branches, ternaries, and unnecessary conversions into equivalent concise forms | Equivalence-compress redundant conditionals, ternary chains, and `if/else return true/false`. Behavior-preserving transforms only. **VERIFY**: every transform is a known behavior-preserving equivalence (truth table identical); no short-circuit / evaluation-order change; unit tests pass. | `reference/logic-simplification.md` |
 | Split Function | `split` | | Focused | Incrementally split overly long functions along responsibility boundaries (enhanced `extract`) | Split functions > 50 lines or cognitive complexity > 20 along responsibility seams. More structural than `extract` (seam design → staged execution → verify). **VERIFY**: responsibility seams identified before cutting; staged with rollback checkpoints; behavior preserved; coverage ≥ baseline. | `reference/function-splitting.md` |
 | Guard Clauses | `guard` | | Focused | Convert nested `if` to early return / guard clauses | Convert conditionals at nesting depth ≥ 3 to early returns / guard clauses. **VERIFY**: nesting depth measurably reduced (before/after attached); early-return ordering preserves the original branch semantics (no skipped side effect / inverted condition); tests green. | `reference/guard-clauses.md` |
@@ -158,7 +158,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `rename`, `naming`, `variable name`, `function name` | `naming` |
 | `extract`, `long method`, `decompose`, `split function` | `extract` or `split` |
 | `magic number`, `constant`, `hardcoded` | `constants` |
-| `dead code`, `unused`, `unreachable` | `dead` |
+| `remove dead code`, `remove unused`, `unreachable code` | `dead` |
 | `simplify`, `redundant branch`, `ternary chain` | `simplify` |
 | `guard`, `early return`, `nested if`, `defensive`, `fallback` | `guard` (logic) / defensive cleanup |
 | `complexity`, `nesting`, `cognitive` | Review mode + appropriate refactor recipe (`reference/cognitive-complexity-research.md`) |
@@ -232,7 +232,7 @@ Zen receives code quality signals from upstream agents, performs refactoring or 
 - **vs Radar**: Radar = new test cases, coverage growth, flaky fixes. Zen = test structure and readability only.
 - **vs Atlas**: Atlas = architecture analysis, module splitting, dependency structure. Zen = within-module refactoring only.
 - **vs Builder**: Builder = feature implementation and logic changes. Zen = behavior-preserving cleanup only.
-- **vs Sweep**: Sweep = detecting unused files at filesystem level. Zen = removing dead code within known files.
+- **vs Sweep**: Sweep = detecting dead code, unused exports and unused files across the codebase (never edits). Zen = removing dead code inside files it is refactoring.
 
 **Required report anchors:** `## Zen Code Review`, `## Refactoring Report: [Component/File]`, `## Consistency Audit Report`, `## Test Refactoring Report: [test file/module]`
 
