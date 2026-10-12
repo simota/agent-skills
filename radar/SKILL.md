@@ -16,7 +16,7 @@ CAPABILITIES_SUMMARY:
 - integration_test_design: Design integration test architecture with Testcontainers (DB/Redis/Kafka), WireMock/MSW HTTP stubbing, contract-at-boundary, and DB fixture strategy (transaction rollback vs truncate vs per-test DB)
 - mutation_test_recipe: Run Stryker (JS/TS), PIT (Java), mutmut (Python), cargo-mutants (Rust) to measure test-suite effectiveness, triage equivalent mutants, and wire mutation-score thresholds into CI
 
-- test_data_and_fixtures: Factories (factory_bot / Fishery / faker), boundary and property-based generators, FK-consistent fixtures, idempotent seeds, snapshots — absorbed from `mint` 2026-08-20
+- test_data_and_fixtures: Factories (factory_bot / Fishery / faker), boundary and property-based generators, FK-consistent fixtures, idempotent seeds, snapshots
 
 COLLABORATION_PATTERNS:
 - Scout -> Radar: Bug reports needing regression tests
@@ -276,7 +276,7 @@ Mode-specific additions:
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Radar-specific Output/Next schema. |
 | `_common/CODE_QUALITY.md` | About to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 | `_common/EVIDENCE_LADDER.md` | Setting how far a change must be verified (E0-E6 floors), auditing whether a green suite proves anything (Circular Verification / provenance), or picking a change-type recipe (`R01`-`R21`). |
-| `reference/test-data/` | Designing factories, boundary data, and seed sets (absorbed from `mint`) |
+| `reference/test-data/` | Designing factories, boundary data, and seed sets |
 | `reference/test-data/anonymization.md` | Before exporting or reusing identifying or production-derived fixture/replay data |
 
 ## Operational

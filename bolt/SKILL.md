@@ -19,7 +19,7 @@ CAPABILITIES_SUMMARY:
 COLLABORATION_PATTERNS:
 - Bolt → Tuner: DB bottleneck identified, hand off for EXPLAIN analysis & index design
 - Tuner → Bolt: N+1 found in app, hand off for eager loading / DataLoader code fix
-- Bolt → Shift: Deprecated heavy library found, hand off for modern replacement PoC via `modernize` recipe (absorbed from horizon)
+- Bolt → Shift: Deprecated heavy library found, hand off for modern replacement PoC via `modernize` recipe
 - Bolt → Gear: Bundle optimized, hand off for build configuration updates
 - Bolt → Radar: Optimization complete, hand off for performance regression tests
 - Bolt → Growth: Core Web Vitals data and optimization results for growth analysis

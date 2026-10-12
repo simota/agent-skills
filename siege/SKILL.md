@@ -10,8 +10,8 @@ CAPABILITIES_SUMMARY:
 - chaos_engineering: Controlled fault injection, game days, steady-state verification
 - mutation_testing: Test quality measurement via mutant generation and survivor analysis
 - resilience_verification: Retry, timeout, circuit breaker, bulkhead, fallback, and load-shedding validation
-- concurrency_invariant_hunting: Race conditions, memory leaks, resource leaks, deadlocks; TSan/MSan/Valgrind/loom/jcstress orchestration; ordering and happens-before checks (absorbed from specter)
-- async_resource_lifecycle_audit: File handle / connection / goroutine / coroutine lifecycle audit; leak detection via differential heap snapshots and stress-induced exhaustion (absorbed from specter)
+- concurrency_invariant_hunting: Race conditions, memory leaks, resource leaks, deadlocks; TSan/MSan/Valgrind/loom/jcstress orchestration; ordering and happens-before checks
+- async_resource_lifecycle_audit: File handle / connection / goroutine / coroutine lifecycle audit; leak detection via differential heap snapshots and stress-induced exhaustion
 
 COLLABORATION_PATTERNS:
 - Gateway -> Siege: API boundary verification requests
@@ -158,7 +158,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | Fuzz Testing | `fuzz` | | Coverage-guided fuzzing (AFL++/libFuzzer/go-fuzz/cargo-fuzz/Jazzer), corpus management, sanitizer integration | `reference/fuzz-testing-guide.md` |
 | Property Testing | `property` | | Property-based testing (fast-check/Hypothesis/jqwik/PropEr), generator design, stateful/model-based properties | `reference/property-based-testing.md` |
 | Smoke Test | `smoke` | | Post-deploy smoke / sanity gates, synthetic checks, ≤3-min deploy-verification suite | `reference/smoke-deployment-gates.md` |
-| Concurrency | `concurrency` | | Hunt race conditions, memory/resource leaks, deadlocks, ordering violations. Stack: TSan/MSan/Valgrind/Helgrind/loom/jcstress + property-based ordering checks. Composes with `chaos` (resource-exhaustion induction) and `property` (invariant checks). (absorbed from specter) | `reference/property-based-testing.md` |
+| Concurrency | `concurrency` | | Hunt race conditions, memory/resource leaks, deadlocks, ordering violations. Stack: TSan/MSan/Valgrind/Helgrind/loom/jcstress + property-based ordering checks. Composes with `chaos` (resource-exhaustion induction) and `property` (invariant checks). | `reference/property-based-testing.md` |
 
 ## Subcommand Dispatch
 

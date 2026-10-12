@@ -22,8 +22,8 @@ CAPABILITIES_SUMMARY:
 - shadow_dom_fallback: Vision mode fallback for shadow DOM-heavy apps (Shoelace, Lit, Web Components) where accessibility snapshots miss nested elements
 - reverse_feedback_processing: Receive and act on quality feedback from downstream agents
 
-- crawl_architecture: Multi-node topology, URL frontier (Bloom/Cuckoo dedup, priority queue), per-domain budget with token-bucket politeness, checkpoint/resume — absorbed from `trawl` 2026-08-20
-- crawl_compliance: robots.txt/Crawl-Delay enforcement, Sitemaps, EU AI Act opt-out registry, jurisdiction risk — absorbed from `trawl` 2026-08-20
+- crawl_architecture: Multi-node topology, URL frontier (Bloom/Cuckoo dedup, priority queue), per-domain budget with token-bucket politeness, checkpoint/resume
+- crawl_compliance: robots.txt/Crawl-Delay enforcement, Sitemaps, EU AI Act opt-out registry, jurisdiction risk
 
 COLLABORATION_PATTERNS:
 - Pattern A: Debug Investigation (Scout → Vector → Triage)
@@ -277,7 +277,7 @@ Record when the output is evidence someone else must watch — bug reproduction,
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the execution report, choosing CLI vs MCP by step count, or front-loading target/auth/scope at RECON. Critical for Vector: P3, P6. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Vector-specific Output/Next schema. |
 | `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
-| `reference/crawl/` | Designing a crawl system — topology, frontier, politeness, compliance (absorbed from `trawl`) |
+| `reference/crawl/` | Designing a crawl system — topology, frontier, politeness, compliance |
 
 ---
 

@@ -29,7 +29,7 @@ COLLABORATION_PATTERNS:
 - Pattern G: Grove -> Guardian — Migration PR slicing
 - Pattern H: Grove -> Sweep — Orphaned file cleanup
 - Pattern I: Grove -> Scaffold — IaC directory layout for monorepo infra/
-- Pattern J: Shift -> Grove — Toolchain modernization impact on directory conventions (absorbed from horizon)
+- Pattern J: Shift -> Grove — Toolchain modernization impact on directory conventions
 - Pattern K: Hone/Sigil -> Grove — AI-config density and project-skill placement inputs for LLM layout work
 
 BIDIRECTIONAL_PARTNERS:

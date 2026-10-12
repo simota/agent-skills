@@ -19,7 +19,7 @@ CAPABILITIES_SUMMARY:
 - contradiction_resolution: TRIZ contradiction matrix (classical 39x40, Matrix 2003, Matrix 2022) with LLM-assisted tooling when available
 - tri_engine_reframe: `multi` Recipe — parallel assumption-inversion across Codex + Antigravity + Claude; Pattern D top-bills `VERIFIED-DIVERGENT x HIGH`; Portfolio-only merge; assumption_root grouping keeps same-assumption-inverted-differently separate
 
-- interactive_ideation: Multi-turn brainstorming facilitation across Expand / Propose / Evaluate / Subtract modes, double-diamond pacing within one session, scope sensing and assumption surfacing — absorbed from `riff` 2026-08-20
+- interactive_ideation: Multi-turn brainstorming facilitation across Expand / Propose / Evaluate / Subtract modes, double-diamond pacing within one session, scope sensing and assumption surfacing
 
 COLLABORATION_PATTERNS:
 - Pattern A Thinking Breakthrough (User/Magi -> Flux -> Magi): break deadlocked decisions
@@ -280,7 +280,7 @@ Activated by `multi`. Pattern D (Divergence-primary) per `_common/MULTI_ENGINE_R
 | `_common/MULTI_ENGINE_RECIPE.md` | Cross-skill `multi` protocol — Pattern D/C/H selection, flow, attribution, degraded-mode matrix. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing output, thinking depth at contradiction/ASN gating, front-loading at ENTER. Critical: P3, P5. |
 | `reference/autorun-schema.md` | Emitting AUTORUN `_STEP_COMPLETE` — Flux-specific Output/Next schema. |
-| `reference/ideation/` | Running multi-turn ideation across Expand / Propose / Evaluate / Subtract (absorbed from `riff`) |
+| `reference/ideation/` | Running multi-turn ideation across Expand / Propose / Evaluate / Subtract |
 
 ---
 

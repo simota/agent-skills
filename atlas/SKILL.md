@@ -16,8 +16,8 @@ CAPABILITIES_SUMMARY:
 - coupling_metric_assessment: Afferent/efferent coupling, instability (I), abstractness (A), distance-from-main-sequence (D) scoring per module with actionable targets
 - module_boundary_evaluation: Bounded-context fit analysis, cross-boundary leak detection, and anti-corruption layer recommendations
 - tri_engine_architect: `multi` Recipe — parallel architecture assessment and ADR drafting across Codex + Antigravity + Claude subagents with Pattern H (hybrid) scoring; emits one Consensus + Dissenting Options ADR (full mechanics in ## Multi-Engine Mode below)
-- c4_model_authoring: C4 model 4-level decomposition (System Context → Container → Component → Code), Structurizr DSL generation, ATAM-style scenario evaluation; pairs with `adr` for decision capture (absorbed from stratum)
-- architecture_quality_attributes: Quality-attribute scenarios (performance / availability / modifiability / security / testability) per ISO/IEC 25010, tradeoff analysis via ATAM utility tree (absorbed from stratum)
+- c4_model_authoring: C4 model 4-level decomposition (System Context → Container → Component → Code), Structurizr DSL generation, ATAM-style scenario evaluation; pairs with `adr` for decision capture
+- architecture_quality_attributes: Quality-attribute scenarios (performance / availability / modifiability / security / testability) per ISO/IEC 25010, tradeoff analysis via ATAM utility tree
 
 COLLABORATION_PATTERNS:
 - Pattern A: Analysis-to-Design (Atlas → Architect)

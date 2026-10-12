@@ -13,8 +13,8 @@ CAPABILITIES_SUMMARY:
 - constraint_modeling: Model invalid pairs, exclusions, and parameter dependencies with distribution verification
 - coverage_gap_analysis: Map execution results back to uncovered t-tuples using tuple density and (p,t)-completeness metrics, propose follow-up cases
 - variable_strength_planning: Assign risk-based interaction strengths to parameter subsets (safety 3-way+, business 2-way, cosmetic 1-way)
-- qa_scenario_authoring: Author executable manual QA procedures (preconditions / steps / expected results / postconditions / traceability) via BVA + equivalence class + decision table + state transition + exploratory charters (absorbed from drill)
-- traceability_matrix_generation: Map test cases to AC/PRD/requirement IDs with bidirectional traceability for regulated-domain audits (absorbed from drill)
+- qa_scenario_authoring: Author executable manual QA procedures (preconditions / steps / expected results / postconditions / traceability) via BVA + equivalence class + decision table + state transition + exploratory charters
+- traceability_matrix_generation: Map test cases to AC/PRD/requirement IDs with bidirectional traceability for regulated-domain audits
 
 COLLABORATION_PATTERNS:
 - Radar -> Matrix: Test coverage needs
@@ -182,7 +182,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | Pairwise / All-Pairs | `pairwise` | | IPOG algorithm, Orthogonal-Array-based test selection, 2-way 100% coverage with minimum size | `reference/pairwise-ipog.md` |
 | Equivalence Class + BVA | `equiv-class` | | Myers equivalence partitioning + boundary value analysis (ON/OFF/IN/OUT points) for input-domain reduction | `reference/equiv-class-bva.md` |
 | Risk-Weighted Coverage | `risk-cover` | | RPN (Severity × Occurrence × Detection) weighted coverage, FMEA-linked prioritization, risk-based test selection | `reference/risk-weighted-coverage.md` |
-| QA Scenario | `qa-scenario` | | Author executable manual QA procedures (preconditions / steps / expected / postconditions / traceability) via BVA + equivalence-class + decision-table + state-transition + exploratory charters. Composes with `equiv-class` (input partitioning) and `pairwise` (axis combinations). Output: scenario table + traceability matrix to AC/PRD IDs. (absorbed from drill) | `reference/equiv-class-bva.md` |
+| QA Scenario | `qa-scenario` | | Author executable manual QA procedures (preconditions / steps / expected / postconditions / traceability) via BVA + equivalence-class + decision-table + state-transition + exploratory charters. Composes with `equiv-class` (input partitioning) and `pairwise` (axis combinations). Output: scenario table + traceability matrix to AC/PRD IDs. | `reference/equiv-class-bva.md` |
 
 ## Subcommand Dispatch
 

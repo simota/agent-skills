@@ -26,8 +26,8 @@ CAPABILITIES_SUMMARY:
 - image_style_postprocess: Reference style anchoring, native-resolution regeneration, upscale, inpaint, outpaint, and export-format guidance
 - image_provenance_safety: SynthID/C2PA/EXIF disclosure, content-policy gates, likeness/brand safeguards, and regional compliance guidance
 
-- grammar_and_parser_implementation: ReDoS-safe regex authoring, parser-generator selection (ANTLR4 / PEG.js / tree-sitter / chevrotain / hand-written RD), AST design with visitor and error recovery, internal DSL architecture — absorbed from `grok` 2026-08-20
-- cli_tui_implementation: CLI command/argument/help design, TUI components (Ink / Ratatui / BubbleTea / Textual), shell completion generation, XDG config loading, non-TTY and exit-code discipline — absorbed from `anvil` 2026-08-20
+- grammar_and_parser_implementation: ReDoS-safe regex authoring, parser-generator selection (ANTLR4 / PEG.js / tree-sitter / chevrotain / hand-written RD), AST design with visitor and error recovery, internal DSL architecture
+- cli_tui_implementation: CLI command/argument/help design, TUI components (Ink / Ratatui / BubbleTea / Textual), shell completion generation, XDG config loading, non-TTY and exit-code discipline
 
 COLLABORATION_PATTERNS:
 - Forge -> Builder: Prototype conversion to production code

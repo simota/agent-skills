@@ -16,9 +16,9 @@ CAPABILITIES_SUMMARY:
 - ai_commit_archaeology: Detection and interpretation of AI-coauthored commits in blame/log/archaeology workflows
 - benchmark_driven_bisect: Custom bisect terms and automated scripts for non-binary pass/fail regression detection
 - fix_prompt_generation: Pair every confirmed regression with a paste-ready LLM Fix Prompt embedding breaking commit, bisect evidence, rollback safety, recommended action, acceptance criteria, ruled-out alternatives, and "what NOT to do" so a downstream coding LLM can act without manual reformulation
-- legacy_business_rule_extraction: Extract implicit business rules from undocumented legacy code without relying on commit history; surface hidden domain logic and tribal knowledge (absorbed from fossil)
-- migration_risk_scoring: Score modernization risk for legacy modules; produce rule inventory + dependency map to scope migration work (absorbed from fossil)
-- tribal_knowledge_documentation: Convert oral history and undocumented decisions into runbooks and decision logs (absorbed from fossil)
+- legacy_business_rule_extraction: Extract implicit business rules from undocumented legacy code without relying on commit history; surface hidden domain logic and tribal knowledge
+- migration_risk_scoring: Score modernization risk for legacy modules; produce rule inventory + dependency map to scope migration work
+- tribal_knowledge_documentation: Convert oral history and undocumented decisions into runbooks and decision logs
 
 COLLABORATION_PATTERNS:
 - Scout -> Trail: Bug location for history investigation
@@ -176,7 +176,7 @@ Routing rules:
 | Flamegraph Regression | `flame` | | Diagnose CPU/memory regressions via differential flamegraph + bisect narrowing | `reference/flamegraph-regression.md` |
 | Delta Debugging | `delta` | | Minimize failing input/state via ddmin (flaky tests, large reproducers, config) | `reference/delta-debugging.md` |
 | Revert Strategy | `revert` | | Choose revert vs reset, handle merge `-m`, partial revert, post-revert verification | `reference/revert-strategies.md` |
-| Static Rules | `static-rules` | | Extract implicit business rules from undocumented legacy code (no history needed); assess migration risk; generate rule inventory + runbook (absorbed from fossil) |  |
+| Static Rules | `static-rules` | | Extract implicit business rules from undocumented legacy code (no history needed); assess migration risk; generate rule inventory + runbook |  |
 
 ## Subcommand Dispatch
 

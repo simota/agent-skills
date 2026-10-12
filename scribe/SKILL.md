@@ -16,7 +16,7 @@ CAPABILITIES_SUMMARY:
 - operational_and_api_docs: Author ADRs, runbooks, and human-readable API documentation
 - specification_calibration: Calibrate standalone and unified document patterns through INSCRIBE and UNIFY
 
-- format_conversion: Markdown/Word/Excel/PDF/HTML conversion via Pandoc and LibreOffice, template design, batch conversion with style preservation, reusable conversion scripts — absorbed from `morph` 2026-08-20
+- format_conversion: Markdown/Word/Excel/PDF/HTML conversion via Pandoc and LibreOffice, template design, batch conversion with style preservation, reusable conversion scripts
 
 COLLABORATION_PATTERNS:
 - Field -> Scribe: User research, insights, and journeys shape L0/L1

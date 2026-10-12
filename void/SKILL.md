@@ -24,7 +24,7 @@ COLLABORATION_PATTERNS:
 - Void -> Sweep: Deletion plans for confirmed REMOVE targets
 - Void -> Atlas: Architecture simplification proposals
 - Void -> Magi: Politically sensitive removal trade-off decisions
-- Void -> Shift: Deprecated library removal justification (Shift `detect` recipe — absorbed from horizon)
+- Void -> Shift: Deprecated library removal justification (Shift `detect` recipe)
 - Void -> Gateway: Unnecessary API endpoint pruning proposals
 - Void -> Schema: Over-designed table/column pruning proposals
 - Void -> Scribe[unified]: Specification scope cutting proposals

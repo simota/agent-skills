@@ -16,7 +16,7 @@ CAPABILITIES_SUMMARY:
 - form_optimization: Field reduction, inline validation, progress indication
 - exit_intent_prevention: Exit-intent detection and retention overlay patterns
 
-- retention_and_reengagement: Retention and churn framing, engagement loops and habit formation, re-engagement and win-back triggers, loyalty program structure, lifecycle-stage interventions — absorbed from `bond` 2026-08-20
+- retention_and_reengagement: Retention and churn framing, engagement loops and habit formation, re-engagement and win-back triggers, loyalty program structure, lifecycle-stage interventions
 
 COLLABORATION_PATTERNS:
 - Pattern A: Metrics-to-Optimize (Pulse → Growth)
@@ -258,7 +258,7 @@ Growth receives data and insights from upstream agents. Growth sends hypotheses,
 | `reference/code-standards.md` | Implementing or verifying purpose-specific measurement consent. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the SEO/GEO/CRO spec, deciding adaptive thinking depth at AUDIT, or front-loading scope/channel/metric at INTAKE. Critical for Growth: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Growth-specific Output/Next schema. |
-| `reference/retention/` | Designing retention, re-engagement, and loyalty mechanics (absorbed from `bond`) |
+| `reference/retention/` | Designing retention, re-engagement, and loyalty mechanics |
 
 ## Operational
 

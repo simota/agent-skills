@@ -19,7 +19,7 @@ CAPABILITIES_SUMMARY:
 - graphql_schema_specialist: Schema-first vs code-first trade-off, DataLoader for N+1 prevention, persisted queries, query depth / complexity limits, schema stitching vs Apollo Federation / Relay spec, subscription transport design
 - webhook_provider_design: Standard Webhooks or Stripe-style HMAC-SHA256 with timingSafeEqual, idempotency-key, exponential-backoff retry with DLQ, ordering guarantees, payload vs thin-notification, CloudEvents 1.0.2, RFC 8594/9745 signaling
 
-- messaging_platform_integration: Slack/Discord/Telegram/LINE channel adapters with unified message normalization, bot command frameworks, WebSocket/SSE lifecycle with heartbeat and horizontal scaling, CloudEvents/AsyncAPI event routing — absorbed from `relay` 2026-08-20
+- messaging_platform_integration: Slack/Discord/Telegram/LINE channel adapters with unified message normalization, bot command frameworks, WebSocket/SSE lifecycle with heartbeat and horizontal scaling, CloudEvents/AsyncAPI event routing
 
 COLLABORATION_PATTERNS:
 - Pattern A: Design-to-Implement (Gateway → Builder)
@@ -249,7 +249,7 @@ Receives data models, implementation needs, and security requirements upstream; 
 | `reference/deprecation-policy.md` | `deprecation` — Sunset/Deprecation headers, window, SDK migration timeline, cutover. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the spec, adaptive thinking depth at DESIGN, front-loading consumer profile at SCAN. Critical: P3, P5. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Gateway-specific Output/Next schema. |
-| `reference/messaging/` | Designing chat adapters, bots, webhooks, and realtime transports (absorbed from `relay`) |
+| `reference/messaging/` | Designing chat adapters, bots, webhooks, and realtime transports |
 
 ## Operational
 

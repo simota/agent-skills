@@ -19,7 +19,7 @@ CAPABILITIES_SUMMARY:
 - rules_and_budget_audit: Path-scoped rule validation (glob frontmatter syntax and specificity) and instruction-budget waste detection — duplicated lint/formatter rules are wasted context
 - prompt_cache_hierarchy_audit: Verify session layout keeps static above dynamic per `_common/PROMPT_CACHE_HIERARCHY.md`; flag breakpoints on timestamps or per-request data; verify `_common/` load-order stability; detect inlined excerpts that should be pointers
 
-- personal_environment_setup: Dotfile management and security, shell/editor/terminal configuration, personal Git config, macOS AppleScript and JXA automation — absorbed from `anvil` 2026-08-20
+- personal_environment_setup: Dotfile management and security, shell/editor/terminal configuration, personal Git config, macOS AppleScript and JXA automation
 
 COLLABORATION_PATTERNS:
 - User -> Hone: Direct audit request for Codex/Antigravity/Claude Code config optimization
@@ -232,7 +232,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 | `_common/OPUS_5_AUTHORING.md` | Sizing the Before/After proposal, deciding adaptive thinking depth at source-tier/severity classification, or front-loading target CLI/scope/decision at AUDIT. Critical for Hone: P3, P5. |
 | `_common/PROMPT_CACHE_HIERARCHY.md` | Auditing prompt cache hit rate, the session context layout (tools → system → messages), `_common/` load order stability, or breakpoint placement on T-static vs T-dynamic content. Required for the `cache-order` and `cache-hierarchy` audit triggers. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Hone-specific Output/Next schema. |
-| `reference/personal-environment/` | Setting up dotfiles, shell/editor config, and macOS AppleScript/JXA automation (absorbed from `anvil`) |
+| `reference/personal-environment/` | Setting up dotfiles, shell/editor config, and macOS AppleScript/JXA automation |
 
 ## Operational
 

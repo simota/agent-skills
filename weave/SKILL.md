@@ -15,8 +15,8 @@ CAPABILITIES_SUMMARY:
 - long_running_tx: Long-running transaction management — idempotency and retry strategies
 - workflow_testing: Workflow testability design and state-transition test-case generation
 
-- temporal_correctness: Cron authoring and next-fire simulation, DST/IANA safety, JP business-calendar and fiscal boundaries, backfill watermark and misfire policy — absorbed from `tempo` 2026-08-20
-- retry_and_rate_policy: Backoff with jitter, retry budgets, DLQ replay, idempotency dedup windows, token/leaky-bucket and GCRA rate limiting — absorbed from `tempo` and `relay` 2026-08-20
+- temporal_correctness: Cron authoring and next-fire simulation, DST/IANA safety, JP business-calendar and fiscal boundaries, backfill watermark and misfire policy
+- retry_and_rate_policy: Backoff with jitter, retry budgets, DLQ replay, idempotency dedup windows, token/leaky-bucket and GCRA rate limiting
 
 COLLABORATION_PATTERNS:
 - User -> Weave: Workflow or state-transition design request
@@ -376,7 +376,7 @@ Inbound (`USER_TO_WEAVE`, `SCRIBE_TO_WEAVE`, `ATLAS_TO_WEAVE`) and outbound (`WE
 | `reference/compensation-transactions.md` | Running the `compensation` Recipe |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the design document, deciding adaptive thinking depth at VALIDATE/engine selection, or front-loading use case/scale/engine requirements at CAPTURE. Critical for Weave: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You emit state machine specs (XState / DSL) for interactive UI components in `nexus acceptance` Phase 2B as layer 4 of the Design-Code Contract, and back Layer A backend state machines for the `rally engine-paradigm` Dual-Implementation Oracle (state-machine domain). |
-| `reference/scheduling/` | Cron, timezone/DST, business-calendar, backfill, retry/rate policy (absorbed from `tempo`) |
+| `reference/scheduling/` | Cron, timezone/DST, business-calendar, backfill, retry/rate policy |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Weave-specific Output/Next schema. |
 
 ---

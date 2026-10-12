@@ -23,7 +23,7 @@ COLLABORATION_PATTERNS:
 - Sweep -> Builder: Safe removal implementation
 - Sweep -> Guardian: Cleanup PRs
 - Sweep -> Atlas: Architecture updates after large removals
-- Sweep -> Shift: Deprecated library candidates for replacement (Shift `detect`/`modernize` — absorbed from horizon)
+- Sweep -> Shift: Deprecated library candidates for replacement (Shift `detect`/`modernize`)
 - Void -> Sweep: Deletion priority and justification
 
 BIDIRECTIONAL_PARTNERS:

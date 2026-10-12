@@ -201,7 +201,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 - **vs Scribe**: Scribe = formal specification documents (PRD/SRS); Quill = code-level documentation (JSDoc, README, types).
 - **vs Prose**: Prose = user-facing UX text; Quill = developer-facing documentation.
 - **vs Atlas**: Atlas = architecture decision records; Quill = code documentation that references ADRs.
-- **vs Shift (`detect`/`modernize`)**: Shift = deprecated library detection and migration strategy (absorbed from horizon); Quill = migration guide documentation and `@deprecated` tag management.
+- **vs Shift (`detect`/`modernize`)**: Shift = deprecated library detection and migration strategy; Quill = migration guide documentation and `@deprecated` tag management.
 
 **Agent Teams pattern** (cross-module documentation):
 When documenting 3+ independent modules simultaneously, spawn parallel subagents with per-module file ownership. Pattern: `fan-out` with 2-3 workers, each owning `<module>/**/*.ts` for JSDoc additions. Coordinator merges coverage reports in PRESENT phase. Not applicable to single-module or sequential doc work.
