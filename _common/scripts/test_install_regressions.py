@@ -16,6 +16,7 @@ MAKE = shutil.which("make")
 CHECKERS = (
     "lint-frontmatter", "lint-project-local", "validate-recipes", "routing-oracle",
     "lint-instructions", "lint-contracts", "lint-lessons", "task-battery-check",
+    "generate-index-subcommands",
 )
 
 

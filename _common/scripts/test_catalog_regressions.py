@@ -82,7 +82,7 @@ class CatalogDataTests(unittest.TestCase):
         self.assertEqual({name.lower() for name in translations}, self.global_skills | self.local_skills)
 
     def test_subcommand_descriptions_keep_their_inline_markup_whole(self):
-        # Descriptions are copied from recipes-index.md tables, where `\|` escapes a pipe
+        # Descriptions are generated from Recipes tables, where `\|` escapes a pipe
         # inside inline code. Splitting on that pipe truncated two rows mid-span.
         for name, rows in self.data["subs"].items():
             for row in rows:

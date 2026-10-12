@@ -178,6 +178,9 @@ class TestBaseline(CheckerCase):
     def test_lint_lessons_is_clean(self):
         self.expect_clean("lint-lessons.py", "--severity", "error")
 
+    def test_index_subcommands_are_fresh(self):
+        self.expect_clean("generate-index-subcommands.py", "--check")
+
 
 class TestInstructionDrift(CheckerCase):
     """`lint-instructions.py`. I1 is here in three phrasings because its
@@ -438,6 +441,20 @@ class TestLessonsRegister(CheckerCase):
         not be caught by its own quotation, or the rule cannot describe itself."""
         self.add_row(mech="The linter rejects any mechanism containing `remember to`.")
         self.expect_clean("lint-lessons.py", "--severity", "error")
+
+
+class TestIndexSubcommands(CheckerCase):
+    """index.html's recipe list is generated; editing either side alone must fail."""
+
+    def test_a_recipe_description_changed_only_in_skill_md_fails(self):
+        self.edit("architect/SKILL.md", "New skill generation (from gap analysis through design)",
+                  "New skill generation from a gap report")
+        self.expect_caught("generate-index-subcommands.py", "SUBCOMMANDS is stale", "--check")
+
+    def test_a_hand_edit_to_the_page_fails(self):
+        self.edit("index.html", '{"n":"create","d":"New skill generation (from gap analysis through design)"}',
+                  '{"n":"create","d":"Hand-written copy"}')
+        self.expect_caught("generate-index-subcommands.py", "SUBCOMMANDS is stale", "--check")
 
 
 if __name__ == "__main__":

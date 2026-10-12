@@ -38,7 +38,7 @@ make check
 
 | コマンド | 用途 |
 |---|---|
-| `make validate` | スキル構造、project-local 配線、Recipes、routing、instructions、contract delivery、lessons、task battery を検証 |
+| `make validate` | スキル構造、project-local 配線、Recipes、routing、instructions、contract delivery、lessons、task battery、`index.html` の Recipe 一覧の鮮度を検証 |
 | `make test` | 検証スクリプトと周辺ツールの回帰テストを実行 |
 | `make check` | `make validate` + `make test`。PR 前の標準コマンド |
 | `make hooks` | リポジトリ管理の pre-commit hook を有効化 |
@@ -117,14 +117,13 @@ Route elsewhere when the task is primarily:
 3. 完全なセクション一覧・順序・記法は `_templates/SKILL_TEMPLATE.md` を参照し、それに沿って作成する
 4. **ロスターを更新する（手作業のレジストリは自動同期されない）**:
    - `README.md` / `README_ja.md` のエージェント一覧とエージェント数
-   - `index.html`（`const AGENTS` 配列・`SUBCOMMANDS`・英訳・カテゴリ件数・件数を記載した全テキスト）
+   - `index.html`（`const AGENTS` 配列・英訳・カテゴリ件数・件数を記載した全テキスト。`SUBCOMMANDS` は生成物なので手で編集しない）
    - `compass/reference/catalog.md`（カテゴリ節とその件数）
    - `_common/SKILL_PACKS.md`（最低1つのPack、またはoptional／explicit-only配置に登録する）
    - `AGENTS.md` / `CLAUDE.md` のスキル数
-5. Recipes や routing を追加・変更した場合は、それぞれの参照ファイル・生成物・ルーティング面も同期する
-6. 使用例セクションにサンプルを追加
-7. `make check` を通す
-8. warning が残る場合は、その warning の仕様に従ってレビュー済み例外として根拠を残す。単に検証を迂回しない
+5. Recipes や routing を追加・変更した場合は、それぞれの参照ファイル・ルーティング面を同期し、生成物を再生成する（`python3 _common/scripts/generate-index-subcommands.py`、`python3 _common/scripts/generate-recipes-directory.py`）
+6. `make check` を通す
+7. warning が残る場合は、その warning の仕様に従ってレビュー済み例外として根拠を残す。単に検証を迂回しない
 
 ### project-local スキルの変更
 

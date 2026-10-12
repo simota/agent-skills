@@ -161,6 +161,7 @@ validate:
 	@python3 "$$SCRIPTS/lint-contracts.py" --severity error
 	@python3 "$$SCRIPTS/lint-lessons.py" --severity error
 	@python3 "$$SCRIPTS/task-battery-check.py" --severity error
+	@python3 "$$SCRIPTS/generate-index-subcommands.py" --check
 	@if hook=$$(git rev-parse --git-path hooks/pre-commit 2>/dev/null) && [ -x "$$hook" ]; then echo "hooks on"; else \
 	  echo "hooks off — run 'make hooks' so these run without being remembered"; fi
 
