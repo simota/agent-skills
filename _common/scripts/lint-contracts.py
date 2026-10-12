@@ -81,9 +81,6 @@ MAX_HOPS = 3
 #: Spine contracts should be named directly. Depth above this is reported, not failed.
 DIRECT_DEPTH = 1
 
-#: Backtick-quoted references to markdown documents, e.g. `_common/HANDOFF.md`.
-TICKED_MD = re.compile(r"`([A-Za-z0-9_~.][A-Za-z0-9_./~-]*\.md)(?:#[^`\s]*)?`")
-
 #: Backtick-quoted references to any file this repository could own.
 TICKED_ANY = re.compile(r"`([A-Za-z0-9_~.][A-Za-z0-9_./~-]*\.(?:md|py|ya?ml|json))(?:#[^`\s]*)?`")
 

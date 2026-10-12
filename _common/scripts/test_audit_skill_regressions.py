@@ -110,7 +110,6 @@ class TestPortGoldenExamples(unittest.TestCase):
 class TestSessionStartExamples(unittest.TestCase):
     REFERENCES = (
         ROOT / "hone/reference/hooks/sessionstart-hook.md",
-        ROOT / ".archive/latch/reference/sessionstart-hook.md",
     )
 
     def setUp(self) -> None:

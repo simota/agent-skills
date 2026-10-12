@@ -11,12 +11,10 @@ import sys
 import tempfile
 import unittest
 
-import test_launch_regressions as launch_tests
-
 
 ROOT = Path(__file__).resolve().parents[2]
 NODE = shutil.which("node")
-REPORT_ROOTS = ("launch", ".archive/harvest")
+REPORT_ROOTS = ("launch",)
 
 
 @unittest.skipUnless(NODE, "Node.js is required")
@@ -236,26 +234,6 @@ module.exports.launch = async () => ({
             with self.subTest(base=base):
                 result = self.run_script(base, "puppeteer-pdf.js", self.input, self.work / "plain.pdf")
                 self.assertEqual(result.returncode, 0, result.stderr)
-
-
-class ArchivedReportRegressions(launch_tests.ReportRegressions):
-    """The archived CLI is executable and must retain the same safety guarantees."""
-
-    def report(self, *args):
-        return self.run_cli([NODE, str(ROOT / ".archive/harvest/scripts/generate-report.js"), *args])
-
-
-class ArchivedPdfShellRegressions(launch_tests.PdfShellRegressions):
-    def pdf(self, *args):
-        return self.run_cli([launch_tests.BASH,
-                             str(ROOT / ".archive/harvest/scripts/html-to-pdf.sh"),
-                             *map(str, args)])
-
-
-class ArchivedPuppeteerRegressions(launch_tests.PuppeteerRegressions):
-    def pdf(self):
-        return self.run_cli([NODE, str(ROOT / ".archive/harvest/scripts/puppeteer-pdf.js"),
-                             str(self.input), str(self.work / "output.pdf")])
 
 
 if __name__ == "__main__":

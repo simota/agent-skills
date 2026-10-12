@@ -102,7 +102,6 @@ WHAT_HINTS = (
     "tool",
     "framework",
 )
-SEVERITY_RANK = {"P0": 0, "P1": 1, "P2": 2, "P3": 3}
 
 CAPABILITIES_SUMMARY_PATTERN = re.compile(r"<!--[^>]*CAPABILITIES_SUMMARY:", re.DOTALL)
 
