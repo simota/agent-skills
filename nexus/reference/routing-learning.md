@@ -128,7 +128,7 @@ CES = Success_Rate × 0.35 + Recovery_Efficiency × 0.20 + Step_Economy × 0.20 
 | Component | Weight | Definition | Range |
 |-----------|--------|------------|-------|
 | Success_Rate | 0.35 | Proportion of executions with final STATUS=SUCCESS | 0.0–1.0 |
-| Recovery_Efficiency | 0.20 | Auto-recovery success rate when errors occur | 0.0–1.0 |
+| Recovery_Efficiency | 0.20 | Auto-recovery success rate when errors occur: Σ errors_recovered / Σ errors over the window; 1.0 when the window has no errors (nothing needed recovering) | 0.0–1.0 |
 | Step_Economy | 0.20 | Expected steps / Actual steps (capped at 1.0; lower actual = higher score) | 0.0–1.0 |
 | User_Satisfaction | 0.25 | Proportion completed without user correction or re-execution | 0.0–1.0 |
 
