@@ -133,7 +133,7 @@ Full `AskUserQuestion` YAML -> `reference/criteria-extraction.md` § INTERACTION
 |-------|------|------------------|------|
 | `INGEST` | Load the spec and detect its format | Spec source, format confidence, initial quality flags | `reference/criteria-extraction.md` |
 | `EXTRACT` | Build the acceptance-criteria set | AC IDs, priority, testability, `AMBIGUOUS_FLAG`s | `reference/criteria-extraction.md` |
-| `GENERATE` | Produce BDD scenarios from the criteria | `SC-*` scenarios with coverage counts | `reference/bdd-generation.md` |
+| `GENERATE` | Produce the selected Recipe's artifact from the criteria (BDD scenarios by default; `.feature` + step stubs for `gherkin`, property tests for `property`, oracle harnesses for `oracle`) | `SC-*` scenarios with coverage counts, or the Recipe's artifacts with the criteria each covers | `reference/bdd-generation.md`, or the Recipe's Read First file |
 | `VERIFY` | Compare implementation to each criterion | Per-criterion verdicts, evidence, runtime-only exclusions | `reference/verification-methods.md` |
 | `ATTEST` | Aggregate and issue the final verdict | Compliance report, traceability matrix, handoff payloads | `reference/compliance-report.md` |
 
