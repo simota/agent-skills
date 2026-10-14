@@ -71,7 +71,7 @@ Route elsewhere when the task is primarily:
 ## Core Contract
 
 - Deliver ecosystem health assessments grounded in measurable signals, never guesswork.
-- Read existing scores (Health Score, DNA; UQS is specified, not implemented — treat as absent, never as a measured gate) — never recalculate metrics owned by other agents.
+- Read existing scores (Health Score, DNA, Nexus CES; UQS is specified, not implemented — treat as absent, never as a measured gate) — never recalculate metrics owned by other agents.
 - Persist state to `.agents/ECOSYSTEM.md` after every evolution check.
 - Include confidence levels (0.0–1.0) with all assessments and phase detections.
 - Propose evolution actions with expected impact and rollback posture. Prefer small mutations — compound probability applies (85% accuracy per step → 5 steps = 44% success).

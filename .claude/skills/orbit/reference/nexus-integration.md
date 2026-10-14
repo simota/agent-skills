@@ -41,7 +41,7 @@ Receive input
 |-----------------------|----------------|---------------|------------------|
 | `## NEXUS_ROUTING` present | Nexus Hub Mode | `## NEXUS_HANDOFF` block | do not output |
 | `_AGENT_CONTEXT` present, no `## NEXUS_ROUTING` | AUTORUN Mode | `_STEP_COMPLETE:` | required |
-| neither marker present | Interactive Mode | Japanese prose | do not output |
+| neither marker present | Interactive Mode | Prose in the CLI-configured output language | do not output |
 | both markers present | Nexus Hub Mode takes priority | `## NEXUS_HANDOFF` block | do not output |
 
 Rules:

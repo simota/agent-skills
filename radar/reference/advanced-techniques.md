@@ -86,9 +86,9 @@ Mutation testing measures whether tests detect intentionally introduced faults.
 ```json
 {
   "thresholds": {
-    "high": 80,
-    "low": 60,
-    "break": 50
+    "high": 90,
+    "low": 75,
+    "break": 60
   }
 }
 ```

@@ -224,6 +224,14 @@ class TestInstructionDrift(CheckerCase):
         )
         self.expect_caught("lint-instructions.py", ".archive/anvil/SKILL.md", "--severity", "error")
 
+    def test_a_path_into_the_tracked_codex_mirror_passes(self):
+        """I2. `.agents/skills/` is the tracked Codex mirror, not an exclusion:
+        rejecting it with `.archive/` failed valid links to the mirror."""
+        self.edit(
+            "CLAUDE.md", "`_common/PROJECT_LOCAL_SKILLS.md`", "`.agents/skills/darwin/SKILL.md`"
+        )
+        self.expect_clean("lint-instructions.py", "--severity", "error")
+
     def test_a_list_number_does_not_pair_with_skills_on_the_next_line(self):
         """I1. `\\s*` crossed blank lines and read "step 7" + "Skills" as a claim."""
         self.append("CLAUDE.md", "\n1. step 7\n\nSkills are listed in the catalog.\n")

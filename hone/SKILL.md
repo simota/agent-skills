@@ -1,6 +1,6 @@
 ---
 name: hone
-description: "Auditing AI CLI configs and designing, configuring, or debugging Claude Code hooks. Use for Codex/agy/Claude Code config reviews, hook lifecycle automation, quality gates, or MCP governance. Also personal dotfiles/shell setup (env) and macOS AppleScript/JXA automation (automate)."
+description: "Auditing AI CLI configs and designing, configuring, or debugging Claude Code hooks. Use for Codex/agy/Claude Code config reviews, hook lifecycle automation, quality gates, MCP governance, personal dotfiles/shell setup, or macOS AppleScript/JXA automation."
 ---
 
 <!--

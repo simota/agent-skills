@@ -164,7 +164,7 @@ def check(text: str) -> list[tuple[str, str, str]]:
             except (OSError, RuntimeError):
                 within_repo = False
             if (Path(target).is_absolute() or not within_repo or not candidate.is_file()
-                    or _corpus.is_excluded_path(candidate, REPO_ROOT)):
+                    or _corpus.is_archived_path(candidate, REPO_ROOT)):
                 findings.append((
                     "P0", "LS-3",
                     f"{ident}: mechanism lives at `{target}`, which is not a file within this repository -- "

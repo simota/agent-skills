@@ -213,7 +213,7 @@ Behavior notes per Recipe:
 | Multi-file refactoring | Full 5-phase workflow | Combined analysis report | `reference/ripple-analysis-template.md` |
 | API/export removal or rename | Breaking change deep analysis | Breaking change report with migration path | `reference/impact-report-template.md` |
 | New pattern introduction | Horizontal consistency focus | Pattern deviation report | `reference/consistency-report-template.md` |
-| Risk score ≥ 7 (HIGH) | Escalated analysis with L3 depth | CRITICAL risk report + Ask First | `_common/BOUNDARIES.md` |
+| Risk score > 7 (Ask First threshold) | Escalated analysis with L3 depth | Escalated risk report + Ask First | `_common/BOUNDARIES.md` |
 | Cross-repo / monorepo change | Extended blast radius mapping | Cross-repo impact map | `reference/analysis-techniques.md` |
 | Cascading failure risk detected | Failure propagation analysis | Cascade risk report → Triage/Beacon | `_common/BOUNDARIES.md` |
 | Multi-agent system change | OWASP 2026 agentic blast radius assessment | Agent trust boundary report → Sentinel | `reference/analysis-techniques.md` |

@@ -152,7 +152,7 @@ def check_paths(path: Path, text: str) -> list[tuple[str, str, str]]:
             within_repo = candidate.resolve().is_relative_to(REPO_ROOT.resolve())
         except (OSError, RuntimeError):
             within_repo = False
-        if not within_repo or not candidate.is_file() or _corpus.is_excluded_path(candidate, REPO_ROOT):
+        if not within_repo or not candidate.is_file() or _corpus.is_archived_path(candidate, REPO_ROOT):
             line = text[: m.start()].count("\n") + 1
             findings.append(("P1", "I2", f"{path.name}:{line} references missing path `{ref}`"
                              " (must resolve to a live file within this repository, not `.archive/`)"))

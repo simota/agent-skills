@@ -68,9 +68,9 @@ Orchestrators (Nexus, Rally) should be stateless and replaceable. Session state 
 | HE-01 | Guardrail Levels | Models frequently make critical mistakes | L2+ trigger frequency drops 50% over baseline | Count L2/L3/L4 triggers per 100 tasks |
 | HE-02 | Agent Chain Length | Multi-agent decomposition produces better results | CES grade A + step_economy approaches 1.0 | CES score with single-agent vs multi-agent |
 | HE-03 | Recovery Chains | Auto-recovery is frequently needed | Recovery invocation rate drops below 5% | Recovery triggers per 100 executions |
-| HE-04 | Context Reset Strategy | Sonnet struggles with large context | `continuous` strategy shows no quality degradation vs `reset` | UQS comparison across strategies |
+| HE-04 | Context Reset Strategy | Sonnet struggles with large context | `continuous` strategy shows no quality degradation vs `reset` | CES comparison across strategies |
 | HE-05 | Evaluator Loop Iterations | Multiple loops needed for quality | First-iteration ACCEPT rate exceeds 80% | ACCEPT rate at iteration 1 |
-| HE-06 | Sprint Contract Detail | Detailed contracts needed for alignment | Contract-free executions show no quality degradation | UQS comparison with/without contracts |
+| HE-06 | Sprint Contract Detail | Detailed contracts needed for alignment | Contract-free executions show no quality degradation | CES comparison with/without contracts |
 
 ---
 
@@ -102,7 +102,7 @@ This is additive scheduling only (no new script, no new loop, no new agent) — 
 3. For each component meeting its condition:
      a. Propose simplification (documented in EVOLUTION_SIGNAL)
      b. Run A/B comparison (3 tasks minimum)
-     c. Measure CES/UQS impact (TES is unimplemented — see Metrics Definitions)
+     c. Measure CES impact (TES and UQS are unimplemented — see Metrics Definitions)
      ↓
 4. Apply or reject simplification
      ├─ CES drop <= 0.05 → Apply (safe simplification)
@@ -213,7 +213,7 @@ reusable: true
 
 **Before:** Full SPRINT_CONTRACT with detailed acceptance criteria.
 **After:** Lightweight contract (Goal + Scope only) or contract skipped for MEDIUM complexity.
-**Condition met when:** UQS shows no degradation without detailed contracts.
+**Condition met when:** CES shows no degradation without detailed contracts.
 
 ---
 
