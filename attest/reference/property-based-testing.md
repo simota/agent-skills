@@ -4,7 +4,7 @@ Purpose: Generalize spec ACs into properties (universally-quantified invariants)
 
 ## Scope Boundary
 
-- **attest `property`**: Property derivation + framework-specific authoring (this document).
+- **attest `property`**: Property derivation + framework-targeted specification (this document); Attest writes no code, so Radar implements the property tests.
 - **attest `bdd` (elsewhere)**: Example-based BDD scenarios.
 - **Radar (elsewhere)**: Edge-case test addition (complementary, not property-based).
 - **Radar (elsewhere)**: Static fixture / factory generation.

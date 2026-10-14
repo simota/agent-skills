@@ -81,7 +81,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 - Require a specification before verification; raise `SPEC_MISSING` when none exists.
 - Extract all acceptance criteria before issuing any verdict.
-- Generate BDD scenarios for every extracted criterion.
+- Generate BDD scenarios for every extracted criterion (`FULL` / `EXTRACT`; `GENERATE` produces only its Recipe's specifications).
 - Cite `file:line` or `spec:section` evidence for every finding and verdict.
 - **Supply-chain provenance**: attach `sbom_ref`, `signature_ref`, `provenance_attestation` when Sigstore/Cosign/SBOM infra exists; otherwise mark `skipped (org capability missing)`. Mandatory only under Tier policy — **never block merge** for absent fields on orgs without the infra.
 - **Citation form**: prefer symbol-based (`@source:service::method`) or content-hash (`@source:file#sha256:…`) references over raw line numbers, which drift silently on refactor; a line-number citation requires a paired content-hash anchor.
@@ -133,7 +133,7 @@ Full `AskUserQuestion` YAML -> `reference/criteria-extraction.md` § INTERACTION
 |-------|------|------------------|------|
 | `INGEST` | Load the spec and detect its format | Spec source, format confidence, initial quality flags | `reference/criteria-extraction.md` |
 | `EXTRACT` | Build the acceptance-criteria set | AC IDs, priority, testability, `AMBIGUOUS_FLAG`s | `reference/criteria-extraction.md` |
-| `GENERATE` | Produce the selected Recipe's artifact from the criteria (BDD scenarios by default; `.feature` + step stubs for `gherkin`, property tests for `property`, oracle harnesses for `oracle`) | `SC-*` scenarios with coverage counts, or the Recipe's artifacts with the criteria each covers | `reference/bdd-generation.md`, or the Recipe's Read First file |
+| `GENERATE` | Produce the selected Recipe's artifact from the criteria (BDD scenarios by default; `.feature` files + empty step-definition stubs for `gherkin`, property specifications for `property`, oracle pattern selections for `oracle`) | `SC-*` scenarios with coverage counts, or the Recipe's specifications with the criteria each covers | `reference/bdd-generation.md`, or the Recipe's Read First file |
 | `VERIFY` | Compare implementation to each criterion | Per-criterion verdicts, evidence, runtime-only exclusions | `reference/verification-methods.md` |
 | `ATTEST` | Aggregate and issue the final verdict | Compliance report, traceability matrix, handoff payloads | `reference/compliance-report.md` |
 
@@ -145,7 +145,7 @@ Full `AskUserQuestion` YAML -> `reference/criteria-extraction.md` § INTERACTION
 | `EXTRACT` | Spec only | Acceptance criteria + BDD scenarios | Pre-implementation prep |
 | `AUDIT` | Spec + implementation + tests | Traceability and coverage-gap analysis | Traceability or coverage review |
 | `ADVERSARIAL` | Spec + implementation | Adversarial probe report | Deep gap / edge-case review |
-| `GENERATE` | Spec (+ implementation where the oracle needs it) | Executable test artifacts: `.feature` files + step stubs, property-based tests, oracle harnesses | Turning criteria into runnable tests (`gherkin` / `property` / `oracle` only) |
+| `GENERATE` | Spec (+ implementation where the oracle needs it) | test specifications, never test code (Attest writes no code — `_common/BOUNDARIES.md`): `.feature` files + empty step stubs, property specifications, oracle pattern selections — Radar/Builder implement the bodies | Turning criteria into test designs (`gherkin` / `property` / `oracle` only) |
 
 Default `FULL`; auto-detect: spec-only -> `EXTRACT`, spec+tests -> `AUDIT`, explicit adversarial request -> `ADVERSARIAL`. `GENERATE` is never auto-detected; only a Recipe binds it.
 
@@ -231,7 +231,7 @@ Single source of truth for Recipe definitions. Mode binds each Recipe to an Oper
 | Traceability Matrix | `trace` | | `AUDIT` | Generate spec ↔ code traceability matrix. 90% coverage is the CERTIFIED threshold. | `reference/traceability-advanced.md` |
 | Compliance Report | `report` | | `AUDIT` | Audit-oriented full-section compliance report. | `reference/compliance-report.md` |
 | Gherkin Authoring | `gherkin` | | `GENERATE` | `.feature` files (Background/Outline/Examples/Tags) + framework step-def stubs, regex/cucumber-expression mapped. | `reference/gherkin-authoring.md` |
-| Property-Based | `property` | | `GENERATE` | Generalize spec invariants (idempotency, commutativity, round-trip, monotonicity) into framework code with shrinking and stateful-machine tests. | `reference/property-based-testing.md` |
+| Property-Based | `property` | | `GENERATE` | Generalize spec invariants (idempotency, commutativity, round-trip, monotonicity) into framework-targeted property specifications (generators, shrinking, stateful-machine models) that Radar implements. | `reference/property-based-testing.md` |
 | Test Oracle | `oracle` | | `GENERATE` | Oracle pattern per criterion: golden master (legacy), metamorphic (unknown output), differential (cross-impl), model-based (state machine), consistency (cross-API). | `reference/test-oracle-design.md` |
 
 ### Signal Keywords → Recipe
@@ -252,8 +252,8 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 - Operating mode used (FULL / EXTRACT / AUDIT / ADVERSARIAL / GENERATE).
 - Acceptance criteria with IDs, priorities, testability classifications.
-- BDD scenarios with coverage counts per criterion.
-- Generated test artifacts (`GENERATE`) with the criteria each covers; `GENERATE` issues no verdict.
+- BDD scenarios with coverage counts per criterion (`FULL` / `EXTRACT`).
+- Generated test specifications (`GENERATE`) with the criteria each covers and the Radar/Builder implementation handoff; `GENERATE` issues no verdict.
 - Per-criterion verdicts with file:line or spec:section evidence.
 - Traceability matrix mapping spec sections to implementation.
 - Adversarial probe results where applicable.

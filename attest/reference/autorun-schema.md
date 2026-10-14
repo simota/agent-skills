@@ -12,11 +12,11 @@ _STEP_COMPLETE:
     critical_findings: List[String]
     files_analyzed: List[{path, criteria_covered: List[AC_ID]}]
   # GENERATE replaces Output with the block below — it verifies nothing, so it emits no verdict:
-  #   artifacts: List[{path, kind: feature | step_stubs | property_test | oracle_harness, criteria_covered: List[AC_ID]}]
+  #   artifacts: List[{path, kind: feature | step_stubs | property_spec | oracle_selection, criteria_covered: List[AC_ID]}]
   #   uncovered_criteria: List[AC_ID]
   Handoff:
     Format: ATTEST_TO_[NEXT]_HANDOFF
-    Content: [Full compliance report; GENERATE: the artifact list for Radar to run or Builder to wire up]
+    Content: [Full compliance report; GENERATE: the specification list for Radar (test bodies) / Builder (step and oracle implementation)]
   Risks: [Compliance gaps, ambiguity concerns]
   Next: Builder | Radar | DONE
   Reason: [Why this Status/Next; if BLOCKED/FAILED, what is needed to unblock]
