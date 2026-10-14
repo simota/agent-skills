@@ -1,6 +1,6 @@
 # Property-Based Testing Reference
 
-Purpose: Generalize spec ACs into properties (universally-quantified invariants) and emit framework-specific code. Cover Hypothesis (Python), fast-check (JS/TS), jqwik (Java), proptest (Rust), ScalaCheck, and FsCheck. Replace example-based tests with adversarial-by-design generators that include shrinking and stateful machines.
+Purpose: Generalize spec ACs into properties (universally-quantified invariants) and specify them for a target framework; Radar writes the test code (Attest writes no code). Cover Hypothesis (Python), fast-check (JS/TS), jqwik (Java), proptest (Rust), ScalaCheck, and FsCheck. Replace example-based tests with adversarial-by-design generators that include shrinking and stateful machines.
 
 ## Scope Boundary
 
@@ -233,8 +233,8 @@ GENERATORS   →  base types → domain types via composition
              →  filter (assume) for valid-input subsets
              →  recursive for trees / nested data
 
-WRITE        →  one property per spec invariant
-             →  use framework's @given / fc.property / @Property syntax
+SPECIFY      →  one property per spec invariant
+             →  name the framework construct Radar will use (@given / fc.property / @Property)
              →  set generation count (default: 100; raise for cheap properties)
 
 SHRINK       →  rely on built-ins
@@ -270,8 +270,8 @@ HANDOFF      →  Builder: implement fix
 | P3 | merge is commutative | commutativity | (Map) | @given(maps, maps) |
 | P4 | LRU cache size ≤ capacity | stateful | command sequence | RuleBasedStateMachine |
 
-### Code
-[full test code, framework-specific]
+### Implementation Handoff
+[per property: framework construct, generator composition, assertion in prose — Radar writes the code]
 
 ### Generators
 - Custom domain types: [list]
@@ -293,8 +293,8 @@ HANDOFF      →  Builder: implement fix
 - [seed] / [shrunk input] / [why]
 
 ### Handoffs
+- Radar: implement the property tests from this package, plus edge-case examples for fast feedback
 - Builder: implement spec gap fix
-- Radar: edge-case examples for fast feedback
 - attest: property-coverage matrix in compliance report
 ```
 
@@ -322,12 +322,12 @@ HANDOFF      →  Builder: implement fix
 When `property` completes, emit:
 
 - **Property inventory** with pattern classification.
-- **Code** for the chosen framework.
+- **Implementation handoff** to Radar for the chosen framework (no code from Attest).
 - **Generators** including custom domain types.
 - **Run configuration** (count, nightly).
 - **Coverage map** against spec ACs.
 - **Counterexample log** of known shrunk cases.
-- **Handoffs**: Builder, Radar, attest.
+- **Handoffs**: Radar (test code), Builder, attest.
 
 ## References
 

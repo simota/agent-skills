@@ -349,7 +349,7 @@ HANDOFF     →  Builder: step body implementation
 When `gherkin` completes, emit:
 
 - **Feature files** with Background, Scenarios, Outlines, Tags.
-- **Step-definition stubs** for the target framework.
+- **Step-definition stubs** for the target framework: signatures and expression mapping only, empty bodies; Builder implements them (Attest writes no logic).
 - **Tag taxonomy** with CI lane mapping.
 - **Hook configuration**.
 - **Data fixtures** plan.
