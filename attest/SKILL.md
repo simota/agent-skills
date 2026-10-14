@@ -145,8 +145,9 @@ Full `AskUserQuestion` YAML -> `reference/criteria-extraction.md` § INTERACTION
 | `EXTRACT` | Spec only | Acceptance criteria + BDD scenarios | Pre-implementation prep |
 | `AUDIT` | Spec + implementation + tests | Traceability and coverage-gap analysis | Traceability or coverage review |
 | `ADVERSARIAL` | Spec + implementation | Adversarial probe report | Deep gap / edge-case review |
+| `GENERATE` | Spec (+ implementation where the oracle needs it) | Executable test artifacts: `.feature` files + step stubs, property-based tests, oracle harnesses | Turning criteria into runnable tests (`gherkin` / `property` / `oracle` only) |
 
-Default `FULL`; auto-detect: spec-only -> `EXTRACT`, spec+tests -> `AUDIT`, explicit adversarial request -> `ADVERSARIAL`.
+Default `FULL`; auto-detect: spec-only -> `EXTRACT`, spec+tests -> `AUDIT`, explicit adversarial request -> `ADVERSARIAL`. `GENERATE` is never auto-detected; only a Recipe binds it.
 
 ## Acceptance Criteria Extraction
 
@@ -202,7 +203,7 @@ Guardrails:
 
 Probe IDs are `PRB-{category_code}-{NNN}` across six categories: Boundary `BND`, Omission `OMS`, Contradiction `CTR`, Implicit `IMP`, Negative `NEG`, Concurrency `CNC` (`reference/adversarial-probing.md`).
 
-**Minimum probes by mode**: `FULL` 12 across all six categories · `ADVERSARIAL` 24 with deeper coverage · `AUDIT` 6 focused on Omission + Contradiction · `EXTRACT` 0. Every probe output carries `Probe ID`, `Category`, `Description`, `Spec Gap`, `Risk`, `Suggested Criterion`.
+**Minimum probes by mode**: `FULL` 12 across all six categories · `ADVERSARIAL` 24 with deeper coverage · `AUDIT` 6 focused on Omission + Contradiction · `EXTRACT` 0 · `GENERATE` 0. Every probe output carries `Probe ID`, `Category`, `Description`, `Spec Gap`, `Risk`, `Suggested Criterion`.
 
 ## Compliance Report
 
@@ -229,9 +230,9 @@ Single source of truth for Recipe definitions. Mode binds each Recipe to an Oper
 | BDD Scenarios | `bdd` | | `EXTRACT` | Generate Given/When/Then scenarios. Spec only; scenario minimums per priority (see BDD Scenario Generation). | `reference/bdd-generation.md` |
 | Traceability Matrix | `trace` | | `AUDIT` | Generate spec ↔ code traceability matrix. 90% coverage is the CERTIFIED threshold. | `reference/traceability-advanced.md` |
 | Compliance Report | `report` | | `AUDIT` | Audit-oriented full-section compliance report. | `reference/compliance-report.md` |
-| Gherkin Authoring | `gherkin` | | `EXTRACT` | `.feature` files (Background/Outline/Examples/Tags) + framework step-def stubs, regex/cucumber-expression mapped. | `reference/gherkin-authoring.md` |
-| Property-Based | `property` | | `EXTRACT` | Generalize spec invariants (idempotency, commutativity, round-trip, monotonicity) into framework code with shrinking and stateful-machine tests. | `reference/property-based-testing.md` |
-| Test Oracle | `oracle` | | — (auto-detect) | Oracle pattern per criterion: golden master (legacy), metamorphic (unknown output), differential (cross-impl), model-based (state machine), consistency (cross-API). | `reference/test-oracle-design.md` |
+| Gherkin Authoring | `gherkin` | | `GENERATE` | `.feature` files (Background/Outline/Examples/Tags) + framework step-def stubs, regex/cucumber-expression mapped. | `reference/gherkin-authoring.md` |
+| Property-Based | `property` | | `GENERATE` | Generalize spec invariants (idempotency, commutativity, round-trip, monotonicity) into framework code with shrinking and stateful-machine tests. | `reference/property-based-testing.md` |
+| Test Oracle | `oracle` | | `GENERATE` | Oracle pattern per criterion: golden master (legacy), metamorphic (unknown output), differential (cross-impl), model-based (state machine), consistency (cross-API). | `reference/test-oracle-design.md` |
 
 ### Signal Keywords → Recipe
 
@@ -249,7 +250,7 @@ Parse the first token of user input:
 
 A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
-- Operating mode used (FULL / EXTRACT / AUDIT / ADVERSARIAL).
+- Operating mode used (FULL / EXTRACT / AUDIT / ADVERSARIAL / GENERATE).
 - Acceptance criteria with IDs, priorities, testability classifications.
 - BDD scenarios with coverage counts per criterion.
 - Per-criterion verdicts with file:line or spec:section evidence.

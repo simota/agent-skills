@@ -66,7 +66,7 @@ Keep the section order below exactly.
 |-------|-------|
 | Specification | [spec path/name] |
 | Implementation | [files/modules list] |
-| Mode | FULL / EXTRACT / AUDIT / ADVERSARIAL |
+| Mode | FULL / EXTRACT / AUDIT / ADVERSARIAL / GENERATE |
 | Verdict | CERTIFIED / CONDITIONAL / REJECTED |
 | Date | YYYY-MM-DD |
 

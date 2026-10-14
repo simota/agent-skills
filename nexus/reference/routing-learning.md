@@ -51,7 +51,7 @@ COLLECT → EVALUATE → EXTRACT → ADAPT → VERIFY → RECORD
 - Whether user manually corrected the chain or re-executed
 - **Near misses** (LT-07): defenses that fired without an incident following — see below
 
-**EVALUATE** — First appends this run's raw outcome to the `## CES Log` section of the `.agents/nexus.md` journal — `date · task_type · chain_template · status · errors_recovered/errors · expected_steps/actual_steps · user_corrected` — on every run, LT-01 included. CES is an aggregate over runs, so it is computed from those rows per task-type/chain series once the series holds the minimum below (§ Minimum Data Requirements), never logged per run. That log is the history the comparisons below (and Darwin's `ces_trend`) read; without it there is no baseline. Compares against:
+**EVALUATE** — First appends this run's raw outcome to the `## CES Log` section of the `.agents/nexus.md` journal — `date · task_type · chain_template · variant · status · errors_recovered/errors · expected_steps/actual_steps · user_corrected · user_reexecuted` (`variant` names any experiment cohort, e.g. context strategy `continuous`/`reset` or contract `detailed`/`none`; `-` when none) — on every run, LT-01 included. CES is an aggregate over runs, so it is computed from those rows per task-type/chain/variant series once the series holds the minimum below (§ Minimum Data Requirements), never logged per run. That log is the history the comparisons below (and Darwin's `ces_trend`) read; without it there is no baseline. Compares against:
 - Historical average for the same task type
 - Global average across all task types
 - Previous CES for the same chain template

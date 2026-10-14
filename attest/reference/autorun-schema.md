@@ -1,6 +1,6 @@
 # Attest — AUTORUN `_STEP_COMPLETE` Schema
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Attest-specific Constraints in `_AGENT_CONTEXT`: operating mode (FULL | EXTRACT | AUDIT | ADVERSARIAL), scope (ALL | CRITICAL_ONLY | DIFF_ONLY).
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Attest-specific Constraints in `_AGENT_CONTEXT`: operating mode (FULL | EXTRACT | AUDIT | ADVERSARIAL | GENERATE), scope (ALL | CRITICAL_ONLY | DIFF_ONLY).
 
 ```yaml
 _STEP_COMPLETE:

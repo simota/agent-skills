@@ -100,7 +100,7 @@ Quality = ces_trend × 0.4 + feedback_ratio × 0.3 + health_score × 0.3
 
 Where:
   ces_trend    = direction of Nexus CES over last 3 cycles (improving=100, stable=60, declining=20),
-                 read per like-for-like series (same task-type/chain combination,
+                 read per like-for-like series (same task-type/chain/variant,
                  `nexus/reference/routing-learning.md` § Safety Guardrails, Like-for-like baseline row) that holds
                  ≥ 10 data points (§ Minimum Data Requirements). `declining` only when most
                  qualifying series decline; no qualifying series → neutral 60, never `declining`
