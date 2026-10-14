@@ -11,8 +11,8 @@ Mobile differs structurally from web release on three axes:
 
 Before triggering the `mobile` Recipe, validate the incoming `NATIVE_TO_LAUNCH_HANDOFF`:
 
-- [ ] `privacy_manifest_complete: true` (iOS auto-rejects without `PrivacyInfo.xcprivacy` + Required Reasons API)
-- [ ] `data_safety_complete: true` (Google Play blocks all tracks, including Internal Testing, since 2024)
+- [ ] iOS in `platforms` → `privacy_manifest_complete: true` (iOS auto-rejects without `PrivacyInfo.xcprivacy` + Required Reasons API)
+- [ ] Android in `platforms` → `data_safety_complete: true` (Google Play blocks all tracks, including Internal Testing, since 2024)
 - [ ] `feature_flags` includes at least one server-driven kill-switch per new user-facing feature (mobile cannot fast-roll back; flags are the rollback)
 - [ ] 5.1.2(i) AI disclosure UI present when the app sends user data to third-party AI providers (effective 2025-11-13)
 - [ ] Sign in with Apple offered alongside any third-party social login (Guideline 4.8)
@@ -214,8 +214,8 @@ NATIVE_TO_LAUNCH_HANDOFF:
   app_version: "[semver]"
   platforms: ["iOS", "Android"]
   store_compliance_notes: ["[Compliance items verified]"]
-  privacy_manifest_complete: true | false
-  data_safety_complete: true | false
+  privacy_manifest_complete: true | false  # required when platforms includes iOS
+  data_safety_complete: true | false       # required when platforms includes Android
   build_artifacts: ["[IPA/AAB paths]"]
   release_notes: "[User-facing changelog]"
   rollout_plan:

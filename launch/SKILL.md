@@ -269,9 +269,9 @@ When pure-native iOS or Android releases flow from `Native`, Launch operates as 
 
 Field list and full YAML schema -> `reference/mobile-release.md`.
 
-Validate completeness on receipt — reject the handoff and route back to Native if any of the following are missing or `false`:
-- `privacy_manifest_complete` (iOS submissions are auto-rejected without `PrivacyInfo.xcprivacy` Required Reasons API declarations)
-- `data_safety_complete` (Google Play blocks submission across all tracks including Internal Testing)
+Validate completeness on receipt — reject the handoff and route back to Native if any of the following that apply to the handoff's `platforms` are missing or `false` (a store field for a platform not being released is not required):
+- `privacy_manifest_complete` — when `platforms` includes iOS (iOS submissions are auto-rejected without `PrivacyInfo.xcprivacy` Required Reasons API declarations)
+- `data_safety_complete` — when `platforms` includes Android (Google Play blocks submission across all tracks including Internal Testing)
 - `feature_flags` (mobile lacks instant rollback; flags are the primary kill-switch)
 - 5.1.2(i) AI disclosure UI when the app invokes third-party AI
 
