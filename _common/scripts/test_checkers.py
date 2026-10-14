@@ -216,6 +216,19 @@ class TestInstructionDrift(CheckerCase):
         )
         self.expect_caught("lint-instructions.py", "NO_SUCH_CONTRACT.md", "--severity", "error")
 
+    def test_a_path_into_the_archive_fails(self):
+        """I2. A retired skill is on disk but not installed; resolving against it
+        turned a dead reference into a passing one."""
+        self.edit(
+            "CLAUDE.md", "`_common/PROJECT_LOCAL_SKILLS.md`", "`.archive/anvil/SKILL.md`"
+        )
+        self.expect_caught("lint-instructions.py", ".archive/anvil/SKILL.md", "--severity", "error")
+
+    def test_a_list_number_does_not_pair_with_skills_on_the_next_line(self):
+        """I1. `\\s*` crossed blank lines and read "step 7" + "Skills" as a claim."""
+        self.append("CLAUDE.md", "\n1. step 7\n\nSkills are listed in the catalog.\n")
+        self.expect_clean("lint-instructions.py", "--severity", "error")
+
 
 class TestContractDelivery(CheckerCase):
     """`lint-contracts.py`."""
@@ -321,6 +334,26 @@ class TestRoutingSurface(CheckerCase):
         )
         self.expect_reported("routing-oracle.py", "RO-2", "--severity", "error")
 
+    def test_a_flow_whose_select_survives_only_inside_chain_select_is_reported(self):
+        """RO-2. A substring search found `SELECT` inside `CHAIN_SELECT` and
+        passed a flow whose SELECT step had been deleted."""
+        self.edit(
+            "nexus/SKILL.md",
+            "`RESOLVE → GATE → MULTI? → REDIRECT? → SELECT → LADDER? → CHAIN_SELECT`",
+            "`RESOLVE → GATE → MULTI? → REDIRECT? → CHAIN_SELECT → LADDER?`",
+        )
+        self.expect_reported("routing-oracle.py", "token `SELECT` missing", "--severity", "error")
+
+    def test_an_unescaped_pipe_inside_a_hint_cell_fails(self):
+        """RO-9. `Forge[ui|api|fullstack]` split the FEATURE row into extra
+        cells, so its later hints were never checked."""
+        self.edit(
+            "nexus/reference/routing-matrix.md",
+            "Forge[ui\\|api\\|fullstack]",
+            "Forge[ui|api|fullstack]",
+        )
+        self.expect_caught("routing-oracle.py", "FEATURE (6 cells, header has 4)", "--severity", "error")
+
     def test_a_recipe_hint_naming_an_unknown_subcommand_fails(self):
         """RO-9. `Pixel[gap-report]` read as a hint but Pixel has no such
         Recipe, so dispatch fell back to the code-generating default."""
@@ -418,6 +451,10 @@ class TestLessonsRegister(CheckerCase):
         self.add_row(mech="A check enforces it.", where="`_common/scripts/no-such-check.py`")
         self.expect_caught("lint-lessons.py", "LS-3", "--severity", "error")
 
+    def test_a_mechanism_living_in_the_archive_fails(self):
+        self.add_row(mech="A check enforces it.", where="`.archive/anvil/SKILL.md`")
+        self.expect_caught("lint-lessons.py", "LS-3", "--severity", "error")
+
     def test_an_unknown_failure_class_fails(self):
         self.append(
             "_common/LESSONS.md",
@@ -443,6 +480,14 @@ class TestLessonsRegister(CheckerCase):
         self.expect_clean("lint-lessons.py", "--severity", "error")
 
 
+class TestRecipesDirectory(CheckerCase):
+    """compass's Recipe directory is generated; a Recipe added without regenerating must fail."""
+
+    def test_a_subcommand_renamed_only_in_skill_md_fails(self):
+        self.edit("architect/SKILL.md", "| `create` |", "| `forge-new` |")
+        self.expect_caught("generate-recipes-directory.py", "recipes-directory.md is stale", "--check")
+
+
 class TestIndexSubcommands(CheckerCase):
     """index.html's recipe list is generated; editing either side alone must fail."""
 
@@ -455,6 +500,12 @@ class TestIndexSubcommands(CheckerCase):
         self.edit("index.html", '{"n":"create","d":"New skill generation (from gap analysis through design)"}',
                   '{"n":"create","d":"Hand-written copy"}')
         self.expect_caught("generate-index-subcommands.py", "SUBCOMMANDS is stale", "--check")
+
+    def test_a_table_without_a_description_column_fails(self):
+        """Falling back to a fixed column published Mode tokens (`FULL`) as descriptions."""
+        self.edit("attest/SKILL.md", "| Recipe | Subcommand | Default? | Mode | Behavior | Read First |",
+                  "| Recipe | Subcommand | Default? | Mode | Summary | Read First |")
+        self.expect_caught("generate-index-subcommands.py", "no 'When to Use' or 'Behavior' column", "--check")
 
 
 if __name__ == "__main__":

@@ -90,6 +90,15 @@ class CatalogDataTests(unittest.TestCase):
                     self.assertEqual(row["d"].count("`") % 2, 0, row["d"])
                     self.assertFalse(row["d"].rstrip().endswith("\\"), row["d"])
 
+    def test_subcommand_descriptions_are_prose_not_mode_tokens(self):
+        # A table whose When to Use column was missed published its Mode or Engine
+        # cell instead: "`FULL`", "Fan-out", or a sentence cut at "Reg. (EU)".
+        for name, rows in self.data["subs"].items():
+            for row in rows:
+                with self.subTest(skill=name, subcommand=row["n"]):
+                    self.assertNotRegex(row["d"], r"^`[^`]+`(?:\s*/\s*`[^`]+`)*(?:\s*\([^)]*\))?$")
+                    self.assertNotRegex(row["d"], r"\b(?:Reg|Art|vs)$")
+
     def test_public_count_claims_match_the_roster(self):
         # The roster counts are repeated across READMEs and the page's meta, hero and
         # footer strings; any one of them can drift when a skill is added or retired.

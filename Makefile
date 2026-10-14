@@ -162,7 +162,9 @@ validate:
 	@python3 "$$SCRIPTS/lint-lessons.py" --severity error
 	@python3 "$$SCRIPTS/task-battery-check.py" --severity error
 	@python3 "$$SCRIPTS/generate-index-subcommands.py" --check
-	@if hook=$$(git rev-parse --git-path hooks/pre-commit 2>/dev/null) && [ -x "$$hook" ]; then echo "hooks on"; else \
+	@python3 "$$SCRIPTS/generate-recipes-directory.py" --check
+	@if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then :; \
+	elif hook=$$(git rev-parse --git-path hooks/pre-commit 2>/dev/null) && [ -x "$$hook" ]; then echo "hooks on"; else \
 	  echo "hooks off — run 'make hooks' so these run without being remembered"; fi
 
 # A checker nobody has watched fail is indistinguishable from one that returns

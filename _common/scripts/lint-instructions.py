@@ -56,12 +56,13 @@ INSTRUCTION_FILES = ["AGENTS.md", "CLAUDE.md"]
 # Also recognised: an open-ended "90+ skills", a Japanese counter ("90 個のスキル",
 # "90件のスキル"), "agent"/"repository-local" qualifiers, and comma-grouped numbers
 # ("1,234 skills" is 1234, never 234). The lookbehind stops a match from starting
-# in the middle of a longer number.
+# in the middle of a longer number. Separators are spaces and tabs only, so a list
+# number at the end of one line never pairs with "Skills" opening the next.
 COUNT_PATTERN = re.compile(
-    r"(?<![\d,.])(\d{1,3}(?:,\d{3})+|\d{1,4})\+?\s*(?:個|件|本)?\s*(?:の)?\s*"
+    r"(?<![\d,.])(\d{1,3}(?:,\d{3})+|\d{1,4})\+?[ \t]*(?:個|件|本)?[ \t]*(?:の)?[ \t]*"
     r"((?:(?:global|specialist|agent|project-local|repository-local|repo-local"
-    r"|グローバル|プロジェクトローカル|専用の?)\s*)*)"
-    r"(?:skill\s+agents?|skills?|スキルエージェント|スキル)",
+    r"|グローバル|プロジェクトローカル|専用の?)[ \t]*)*)"
+    r"(?:skill[ \t]+agents?|skills?|スキルエージェント|スキル)",
     re.I,
 )
 
@@ -151,10 +152,10 @@ def check_paths(path: Path, text: str) -> list[tuple[str, str, str]]:
             within_repo = candidate.resolve().is_relative_to(REPO_ROOT.resolve())
         except (OSError, RuntimeError):
             within_repo = False
-        if not within_repo or not candidate.is_file():
+        if not within_repo or not candidate.is_file() or _corpus.is_excluded_path(candidate, REPO_ROOT):
             line = text[: m.start()].count("\n") + 1
             findings.append(("P1", "I2", f"{path.name}:{line} references missing path `{ref}`"
-                             " (must resolve to a file within this repository)"))
+                             " (must resolve to a live file within this repository, not `.archive/`)"))
     return findings
 
 

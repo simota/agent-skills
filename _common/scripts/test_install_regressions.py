@@ -16,7 +16,7 @@ MAKE = shutil.which("make")
 CHECKERS = (
     "lint-frontmatter", "lint-project-local", "validate-recipes", "routing-oracle",
     "lint-instructions", "lint-contracts", "lint-lessons", "task-battery-check",
-    "generate-index-subcommands",
+    "generate-index-subcommands", "generate-recipes-directory",
 )
 
 
@@ -168,6 +168,13 @@ class InstallRegressionTests(unittest.TestCase):
         self.assertEqual(args[2:], ["--no-print-directory", "validate", "staged in linked worktree"])
         self.assertNotEqual(args[1], str(worktree))
         self.assertFalse(Path(args[1]).exists(), "the index snapshot must be removed")
+
+    def test_validate_outside_a_git_work_tree_does_not_report_hooks_off(self):
+        # The pre-commit hook validates an index snapshot that is not a Git work
+        # tree; it must not tell the committer the hook is off while it runs.
+        result = self.run_make("validate")
+        self.assert_ok(result)
+        self.assertNotIn("hooks off", result.stdout)
 
     def test_hooks_respect_core_hooks_path(self):
         self.initialize_git()

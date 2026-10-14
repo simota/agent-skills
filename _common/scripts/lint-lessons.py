@@ -39,6 +39,7 @@ import re
 import sys
 from pathlib import Path
 
+import _corpus
 from _markdown import without_fenced_examples, without_inline_code
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -162,7 +163,8 @@ def check(text: str) -> list[tuple[str, str, str]]:
                 within_repo = candidate.resolve().is_relative_to(REPO_ROOT.resolve())
             except (OSError, RuntimeError):
                 within_repo = False
-            if Path(target).is_absolute() or not within_repo or not candidate.is_file():
+            if (Path(target).is_absolute() or not within_repo or not candidate.is_file()
+                    or _corpus.is_excluded_path(candidate, REPO_ROOT)):
                 findings.append((
                     "P0", "LS-3",
                     f"{ident}: mechanism lives at `{target}`, which is not a file within this repository -- "

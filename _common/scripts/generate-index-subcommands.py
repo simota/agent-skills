@@ -36,7 +36,11 @@ END = "\n};\n"
 AGENT_NAME = re.compile(r"\{ name: '([^']+)'")
 
 
-CLAUSE_BREAK = re.compile(r"; |(?<!\be\.g)(?<!\bi\.e)\. ")
+# A period ends a clause unless it closes an abbreviation (`e.g.`, `Reg. (EU)`, `Art. 28`).
+CLAUSE_BREAK = re.compile(
+    r"; |(?<!\be\.g)(?<!\bi\.e)(?<!\bvs)(?<!\betc)(?<!\bArt)(?<!\bReg)(?<!\bNo)\. "
+)
+DETAIL_POINTER = re.compile(r"`(reference/[a-z0-9-]+\.md)`")
 
 
 def summary(text: str) -> str:
@@ -56,7 +60,10 @@ def recipe_rows(skill_dir: Path) -> list[dict[str, str]]:
         pointer = registry_pointer(block)
         if pointer:
             block = (skill_dir / pointer).read_text(encoding="utf-8")
-    column = when_to_use_column(block)
+    column = description_column(block)
+    if column is None:
+        # A condensed table may defer its When to Use column to a named detail file.
+        block, column = detail_table(skill_dir, block)
     rows = []
     for cells in recipe_cells(block):
         match = re.fullmatch(r"`([^`]+)`", cells[1] if len(cells) >= 2 else "")
@@ -65,13 +72,31 @@ def recipe_rows(skill_dir: Path) -> list[dict[str, str]]:
     return rows
 
 
-def when_to_use_column(block: str) -> int:
-    """Tables differ in column order (some add a Mode column); find the header's cell."""
+def description_column(block: str) -> int | None:
+    """Tables differ in column order and naming; prefer When to Use, then Behavior."""
     for line in block.splitlines():
         cells = [cell.strip().lower() for cell in line.strip().strip("|").split("|")]
         if cells[:2] == ["recipe", "subcommand"]:
-            return cells.index("when to use") if "when to use" in cells else 3
-    return 3
+            for prefix in ("when to use", "behavior"):
+                found = next((i for i, cell in enumerate(cells) if cell.startswith(prefix)), None)
+                if found is not None:
+                    return found
+            return None
+    return None
+
+
+def detail_table(skill_dir: Path, block: str) -> tuple[str, int]:
+    for pointer in DETAIL_POINTER.findall(block):
+        path = skill_dir / pointer
+        if path.is_file():
+            detail = path.read_text(encoding="utf-8")
+            column = description_column(detail)
+            if column is not None and list(recipe_cells(detail)):
+                return detail, column
+    raise SystemExit(
+        f"error: {skill_dir.name}: Recipes table has no 'When to Use' or 'Behavior' column "
+        "and names no reference table that does"
+    )
 
 
 def skill_dirs() -> list[Path]:

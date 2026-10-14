@@ -6,10 +6,15 @@ Format: `- **{skill}**: {sub}★ / {sub} / ...` alphabetical by skill name.
 The ★ marker indicates the Default Recipe (✓ in the Default? column).
 
 Run after any Recipe/Subcommand change. Idempotent.
+
+Usage:
+  python3 _common/scripts/generate-recipes-directory.py          # rewrite the directory
+  python3 _common/scripts/generate-recipes-directory.py --check  # exit 1 if it is stale
 """
 
 from __future__ import annotations
 
+import argparse
 import re
 import sys
 from pathlib import Path
@@ -94,7 +99,10 @@ def iter_skill_dirs() -> list[tuple[Path, bool]]:
     return sorted(entries, key=lambda item: item[0].name)
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[1])
+    parser.add_argument("--check", action="store_true", help="exit 1 if the directory is stale")
+    args = parser.parse_args(argv or [])
     lines: list[str] = [HEADER]
     count = 0
     global_count = 0
@@ -121,10 +129,18 @@ def main() -> int:
         local_count=local_count,
     ))
 
-    OUTPUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    fresh = "\n".join(lines) + "\n"
+    if args.check:
+        current = OUTPUT.read_text(encoding="utf-8") if OUTPUT.is_file() else ""
+        if fresh != current:
+            print(f"error: {OUTPUT.relative_to(SKILLS_ROOT)} is stale — run "
+                  "python3 _common/scripts/generate-recipes-directory.py", file=sys.stderr)
+            return 1
+        return 0
+    OUTPUT.write_text(fresh, encoding="utf-8")
     print(f"Wrote {count} skills to {OUTPUT.relative_to(SKILLS_ROOT)}")
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main(sys.argv[1:]))

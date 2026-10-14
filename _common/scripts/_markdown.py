@@ -27,7 +27,9 @@ def without_fenced_examples(text: str) -> str:
     lines = []
     fence = ""
     in_comment = False
-    for line in text.splitlines():
+    # Split on "\n" only, as without_html_comments does: splitlines() also breaks
+    # on U+2028, form feeds and the like, which shifted that function's masks.
+    for line in text.split("\n"):
         marker = FENCE.match(line)
         if fence:
             if (marker and marker.group(1)[0] == fence[0]
@@ -86,7 +88,7 @@ def markdown_section(text: str, title: str, *, allow_suffix: bool = False) -> st
     visible = without_fenced_examples(without_html_comments(text))
     lines = []
     found = False
-    for original, line in zip(text.splitlines(), visible.splitlines()):
+    for original, line in zip(text.split("\n"), visible.split("\n")):
         heading = re.match(r"^ {0,3}(#{1,6})[ \t]+(.*?)(?:[ \t]+#+)?[ \t]*$", line)
         if heading and len(heading.group(1)) <= 2:
             if found:
