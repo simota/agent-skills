@@ -74,7 +74,7 @@ Read from other agents' outputs (never recalculated by Darwin).
 | Signal | Source | Location |
 |--------|--------|----------|
 | Health Score | Architect | `.agents/architect.md` or last review output |
-| CES History | Nexus | `.agents/nexus.md` § CES Log, one line per run (`nexus/reference/routing-learning.md` EVALUATE) |
+| CES History | Nexus | `.agents/nexus.md` § CES Log — per-run raw outcomes; compute CES per task-type/chain window (`nexus/reference/routing-learning.md` EVALUATE) |
 | DNA Score | Grove | `.agents/grove.md` or last profile output |
 | Strategy Drift | Magi | `.agents/magi.md` or last monitoring output |
 | Reverse Feedback | Judge | `_common/REVERSE_FEEDBACK.md` or judge outputs |
