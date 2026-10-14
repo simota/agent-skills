@@ -302,7 +302,7 @@ Framework integration points HIG references. See parallel implementation in Nati
 | Deep links (Universal Links) | `deeplink-routing.md`, `deeplink` Recipe |
 | Background tasks (BGTaskScheduler) | `bg-execution.md`, `bg` Recipe |
 | App Store compliance | `store-compliance.md`, `store` Recipe |
-| Staged rollout (TestFlight phased) | `release-rollout.md`, `rollout` Recipe |
+| Staged rollout (App Store Phased Release) | `release-rollout.md`, `rollout` Recipe |
 | Mobile CI/CD (Xcode Cloud) | `mobile-ci-cd.md` |
 
 ---

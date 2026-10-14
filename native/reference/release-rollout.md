@@ -1,6 +1,6 @@
 # Staged Release & Rollout (Pure-Native)
 
-**Purpose:** Pure-native iOS / Android release strategy — TestFlight Phased Release and Play Console Staged Rollout, server-driven Feature Flags, Halt + Hotfix.
+**Purpose:** Pure-native iOS / Android release strategy — TestFlight + App Store Phased Release and Play Console Staged Rollout, server-driven Feature Flags, Halt + Hotfix.
 **Read when:** Planning a release, designing a staged rollout, handling rollback, or executing an emergency hotfix.
 
 > **Important:** In a pure-native environment, **OTA cannot update native code**. CodePush / EAS Update / Shorebird are React Native / Flutter only and out of scope here. For native, the rollback strategy centers on the combination of "**Phased Release** (iOS) / **Staged Rollout** (Android) + server-driven Feature Flags."
@@ -17,7 +17,7 @@
 
 [ Client (slow rollback, store-mediated) ]
    ├─ App Binary (IPA / AAB)
-   ├─ TestFlight Phased Release (iOS) / Staged Rollout (Android)
+   ├─ App Store Phased Release (iOS) / Staged Rollout (Android)
    └─ In-app remote config (assets / copy / pricing)
 ```
 

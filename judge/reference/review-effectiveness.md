@@ -22,7 +22,7 @@
 | **Time to First Comment** | Time from PR creation to first comment | < 4 hours |
 | **Review Iterations** | Number of round-trips until approval | ≤ 2 |
 | **PR Rejection Rate** | Percentage of rejected PRs | 10–20% |
-| **Lines Reviewed per Hour** | Lines of code reviewed per hour | 200–400 LOC |
+| **Lines Reviewed per Hour** | Lines of code reviewed per hour | ≤ 200 LOC (flag reduced confidence > 450) |
 
 ### Process Metrics
 
@@ -71,8 +71,9 @@ Cause: Working memory capacity is ~4 chunks → cognitive capacity exceeded
 |------|-----|-------------|-------------------|
 | **Small** | < 100 | Deep | Review immediately |
 | **Medium** | 100–400 | Adequate | Standard review |
-| **Large** | 400–1000 | Declining | Recommend splitting |
-| **XL** | > 1000 | Perfunctory risk | Strongly recommend splitting |
+| **Large** | 400–600 | Declining | Flag; recommend splitting |
+| **XL** | 600–1,000 | Perfunctory risk | Decompose before review |
+| **Oversize** | > 1,000 | Not reviewable as one unit | Refuse single-unit review; require split |
 
 ---
 
@@ -155,9 +156,14 @@ Metrics Judge cannot measure (organization-level):
 PR size warnings in Judge reports:
 
 if (totalLOC > 1000):
-  ⚠️ "PR exceeds 1000 LOC.
-      Review quality may degrade significantly.
-      Strongly recommend splitting."
+  ⛔ "PR exceeds 1,000 LOC.
+      Refusing single-unit review.
+      Split the PR before review."
+
+elif (totalLOC > 600):
+  ⚠️ "PR exceeds 600 LOC.
+      Decompose into reviewable units
+      before review."
 
 elif (totalLOC > 400):
   ℹ️ "PR exceeds 400 LOC.

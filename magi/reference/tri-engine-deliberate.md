@@ -297,11 +297,11 @@ viewpoint before considering the others. Do not let one viewpoint's verdict anch
 | Claude + Codex + agy AVAILABLE | `tri-engine` | Run all three; 9-cell matrix; concurrence labels per tri-engine rubric (3/3 CONFIRMED, 2/3 LIKELY, 1/3 CANDIDATE) |
 | Claude + Codex AVAILABLE, agy UNAVAILABLE or RUNTIME-BROKEN | `dual-engine` (default baseline) | Run Claude + Codex; **6-cell matrix**; concurrence labels per dual-engine rubric (2/2 CONFIRMED, 1/2 CANDIDATE — `LIKELY` is unreachable with 2 engines, so the bar for shipping a single-engine viewpoint is naturally tighter); matrix-pattern detection FULLY enabled (6 cells is sufficient for pattern recognition); record agy absence as informational header line, NOT as a failure |
 | Only 1 of Claude/Codex AVAILABLE | `single-engine` (degraded) | Single-engine 3-cell matrix; every cell treated as CANDIDATE; ground all before reporting; flag reduced confidence; matrix-pattern detection DISABLED (3 cells too sparse for cross-engine pattern signal) |
-| Both Claude and Codex unavailable | Abort multi flow; degrade to `decide` (Simple Mode three internal lenses) |
-| User explicitly requests single engine | Skip fan-out; use standard `decide` Recipe |
-| Trivial / low-stakes / fully-reversible decision | Recommend `decide` instead; reserve multi for high-stakes, low-reversibility |
-| One engine's all 3 viewpoints return ABSTAIN | Treat as that engine declined to deliberate; flag but do not auto-replace |
-| Engine returns < 3 viewpoints | Ask subagent to re-emit; if it cannot, mark missing viewpoints as ABSTAIN with `confidence: 0` |
+| Both Claude and Codex unavailable | `abort` → `decide` | Abort multi flow; degrade to `decide` (Simple Mode three internal lenses) |
+| User explicitly requests single engine | `decide` | Skip fan-out; use standard `decide` Recipe |
+| Trivial / low-stakes / fully-reversible decision | `decide` (recommended) | Recommend `decide` instead; reserve multi for high-stakes, low-reversibility |
+| One engine's all 3 viewpoints return ABSTAIN | unchanged | Treat as that engine declined to deliberate; flag but do not auto-replace |
+| Engine returns < 3 viewpoints | unchanged | Ask subagent to re-emit; if it cannot, mark missing viewpoints as ABSTAIN with `confidence: 0` |
 
 ---
 

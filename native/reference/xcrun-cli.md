@@ -178,6 +178,6 @@ xcodebuild -exportLocalizations -project App.xcodeproj -localizationPath ./l10n 
 ## Cross-References
 
 - `reference/mobile-ci-cd.md` — Xcode Cloud / fastlane / GitHub Actions pipeline integration
-- `reference/release-rollout.md` — TestFlight phased release that consumes `notarytool` / `altool` output
+- `reference/release-rollout.md` — TestFlight + App Store Phased Release that consume `notarytool` / `altool` output
 - `reference/adb-cli.md` — Android counterpart (side-by-side iOS ↔ Android command mapping at bottom of that file)
 - Apple official: <https://developer.apple.com/documentation/xcode-release-notes>

@@ -1,4 +1,4 @@
-Purpose: Use this file when deciding what an agent should *be* to its users — how much role, policy, memory, relationship, and expressed character it needs, what must never move, and how to detect it moving anyway. Covers products you are building; not the synthetic **user** personas owned by `cast` / `echo` / `plea` / `field` (`_common/AI_PERSONA_RISKS.md`).
+Purpose: Use this file when deciding what an agent should *be* to its users — how much role, policy, memory, relationship, and expressed character it needs, what must never move, and how to detect it moving anyway. Covers products you are building; not the synthetic **user** personas owned by `cast` / `echo` / `field` (`_common/AI_PERSONA_RISKS.md`).
 
 ## Contents
 - Six layers behind "it has a personality"

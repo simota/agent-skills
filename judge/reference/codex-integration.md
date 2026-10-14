@@ -197,12 +197,14 @@ Measure PR size using `git diff --stat` and classify into tiers. Cognitive load 
 |------|----------------------|--------------|--------|
 | **Small** | < 100 | Deep | Review immediately |
 | **Medium** | 100–400 | Adequate | Standard review |
-| **Large** | 400–1000 | Declining | Recommend splitting |
-| **XL** | > 1000 | Perfunctory risk | Strongly recommend splitting |
+| **Large** | 400–600 | Declining | Flag; recommend splitting |
+| **XL** | 600–1,000 | Perfunctory risk | Decompose before review |
+| **Oversize** | > 1,000 | Not reviewable as one unit | Refuse single-unit review; require split |
 
 **Warning thresholds in review report:**
 
-- **> 1000 LOC**: `⚠️ PR exceeds 1000 LOC. Review quality degrades significantly. Strongly recommend splitting.`
+- **> 1,000 LOC**: `⛔ PR exceeds 1,000 LOC. Refusing single-unit review; split the PR.`
+- **> 600 LOC**: `⚠️ PR exceeds 600 LOC. Decompose into reviewable units before review.`
 - **> 400 LOC**: `ℹ️ PR exceeds 400 LOC. Consider splitting to reduce reviewer cognitive load.`
 
 ---

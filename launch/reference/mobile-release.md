@@ -1,4 +1,4 @@
-# Mobile Release — TestFlight Phased Release and Play Staged Rollout
+# Mobile Release — App Store Phased Release and Play Staged Rollout
 
 This reference covers the `mobile` Recipe: planning, executing, and halting mobile app store releases for pure-native iOS and Android builds handed off from `Native`.
 
@@ -22,7 +22,7 @@ Before triggering the `mobile` Recipe, validate the incoming `NATIVE_TO_LAUNCH_H
 
 Reject the handoff and route back to Native if any item fails.
 
-## TestFlight Phased Release (iOS)
+## App Store Phased Release (iOS)
 
 ### Schedule
 
@@ -234,7 +234,7 @@ LAUNCH_TO_NATIVE_HANDOFF:
       testflight_internal: "[YYYY-MM-DD]"
       testflight_external: "[YYYY-MM-DD]"
       app_review_submit: "[YYYY-MM-DD]"
-      phased_release: "1%/10%/50%/100% over 7d starting [YYYY-MM-DD]"
+      phased_release: "App Store Phased Release 1%/2%/5%/10%/20%/50%/100% over 7d starting [YYYY-MM-DD]"
     android:
       play_internal: "[YYYY-MM-DD]"
       play_closed: "[YYYY-MM-DD]"

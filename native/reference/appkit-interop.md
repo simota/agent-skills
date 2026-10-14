@@ -1,7 +1,7 @@
 # SwiftUI ↔ AppKit Interop
 
 **Purpose:** `NSViewRepresentable`/`NSViewControllerRepresentable` full lifecycle, Coordinator pattern, `NSHostingView`/`NSHostingController` for the reverse direction, backing-`NSWindow` access, `@NSApplicationDelegateAdaptor` and delegate hooks SwiftUI lacks, first-responder/focus bridging, decision table for common Mac controls, retain-cycle/update-loop pitfalls, performance notes.
-**Read when:** Bridging AppKit into SwiftUI or vice versa (`appkit` Recipe).
+**Read when:** Bridging AppKit into SwiftUI or vice versa (`macos` Recipe).
 
 ---
 

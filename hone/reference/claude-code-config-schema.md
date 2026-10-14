@@ -192,9 +192,9 @@ StatusLine JSON input fields: `workspace`, `model`, `cost`, `context_window`, `s
 |----------|------|---------|-------------|-------------|
 | `ANTHROPIC_MODEL` | string | — | Model override | CCM1 |
 | `CLAUDE_CODE_EFFORT_LEVEL` | string | — | Reasoning effort: `low`, `medium`, `high` | — |
-| `CLAUDE_CODE_MAX_OUTPUT_TOKENS` | string | `"32000"` | Max output tokens (max `"64000"`) | CCE1: consider raising |
-| `MAX_THINKING_TOKENS` | string | `"31999"` | Extended Thinking budget | CCE2: balance cost vs depth |
-| `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` | string | `"95"` | Auto-compact trigger threshold (%) | **CCE3: 70-80 recommended** |
+| `CLAUDE_CODE_MAX_OUTPUT_TOKENS` | string | `"32000"` | Max output tokens (max `"64000"`) | CCE3: review (default 32K, max 64K) |
+| `MAX_THINKING_TOKENS` | string | `"31999"` | Extended Thinking budget | CCE4: calibrate with `alwaysThinkingEnabled` |
+| `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` | string | `"95"` | Auto-compact trigger threshold (%) | **CCE1: 70-80 recommended** |
 | `CLAUDE_CODE_DISABLE_1M_CONTEXT` | string | — | `"1"` to disable 1M context | — |
 | `CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING` | string | — | `"1"` to disable adaptive reasoning | — |
 | `CLAUDE_CODE_SUBAGENT_MODEL` | string | — | Model for subagents | — |
@@ -204,7 +204,7 @@ StatusLine JSON input fields: `workspace`, `model`, `cost`, `context_window`, `s
 
 | Variable | Type | Default | Description | Audit focus |
 |----------|------|---------|-------------|-------------|
-| `ENABLE_TOOL_SEARCH` | string | — | `"auto:0"` for on-demand MCP tool loading | **CCE4: saves ~32% context** |
+| `ENABLE_TOOL_SEARCH` | string | — | `"auto:0"` for on-demand MCP tool loading | **CCE2: saves ~32% context** |
 | `MCP_TIMEOUT` | string | — | MCP server startup timeout (ms) | — |
 | `MCP_TOOL_TIMEOUT` | string | — | MCP tool execution timeout (ms) | — |
 | `MAX_MCP_OUTPUT_TOKENS` | string | `"25000"` | MCP output limit | — |

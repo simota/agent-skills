@@ -184,9 +184,9 @@ Plot all surviving clusters on a 2D matrix:
 Severity ↑
   10 │ ◆D ◆U │ ●U ●U │ ▲L     │ CRITICAL (sev≥9 — auto-flagged regardless of occurrence)
    9 │       │       │        │
-   8 │       │ ◆D    │ ●U     │ HIGH (RPN > 200 or AP=H)
+   8 │       │ ◆D    │ ●U     │ CRITICAL (RPN > 200 or AP=H)
    7 │       │       │ ▲L     │
-   6 │       │       │        │ MEDIUM (RPN 100-200)
+   6 │       │       │        │ HIGH (RPN 100-200)
    5 │       │       │        │
    …
      └───────┴───────┴────────┘

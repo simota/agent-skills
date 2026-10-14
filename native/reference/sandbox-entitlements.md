@@ -1,6 +1,6 @@
 # App Sandbox — Entitlements, Powerbox, Bookmarks, TCC
 
-Production reference for scoping App Sandbox entitlements on macOS, resolving file access through Powerbox, managing security-scoped bookmarks across launches, and navigating TCC-protected resources. Companion to `reference/distribution.md` (hardened runtime is a *separate* system — see § 6) and `reference/xpc-helpers.md` (app groups feed shared-container IPC).
+Production reference for scoping App Sandbox entitlements on macOS, resolving file access through Powerbox, managing security-scoped bookmarks across launches, and navigating TCC-protected resources. Companion to `reference/distribution.md` (hardened runtime is a *separate* system — see § 9) and `reference/xpc-helpers.md` (app groups feed shared-container IPC).
 
 > Scope: App Sandbox (`com.apple.security.*` sandbox keys) and TCC (Info.plist usage-description strings + user-approved system settings). Signing/notarization mechanics live in `reference/macos-xcrun-cli.md`; the ship decision matrix lives in `reference/distribution.md`.
 
@@ -28,7 +28,7 @@ Production reference for scoping App Sandbox entitlements on macOS, resolving fi
 | `com.apple.security.files.user-selected.read-write` | Read+write user-picked files/folders | Only when the app writes back to the *same* user-picked location (editors, not viewers) |
 | `com.apple.security.files.user-selected.executable` | Execute a user-selected file (e.g. running a user-chosen script/binary) | Rare — pair with code-signing checks on the target before exec |
 | `com.apple.security.files.downloads.read-only` / `.read-write` | Access `~/Downloads` without a picker prompt each time | Only if the app's core purpose is downloads management; otherwise use a picker |
-| `com.apple.security.files.bookmarks.app-scope` | Resolve app-scoped security-scoped bookmarks (bookmark valid only for the app that created it) | Default bookmark scope for most apps (see § 4) |
+| `com.apple.security.files.bookmarks.app-scope` | Resolve app-scoped security-scoped bookmarks (bookmark valid only for the app that created it) | Default bookmark scope for most apps (see § 6) |
 | `com.apple.security.files.bookmarks.document-scope` | Resolve document-scoped bookmarks, shareable across apps/processes via the document itself | Document-based apps that hand bookmarks to XPC helpers or export them in a doc format |
 | `com.apple.security.assets.pictures.read-only` / `.read-write` | `~/Pictures` without per-file picker | Photo/image-management apps whose *entire purpose* is browsing this library |
 | `com.apple.security.assets.music.read-only` / `.read-write` | `~/Music` | Music-library apps only |
@@ -44,7 +44,7 @@ Production reference for scoping App Sandbox entitlements on macOS, resolving fi
 |---|---|---|
 | `com.apple.security.network.client` | Outbound network connections | Required for any HTTP client / WebSocket / URLSession usage |
 | `com.apple.security.network.server` | Inbound listening sockets | Only for apps that run a local server (sync daemons, local API); omit otherwise |
-| `com.apple.security.device.camera` | Camera capture APIs | Pair with `NSCameraUsageDescription` (§ 6) — entitlement alone does not suppress the TCC prompt |
+| `com.apple.security.device.camera` | Camera capture APIs | Pair with `NSCameraUsageDescription` (§ 8) — entitlement alone does not suppress the TCC prompt |
 | `com.apple.security.device.microphone` | Microphone capture APIs | Pair with `NSMicrophoneUsageDescription` |
 | `com.apple.security.device.usb` | Direct USB device communication (IOKit) | Hardware-integration apps only (MIDI controllers, peripherals) |
 | `com.apple.security.device.bluetooth` | CoreBluetooth central/peripheral roles | Only if the app talks to BLE accessories directly |
@@ -53,7 +53,7 @@ Production reference for scoping App Sandbox entitlements on macOS, resolving fi
 | `com.apple.security.scripting-targets` | Scoped AppleScript/Apple Events access to specific *other* apps (dictionary + access level per target) | Prefer this scoped form over the blanket entitlement below when scripting a known set of apps |
 | `com.apple.security.automation.apple-events` | Send Apple Events broadly (paired with per-target `NSAppleEventsUsageDescription` prompts at runtime) | Only for automation-hub apps; route "Native builds a scriptable app" vs "app scripts other apps" through the Native↔Hone boundary — this entitlement is for the latter direction |
 | `com.apple.security.personal-information.addressbook` | Contacts framework access | Pair with `NSContactsUsageDescription` |
-| `com.apple.security.personal-information.calendars` | EventKit calendar access | Pair with `NSCalendarsFullAccessUsageDescription` / `NSCalendarsWriteOnlyAccessUsageDescription` (macOS 14+ split, § 6) |
+| `com.apple.security.personal-information.calendars` | EventKit calendar access | Pair with `NSCalendarsFullAccessUsageDescription` / `NSCalendarsWriteOnlyAccessUsageDescription` (macOS 14+ split, § 8) |
 | `com.apple.security.personal-information.location` | Core Location | Pair with `NSLocationUsageDescription` (macOS uses the unified key, not the iOS when-in-use/always split) |
 | `com.apple.security.personal-information.photos-library` | Photos library access via the Photos framework (distinct from `assets.pictures.*`, which is raw filesystem access to `~/Pictures`) | Use this over `assets.pictures.*` when integrating with the Photos app's managed library rather than a flat folder |
 

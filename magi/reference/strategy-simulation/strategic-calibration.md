@@ -174,7 +174,7 @@ bsc_effectiveness:
 
 ### Journal Format
 
-Write reusable findings to `.agents/helm.md`:
+Write reusable findings to `.agents/magi.md`:
 
 ```markdown
 ## YYYY-MM-DD - FORESIGHT: [Simulation Type]

@@ -211,7 +211,7 @@ For maximum confidence, run Codex + Antigravity + Claude and cross-reference fin
 
 ```bash
 codex review --base main "Focus on correctness, security, and logic errors." > review-codex.md
-agy -p "Activate the code review skill. Review the current branch diff and write findings to review-agy.md." --dangerously-skip-permissions --log-file "$(mktemp -t agy_review.XXXXXX)"  # silent-failure detection — see reference/antigravity-review-usage.md §Silent Failure Detection
+agy -p "Activate the code review skill. Review the current branch diff and write findings to review-agy.md." --log-file "$(mktemp -t agy_review.XXXXXX)"  # silent-failure detection — see reference/antigravity-review-usage.md §Silent Failure Detection
 claude -p "Review the current branch diff. Output: review-claude.md — include severity, file:line, evidence, suggested fix." --permission-mode plan > review-claude.md
 ```
 

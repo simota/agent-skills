@@ -18,7 +18,7 @@ what Recipes exist at all.
 | Feature Flag | `flag` | | Feature flag management and staged rollout design | `reference/feature-flag-pitfalls.md` |
 | Hotfix Release | `hotfix` | | Emergency patch release (shortened CI / hotfix branch / 2h SLA / rollback bundled / backport to main) | `reference/hotfix-workflow.md` |
 | Canary Rollout | `canary` | | Staged traffic rollout (1%->10%->50%->100%) with automatic guardrails and abort conditions | `reference/canary-rollout.md` |
-| Mobile Release | `mobile` | | iOS / Android store release: TestFlight phased release (1%/10%/50%/100% over 7d), Play staged rollout (5%/20%/50%/100%), store-compliance gate, server-driven flag rollback path | `reference/mobile-release.md` |
+| Mobile Release | `mobile` | | iOS / Android store release: App Store Phased Release (1%/2%/5%/10%/20%/50%/100% over 7d, after TestFlight), Play staged rollout (5%/20%/50%/100%), store-compliance gate, server-driven flag rollback path | `reference/mobile-release.md` |
 | Weekly Report | `weekly` | | Weekly PR aggregation and engineering summary | `reference/engineering-report-templates.md`, `reference/github-pr-collection.md` |
 | Monthly Report | `monthly` | | Monthly work report with delivery metrics | `reference/engineering-report-templates.md`, `reference/delivery-metrics.md` |
 | Client Report | `client-report` | | Client-facing Markdown/HTML/PDF report with effort ranges and charts | `reference/client-report-templates.md`, `reference/report-pdf-export.md` |

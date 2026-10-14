@@ -139,7 +139,7 @@ Each step is reversible until step 4.
 | Internal beta | TestFlight Internal (immediate) | Play Internal Testing (immediate) |
 | External beta | TestFlight External (~24 hr review on first build) | Play Closed / Open Testing (~hours-day) |
 | Production review | App Review (~24-72 hr typical, longer for novel apps) | Play Console review (~hours-day, longer for sensitive permissions) |
-| Phased rollout | "Phased Release" 1%/10%/50%/100% over 7 days | Play "Staged Rollout" 5%/20%/50%/100% |
+| Phased rollout | App Store "Phased Release" 1%/2%/5%/10%/20%/50%/100% over 7 days | Play "Staged Rollout" 5%/20%/50%/100% |
 | Hotfix | Expedited review (rare; gate carefully) | Increment versionCode and re-release |
 
 Plan for at least one rejection cycle per store on first submission. Common reasons: privacy manifest missing third-party SDK, Sign in with Apple missing, IAP rules violation, restricted content.

@@ -1,7 +1,7 @@
 # Document-Based macOS Apps
 
 **Purpose:** `DocumentGroup`/`FileDocument`/`ReferenceFileDocument` (SwiftUI-first path), legacy `NSDocument`/`NSDocumentController`, autosave-in-place + Versions, custom `UTType` export, iCloud document sync, undo integration, package-format documents, untitled-document lifecycle.
-**Read when:** Building a document-based Mac app (`document` Recipe).
+**Read when:** Building a document-based Mac app (`macos` Recipe).
 
 ---
 

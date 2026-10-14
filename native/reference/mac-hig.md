@@ -113,7 +113,7 @@ Mac is a **pointer-first, indirect-manipulation** platform — this is the singl
 - **Cursor rects**: change the pointer shape (`NSCursor.pointingHand`, `.resizeLeftRight`, `.iBeam`, etc.) over draggable dividers, resize handles, and clickable non-button elements. In SwiftUI, use `.onHover { NSCursor... }` or `.pointerStyle()` (macOS 15+, WWDC24) rather than leaving the default arrow over every control.
 - **Reveal-on-hover controls**: list-row action buttons (delete, favorite, quick actions) should appear on row hover and stay hidden otherwise — reduces visual noise versus always-visible icon buttons, which read as cluttered on a dense pointer-driven UI.
 - **Tooltips (`.help()`)**: every icon-only toolbar button, and any control whose purpose isn't obvious from its label, needs a tooltip. Touch interfaces have no tooltip equivalent (no persistent hover), so this is easy to omit when porting.
-- **Precision affordances**: because pointer input is far more precise than touch, Mac controls can be smaller and denser (§6) — but must still show clear hover/pressed states since there is no touch "highlight on tap" feedback loop to substitute.
+- **Precision affordances**: because pointer input is far more precise than touch, Mac controls can be smaller and denser (§7) — but must still show clear hover/pressed states since there is no touch "highlight on tap" feedback loop to substitute.
 - **Right-click / secondary click**: every object that supports contextual actions needs a context menu (`.contextMenu { }`) — this is the Mac equivalent of iOS's long-press action sheet, but expected far more pervasively (on nearly every list row, canvas object, and text selection).
 
 ---
@@ -202,7 +202,7 @@ Shared accessibility principles (VoiceOver labels, Dynamic Type, WCAG contrast) 
 - **Full Keyboard Access** (§6) has no iOS equivalent of this scope — iOS assumes touch as primary and keyboard as supplementary; Mac explicitly supports full mouse-free operation as a first-class accessibility mode, not just a power-user feature.
 - **Increase Contrast**: `NSWorkspace.shared.accessibilityDisplayShouldIncreaseContrast` (or SwiftUI `@Environment(\.accessibilityIncreaseContrast)`) — verify custom-drawn borders/dividers remain visible when enabled; standard `Material`/Liquid Glass surfaces respond automatically.
 - **Reduce Motion / Reduce Transparency**: `@Environment(\.accessibilityReduceMotion)` / `\.accessibilityReduceTransparency` — same API surface as iOS; Mac's Liquid Glass sidebar/toolbar (§1) is the surface most likely to need a Reduce Transparency fallback (falls back to an opaque or near-opaque material automatically for standard components; verify for custom chrome).
-- **Accessibility Inspector** (bundled with Xcode): audit target — run against your app's window hierarchy to catch missing labels/roles before relying on manual VoiceOver testing. Treat a clean Accessibility Inspector pass as a `VERIFY` phase gate for accessibility-sensitive features, alongside the `hig` Recipe audit.
+- **Accessibility Inspector** (bundled with Xcode): audit target — run against your app's window hierarchy to catch missing labels/roles before relying on manual VoiceOver testing. Treat a clean Accessibility Inspector pass as a `VERIFY` phase gate for accessibility-sensitive features, alongside the `macos` Recipe HIG audit.
 
 ---
 
@@ -246,7 +246,7 @@ The most common Mac HIG failure is a Catalyst or SwiftUI-multiplatform app that 
 | No menu bar commands | All actions live only in toolbar buttons or in-view controls | Mirror every meaningful action into `Commands`/`CommandGroup` (§2) |
 | Fixed/non-resizable window | Window can't tile, resize, or go full-screen usefully | Set sensible `.frame(minWidth:minHeight:)`, support full-screen (§3) |
 | No hover states | Buttons/rows look identical whether pointer is over them or not | Add `.onHover`, reveal-on-hover row actions, cursor rects (§5) |
-| Touch-sized everything | 44pt-minimum controls throughout, sparse padding | Adopt `.controlSize()` density appropriate to pointer input (§6) |
+| Touch-sized everything | 44pt-minimum controls throughout, sparse padding | Adopt `.controlSize()` density appropriate to pointer input (§7) |
 | No keyboard shortcuts / Tab traversal | Every action requires a click; Tab does nothing useful | Wire `.keyboardShortcut()`, verify Full Keyboard Access traversal (§6) |
 | Bottom tab bar ported as-is | iOS `TabView` pattern used for app-level navigation | Convert to sidebar-first `NavigationSplitView` (§4) |
 | No right-click context menus | Users can't get contextual actions without hunting a toolbar | Add `.contextMenu` to list rows, canvas objects, text selections (§5) |
@@ -254,7 +254,7 @@ The most common Mac HIG failure is a Catalyst or SwiftUI-multiplatform app that 
 | No Dock menu / badge | App ignores Dock-level interaction entirely | Implement `applicationDockMenu(_:)`, wire badge to a single state source (§8) |
 | iOS-style full-bleed opaque tab content mistaken for Liquid Glass chrome | Custom `.glassEffect()` slapped onto content/list rows | Restrict Liquid Glass to chrome only — sidebar/toolbar/menu bar (§1) |
 
-This table is the practical checklist for the `hig` Recipe audit (`SKILL.md` Recipes table) — run it against any Catalyst-sourced or multiplatform-SwiftUI app before calling a Mac port "done." See `reference/catalyst-decision.md` for the deeper Catalyst-vs-native decision this anti-pattern usually stems from.
+This table is the practical checklist for the `macos` Recipe HIG audit (`SKILL.md` Recipes table) — run it against any Catalyst-sourced or multiplatform-SwiftUI app before calling a Mac port "done." See `reference/catalyst-decision.md` for the deeper Catalyst-vs-native decision this anti-pattern usually stems from.
 
 ---
 
