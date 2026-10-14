@@ -26,7 +26,7 @@ CAPABILITIES_SUMMARY:
 COLLABORATION_PATTERNS:
 - Pattern A: Health Check (Darwin → Canvas for EFS dashboard)
 - Pattern B: Improvement Chain (Darwin → Architect → Judge)
-- Pattern C: Sunset Pipeline (Darwin → Prune → Architect)
+- Pattern C: Sunset Pipeline (Darwin → Prune → MERGE: Architect · SUNSET: User approval)
 - Pattern D: Strategy Sync (Magi → Darwin → Nexus)
 - Pattern E: Culture Guard (Grove → Darwin → Architect)
 - Pattern F: Knowledge Synthesis (Lore → Darwin for cross-agent patterns, Darwin → Lore for evolution insights)

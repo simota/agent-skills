@@ -30,7 +30,7 @@ current_phase ≠ stored_phase AND current_confidence ≥ 0.60
 
 ### ET-02: Quality Plateau
 
-**Condition:** CES has not changed significantly for 3+ consecutive Nexus cycles. Evaluate only once the window holds ≥ 10 CES data points (`nexus/reference/routing-learning.md` § Minimum Data Requirements).
+**Condition:** CES has not changed significantly for 3+ consecutive Nexus cycles. Evaluate per like-for-like series (same task-type/chain combination) and only for a series holding ≥ 10 CES data points (`nexus/reference/routing-learning.md` § Minimum Data Requirements); never across mixed chains.
 
 **Detection:**
 ```
