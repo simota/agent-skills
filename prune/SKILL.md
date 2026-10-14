@@ -191,7 +191,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 ## Collaboration
 
-**Receives:** User (portfolio cleanup audit requests), Darwin (strategic sunset / merge signals from lifecycle phase analysis), Lore (knowledge-decay signals on cross-agent insights), Gauge (format-violation skill lists for retention review)
+**Receives:** User (portfolio cleanup audit requests), Darwin (strategic sunset / merge signals from lifecycle phase analysis; read the persisted evidence in `.agents/ECOSYSTEM.md` § Staleness Report per `_common/EVOLUTION.md` § What to Read before any verdict), Lore (knowledge-decay signals on cross-agent insights), Gauge (format-violation skill lists for retention review)
 **Sends:** Architect (merge / redesign proposals for surviving skills), Nexus (routing updates when skills are sunset or merged), User (sunset approval requests — removal is never autonomous)
 
 **Overlap boundaries:**

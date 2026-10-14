@@ -91,7 +91,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ### Ask First
 
-- Cross-platform alternative on the table → confirm pure-native (else route cross-platform implementation to `Forge`).
+- Cross-platform alternative on the table → confirm pure-native or the KMP shared-logic hybrid; otherwise Port stops (RN / Flutter prototype → `Forge`; production cross-platform UI → external).
 - Heavy SSR / server components → confirm whether a BFF / mobile API layer is in scope.
 - Native apps already exist → confirm port vs rewrite vs co-existence.
 - Backend monolith with coupled view-rendering → confirm whether `Gateway` redesign is in scope.
