@@ -117,12 +117,14 @@ slo:
       percentile: p99
       window: 30d
   consequences:
-    budget_exhausted:
-      - "Freeze non-critical deployments"
+    budget_exhausted:            # 100% consumed
+      - "Halt all deployments until the budget resets"
       - "Redirect engineering to reliability"
-    budget_below_25:
+    budget_below_10:             # 90% consumed
+      - "Freeze non-critical changes"
+    budget_below_25:             # 75% consumed
       - "Alert on-call lead"
-      - "Increase deployment scrutiny"
+      - "Slow deployments; prioritize stability"
 ```
 
 ---

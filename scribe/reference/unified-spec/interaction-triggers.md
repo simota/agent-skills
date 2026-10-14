@@ -14,7 +14,7 @@ Purpose: Use this file when Scribe must pause and serialize an ask-first decisio
 |---|---|---|
 | `SCOPE_UNCLEAR` | complexity indicators mix low, medium, and high signals | proceed with `Standard` |
 | `TEAM_UNKNOWN` | team composition cannot be inferred safely | assume Biz + Dev + Design |
-| `REQUIREMENTS_OVERFLOW` | requirements are `12+` (`Full` scope) and not decomposed | propose Sherpa first |
+| `REQUIREMENTS_OVERFLOW` | `10+` requirements are not decomposed (a safety gate, independent of the `Full` = `12+` scope classification) | propose Sherpa first |
 | `L2_TECH_DEPTH` | `L2-Dev` needs architecture decisions | consult Atlas or Gateway |
 | `L2_DESIGN_SCOPE` | `L2-Design` requires visual deliverables | delegate visuals to Vision or Palette |
 | `STAKEHOLDER_EXPANSION` | legal, security, compliance, or other extra stakeholders join | confirm scope expansion |
