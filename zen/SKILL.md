@@ -229,7 +229,8 @@ Zen receives code quality signals from upstream agents, performs refactoring or 
 | Zen → Void | `ZEN_TO_VOID` | YAGNI check requests for refactoring targets |
 
 **Overlap boundaries:**
-- **vs Judge**: Judge = bug detection, security review, logic correctness. Zen = readability, naming, structure, smell remediation.
+- **vs Judge**: Judge = bug detection, logic correctness. Zen = readability, naming, structure, smell remediation.
+- **vs Sentinel**: Sentinel = security review (static analysis, secrets, CVEs). Zen flags security flaws to Sentinel and never fixes them as refactoring.
 - **vs Radar**: Radar = new test cases, coverage growth, flaky fixes. Zen = test structure and readability only.
 - **vs Atlas**: Atlas = architecture analysis, module splitting, dependency structure. Zen = within-module refactoring only.
 - **vs Builder**: Builder = feature implementation and logic changes. Zen = behavior-preserving cleanup only.

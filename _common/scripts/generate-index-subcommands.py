@@ -60,6 +60,8 @@ def recipe_rows(skill_dir: Path) -> list[dict[str, str]]:
         pointer = registry_pointer(block)
         if pointer:
             block = (skill_dir / pointer).read_text(encoding="utf-8")
+    if not list(recipe_cells(block)):
+        return []  # No Recipes table: `## Recipes` is recommended, not required.
     column = description_column(block)
     if column is None:
         # A condensed table may defer its When to Use column to a named detail file.

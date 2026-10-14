@@ -537,6 +537,12 @@ class TestIndexSubcommands(CheckerCase):
                   '{"n":"create","d":"Hand-written copy"}')
         self.expect_caught("generate-index-subcommands.py", "SUBCOMMANDS is stale", "--check")
 
+    def test_a_skill_without_a_recipes_section_is_skipped_not_fatal(self):
+        """`## Recipes` is recommended, not required (`_common/RECIPES.md`). The
+        generator must drop such a skill from the page, not abort the run."""
+        self.edit("architect/SKILL.md", "## Recipes", "## Recipe Notes")
+        self.expect_caught("generate-index-subcommands.py", "SUBCOMMANDS is stale", "--check")
+
     def test_a_table_without_a_description_column_fails(self):
         """Falling back to a fixed column published Mode tokens (`FULL`) as descriptions."""
         self.edit("attest/SKILL.md", "| Recipe | Subcommand | Default? | Mode | Behavior | Read First |",
