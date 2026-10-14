@@ -174,7 +174,7 @@ Routing rules:
 | Radius Tokens | `radius` | | Border-radius scale, corner-set tokens, and brand-personality spectrum | `reference/radius-tokens.md` |
 
 Behavior notes:
-- **tokens** (default): SURVEY → DEFINE → VALIDATE → PRESENT; load `token-system.md` + `css-token-architecture-anti-patterns.md`.
+- **tokens** (default): SCAN → POLISH → REFINE → VERIFY → PRESENT; load `token-system.md` + `css-token-architecture-anti-patterns.md`.
 - **apply**: Map existing design values to token variables; load `token-lifecycle.md`; output token diff.
 - **theme**: Design color palette with dark mode; load `dark-mode.md` + `color-dark-mode-anti-patterns.md`.
 - **typography**: Select type scale and font pairing; load `typography-selection-guide.md`.

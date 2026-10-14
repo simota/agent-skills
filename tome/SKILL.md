@@ -344,6 +344,8 @@ Concept, draft, transcript, or learning document → publishable external articl
 
 **Sends to:** Quill (inline docs), Scribe (spec promotion), Canvas (visualization + knowledge graph), Lore (knowledge patterns), Cue (demo narration scripts), Growth (SEO/SMO/OGP), Stage (slide conversion), Scribe (format export).
 
+`Lore` is project-local — apply the Availability Gate in `_common/PROJECT_LOCAL_SKILLS.md` first; if absent, route to the registered fallback (`Scribe` for durable pattern documentation) and report `project_local_fallback: true`.
+
 ### Collaboration Patterns
 
 | Pattern | Flow | Purpose |

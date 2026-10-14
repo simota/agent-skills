@@ -1,6 +1,6 @@
 ---
 name: native
-description: "Implementing production iOS/Android/macOS native features (SwiftUI, Compose) and iterating a screen against a reference design. Not for cross-platform RN/Flutter (Port) or web (Artisan)."
+description: "Implementing production iOS/Android/macOS native features (SwiftUI, Compose) and iterating a screen against a reference design. Not for cross-platform RN/Flutter (Forge) or web (Artisan)."
 ---
 
 <!--

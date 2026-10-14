@@ -15,14 +15,14 @@ Only available in `NEXUS_AUTORUN_FULL` mode.
 
 | Condition | Layer | Method |
 |-----------|-------|--------|
-| 2-3 independent branches, clear file ownership | **L2: Parallel Spawn** | `Agent(run_in_background: true)` per branch |
-| 4+ workers, complex ownership, multi-step branches | **L3: Rally Delegation** | `Agent(Rally)` manages team |
+| 2-4 independent branches, clear file ownership | **L2: Parallel Spawn** | `Agent(run_in_background: true)` per branch |
+| 5+ workers (beyond the Max branches limit below), complex ownership, multi-step branches | **L3: Rally Delegation** | `Agent(Rally)` manages team |
 
 **L2 Parallel Spawn**: Nexus spawns each branch as a background Agent. Each agent reads its own SKILL.md and works independently. Nexus waits for completion notifications, then aggregates.
 
 **L3 Rally Delegation**: Nexus spawns Rally as a single Agent. Rally handles all team management using Agent Teams API.
 
-See `_common/AUTORUN.md` for full execution layer details.
+See `nexus/reference/execution-layers.md` for full execution layer details.
 
 ---
 

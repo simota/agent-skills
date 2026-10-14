@@ -1,6 +1,6 @@
 ---
 name: weave
-description: "Designing workflows and state machines. Use when state transition design, invalid transition detection, Saga patterns, or approval flow design is needed."
+description: "Designing workflows and state machines. Use when state transition design, invalid transition detection, Saga patterns, approval flow design, or scheduling (cron, DST-safe timing, business calendars) is needed."
 ---
 
 <!--

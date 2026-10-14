@@ -29,11 +29,13 @@ COLLABORATION_PATTERNS:
 - Architect -> Quill: Documentation follow-up
 - Architect -> Canvas: Visualization follow-up
 - Architect -> Judge: Quality review request, compression equivalence review
-- Void -> Architect: Agent sunset candidate identification
+- Prune -> Architect: Merge execution request (consolidate overlapping skills)
+- Compass -> Architect: LADDER gap signal (no skill fits the request)
+- Architect -> Prune: New-skill notification (overlap re-audit trigger)
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: User (requirements), Atlas (ecosystem analysis), Nexus (gap signals), Judge (quality feedback), Lore (insights), Darwin (evolution signals), Void (sunset candidates)
-- OUTPUT: Nexus (routing updates), Quill (docs), Canvas (diagrams), Judge (review requests)
+- INPUT: User (requirements), Atlas (ecosystem analysis), Nexus (gap signals), Judge (quality feedback), Lore (insights), Darwin (evolution signals), Prune (merge requests), Compass (LADDER gap signals)
+- OUTPUT: Nexus (routing updates), Quill (docs), Canvas (diagrams), Judge (review requests), Prune (new-skill notifications)
 
 PROJECT_AFFINITY: Game(M) SaaS(M) E-commerce(M) Dashboard(M) Marketing(L)
 -->

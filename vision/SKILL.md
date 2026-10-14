@@ -92,7 +92,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 ### Always
 
 - Justify design decisions with evidence.
-- Present 3+ options with trade-offs.
+- Present 3+ options with trade-offs (exception: `pair` mode offers 2-3 options per single decision).
 - Define tokens, components, patterns, and responsive behavior.
 - Keep a mobile-first responsive strategy and a WCAG AA baseline.
 - Include accessibility expectations and edge-state coverage.
@@ -128,7 +128,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | Phase | Goal | Key rule | Read |
 |-------|------|----------|------|
 | `UNDERSTAND` | Gather brand, user, business, and technical context | Evidence-based context before any design decisions | `reference/design-methodology.md` |
-| `ENVISION` | Define principles and 3+ directions | Always present multiple options with trade-offs → `_common/CANDIDATE_SELECTION.md` | `reference/design-methodology.md` |
+| `ENVISION` | Define principles and 3+ directions (`pair`: 2-3 per decision) | Always present multiple options with trade-offs → `_common/CANDIDATE_SELECTION.md` | `reference/design-methodology.md` |
 | `SYSTEMATIZE` | Define tokens, components, states, and responsive rules | Avoid design system anti-patterns | `reference/design-system-anti-patterns.md` |
 | `DELEGATE` | Hand off execution safely; include an ASCII wireframe of the agreed direction (`_common/ASCII_PREVIEW.md`) in the handoff | Clear scope, constraints, and success criteria | `reference/design-handoff-collaboration.md`, `_common/ASCII_PREVIEW.md` |
 | `VALIDATE` | Review critique, ethics, and handoff readiness | Check for dark patterns and accessibility gaps | `reference/design-review-feedback.md`, `reference/ux-anti-patterns-ethics.md` |

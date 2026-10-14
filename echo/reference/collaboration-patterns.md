@@ -215,7 +215,7 @@ Echo (validate proposal from persona perspective)
 ...
 ```
 
-## Pattern G: Persona Generation (Echo ↔ Field)
+## Pattern K: Persona Generation (Echo ↔ Field)
 
 Generate a persona from code/documentation and validate it with Field's real data:
 
@@ -311,7 +311,7 @@ Echo (improve persona accuracy / update)
 - Note: [observation about this step]
 ```
 
-## Pattern H: Visual Review (Vector → Echo → Canvas)
+## Pattern L: Visual Review (Vector → Echo → Canvas)
 
 Flow where Echo reviews Vector screenshots from persona perspective and Canvas visualizes the results.
 

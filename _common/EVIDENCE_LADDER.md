@@ -178,7 +178,7 @@ whether the search was exhaustive, narrow, or never run.
 | Part | Why | Example |
 |------|-----|---------|
 | What was searched | Scope is the whole claim. "No hardcoded secrets" over one directory is a different statement than over the repo | `rg -n 'api[_-]?key' src/ tests/` |
-| What a hit would have looked like | If you cannot say, you cannot know the search could have found one | "a string literal assigned to a name matching /key|token|secret/" |
+| What a hit would have looked like | If you cannot say, you cannot know the search could have found one | "a string literal assigned to a name matching /key\|token\|secret/" |
 | What was *not* covered | The part the search structurally could not reach | "not covered: values assembled at runtime from `process.env`" |
 
 Written out: *"No hardcoded credentials under `src/` and `tests/` (`rg -n '(api[_-]?key|secret|token)\s*[:=]' src tests` → 0 hits). A hit would be a literal assigned to such a name. Runtime-assembled values are outside what this search can reach."*

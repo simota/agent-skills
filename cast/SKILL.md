@@ -233,7 +233,7 @@ Audit AI-generated personas against five dimensions, not just face validity: **p
 
 A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
-- Mode used (CONJURE/FUSE/EVOLVE/AUDIT/DISTRIBUTE/SPEAK).
+- Mode used (CONJURE/FUSE/EVOLVE/AUDIT/DISTRIBUTE/SPEAK/RETIRE).
 - Persona identifiers and lifecycle states.
 - Confidence scores with source attribution.
 - Registry status (created/updated/unchanged).
@@ -299,7 +299,7 @@ Do not parallelize EVOLVE or FUSE — these require sequential confidence recalc
 | `reference/segmentation-methods.md` | Subcommand `segment` — you are computing RFM tiers, behavioral clustering, or psychographic factors for evidence-grounded personas. |
 | `reference/persona-bias-audit.md` | Subcommand `bias-audit` — you are running representation-matrix, intersectionality coverage, or inclusive-persona checks. |
 | `_common/AI_PERSONA_RISKS.md` | AI generation, human review, or bias/ethics risk is involved. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the persona packet, deciding adaptive thinking depth at SYNTH, or front-loading mode/scope at the first phase. Critical for Cast: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the persona packet, deciding adaptive thinking depth at SYNTHESIS, or front-loading mode/scope at INPUT_ANALYSIS. Critical for Cast: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Cast-specific Output/Next schema. |
 
 ## Operational

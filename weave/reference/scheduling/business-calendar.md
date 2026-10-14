@@ -93,7 +93,7 @@ async function loadHolidays(year: number): Promise<Map<string, string>> {
   return parseHolidayCSV(csv);
 }
 
-// Refresh on a monthly schedule (via Tempo-designed cron)
+// Refresh on a monthly schedule (via Weave `schedule`-designed cron)
 ```
 
 ---
@@ -275,7 +275,7 @@ Subscribe with HTTP `ETag` / `If-Modified-Since` to avoid unnecessary fetches.
 Calendar data MUST be dynamic, not baked:
 
 1. Store holidays in a DB table or external KV (`calendar:jp:2026` → JSON).
-2. Fetch from 内閣府 CSV (or similar source per region) on a **monthly** Tempo-designed cron.
+2. Fetch from 内閣府 CSV (or similar source per region) on a **monthly** Weave `schedule`-designed cron.
 3. Cache in-process with TTL (1h-24h).
 4. On fetch failure: keep serving stale cache; alert if cache age > 7 days.
 5. Unit test: synthetic holiday injection to verify gate logic.

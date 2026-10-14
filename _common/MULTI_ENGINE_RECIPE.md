@@ -311,10 +311,10 @@ Do not copy shell wrappers here. Historical PTY, foreground-only, default-model 
 | Claude + Codex + agy AVAILABLE | `tri-engine` | Run all three; standard confidence rubric; engine-attribution tags include agy |
 | Claude + Codex AVAILABLE, agy UNAVAILABLE or RUNTIME-BROKEN | `dual-engine` (default fallback) | Run Claude + Codex; standard confidence rubric (NOT degraded); engine-attribution tags use 2-of-2 vocabulary; record agy absence in the rejection ledger as informational, not as a failure |
 | Only 1 engine AVAILABLE (other RUNTIME-BROKEN or missing) | `single-engine` (degraded) | Single-engine output; every output is CANDIDATE; ground all before reporting; flag reduced confidence explicitly |
-| 0 engines AVAILABLE | Abort multi mode; degrade to the skill's default non-multi Recipe |
-| User explicitly requests single engine | Skip fan-out; use default Recipe |
-| Trivial scope | Optionally skip multi; recommend default Recipe |
-| Auth/quota error during execution | Apply §3.5 Engine Runtime Failure Detection; mark engine `RUNTIME-BROKEN`, exclude from aggregation, surface the matched log excerpt in the rejection ledger; if agy is the broken engine, fall through to `dual-engine` mode silently (no abort) |
+| 0 engines AVAILABLE | — (abort) | Abort multi mode; degrade to the skill's default non-multi Recipe |
+| User explicitly requests single engine | — (default Recipe) | Skip fan-out; use default Recipe |
+| Trivial scope | — (default Recipe, optional) | Optionally skip multi; recommend default Recipe |
+| Auth/quota error during execution | re-evaluate per rows above | Apply §3.5 Engine Runtime Failure Detection; mark engine `RUNTIME-BROKEN`, exclude from aggregation, surface the matched log excerpt in the rejection ledger; if agy is the broken engine, fall through to `dual-engine` mode silently (no abort) |
 
 **Dual-engine tag vocabulary** (when running Claude + Codex only):
 

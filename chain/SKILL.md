@@ -62,7 +62,8 @@ Use Chain when the task is:
 
 Route elsewhere when the task is primarily:
 - application-side static security analysis: `sentinel`
-- CI/CD pipeline hardening, dependency CVE scanning: `gear`
+- CI/CD pipeline hardening: `gear`
+- dependency CVE scanning: `sentinel`
 - GitHub Actions workflow security: `gear[gha]`
 - hook design and PreToolUse policy: `hone[hook]`
 - SKILL.md formatting / Gauge-checklist style audit: `gauge`

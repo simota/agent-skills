@@ -2,7 +2,7 @@
 
 Cross-tool agent instructions for this repository. Read by **Antigravity CLI (`agy`)**, **Claude Code**, **Cursor**, and any other tool that honors the Agentic AI Foundation `AGENTS.md` standard.
 
-> **Authority order**: `AGENTS.md` (this file, cross-tool common rules) → tool-specific overrides (`CLAUDE.md` for Claude Code, `GEMINI.md` for agy). Tool-specific files should contain only deltas, not duplicates.
+> **Authority order**: `AGENTS.md` (this file, cross-tool common rules) → tool-specific overrides (`CLAUDE.md` for Claude Code; `GEMINI.md` for agy, if present). Tool-specific files should contain only deltas, not duplicates.
 
 ---
 
@@ -120,7 +120,7 @@ Current versions, models, schemas, optional features and legacy workarounds → 
 ## When Tools Disagree
 
 - `AGENTS.md` (this file) takes precedence over silently-inherited tool defaults.
-- Tool-specific override files (`CLAUDE.md`, `GEMINI.md`) take precedence over `AGENTS.md` *only on the file's home tool* and *only for delta content*.
+- Tool-specific override files (`CLAUDE.md`, and `GEMINI.md` if present) take precedence over `AGENTS.md` *only on the file's home tool* and *only for delta content*.
 - If a rule cannot be expressed cross-tool, document it here as "tool-specific" with a reference to the override file.
 
 ## When Rules Disagree

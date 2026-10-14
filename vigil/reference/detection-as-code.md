@@ -21,7 +21,7 @@
 |--------|--------|-------------|
 | **YARA-X** (Rust rewrite, VirusTotal) | `1.0.0` stable since 2025-06; powers VirusTotal Livehunt / Retrohunt at billions-of-files scale; ~`99%` rule compatibility with classic YARA; heavy rules (large regex, deep loops) run seconds faster | New rule authoring, threat hunting pipelines, any project that can afford a one-time migration |
 | **YARA 4.x** (classic, C) | Maintenance mode — only bug fixes land here; new features go exclusively to YARA-X | Legacy pipelines that have not yet migrated; budget the YARA-X migration |
-| **Sigma** (SigmaHQ) | Active; the de-facto vendor-agnostic log-detection format. Compile to Splunk SPL / Elastic ES|QL / Sentinel KQL / Sumo / etc. via `sigma-cli` | First-class authoring for log-based detections; all rules in this repo start as Sigma |
+| **Sigma** (SigmaHQ) | Active; the de-facto vendor-agnostic log-detection format. Compile to Splunk SPL / Elastic ES\|QL / Sentinel KQL / Sumo / etc. via `sigma-cli` | First-class authoring for log-based detections; all rules in this repo start as Sigma |
 | **Snort 3 / Suricata 7** | Active; network-traffic detection. See `snort-network-detection.md` | Packet-level signatures, IDS / IPS rules |
 
 ### Pipeline Supply-Chain Controls (GitHub Actions 2026 baseline)

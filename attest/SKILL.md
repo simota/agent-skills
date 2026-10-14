@@ -229,9 +229,9 @@ Single source of truth for Recipe definitions. Mode binds each Recipe to an Oper
 | BDD Scenarios | `bdd` | | `EXTRACT` | Generate Given/When/Then scenarios. Spec only; scenario minimums per priority (see BDD Scenario Generation). | `reference/bdd-generation.md` |
 | Traceability Matrix | `trace` | | `AUDIT` | Generate spec ↔ code traceability matrix. 90% coverage is the CERTIFIED threshold. | `reference/traceability-advanced.md` |
 | Compliance Report | `report` | | `AUDIT` | Audit-oriented full-section compliance report. | `reference/compliance-report.md` |
-| Gherkin Authoring | `gherkin` | | `EXTRACT` / `GENERATE` | `.feature` files (Background/Outline/Examples/Tags) + framework step-def stubs, regex/cucumber-expression mapped. | `reference/gherkin-authoring.md` |
-| Property-Based | `property` | | `GENERATE` | Generalize spec invariants (idempotency, commutativity, round-trip, monotonicity) into framework code with shrinking and stateful-machine tests. | `reference/property-based-testing.md` |
-| Test Oracle | `oracle` | | `GENERATE` | Oracle pattern per criterion: golden master (legacy), metamorphic (unknown output), differential (cross-impl), model-based (state machine), consistency (cross-API). | `reference/test-oracle-design.md` |
+| Gherkin Authoring | `gherkin` | | `EXTRACT` | `.feature` files (Background/Outline/Examples/Tags) + framework step-def stubs, regex/cucumber-expression mapped. | `reference/gherkin-authoring.md` |
+| Property-Based | `property` | | `EXTRACT` | Generalize spec invariants (idempotency, commutativity, round-trip, monotonicity) into framework code with shrinking and stateful-machine tests. | `reference/property-based-testing.md` |
+| Test Oracle | `oracle` | | — (auto-detect) | Oracle pattern per criterion: golden master (legacy), metamorphic (unknown output), differential (cross-impl), model-based (state machine), consistency (cross-API). | `reference/test-oracle-design.md` |
 
 ### Signal Keywords → Recipe
 

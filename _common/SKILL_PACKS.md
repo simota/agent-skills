@@ -2,13 +2,13 @@
 
 > **Tier:** `authoring` — activates when creating or auditing skills, not during user work. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
 
-Skill membership matrix for selective enablement across the 90-skill global ecosystem. This repository also carries three project-local extensions (`orbit`, `lore`, `darwin`) registered in `_common/PROJECT_LOCAL_SKILLS.md`.
+Skill membership matrix for selective enablement across the global skill ecosystem. This repository also carries three project-local extensions (`orbit`, `lore`, `darwin`) registered in `_common/PROJECT_LOCAL_SKILLS.md`.
 
 ## Why this exists
 
-Anthropic guidance is **8-12 skills** before "context tax" (token overhead per turn) starts to dominate; routing degradation begins in the **dozens**, and a **15,000-character cap** on the available skills list is a hard ceiling. This repository's 93 packages (90 global + 3 project-local) exceed all three thresholds when loaded together.
+Anthropic guidance is **8-12 skills** before "context tax" (token overhead per turn) starts to dominate; routing degradation begins in the **dozens**, and a **15,000-character cap** on the available skills list is a hard ceiling. This repository's packages (every global skill plus the project-local extensions) exceed all three thresholds when loaded together.
 
-This file defines **11 Packs** (overlapping subsets of the ecosystem) so that any single workstream can enable ~20-30 skills instead of the full 90 global skills. Selective enablement is driven by the Claude Code `skills` filter in `~/.claude/settings.json` (`"all"` / `[list]` / `[]`); Codex CLI and agy use equivalent allowlist mechanisms when available.
+This file defines **11 Packs** (overlapping subsets of the ecosystem) so that any single workstream can enable ~20-30 skills instead of the full global set. Selective enablement is driven by the Claude Code `skills` filter in `~/.claude/settings.json` (`"all"` / `[list]` / `[]`); Codex CLI and agy use equivalent allowlist mechanisms when available.
 
 **Sources:**
 - claude.com/blog/lessons-from-building-claude-code-how-we-use-skills (8-12 sweet spot, context tax)
@@ -43,7 +43,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 | `legal-jp` | `core + canon` | 9 |
 | `personal-env` | `core + hone` | 9 |
 | `ai-cli-admin` | `core + hone` | 9 |
-| `all` | `"all"` (no filter) | 90 global; this repository additionally discovers 3 project-local skills |
+| `all` | `"all"` (no filter) | every global skill; this repository additionally discovers the project-local skills |
 
 ---
 

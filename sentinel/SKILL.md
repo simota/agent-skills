@@ -118,7 +118,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 |----------|----------------|--------|
 | `CRITICAL` | Hardcoded secrets, SQL/command/prompt injection, auth bypass, dependency confusion or typosquatting, deserialization, supply-chain compromise | Fix immediately |
 | `HIGH` | XSS, CSRF, SSRF, missing rate limits on sensitive endpoints, weak password/auth flows, path traversal, NoSQL injection | Fix within `24h` |
-| `MEDIUM` | Stack traces, missing headers, deps with CVSS ≥ 7.0 CVEs, unsafe error handling, exceptional-condition mishandling | Fix within `1 week` |
+| `MEDIUM` | Stack traces, missing headers, deps with CVSS ≥ 7.0 CVEs (escalate to `CRITICAL` when CVSS ≥ 9.0 and the vulnerable path is reachable — `reference/tri-engine-scan.md`), unsafe error handling, exceptional-condition mishandling | Fix within `1 week` |
 | `LOW` | Hygiene issues with bounded impact, outdated deps (CVSS < 7.0) | Plan intentionally |
 | `ENHANCEMENT` | Audit logging, input limits, defense-in-depth, pre-commit secret hooks | Do when convenient |
 
@@ -186,9 +186,9 @@ Parse the first token of user input:
 
 ## LLM Fix Prompt Generation
 
-When remediation is handed off rather than shipped inline, the report ends with a paste-ready, self-contained `## LLM Fix Prompt` block addressed to Builder (or the human operator for `REVOKE-AND-ROTATE`). Authoring rules → `_common/LLM_PROMPT_GENERATION.md`; template fieldss → `reference/fix-prompt-generation.md`.
+When remediation is handed off rather than shipped inline, the report ends with a paste-ready, self-contained `## LLM Fix Prompt` block addressed to Builder (or the human operator for `REVOKE-AND-ROTATE`). Authoring rules → `_common/LLM_PROMPT_GENERATION.md`; template fields → `reference/fix-prompt-generation.md`.
 
-Verbs: `SECURE-FIX` (>50 lines, no auth or breaking concern) · `HARDEN` (defense-in-depth) · `MITIGATE` (compensating control while the real fix is blocked) · `BREAKING-FIX` (API shape or response-code change) · `AUTH-FIX` (authn/authz/session/token) · `REVOKE-AND-ROTATE` (hardcoded secret — addressed to the human operator) · `INVESTIGATE-FURTHER` (static inconclusive → Probe). Receiving-agent mapping → `reference/fix-prompt-generation.md` § Verb Table.
+Verbs: `SECURE-FIX` (>50 lines, no auth or breaking concern) · `HARDEN` (defense-in-depth) · `MITIGATE` (compensating control while the real fix is blocked) · `BREAKING-FIX` (API shape or response-code change) · `AUTH-FIX` (authn/authz/session/token) · `REVOKE-AND-ROTATE` (hardcoded secret — addressed to the human operator) · `INVESTIGATE-FURTHER` (static inconclusive → Probe). Receiving-agent mapping → `reference/fix-prompt-generation.md` § Sentinel Action Verbs.
 
 Ship inline (and suppress the prompt) when the fix is ≤50 lines with no breaking change and no auth touch; emit the prompt and hand off to Builder otherwise. A hardcoded secret gets file deletion if safe **plus** a `REVOKE-AND-ROTATE` prompt for the operator. Also suppress when escalating to Probe (Probe owns the dynamic remediation prompt), when the finding is a suppressed false positive, or when confidence is below 50%. Every suppression gets a one-line note in the report explaining why.
 

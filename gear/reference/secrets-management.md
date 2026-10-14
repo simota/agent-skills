@@ -108,4 +108,4 @@ Production rule: never use raw `kind: Secret` as the source of truth. Source = V
 - **To Sentinel**: post-design static scan to confirm repo is clean before rollout.
 - **To Scaffold**: IAM / IRSA / Workload Identity role provisioning that Gear's auth method depends on.
 - **To Crypt**: when the design needs HSM, envelope encryption, or custom key hierarchy.
-- **To Comply**: SOC2 / PCI-DSS / HIPAA mapping of rotation cadence and audit trail.
+- **To Canon[regulatory]**: SOC2 / PCI-DSS / HIPAA mapping of rotation cadence and audit trail.

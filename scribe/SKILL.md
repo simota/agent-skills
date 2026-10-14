@@ -65,7 +65,7 @@ Use Scribe when the task needs one of these outputs:
 
 Do not use Scribe for:
 
-- Feature ideation or prioritization -> Spark
+- Feature ideation -> Spark; prioritization -> Rank
 - API design itself -> Gateway
 - Architecture tradeoff decisions -> Atlas
 - Implementation -> Builder
@@ -164,17 +164,17 @@ Use the safe default only for reversible ambiguity; otherwise serialize the deci
 
 Keep these rules explicit. Full detail lives in `reference/documentation-calibration.md`.
 
-| Metric               | Threshold         | Action                                         |
-| -------------------- | ----------------- | ---------------------------------------------- |
-| Adoption rate        | `> 0.85`          | Keep the current template and pattern choices. |
-| Adoption rate        | `0.60-0.85`       | Review handoff quality and audience fit.       |
-| Adoption rate        | `< 0.60`          | Rework template choice or information density. |
-| Requirement accuracy | `> 0.90`          | Treat the writing pattern as strong.           |
-| Requirement accuracy | `0.75-0.90`       | Keep, but remove ambiguity.                    |
-| Requirement accuracy | `< 0.75`          | Revisit precision and testability.             |
-| Calibration minimum  | `3+ documents`    | Do not change weights before this.             |
-| Max change per cycle | `±0.15`           | Prevent overcorrection.                        |
-| Decay                | `10% per quarter` | Drift calibrated values back toward defaults.  |
+| Metric | Threshold | Action |
+| --- | --- | --- |
+| Adoption rate | `> 0.85` | Keep the current template and pattern choices. |
+| Adoption rate | `0.60-0.85` | Review handoff quality and audience fit. |
+| Adoption rate | `< 0.60` | Rework template choice or information density. |
+| Requirement accuracy | `> 0.90` | Treat the writing pattern as strong. |
+| Requirement accuracy | `0.75-0.90` | Keep, but remove ambiguity. |
+| Requirement accuracy | `< 0.75` | Revisit precision and testability. |
+| Calibration minimum | `3+ documents` | Do not change weights before this. |
+| Max change per cycle | `±0.15` | Prevent overcorrection. |
+| Decay | `10% per quarter` | Drift calibrated values back toward defaults. |
 
 ## Unified Specification Recipe
 
@@ -304,7 +304,7 @@ Unified artifacts contain scope-appropriate `L0-L4` plus `Meta`; keep `Given / W
 ## Collaboration
 
 **Receives:** Field (research), Cast (personas), Voice (feedback), Flux/Magi/Void (assumption, trade-off, and scope inputs), Vision (design direction), Spark (feature proposals), Gateway (API design), Atlas (architecture decisions), PDM (spec gaps)
-**Sends:** Builder (implementation specs), Artisan (UI specs), Radar (test specs), Voyager (E2E test specs), Judge (review criteria), Sherpa (atomic task breakdown), Canvas (visual rendering), Lore (reusable patterns), PDM (planned scope)
+**Sends:** Builder (implementation specs), Artisan (UI specs), Radar (test specs), Voyager (E2E test specs), Judge (review criteria), Sherpa (atomic task breakdown), Canvas (visual rendering), Lore (reusable patterns; project-local, fallback per `_common/PROJECT_LOCAL_SKILLS.md`), PDM (planned scope)
 
 ### Overlap Boundaries
 

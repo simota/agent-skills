@@ -355,17 +355,20 @@ questions:
 
 | Indicator | SIMPLE | COMPLEX |
 |-----------|--------|---------|
-| Estimated steps | 1-2 | 3+ |
+| Estimated steps | 1-2 | 6+ (3-5 = MEDIUM) |
 | Affected files | 1-3 | 4+ |
 | Security-related | No | Yes |
 | Destructive changes | No | Yes |
 
+- **Default (AUTORUN_FULL)**: Executes all tasks, including COMPLEX, with guardrails
 - **SIMPLE + NEXUS_AUTORUN**: Fully automatic execution
-- **COMPLEX**: Automatically switches to Guided mode (interaction required)
+- **COMPLEX under NEXUS_AUTORUN**: Switches to Guided mode (interaction required)
 
 See `_common/INTERACTION.md` for details.
 
 ### Chain Templates by Task Type
+
+> **Source of truth:** base chains live in `nexus/reference/routing-matrix.md` and variants in `nexus/reference/agent-chains.md`; where this summary differs, those files win.
 
 #### Investigation & Understanding
 
@@ -382,8 +385,8 @@ See `_common/INTERACTION.md` for details.
 
 | Task | Description | Chain |
 |------|-------------|-------|
-| BUG/simple | Simple bug fix | Scout > Builder > Radar |
-| BUG/complex | Complex bug (RCA required) | Scout > Sherpa > Builder > Radar > Sentinel |
+| BUG/simple | Simple bug fix | Scout > Lens > Builder > Radar |
+| BUG/complex | Complex bug (RCA required) | Scout > Lens > Sherpa > Builder > Radar > Sentinel |
 | BUG/frontend | Frontend bug | Scout > Artisan > Radar |
 
 #### Feature Development
@@ -393,9 +396,9 @@ See `_common/INTERACTION.md` for details.
 | FEATURE/S | Small feature | Builder > Radar |
 | FEATURE/M | Medium feature | Sherpa > Forge > Builder > Radar |
 | FEATURE/L | Large feature | Spark > Sherpa > Forge > Builder > Radar > Quill |
-| FEATURE/frontend | Frontend feature | Sherpa > Forge > Artisan > Radar |
+| FEATURE/frontend | Frontend feature | Forge > Artisan > Radar |
 | FEATURE/fullstack | Full-stack feature | Sherpa > Forge > Artisan > Builder > Radar |
-| FEATURE/api | API development | Gateway > Builder > Radar |
+| FEATURE/api | API development | Gateway > Builder > Radar > Quill |
 
 #### UI/UX
 
@@ -430,7 +433,7 @@ See `_common/INTERACTION.md` for details.
 
 | Task | Description | Chain |
 |------|-------------|-------|
-| AI/rag | RAG pipeline design | Oracle > Stream > Builder > Radar |
+| AI/rag | RAG pipeline design | Oracle > Gateway > Builder > Radar |
 | AI/llm-app | LLM application design | Oracle > Builder > Radar |
 | AI/safety | AI safety review | Oracle > Sentinel > Oracle |
 | AI/prompt-ops | Prompt engineering & evaluation | Oracle > Radar |
@@ -440,26 +443,26 @@ See `_common/INTERACTION.md` for details.
 
 | Task | Description | Chain |
 |------|-------------|-------|
-| SRE/slo | SLO definition & monitoring | Beacon > Gear > Builder |
+| SRE/slo | SLO definition & monitoring | Beacon > Gear > Builder > Radar |
 | SRE/observability | Full observability setup | Beacon > Gear > Builder > Radar |
 
 #### Security
 
 | Task | Description | Chain |
 |------|-------------|-------|
-| SECURITY/audit | Static analysis | Sentinel > Builder > Radar |
-| SECURITY/pentest | Dynamic testing | Probe > Builder > Radar > Probe |
-| SECURITY/full | Full audit | Sentinel > Probe > Builder > Radar > Sentinel |
+| SECURITY/audit | Static analysis | Sentinel > Builder > Radar > Sentinel |
+| SECURITY/pentest | Dynamic testing | Sentinel > Probe > Builder > Radar > Probe |
+| SECURITY/full | Full audit | Sentinel > Probe > Builder > Radar > Sentinel > Probe |
 
 #### Testing
 
 | Task | Description | Chain |
 |------|-------------|-------|
 | TEST/unit | Unit test addition | Radar |
-| TEST/e2e | E2E test addition | Voyager |
+| TEST/e2e | E2E test addition | Voyager > Lens > Radar |
 | TEST/coverage | Coverage improvement | Radar > Voyager |
 | TEST/load | Load testing | Siege > Bolt |
-| TEST/chaos | Chaos engineering | Siege > Triage > Builder |
+| TEST/chaos | Chaos engineering | Siege > Bolt > Triage > Builder > Beacon |
 | TEST/contract | Contract testing | Gateway > Siege > Radar |
 | TEST/mutation | Mutation testing | Siege > Radar |
 
@@ -467,7 +470,7 @@ See `_common/INTERACTION.md` for details.
 
 | Task | Description | Chain |
 |------|-------------|-------|
-| REVIEW/pr | PR review | Judge > Zen/Builder/Sentinel |
+| REVIEW/pr | PR review | Judge > Builder/Zen/Sentinel (based on findings) > Radar |
 | REVIEW/security | Security review | Judge > Sentinel |
 
 #### Git/PR
@@ -484,7 +487,7 @@ See `_common/INTERACTION.md` for details.
 | Task | Description | Chain |
 |------|-------------|-------|
 | DECISION/arch | Architecture selection | Magi > Builder/Zen |
-| DECISION/strategy | Strategic decisions | Magi > Spark |
+| DECISION/strategy | Strategic decisions | Scribe[unified] > Magi > Spark |
 | DECISION/office-hours | Founder office hours advisory | Magi > Builder/Echo[demand]/Sherpa |
 | DECISION/retro | Postmortem on a recent decision/outcome | Magi |
 
@@ -516,7 +519,7 @@ See `_common/INTERACTION.md` for details.
 | DOCS/component | Component documentation | Vitrine > Quill |
 | DOCS/architecture | Architecture diagrams | Canvas |
 | DOCS/convert | Format conversion | Scribe |
-| DOCS/report | PR report | Launch > Scribe |
+| DOCS/report | PR report | Launch[weekly] > Scribe |
 | DOCS/learning | Change-based learning doc | Tome |
 | DOCS/onboarding | Onboarding material from changes | Trail > Tome |
 
@@ -567,14 +570,14 @@ For large-scale tasks where parallel execution is beneficial, Nexus escalates to
 
 | Task | Description | Parallel Chain |
 |------|-------------|---------------|
-| FEATURE/L (parallel) | Large-scale full-stack | Sherpa > Rally(Artisan + Builder + Radar) |
+| FEATURE/L (parallel) | Large-scale full-stack | Spark > Sherpa > Rally(Forge+Artisan, Builder, Radar) |
 | FEATURE/fullstack (parallel) | Frontend + Backend | Rally(Artisan, Builder, Radar) |
 | FEATURE/multi (parallel) | Multiple independent features | Sherpa > Rally(Builder x N, Radar) |
 | BUG/multiple (parallel) | Multiple independent bug fixes | Rally(Builder x N) > Radar |
 | REFACTOR/arch (parallel) | Multi-module refactoring | Atlas > Sherpa > Rally(Zen x N) > Radar |
 | SECURITY/full (parallel) | Static + dynamic parallel scan | Rally(Sentinel, Probe) > Builder > Radar |
 | TEST/coverage (parallel) | Unit + E2E parallel testing | Rally(Radar, Voyager) |
-| MODERNIZE/stack (parallel) | Multi-area modernization | Shift (detect+modernize) > Sherpa > Rally(Builder x N) > Radar |
+| MODERNIZE/stack (parallel) | Multi-area modernization | Lens > Shift (detect+modernize) > Sherpa > Rally(Builder x N) > Radar |
 | DOCS/full (parallel) | Code docs + diagrams + stories | Rally(Quill, Canvas, Vitrine) |
 
 > **Rally Escalation Criteria**: Rally is triggered when there are 2+ independent implementation steps, changes span 4+ files across 2+ domains, or Sherpa detects a `parallel_group`.
@@ -585,7 +588,7 @@ For large-scale tasks where parallel execution is beneficial, Nexus escalates to
 
 | Task | Description | Chain |
 |------|-------------|-------|
-| PROJECT/full | Full product from ambiguous goal | `Nexus deliver` (scope-adaptive lifecycle) |
+| PROJECT/full | Full product from ambiguous goal | Nexus[deliver] > Sherpa > Builder > Radar > Guardian > Launch |
 | PROJECT/mvp | MVP-focused delivery | `Nexus deliver` (minimum viable specialist chain) |
 
 > **Nexus build modes**: `feature` handles one bounded capability, `deliver` sizes a product/MVP chain to scope, and `apex` runs a high-investment discovery-to-ship workflow.
@@ -603,7 +606,7 @@ For large-scale tasks where parallel execution is beneficial, Nexus escalates to
 | Task | Description | Chain |
 |------|-------------|-------|
 | MESSAGING/bot | Bot development | Gateway > Builder > Radar |
-| MESSAGING/webhook | Webhook handler | Gateway > Builder > Radar |
+| WEBHOOK | Webhook handler | Gateway > Builder |
 | MESSAGING/realtime | Real-time communication | Gateway > Scaffold > Builder > Radar |
 | MESSAGING/multi-channel | Multi-channel integration | Gateway > Builder > Radar |
 

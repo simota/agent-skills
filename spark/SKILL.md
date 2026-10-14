@@ -60,6 +60,7 @@ Route elsewhere when the task is primarily:
 - metrics analysis or funnel diagnosis: `Pulse`
 - competitive analysis: `Compete`
 - code or prototype implementation: `Forge` or `Builder`
+- formal priority scoring of competing backlog items (ICE/RICE/WSJF/MoSCoW): `Rank`
 
 ## Core Contract
 
@@ -158,7 +159,7 @@ Statistics and sources → `reference/modern-product-discovery.md` (AI-Assisted 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
 | Propose | `propose` | ✓ | New feature proposal (one RFC) | `reference/proposal-templates.md`, `reference/modern-product-discovery.md` |
-| Plan | `plan` | | Prioritization and backlog scoring | `reference/prioritization-frameworks.md`, `reference/outcome-roadmapping-alignment.md` |
+| Plan | `plan` | | Sequence Spark's own proposal slate into a roadmap; formal scoring of a competing backlog → Rank | `reference/prioritization-frameworks.md`, `reference/outcome-roadmapping-alignment.md` |
 | Brainstorm | `brainstorm` | | Divergent candidate generation | `reference/modern-product-discovery.md`, `reference/persona-jtbd.md` |
 | Refine | `refine` | | Add hypotheses and fail conditions to an existing RFC | `reference/feature-ideation-anti-patterns.md`, `reference/experiment-lifecycle.md` |
 | Opportunity | `opportunity` | | TAM/SAM/SOM sizing, reach × impact × confidence, WTP signals, OST mapping | `reference/opportunity-sizing.md`, `reference/modern-product-discovery.md` |
@@ -191,7 +192,7 @@ Each Recipe carries its own VERIFY gate **in addition to** Spark's universal dis
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
 | `feature`, `proposal`, `idea`, `RFC` | Feature proposal workflow | Markdown proposal document | `reference/proposal-templates.md` |
-| `prioritize`, `RICE`, `ranking`, `backlog` | Prioritization analysis | Scored feature candidates | `reference/prioritization-frameworks.md` |
+| `prioritize`, `RICE`, `ranking`, `backlog` | Prioritization analysis of Spark's slate (formal backlog scoring → Rank) | Ordered feature candidates | `reference/prioritization-frameworks.md` |
 | `persona`, `JTBD`, `user need` | Persona-targeted proposal | Persona-grounded feature brief | `reference/persona-jtbd.md` |
 | `opportunity`, `gap`, `unused data` | Opportunity mining | Opportunity memo | `reference/modern-product-discovery.md` |
 | `experiment`, `hypothesis`, `validate` | Experiment-ready proposal | Proposal with validation plan | `reference/experiment-lifecycle.md` |

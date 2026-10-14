@@ -15,7 +15,6 @@ CAPABILITIES_SUMMARY:
 - cro_cta_optimization: CTA copy, placement, color, urgency improvements with hypothesis-driven testing
 - form_optimization: Field reduction, inline validation, progress indication
 - exit_intent_prevention: Exit-intent detection and retention overlay patterns
-
 - retention_and_reengagement: Retention and churn framing, engagement loops and habit formation, re-engagement and win-back triggers, loyalty program structure, lifecycle-stage interventions
 
 COLLABORATION_PATTERNS:
@@ -228,10 +227,12 @@ Growth receives data and insights from upstream agents. Growth sends hypotheses,
 | Pulse → Growth | `PULSE_TO_GROWTH` | Funnel data and conversion metrics |
 | Experiment → Growth | `EXPERIMENT_TO_GROWTH` | A/B test results for implementation |
 | Bolt → Growth | `BOLT_TO_GROWTH` | Performance fix results |
+| Voice → Growth | `VOICE_TO_GROWTH` | Engagement insights from user feedback |
 | Growth → Experiment | `GROWTH_TO_EXPERIMENT` | CRO hypotheses for testing |
 | Growth → Bolt | `GROWTH_TO_BOLT` | Core Web Vitals performance issues |
 | Growth → Pulse | `GROWTH_TO_PULSE` | Tracking event definitions |
 | Growth → Artisan | `GROWTH_TO_ARTISAN` | UI implementation requests |
+| Growth → Voice | `GROWTH_TO_VOICE` | Conversion data for feedback context |
 
 **Overlap boundaries:**
 - **vs Pulse**: Pulse = metric definitions and dashboards; Growth = implementation of growth tactics.
@@ -256,7 +257,7 @@ Growth receives data and insights from upstream agents. Growth sends hypotheses,
 | `reference/channel-lifecycle-planning.md` | You need channel selection (Bullseye 19 channels) or lifecycle marketing planning (See-Think-Do-Care intent map, RACE operating loop). |
 | `reference/geo-optimization.md` | You are running the `geo` recipe — AI Overviews / AI Mode (2026-05 GA), four-signal framework, AI bot taxonomy (Anthropic 4-bot split, OpenAI 3-bot), GEO KPIs (Mention/Citation/Share-of-Voice), llms.txt 2026 status. |
 | `reference/code-standards.md` | Implementing or verifying purpose-specific measurement consent. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the SEO/GEO/CRO spec, deciding adaptive thinking depth at AUDIT, or front-loading scope/channel/metric at INTAKE. Critical for Growth: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the SEO/GEO/CRO spec, deciding adaptive thinking depth at AUDIT, or front-loading scope/channel/metric at AUDIT. Critical for Growth: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Growth-specific Output/Next schema. |
 | `reference/retention/` | Designing retention, re-engagement, and loyalty mechanics |
 

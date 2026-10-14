@@ -200,6 +200,7 @@ Per-Recipe behavior — full technique lists and handoffs -> `reference/domain-p
 | `prioritize` | Critical/High/Medium/Low prioritization with bias detection |
 | `pairwise` | IPOG / IPOG-F or Orthogonal Array Testing for the smallest 2-way 100%-covering set. Output: test table + uncovered 3-way tuples + reduction ratio. Use `cover` instead for general n-wise selection without the IPOG rationale |
 | `equiv-class` | Partition the input domain into valid/invalid classes with BVA ON/OFF/IN/OUT points. **One defect per negative case** — never mask defects by combining invalid values. Use when axes are input ranges rather than enumerations |
+| `risk-cover` | Weight coverage by RPN (Severity × Occurrence × Detection), link to FMEA items, and select tests risk-first. Output: risk-ranked coverage set + residual-risk note |
 | `qa-scenario` | Manual QA scenarios for human testers and regulated audits — BVA, equivalence class, decision table, state transition, exploratory charter. Output: numbered procedures, traceability matrix, regression suite seed |
 
 
@@ -282,7 +283,7 @@ Agent, Status(SUCCESS|PARTIAL|BLOCKED|FAILED), Output(domain, axes_count, total_
 
 ## AUTORUN Support
 
-Emit `_STEP_COMPLETE` using `_common/AUTORUN.md` § Default Completion Schema; no skill-specific extension is required.
+Emit `_STEP_COMPLETE` using `_common/AUTORUN.md` § Default Completion Schema, extended with the Matrix-specific `Output` fields listed above.
 
 ## Nexus Hub Mode
 

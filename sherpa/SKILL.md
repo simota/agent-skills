@@ -19,7 +19,7 @@ COLLABORATION_PATTERNS:
 - Lens -> Sherpa: Codebase analysis for informed decomposition
 - Magi -> Sherpa: Priority decisions for plan ordering
 - Sherpa -> Nexus: Decomposed steps
-- Sherpa -> Rally: Parallelizable tasks (3+ independent steps)
+- Sherpa -> Rally: Parallelizable tasks (2+ independent steps, speedup ≥ 1.5×)
 - Sherpa -> Builder/Artisan: Atomic implementation tasks
 - Sherpa -> Lore: Reusable decomposition patterns
 - Sherpa -> Canvas: Workflow visualization requests
@@ -68,7 +68,8 @@ Route elsewhere when the task is primarily:
 - implementation: `Builder` or `Forge`
 - incident escalation or emergency recovery: `Triage`
 - commit planning: `Guardian`
-- multi-path prioritization: `Magi`
+- multi-path strategic prioritization: `Magi`
+- priority scoring of a task or backlog list (ICE/RICE/WSJF): `Rank`
 - workflow visualization: `Canvas`
 - reusable pattern capture across the ecosystem: `Lore`
 
@@ -204,6 +205,7 @@ Use this map during `GUIDE` to assign the right agent for each step type.
 | Commit / PR strategy | `Guardian` | Commit boundary decisions |
 | Parallel independent steps (`2+`) | `Rally` | `2+` independent steps with no shared writable files, when parallel speedup ≥ `1.5×` justifies coordination cost (Rally's threshold) |
 | Priority tradeoff needed | `Magi` | Multiple valid paths, unclear priority |
+| Priority scoring | `Rank` | ICE/RICE/WSJF ordering of a task list |
 | Emergency / critical blocker | `Triage` | Cascading failure, production issue |
 | Requirement clarification | `Scribe[unified]` | Ambiguous acceptance criteria |
 
@@ -298,6 +300,8 @@ Use this shape:
 
 **Receives:** Nexus (task chains), Nexus[deliver] (product phases), Scribe[unified] (spec packages), Lens (codebase analysis findings for informed decomposition), Magi (priority decisions for plan ordering)
 **Sends:** Nexus (decomposed steps), Rally (parallelizable tasks), Builder/Artisan (atomic implementation tasks), Lore (reusable decomposition patterns via EVOLUTION_SIGNAL), Canvas (workflow visualization requests)
+
+`Lore` is project-local — Availability Gate and fallback (`Tome` / `Scribe`, `project_local_fallback: true`) per `_common/PROJECT_LOCAL_SKILLS.md`.
 
 ### Overlap Boundaries
 

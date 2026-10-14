@@ -130,7 +130,7 @@ Why this is a defect:
 
 Engine outputs (for traceability — do NOT re-litigate):
 - Codex: [summary of codex finding, if any]
-- Gemini: [summary of agy finding, if any]
+- agy (Antigravity): [summary of agy finding, if any]
 - Claude Code: [summary of claude finding, if any]
 
 # Recommended action

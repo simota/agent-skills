@@ -28,7 +28,7 @@ Standard protocol for treating SKILL.md files, bundled scripts, MCP server defin
 | First-party skills in this repo (committed by repo owners) | **trusted** | normal code review |
 | Third-party skill from a known maintainer (verified) | **conditional** | `chain` intake checklist |
 | Third-party skill from `claudemarketplaces.com` or similar aggregator | **untrusted** | `chain` full audit + sandboxed first-use |
-| Skill pulled via `curl ... | bash`, `wget ... | sh`, or non-pinned `npm install` | **rejected** | block; require human approval to override |
+| Skill pulled via `curl ... \| bash`, `wget ... \| sh`, or non-pinned `npm install` | **rejected** | block; require human approval to override |
 | MCP server (any source) | **conditional** | hash-pin tool descriptions before first call |
 
 **Definition of "trusted":** the source's identity is cryptographically verifiable AND the artifact has not changed since the last audit AND the artifact's permissions match the declared capabilities.

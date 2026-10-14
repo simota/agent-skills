@@ -112,7 +112,9 @@ the two copies contradicted each other for as long as both existed.
 
 Per the classification rule in `guardrails.md`: **minor** = the step's goal is still reachable by a local fix
 → attempt the fix and continue; **major** = it is not → stop and reconsider. The percentages below are rough
-guidelines, not fixed thresholds.
+guidelines, not fixed thresholds. For triggers that also appear in `guardrails.md` § Auto-Recovery Actions
+(`test_failure` bands, `security_warning`, `breaking_change`, `type_error`), that table is the source of the
+action; the rows below cite it rather than restate it.
 
 **L1 — MONITORING**
 
@@ -127,7 +129,7 @@ guidelines, not fixed thresholds.
 
 | Trigger | Action |
 |---------|--------|
-| `test_failure` (minor — goal reachable by local fix; ~<20% guideline) | Auto-fix attempt → retest (max 3) |
+| `test_failure` (minor — goal reachable by local fix; ~<50% guideline) | Per `guardrails.md` § Auto-Recovery Actions (<20%: re-run, fix if obvious; 20-50%: inject Builder) → retest (max 3) |
 | `security_warning` (non-critical) | Add Sentinel scan |
 | `type_error` | Auto-fix attempt (max 2) |
 | `performance_regression` (minor; ~<10% guideline) | Log, optional Bolt |
@@ -137,8 +139,8 @@ guidelines, not fixed thresholds.
 
 | Trigger | Action |
 |---------|--------|
-| `test_failure` (major — goal not reachable by local fix; ~>50% guideline) | Rollback, re-decompose with Sherpa |
-| `breaking_change` | Pause, verify consumers (Ripple) |
+| `test_failure` (major — goal not reachable by local fix; ~>50% guideline) | Per `guardrails.md` § L3 Auto-Recovery Chains (Chain A 50-80%, Chain B >80%) |
+| `breaking_change` | Per `guardrails.md` § Auto-Recovery Actions: pause, verify with Atlas, require migration plan |
 | `security_critical` (High) | Pause, require Sentinel |
 | `merge_conflict` | Pause, resolve or escalate |
 | `build_failure` | Rollback, fix attempt (max 2) |

@@ -190,7 +190,8 @@ Empty slots collapse to one word (`unverified: none`) and are never dropped — 
 empty one look identical to a reader who has to search for it. Labels may be reworded to fit the
 response's language and register; **the order is fixed**, because the value here is positional. A
 reader learns one location once and stops scanning for it in every reply afterwards. Rotating the
-position of "what's next" between responses spends that saving on nothing.
+position of `decide:` (where a next action that needs the reader belongs) between responses spends
+that saving on nothing.
 
 `S` tier omits the block — a 1–3 line answer *is* the tail. Envelope formats (`_STEP_COMPLETE`,
 `NEXUS_HANDOFF`, `NEXUS_COMPLETE`) carry their own field order and are exempt.
@@ -246,7 +247,7 @@ table  >  bulleted list  >  numbered list  >  prose
 
 - At most one short header (often none).
 - Use a 3–5 row table or bullet list when ≥3 distinct items.
-- Close with the next action only if non-obvious.
+- A non-obvious next action goes in the `decide:` tail slot, not in a separate closing line.
 
 ### L tier (30–80 lines)
 

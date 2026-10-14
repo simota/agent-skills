@@ -115,7 +115,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Save data to `.vector/`.
 - Use explicit waits (not arbitrary timeouts).
 - Document each step.
-- Validate data against expected schema before extraction.
+- Validate extracted data against expected schema before saving.
 - Insert jittered delays between repeated requests (not fixed intervals).
 - Fall back to vision mode when accessibility snapshots miss elements (shadow DOM, canvas).
 - Check robots.txt and all opt-out signals (machine-readable and plain-text ToS) before scraping.

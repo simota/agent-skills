@@ -173,7 +173,7 @@ Per-Recipe behavior — full tool lists and handoff detail -> `reference/test-st
 | `load` | LOAD mode — throughput, latency, capacity, spike, soak. **Always report p50/p95/p99/max** |
 | `contract` | CONTRACT mode — consumer/provider contracts wired into the CI gate |
 | `chaos` | CHAOS mode — define steady state **first**, minimize blast radius, then inject faults. Always prepare a kill switch |
-| `mutation` | MUTATE mode — generate mutants, classify survivors, evaluate against coverage thresholds (60% project-wide, 75%+ recommended) |
+| `mutation` | MUTATE mode — generate mutants, classify survivors, evaluate against mutation-score thresholds (60% project-wide minimum, 75%+ recommended) |
 | `fuzz` | Coverage-guided fuzzing of parsers, decoders, security-sensitive surfaces. Always pair with a sanitizer, seed from a real corpus, minimize and dedupe crashes before reporting |
 | `property` | Invariant testing (round-trip, idempotent, monotonic, model-based). Compose generators from primitives, cap 100-1000 runs at PR tier, commit shrunk counter-examples as regression tests |
 | `concurrency` | Hunt invisible defects — races, memory and resource leaks, deadlocks, atomic-ordering bugs. Use when symptoms are flaky-only-under-load or sporadic CI failures. Output: defect class + reproduction trace + minimal repro + fix recommendation |

@@ -37,9 +37,11 @@ COLLABORATION_PATTERNS:
 - Pattern H: Echo[walkthrough] ↔ Echo[demand] — Demand-Validation Loop: demand hypotheses are checked against existing flows and refined without becoming real evidence
 - Pattern I: Echo → Canon — WCAG 3.0 Silver/Gold: cognitive walkthrough output → standards compliance evidence
 - Pattern J: Cast/Field/Voice → Echo[demand] → Spark/Rank — Synthetic Demand Pipeline
+- Pattern K: Echo ↔ Field — Persona Generation: Echo drafts persona from code/docs → Field validates with real data → Echo refines
+- Pattern L: Vector → Echo → Canvas — Visual Review: screenshots → persona visual review → visual journey map
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Field (persona data), Voice (real feedback), Pulse (quantitative metrics), Cast (synthetic personas)
+- INPUT: Field (persona data), Voice (real feedback), Pulse (quantitative metrics), Cast (synthetic personas), Vector (captured screens for visual review)
 - OUTPUT: Palette (interaction fixes), Experiment (A/B hypotheses), Growth (CRO), Canvas (visualization), Spark (feature ideas), Rank (priority input), Scribe (requirements), Field (validation), Scout (bug investigation), Muse (design tokens), Cast (persona evolution data), Canon (WCAG 3.0 Silver/Gold evidence)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Dashboard(H) Mobile(H) CLI(M)
@@ -180,7 +182,7 @@ Load-bearing caps that must hold regardless of Recipe: ≤1-4 tasks per session,
 | `a11y`, `accessibility` | Accessibility persona walkthrough | Accessibility audit | `reference/ux-frameworks.md` |
 | `predictive`, `pre-launch` | Predictive friction detection | Risk signal report | `reference/ux-frameworks.md` |
 | `multi-engine`, `tri-engine walkthrough`, `parallel persona walkthrough`, `cross-engine UX`, `multi`, `persona × engine matrix` | Tri-engine cognitive walkthrough | Persona × engine × step matrix report with cross-persona-universal findings | `reference/tri-engine-walkthrough.md` |
-| `council`, `persona council`, `persona contract`, `multi-persona evaluation`, `disqualification check`, `persona weight matrix` | Persona Council evaluation (machine-readable Contract + no-opinion + behavior trace + disqualification triggers) | Council evaluation report per persona with PASS/FAIL + behavior trace + correction proposals | (inline in Subcommand Dispatch) + `reference/cognitive-persona-model.md` |
+| `council`, `persona council`, `persona contract`, `multi-persona evaluation`, `disqualification check`, `persona weight matrix` | Persona Council evaluation (machine-readable Contract + no-opinion + behavior trace + disqualification triggers) | Council evaluation report per persona with PASS/FAIL + behavior trace + correction proposals | `reference/council-mode.md` + `reference/cognitive-persona-model.md` |
 | `feature request`, `unmet need`, `synthetic demand`, `switch interview`, `JTBD`, `5 whys`, `opportunity solution tree` | Synthetic demand generation | Tagged demand report + validation handoff | `reference/demand-subcommand-behavior.md` |
 
 ## Output Requirements
@@ -237,7 +239,7 @@ Full algorithm, JSON schema, CLUSTER identity rules, GROUND checks, prompt skele
 | `reference/process-workflows.md` | The 6-step daily process, simulation standards, multi-engine mode, or AUTORUN/NEXUS_HANDOFF formats. |
 | `reference/analysis-frameworks.md` | Persona generation, context-aware simulation, or service-specific review. |
 | `reference/output-templates.md` | Report formats (emotion, cognitive, JTBD, behavioral, visual review, a11y). |
-| `reference/collaboration-patterns.md` | Agent handoff templates (6 patterns). |
+| `reference/collaboration-patterns.md` | Agent handoff templates (Patterns A–F, K, L). |
 | `reference/cognitive-persona-model.md` | The CPM framework: 6 dimensions, cross-dimension interactions, consistency verification. |
 | `reference/question-templates.md` | Interaction trigger YAML templates. |
 | `reference/visual-review.md` | Visual review mode detailed process. |
@@ -256,7 +258,7 @@ Full algorithm, JSON schema, CLUSTER identity rules, GROUND checks, prompt skele
 | `_common/SUBAGENT.md` | Base MULTI_ENGINE protocol — engine dispatch, loose prompts, fan-out mechanics, fallbacks. Read before authoring `multi` subagent prompts. |
 | `_common/MULTI_ENGINE_RECIPE.md` | Cross-skill protocol — Pattern D/C/H selection, SCOPE/PREFLIGHT/FAN-OUT/NORMALIZE/CLUSTER, attribution tags. Echo applies Pattern H. |
 | `_common/UX_TRENDS_2026.md` | 2025-2026 evidence — NN/g IA studies, WCAG 2.2 motion a11y, agentic UX failure modes, dark-mode/hamburger anti-patterns. Read §2, §1. |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the walkthrough report, deciding adaptive thinking depth at persona/method selection, or front-loading persona/UI/method at PLAN. Critical for Echo: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the walkthrough report, deciding adaptive thinking depth at persona/method selection, or front-loading persona/UI/method at PRE-SCAN. Critical for Echo: P3, P5. |
 | `_common/IMAGE_INPUT.md` | A UI screenshot is the input — run the image pipeline (describe-first, task-frame, region enumeration, observed-vs-inferred) before walking. |
 | `_common/PROOF_CARRYING.md` v3.1 | You define the `ux_task_proof` persona set for `nexus acceptance` Phase 3B (standard/returning/impatient/mobile/screen-reader/slow-net/payment-fail/locale-edge/adversarial). Each persona needs a non-trivial walkthrough log — empty findings without one are rejected. v4: `council` Persona Contract + Org-Tier cap. |
 | `_common/GROWTH_BRAND_PROOF.md` | You feed `council` output to `nexus growth-acceptance` Phase 0 for Persona Proof; Friction Ledger entries (writer role, G11) capture UI moments at second-grain. |

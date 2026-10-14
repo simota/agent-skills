@@ -211,7 +211,7 @@ Use `_common/CLI_COMPATIBILITY.md`'s canonical spawn/capture template once per s
 ## Cross-References
 
 - `codex-review-usage.md` — how `review-codex` subagent invokes Codex
-- `antigravity-review-usage.md` — how `review-agy` subagent invokes Gemini
+- `antigravity-review-usage.md` — how `review-agy` subagent invokes agy (Antigravity)
 - `claude-review-usage.md` — how `review-claude` subagent invokes Claude
 - `codex-integration.md` — severity override rules, report template, multi-agent verification rationale
 - `review-anti-patterns.md` — why filtering noise matters more than maximizing recall

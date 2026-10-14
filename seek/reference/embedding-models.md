@@ -77,7 +77,7 @@ START
 
 | Metric | Formula | Best For | Normalized |
 |--------|---------|----------|-----------|
-| Cosine | 1 - (a·b)/(|a||b|) | General text similarity | Yes (0-2) |
+| Cosine | 1 - (a·b)/(‖a‖‖b‖) | General text similarity | Yes (0-2) |
 | L2 (Euclidean) | sqrt(Σ(a-b)²) | Dense clusters | No |
 | Inner Product | -a·b | Pre-normalized vectors | Depends |
 

@@ -98,7 +98,7 @@ Agent boundaries → `_common/BOUNDARIES.md` · disambiguation → `reference/ag
 - Route to `Orbit`, `Lore`, or `Darwin` when neither project-local installation path exists.
 - Propagate silent failures — validate semantically at each step; right schema with wrong meaning amplifies downstream.
 - Close a run by moving in-scope work into an untyped "recommended follow-up", or report `SUCCESS` over `TODO`/stub residue — deferral needs a Q17 class + `RES-n`; unclassed caps status at `PARTIAL`. Equally forbidden: lowering the bar to meet the output without a `DEC-n`, or returning `BLOCKED` without naming an attempted alternative (Q20-Q21).
-- Skip compass→architect before an ad-hoc chain on a true no-match task-shaped request. Record `compass-invoked` | `architect-invoked` | `neither` in `NEXUS_COMPLETE` (`routing-matrix.md` § LADDER). Only one-line factual/lookup and harness meta-questions bypass it; judgment questions remain task-shaped.
+- Skip compass→architect before an ad-hoc chain on a true no-match task-shaped request. Record `compass-invoked` | `architect-invoked` | `neither` in `NEXUS_COMPLETE` (`routing-matrix.md` § Classify Flow (LADDER)). Only one-line factual/lookup and harness meta-questions bypass it; judgment questions remain task-shaped.
 
 ## Modes
 
@@ -112,7 +112,7 @@ Agent boundaries → `_common/BOUNDARIES.md` · disambiguation → `reference/ag
 | `## NEXUS_INTERACTIVE` | `Interactive` | Confirm every step |
 | `## NEXUS_HANDOFF` | `Continue` | Integrate agent results and continue the chain |
 
-**Triggers:** `/Nexus` with no arguments → proactive mode (`reference/proactive-mode.md`); `## NEXUS_ROUTING` → **Nexus Hub Mode**. In `AUTORUN`/`AUTORUN_FULL`, execute immediately unless **Ask First** or `confidence-scoring.md` Part 2 requires confirmation.
+**Triggers:** `/Nexus` with no arguments → proactive mode (`reference/proactive-mode.md`); `## NEXUS_ROUTING` → **Nexus Hub Mode**. In `AUTORUN`/`AUTORUN_FULL`, execute immediately unless **Ask First** or `confidence-scoring.md` § Decision Thresholds or § Reversibility and Safety Overrides requires confirmation.
 
 **Phase contract:** `AUTORUN_FULL` = `PLAN → PREPARE → CHAIN_SELECT → SPECIFY? → EXECUTE → AGGREGATE → VERIFY → DELIVER`; `AUTORUN` = `CLASSIFY → CHAIN_SELECT → SPECIFY? → EXECUTE_LOOP → VERIFY → DELIVER`. `SPECIFY?` is gated — `reference/specify-phase.md`.
 

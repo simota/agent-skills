@@ -14,7 +14,7 @@ This file answers "which direction, and why" for Apple-platform work. It does no
 | "Is this flow usable — tap targets, error recovery, cognitive load?" | `palette/` |
 | "What icon style/weight fits this direction?" | `ink/` |
 
-Rule of thumb: if the answer is a rule ("minimum touch target is 44×44pt"), it lives in `ios-hig.md`. If the answer is a judgment call ("should this app use Liquid Glass chrome or stay flat"), it lives here. Vision reads this file during `ENVISION`; it hands the chosen direction to Native for HIG-compliant implementation.
+Rule of thumb: if the answer is a rule ("minimum touch target is 44×44pt"), it lives in `native/reference/ios-hig.md`. If the answer is a judgment call ("should this app use Liquid Glass chrome or stay flat"), it lives here. Vision reads this file during `ENVISION`; it hands the chosen direction to Native for HIG-compliant implementation.
 
 ---
 

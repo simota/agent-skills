@@ -43,7 +43,7 @@ One entry per confirmed debt. Symptom and interest are **required** — a catego
 
 ```yaml
 debt_id: HD-0042
-category: stale-documentation      # from the catalog above
+category: HD-DOC                   # from the catalog above
 asset: nexus/reference/routing-matrix.md
 symptom:
   - router selects a deprecated recipe for migration tasks
@@ -127,7 +127,7 @@ of a past one.
 | Derived asset | Source (authoritative) | Rule | Freshness check |
 |---------------|------------------------|------|-----------------|
 | `compass/reference/recipes-directory.md` | each `SKILL.md` `## Recipes` table | `_common/scripts/generate-recipes-directory.py` | re-run; diff must be empty |
-| Every skill-count claim (`README.md`, `CLAUDE.md`, `AGENTS.md`, `_common/SKILL_PACKS.md`, `_common/RECIPES.md`, `compass/SKILL.md`, `compass/reference/cache-format.md`, `nexus/reference/task-battery.md`) | the skill directory listing | manual restatement | `ls -d */ \| grep -v '^_' \| wc -l` equals every stated number |
+| Every skill-count claim (`README.md`, `CLAUDE.md`, `AGENTS.md`, `_common/SKILL_PACKS.md`, `_common/RECIPES.md`, `compass/SKILL.md`, `compass/reference/cache-format.md`, `nexus/reference/task-battery.md`) | the skill directory listing | manual restatement | `ls -d */SKILL.md \| wc -l` equals every stated number |
 | `nexus/SKILL.md` Recipe Registry allowlist | `nexus/reference/recipes-index.md` Subcommand column | manual restatement | the two token sets are equal |
 | `CAPABILITIES_SUMMARY` block in each `SKILL.md` | that skill's own body | manual restatement | every summarized capability is still claimed in the body |
 | `.claude/compass-cache.md` | `compass/reference/catalog.md` | `/compass refresh` | regenerate rather than hand-edit |
@@ -139,7 +139,7 @@ register because it retires every row at once. Each states what removes the valu
 | Derived asset | Delete route (action → proof) |
 |---------------|------------------------------|
 | `compass/reference/recipes-directory.md` | re-run the generator after the `## Recipes` row is gone → the recipe token is absent from the output |
-| Every skill-count claim | re-count and restate in the same change → `ls -d */ \| grep -v '^_' \| wc -l` equals every stated number again |
+| Every skill-count claim | re-count and restate in the same change → `ls -d */SKILL.md \| wc -l` equals every stated number again |
 | `nexus/SKILL.md` Recipe Registry allowlist | drop the token from `recipes-index.md` first, then the allowlist → the two token sets are equal and neither contains it |
 | `CAPABILITIES_SUMMARY` block | remove the entry when the body stops claiming it → no summarized capability lacks a body claim |
 | `.claude/compass-cache.md` | `/compass refresh` after the catalog entry is gone → regenerated cache does not name it |

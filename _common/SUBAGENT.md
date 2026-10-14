@@ -115,7 +115,7 @@ Use the available native spawn API, or a documented headless CLI inside its appr
 
 #### Fallback Rule
 
-Use the Degraded Modes in `_common/MULTI_ENGINE_RECIPE.md`. Same-engine independent sessions may provide additional perspectives but never count as missing engines or acquire their provenance tags. Report missing independent verification instead of simulating it.
+Use § Engine Availability Modes in `_common/MULTI_ENGINE_RECIPE.md`. Same-engine independent sessions may provide additional perspectives but never count as missing engines or acquire their provenance tags. Report missing independent verification instead of simulating it.
 
 #### Merge Strategies for Multi-Engine
 

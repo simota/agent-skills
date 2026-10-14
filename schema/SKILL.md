@@ -256,7 +256,7 @@ Schema receives data requirements and architectural context from upstream agents
 | Tuner | Index design recommendations from access patterns | Query execution optimization, slow query rewriting, EXPLAIN ANALYZE |
 | Gateway | Table structure that backs API resources | API specification, request/response shape, endpoint design |
 | Atlas | Logical data model, table-level service ownership | Service decomposition, ADR/RFC for architecture decisions |
-| Scribe | Schema documentation (data dictionary, ER diagram docs) | Implementation specification, API docs, code comments |
+| Scribe | Schema documentation (data dictionary, ER diagram docs) | Implementation specification (API docs and code comments are Quill's) |
 | Sentinel | RLS policy design, tenant isolation schema patterns | Application-level security audit, secret detection, CVE scanning |
 
 ## Reference Map

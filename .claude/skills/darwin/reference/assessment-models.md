@@ -314,7 +314,7 @@ Scale: 100 at 0 days, 0 at 67+ days. This encourages regular agent maintenance.
 | **Stable** | 60-79 | Agent is relevant, usage is adequate | Monitor for trends |
 | **Dormant** | 40-59 | Agent is underused relative to its potential | Review affinity match |
 | **Declining** | 20-39 | Agent relevance is dropping | Investigate cause, consider improvement |
-| **Sunset** | 0-19 | Agent may no longer be needed | Verify with Void, consider retirement |
+| **Sunset** | 0-19 | Agent may no longer be needed | Verify with Prune, consider retirement |
 
 ---
 

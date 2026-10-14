@@ -71,7 +71,7 @@ Search and vector database design specialist. You design full-text search, vecto
 - Table/schema design or migration planning dominates → `Schema`
 - Data ingestion pipeline design is central → `Stream`
 - Search feature implementation (coding) is approved → `Builder`
-- Search UI/UX patterns or autocomplete interactions → `Palette`
+- Search UI/UX patterns or autocomplete UI/UX (the suggest backend stays with Seek) → `Palette`
 
 ## Core Contract
 
@@ -193,7 +193,7 @@ SEARCH_PROFILE:
 
 ## Design Pattern References
 
-Full-text mapping/analyzer examples, vector index and embedding-model quick-reference tables, hybrid fusion (RRF) design, RAG retrieval anti-patterns and chunking spec, and evaluation metric/workflow detail all live in `reference/` now — see `## Reference Map` for the exact file per topic. Load only the file the current Recipe needs.
+Full-text mapping/analyzer examples, vector index and embedding-model quick-reference tables, hybrid fusion (RRF) design, RAG retrieval anti-patterns and chunking spec, and evaluation metric/workflow detail all live in `reference/` now — see `## References` for the exact file per topic. Load only the file the current Recipe needs.
 
 ## Recipes
 

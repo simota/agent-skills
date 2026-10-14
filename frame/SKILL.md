@@ -22,20 +22,23 @@ CAPABILITIES_SUMMARY:
 - w3c_dtcg_alignment: Align token exports with W3C DTCG 2025.10 stable specification (theming, multi-brand, Display P3/Oklch) for cross-tool interoperability
 
 COLLABORATION_PATTERNS:
-  Frame -> Muse: token map and variable definitions for design token management
-  Frame -> Forge: design context handoff for rapid prototyping
-  Frame -> Artisan: component hierarchy and Code Connect mappings for production implementation
-  Frame -> Builder: structured design data and API schemas for backend integration
-  Frame -> Schema: data model hints extracted from design patterns
-  Frame -> Canvas: design structure for diagram generation
-  Frame -> Vision: extracted design audit data for creative direction
-  Frame <-> Vitrine: bidirectional Code Connect sync and visual regression baseline
-  Vitrine -> Frame: stale mapping alerts and visual diff requests
-  Vision -> Frame: design direction requiring Figma extraction
-  Forge -> Frame: rendered UI for code-to-Figma canvas write via use_figma
-  Muse -> Frame: token definitions requiring Figma variable verification
+- Frame -> Muse: token map and variable definitions for design token management
+- Frame -> Forge: design context handoff for rapid prototyping
+- Frame -> Artisan: component hierarchy and Code Connect mappings for production implementation
+- Frame -> Builder: structured design data and API schemas for backend integration
+- Frame -> Schema: data model hints extracted from design patterns
+- Frame -> Canvas: design structure for diagram generation
+- Frame -> Vision: extracted design audit data for creative direction
+- Frame -> Vitrine: Code Connect sync and visual regression baseline
+- Vitrine -> Frame: stale mapping alerts and visual diff requests
+- Vision -> Frame: design direction requiring Figma extraction
+- Forge -> Frame: rendered UI for code-to-Figma canvas write via use_figma
+- Muse -> Frame: token definitions requiring Figma variable verification
 
-BIDIRECTIONAL_PARTNERS: INPUT=User,Nexus,Vision,Vitrine,Muse,Forge | OUTPUT=Muse,Forge,Artisan,Builder,Schema,Vision,Vitrine,Canvas
+BIDIRECTIONAL_PARTNERS:
+- INPUT: User (extraction requests), Nexus (routed tasks), Vision (design direction), Vitrine (stale mapping alerts, visual diff requests), Muse (token definitions to verify), Forge (rendered UI for canvas write)
+- OUTPUT: Muse (token map), Forge (design context), Artisan (component hierarchy, Code Connect), Builder (design data, API schemas), Schema (data model hints), Vision (design audit data), Vitrine (Code Connect sync, baselines), Canvas (design structure)
+
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Dashboard(H) Mobile(H) Static(M) Library(M)
 -->
 
@@ -138,8 +141,6 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 `CONNECT -> SURVEY -> EXTRACT -> PACKAGE -> DELIVER`
 
-Execution loop: `SURVEY -> PLAN -> VERIFY -> PRESENT`
-
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
 | `CONNECT` | verify MCP, identity, and budget | `whoami` first | `reference/figma-mcp-server-ga.md` |
@@ -222,7 +223,7 @@ Published limits depend on both plan and seat; connection, per-minute/day/month 
 - Code Connect mappings older than `30` days are stale — flag them.
 - Figma documents specific exempt examples, including `whoami`, `add_code_connect_map`, and `generate_figma_design`; never infer that every write tool is exempt. Generation remains ask-first.
 - `whoami` and `generate_figma_design` are remote-only in GA; desktop plugin mode may need an alternative connection check.
-- `use_figma` requires Figma's official skills (`/figma-use`) for correct sequencing; Full and Dev seats only outside drafts (Dev seats read-only outside drafts).
+- `use_figma` requires Figma's official skills (`/figma-use`) for correct sequencing; Full seats can write anywhere; Dev seats can write only in drafts (read-only outside drafts).
 - Claude Code may fail above `25,000` tokens; set `MAX_MCP_OUTPUT_TOKENS=50000`+ when needed.
 
 ## Quality Guardrails
@@ -262,7 +263,7 @@ When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical
 | `muse/reference/design-system-context.md` | You need the contract format for handing extracted design context to downstream agents — Component Contract and Token Context fields, not just raw structural data. |
 | `_common/ASSET_PROVENANCE.md` | You extract image assets from Figma bound for publication — rights, license, and generation-log discipline before handoff. |
 | `_common/UX_TRENDS_2026.md` | Cross-vendor token context — DTCG 2025.10, OKLCH/P3 pipelines, Schema 2025 / Code Connect lineage. Read §1 Design. |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the handoff packet, adaptive thinking depth at SCOPE, front-loading consumer/file scope at SCAN. Critical: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the handoff packet, adaptive thinking depth and front-loading consumer/file scope at SURVEY. Critical: P3, P5. |
 | `_common/IMAGE_INPUT.md` | Reading a screenshot or raw image as input — apply RECOGNIZE→PARSE (describe-first, region enumeration, observed-vs-inferred) before relaying downstream. |
 | `_common/PROOF_CARRYING.md` | You own Design-Code Contract enforcement in `nexus acceptance` Phase 2B / 4B — G9 Swiss-Cheese 4-layer detection (AST + Storybook + Runtime DOM + Code Connect), all 4 required before `component_proof` is Gate-blocking; contract changes are themselves Proof-Carrying; v1/v2 coexistence ≤6 months. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Frame-specific Output/Next schema. |

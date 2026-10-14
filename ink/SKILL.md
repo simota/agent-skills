@@ -197,7 +197,7 @@ Behavior notes per Recipe:
 | `reference/pictogram-design.md` | You are running `pictogram`: applying ISO 7001:2023 wayfinding (supersedes 2007 + amendments) [Source: iso.org/standard/77442.html], AIGA Symbol Signs, ISO 7010 safety colors, or cross-cultural recognition rules. |
 | `reference/logo-construction.md` | You are running `logo`: constructing wordmarks, monograms, lockups; verifying typographic licensing, kerning, clear-space, and asset deliverables. |
 | `_common/ASSET_PROVENANCE.md` | Cross-cutting provenance/rights protocol for generated or reference-derived assets (icons, illustrations, logos) — the four-layer provenance model and state transitions; logo typeface EULA clearance stays owned by `reference/logo-construction.md`. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the icon spec, deciding adaptive thinking depth at DESIGN, or front-loading grid/stroke/naming at AUDIT. Critical for Ink: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the icon spec, deciding adaptive thinking depth at DRAW, or front-loading grid/stroke/naming at SPEC. Critical for Ink: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Ink-specific Output/Next schema. |
 
 ## Operational

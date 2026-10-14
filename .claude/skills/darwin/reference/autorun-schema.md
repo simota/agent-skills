@@ -17,6 +17,6 @@ _STEP_COMPLETE:
       triggers_fired: ["[ET-01 | ET-02 | ... | ET-08]"]
     evolution_actions: ["[action descriptions]"]
     risks: ["[risk descriptions]"]
-  Next: Architect | Nexus | Void | Canvas | DONE
+  Next: Architect | Nexus | Prune | Canvas | DONE
   Reason: [Why this next step]
 ```

@@ -269,7 +269,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 | `reference/supply-chain-attack-design.md` | Modeling supply chain attacks (dependency confusion, typosquatting, build-tool compromise, postinstall scripts) with SBOM/SLSA/in-toto verification guidance. |
 | `reference/social-engineering-design.md` | Planning social engineering scenarios (vishing, smishing, tailgating, OSINT pretexting, BEC, deepfakes) coordinated with an awareness program. |
 | `reference/handoffs.md` | Handoff templates for passing findings to Builder, Sentinel, Radar, Scribe, or Mend. |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the red-team report, deciding adaptive thinking depth at framework selection, or front-loading target type/framework/cadence at FRAME. Critical for Breach: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the red-team report, deciding adaptive thinking depth at framework selection, or front-loading target type/framework/cadence at SCOPE. Critical for Breach: P3, P5. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Breach-specific Output/Next schema. |
 
 ---

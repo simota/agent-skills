@@ -319,12 +319,12 @@ exists today, and no workaround inside this repo substitutes for them.
 
 All three are formulas defined in `_common/HARNESS_EVOLUTION.md` and
 `nexus/reference/context-strategy.md` with zero implementing code anywhere in the repo
-(`grep -rl "CES\|TES\|UQS" **/*.py` returns nothing).
+(`grep -rlw "CES\|TES\|UQS" --include=*.py .` returns nothing).
 
-- **TES** (`output_information_tokens / total_tokens_consumed`, HARNESS_EVOLUTION.md:55) —
+- **TES** (`output_information_tokens / total_tokens_consumed`, `HARNESS_EVOLUTION.md` § Metrics Definitions) —
   no code computes `output_information_tokens`; it is not a field this repo's transcripts
   expose or derive.
-- **UQS** (`Σ (normalized_agent_score × weight)`, HARNESS_EVOLUTION.md:56) — depends on
+- **UQS** (`Σ (normalized_agent_score × weight)`, `HARNESS_EVOLUTION.md` § Metrics Definitions) — depends on
   per-agent evaluator scores that are never persisted, so it has no data source today.
 - **The 70% context-usage trigger** (`nexus/reference/context-strategy.md:200`,
   `handoff` fallback trigger at `:221`) — no counting mechanism exists to know current
@@ -333,7 +333,7 @@ All three are formulas defined in `_common/HARNESS_EVOLUTION.md` and
 
 **Disposition: applied.** All three items below are now in the corpus — the 70% trigger is gone
 from `nexus/reference/context-strategy.md:200`, and `HARNESS_EVOLUTION.md` marks TES
-`specified, not implemented`, drops it from the grading band, and removes it from the
+`specified, not implemented`, drops it from the grading band (UQS is likewise marked, its bands labelled not a measured gate), and removes it from the
 `CES/TES` rollback and evaluation-ladder thresholds. What follows is the reasoning, kept
 because the *rule* it establishes outlives the three fixes: **a formula with no data source
 is never presented with a grade band or wired into a gate.** Re-apply it to the next metric,

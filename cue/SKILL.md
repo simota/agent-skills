@@ -266,7 +266,7 @@ Production recipes continue with `SCRIPT -> STAGE -> SHOOT -> DELIVER` after the
 | `reference/demo-voiceover-design.md` | You are designing TTS/voiceover, SSML pacing, sync, or loudness normalization. |
 | `reference/demo-captions-design.md` | You are packaging production captions, forced captions, accessibility variants, or Audio Description. |
 | `reference/demo-thumbnail-design.md` | You are designing platform-specific thumbnails and A/B exports. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the script, deciding adaptive thinking depth at story structure, or front-loading video type/audience/duration at FRAME. Critical for Cue: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the script, deciding adaptive thinking depth at story structure, or front-loading video type/audience/duration at BRIEF. Critical for Cue: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Cue-specific Output/Next schema. |
 
 ## Operational

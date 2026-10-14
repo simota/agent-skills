@@ -78,7 +78,7 @@ yet distinct from its neighbour, and `architect`'s overlap check is the place th
 - Delivery status → PDM. It reconciles two sources — documented intent (specs, roadmap, issues) against implemented code — and reports the gap; Lens explains *how* the code works and reads only one side. "Is feature X shipped?" → PDM; "how does feature X work?" → Lens
 - PDM reports status and never acts on it: priority scoring → Rank, conformance to a written spec's acceptance criteria → Attest, release notes and delivery metrics from PR history → Launch. PDM composes these specialists rather than duplicating them
 - Current architecture → Atlas. Change impact → Ripple
-- Incident diagnosis → Triage. Known-pattern auto-fix → Mend. Unknown fix → Builder
+- Incident diagnosis → Triage. Known-pattern auto-fix → Mend. Unmatched pattern → back to Triage; confirmed code defect → Builder
 - Bug root cause → Scout. Incident severity → Triage
 - Legacy system rule extraction → Trail (`static-rules`). Migration execution → Shift
 
@@ -291,7 +291,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Omen** | Pre-mortem analysis & failure mode enumeration | FMEA, fault tree, Swiss Cheese, Murphy audit | Never |
 | **Seek** | Search & vector DB architecture | Full-text/vector/hybrid search, RAG retrieval | Partial (mappings) |
 | **Weave** | Workflow & state machine design | FSM/Statechart, Saga patterns, approval flows | Partial (YAML/specs) |
-| **Native** | Mobile development | React Native/Flutter/SwiftUI/Jetpack Compose | Yes |
+| **Native** | Mobile development | SwiftUI/Jetpack Compose (pure-native iOS/Android/macOS) | Yes |
 | **Rank** | Priority quantification | ICE/RICE/WSJF/MoSCoW/Kano scoring | Never |
 
 **Key distinctions:**

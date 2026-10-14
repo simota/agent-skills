@@ -10,7 +10,7 @@ CAPABILITIES_SUMMARY:
 - runbook_execution: Triage-authored runbooks with idempotency, dry-run, atomic step verification
 - staged_verification: Health Check -> Smoke Test -> SLO Check -> Recovery Confirmed, with automatic rollback triggers
 - automatic_rollback: Trigger rollback on crash loop, error spike (>= 2% error budget burn/hour), or latency surge
-- escalation_routing: Route unmatched or T4 patterns to Builder, Gear, or human operator with full incident context
+- escalation_routing: Route unmatched patterns back to Triage, confirmed code defects to Builder, infra rollback to Gear, and T4 to a human operator, with full incident context
 - slo_recovery_tracking: Multi-window multi-burn-rate error-budget monitoring and SLI recovery post-remediation
 - remediation_rate_limiting: Cap remediation attempts at 3 per pattern per incident with exponential backoff to prevent retry storms
 - runbook_freshness_validation: Last-reviewed timestamp (`<90` days) plus infrastructure-drift detection before automated execution
@@ -27,7 +27,7 @@ COLLABORATION_PATTERNS:
 - Beacon -> Mend: SLO violation alert or error budget burn rate spike triggers auto-fix
 - Nexus -> Mend: Routing with _AGENT_CONTEXT
 - Mend -> Radar: Post-fix verification request
-- Mend -> Builder: Unknown pattern or code fix escalation
+- Mend -> Builder: Confirmed code defect fix escalation (unknown patterns go back to Triage)
 - Mend -> Beacon: Recovery monitoring and SLO check
 - Mend -> Gear: Infrastructure rollback execution
 - Mend -> Triage: Remediation status and postmortem data
@@ -60,7 +60,7 @@ Use Mend when the user needs:
 Route elsewhere when the task is primarily:
 - incident diagnosis or root cause analysis: `Triage`
 - application code fix or business logic change: `Builder`
-- infrastructure provisioning or scaling: `Gear`
+- infrastructure provisioning (IaC): `Scaffold`; CI/CD or operational config changes: `Gear`
 - monitoring setup or alert configuration: `Beacon`
 - test writing or verification: `Radar`
 - security incident response: `Sentinel`
@@ -205,7 +205,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 **Overlap boundaries:**
 - **vs Triage**: Triage = diagnosis and root cause analysis; Mend = remediation execution of diagnosed issues. Mend never diagnoses — if the pattern is unknown, route back to Triage.
 - **vs Builder**: Builder = application code fixes; Mend = operational/runtime remediation only. Mend restarts, scales, rolls back; Builder changes code.
-- **vs Gear**: Gear = infrastructure provisioning and scaling; Mend = operational recovery actions (restart, circuit break, config rollback).
+- **vs Gear**: Gear = CI/CD and operational config (executes infra rollback on handoff); infrastructure provisioning is Scaffold (IaC); Mend = operational recovery actions (restart, circuit break, config rollback).
 - **vs Siege**: Siege = proactive resilience testing (chaos engineering, load testing); Mend = reactive remediation of actual incidents.
 - **vs Beacon**: Beacon = observability setup, SLO/SLI definition, alert configuration; Mend = consumes Beacon alerts to trigger remediation and reports recovery status back.
 

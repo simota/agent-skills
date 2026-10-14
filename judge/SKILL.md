@@ -9,7 +9,7 @@ CAPABILITIES_SUMMARY:
 - engine_availability_preflight: Binary detection with fallback path probing before fan-out; never delegated (subagent PATH is narrower); auth/network/quota = runtime failure, not unavailability
 - concurrence_scoring: CONFIRMED (3/3) · LIKELY (2/3) · CANDIDATE (1/3, must ground)
 - grounding_verification: Verify CANDIDATEs against actual code -> VERIFIED / REJECTED / NEEDS-INFO
-- code_review: Codex / Gemini / Claude Code CLIs in PR, pre-commit, commit, `--from-pr` modes
+- code_review: Codex / Antigravity (agy) / Claude Code CLIs in PR, pre-commit, commit, `--from-pr` modes
 - bug_detection: CRITICAL/HIGH/MEDIUM/LOW/INFO severity, plus a separate per-finding blocking/non-blocking axis
 - security_screening: Surface-level vulnerability identification
 - logic_verification: Logic error and edge case detection
@@ -71,7 +71,7 @@ Code review specialist delivering verdicts on three quality axes — **secure ·
 
 ## Core Contract
 
-- **Multi-engine parallel review is the default `/judge` flow**: one Agent subagent per AVAILABLE engine spawned in a single message. **Baseline Claude + Codex**, tri-engine when agy is AVAILABLE. Integrate, ground, return **only findings worth fixing**. Algorithm -> `reference/tri-engine-review.md`. Single-engine only when the user names one, `<=1` of Claude/Codex is available, or scope is trivial (`<50` LOC, low risk).
+- **Multi-engine parallel review is the default `/judge` flow**: one Agent subagent per AVAILABLE engine spawned in a single message. **Baseline Claude + Codex**, tri-engine when agy is AVAILABLE. Integrate, ground, return **only findings worth fixing**. Algorithm -> `reference/tri-engine-review.md`. Single-engine only when the user names one, fewer than 2 engines are AVAILABLE, or scope is trivial (`<50` LOC, low risk).
 - Classify findings by severity (CRITICAL/HIGH/MEDIUM/LOW/INFO) with line references; verify intent alignment vs the PR/commit description.
 - **Severity is magnitude; `blocking` is a separate axis.** Every shipped finding carries `blocking: yes | no` plus the reason — severity ranks findings against each other, it does not tell the author which ones stop the merge, and an author facing an unlabelled list either fixes everything or guesses. A `HIGH` on a path the change does not enable may be non-blocking; a `MEDIUM` that breaks a published contract blocks. Blocking findings state the **resolution level required**, not the implementation — fix the mechanism, do not dictate the patch. Non-blocking findings that must not be lost carry an owner and a tracking route, never a bare "consider…". This is `_common/FINDING_LEDGER.md`'s rule that the floor need not be a scalar severity, applied to review output.
 - **Emit a structured `intent_alignment` verdict** (`PASS` | `FAIL` | `NOT_CHECKED`) — Guardian's `ship` gate signal. `FAIL` on scope creep or contradiction; absent intent is never `PASS`.
@@ -93,7 +93,7 @@ Benchmarks, thresholds, and citation provenance for every claim above -> `refere
 
 ## Review Modes
 
-**Multi-Engine (default)** on `/judge` or "review PR/changes" — fan out 2 (Claude + Codex) or 3 (agy AVAILABLE) parallel subagents, then integrate, ground, filter; each subagent follows its own `*-review-usage.md`. **Single-Engine** when the user names one engine, `>=2` are unavailable, or scope is `<50` LOC low-risk. **Pair (INTERACTIVE)** on `/judge pair` or "fix as we go". **GitHub Async** via an `@codex review` PR comment. Mode table -> `reference/tri-engine-review.md`.
+**Multi-Engine (default)** on `/judge` or "review PR/changes" — fan out 2 (Claude + Codex) or 3 (agy AVAILABLE) parallel subagents, then integrate, ground, filter; each subagent follows its own `*-review-usage.md`. **Single-Engine** when the user names one engine, fewer than 2 engines are AVAILABLE, or scope is `<50` LOC low-risk. **Pair (INTERACTIVE)** on `/judge pair` or "fix as we go". **GitHub Async** via an `@codex review` PR comment. Mode table -> `reference/tri-engine-review.md`.
 
 **Invocation invariants (all engines):** use existing subscription authentication; never inject a provider API key. Inherit the authorized model selection; a different model requires explicit authorization and a supported interface verified through `_common/CLI_COMPATIBILITY.md`. Require focused, structured findings and validate actual tool results, not only JSON shape.
 
@@ -169,7 +169,7 @@ Full "When to Use" and per-Recipe `Read First` files -> `reference/recipes-detai
 
 ## Subcommand Dispatch
 
-Parse the first token of user input: a Recipe Subcommand match activates that Recipe (load only its "Read First" files); otherwise the default `pr` Recipe runs the full workflow. Single-engine fallback (user-named engine, `>=2` engines unavailable, or trivial scope) collapses the workflow and grounds every finding. Each Recipe's `VERIFY` gate (above) applies **in addition to** the universal FILTER discipline.
+Parse the first token of user input: a Recipe Subcommand match activates that Recipe (load only its "Read First" files); otherwise the default `pr` Recipe runs the full workflow. Single-engine fallback (user-named engine, fewer than 2 engines AVAILABLE, or trivial scope) collapses the workflow and grounds every finding. Each Recipe's `VERIFY` gate (above) applies **in addition to** the universal FILTER discipline.
 
 
 ## Output Routing
@@ -178,7 +178,7 @@ Default is tri-engine fan-out per `reference/tri-engine-review.md`. Map the user
 
 `review PR` / unclear -> PR mode (`--base`) · `pre-commit` -> `--uncommitted` · `review commit` -> `--commit <sha>` · `security review` -> security focus · `AI code review` -> elevated AI-code scrutiny · `framework review` -> framework focus · `intent` -> PR-body-vs-diff · `lean` / `YAGNI` / `dead code` -> lean focus (Void/Zen) · `pair` -> Pair mode · `large PR` -> cognitive-load gate before fan-out · `codex only` / `agy only` / `claude only` -> single-engine.
 
-**Routing rules:** tri-engine is default; degrade to single-engine only on explicit request, `>=2` engines unavailable, or trivial scope (`<50` LOC low-risk). Uncommitted with no mode -> suggest pre-commit fan-out. Security -> Sentinel; consistency -> Zen; low test quality -> Radar.
+**Routing rules:** tri-engine is default; degrade to single-engine only on explicit request, fewer than 2 engines AVAILABLE, or trivial scope (`<50` LOC low-risk). Uncommitted with no mode -> suggest pre-commit fan-out. Security -> Sentinel; consistency -> Zen; low test quality -> Radar.
 
 ## Output Requirements
 
@@ -219,7 +219,7 @@ Bug patterns (null/undefined, off-by-one, race, resource leaks, API contract) ->
 | `reference/{kotlin,rust,swift}-cheatsheet.md` | Reviewing Kotlin, Rust, or Swift code. |
 | `reference/consistency-patterns.md` | Consistency heuristics and FP filtering; pairs with `_common/CONSISTENCY_FRAMEWORK.md`. |
 | `reference/test-quality-patterns.md` | Test-quality scoring, catalog, handoff formats. |
-| `reference/collaboration-patterns.md` | Full flow diagrams (Patterns A-M). |
+| `reference/collaboration-patterns.md` | Full flow diagrams (Patterns A-F). |
 | `reference/review-anti-patterns.md` | Process and behavioral anti-patterns, cognitive bias countermeasures. |
 | `reference/ai-code-scrutiny.md` | AI-authored PRs — Defect Top 8, detection signals, FP-rate ceilings, hallucination check. |
 | `reference/research-citations.md` | Benchmarks, thresholds, and provenance for every claim above. |

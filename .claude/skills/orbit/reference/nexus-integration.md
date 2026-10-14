@@ -24,6 +24,8 @@ Canonical inbound/outbound handoff token vocabulary for Orbit. Preserve token sp
 | Orbit -> Radar | `ORBIT_TO_RADAR_HANDOFF` |
 | Orbit -> Lore | `ORBIT_TO_LORE_HANDOFF` |
 | Orbit -> Scout | `ORBIT_TO_SCOUT_HANDOFF` |
+| Orbit -> Beacon | `ORBIT_TO_BEACON_HANDOFF` |
+| Orbit -> Triage | `ORBIT_TO_TRIAGE_HANDOFF` |
 | Judge -> Orbit | `QUALITY_FEEDBACK` |
 
 ## Mode Priority

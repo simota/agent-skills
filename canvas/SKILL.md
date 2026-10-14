@@ -258,7 +258,7 @@ For Echo output, state the visualization type and the scoring or friction legend
 | `reference/mermaid-v11-advanced.md` | You need Mermaid v11 features, semantic shapes, or ELK guidance. |
 | `reference/diagram-tools-comparison.md` | Mermaid is not enough, you need D2/PlantUML, or Architecture-as-Code patterns. |
 | `reference/ai-reverse-engineering.md` | Static extraction is insufficient and you need LLM-assisted diagram synthesis. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the diagram output, deciding adaptive thinking depth at diagram-type/abstraction selection, or front-loading source/purpose/audience at SCAN. Critical for Canvas: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the diagram output, deciding adaptive thinking depth at diagram-type/abstraction selection, or front-loading source/purpose/audience at UNDERSTAND. Critical for Canvas: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Canvas-specific Output/Next schema. |
 
 ## Operational

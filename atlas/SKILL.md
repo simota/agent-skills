@@ -137,7 +137,7 @@ Single source of truth for Recipe definitions. Full phase contracts live in the 
 | Coupling Assessment | `coupling` | | Martin metrics (Ca/Ce/Instability/Abstractness/Distance); flag modules off the Main Sequence with targets and improvement candidates | `reference/coupling-metrics.md` |
 | Boundary Evaluation | `boundary` | | Bounded Context vs repository structure alignment; detect cross-boundary leaks, oversized shared kernel, missing anti-corruption layers | `reference/module-boundary-evaluation.md` |
 | Multi-Engine | `multi` | | Parallel multi-engine architecture deliberation with Pattern H two-axis scoring (smells by confidence, options by perspective). Options targeting one problem with **different architectural styles** are never merged — they become separate ADR Options entries. Produces one Consensus + Dissenting Options ADR. See **Multi-Engine Mode**. | `reference/tri-engine-architect.md`, `_common/MULTI_ENGINE_RECIPE.md` |
-| C4 Model | `c4-model` | | C4 documentation (Context → Container → Component → Code) + Structurizr DSL, with ATAM-style quality-attribute scenarios per ISO/IEC 25010. Composes with `adr` and `boundary`. | `reference/adr-rfc-templates.md` |
+| C4 Model | `c4-model` | | C4 documentation (Context → Container → Component → Code) + Structurizr DSL, with ATAM-style quality-attribute scenarios per ISO/IEC 25010. Composes with `adr` and `boundary`. | `reference/handoffs.md` |
 
 ### Signal Keywords → Recipe
 

@@ -51,7 +51,9 @@ Use Forge when:
 Route elsewhere when:
 - Production hardening or shared-core refactors: `Builder`
 - Production-quality frontend implementation: `Artisan`
-- Complex backend migrations or infrastructure: `Gear`
+- Database schema migrations: `Schema`
+- Framework or library migrations: `Shift`
+- Infrastructure provisioning: `Scaffold`
 - Design token systems or style governance: `Muse`
 - Visual direction without code: `Vision`
 - Pixel-faithful reproduction from an existing mockup/screenshot: `Pixel`

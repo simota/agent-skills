@@ -10,10 +10,13 @@ This file defines the common interaction control rules that all agents reference
 
 | Mode | Trigger | Behavior | Interaction Timing |
 |------|---------|----------|-------------------|
-| AUTORUN | `## NEXUS_AUTORUN` + SIMPLE assessment | Fully automatic execution | Error cases only |
-| GUIDED | Default or `## NEXUS_GUIDED` | Confirm at decision points | Per INTERACTION_TRIGGERS |
+| AUTORUN_FULL | Default (no marker) or `## NEXUS_AUTORUN_FULL` | Execute all tasks, including COMPLEX, with guardrails (`_common/AUTORUN.md`) | Ask First triggers and guardrail escalations only |
+| AUTORUN | `## NEXUS_AUTORUN` + SIMPLE assessment | Fully automatic execution; COMPLEX → GUIDED | Error cases only |
+| GUIDED | `## NEXUS_GUIDED` | Confirm at decision points | Per INTERACTION_TRIGGERS |
 | INTERACTIVE | `## NEXUS_INTERACTIVE` | Confirm at every step | Always confirm |
-| Kickoff | (No mode specified) | Chain design only | Initial confirmation only |
+| Kickoff | Explicit request for chain design only | Chain design only | Initial confirmation only |
+
+Default mode is `AUTORUN_FULL` — `_common/AUTORUN.md` and `nexus/SKILL.md` § Modes own the mode set.
 
 ---
 
@@ -87,9 +90,11 @@ interrupted; it never changes what requires their consent.
 
 Criteria for assessing task complexity and auto-selecting execution mode.
 
+Step thresholds follow `nexus/reference/execution-phases.md` § Phase 1 (SIMPLE 1-2, MEDIUM 3-5, COMPLEX 6+).
+
 | Indicator | SIMPLE | COMPLEX |
 |-----------|--------|---------|
-| Estimated steps | 1-2 | 3+ |
+| Estimated steps | 1-2 | 6+ (3-5 = MEDIUM) |
 | Files affected | 1-3 | 4+ |
 | Security related | No | Yes |
 | Infrastructure change | No | Yes |
@@ -107,7 +112,7 @@ ELSE IF any(COMPLEX indicators) THEN
 ELSE IF all(SIMPLE indicators) AND mode == AUTORUN THEN
   → AUTORUN allowed
 ELSE
-  → GUIDED (default)
+  → GUIDED (fallback for AUTORUN when not all SIMPLE)
 ```
 
 ---

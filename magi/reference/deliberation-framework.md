@@ -167,7 +167,7 @@ Different engines may have systematic confidence biases:
 |--------|--------------|-------|
 | Claude | 60-85 | Tends toward moderate confidence with calibrated uncertainty |
 | Codex | 55-80 | May show lower confidence on non-code decisions |
-| Gemini | 50-85 | Wider range, may be more decisive on strategic questions |
+| agy (Antigravity) | 50-85 | Wider range, may be more decisive on strategic questions |
 
 ### Engine Confidence Rules
 

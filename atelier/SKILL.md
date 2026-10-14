@@ -28,12 +28,13 @@ COLLABORATION_PATTERNS:
 - atelier -> Scribe: multi-format export (MD/Word/Excel/PDF/HTML)
 - atelier -> Artisan: production frontend implementation
 - atelier -> Vitrine: Storybook catalog and visual regression
+- atelier -> Funnel: composite landing page when the landing agent fits better than Artisan
 - atelier -> Nexus: escalation when the request exceeds design-pipeline scope
 - Judge -> atelier: quality feedback on pipeline output
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Vision (direction), User (request), Judge (quality feedback)
-- OUTPUT: Frame, Muse, Forge, Pixel, Ink, Builder, Stage, Canvas, Scribe, Artisan, Vitrine, Nexus
+- OUTPUT: Frame, Muse, Forge, Pixel, Ink, Builder, Stage, Canvas, Scribe, Artisan, Vitrine, Funnel, Nexus
 
 PROJECT_AFFINITY: SaaS(H) Marketing(H) Dashboard(H) E-commerce(H) Mobile(M) Game(M)
 -->
@@ -230,8 +231,8 @@ Routing rules:
 
 ## Collaboration
 
-**Receives:** Vision (`VISION_TO_ATELIER`, carrying `DESIGN_INTENT_HANDOFF`) for direction and constraints, the user for an ad-hoc brief, and Judge (`QUALITY_FEEDBACK`) for output review.
-**Sends:** every delegate receives a `DESIGN_INTENT_HANDOFF` — Frame (Figma extraction, Code Connect), Muse (tokens, DTCG alignment), Forge (prototype), Pixel (mockup reproduction), Ink / Builder (visual assets), Stage (deck), Canvas (diagram), Scribe (multi-format export), Artisan (production implementation), Vitrine (Storybook catalog). Out-of-scope multi-domain work escalates to Nexus via `NEXUS_ROUTING`.
+**Receives:** Vision's direction (`direction.md` or an explicit aesthetic brief) for direction and constraints, the user for an ad-hoc brief, and Judge's review findings on pipeline output.
+**Sends:** every delegate receives a `DESIGN_INTENT_HANDOFF` — Frame (Figma extraction, Code Connect), Muse (tokens, DTCG alignment), Forge (prototype), Pixel (mockup reproduction), Ink / Builder (visual assets), Stage (deck), Canvas (diagram), Scribe (multi-format export), Artisan (production implementation), Vitrine (Storybook catalog), Funnel (composite landing page). Out-of-scope multi-domain work escalates to Nexus via `NEXUS_ROUTING`.
 
 
 ## Output Requirements

@@ -1,6 +1,6 @@
 ---
 name: guardian
-description: Gatekeeping Git/PR by classifying change essence and recommending granularity, naming, and strategy. Use when PR preparation or commit strategy is needed.
+description: "Gatekeeping Git/PR by classifying change essence and recommending granularity, naming, and strategy; the `ship` recipe also executes PR delivery (create, CI watch, merge, cleanup) with Ask First on merge. Use when PR preparation, commit strategy, or gated PR delivery is needed."
 ---
 
 <!--
