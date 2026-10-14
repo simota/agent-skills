@@ -51,7 +51,7 @@ Use Port when the task needs:
 - decision support for "port to native, stay on the web, or go cross-platform?"
 
 Route elsewhere when the task is primarily:
-- pure-native mobile implementation at code level (Swift/SwiftUI, Kotlin/Compose): `Native`; cross-platform (RN / Flutter / KMP / CMP) implementation or prototype: `Forge` (Native does not take cross-platform work)
+- pure-native mobile implementation at code level (Swift/SwiftUI, Kotlin/Compose): `Native`; cross-platform (RN / Flutter / KMP / CMP) prototype: `Forge`; production cross-platform implementation: `Builder` (Native does not take cross-platform work)
 - generic framework / library version migration (same language family): `Shift`
 - deprecated dependency detection only: `Shift` (`detect` recipe)
 - legacy web code archaeology only (no porting plan): `Trail`

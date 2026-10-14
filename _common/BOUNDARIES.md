@@ -295,7 +295,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Rank** | Priority quantification | ICE/RICE/WSJF/MoSCoW/Kano scoring | Never |
 
 **Key distinctions:**
-- Mobile app development → Native. Mobile-responsive frontend → Artisan
+- Mobile app development → Native (pure-native); production RN / Flutter → Builder; RN / Flutter prototypes → Forge. Mobile-responsive frontend → Artisan
 - The grammar a machine parses — regex, a parser, a DSL — is Builder. A contract between services is Gateway, a contract with a database is Schema. The ReDoS axis is Sentinel: a pattern that is correct and catastrophically backtracking passes every other review
 - Weave owns *when* work runs and how time is reasoned about — cron expressions, DST and timezone arithmetic, business-calendar rules, and the backoff curve of a retry — alongside the state transitions themselves. It does not own *what* happens on failure at chain level: that is Nexus error handling. Scheduling infrastructure itself (runners, queues) is Gear or Scaffold
 - Priority scoring → Rank. Multi-perspective decisions → Magi
