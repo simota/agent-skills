@@ -263,7 +263,9 @@ def check_ladder_token_order(findings: list[Finding]):
     tokens = ["REDIRECT", "SELECT", "LADDER"]
     positions = []
     for t in tokens:
-        idx = chain_template.find(t)
+        # Whole-token match: a bare find("SELECT") also hits CHAIN_SELECT.
+        m = re.search(rf"(?<![A-Z_]){t}(?![A-Z_])", chain_template)
+        idx = m.start() if m else -1
         if idx == -1:
             findings.append(Finding("RO-2", "ERROR", f"token `{t}` missing from CLASSIFY Default dispatch flow: {chain_template}"))
             return
@@ -302,6 +304,55 @@ RO3_REVIEWED_EXCEPTIONS = {
 }
 
 
+def _split_cells(line: str) -> list[str]:
+    """Split a table row on unescaped pipes.
+
+    A pipe is escaped only by an odd run of backslashes: in `a\\\\|b` the
+    first backslash escapes the second, so the pipe still separates cells.
+    """
+    body = line.strip()
+    if body.startswith("|"):
+        body = body[1:]
+    cells, current, backslashes = [], [], 0
+    for char in body:
+        if char == "|" and backslashes % 2 == 0:
+            cells.append("".join(current))
+            current = []
+        else:
+            current.append(char)
+        backslashes = backslashes + 1 if char == "\\" else 0
+    if "".join(current).strip():
+        cells.append("".join(current))
+    return cells
+
+
+def _matrix_rows(content: str, malformed: list[str] | None = None):
+    """Yield body-row cells of every routing-matrix table, honoring `\\|` escapes.
+
+    A plain `split("|")` let `Forge[ui|api|fullstack]` push a row's later hints
+    into columns no check reads. Rows whose width differs from their header are
+    appended to `malformed` (when given) as well as yielded.
+    """
+    separator = re.compile(r"\|?[\s:|-]+\|?")
+    lines = content.splitlines()
+    header_width = None
+    for index, line in enumerate(lines):
+        if not line.startswith("|"):
+            continue
+        if separator.fullmatch(line.strip()) and "-" in line:
+            continue
+        cells = [c.strip() for c in _split_cells(line)]
+        following = lines[index + 1].strip() if index + 1 < len(lines) else ""
+        if separator.fullmatch(following) and "-" in following:
+            # A header is the row directly above a separator line; a row resumed
+            # after a blank line or masked comment keeps the previous header.
+            header_width = len(cells)
+            continue
+        if malformed is not None and header_width is not None and len(cells) != header_width:
+            malformed.append(f"{cells[0]} ({len(cells)} cells, header has {header_width})")
+        yield cells
+
+
 def check_producer_verifier(findings: list[Finding]):
     """RO-3: in a chain's Recipe Hints list, the agent immediately preceding a
     `[...verify...]`-annotated step must not be the same agent as the verifier."""
@@ -310,10 +361,7 @@ def check_producer_verifier(findings: list[Finding]):
         return
     content = active_text(ROUTING_MATRIX.read_text(encoding="utf-8"))
     rows_checked = 0
-    for line in content.splitlines():
-        if not line.startswith("|") or line.strip().startswith("|---") or "Recipe Hints" in line:
-            continue
-        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+    for cells in _matrix_rows(content):
         if len(cells) < 3:
             continue
         recipe_hints = cells[2]
@@ -567,10 +615,9 @@ def check_recipe_hint_subcommands(findings: list[Finding]):
     allow_cache: dict[str, set[str] | None] = {}
     checked = 0
     bad = []
-    for line in active_text(ROUTING_MATRIX.read_text(encoding="utf-8")).splitlines():
-        if not line.startswith("|") or line.strip().startswith("|---") or "Recipe Hints" in line:
-            continue
-        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+    content = active_text(ROUTING_MATRIX.read_text(encoding="utf-8"))
+    malformed = []
+    for cells in _matrix_rows(content, malformed):
         if len(cells) < 3:
             continue
         for column in (cells[1], cells[2]):
@@ -586,6 +633,13 @@ def check_recipe_hint_subcommands(findings: list[Finding]):
                 checked += 1
                 if token not in allowed:
                     bad.append(f"{cells[0]}: `{agent}[{token}]`")
+    if malformed:
+        findings.append(Finding(
+            "RO-9", "ERROR",
+            "routing-matrix.md rows whose cell count differs from their header (an unescaped `|` "
+            "inside a cell shifts later hints out of the checked columns; escape it as `\\|`): "
+            + "; ".join(malformed),
+        ))
     if bad:
         findings.append(Finding(
             "RO-9", "ERROR",

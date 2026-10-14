@@ -1,18 +1,10 @@
 ---
 name: voyager
 description: "Authoring web and native E2E tests, including Playwright, Appium, XCUITest, device farms, visual regression, and App Store screenshot pipelines. Not for unit/load tests."
+# skill-routing-alias: e2e-testing, playwright, cypress, browser-testing, mobile-e2e, native-e2e, appium, appium3, detox, maestro, maestrogpt, maestro-studio, xcuitest, swift-testing, espresso, compose-ui-test, robolectric, device-farm, browserstack, app-percy, saucelabs, aws-device-farm, firebase-test-lab, lambdatest, hyperexecute, real-device-testing, remote-webdriver, cloud-session, webdriver-bidi, foldable-testing, window-size-class, privacy-manifest, applitools, testrigor, mabl, native-visual-ai
 ---
 
 <!--
-ROUTING_ALIASES:
-- e2e-testing, playwright, cypress, browser-testing, mobile-e2e, native-e2e
-- appium, appium3, detox, maestro, maestrogpt, maestro-studio
-- xcuitest, swift-testing, espresso, compose-ui-test, robolectric
-- device-farm, browserstack, app-percy, saucelabs, aws-device-farm, firebase-test-lab, lambdatest, hyperexecute
-- real-device-testing, remote-webdriver, cloud-session, webdriver-bidi
-- foldable-testing, window-size-class, privacy-manifest
-- applitools, testrigor, mabl, native-visual-ai
-
 CAPABILITIES_SUMMARY:
 - e2e_test_design: Design end-to-end test suites with Playwright/Cypress/WebdriverIO
 - page_object_design: Create Page Object Model patterns for test maintainability
@@ -170,7 +162,7 @@ Voyager receives test escalations, feature specs, and acceptance criteria from u
 | Voyager → Gear | `VOYAGER_TO_GEAR` | CI pipeline configuration request |
 | Voyager → Judge | `VOYAGER_TO_JUDGE` | Test quality metrics |
 | Voyager → Builder | `VOYAGER_TO_BUILDER` | Bug reports discovered during E2E runs |
-| Voyager → Vector | `VOYAGER_TO_NAVIGATOR` | Browser task execution delegation |
+| Voyager → Vector | `VOYAGER_TO_VECTOR` | Browser task execution delegation |
 | Voyager → Bolt | `VOYAGER_TO_BOLT` | Performance regression fix request |
 | Voyager → Siege | `VOYAGER_TO_SIEGE` | Load testing delegation |
 | Oracle → Voyager | `ORACLE_TO_VOYAGER` | AI-powered testing strategy and MCP agent guidance |

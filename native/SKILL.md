@@ -1,6 +1,6 @@
 ---
 name: native
-description: "Implementing production iOS/Android/macOS native features (SwiftUI, Compose) and iterating a screen against a reference design. Not for cross-platform RN/Flutter (Port) or web (Artisan)."
+description: "Implementing production iOS/Android/macOS native features (SwiftUI, Compose) and iterating a screen against a reference design. Not for cross-platform RN/Flutter (Forge prototypes only; production is out of scope) or web (Artisan)."
 ---
 
 <!--
@@ -55,7 +55,7 @@ Use Native for: iOS Swift 6.3 + SwiftUI; Android Kotlin 2.4+ + Compose + M3 Expr
 Also for **macOS desktop apps** (`macos` recipe): SwiftUI for Mac + AppKit interop, scenes, menu bar Commands, document apps, sidebar/toolbar/inspector, drag & drop, App Sandbox + notarization + Sparkle, Mac HIG, Catalyst decision, XPC/SMAppService.
 
 Route elsewhere when:
-- RN / Flutter / KMP / CMP implementation → **out of scope** (use `Forge` for prototypes)
+- RN / Flutter / Compose Multiplatform UI → **out of scope** (`Forge` prototypes RN / Flutter; production needs an external implementer; Nexus routes it as external). KMP shared logic under native UI → `Port` hybrid blueprint, logic by `Builder`
 - Automating an *existing* Mac app via AppleScript / JXA → `Hone` (`automate`) — Native builds, Hone automates externally
 - Web→native porting **design / blueprint** → `Port`
 - Quick prototype validation → `Forge`
@@ -88,7 +88,7 @@ Condensed; full elaboration → `reference/boundaries.md`.
 
 ### Never
 
-- Implement RN / Flutter / KMP / CMP — **out of scope**, route to Forge · ship without testing both platforms when both are in scope.
+- Implement RN / Flutter / CMP UI or KMP shared modules — **out of scope**; RN / Flutter prototypes route to Forge, production cross-platform UI is external · ship without testing both platforms when both are in scope.
 - Hard-code secrets client-side or store tokens in `UserDefaults`/`SharedPreferences` — use Keychain / Tink-encrypted DataStore and proxy via BFF.
 - Apply `.glassEffect()` to content layers · force chrome opaque to hide Liquid Glass · declare `@unchecked Sendable` to silence concurrency errors.
 - Treat `@Observable` as a drop-in `ObservableObject` · use deprecated `EncryptedSharedPreferences` · keep `onBackPressed()` on targetSdk 36.
@@ -182,7 +182,7 @@ Per-Recipe behavior notes (key gotchas + thresholds) → `reference/recipes.md`.
 | HIG / M3 design guideline lookup | Per-platform OEM design-system reference | `reference/ios-hig.md`, `reference/android-material3.md` |
 | Performance regression | Profile cold start, re-render / recomposition, memory | `reference/apple-perf.md`, `reference/compose-perf.md` |
 | Store submission / phased release | Compliance audit + Privacy Manifest / Data Safety + staged rollout | `reference/store-compliance.md`, `reference/release-rollout.md` |
-| Cross-platform UI framework (RN/Flutter/KMP/CMP) | Out of scope — route to Forge for prototyping | — |
+| Cross-platform UI framework (RN/Flutter/CMP) | Out of scope — RN/Flutter prototypes to Forge; production external | — |
 | Terminal tooling (`xcrun`/`adb`) | `cli` Recipe, scoped to the tool named | `reference/xcrun-cli.md`, `reference/adb-cli.md` |
 | "Match this design" / screenshot as target | `visualloop` — accessibility tree first, pixel score, 3-pass cap | `reference/agent-visual-loop.md` |
 

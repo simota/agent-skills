@@ -154,7 +154,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | Migration Plan | `plan` | ✓ | Migration planning and scope estimation | `reference/migration-strategies.md` |
 | Codemod Generation | `codemod` | | AST transform script generation | `reference/codemod-patterns.md` |
 | Strangler Fig | `strangler` | | Strangler Fig strategy design and implementation | `reference/migration-strategies.md`, `reference/strangler-fig-migration.md` |
-| Verification | `verify` | | Behavioral equivalence verification before and after migration | `reference/database-migration.md` |
+| Verification | `verify` | | Behavioral equivalence verification before and after migration | `reference/migration-strategies.md` (Parallel Run), `reference/recipes-detail.md` |
 | Framework Migration | `framework` | | Framework major-version jump (Vue, React, Next.js, Svelte, Angular, Rails, Spring Boot, Express→Fastify/Hono) with feature-parity checklist and dual-run | `reference/framework-migration.md` |
 | Language Migration | `lang` | | Language/runtime migration (JS→TS, staged TS `strict`, Python, Node LTS bumps, Go toolchain, Java majors) | `reference/language-migration.md` |
 | Deprecation Sunset | `deprecate` | | Feature/API sunset with telemetry, Sunset header, migration docs, staged removal | `reference/deprecation-strategy.md`, `reference/deprecation-lifecycle.md` |

@@ -14,7 +14,7 @@
 
 ## ルーティング（単一入口）
 - 非自明な依頼（複数ステップ・複数領域・スキル選択が自明でないもの）は `nexus` を単一入口とする — 分類 → レシピ/チェーン選択 → 実行までを nexus が担う。
-- どのスキルにも該当しない依頼も nexus に投げてよい: LADDER（compass → architect → 明示的フォールバック）がカバレッジを保証する（`nexus/reference/routing-matrix.md` § LADDER）。
+- どのスキルにも該当しない依頼も nexus に投げてよい: LADDER（compass → architect → 明示的フォールバック）がカバレッジを保証する（`nexus/reference/routing-matrix.md` § Classify Flow (LADDER)）。
 - 個別スキルの直接呼び出しは、次の3条件を**すべて**満たす場合に限る: (1) 担当スキルが1つに確定している (2) 成果物が1種類 (3) `_common/BOUNDARIES.md` の境界を1つしか跨がない。1つでも満たさなければ nexus を通す — 「たぶんこのスキル」は条件(1)を満たさない。
 - 呼び出し経路にかかわらず、完了判定は `_common/OPERATIONAL.md` § Completion Contract に従う（AC凍結・証拠束縛・型付き繰越・完了スイープ・status非膨張）。nexus 経由かどうかで完了の基準は変わらない。
 - 環境レベルの強制（hooks 等によるプロンプト介入）はリポジトリ範囲外のため行わない — 本宣言が単一入口の境界である。

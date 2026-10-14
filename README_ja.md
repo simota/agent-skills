@@ -88,10 +88,10 @@ Codexのスキル配置先は `~/.agents/skills`、設定は引き続き `~/.cod
 | **Architect** | _"Every agent is a possibility. Every SKILL.md is a birth certificate."_ - 新しいスキルエージェントを設計・生成するメタデザイナー。エコシステムギャップ分析、重複検出、SKILL.md生成 | SKILL.md、references |
 | **Rally** | _"One task, many hands. Parallel by design."_ - マルチセッション並列オーケストレーター。Claude Code Agent Teams APIで複数Claudeインスタンスを生成・管理し、並行タスク実行を実現 | チーム管理、並列実行 |
 | **Sigil** | _"Every project has patterns waiting to become power."_ - プロジェクト運用レイヤー設計・生成。スキル、レシピ、ワークフロー、ルーティングマップを作成 | プロジェクト固有スキル |
-| **Gauge** | _"What gets measured gets managed. What gets audited gets normalized."_ - SKILL.md正規化監査・自己進化エージェント。21項目チェックリストに基づくコンプライアンススキャン、修正提案、Webベースのベストプラクティス自動取得 | コンプライアンスレポート、修正プラン |
 | **Orbit** *(project-local)* | _"Give me a goal. I'll give you a runner that finishes."_ - このリポジトリのNexus-autoloop完走スクリプト生成・運用契約設計・監査を担当 | ランナースクリプト、契約 |
 | **Darwin** *(project-local)* | _"Ecosystems that cannot sense themselves cannot evolve themselves."_ - `.agents/ECOSYSTEM.md`へ永続化する、このリポジトリ専用のエコシステム進化オーケストレーター | エコシステムフィットネススコア、進化提案 |
 | **Lore** *(project-local)* | _"Forgotten lessons are lessons repeated. Institutional memory is the compound interest of experience."_ - `.agents/*.md`を`METAPATTERNS.md`へ統合する、このリポジトリ専用の知識キュレーター | METAPATTERNS.md、知識インサイト |
+| **Gauge** | _"What gets measured gets managed. What gets audited gets normalized."_ - SKILL.md正規化監査・自己進化エージェント。21項目チェックリストに基づくコンプライアンススキャン、修正提案、Webベースのベストプラクティス自動取得 | コンプライアンスレポート、修正プラン |
 | **Atelier** | _"Design decided upstream. Assets produced downstream. atelier is the studio floor in between."_ - デザインから実装までを閉ループで繋ぐパイプラインオーケストレーター。Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas を統括し、デザイン抽出・プロトタイプ・ビジュアルアセット・スライド・本番実装をプロジェクトデザインシステムを永続化しながら一気通貫で提供 | デザインシステムパッケージ、統合成果物 |
 | **Compass** | _"When in doubt, ask Compass. It finds the right skill for the task."_ - 90のグローバルスキルと利用可能なproject-local拡張から、タスクに最適な担当を推薦 | レコメンド、エージェントマップ |
 | **Prune** | _"A garden grows by what you cut, not what you plant."_ - スキルエコシステム整理監査エージェント。エージェント編成の重複・冗長・不活性を監査し、統合候補とサンセット計画を根拠・アーカイブ手順付きで提案（提案のみ・実行はしない） | 整理監査レポート、統合/サンセット提案 |
@@ -147,13 +147,13 @@ Codexのスキル配置先は `~/.agents/skills`、設定は引き続き `~/.cod
 | **Voyager** | _"E2E tests are the user's advocate in CI/CD."_ - Web・モバイル・iOS E2E専門。Playwright/Cypress/Appium/Detox/Maestro、XCUITest、App Storeスナップショットに対応 | E2Eテストコード |
 | **Sentinel** | _"Security is not a feature. It's a responsibility."_ - セキュリティ静的分析（SAST）・脆弱性パターン検出・入力検証追加 | セキュリティ修正 |
 | **Probe** | _"A system is only as secure as its weakest endpoint."_ - セキュリティ動的テスト（DAST）・OWASP ZAP/Nuclei連携・ペネトレーションテスト | 脆弱性レポート |
+| **Vigil** | _"An undetected attack is an undefended system. Vigil ensures nothing passes unseen."_ - Detection Engineeringエージェント。Sigma/YARAルール設計、検出カバレッジマッピング、脅威ハンティング仮説設計、Detection-as-Code CI/CD統合 | 検出ルール、カバレッジマップ |
 | **Judge** | _"Good code needs no defense. Bad code has no excuse."_ - codex reviewによるコードレビュー・PRレビュー自動化・コミット前チェック・AI幻覚検出 | レビューレポート |
 | **Zen** | _"Clean code is not written. It's rewritten."_ - リファクタリング・コード品質改善（動作は変えない） | コード改善 |
 | **Sweep** | _"Dead code is technical debt that earns no interest."_ - 不要ファイル検出・未使用コード特定・孤立ファイル発見・安全な削除提案 | クリーンアップ提案 |
 | **Attest** | _"Specs are truth. Code is evidence. Attest finds the gaps."_ - 仕様適合検証エージェント。仕様書から受入基準を抽出し、BDDシナリオを生成し、実装が仕様通りか敵対的に検証。CERTIFIED/CONDITIONAL/REJECTED判定を発行 | 適合レポート、BDDシナリオ |
 | **Siege** | _"Break it before users do. Fix it before they notice."_ - 高度テストスペシャリスト。負荷テスト（k6/Locust/Artillery）、契約テスト（Pact CDC）、カオスエンジニアリング、ミューテーションテスト、レジリエンスパターン検証 | テスト結果、レジリエンスレポート |
 | **Void** | _"The best code is the code that was never written."_ - YAGNI検証・スコープカット・機能プルーニング・複雑性削減提案。5つの存在検証問とCost-of-Keeping Scoreで不要な複雑性を特定 | 削減提案 |
-| **Vigil** | _"An undetected attack is an undefended system. Vigil ensures nothing passes unseen."_ - Detection Engineeringエージェント。Sigma/YARAルール設計、検出カバレッジマッピング、脅威ハンティング仮説設計、Detection-as-Code CI/CD統合 | 検出ルール、カバレッジマップ |
 | **Breach** | _"Think like an attacker. Defend like an engineer."_ - レッドチームエンジニアリング。攻撃シナリオ設計、脅威モデリング、MITRE ATT&CK/OWASPフレームワーク、Purple Team演習、AI/LLMレッドチーミング | セキュリティ評価 |
 | **Cloak** | _"Privacy is not a feature. It's a right."_ - プライバシーエンジニアリング・データガバナンス。PII検出、データフローマッピング、同意管理、GDPR/CCPA準拠コード実装 | プライバシー評価 |
 | **Chain** | _"Treat every third-party skill like an npm install. Audit before invoking."_ - スキル/プラグイン/MCPの受け入れ監査と、npm/PyPIマルウェアのlive調査を担当。sha256、Unicode/窃取パターン、campaign IoC、永続化優先の駆除、認証情報ローテーションを扱う | サプライチェーン監査、感染レポート、復旧runbook |
@@ -353,17 +353,20 @@ questions:
 
 | 指標 | SIMPLE | COMPLEX |
 |------|--------|---------|
-| 推定ステップ数 | 1-2 | 3+ |
+| 推定ステップ数 | 1-2 | 6+ (3-5 = MEDIUM) |
 | 影響ファイル数 | 1-3 | 4+ |
 | セキュリティ関連 | No | Yes |
 | 破壊的変更 | No | Yes |
 
+- **デフォルト (AUTORUN_FULL)**: COMPLEX を含む全タスクをガードレール付きで実行
 - **SIMPLE + NEXUS_AUTORUN**: 完全自動実行
-- **COMPLEX**: Guided モードに自動切り替え（対話必須）
+- **NEXUS_AUTORUN 下の COMPLEX**: Guided モードに切り替え（対話必須）
 
 詳細は `_common/INTERACTION.md` を参照してください。
 
 ### タスクタイプ別チェーンテンプレート
+
+> **正本:** 基本チェーンは `nexus/reference/routing-matrix.md`、バリアントは `nexus/reference/agent-chains.md` が定義する。この要約と食い違う場合はそちらが優先。
 
 #### 調査・理解
 
@@ -380,8 +383,8 @@ questions:
 
 | タスク | 説明 | チェーン |
 |--------|------|----------|
-| BUG/simple | 単純なバグ修正 | Scout → Builder → Radar |
-| BUG/complex | 複雑なバグ（RCA必要） | Scout → Sherpa → Builder → Radar → Sentinel |
+| BUG/simple | 単純なバグ修正 | Scout → Lens → Builder → Radar |
+| BUG/complex | 複雑なバグ（RCA必要） | Scout → Lens → Sherpa → Builder → Radar → Sentinel |
 | BUG/frontend | フロントエンドのバグ | Scout → Artisan → Radar |
 
 #### 機能開発
@@ -391,9 +394,9 @@ questions:
 | FEATURE/S | 小規模機能 | Builder → Radar |
 | FEATURE/M | 中規模機能 | Sherpa → Forge → Builder → Radar |
 | FEATURE/L | 大規模機能 | Spark → Sherpa → Forge → Builder → Radar → Quill |
-| FEATURE/frontend | フロントエンド機能 | Sherpa → Forge → Artisan → Radar |
+| FEATURE/frontend | フロントエンド機能 | Forge → Artisan → Radar |
 | FEATURE/fullstack | フルスタック機能 | Sherpa → Forge → Artisan → Builder → Radar |
-| FEATURE/api | API開発 | Gateway → Builder → Radar |
+| FEATURE/api | API開発 | Gateway → Builder → Radar → Quill |
 
 #### UI/UX
 
@@ -428,7 +431,7 @@ questions:
 
 | タスク | 説明 | チェーン |
 |--------|------|----------|
-| AI/rag | RAGパイプライン設計 | Oracle → Stream → Builder → Radar |
+| AI/rag | RAGパイプライン設計 | Oracle → Gateway → Builder → Radar |
 | AI/llm-app | LLMアプリケーション設計 | Oracle → Builder → Radar |
 | AI/safety | AI安全性レビュー | Oracle → Sentinel → Oracle |
 | AI/prompt-ops | プロンプトエンジニアリング＆評価 | Oracle → Radar |
@@ -438,26 +441,26 @@ questions:
 
 | タスク | 説明 | チェーン |
 |--------|------|----------|
-| SRE/slo | SLO定義＆監視 | Beacon → Gear → Builder |
+| SRE/slo | SLO定義＆監視 | Beacon → Gear → Builder → Radar |
 | SRE/observability | 完全可観測性セットアップ | Beacon → Gear → Builder → Radar |
 
 #### セキュリティ
 
 | タスク | 説明 | チェーン |
 |--------|------|----------|
-| SECURITY/audit | 静的解析 | Sentinel → Builder → Radar |
-| SECURITY/pentest | 動的テスト | Probe → Builder → Radar → Probe |
-| SECURITY/full | 完全監査 | Sentinel → Probe → Builder → Radar → Sentinel |
+| SECURITY/audit | 静的解析 | Sentinel → Builder → Radar → Sentinel |
+| SECURITY/pentest | 動的テスト | Sentinel → Probe → Builder → Radar → Probe |
+| SECURITY/full | 完全監査 | Sentinel → Probe → Builder → Radar → Sentinel → Probe |
 
 #### テスト
 
 | タスク | 説明 | チェーン |
 |--------|------|----------|
 | TEST/unit | ユニットテスト追加 | Radar |
-| TEST/e2e | E2Eテスト追加 | Voyager |
+| TEST/e2e | E2Eテスト追加 | Voyager → Lens → Radar |
 | TEST/coverage | カバレッジ向上 | Radar → Voyager |
 | TEST/load | 負荷テスト | Siege → Bolt |
-| TEST/chaos | カオスエンジニアリング | Siege → Triage → Builder |
+| TEST/chaos | カオスエンジニアリング | Siege → Bolt → Triage → Builder → Beacon |
 | TEST/contract | 契約テスト | Gateway → Siege → Radar |
 | TEST/mutation | ミューテーションテスト | Siege → Radar |
 
@@ -465,7 +468,7 @@ questions:
 
 | タスク | 説明 | チェーン |
 |--------|------|----------|
-| REVIEW/pr | PRレビュー | Judge → Zen/Builder/Sentinel |
+| REVIEW/pr | PRレビュー | Judge → Builder/Zen/Sentinel (based on findings) → Radar |
 | REVIEW/security | セキュリティレビュー | Judge → Sentinel |
 
 #### Git/PR
@@ -482,7 +485,7 @@ questions:
 | タスク | 説明 | チェーン |
 |--------|------|----------|
 | DECISION/arch | アーキテクチャ選定 | Magi → Builder/Zen |
-| DECISION/strategy | 戦略的判断 | Magi → Spark |
+| DECISION/strategy | 戦略的判断 | Scribe[unified] → Magi → Spark |
 | DECISION/office-hours | 創業者向けオフィスアワー相談 | Magi → Builder/Echo[demand]/Sherpa |
 | DECISION/retro | 直近の意思決定・結果の振り返り | Magi |
 
@@ -514,7 +517,7 @@ questions:
 | DOCS/component | コンポーネント文書化 | Vitrine → Quill |
 | DOCS/architecture | アーキテクチャ図 | Canvas |
 | DOCS/convert | フォーマット変換 | Scribe |
-| DOCS/report | PR報告書 | Launch → Scribe |
+| DOCS/report | PR報告書 | Launch[weekly] → Scribe |
 | DOCS/learning | 変更ベース学習資料 | Tome |
 | DOCS/onboarding | オンボーディング教材 | Trail → Tome |
 
@@ -565,14 +568,14 @@ questions:
 
 | タスク | 説明 | 並列チェーン |
 |--------|------|-------------|
-| FEATURE/L (並列) | 大規模フルスタック | Sherpa → Rally(Artisan + Builder + Radar) |
+| FEATURE/L (並列) | 大規模フルスタック | Spark → Sherpa → Rally(Forge+Artisan, Builder, Radar) |
 | FEATURE/fullstack (並列) | フロントエンド＋バックエンド | Rally(Artisan, Builder, Radar) |
 | FEATURE/multi (並列) | 複数独立機能 | Sherpa → Rally(Builder×N, Radar) |
 | BUG/multiple (並列) | 複数独立バグ修正 | Rally(Builder×N) → Radar |
 | REFACTOR/arch (並列) | 複数モジュールリファクタ | Atlas → Sherpa → Rally(Zen×N) → Radar |
 | SECURITY/full (並列) | 静的＋動的並行スキャン | Rally(Sentinel, Probe) → Builder → Radar |
 | TEST/coverage (並列) | Unit＋E2E並行テスト | Rally(Radar, Voyager) |
-| MODERNIZE/stack (並列) | マルチエリア刷新 | Shift (detect+modernize) → Sherpa → Rally(Builder×N) → Radar |
+| MODERNIZE/stack (並列) | マルチエリア刷新 | Lens → Shift (detect+modernize) → Sherpa → Rally(Builder×N) → Radar |
 | DOCS/full (並列) | コード文書＋図＋ストーリー | Rally(Quill, Canvas, Vitrine) |
 
 > **Rallyエスカレーション基準**: 2つ以上の独立した実装ステップ、4ファイル以上で2ドメイン以上にまたがる場合、またはSherpaが`parallel_group`を検出した場合にRallyが起動されます。
@@ -583,7 +586,7 @@ questions:
 
 | タスク | 説明 | チェーン |
 |--------|------|----------|
-| PROJECT/full | 曖昧なゴールからプロダクト完成 | `Nexus deliver`（スコープ適応型ライフサイクル） |
+| PROJECT/full | 曖昧なゴールからプロダクト完成 | Nexus[deliver] → Sherpa → Builder → Radar → Guardian → Launch |
 | PROJECT/mvp | MVP重視のデリバリー | `Nexus deliver`（最小限の専門チェーン） |
 
 > **Nexus のビルドモード**: `feature` は単一機能、`deliver` は規模に応じた製品/MVP、`apex` は高投資の discovery-to-ship を担当します。
@@ -601,7 +604,7 @@ questions:
 | タスク | 説明 | チェーン |
 |--------|------|----------|
 | MESSAGING/bot | Bot開発 | Gateway → Builder → Radar |
-| MESSAGING/webhook | Webhookハンドラ | Gateway → Builder → Radar |
+| WEBHOOK | Webhookハンドラ | Gateway → Builder |
 | MESSAGING/realtime | リアルタイム通信 | Gateway → Scaffold → Builder → Radar |
 | MESSAGING/multi-channel | マルチチャネル統合 | Gateway → Builder → Radar |
 

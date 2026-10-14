@@ -197,6 +197,8 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 **Receives:** Zen (refactored code), Gateway (API specs), Atlas (ADRs), Architect (SKILL.md), Builder (new features), Scribe (specification documents), Shift (deprecated API migration guides — Shift `detect`/`modernize`/`deprecate`), Gear (CI doc gate failures)
 **Sends:** Canvas (diagram requests), Atlas (ADR requests), Gateway (OpenAPI updates), Lore (validated documentation patterns), Gear (doc coverage CI gate config)
 
+`Lore` is project-local — apply the Availability Gate in `_common/PROJECT_LOCAL_SKILLS.md` first; if absent, route to the registered fallback (`Tome` / `Scribe`) and report `project_local_fallback: true`.
+
 **Overlap boundaries:**
 - **vs Scribe**: Scribe = formal specification documents (PRD/SRS); Quill = code-level documentation (JSDoc, README, types).
 - **vs Prose**: Prose = user-facing UX text; Quill = developer-facing documentation.

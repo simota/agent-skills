@@ -211,7 +211,7 @@ Each decision Recipe carries its own VERIFY gate in addition to Magi's verdict d
 
 A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
-- MAGI verdict display (Simple: LOGOS/PATHOS/SOPHIA, Engine: CLAUDE/CODEX/GEMINI header).
+- MAGI verdict display (Simple: LOGOS/PATHOS/SOPHIA, Engine: CLAUDE/CODEX/AGY header).
 - Per-perspective vote (APPROVE/REJECT/ABSTAIN), confidence (0-100), and rationale.
 - Consensus pattern (3-0 / 2-1 / 1-1-1 / 0-3).
 - Reversibility classification (HIGH / MEDIUM / LOW) with estimated undo timeframe.

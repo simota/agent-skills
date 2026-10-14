@@ -161,9 +161,19 @@ and never ships on its own.
 ## NEXUS_HANDOFF
 - Step: 3/7
 - Agent: Sentinel
-- Summary: Security audit complete. 2 critical, 1 medium vulnerability found
-- Findings: SQL injection in search endpoint, XSS in comment rendering, weak CSRF token
+- Summary: Security audit complete. 2 critical, 1 medium vulnerability found (1 critical verified below; the rest UNVERIFIED)
+- Findings: SQL injection in search endpoint (verified); XSS in comment rendering, weak CSRF token (UNVERIFIED — scanner output only, no reproduction yet)
 - Artifacts: `reports/security-audit.md`
+- Verified:
+    - claim: "SQL injection in search endpoint is exploitable"
+      command: "pytest tests/security/test_search_sqli.py -q"
+      exit_code: 1
+      head: 3b7e0d4
+      verified_at: 2026-08-17T14:05:40Z
+    - claim: "audit covered all public endpoints"
+      observation: "endpoint inventory cross-checked in `reports/security-audit.md` § Scope"
+      head: 3b7e0d4
+      verified_at: 2026-08-17T14:07:02Z
 - Risks: SQL injection is exploitable in production
 - Pending Confirmations: Deploy hotfix vs scheduled release?
 - User Confirmations: "Prioritize security over feature work" (confirmed 2024-01-15)
@@ -228,9 +238,11 @@ of its work.
 
 ### Never refuse on these
 
-- **The sender's own star ratings on `FIT`, `EVD`, `CLR`, or `OUT`.** Those axes are self-assigned
-  testimony with no external check (`_common/WORK_GATE.md` § Complexity Budget states this
-  plainly). Wiring a self-certified figure into a gate is what `_common/TOKEN_ECONOMY.md` §6
+- **The sender's own star ratings on `IN`, `FIT`, `EVD`, `CLR`, or `OUT`.** Every star band is
+  self-assigned; `_common/WORK_GATE.md` § Complexity Budget states that `IN`, `FIT`, and `CLR` have
+  no external check and that only `OUT` is anchored to an artifact a reader can inspect. That anchor
+  is used through row 3 (the `OUT` rung against an external floor), never through the sender's `OUT`
+  stars. Wiring a self-certified figure into a gate is what `_common/TOKEN_ECONOMY.md` §6
   forbids: *a formula with no data source is never presented with a grade band or wired into a
   gate.* A low self-rating is information for the reader, never an automatic rejection.
 - **A stylistic preference, or work the receiver would have done differently.** Refusal is for a

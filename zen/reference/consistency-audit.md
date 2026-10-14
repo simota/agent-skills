@@ -98,7 +98,7 @@ Detection-heavy categories typically handled inside Judge's review loop; Zen exe
 |------|-------|-------------------|--------------|
 | **Focused** | 1-3 | ≤50 | Direct refactoring (standard Zen scope) |
 | **Module** | 4-10 | ≤100 | Mechanical pattern replacement only |
-| **Project-wide** | 10+ | Plan only | Generate migration plan, execute in multiple PRs |
+| **Project-wide** | 11+ | Plan only | Generate migration plan, execute in multiple PRs |
 
 ### Tier Rules
 
@@ -106,7 +106,7 @@ Detection-heavy categories typically handled inside Judge's review loop; Zen exe
 
 **Module (4-10 files):** Extended to 100 lines max. **Restricted to mechanical pattern replacement** — same transform applied identically. No logic or behavioral changes. Single pattern category across the batch. Tests BEFORE and AFTER each batch.
 
-**Project-wide (10+ files):** Migration plan only — no code changes. Plan lists files, priority order, estimated effort per file. Execution split into multiple Focused/Module-tier PRs, each independently testable.
+**Project-wide (11+ files):** Migration plan only — no code changes. Plan lists files, priority order, estimated effort per file. Execution split into multiple Focused/Module-tier PRs, each independently testable.
 
 ---
 

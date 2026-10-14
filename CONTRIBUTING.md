@@ -115,15 +115,16 @@ Route elsewhere when the task is primarily:
 `## INTERACTION_TRIGGERS`（ユーザー確認が必要な決定ポイントの定義）は、必要なエージェントで使用する任意セクションです。
 
 3. 完全なセクション一覧・順序・記法は `_templates/SKILL_TEMPLATE.md` を参照し、それに沿って作成する
-4. **ロスターを更新する（手作業のレジストリは自動同期されない）**:
+4. Complexity Budget（`_common/HARNESS_DEBT.md` §3b）の4項目 `failure` / `effect` / `owner` / `removal` を宣言する。`removal` が空欄なら却下される
+5. **ロスターを更新する（手作業のレジストリは自動同期されない）**:
    - `README.md` / `README_ja.md` のエージェント一覧とエージェント数
    - `index.html`（`const AGENTS` 配列・英訳・カテゴリ件数・件数を記載した全テキスト。`SUBCOMMANDS` は生成物なので手で編集しない）
    - `compass/reference/catalog.md`（カテゴリ節とその件数）
    - `_common/SKILL_PACKS.md`（最低1つのPack、またはoptional／explicit-only配置に登録する）
    - `AGENTS.md` / `CLAUDE.md` のスキル数
-5. Recipes や routing を追加・変更した場合は、それぞれの参照ファイル・ルーティング面を同期し、生成物を再生成する（`python3 _common/scripts/generate-index-subcommands.py`、`python3 _common/scripts/generate-recipes-directory.py`）
-6. `make check` を通す
-7. warning が残る場合は、その warning の仕様に従ってレビュー済み例外として根拠を残す。単に検証を迂回しない
+6. Recipes や routing を追加・変更した場合は、それぞれの参照ファイル・ルーティング面を同期し、生成物を再生成する（`python3 _common/scripts/generate-index-subcommands.py`、`python3 _common/scripts/generate-recipes-directory.py`）
+7. `make check` を通す
+8. warning が残る場合は、その warning の仕様に従ってレビュー済み例外として根拠を残す。単に検証を迂回しない
 
 ### project-local スキルの変更
 
@@ -192,14 +193,13 @@ Examples:
 - [ ] Recipes / routing / shared contract の変更面を同期した
 - [ ] `make check` が通る
 - [ ] warning / reviewed exception を増やした場合、根拠と境界を記録した
-- [ ] 必要な使用例・説明・変更履歴を更新した
+- [ ] 必要な説明・変更履歴を更新した
 
 ## 📝 ドキュメント改善
 
 ドキュメントの改善も歓迎します:
 - 誤字脱字の修正
 - 説明の明確化
-- 使用例の追加
 - 翻訳の改善
 - 実装済み invariant とドキュメントの差分解消
 

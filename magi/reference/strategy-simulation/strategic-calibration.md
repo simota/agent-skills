@@ -17,7 +17,7 @@ Use this after a simulation, quarterly review, or any point where outcomes can b
 
 | Phase | Goal | Keep |
 |---|---|---|
-| `TRACK` | Record what Helm predicted | simulation type, horizon, frameworks, assumptions, confidence, data completeness |
+| `TRACK` | Record what Magi predicted | simulation type, horizon, frameworks, assumptions, confidence, data completeness |
 | `VALIDATE` | Compare predictions with actuals | accuracy rate, bracket rate, downstream utilization |
 | `CALIBRATE` | Tune heuristics conservatively | framework effectiveness, scenario ranges, assumption defaults |
 | `PROPAGATE` | Share reusable learnings | journal note, `EVOLUTION_SIGNAL`, future default updates |
@@ -56,7 +56,7 @@ Track at minimum:
 | Assumption accuracy | Improves default values when data is missing |
 | Scenario bracketing quality | Checks whether optimistic/pessimistic ranges are realistic |
 | Data completeness impact | Shows whether more data materially improves quality |
-| Downstream utilization | Tests whether Helm output is decision-ready |
+| Downstream utilization | Tests whether Magi output is decision-ready |
 
 ## VALIDATE
 
@@ -188,10 +188,10 @@ Write reusable findings to `.agents/helm.md`:
 
 <!-- EVOLUTION_SIGNAL
 type: PATTERN
-source: Helm
+source: Magi
 date: YYYY-MM-DD
 summary: [strategic insight]
-affects: [Helm, Magi]
+affects: [Magi]
 priority: MEDIUM
 reusable: true
 -->

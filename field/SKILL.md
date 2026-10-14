@@ -234,7 +234,7 @@ Activated by the `multi` Recipe or explicit requests for parallel research desig
 
 **Base engine policy**: default Claude + Codex (2 spawns); agy adds a third axis when available at PREFLIGHT. Dual-engine is **not** degraded — it covers quant (Codex) and qual/ethics (Claude); agy adds mixed-methods at scale.
 
-**Field-specific contracts** — full algorithm, JSON schema, coverage matrix, GROUND checklist, subagent prompts → `reference/tri-engine-research.md` § Field-Specific Contracts. Load-bearing rules:
+**Field-specific contracts** — full algorithm, JSON schema, coverage matrix, GROUND checklist, subagent prompts → `reference/tri-engine-research.md` §§ 1. SCOPE – 7. PRESENT and § Parallel Subagent Prompt Skeleton. Load-bearing rules:
 
 - Spawn `research-codex` / `research-agy` / `research-claude` in one message; run PREFLIGHT in main context only.
 - **Loose prompts only** (Role + Target + Output format) — never pass methodology templates, sample-size formulas, SUS/UEQ rubrics, screener archetypes, or JTBD scaffolds. Framework rules apply at SYNTHESIZE, not FAN-OUT.
@@ -262,7 +262,7 @@ Activated by the `multi` Recipe or explicit requests for parallel research desig
 | `reference/tri-engine-research.md` | `multi` — fan-out mechanics, coverage matrix, CLUSTER identity rules, GROUND checklist, Combined-Plan vs Portfolio merge, JSON schema, prompt skeleton. |
 | `_common/SUBAGENT.md` | Base MULTI_ENGINE protocol — engine dispatch, loose prompts, fan-out mechanics, fallbacks. Read before authoring `multi` subagent prompts. |
 | `_common/MULTI_ENGINE_RECIPE.md` | Cross-skill `multi` protocol — Pattern D scoring, PREFLIGHT probe, degraded modes, attribution tags, Implementation Checklist. |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the report, thinking depth at method selection, front-loading question/scope/participants at INTAKE. Critical: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the report, thinking depth at method selection, front-loading question/scope/participants at DEFINE. Critical: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | Core Research-axis agent in `nexus growth-acceptance` Phase 0 — 9 Research Proof fields (source/sample/bias/contradiction/triangulation/recency/decision/confidence/reproducibility). Insights go to the Insight Ledger **queue** (G11: AI never writes directly; Research Lead merges). 3 mandatory categories/quarter — customer/lost-customer/non-customer — to defeat survivor bias. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Field-specific Output/Next schema. |
 

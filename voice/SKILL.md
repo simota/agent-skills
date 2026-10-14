@@ -206,7 +206,7 @@ Routing rules:
 | Growth → Voice | `GROWTH_TO_VOICE` | Conversion data for feedback context |
 | Voice → Field | `VOICE_TO_RESEARCHER` | Feedback insights for research validation |
 | Voice → Spark | `VOICE_TO_SPARK` | Feature ideas from user feedback |
-| Voice → Growth | `VOICE_TO_RETAIN` | Engagement insights for retention |
+| Voice → Growth | `VOICE_TO_GROWTH` | Engagement insights for retention |
 | Voice → Compete | `VOICE_TO_COMPETE` | Competitive feedback for market analysis |
 | Voice → Magi | `VOICE_TO_MAGI` | Customer voice for strategic decisions |
 | Voice → Echo | `VOICE_TO_ECHO` | Persona-specific complaints for journey validation |

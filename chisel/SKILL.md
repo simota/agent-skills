@@ -25,7 +25,6 @@ COLLABORATION_PATTERNS:
 - Chisel -> Scribe: Derived criteria that should become a durable specification document
 - Chisel -> Attest: Acceptance criteria set ready to verify an artifact against
 - Chisel -> Magi: Irreconcilable instruction conflict needing a precedence verdict
-
 - Chisel -> Nexus: Specified Brief for the SPECIFY phase, inherited verbatim by every agent in the chain
 
 BIDIRECTIONAL_PARTNERS:

@@ -334,7 +334,7 @@ Handoff formats → `reference/handoffs.md`
 | `reference/premium-ia-blueprint.md` | Integrating IA, technical SEO, content SEO, and GEO as one structural axis. |
 | `_common/ASSET_PROVENANCE.md` | Hero image or generated illustration enters BUILD — rights, source, and state discipline before shipping. |
 | `_common/CANDIDATE_SELECTION.md` | Narrowing 5+ headline options or multiple hero layout patterns to one — stage funnel and Gate/Trade-off/Preference classification for the selection. |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the LP spec, thinking depth at section/CTA design, front-loading type/audience/goal at FRAME. Critical: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the LP spec, thinking depth at section/CTA design, front-loading type/audience/goal at BRIEF. Critical: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | Generating `channel_proof` / `funnel_proof` in `nexus growth-acceptance` Phase 2. LP authoring is bound by Brand Compiler B.hard + B.pattern; LP copy by `copy_proof` + `tone_proof`. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Funnel-specific Output/Next schema. |
 | `_common/CODE_QUALITY.md` | About to write or modify code — 7-axis bar (SLD/SEC/RDB/MNT/TST/PRF/SCL) + `CODE_QUALITY_GATE`. |

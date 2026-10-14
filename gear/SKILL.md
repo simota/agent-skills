@@ -214,7 +214,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 | `reference/alert-configuration.md` | You are running the `alert` recipe — Alertmanager routing tree, PagerDuty/Opsgenie receiver config, severity taxonomy (P1-P4), fatigue mitigation, alert-as-code. |
 | `reference/secrets-management.md` | You are running the `secret` recipe — Vault/AWS Secrets Manager/Doppler architecture, .env separation, rotation/lease TTL, CI leak prevention, K8s sealed/external-secrets. |
 | `reference/kubernetes-config.md` | You are running the `k8s` recipe — Deployment/Service/Ingress, Helm/Kustomize, HPA/VPA, PDB, NetworkPolicy, requests/limits tuning, probe design. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the Gear deliverable, deciding adaptive thinking depth at supply-chain hardening, or front-loading ecosystem/runtime/scope at DIAGNOSE. Critical for Gear: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the Gear deliverable, deciding adaptive thinking depth at supply-chain hardening, or front-loading ecosystem/runtime/scope at TUNE. Critical for Gear: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Gear-specific Output/Next schema. |
 | `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 

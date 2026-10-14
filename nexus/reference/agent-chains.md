@@ -161,8 +161,8 @@ Each row is a **deviation** from the `routing-matrix.md` default for that task t
 | LOOP_OPS | simple | Orbit (project-local) / Nexus fallback → Builder → Radar |
 | LOOP_OPS | full | Orbit (project-local) / Nexus fallback → Builder → Guardian → Radar |
 | EVOLUTION | quick | Darwin → Canvas |
-| EVOLUTION | standard | Darwin → Architect → Void → Canvas |
-| EVOLUTION | full | Darwin → Architect → Void → Lore → Canvas |
+| EVOLUTION | standard | Darwin → Prune → (MERGE: Architect · SUNSET: User approval) → Canvas |
+| EVOLUTION | full | Darwin → Prune → (MERGE: Architect · SUNSET: User approval) → Lore → Canvas |
 | SKILL_GEN | quick | Sigil → Lens |
 | SKILL_GEN | full | Sigil → Lens → Grove → Gauge |
 | YAGNI | standard | Void → Sweep → Zen → Radar |

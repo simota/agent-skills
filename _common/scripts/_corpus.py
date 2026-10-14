@@ -69,7 +69,10 @@ def external_skill_dirs(root: pathlib.Path) -> list[pathlib.Path]:
     ]
 
 
-def is_excluded_path(entry: pathlib.Path, root: pathlib.Path) -> bool:
+def is_excluded_path(
+    entry: pathlib.Path, root: pathlib.Path,
+    excluded: frozenset[str] = frozenset({".git", ".agents", ".archive", "node_modules"}),
+) -> bool:
     """True when `entry` sits under a directory that never holds live corpus content.
 
     `INFRA_DIRS` answers "is this a skill directory"; this answers "does anything
@@ -77,7 +80,6 @@ def is_excluded_path(entry: pathlib.Path, root: pathlib.Path) -> bool:
     a retired skill is on disk, is not installed, and resolving a live reference
     against it turns a dead link into a passing check.
     """
-    excluded = {".git", ".agents", ".archive", "node_modules"}
     # A link under an excluded directory stays excluded even if its target is
     # live. Conversely a live-looking alias cannot make an archived target live.
     candidates = [(entry.absolute(), root.absolute())]
@@ -93,3 +95,12 @@ def is_excluded_path(entry: pathlib.Path, root: pathlib.Path) -> bool:
         if any(part in excluded for part in parts):
             return True
     return False
+
+
+def is_archived_path(entry: pathlib.Path, root: pathlib.Path) -> bool:
+    """True when `entry` is under `.archive/`: on disk, but a retired skill.
+
+    Narrower than `is_excluded_path` for checks that read tracked files a reader
+    can open: the `.agents/skills/` mirror is live content there, not an exclusion.
+    """
+    return is_excluded_path(entry, root, frozenset({".archive"}))

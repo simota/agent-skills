@@ -181,10 +181,10 @@ CANON_QUESTION:
 | Category | Standards | Reference |
 |----------|----------|-----------|
 | Security | OWASP Top 10:2025, OWASP API Security Top 10:2023, OWASP ASVS 5.0, NIST CSF 2.0, CIS Controls v8.1, CWE Top 25 (2025), NIST SSDF v1.1 | `reference/security-standards.md` |
-| Accessibility | WCAG 2.2 (ISO/IEC 40500:2025), WAI-ARIA 1.2, JIS X 8341-3, European Accessibility Act, WCAG 3.0 (Working Draft — track only) |  |
-| API / Data | OpenAPI 3.1.2 / 3.2, JSON Schema, RFC 9110 (supersedes 7231), GraphQL Spec |  |
-| Quality | ISO/IEC 25010:2023 (9 chars incl. Safety), ISO/IEC 25019:2023 (Quality-in-Use), IEEE 29148 (supersedes 830), Clean Code, SOLID |  |
-| Infrastructure | 12-Factor App, CNCF Best Practices, SRE Principles |  |
+| Accessibility | WCAG 2.2 (ISO/IEC 40500:2025), WAI-ARIA 1.2, JIS X 8341-3, European Accessibility Act, WCAG 3.0 (Working Draft — track only) | — (no dedicated reference; cite the pinned standard) |
+| API / Data | OpenAPI 3.1.2 / 3.2, JSON Schema, RFC 9110 (supersedes 7231), GraphQL Spec | — (no dedicated reference; cite the pinned standard) |
+| Quality | ISO/IEC 25010:2023 (9 chars incl. Safety), ISO/IEC 25019:2023 (Quality-in-Use), IEEE 29148 (supersedes 830), Clean Code, SOLID | — (no dedicated reference; cite the pinned standard) |
+| Infrastructure | 12-Factor App, CNCF Best Practices, SRE Principles | — (no dedicated reference; cite the pinned standard) |
 | AI Agent Skill | Anthropic Skill Specification (2025) | `reference/anthropic-skill-standards.md` |
 | AI Agent Security | OWASP Top 10 for Agentic Applications (2026), OWASP LLM Top 10:2025, OWASP MCP Top 10 (2025), NIST SP 800-53 AI Overlays, MAESTRO | `reference/security-standards.md` |
 | AI Governance | ISO/IEC 42001:2023 (AI Management System), EU AI Act alignment | `reference/security-standards.md` |
@@ -219,10 +219,10 @@ Per-Recipe non-negotiable behaviour -> `reference/recipes-index.md`.
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `OWASP`, `NIST`, `CIS`, `WCAG`, `a11y` | Security or accessibility standards | Cited compliance report | Security or accessibility reference |
-| `OpenAPI`, `RFC`, `ISO 25010`, `12-factor`, `SRE` | API, quality, or infrastructure standards | Cited compliance report | API or quality reference |
+| `OWASP`, `NIST`, `CIS`, `WCAG`, `a11y` | Security or accessibility standards | Cited compliance report | `reference/security-standards.md` (security); accessibility has no dedicated reference |
+| `OpenAPI`, `RFC`, `ISO 25010`, `12-factor`, `SRE` | API, quality, or infrastructure standards | Cited compliance report | No dedicated reference — cite the pinned standard |
 | `SOC2`, `HIPAA`, `ISO 27001`, `audit readiness` | Regulatory control assessment | Control matrix + auditor evidence plan | `reference/regulatory-frameworks.md` |
-| `audit trail`, `evidence room`, `sampling`, `OPA`, `Rego` | Audit evidence or executable-control design | Evidence architecture or policy specification | Regulatory audit/policy reference |
+| `audit trail`, `evidence room`, `sampling`, `OPA`, `Rego` | Audit evidence or executable-control design | Evidence architecture or policy specification | `reference/regulatory-audit-readiness.md` (evidence); `reference/regulatory-frameworks.md` (policy-as-code) |
 | `vendor`, `SIG`, `CAIQ`, `subprocessor` | Third-party risk | Evidence-backed vendor tier and memo | `reference/regulatory-vendor-risk-assessment.md` |
 | `audit`, `compliance report`, `gap analysis` | Multi-standard or multi-framework audit | Consolidated compliance report | `reference/regulatory-compliance-reporting.md` |
 | `ISO 42001`, `AI governance`, `EU AI Act` | AI governance assessment | Governance/regulatory report | Security or GDPR/EU AI Act reference |

@@ -258,7 +258,7 @@ Same structure as the Full Deliberation Report Template above, with title `# MAG
     ║              M A G I   E N G I N E   M O D E                 ║
     ║                                                              ║
     ║           ┌─────────┐  ┌─────────┐  ┌─────────┐             ║
-    ║           │ CLAUDE  │  │  CODEX  │  │ GEMINI  │             ║
+    ║           │ CLAUDE  │  │  CODEX  │  │   AGY   │             ║
     ║           │  ██████ │  │  ██████ │  │  ██████ │             ║
     ║           │ APPROVE │  │ APPROVE │  │ APPROVE │             ║
     ║           └─────────┘  └─────────┘  └─────────┘             ║
@@ -278,7 +278,7 @@ Same structure as the Full Deliberation Report Template above, with title `# MAG
     ║              M A G I   E N G I N E   M O D E                 ║
     ║                                                              ║
     ║           ┌─────────┐  ┌─────────┐  ┌─────────┐             ║
-    ║           │ CLAUDE  │  │  CODEX  │  │ GEMINI  │             ║
+    ║           │ CLAUDE  │  │  CODEX  │  │   AGY   │             ║
     ║           │  ██████ │  │  ██████ │  │  ░░░░░░ │             ║
     ║           │ APPROVE │  │ APPROVE │  │ REJECT  │             ║
     ║           └─────────┘  └─────────┘  └─────────┘             ║
@@ -298,7 +298,7 @@ Same structure as the Full Deliberation Report Template above, with title `# MAG
     ║              M A G I   E N G I N E   M O D E                 ║
     ║                                                              ║
     ║           ┌─────────┐  ┌─────────┐  ┌─────────┐             ║
-    ║           │ CLAUDE  │  │  CODEX  │  │ GEMINI  │             ║
+    ║           │ CLAUDE  │  │  CODEX  │  │   AGY   │             ║
     ║           │  ██████ │  │  ░░░░░░ │  │  ▒▒▒▒▒▒ │             ║
     ║           │ APPROVE │  │ REJECT  │  │ ABSTAIN │             ║
     ║           └─────────┘  └─────────┘  └─────────┘             ║
@@ -318,7 +318,7 @@ Same structure as the Full Deliberation Report Template above, with title `# MAG
     ║              M A G I   E N G I N E   M O D E                 ║
     ║                                                              ║
     ║           ┌─────────┐  ┌─────────┐  ┌─────────┐             ║
-    ║           │ CLAUDE  │  │  CODEX  │  │ GEMINI  │             ║
+    ║           │ CLAUDE  │  │  CODEX  │  │   AGY   │             ║
     ║           │  ░░░░░░ │  │  ░░░░░░ │  │  ░░░░░░ │             ║
     ║           │ REJECT  │  │ REJECT  │  │ REJECT  │             ║
     ║           └─────────┘  └─────────┘  └─────────┘             ║
@@ -358,7 +358,7 @@ Same structure as the Compact Report Template above, with title `## MAGI Engine 
     ║              M A G I   E N G I N E   M O D E                 ║
     ║                                                              ║
     ║           ┌─────────┐  ┌─────────┐  ┌─────────┐             ║
-    ║           │ CLAUDE  │  │  CODEX  │  │ GEMINI  │             ║
+    ║           │ CLAUDE  │  │  CODEX  │  │   AGY   │             ║
     ║           │  ██████ │  │  ██████ │  │  ░░░░░░ │             ║
     ║           │ APPROVE │  │ APPROVE │  │ REJECT  │             ║
     ║           └─────────┘  └─────────┘  └─────────┘             ║

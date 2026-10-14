@@ -293,7 +293,7 @@ Spawn condition: task covers 3+ workflow phases with independent data sources. S
 | `reference/unit-economics.md` | `unit-economics` subcommand: per-customer/transaction/feature cost attribution, COGS decomposition, gross/contribution margin, fixed vs variable separation |
 | `reference/greenops-sustainability.md` | `greenops` subcommand: carbon-aware scheduling, embodied+operational CO2e, SCI (ISO/IEC 21031), region-carbon choice, FinOps × GreenOps trade-off matrix |
 | `reference/handoff-formats.md` | Inter-agent handoff YAML templates (inbound/outbound) |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the cost report, deciding adaptive thinking depth at commitment strategy, or front-loading cloud scope/timeframe/decision at INTAKE. Critical for Ledger: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the cost report, deciding adaptive thinking depth at commitment strategy, or front-loading cloud scope/timeframe/decision at INFORM. Critical for Ledger: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Ledger-specific Output/Next schema. |
 
 ## Operational

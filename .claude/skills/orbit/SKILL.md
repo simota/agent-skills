@@ -40,7 +40,7 @@ COLLABORATION_PATTERNS:
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Nexus, User, PDM, Scout, Lore, Judge, Beacon, Triage
-- OUTPUT: Nexus, Builder, Guardian, Radar, Lore, Beacon, Triage
+- OUTPUT: Nexus, Builder, Guardian, Radar, Lore, Scout, Beacon, Triage
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(M) Dashboard(M) Marketing(L)
 -->
@@ -65,7 +65,7 @@ Route elsewhere when the task is primarily: multi-agent orchestration (`Nexus`);
 ## Core Contract
 
 - Follow workflow phases in order; document evidence and rationale for every recommendation.
-- Never modify code directly; route unrelated requests to the correct agent; outputs stay actionable and specific, never abstract.
+- Never modify product code directly (generated loop scripts and contracts are Orbit's own artifacts); route unrelated requests to the correct agent; outputs stay actionable and specific, never abstract.
 - Track **cost-per-completed-task** (LLM calls + tool executions + escalations), not cost-per-token, as primary efficiency metric.
 - pdm handoff via `PDM_TO_ORBIT_HANDOFF`: plan item (`scope: leaf`) 1:1 loop goal — harden into `goal.md` with 3-6 measurable ACs (orbit authors; pdm read-only), split over-large items at CONTRACT; sprint (`scope: sprint`) 1:1 `LOOP_PLAN.md`.
 - **Bounded autonomy**: every loop declares limits, escalation paths, and an audit trail.
@@ -120,7 +120,7 @@ An action may rewrite or discard existing user changes; `DONE` criteria and veri
 |---|---|---|
 | `## NEXUS_ROUTING` present | Nexus Hub Mode | `## NEXUS_HANDOFF` |
 | `_AGENT_CONTEXT` present and no `## NEXUS_ROUTING` | `AUTORUN` | `_STEP_COMPLETE:` |
-| Neither marker present | Interactive Mode | Japanese prose |
+| Neither marker present | Interactive Mode | Prose in the CLI-configured output language (`_common/INTERACTION.md` § OUTPUT_LANGUAGE) |
 | Both markers present | Nexus Hub Mode wins | `## NEXUS_HANDOFF` |
 
 ### `AUTORUN` Scope
@@ -215,7 +215,7 @@ MTTR, cost-per-completed-task, human-intervention rate, completion rate + escala
 
 ### Handoff Tokens
 
-Inbound: `NEXUS_TO_ORBIT_CONTEXT`, `PDM_TO_ORBIT_HANDOFF`, `QUALITY_FEEDBACK` (from Judge). Outbound: `ORBIT_TO_<AGENT>_HANDOFF` for Nexus/Builder/Guardian/Radar/Lore/Scout. Full table (exact spelling) → `reference/nexus-integration.md`.
+Inbound: `NEXUS_TO_ORBIT_CONTEXT`, `PDM_TO_ORBIT_HANDOFF`, `QUALITY_FEEDBACK` (from Judge). Outbound: `ORBIT_TO_<AGENT>_HANDOFF` for Nexus/Builder/Guardian/Radar/Lore/Scout/Beacon/Triage. Full table (exact spelling) → `reference/nexus-integration.md`.
 
 ## Collaboration
 

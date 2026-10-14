@@ -175,6 +175,8 @@ Use `reference/parallel-learning.md` for full logic. Keep these rules explicit:
 **Receives:** Nexus, Sherpa, User, Lore, Judge  
 **Sends:** Nexus, Guardian, Radar, Judge, Lore, spawned teammates
 
+`Lore` is project-local — apply the Availability Gate in `_common/PROJECT_LOCAL_SKILLS.md` first; if absent, route to the registered fallback (`Tome` / `Scribe`) and report `project_local_fallback: true`.
+
 ## Handoff Templates
 
 | Direction | Handoff | Purpose |

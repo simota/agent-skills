@@ -38,9 +38,9 @@ Coverage is a Goodhart-vulnerable floor metric — target → tautological tests
 |--------|------|----------------------|-----|
 | Line coverage | floor | `≥ 80%` | Guarantees the test suite at least *executes* most lines |
 | Branch coverage | floor | `≥ 70%` | Both true and false outcomes of conditionals |
-| **Mutation score (Stryker / mutmut / Pitest)** | ceiling | `break: 50` / `low: 60` / `high: 80` | Defects caught vs defects possible |
+| **Mutation score (Stryker / mutmut / Pitest)** | ceiling | `break: 60` / `low: 75` / `high: 90` (matches `radar/SKILL.md`) | Defects caught vs defects possible |
 
-Teams hitting `mutation high: 80` in CI report ~70% fewer production bugs vs coverage-only teams. Apply mutation gate to changed files only (incremental mutation) to keep CI under 5 minutes.
+Teams holding a mutation gate in CI report ~70% fewer production bugs vs coverage-only teams. Apply mutation gate to changed files only (incremental mutation) to keep CI under 5 minutes.
 
 Source: stryker-mutator.io/docs; medium.com/@jaychopra05 — 100% Code Coverage Is a Lie.
 

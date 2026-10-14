@@ -19,7 +19,7 @@ COLLABORATION_PATTERNS:
 - Judge -> Sweep: Code review findings and dead code flags
 - Sentinel -> Sweep: Security audit — outdated dependencies with CVEs
 - Gear -> Sweep: CI build warnings and unused dependency alerts
-- Sweep -> Zen: Cleanup execution
+- Sweep -> Zen: Refactor residue left after removal (readability cleanup, not deletion)
 - Sweep -> Builder: Safe removal implementation
 - Sweep -> Guardian: Cleanup PRs
 - Sweep -> Atlas: Architecture updates after large removals
@@ -56,7 +56,7 @@ Route elsewhere when:
 - Stay within Sweep's domain; route unrelated requests to the correct agent.
 - Treat tool output as evidence, not authority — cross-verify with ≥2 independent signals (grep, git history, framework conventions, config, tests) before proposing deletion.
 - Target 0% dead code rate as the ideal benchmark; track dead-code percentage per scan to measure cleanup progress over time.
-- Require ≥80% test pass rate post-cleanup before marking any batch as verified; abort and rollback if tests drop below baseline.
+- Require the post-cleanup test pass rate to be ≥ the pre-cleanup baseline before marking any batch as verified; abort and rollback if tests drop below baseline.
 - Never recycle or repurpose old flags/feature toggles — remove them entirely.
 ## Boundaries
 ### Always
@@ -202,7 +202,7 @@ Deliver:
 | Gear → Sweep | `GEAR_TO_SWEEP` | CI build warnings and unused dependency alerts |
 | Void → Sweep | `VOID_TO_SWEEP` | Deletion priority and justification |
 | Grove → Sweep | `GROVE_TO_SWEEP_HANDOFF` | Structure-level cleanup candidates |
-| Sweep → Zen | `SWEEP_TO_ZEN` | Cleanup execution |
+| Sweep → Zen | `SWEEP_TO_ZEN` | Refactor residue left after removal (readability cleanup, not deletion) |
 | Sweep → Builder | `SWEEP_TO_BUILDER` | Safe removal implementation |
 | Sweep → Guardian | `SWEEP_TO_GUARDIAN` | Cleanup PRs |
 | Sweep → Atlas | `SWEEP_TO_ATLAS` | Architecture updates after large removals |

@@ -90,5 +90,5 @@ Items 29-30 and 33-35 are the dim-3 proof points (5 total, exceeding the rubric'
 ## Regression discipline
 
 - Re-run items 1-28 whenever `routing-matrix.md`, `signal-keywords.md`, or `nexus/SKILL.md`'s Recipe Registry or `reference/recipes-index.md` changes. Items 1-28 must resolve to byte-identical chain selections across the change — they prove REDIRECT/SELECT priority is untouched.
-- Items 29-30 and 33-35 (out-of-coverage) are the only items expected to exercise the LADDER path; re-run them whenever `routing-matrix.md` § LADDER, `compass/SKILL.md` Output Routing "No matching skill" row, or `architect`'s `ARCHITECT_TO_NEXUS_HANDOFF` schema changes.
+- Items 29-30 and 33-35 (out-of-coverage) are the only items expected to exercise the LADDER path; re-run them whenever `routing-matrix.md` § Classify Flow (LADDER), `compass/SKILL.md` Output Routing "No matching skill" row, or `architect`'s `ARCHITECT_TO_NEXUS_HANDOFF` schema changes.
 - Items 31-32 (ambiguous stress tests) are the only items expected to hard-stop at `GATE`/`REDIRECT` with a clarifying question — a regression here means an ambiguous anchor started silently resolving without a question, which is the DC-1-adjacent failure this battery exists to catch.

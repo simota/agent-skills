@@ -1,6 +1,6 @@
 ---
 name: hone
-description: "Auditing AI CLI configs and designing, configuring, or debugging Claude Code hooks. Use for Codex/agy/Claude Code config reviews, hook lifecycle automation, quality gates, or MCP governance."
+description: "Auditing AI CLI configs and designing, configuring, or debugging Claude Code hooks. Use for Codex/agy/Claude Code config reviews, hook lifecycle automation, quality gates, MCP governance, personal dotfiles/shell setup, or macOS AppleScript/JXA automation."
 ---
 
 <!--
@@ -212,7 +212,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 | `reference/antigravity-config-schema.md` | Settings.json key definitions, safety settings, and extension config. |
 | `reference/claude-code-config-schema.md` | Claude Code settings.json, permissions, MCP, CLAUDE.md, commands, and hooks config. |
 | `reference/audit-checklist.md` | The full audit checklist with PASS/WARN/FAIL criteria. |
-| `reference/key-thresholds.md` | The full rationale, source citations, and detailed semantics for any Key Threshold listed in the SKILL.md summary table. Required when audit reports must include source attribution. |
+| `reference/key-thresholds.md` | The full rationale, source citations, and detailed semantics for any threshold cited in SKILL.md. Required when audit reports must include source attribution. |
 | `reference/web-sources.md` | Source tier classification, search queries, or freshness rules. |
 | `reference/proposal-templates.md` | Before/After diff templates for proposals. |
 | `reference/handoffs.md` | Handoff templates for Builder/Judge/Nexus collaboration. |

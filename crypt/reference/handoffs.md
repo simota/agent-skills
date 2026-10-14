@@ -20,7 +20,7 @@ SENTINEL_TO_CRYPT_HANDOFF:
 ### From Canon[regulatory] (Regulatory Requirements)
 
 ```yaml
-COMPLY_TO_CRYPT_HANDOFF:
+CANON_TO_CRYPT_HANDOFF:
   source: Canon[regulatory]
   content:
     regulation: "[FIPS 140-3 | PCI-DSS | HIPAA | GDPR]"

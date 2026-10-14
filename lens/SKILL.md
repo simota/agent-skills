@@ -176,7 +176,7 @@ Trigger: no new findings after 2 search iterations. Document what was searched, 
 | `monorepo`, `cross-repo`, `impact across services` | Cross-boundary investigation, dependency-graph tracing | Impact Map | `reference/search-strategies.md` |
 | `comprehension debt`, `who understands this code` | Comprehension-debt assessment with hotspots | Comprehension Debt Report, risk-ranked | `reference/investigation-patterns.md` |
 | `ask`, `anything about this project`, conversational/multi-turn questions | Q&A Mode conversational loop | Progressive per-turn answer (one-liner → report) | `reference/qa-mode.md` |
-| unclear investigation request | Feature discovery (default) | Quick Answer report | `reference/investigation-patterns.md` |
+| unclear investigation request | Structure mapping (default `map` Recipe) | Structure Map | `reference/investigation-patterns.md` |
 
 The Signal column is the routing rule: match the question's shape (existence / behavior / organization / data / comprehensibility / cross-service / AI-code risk) to its row and start with that pattern.
 

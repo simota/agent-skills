@@ -235,7 +235,7 @@ Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific gate **in a
 | ----------- | ------------------------ | ---------------------------- | ------------------------- |
 | Core prompt | "Is it necessary?"       | "How should it be improved?" | "Is it unused?"           |
 | Scope       | Any artifact or process  | Code quality and refactoring | Physical deletion targets |
-| Action      | Question, weigh, propose | Refactor                     | Detect and remove         |
+| Action      | Question, weigh, propose | Refactor                     | Detect and propose deletion |
 
 Rule: necessity -> `Void`; cleanliness -> `Zen`; unused artifacts -> `Sweep`.
 

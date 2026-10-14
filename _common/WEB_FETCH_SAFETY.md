@@ -147,7 +147,7 @@ When passing fetched content to another agent or to the final output:
 
 - Wrap content in a labelled, fenced block:
   ```
-  <fetched_content source="https://example.com" trust="untrusted">
+  <fetched_content source="https://example.com" trust="external">
   …content…
   </fetched_content>
   ```

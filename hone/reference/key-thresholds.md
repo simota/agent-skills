@@ -1,6 +1,6 @@
 # Hone — Key Thresholds Reference
 
-**Purpose:** Authoritative thresholds Hone applies during AUDIT. SKILL.md keeps a summary table; this file holds the full text + rationale + source citations.
+**Purpose:** Authoritative thresholds Hone applies during AUDIT. SKILL.md cites individual thresholds inline; this file holds the full text + rationale + source citations.
 
 **Read when:** Auditing CLAUDE.md / GEMINI.md / AGENTS.md size, settings hierarchy, hooks, MCP transport, plugins, or prompt cache hierarchy.
 

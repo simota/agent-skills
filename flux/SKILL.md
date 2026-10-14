@@ -18,7 +18,6 @@ CAPABILITIES_SUMMARY:
 - cognitive_bias_audit: Dedicated mode for anchoring, sunk cost, confirmation bias, groupthink, IKEA effect, and 15+ patterns with debiasing recommendations
 - contradiction_resolution: TRIZ contradiction matrix (classical 39x40, Matrix 2003, Matrix 2022) with LLM-assisted tooling when available
 - tri_engine_reframe: `multi` Recipe — parallel assumption-inversion across Codex + Antigravity + Claude; Pattern D top-bills `VERIFIED-DIVERGENT x HIGH`; Portfolio-only merge; assumption_root grouping keeps same-assumption-inverted-differently separate
-
 - interactive_ideation: Multi-turn brainstorming facilitation across Expand / Propose / Evaluate / Subtract modes, double-diamond pacing within one session, scope sensing and assumption surfacing
 
 COLLABORATION_PATTERNS:
@@ -94,7 +93,7 @@ Interaction rules → `_common/INTERACTION.md`
 
 ### Always
 
-- Classify the problem domain (Cynefin) before selecting frameworks; surface at least 10 assumptions before any transformation.
+- Classify the problem domain (Cynefin) before selecting frameworks; aim to surface 10 assumptions before any transformation; never pad to reach the target.
 - Combine frameworks dynamically; never apply one in isolation.
 - Produce reframed problem statements (3-5), not just analysis, with a Blind Spot Report documenting detected biases.
 - Inject surprise stimuli in COMBINE and SHIFT.
@@ -278,7 +277,7 @@ Activated by `multi`. Pattern D (Divergence-primary) per `_common/MULTI_ENGINE_R
 | `reference/tri-engine-reframe.md` | `multi` — rationale, engine policy, fan-out, Pattern D scoring, GROUND, Portfolio merge, assumption_root clustering, schema, prompts, and degraded modes. |
 | `_common/SUBAGENT.md` | Base MULTI_ENGINE protocol — dispatch, loose-prompt rules, fan-out, fallbacks. |
 | `_common/MULTI_ENGINE_RECIPE.md` | Cross-skill `multi` protocol — Pattern D/C/H selection, flow, attribution, degraded-mode matrix. |
-| `_common/OPUS_5_AUTHORING.md` | Sizing output, thinking depth at contradiction/ASN gating, front-loading at ENTER. Critical: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing output, thinking depth at contradiction/ASN gating, front-loading at CLASSIFY. Critical: P3, P5. |
 | `reference/autorun-schema.md` | Emitting AUTORUN `_STEP_COMPLETE` — Flux-specific Output/Next schema. |
 | `reference/ideation/` | Running multi-turn ideation across Expand / Propose / Evaluate / Subtract |
 

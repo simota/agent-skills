@@ -18,7 +18,6 @@ CAPABILITIES_SUMMARY:
 - rest_semantics_specialist: Resource modeling, URI design, status taxonomy, ETag conditional requests, cursor vs offset pagination, HATEOAS/RMM, RFC 9457 Problem Details
 - graphql_schema_specialist: Schema-first vs code-first trade-off, DataLoader for N+1 prevention, persisted queries, query depth / complexity limits, schema stitching vs Apollo Federation / Relay spec, subscription transport design
 - webhook_provider_design: Standard Webhooks or Stripe-style HMAC-SHA256 with timingSafeEqual, idempotency-key, exponential-backoff retry with DLQ, ordering guarantees, payload vs thin-notification, CloudEvents 1.0.2, RFC 8594/9745 signaling
-
 - messaging_platform_integration: Slack/Discord/Telegram/LINE channel adapters with unified message normalization, bot command frameworks, WebSocket/SSE lifecycle with heartbeat and horizontal scaling, CloudEvents/AsyncAPI event routing
 
 COLLABORATION_PATTERNS:
@@ -73,7 +72,9 @@ Route elsewhere when the task is primarily:
 - Database schema design: `Schema`
 - API implementation code: `Builder`
 - API documentation beyond spec: `Quill`
-- Security audit beyond API layer (threat modeling, penetration testing): `Sentinel`
+- Threat modeling beyond the API layer: `Breach`
+- Penetration testing / DAST: `Probe`
+- Static security audit beyond the API layer: `Sentinel`
 - E2E API testing: `Voyager`
 - Load testing / chaos engineering for APIs: `Siege`
 
@@ -123,7 +124,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ## Workflow
 
-`SURVEY → DESIGN → VALIDATE → PRESENT`
+`SURVEY → DESIGN → VALIDATE → PRESENT` (+ optional `PIPELINE` after `PRESENT` when CI integration is in scope)
 
 | Phase | Focus | Required checks | Read |
 |-------|-------|-----------------|------|
@@ -218,7 +219,7 @@ Receives data models, implementation needs, and security requirements upstream; 
 
 | Agent | Gateway owns | They own |
 |-------|-------------|----------|
-| Sentinel | API-layer security design (OAuth scope, rate limiting, CORS headers) | Broad security audit, threat modeling, penetration testing |
+| Sentinel | API-layer security design (OAuth scope, rate limiting, CORS headers) | Broad static security audit (threat modeling → Breach; penetration testing / DAST → Probe) |
 | Builder | API specification, OpenAPI/GraphQL SDL, versioning strategy | API implementation code, route handlers, middleware logic |
 | Canon | API design decisions and rationale | Standards-compliance assessment of the API contract |
 | Scribe[unified] | API contract authoring | Cross-team unified specification packages that embed the API contract |
@@ -247,7 +248,7 @@ Receives data models, implementation needs, and security requirements upstream; 
 | `reference/api-auth-patterns.md` | `auth` — OAuth 2.1/OIDC/JWT/mTLS/API key contract, scopes, key rotation, IdP. |
 | `reference/rate-limit-patterns.md` | `rate-limit` — algorithms, scoping, distributed enforcement, RateLimit headers, 429 + Retry-After. |
 | `reference/deprecation-policy.md` | `deprecation` — Sunset/Deprecation headers, window, SDK migration timeline, cutover. |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the spec, adaptive thinking depth at DESIGN, front-loading consumer profile at SCAN. Critical: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the spec, adaptive thinking depth at DESIGN, front-loading consumer profile at SURVEY. Critical: P3, P5. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Gateway-specific Output/Next schema. |
 | `reference/messaging/` | Designing chat adapters, bots, webhooks, and realtime transports |
 

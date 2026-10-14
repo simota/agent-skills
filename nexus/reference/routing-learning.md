@@ -51,10 +51,10 @@ COLLECT → EVALUATE → EXTRACT → ADAPT → VERIFY → RECORD
 - Whether user manually corrected the chain or re-executed
 - **Near misses** (LT-07): defenses that fired without an incident following — see below
 
-**EVALUATE** — Computes CES (see below). Compares against:
-- Historical average for the same task type
-- Global average across all task types
-- Previous CES for the same chain template
+**EVALUATE** — First appends this run's raw outcome to the `## CES Log` section of the `.agents/nexus.md` journal — `run_id · date · task_type · chain_template · variant · status · errors_recovered/errors · expected_steps/actual_steps · user_corrected · reexec_of` (`variant` names any experiment cohort, e.g. context strategy `continuous`/`reset` or contract `detailed`/`none`; `-` when none. `reexec_of` is the `run_id` this run re-executes, `-` otherwise; the log stays append-only, and a run counts as re-executed when a later row's `reexec_of` names it, so the miss is charged to the original run's cohort, not the retry's) — on every run, LT-01 included. CES is an aggregate over runs, so Nexus computes it from those rows per task-type/chain/variant series once the series holds the minimum below (§ Minimum Data Requirements), never logged per run, and appends a line to the journal's `## CES Series` section each time a series is recomputed (`date · task_type · chain_template · variant · n · window · CES`; the latest line per series is current, earlier lines are its trend history). Nexus owns the aggregate; consumers such as Darwin read `## CES Series` and never recompute it. That log is the history the comparisons below (and Darwin's `ces_trend`) read; without it there is no baseline. Compares against (always within one `variant`; a cohort is never an adaptation baseline for another — the one exception is a declared A/B experiment such as `_common/HARNESS_EVOLUTION.md` HE-04/HE-06, which compares two `variant` cohorts of the same task type and chain template, each meeting § Minimum Data Requirements, and reports the difference rather than adapting routing on it):
+- Historical average for the same series (task type, chain template and variant)
+- Global average across all task types (context only, never an adaptation baseline)
+- Previous CES for the same task type, chain template and variant (the same series)
 
 **EXTRACT** — Triggered when enough data accumulates (LT-02, LT-03). Looks for:
 - Repeated failure at specific chain positions (e.g., "Agent X fails as 2nd step in BUG chains")
@@ -83,7 +83,7 @@ COLLECT → EVALUATE → EXTRACT → ADAPT → VERIFY → RECORD
 
 | ID | Condition | Scope | Actions |
 |----|-----------|-------|---------|
-| LT-01 | Chain execution complete (every time) | Lightweight | COLLECT + EVALUATE only |
+| LT-01 | Chain execution complete (every time) | Lightweight | COLLECT + EVALUATE only (EVALUATE still appends the run's CES Log row) |
 | LT-02 | Same task type fails/PARTIAL 3+ times | Full cycle | All 6 phases |
 | LT-03 | User manually overrides chain selection | Full cycle | All 6 phases |
 | LT-04 | Quality feedback from Judge arrives | Medium | COLLECT → EVALUATE → EXTRACT |
@@ -128,7 +128,7 @@ CES = Success_Rate × 0.35 + Recovery_Efficiency × 0.20 + Step_Economy × 0.20 
 | Component | Weight | Definition | Range |
 |-----------|--------|------------|-------|
 | Success_Rate | 0.35 | Proportion of executions with final STATUS=SUCCESS | 0.0–1.0 |
-| Recovery_Efficiency | 0.20 | Auto-recovery success rate when errors occur | 0.0–1.0 |
+| Recovery_Efficiency | 0.20 | Auto-recovery success rate when errors occur: Σ errors_recovered / Σ errors over the window; 1.0 when the window has no errors (nothing needed recovering) | 0.0–1.0 |
 | Step_Economy | 0.20 | Expected steps / Actual steps (capped at 1.0; lower actual = higher score) | 0.0–1.0 |
 | User_Satisfaction | 0.25 | Proportion completed without user correction or re-execution | 0.0–1.0 |
 
@@ -146,9 +146,11 @@ CES = Success_Rate × 0.35 + Recovery_Efficiency × 0.20 + Step_Economy × 0.20 
 
 ### Minimum Data Requirements
 
-- CES calculation requires ≥ 3 data points for the same task-type/chain combination
-- Grades are provisional until ≥ 5 data points
-- Trend analysis requires ≥ 10 data points
+All three thresholds count runs in one series — the same task type, chain template and `variant`; runs from different variants never pool toward a minimum.
+
+- CES calculation requires ≥ 3 data points in the series
+- Grades are provisional until the series holds ≥ 5 data points
+- Trend analysis requires ≥ 10 data points in the series
 
 ## Routing Adaptation Rules
 

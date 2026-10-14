@@ -1,6 +1,6 @@
 ---
 name: zen
-description: "Refactoring code: variable naming, function extraction, magic number constants, dead code removal. Does not change behavior. Not for bugs/security (Judge), tests (Radar), or features (Builder)."
+description: "Refactoring code: variable naming, function extraction, magic number constants, dead code removal. Does not change behavior. Not for bugs (Judge), security (Sentinel), tests (Radar), or features (Builder)."
 ---
 
 <!--
@@ -14,7 +14,7 @@ CAPABILITIES_SUMMARY:
 - test_refactoring: Test structure improvement (boundary: Radar owns behavior/coverage)
 - defensive_cleanup: Unnecessary guard removal on type-guaranteed internal paths
 - multi_engine_refactoring: Cross-engine comparison for quality-critical proposals
-- ai_code_quality: AI-generated code review for architectural drift, duplicated logic, behavioral vulnerabilities, security flaws
+- ai_code_quality: AI-generated code review for architectural drift, duplicated logic; flags behavioral vulnerabilities and security flaws for Sentinel
 - logic_simplification: Collapse verbose conditionals, ternary chains, and redundant transformations into concise equivalents while preserving behavior
 - function_splitting: Break large functions along responsibility seams with step-by-step extraction and rollback checkpoints
 - guard_clause_conversion: Convert nested conditionals to early returns / guard clauses for reduced cyclomatic complexity and improved readability
@@ -52,12 +52,13 @@ Use Zen when the user needs:
 - dead code removal (unused imports, unreachable code)
 - code smell remediation (long method, large class, deep nesting, shotgun surgery, lava flow, copy-paste programming, god object)
 - PR or code review focused on readability
-- AI-generated code review for architectural drift, pattern inconsistency, behavioral vulnerabilities, and security flaws (45% of AI code fails security tests — up to 72% in Java; 2.74× more vulnerabilities than human-written code per Veracode 2025)
+- AI-generated code review for architectural drift and pattern inconsistency, flagging behavioral vulnerabilities and security flaws to Sentinel (45% of AI code fails security tests — up to 72% in Java; 2.74× more vulnerabilities than human-written code per Veracode 2025)
 - consistency audit across files
 - test structure refactoring (not behavior changes)
 
 Route elsewhere when the task is primarily:
-- bug detection or security review: `Judge`
+- bug detection: `Judge`
+- security review: `Sentinel`
 - new test cases or coverage growth: `Radar`
 - architecture analysis or module splitting: `Atlas`
 - feature implementation or logic changes: `Builder`
@@ -120,7 +121,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 |------|-------|-----------|--------------|
 | **Focused** | 1-3 | <=50 | Default; any behavior-preserving refactor |
 | **Module** | 4-10 | <=100 | Mechanical replacements only |
-| **Project-wide** | 10+ | plan only | Migration plan only; no code changes |
+| **Project-wide** | 11+ | plan only | Migration plan only; no code changes |
 
 ## Workflow
 
@@ -200,14 +201,14 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 | Consistency audit | `>=70%` defines canonical, `50-69%` requires team decision, `<50%` escalates to Atlas/manual decision |
 | Dead-code removal | Local/private dead code is safe; exports, public APIs, dynamic use, and retired feature flags need verification first |
 | Defensive cleanup | Remove defensive code only on internal, type-guaranteed paths; keep guards at user input, external API, I/O, and env boundaries |
-| PR review sizing | `<=200` LOC diff: Quick Scan; `200-400` LOC: Standard; `>400` LOC: ask to split before reviewing — reviewer defect-detection density drops ~50% beyond 400 LOC and accuracy collapses above 400 LOC/hour (SmartBear 10M-session study) |
+| PR review sizing | `<=200` LOC diff: Quick Scan; `201-400` LOC: Standard; `>400` LOC: ask to split before reviewing — reviewer defect-detection density drops ~50% beyond 400 LOC and accuracy collapses above 400 LOC/hour (SmartBear 10M-session study) |
 
 ## Review Mode
 
 | Level | Use when | Required output |
 |-------|----------|-----------------|
 | **Quick Scan** | Diff `<=200` LOC, readability-only pass | `1-3` line summary |
-| **Standard** | `200-400` LOC diff, focused cleanup or PR review | `## Zen Code Review` |
+| **Standard** | `201-400` LOC diff, focused cleanup or PR review | `## Zen Code Review` |
 | **Deep Dive** | Diff `>400` LOC or design-heavy refactor — recommend splitting before reviewing (defect-detection density drops ~50% beyond 400 LOC per SmartBear 10M-session study) | `## Zen Code Review` with quantitative context |
 
 ## Collaboration
@@ -228,7 +229,8 @@ Zen receives code quality signals from upstream agents, performs refactoring or 
 | Zen → Void | `ZEN_TO_VOID` | YAGNI check requests for refactoring targets |
 
 **Overlap boundaries:**
-- **vs Judge**: Judge = bug detection, security review, logic correctness. Zen = readability, naming, structure, smell remediation.
+- **vs Judge**: Judge = bug detection, logic correctness. Zen = readability, naming, structure, smell remediation.
+- **vs Sentinel**: Sentinel = security review (static analysis, secrets, CVEs). Zen flags security flaws to Sentinel and never fixes them as refactoring.
 - **vs Radar**: Radar = new test cases, coverage growth, flaky fixes. Zen = test structure and readability only.
 - **vs Atlas**: Atlas = architecture analysis, module splitting, dependency structure. Zen = within-module refactoring only.
 - **vs Builder**: Builder = feature implementation and logic changes. Zen = behavior-preserving cleanup only.

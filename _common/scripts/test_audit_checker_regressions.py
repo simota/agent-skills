@@ -211,5 +211,22 @@ class CheckerBoundaryTests(unittest.TestCase):
                 self.assertEqual(lessons.check(prefix + register), [])
 
 
+class MarkdownMaskTests(unittest.TestCase):
+    def test_comment_masks_survive_unicode_line_separators(self):
+        # splitlines() also breaks on U+2028; mixing it with split("\n") shifted
+        # every mask after such a character onto the wrong line.
+        sys.path.insert(0, str(SCRIPTS))
+        from _markdown import without_html_comments
+        masked = without_html_comments("a\u2028b\n<!-- hidden -->\nvisible")
+        self.assertNotIn("hidden", masked)
+        self.assertTrue(masked.endswith("\nvisible"))
+
+    def test_sections_are_found_in_crlf_files(self):
+        # Splitting on "\n" alone leaves "\r" on each line; headings must still match.
+        sys.path.insert(0, str(SCRIPTS))
+        from _markdown import markdown_section
+        self.assertEqual(markdown_section("# A\r\n\r\n## Sec\r\nbody\r\n", "Sec").strip(), "body")
+
+
 if __name__ == "__main__":
     unittest.main()

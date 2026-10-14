@@ -17,7 +17,7 @@ Use `transmute` for **language-pair crossings**: TS→Rust, Go→Rust, Python→
 | Arch / middleware / mock→prod sweep needing no-omission guarantee | `migrate` (case=arch/middleware/mock-to-prod) | Completeness via RESIDUE-GATE, no language crossing |
 | Dependency / deprecated-API modernization | `shift detect`/`modernize` | No language crossing |
 | Internal cleanup, same language | `refactor` / `kaizen` | No language crossing |
-| Cross-platform prototype (RN/Flutter/KMP) | `forge` | Prototype, not behavior-preserving rewrite |
+| Cross-platform prototype (RN/Flutter/Expo) | `forge` | Prototype, not behavior-preserving rewrite. KMP/CMP has no prototype owner; KMP shared logic under native UI goes through `port` |
 
 **Two non-negotiable principles:**
 1. **Idiomatic re-expression, not transliteration.** Map source idioms to *target* idioms. A literal line-by-line port that "looks like Go written in Rust" is a defect — `judge` Phase 5 rejects it.

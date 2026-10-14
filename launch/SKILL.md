@@ -251,7 +251,7 @@ When input contains `## NEXUS_ROUTING`, do not call other agents directly. Retur
 
 ## Collaboration
 
-**Receives:** Plan (release scope, target date, scope changes), Guardian (release commit/tag strategy and report scope), Builder (feature completion, flag integration status), Gear (deployment readiness), Judge (quality trends), Trail (historical anomaly context), Beacon (SLO/SLI baselines), Sentinel (security results), Native (mobile release artifacts)
+**Receives:** Guardian (release commit/tag strategy and report scope), Builder (feature completion, flag integration status), Gear (deployment readiness), Judge (quality trends), Trail (historical anomaly context), Beacon (SLO/SLI baselines), Sentinel (security results), Native (mobile release artifacts), Magi (release Go/No-Go verdicts), Darwin (release timing lifecycle alignment)
 **Sends:** Guardian (tagging/branch), Gear (deployment execution), Triage (incident playbook), Canvas (timeline/report visualization), Quill (CHANGELOG/docs), Experiment (flag evaluation), Pulse (delivery metrics), Sherpa (large-PR split signal), Radar (PR/test correlation), Native (store-compliance feedback)
 
 **Agent Teams Pattern (Specialist Team, 2-3 workers):**
@@ -287,5 +287,8 @@ Mobile-specific Go/No-Go items beyond the standard scored checklist: App Review 
 
 | File | Read this when |
 |------|----------------|
+| `reference/patterns.md` | Multi-agent release orchestration or handoff payload expectations. |
+| `reference/reporting-handoffs.md` | Structured report payloads for Pulse, Canvas, Zen, Sherpa, and Radar. |
+| `reference/mobile-release.md` | `NATIVE_TO_LAUNCH_HANDOFF` / `LAUNCH_TO_NATIVE_HANDOFF` schemas and the mobile Go/No-Go checklist. |
 
 ---

@@ -55,9 +55,9 @@ Orchestrators (Nexus, Rally) should be stateless and replaceable. Session state 
 |--------|-----------|---------|---------|
 | **CES** | Chain Effectiveness Score | `Success_Rate(0.35) + Recovery_Efficiency(0.20) + Step_Economy(0.20) + User_Satisfaction(0.25)` | Overall chain quality (defined in `nexus/reference/routing-learning.md`) |
 | **TES** | Token Efficiency Score | `output_information_tokens / total_tokens_consumed` — **specified, not implemented** | Cost efficiency — detects context bloat and unnecessary verbosity. **Do not cite TES as a measured value or use it as a gate.** No code computes `output_information_tokens`, and this repository's transcripts neither expose nor derive it (`_common/TOKEN_ECONOMY.md` §6). The formula is retained as a specification for a future evaluator pipeline; until one persists the numerator, use the turn-index rule of `TOKEN_ECONOMY.md` §2, which `token-economy.py` can actually check. |
-| **UQS** | Unified Quality Score | `Σ (normalized_agent_score × weight)` → 0-100. Canonical definition and weights: `nexus/reference/quality-iteration.md` § Unified Quality Score | Evaluator-derived deliverable quality. **Not** a human satisfaction rating — user satisfaction enters the ecosystem through the `User_Satisfaction` term of CES, and the two must never be substituted for one another |
+| **UQS** | Unified Quality Score | `Σ (normalized_agent_score × weight)` → 0-100 — **specified, not implemented across runs** (no pipeline persists `normalized_agent_score` per agent; `_common/TOKEN_ECONOMY.md` §6). Canonical definition and weights: `nexus/reference/quality-iteration.md` § Unified Quality Score | Evaluator-derived deliverable quality. Computable only inside one quality-iteration run, from that run's own agent outputs (its in-loop target is that run's stop condition). **Do not cite a UQS history or trend, or use UQS as a cross-run gate here,** until that pipeline exists. **Not** a human satisfaction rating — user satisfaction enters the ecosystem through the `User_Satisfaction` term of CES, and the two must never be substituted for one another |
 
-**Grading (CES — 0-1 scale):** A (≥ 0.90), B (≥ 0.80), C (≥ 0.70), D (≥ 0.60), F (< 0.60) — canonical: `nexus/reference/routing-learning.md` § Grading. TES takes no grade while it is unimplemented; a band applied to a quantity nothing computes reads as a measurement and is how an unmeasured number becomes a gate. UQS is on a 0-100 scale and uses its own bands (90-100 Excellent · 80-89 Good · 70-79 Acceptable · 60-69 Fair · <60 Poor); do not read it against this table.
+**Grading (CES — 0-1 scale):** A (≥ 0.90), B (≥ 0.80), C (≥ 0.70), D (≥ 0.60), F (< 0.60) — canonical: `nexus/reference/routing-learning.md` § Grading. TES takes no grade while it is unimplemented; a band applied to a quantity nothing computes reads as a measurement and is how an unmeasured number becomes a gate. UQS is on a 0-100 scale; its specification carries its own bands (90-100 Excellent · 80-89 Good · 70-79 Acceptable · 60-69 Fair · <60 Poor), which serve the in-run quality-iteration loop only and are **not a harness-evolution gate** while no pipeline persists UQS across runs; do not read it against this table.
 
 ---
 
@@ -68,9 +68,9 @@ Orchestrators (Nexus, Rally) should be stateless and replaceable. Session state 
 | HE-01 | Guardrail Levels | Models frequently make critical mistakes | L2+ trigger frequency drops 50% over baseline | Count L2/L3/L4 triggers per 100 tasks |
 | HE-02 | Agent Chain Length | Multi-agent decomposition produces better results | CES grade A + step_economy approaches 1.0 | CES score with single-agent vs multi-agent |
 | HE-03 | Recovery Chains | Auto-recovery is frequently needed | Recovery invocation rate drops below 5% | Recovery triggers per 100 executions |
-| HE-04 | Context Reset Strategy | Sonnet struggles with large context | `continuous` strategy shows no quality degradation vs `reset` | UQS comparison across strategies |
+| HE-04 | Context Reset Strategy | Sonnet struggles with large context | `continuous` strategy shows no quality degradation vs `reset` | CES comparison across strategies (declared A/B of two `variant` cohorts, same task type and chain — `nexus/reference/routing-learning.md` EVALUATE) |
 | HE-05 | Evaluator Loop Iterations | Multiple loops needed for quality | First-iteration ACCEPT rate exceeds 80% | ACCEPT rate at iteration 1 |
-| HE-06 | Sprint Contract Detail | Detailed contracts needed for alignment | Contract-free executions show no quality degradation | UQS comparison with/without contracts |
+| HE-06 | Sprint Contract Detail | Detailed contracts needed for alignment | Contract-free executions show no quality degradation | CES comparison with/without contracts (declared A/B of two `variant` cohorts, same task type and chain — `nexus/reference/routing-learning.md` EVALUATE) |
 
 ---
 
@@ -85,7 +85,7 @@ Orchestrators (Nexus, Rally) should be stateless and replaceable. Session state 
 3b. `python3 _common/scripts/token-economy.py --severity warning` — token-economy snapshot (`_common/TOKEN_ECONOMY.md`). A P0 (`TE-INTEGRITY`) finding means a billed transcript record lost its `requestId`/usage or has conflicting duplicate usage — treat it as a data-integrity bug in the transcript pipeline, not a cost signal, and investigate before trusting any total from this run. A P1 (`TE-CONCENTRATION`) or P2 (`TE-LONGTAIL`) finding means session length is driving cost (`TOKEN_ECONOMY.md` §2) — feed it into step 4's EFS review. Do not answer it with a SKILL.md body-size change: §1 of that doc requires session length to be fixed first and the corpus re-measured before body size is judged worth touching, because body cost scales with the turns that follow the load.
 3c. `python3 _common/scripts/lint-contracts.py --severity warning --report` — contract-delivery snapshot (`_common/scripts/lint-contracts.py`). This is the only check that asks whether a contract can reach a running agent at all, so it is where a corpus-wide edit shows up first: a spine contract whose direct-naming count fell means skills stopped loading it without any of them changing behaviour visibly. Compare the depth table against the previous cycle's, not against zero — the count that matters is the *delta*.
 4. Invoke `darwin`'s EFS scoring recipe against that snapshot.
-5. If EFS or compliance drift crosses `gauge`'s stability-index thresholds (<10% stable / 10-20% investigate / >20% intervene — `gauge/SKILL.md` CAPABILITIES_SUMMARY), kick a skill-evolve run bounded by explicit `MAX_ITERATIONS`/`CIRCUIT_BREAKER` guards rather than an unbounded new loop.
+5. Read EFS and compliance drift against `gauge`'s stability-index reference points (<10% stable / 10-20% investigate / >20% intervene — `gauge/SKILL.md` CAPABILITIES_SUMMARY). These are judgment cues, not automatic triggers (`gauge/SKILL.md` § Core Contract and § Phase Details). If judgment says intervene, open a bounded remediation pass — a `darwin` evolution proposal executed by `architect` (`improve`) — with its terminators declared before it starts (an iteration cap and a stop-when-no-improvement condition), rather than an unbounded new loop.
 6. Journal the outcome to `.agents/PROJECT.md`.
 
 This is additive scheduling only (no new script, no new loop, no new agent) — a `schedule`-registered routine pointed at machinery that already exists and is already tested, closing the "prescribed vs. wired" gap between this document's prose cadence and an actually-firing trigger.
@@ -102,7 +102,7 @@ This is additive scheduling only (no new script, no new loop, no new agent) — 
 3. For each component meeting its condition:
      a. Propose simplification (documented in EVOLUTION_SIGNAL)
      b. Run A/B comparison (3 tasks minimum)
-     c. Measure CES/UQS impact (TES is unimplemented — see Metrics Definitions)
+     c. Measure CES impact (TES and UQS are unimplemented — see Metrics Definitions)
      ↓
 4. Apply or reject simplification
      ├─ CES drop <= 0.05 → Apply (safe simplification)
@@ -213,7 +213,7 @@ reusable: true
 
 **Before:** Full SPRINT_CONTRACT with detailed acceptance criteria.
 **After:** Lightweight contract (Goal + Scope only) or contract skipped for MEDIUM complexity.
-**Condition met when:** UQS shows no degradation without detailed contracts.
+**Condition met when:** CES shows no degradation without detailed contracts.
 
 ---
 

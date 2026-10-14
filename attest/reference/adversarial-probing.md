@@ -168,6 +168,7 @@ Use for race conditions, ordering, and parallel activity.
 | `ADVERSARIAL` | `24` | Cover all 6 categories with deeper variants |
 | `AUDIT` | `6` | Focus on `OMS` and `CTR` |
 | `EXTRACT` | `0` | No probing |
+| `GENERATE` | `0` | No probing |
 
 ### Review Sequence
 
@@ -252,6 +253,7 @@ Probe ID convention: `PRB-{category_code}-{NNN}`
 | `ADVERSARIAL` | `24` | All 6 categories with deeper coverage |
 | `AUDIT` | `6` | Focus on `Omission` + `Contradiction` |
 | `EXTRACT` | `0` | No probing |
+| `GENERATE` | `0` | No probing |
 
 Every probe output carries `Probe ID`, `Category`, `Description`, `Spec Gap`, `Risk`, `Suggested Criterion`.
 

@@ -81,7 +81,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 - Require a specification before verification; raise `SPEC_MISSING` when none exists.
 - Extract all acceptance criteria before issuing any verdict.
-- Generate BDD scenarios for every extracted criterion.
+- Generate BDD scenarios for every extracted criterion (`FULL` / `EXTRACT`; `GENERATE` produces only its Recipe's specifications).
 - Cite `file:line` or `spec:section` evidence for every finding and verdict.
 - **Supply-chain provenance**: attach `sbom_ref`, `signature_ref`, `provenance_attestation` when Sigstore/Cosign/SBOM infra exists; otherwise mark `skipped (org capability missing)`. Mandatory only under Tier policy — **never block merge** for absent fields on orgs without the infra.
 - **Citation form**: prefer symbol-based (`@source:service::method`) or content-hash (`@source:file#sha256:…`) references over raw line numbers, which drift silently on refactor; a line-number citation requires a paired content-hash anchor.
@@ -99,7 +99,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 ### Never
 
-- Modify or write production code. `gherkin` step-definition stubs and `property` / `oracle` test code are verification artifacts handed to Radar or Builder, not implementation.
+- Write code of any kind, production or test (`_common/BOUNDARIES.md`: Attest writes no code). `gherkin` emits empty step-definition signatures; `property` / `oracle` emit specifications. Radar writes the test code, Builder the step and oracle implementations.
 - Certify without criterion-by-criterion evaluation.
 - Ignore missing or contradictory spec content.
 - Issue a verdict without adversarial probing.
@@ -133,7 +133,7 @@ Full `AskUserQuestion` YAML -> `reference/criteria-extraction.md` § INTERACTION
 |-------|------|------------------|------|
 | `INGEST` | Load the spec and detect its format | Spec source, format confidence, initial quality flags | `reference/criteria-extraction.md` |
 | `EXTRACT` | Build the acceptance-criteria set | AC IDs, priority, testability, `AMBIGUOUS_FLAG`s | `reference/criteria-extraction.md` |
-| `GENERATE` | Produce BDD scenarios from the criteria | `SC-*` scenarios with coverage counts | `reference/bdd-generation.md` |
+| `GENERATE` | Produce the selected Recipe's artifact from the criteria (BDD scenarios by default; `.feature` files + empty step-definition stubs for `gherkin`, property specifications for `property`, oracle pattern selections for `oracle`) | `SC-*` scenarios with coverage counts, or the Recipe's specifications with the criteria each covers | `reference/bdd-generation.md`, or the Recipe's Read First file |
 | `VERIFY` | Compare implementation to each criterion | Per-criterion verdicts, evidence, runtime-only exclusions | `reference/verification-methods.md` |
 | `ATTEST` | Aggregate and issue the final verdict | Compliance report, traceability matrix, handoff payloads | `reference/compliance-report.md` |
 
@@ -145,8 +145,9 @@ Full `AskUserQuestion` YAML -> `reference/criteria-extraction.md` § INTERACTION
 | `EXTRACT` | Spec only | Acceptance criteria + BDD scenarios | Pre-implementation prep |
 | `AUDIT` | Spec + implementation + tests | Traceability and coverage-gap analysis | Traceability or coverage review |
 | `ADVERSARIAL` | Spec + implementation | Adversarial probe report | Deep gap / edge-case review |
+| `GENERATE` | Spec (+ implementation where the oracle needs it) | test specifications, never test code (Attest writes no code — `_common/BOUNDARIES.md`): `.feature` files + empty step stubs, property specifications, oracle pattern selections — Radar/Builder implement the bodies | Turning criteria into test designs (`gherkin` / `property` / `oracle` only) |
 
-Default `FULL`; auto-detect: spec-only -> `EXTRACT`, spec+tests -> `AUDIT`, explicit adversarial request -> `ADVERSARIAL`.
+Default `FULL`; auto-detect: spec-only -> `EXTRACT`, spec+tests -> `AUDIT`, explicit adversarial request -> `ADVERSARIAL`. `GENERATE` is never auto-detected; only a Recipe binds it.
 
 ## Acceptance Criteria Extraction
 
@@ -202,7 +203,7 @@ Guardrails:
 
 Probe IDs are `PRB-{category_code}-{NNN}` across six categories: Boundary `BND`, Omission `OMS`, Contradiction `CTR`, Implicit `IMP`, Negative `NEG`, Concurrency `CNC` (`reference/adversarial-probing.md`).
 
-**Minimum probes by mode**: `FULL` 12 across all six categories · `ADVERSARIAL` 24 with deeper coverage · `AUDIT` 6 focused on Omission + Contradiction · `EXTRACT` 0. Every probe output carries `Probe ID`, `Category`, `Description`, `Spec Gap`, `Risk`, `Suggested Criterion`.
+**Minimum probes by mode**: `FULL` 12 across all six categories · `ADVERSARIAL` 24 with deeper coverage · `AUDIT` 6 focused on Omission + Contradiction · `EXTRACT` 0 · `GENERATE` 0. Every probe output carries `Probe ID`, `Category`, `Description`, `Spec Gap`, `Risk`, `Suggested Criterion`.
 
 ## Compliance Report
 
@@ -229,8 +230,8 @@ Single source of truth for Recipe definitions. Mode binds each Recipe to an Oper
 | BDD Scenarios | `bdd` | | `EXTRACT` | Generate Given/When/Then scenarios. Spec only; scenario minimums per priority (see BDD Scenario Generation). | `reference/bdd-generation.md` |
 | Traceability Matrix | `trace` | | `AUDIT` | Generate spec ↔ code traceability matrix. 90% coverage is the CERTIFIED threshold. | `reference/traceability-advanced.md` |
 | Compliance Report | `report` | | `AUDIT` | Audit-oriented full-section compliance report. | `reference/compliance-report.md` |
-| Gherkin Authoring | `gherkin` | | `EXTRACT` / `GENERATE` | `.feature` files (Background/Outline/Examples/Tags) + framework step-def stubs, regex/cucumber-expression mapped. | `reference/gherkin-authoring.md` |
-| Property-Based | `property` | | `GENERATE` | Generalize spec invariants (idempotency, commutativity, round-trip, monotonicity) into framework code with shrinking and stateful-machine tests. | `reference/property-based-testing.md` |
+| Gherkin Authoring | `gherkin` | | `GENERATE` | `.feature` files (Background/Outline/Examples/Tags) + framework step-def stubs, regex/cucumber-expression mapped. | `reference/gherkin-authoring.md` |
+| Property-Based | `property` | | `GENERATE` | Generalize spec invariants (idempotency, commutativity, round-trip, monotonicity) into framework-targeted property specifications (generators, shrinking, stateful-machine models) that Radar implements. | `reference/property-based-testing.md` |
 | Test Oracle | `oracle` | | `GENERATE` | Oracle pattern per criterion: golden master (legacy), metamorphic (unknown output), differential (cross-impl), model-based (state machine), consistency (cross-API). | `reference/test-oracle-design.md` |
 
 ### Signal Keywords → Recipe
@@ -243,15 +244,16 @@ Parse the first token of user input:
 - If it matches a Recipe Subcommand in the Recipes table → activate that Recipe; load only the "Read First" file at the initial step.
 - Otherwise → default Recipe (`verify` = AC Verify).
 - Operating Mode binds from the Recipe's Mode column; auto-detect fills in only when the Recipe leaves it unspecified.
-- Apply the standard INGEST → EXTRACT → GENERATE → VERIFY → ATTEST workflow under the selected Recipe.
+- Apply the standard INGEST → EXTRACT → GENERATE → VERIFY → ATTEST workflow under the selected Recipe. In `GENERATE` mode, VERIFY is a static structural check of the generated artifacts (each maps to a criterion; nothing is executed — running them is Radar's, wiring them is Builder's), and ATTEST returns the artifact list instead of a verdict or compliance report.
 
 ## Output Requirements
 
 A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
-- Operating mode used (FULL / EXTRACT / AUDIT / ADVERSARIAL).
+- Operating mode used (FULL / EXTRACT / AUDIT / ADVERSARIAL / GENERATE).
 - Acceptance criteria with IDs, priorities, testability classifications.
-- BDD scenarios with coverage counts per criterion.
+- BDD scenarios with coverage counts per criterion (`FULL` / `EXTRACT`).
+- Generated test specifications (`GENERATE`) with the criteria each covers and the Radar/Builder implementation handoff; `GENERATE` issues no verdict.
 - Per-criterion verdicts with file:line or spec:section evidence.
 - Traceability matrix mapping spec sections to implementation.
 - Adversarial probe results where applicable.

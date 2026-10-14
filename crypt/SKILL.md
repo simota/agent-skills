@@ -151,12 +151,12 @@ Per-Recipe behavior — full parameters, provider notes, and cross-links -> `ref
 |--------|----------|----------------|-----------|
 | `encrypt`, `encryption`, `AES`, `ChaCha` | Symmetric encryption design | Algorithm spec + key management | `reference/patterns.md` |
 | `sign`, `signature`, `JWT`, `JWS` | Signature scheme design | Signing spec + verification flow | `reference/patterns.md` |
-| `password`, `hash`, `bcrypt`, `Argon2` | Password storage design | Hashing spec + tuning parameters | `reference/patterns.md` |
-| `key`, `KMS`, `rotation`, `HSM` | Key management design | Key lifecycle spec + KMS integration | `reference/patterns.md` |
+| `password`, `hash`, `bcrypt`, `Argon2` | Password storage design | Hashing spec + tuning parameters | `reference/password-hashing.md` |
+| `key`, `KMS`, `rotation`, `HSM` | Key management design | Key lifecycle spec + KMS integration | `reference/kms-integration.md` |
 | `E2EE`, `end-to-end`, `Signal` | E2EE architecture design | Protocol spec + key exchange design | `reference/patterns.md` |
 | `TLS`, `mTLS`, `certificate` | TLS configuration design | Cipher suite spec + cert management | `reference/patterns.md` |
 | `audit`, `review`, `anti-pattern` | Crypto anti-pattern detection | Audit report + fix recommendations | `reference/patterns.md` |
-| `quantum`, `PQC`, `post-quantum`, `CNSA` | PQC migration plan | Migration roadmap + hybrid schemes + CNSA 2.0 compliance | `reference/patterns.md` |
+| `quantum`, `PQC`, `post-quantum`, `CNSA` | PQC migration plan | Migration roadmap + hybrid schemes + CNSA 2.0 compliance | `reference/post-quantum-migration.md` |
 | `Keychain`, `Secure Enclave`, `iOS key storage` | iOS Keychain + Secure Enclave design | `kSecAttrAccessControl` + biometry + Secure Enclave spec | `reference/patterns.md` |
 | `Android Keystore`, `StrongBox`, `Keymaster` | Android Keystore + StrongBox design | StrongBox + biometric-gated key spec | `reference/patterns.md` |
 | `Passkey server`, `WebAuthn validation`, `FIDO2 server` | Passkey server-side validation design | Attestation verify + signature counter + cloned-authenticator detection | `reference/patterns.md` |
@@ -270,7 +270,7 @@ Per-Recipe behavior — full parameters, provider notes, and cross-links -> `ref
 | Direction | Handoff | Purpose |
 |-----------|---------|---------|
 | Sentinel → Crypt | `SENTINEL_TO_CRYPT_HANDOFF` | Crypto vulnerability for design fix |
-| Canon[regulatory] → Crypt | `COMPLY_TO_CRYPT_HANDOFF` | Regulatory algorithm requirements |
+| Canon[regulatory] → Crypt | `CANON_TO_CRYPT_HANDOFF` | Regulatory algorithm requirements |
 | Crypt → Builder | `CRYPT_TO_BUILDER_HANDOFF` | Crypto implementation spec |
 | Crypt → Sentinel | `CRYPT_TO_SENTINEL_HANDOFF` | Design for security verification |
 
@@ -283,7 +283,7 @@ Per-Recipe behavior — full parameters, provider notes, and cross-links -> `ref
 | `reference/password-hashing.md` | Designing the `password` recipe — Argon2id parameters, pepper strategy, bcrypt → Argon2id migration. |
 | `reference/kms-integration.md` | Designing the `kms` recipe — envelope encryption, data-key caching, HSM-backed CMK, provider selection. |
 | `reference/post-quantum-migration.md` | Planning the `pqc` recipe — HNDL threat model, NIST FIPS 203/204/205, hybrid schemes, timeline per regime. |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the crypto spec, deciding adaptive thinking depth at DESIGN, or front-loading compliance scope/security-strength target at SCAN. Critical for Crypt: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the crypto spec, deciding adaptive thinking depth at DESIGN, or front-loading compliance scope/security-strength target at THREAT. Critical for Crypt: P3, P5. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Crypt-specific Output/Next schema. |
 
 ## Operational

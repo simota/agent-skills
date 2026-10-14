@@ -25,7 +25,7 @@ Purpose: Use this file before refactoring to avoid process failures, unsafe scop
 | **ANTI-006 Golden Hammer** | Same recipe proposed for every smell | Wrong abstraction, more complexity | Map problem to recipe. Stop if complexity increases. |
 | **ANTI-007 Premature Abstraction** | Shared utility extracted too early | Indirection without value | Apply Rule of Three. Two similar spots are not enough. Three repetitions justify evaluation. |
 | **ANTI-008 Speculative Generality** | Code kept "for future use" | Dead code and maintenance noise | Prefer YAGNI. Use dead-code detection tools and remove unused paths deliberately. |
-| **ANTI-009 Shotgun Refactoring** | One rename or smell fix touches many files | Review burden and regression risk | `Module = 4-10 files, mechanical only`. `Project-wide = 10+ files, plan only`. Split execution into later passes. |
+| **ANTI-009 Shotgun Refactoring** | One rename or smell fix touches many files | Review burden and regression risk | `Module = 4-10 files, mechanical only`. `Project-wide = 11+ files, plan only`. Split execution into later passes. |
 | **ANTI-010 Copy-Paste Refactoring** | Patterns copied from other projects without local fit | Context mismatch and inconsistency | Prefer project-native naming and patterns. Use `consistency-audit.md` before importing external style. |
 ## Cognitive Biases
 | Bias | Failure mode | Countermeasure |

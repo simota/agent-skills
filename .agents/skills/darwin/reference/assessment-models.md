@@ -93,13 +93,18 @@ Measures whether agent outputs are improving over time.
 
 ```
 Hard gate (evaluated BEFORE the weighted score):
-  if uqs_trend == declining, or gauge reports any open P0 finding
+  if ces_trend == declining, or gauge reports any open P0 finding
   → Quality is capped at 40 and the triggering condition is reported on its own line
 
-Quality = uqs_trend × 0.4 + feedback_ratio × 0.3 + health_score × 0.3
+Quality = ces_trend × 0.4 + feedback_ratio × 0.3 + health_score × 0.3
 
 Where:
-  uqs_trend    = direction of UQS over last 3 cycles (improving=100, stable=60, declining=20)
+  ces_trend    = direction of Nexus CES over last 3 cycles (improving=100, stable=60, declining=20),
+                 read per like-for-like series (same task-type/chain/variant,
+                 `nexus/reference/routing-learning.md` § Safety Guardrails, Like-for-like baseline row) that holds
+                 ≥ 10 data points (§ Minimum Data Requirements). `declining` only when most
+                 qualifying series decline; no qualifying series → neutral 60, never `declining`
+                 (CES, not UQS: UQS is specified, not implemented — _common/TOKEN_ECONOMY.md §6)
   feedback_ratio = positive Reverse Feedback / total Reverse Feedback × 100
   health_score = latest Architect Health Score (if available, else 50)
 ```
@@ -107,13 +112,13 @@ Where:
 **Why the gate precedes the average.** A weighted mean lets a rising `feedback_ratio` offset declining output quality, and it lets an open P0 compliance finding disappear into a 70. Evaluate the gate first, report the triggering condition on its own line, and carry gauge's per-severity PASS/PARTIAL/FAIL counts next to the score rather than folding them in — `gauge` deliberately reports per severity and never one composite grade (`gauge/SKILL.md`).
 
 **Scoring guide:**
-- 100: UQS improving, positive feedback dominant, high health score
-- 80: UQS stable-good, mostly positive feedback
-- 60: UQS plateau, mixed feedback
-- 40: UQS declining, negative feedback increasing
+- 100: CES improving, positive feedback dominant, high health score
+- 80: CES stable-good, mostly positive feedback
+- 60: CES plateau, mixed feedback
+- 40: CES declining, negative feedback increasing
 - 20: Poor quality indicators across the board
 
-**Data sources:** Judge UQS history, Reverse Feedback entries, Architect Health Score.
+**Data sources:** Nexus CES history (`nexus/reference/routing-learning.md` EVALUATE), Reverse Feedback entries, Architect Health Score.
 
 #### Adaptability (15%)
 
@@ -314,7 +319,7 @@ Scale: 100 at 0 days, 0 at 67+ days. This encourages regular agent maintenance.
 | **Stable** | 60-79 | Agent is relevant, usage is adequate | Monitor for trends |
 | **Dormant** | 40-59 | Agent is underused relative to its potential | Review affinity match |
 | **Declining** | 20-39 | Agent relevance is dropping | Investigate cause, consider improvement |
-| **Sunset** | 0-19 | Agent may no longer be needed | Verify with Void, consider retirement |
+| **Sunset** | 0-19 | Agent may no longer be needed | Verify with Prune, consider retirement |
 
 ---
 

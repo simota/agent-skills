@@ -5,24 +5,34 @@ description: "Authoring Storybook stories, component catalogs, and Visual Regres
 
 <!--
 CAPABILITIES_SUMMARY:
-- Storybook story creation (CSF 3.0, CSF factories, MDX 3, autodocs, play functions, addon-vitest)
-- React Cosmos fixture creation (installed-version controls, decorators, fixture export shapes)
-- Story coverage audit (variant/state/a11y/interaction scoring with quantitative thresholds, built-in coverage reports)
-- Visual regression testing setup (Chromatic, Playwright VRT, Lost Pixel, Applitools Eyes AI diff)
-- Forge preview story enhancement (prototype → production quality)
-- Multi-framework support (React Storybook 10, Vue Histoire, Svelte 5, Ladle)
-- Component catalog organization (Atoms/Molecules/Organisms hierarchy)
-- Accessibility testing integration (axe-core rules, WCAG 2.2 AA)
-- Portable stories (reuse stories in unit/Vitest tests via composeStories; CSF Factories enable direct story import without composeStories)
-- Storybook 10 features (ESM-only, CSF Factories promoted to Preview for React, 29% lighter than v9, sb.mock Automocking, un-minified dist for debugging, Node 20.16+ required, QR code sharing, tag exclusion filtering, `.test` method for inline test attachment)
-- Storybook 10.3+ features (status-based filtering, component metadata extraction via Volar LanguageService, Reset story button in docs; latest stable: 10.3.x, next: 10.4.0-alpha)
-- Storybook 9.x features (CSF factories experimental, Test Codegen, Story Generation from UI, Testing Widget, 48% leaner deps)
-- Design system metrics tracking (component reuse rate, design-code alignment, a11y pass rate)
-- AI-assisted development (stories as AI context per storybook.js.org/docs/ai/best-practices; addon-mcp for MCP server integration with AI agents — manifest optimization, tag exclusion for context control)
-- React Server Components (RSC) story creation (experimental module-mocking approach, compatible with Storybook addons ecosystem)
-- Git change detection (10.3+, status-value filtering for new/modified/affected stories in sidebar)
+- storybook_story_creation: Storybook story creation (CSF 3.0, CSF factories, MDX 3, autodocs, play functions, addon-vitest)
+- cosmos_fixture_creation: React Cosmos fixture creation (installed-version controls, decorators, fixture export shapes)
+- story_coverage_audit: Story coverage audit (variant/state/a11y/interaction scoring with quantitative thresholds, built-in coverage reports)
+- visual_regression_setup: Visual regression testing setup (Chromatic, Playwright VRT, Lost Pixel, Applitools Eyes AI diff)
+- forge_preview_enhancement: Forge preview story enhancement (prototype → production quality)
+- multi_framework_support: Multi-framework support (React Storybook 10, Vue Histoire, Svelte 5, Ladle)
+- catalog_organization: Component catalog organization (Atoms/Molecules/Organisms hierarchy)
+- a11y_testing_integration: Accessibility testing integration (axe-core rules, WCAG 2.2 AA)
+- portable_stories: Portable stories (reuse stories in unit/Vitest tests via composeStories; CSF Factories enable direct story import without composeStories)
+- storybook_10_features: Storybook 10 features (ESM-only, CSF Factories promoted to Preview for React, 29% lighter than v9, sb.mock Automocking, un-minified dist for debugging, Node 20.16+ required, QR code sharing, tag exclusion filtering, `.test` method for inline test attachment)
+- storybook_10_3_features: Storybook 10.3+ features (status-based filtering, component metadata extraction via Volar LanguageService, Reset story button in docs; latest stable: 10.3.x, next: 10.4.0-alpha)
+- storybook_9_features: Storybook 9.x features (CSF factories experimental, Test Codegen, Story Generation from UI, Testing Widget, 48% leaner deps)
+- design_system_metrics: Design system metrics tracking (component reuse rate, design-code alignment, a11y pass rate)
+- ai_assisted_development: AI-assisted development (stories as AI context per storybook.js.org/docs/ai/best-practices; addon-mcp for MCP server integration with AI agents — manifest optimization, tag exclusion for context control)
+- rsc_story_creation: React Server Components (RSC) story creation (experimental module-mocking approach, compatible with Storybook addons ecosystem)
+- git_change_detection: Git change detection (10.3+, status-value filtering for new/modified/affected stories in sidebar)
 
-COLLABORATION_PATTERNS: Prototype→Docs(Forge→Vitrine→Quill) · Design→Catalog(Vision→Vitrine→Vision) · Story→Test(Vitrine→Radar+Voyager) · TokenAudit(Vitrine→Muse→Vitrine) · Animation(Flow→Vitrine→Flow) · UXReview(Palette→Vitrine→Vision) · Demo→Story(Cue→Vitrine→Radar) · ProductionPolish(Artisan→Vitrine→Muse) · PortableStory→UnitTest(Vitrine→Radar via composeStories) · A11yGate(Vitrine→Canon for WCAG compliance)
+COLLABORATION_PATTERNS:
+- Pattern A: Prototype→Docs(Forge→Vitrine→Quill)
+- Pattern B: Design→Catalog(Vision→Vitrine→Vision)
+- Pattern C: Story→Test(Vitrine→Radar+Voyager)
+- Pattern D: TokenAudit(Vitrine→Muse→Vitrine)
+- Pattern E: Animation(Flow→Vitrine→Flow)
+- Pattern F: UXReview(Palette→Vitrine→Vision)
+- Pattern G: Demo→Story(Cue→Vitrine→Radar)
+- Pattern H: ProductionPolish(Artisan→Vitrine→Muse)
+- Pattern I: PortableStory→UnitTest(Vitrine→Radar via composeStories)
+- Pattern J: A11yGate(Vitrine→Canon for WCAG compliance)
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Forge (preview stories), Artisan (production components), Flow (animation states), Vision (design direction), Cue (demo interactions), Palette (UX review findings)
@@ -98,7 +108,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 ### Always
 
 - Use CSF 3.0 with `satisfies Meta<typeof Component>` (Storybook ≤9.0), CSF factories API experimental (9.1), or CSF factories Preview (10+, React only) for type-safe story definitions.
-- Cover all variants and states.
+- Cover high-signal variants and states (error, loading, empty, overflow) toward the `>=80%` target.
 - Include `tags: ['autodocs']` for documentation.
 - Add play functions for user interaction flows.
 - Include a11y addon configuration.

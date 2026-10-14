@@ -54,7 +54,7 @@ When an agent reads `.agents/ECOSYSTEM.md`, follow these rules:
 | Ecosystem Fitness Dashboard | Nexus (Proactive Mode) | To display health summary |
 | Agent Relevance Scores | Individual agents | To understand own relevance |
 | Cross-Agent Discoveries | All agents | When starting a task in a known pattern area |
-| Staleness Report | Architect, Void | When reviewing agent fitness |
+| Staleness Report | Prune, Architect | When reviewing agent fitness (Prune gives the retention verdict; Architect executes merges) |
 
 ### Reading Protocol
 

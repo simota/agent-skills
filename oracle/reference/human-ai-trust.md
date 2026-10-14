@@ -87,7 +87,7 @@ differs sharply between first-time and expert users of the same feature. The sli
 and tenant; cross them here rather than reporting a single number.
 
 **Do not optimize `correct_acceptance` alone.** It is maximized by sending only easy tasks — the
-same degenerate solution described in `reference/cost-optimization.md` § quality floor. Carry
+same degenerate solution described in `reference/cost-optimization.md` § Hard gates apply before optimization, never against it. Carry
 `overreliance` as the paired guardrail metric.
 
 ---

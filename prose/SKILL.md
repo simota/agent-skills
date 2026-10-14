@@ -54,7 +54,7 @@ Use Prose when the user needs:
 Route elsewhere when the task is primarily:
 - i18n extraction and localization: `Polyglot`
 - UI component implementation: `Artisan` or `Builder`
-- visual design or UX review: `Echo`
+- visual design: `Vision`; usability review: `Palette`; persona walkthrough: `Echo`
 - design direction or brand: `Vision`
 - technical documentation or JSDoc: `Quill`
 - formal specification writing: `Scribe`
@@ -121,7 +121,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `AUDIT` | Analyze existing copy, voice framework, terminology, and context; identify mode (CRAFT/AUDIT/VOICE/ONBOARD/A11Y) | Understand existing patterns before writing | — |
+| `AUDIT` | Analyze existing copy, voice framework, terminology, and context; identify mode (CRAFT/AUDIT/VOICE/ONBOARD/A11Y/DESIGN/DISCLOSE) | Understand existing patterns before writing | — |
 | `DRAFT` | Write copy following voice framework, error structure, and accessibility rules | Clarity over cleverness; every word earns its place | — |
 | `REVIEW` | Check against voice guidelines, accessibility requirements, translation readiness, and context | Test in context, not isolation | `reference/accessibility-text-guide.md` |
 | `DELIVER` | Present copy with context, rationale, and implementation notes | Include effectiveness metrics where applicable | — |
@@ -212,7 +212,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 - Translation readiness notes (interpolation, no concatenation, no `aria-label` for translatable strings).
 - Alternative options (2-3 variants where applicable).
 - Implementation notes for Artisan/Builder.
-- Effectiveness measurement suggestions (task completion rate — benchmark: 78-85% average, >90% excellent; error recovery time; SEQ score — benchmark mean: 5.5/7; consider Google HEART framework: Happiness, Engagement, Adoption, Retention, Task success).
+- Effectiveness measurement suggestions (task success rate — industry average 78%, target ≥ 78% (Palette benchmark); error recovery time; SEQ score — industry average 5.1/7, target ≥ 5.5/7; consider Google HEART framework: Happiness, Engagement, Adoption, Retention, Task success).
 
 ## Domain Knowledge
 

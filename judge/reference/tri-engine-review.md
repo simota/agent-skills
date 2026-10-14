@@ -211,7 +211,7 @@ Use `_common/CLI_COMPATIBILITY.md`'s canonical spawn/capture template once per s
 ## Cross-References
 
 - `codex-review-usage.md` — how `review-codex` subagent invokes Codex
-- `antigravity-review-usage.md` — how `review-agy` subagent invokes Gemini
+- `antigravity-review-usage.md` — how `review-agy` subagent invokes agy (Antigravity)
 - `claude-review-usage.md` — how `review-claude` subagent invokes Claude
 - `codex-integration.md` — severity override rules, report template, multi-agent verification rationale
 - `review-anti-patterns.md` — why filtering noise matters more than maximizing recall
@@ -223,6 +223,6 @@ Use `_common/CLI_COMPATIBILITY.md`'s canonical spawn/capture template once per s
 | Mode | Trigger | Flow | Subagent → CLI usage ref |
 |------|---------|------|--------------------------|
 | **Multi-Engine (DEFAULT)** | `/judge`, "review PR / changes" | Fan out 2 (Claude+Codex) or 3 (agy AVAILABLE) subagents -> integrate -> ground -> filter | `review-{codex,claude,agy}` -> matching `*-review-usage.md` |
-| **Single-Engine** | user names one engine, `>=2` unavailable, or `<50` LOC low-risk | Run the named engine via its usage reference | That engine's usage reference |
+| **Single-Engine** | user names one engine, only one of Claude/Codex AVAILABLE, or `<50` LOC low-risk | Run the named engine via its usage reference | That engine's usage reference |
 | **Pair (INTERACTIVE)** | `/judge pair`, "fix as we go" | Seed -> one at a time -> on agree spawn a driver -> re-verify -> next | `reference/pair-review.md` |
 | **GitHub Async** | "review on GitHub", CI/CD | `@codex review` in PR comment | n/a |

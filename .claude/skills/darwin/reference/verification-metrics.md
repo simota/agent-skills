@@ -21,7 +21,7 @@ After every EVOLVE phase, Darwin runs verification to ensure evolution actions d
 | EFS non-regression | EFS did not drop after action | Compare current EFS with pre-action EFS |
 | RS consistency | RS changes correlate with usage | Cross-reference RS delta with PROJECT.md usage |
 | Override relevance | AFFINITY overrides improve routing | Track routing decisions with/without overrides |
-| Sunset validation | Sunset candidates confirmed by Void | Void YAGNI verification completed |
+| Sunset validation | Sunset candidates confirmed by Prune | Prune retention verdict completed |
 | Pattern adoption | Synthesized patterns referenced | Search journal entries for Pattern Card IDs |
 
 ### Timing
@@ -107,12 +107,12 @@ Failure indicators:
 
 ```
 Success criteria:
-  - Void confirms YAGNI assessment
+  - Prune confirms SUNSET retention verdict
   - Retired agent not missed (no manual workarounds appear)
   - EFS does not drop post-retirement
 
 Failure indicators:
-  - Void rejects sunset recommendation
+  - Prune rejects sunset recommendation (KEEP / MERGE verdict)
   - Users manually perform tasks the retired agent handled
   - Coverage dimension of EFS drops
 ```

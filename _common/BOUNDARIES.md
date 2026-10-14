@@ -50,7 +50,7 @@ yet distinct from its neighbour, and `architect`'s overlap check is the place th
 | **Prune** | Roster cleanup proposals | Overlap and inactivity audit, merge and sunset plans — propose-only | Never |
 
 **Key distinctions:**
-- Compass answers *which skill*; Nexus answers *in what order and runs it*. Compass never executes the work it recommends, and Nexus's LADDER spawns Compass before hand-rolling a chain for an unmatched request (`nexus/reference/routing-matrix.md` § LADDER)
+- Compass answers *which skill*; Nexus answers *in what order and runs it*. Compass never executes the work it recommends, and Nexus's LADDER spawns Compass before hand-rolling a chain for an unmatched request (`nexus/reference/routing-matrix.md` § Classify Flow (LADDER))
 - Compass recommends from the **global** roster as it stands; Sigil designs a **project-local** operating layer that does not exist yet. "Nothing here fits" is Compass's Gap mode, which routes to Architect for a global skill or Sigil for a repo-specific one — the split is global-permanent vs project-scoped, not recommend vs design
 - Compass reports a gap; Architect closes it. A request Compass cannot match is not Compass's to solve
 - Prune proposes removals and never performs them: a merge is executed by Architect, a sunset needs user approval, and target skills are read-only during the audit. Prune measures the roster as it is (overlap, activity, retention score); project-local Darwin judges where the ecosystem should go; Void cuts scope inside product code, not skills. Prune also owns the `HD-ENTROPY` near-duplication sweep one level below the roster — `_common/` protocols and `*/reference/` files (`_common/HARNESS_DEBT.md` §4)
@@ -78,7 +78,7 @@ yet distinct from its neighbour, and `architect`'s overlap check is the place th
 - Delivery status → PDM. It reconciles two sources — documented intent (specs, roadmap, issues) against implemented code — and reports the gap; Lens explains *how* the code works and reads only one side. "Is feature X shipped?" → PDM; "how does feature X work?" → Lens
 - PDM reports status and never acts on it: priority scoring → Rank, conformance to a written spec's acceptance criteria → Attest, release notes and delivery metrics from PR history → Launch. PDM composes these specialists rather than duplicating them
 - Current architecture → Atlas. Change impact → Ripple
-- Incident diagnosis → Triage. Known-pattern auto-fix → Mend. Unknown fix → Builder
+- Incident diagnosis → Triage. Known-pattern auto-fix → Mend. Unmatched pattern → back to Triage; confirmed code defect → Builder
 - Bug root cause → Scout. Incident severity → Triage
 - Legacy system rule extraction → Trail (`static-rules`). Migration execution → Shift
 
@@ -291,11 +291,11 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Omen** | Pre-mortem analysis & failure mode enumeration | FMEA, fault tree, Swiss Cheese, Murphy audit | Never |
 | **Seek** | Search & vector DB architecture | Full-text/vector/hybrid search, RAG retrieval | Partial (mappings) |
 | **Weave** | Workflow & state machine design | FSM/Statechart, Saga patterns, approval flows | Partial (YAML/specs) |
-| **Native** | Mobile development | React Native/Flutter/SwiftUI/Jetpack Compose | Yes |
+| **Native** | Mobile development | SwiftUI/Jetpack Compose (pure-native iOS/Android/macOS) | Yes |
 | **Rank** | Priority quantification | ICE/RICE/WSJF/MoSCoW/Kano scoring | Never |
 
 **Key distinctions:**
-- Mobile app development → Native. Mobile-responsive frontend → Artisan
+- Mobile app development → Native (pure-native); RN / Flutter / Expo prototypes → Forge; production RN / Flutter / Compose Multiplatform UI is out of scope (external implementer — `nexus/reference/agent-disambiguation.md`); KMP shared logic under native UI → Port blueprint, Builder implements. Mobile-responsive frontend → Artisan
 - The grammar a machine parses — regex, a parser, a DSL — is Builder. A contract between services is Gateway, a contract with a database is Schema. The ReDoS axis is Sentinel: a pattern that is correct and catastrophically backtracking passes every other review
 - Weave owns *when* work runs and how time is reasoned about — cron expressions, DST and timezone arithmetic, business-calendar rules, and the backoff curve of a retry — alongside the state transitions themselves. It does not own *what* happens on failure at chain level: that is Nexus error handling. Scheduling infrastructure itself (runners, queues) is Gear or Scaffold
 - Priority scoring → Rank. Multi-perspective decisions → Magi

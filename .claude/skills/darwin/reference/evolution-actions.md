@@ -30,11 +30,11 @@ current_phase ≠ stored_phase AND current_confidence ≥ 0.60
 
 ### ET-02: Quality Plateau
 
-**Condition:** UQS has not changed significantly for 3+ consecutive Judge cycles.
+**Condition:** CES has not changed significantly for 3+ consecutive Nexus cycles. Evaluate per like-for-like series (same task-type/chain/variant) and only for a series holding ≥ 10 CES data points (`nexus/reference/routing-learning.md` § Minimum Data Requirements); never across mixed chains.
 
 **Detection:**
 ```
-abs(uqs[cycle_n] - uqs[cycle_n-3]) < 5% of uqs[cycle_n-3]
+abs(ces[cycle_n] - ces[cycle_n-3]) < 5% of ces[cycle_n-3]
 ```
 
 **Action:** Initiate improvement chain: Judge → Architect for ecosystem-level quality review.

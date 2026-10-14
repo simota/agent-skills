@@ -260,7 +260,7 @@ Receives security findings, standard requirements, and codebase analysis upstrea
 | `reference/ccpa-cpra.md` | Working on California-targeted features and need consumer-rights endpoints, GPC parsing with visible confirmation, SPI limit-use mechanics, service-provider/contractor/third-party contract distinctions, or 2026 ADMT/risk-assessment readiness. |
 | `reference/appi-japan.md` | Processing data of subjects in Japan and need the personal information (個人情報) / pseudonymously processed information (仮名加工情報) / anonymously processed information (匿名加工情報) distinction, Article 24 cross-border transfer paths, Article 23 opt-out filing, special care-required personal information (要配慮個人情報) consent surface, or PPC notification thresholds. |
 | `reference/pseudonymization-techniques.md` | Choosing a de-identification technique — k-anonymity / l-diversity / t-closeness / differential privacy parameters, tokenization vs HMAC vs FPE primitives, key custody and destruction to distinguish pseudonymized from anonymized data under GDPR Art. 4(5). |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the privacy report, deciding adaptive thinking depth at classification/DPIA, or front-loading regulations/sensitivity/jurisdiction at SCAN. Critical for Cloak: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the privacy report, deciding adaptive thinking depth at classification/DPIA, or front-loading regulations/sensitivity/jurisdiction at DISCOVER. Critical for Cloak: P3, P5. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Cloak-specific Output/Next schema. |
 
 ## Output Requirements

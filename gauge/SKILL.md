@@ -17,19 +17,18 @@ CAPABILITIES_SUMMARY:
 
 COLLABORATION_PATTERNS:
 - Architect -> Gauge: New agent notification triggers initial compliance scan
-- Darwin -> Gauge: Ecosystem evolution signal triggers full re-scan
+- Darwin -> Gauge: Ecosystem evolution signal triggers full re-scan; health signals for compliance context
 - Lore -> Gauge: Pattern insights inform detection pattern refinement
 - Gauge -> Architect: Critical non-compliance (P0 failures) triggers redesign request
 - Gauge -> Darwin: Ecosystem health data for fitness scoring
 - Gauge -> Nexus: Routing updates when checklist evolves
 - Gauge -> Sigil: Detection pattern insights inform skill generation templates
-- Gauge -> Sentinel: Supply chain security review request for untrusted/community skills
+- Gauge -> Chain: Supply chain security review request for untrusted/community skills (`GAUGE_TO_CHAIN_ESCALATION`)
 - Beacon -> Gauge: Observability patterns inform compliance monitoring approach
-- Darwin -> Gauge: Ecosystem health signals for compliance context
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Architect (new agent notifications), Darwin (evolution signals, ecosystem health), Lore (pattern insights), Beacon (observability patterns)
-- OUTPUT: Architect (redesign requests), Darwin (health data), Nexus (routing updates), Sigil (detection pattern insights), Sentinel (supply chain security review)
+- OUTPUT: Architect (redesign requests), Darwin (health data), Nexus (routing updates), Sigil (detection pattern insights), Chain (supply chain security review)
 
 PROJECT_AFFINITY: universal
 -->
@@ -60,7 +59,7 @@ Route elsewhere when the task is primarily:
 - spec-vs-implementation verification: `Attest`
 - industry standard compliance (OWASP, WCAG): `Canon`
 - runtime agent behavior validation (not structural): `Sentinel`
-- security audit of imported/community skills (prompt injection, credential theft, supply chain): `Sentinel`
+- security audit of imported/community skills (prompt injection, credential theft, supply chain): `Chain`
 
 ## Core Contract
 
@@ -108,7 +107,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Deploy uncalibrated detection rules — rules with false positive rate > 15% cause alert fatigue and erode trust in audit results (parallel: RegTech systems saw 40% false positive flags before ML-based calibration).
 - Treat checklist as static — static guardrails become outdated as ecosystem conventions evolve; schedule periodic recalibration against actual SKILL.md corpus.
 - Ignore contextual validity — keyword-only detection without context analysis flags valid domain-specific patterns as violations (e.g., Japanese technical terms in otherwise English body text).
-- Audit structural compliance alone when skills originate from untrusted sources — Snyk's ToxicSkills study found 36% of community skills contain security flaws, with 13.4% critical-level (prompt injection, credential theft, malware, exposed secrets); route to Sentinel for security-layer review per OWASP Agentic Skills Top 10 (incubator-stage project) [Source: owasp.org/www-project-agentic-skills-top-10] before adoption.
+- Audit structural compliance alone when skills originate from untrusted sources — Snyk's ToxicSkills study found 36% of community skills contain security flaws, with 13.4% critical-level (prompt injection, credential theft, malware, exposed secrets); route to Chain for security-layer review per OWASP Agentic Skills Top 10 (incubator-stage project) [Source: owasp.org/www-project-agentic-skills-top-10] before adoption.
 - Adjust calibration thresholds without documenting the FP/FN trade-off rationale — undocumented threshold changes create audit gaps and make it impossible to reconstruct calibration decisions during review.
 
 ## Workflow
@@ -221,7 +220,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 ## Collaboration
 
 **Receives:** Architect (new agent notifications), Darwin (ecosystem evolution signals), Lore (pattern insights from cross-agent knowledge), Beacon (observability and monitoring patterns for compliance approach)
-**Sends:** Architect (P0 non-compliance redesign requests), Darwin (ecosystem health data for fitness scoring), Nexus (routing updates when checklist evolves), Sigil (detection pattern insights for skill generation templates), Sentinel (supply chain security review for untrusted/community skills)
+**Sends:** Architect (P0 non-compliance redesign requests), Darwin (ecosystem health data for fitness scoring), Nexus (routing updates when checklist evolves), Sigil (detection pattern insights for skill generation templates), Chain (supply chain security review for untrusted/community skills)
 
 **Overlap boundaries:**
 - **vs Darwin**: Darwin = ecosystem macro-evolution and fitness. Gauge = individual SKILL.md micro-structural audit.

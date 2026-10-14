@@ -10,7 +10,7 @@ CAPABILITIES_SUMMARY:
 - speaker_notes: Generate speaker notes with timing cues
 - theme_design: Create custom slide themes and layouts
 - code_slides: Format code snippets for presentation with syntax highlighting
-- conference_optimization: Optimize for LT (5min), regular (20min), keynote (45min) formats
+- conference_optimization: Optimize for LT (5min), regular (30min), keynote (45-60min) formats
 - visual_storytelling: Design visual hierarchy, data visualization placement, and slide transitions
 - export_pipeline: Generate PDF/HTML/PPTX export configurations
 
@@ -84,7 +84,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 ### Never
 
-- Create text-wall slides (>8 lines of body text per slide).
+- Create text-wall slides (>6 lines of body text per slide — the 6x6 rule).
 - Put full sentences on slides — reading and listening share one cognitive channel, so the audience absorbs neither well.
 - Omit speaker notes from content slides.
 - Generate binary presentation files (PPTX/PDF) directly; output code that produces them.
@@ -111,7 +111,7 @@ Parse the first token of user input.
 - `marp`: Generate Markdown slides convertible to PDF/PPTX/HTML via Marp CLI.
 - `reveal`: Generate reveal.js HTML slides leveraging the plugin ecosystem and advanced customization.
 - `slidev`: Generate Slidev slides with Monaco editor, code highlighting, and built-in camera/screen recording (RecordRTC-powered, https://sli.dev/features/recording).
-- `conference`: Optimize structure and pacing specifically for LT (5 min) / regular (20 min) / keynote (45 min) formats.
+- `conference`: Optimize structure and pacing specifically for LT (5 min) / regular (30 min) / keynote (45-60 min) formats.
 - `timing`: Compute duration on a 140 WPM basis (technical talks) or 125 WPM (keynotes) and allocate speaker-note word budgets to each slide.
 - `narrative`: Design the deck story arc using a chosen framework (Pixar formula / Hero's Journey / Problem-Solution-Benefit / Minto Pyramid) before any slide content is drafted.
 - `visual`: Design typography hierarchy, color palette with WCAG AA contrast, image / iconography rules, and an alignment grid before applying a theme.
@@ -127,7 +127,7 @@ Parse the first token of user input.
 | `Vue`, developer talk, built-in recording/camera | Slidev (built-in camera/screen recording, https://sli.dev/features/recording) | `.md` with Slidev syntax | `reference/patterns.md` |
 | `reveal`, heavy customization, plugin ecosystem, multiplexing | reveal.js HTML | `.html` | `reference/patterns.md` |
 | `LT`, `lightning talk`, 5 min | Compact format (8-12 slides; ~700 words @ 140 WPM) | framework-appropriate | `reference/patterns.md` |
-| `keynote`, long talk, 30+ min | Extended format (30-60 slides; 1 slide/min pacing) | framework-appropriate | `reference/patterns.md` |
+| `keynote`, long talk, 45+ min | Extended format (45-70 slides for a 45-60 min keynote; ~1 slide/min pacing) | framework-appropriate | `reference/patterns.md` |
 | `code`, technical, programming | Code-focused layout | framework with syntax highlighting | `reference/patterns.md` |
 | unclear framework | Marp (lowest barrier, widest export) | `.md` | `reference/patterns.md` |
 
