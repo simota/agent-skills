@@ -4,94 +4,7 @@ Read for IMPROVE or a before/after self-modification assessment. Score observed 
 
 ## Health Score Assessment
 
-### Scoring Components
-
-```
-HEALTH_SCORE = Structure(30%) + Content(25%) + Integration(20%) + Activity(15%) + Freshness(10%)
-```
-
-### Structure Score (30%)
-
-| Check Item | Points | Criteria |
-|-----------|--------|----------|
-| SKILL.md exists and well-formed | 10 | Valid frontmatter, owned outcome and boundaries present |
-| Reference delivery | 8 | Every needed reference is reachable at its trigger; zero is valid when none is needed |
-| Handoff contract delivery | 4 | Applicable shared envelope and any unique payload are reachable; no dedicated duplicate file required |
-| Standard sections complete | 5 | Required sections per `_templates/SKILL_TEMPLATE.md` and current lint |
-| Entrypoint size | 3 | Under 500 lines; heavy detail remains on demand, without a size minimum |
-
-**Maximum: 30 points**
-
-### Content Score (25%)
-
-| Check Item | Points | Criteria |
-|-----------|--------|----------|
-| CAPABILITIES_SUMMARY complete | 5 | All capabilities listed for Nexus routing |
-| Boundaries well-defined | 5 | Explicit mandatory actions, approval gates and prohibitions; no quota |
-| Confirmation coverage | 5 | Required approval gates are actionable; templates only when their format is needed |
-| Domain expertise depth | 5 | Reference files contain actionable knowledge |
-| Workflow defined | 5 | Inputs, decisions and completion checks are executable |
-
-**Maximum: 25 points**
-
-### Integration Score (20%)
-
-| Check Item | Points | Criteria |
-|-----------|--------|----------|
-| BIDIRECTIONAL_PARTNERS defined | 5 | Clear INPUT and OUTPUT partners listed |
-| Collaboration patterns | 5 | Declared partner flows have clear ownership; no diagram quota |
-| Handoff templates complete | 5 | Both inbound and outbound handoffs |
-| AUTORUN support | 3 | _AGENT_CONTEXT and _STEP_COMPLETE defined |
-| Nexus Hub Mode | 2 | NEXUS_HANDOFF format defined |
-
-**Maximum: 20 points**
-
-### Activity Score (15%)
-
-| Check Item | Points | Criteria |
-|-----------|--------|----------|
-| Operational logging | 5 | Relevant logging requirements delivered through the operational contract |
-| Journal section | 5 | Agent journal with clear guidelines |
-| Git guidelines reference | 5 | Canonical `_common/GIT_GUIDELINES.md` resolves |
-
-**Maximum: 15 points**
-
-### Freshness Score (10%)
-
-| Check Item | Points | Criteria |
-|-----------|--------|----------|
-| Recent updates (< 30 days) | 4 | File modified within last 30 days |
-| Ecosystem alignment | 3 | Current role boundaries and registry agree; derive counts rather than maintaining copies |
-| No deprecated patterns | 3 | No stale references or outdated formats |
-
-**Maximum: 10 points**
-
-### Context Efficiency Score (Bonus: +0 to 10)
-
-Applied as a tiebreaker on top of the base 100-point Health Score.
-
-| Check Item | Points | Criteria |
-|-----------|--------|----------|
-| Boilerplate ratio < 15% | 3 | Deduplication applied to common sections |
-| Token budget within target | 3 | Section-level token estimates documented |
-| Layout compliance | 2 | Task constraints and completion remain easy to locate in the canonical template order |
-| Compression equivalence verified | 2 | 4-axis verification passed |
-
-**Maximum Bonus: 10 points** (added to base score, used only as tiebreaker for same-grade agents)
-
-See `reference/context-compression.md` for detailed methodology.
-
----
-
-## Grade Interpretation
-
-| Score | Grade | Action | Response Time |
-|-------|-------|--------|---------------|
-| 90-100 | A | No action needed | — |
-| 80-89 | B | Minor improvements optional | Next cycle |
-| 70-79 | C | Schedule improvements | < 2 weeks |
-| 60-69 | D | Priority improvements | < 1 week |
-| < 60 | F | Immediate attention | < 24 hours |
+Canonical rubric, grades and response-time ladder: `reference/review-loop.md` § Agent Health Score and § Improvement Queue. Score the five components there; this file covers prioritization and the proposal format only.
 
 ## Priority Classification
 
@@ -170,4 +83,4 @@ HEALTH_SCORE_REPORT:
 
 ## Integration with Review Loop
 
-The owning cadence and feedback windows remain in `reference/review-loop.md`. Use this rubric at PLAN/CHECK; execute at DO and carry verified results into ACT. SCHEDULED reviews score the selected batch, ON_AGENT_CREATION scores at 7 days, ON_ECOSYSTEM_CHANGE reassesses affected skills, and ON_QUALITY_ALERT requires an immediate P1 proposal.
+The owning cadence and feedback windows remain in `reference/review-loop.md`. Use its rubric at PLAN/CHECK; execute at DO and carry verified results into ACT. SCHEDULED reviews score the selected batch, ON_AGENT_CREATION scores at 7 days, ON_ECOSYSTEM_CHANGE reassesses affected skills, and ON_QUALITY_ALERT requires an immediate P1 proposal.

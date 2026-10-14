@@ -256,7 +256,7 @@ Required_Output:
   - seo_audit: meta, OGP, JSON-LD, heading hierarchy, alt text
   - smo_spec: social share cards (Twitter/X, OG)
   - cro_recommendations: CTA, form, exit-intent
-  - geo_score: AI-citation readiness ≥ 90
+  - geo_score: AI-citation readiness ≥ 15/20  # /20 scale only — never /100
 Constraints:
   target_keywords: <from brief or Field>
   structured_data_types: <Product | Article | Event | Course | FAQ as applicable>
@@ -331,7 +331,7 @@ Constraints:
 | STRUCTURE | wireframe, copy v1, form spec | DESIGN, BUILD, VERIFY |
 | DESIGN | direction.md, tokens, a11y baseline, assets | BUILD, OPTIMIZE, VERIFY |
 | BUILD | production code, prototype, motion impl | OPTIMIZE, VERIFY |
-| OPTIMIZE | Lighthouse 90+, GEO 90+, first variant | VERIFY, LAUNCH |
+| OPTIMIZE | Lighthouse 90+, GEO ≥ 15/20, first variant | VERIFY, LAUNCH |
 | VERIFY | Judge ship-go, Voyager green, Attest 95%+ | LAUNCH |
 | LAUNCH | release dossier, live LP, analytics live | (downstream Experiment runs) |
 
@@ -339,16 +339,16 @@ Constraints:
 
 ## Receiving Handoffs
 
-### From Nexus (`NEXUS_TO_LURE_HANDOFF`)
+### From Nexus (`NEXUS_TO_FUNNEL_HANDOFF`)
 
 Schema in `_common/HANDOFF.md`. `funnel premium` reads `Constraints`, `Scope`, and `Acceptance_Criteria`, selects Recipe, and emits its first `PREMIUM_LP_STAGE_BUNDLE`.
 
-### From Judge (`JUDGE_TO_LURE_FEEDBACK`)
+### From Judge (`JUDGE_TO_FUNNEL_FEEDBACK`)
 
 When Judge sends feedback on a previously shipped LP:
 
 ```yaml
-JUDGE_TO_LURE_FEEDBACK:
+JUDGE_TO_FUNNEL_FEEDBACK:
   Findings: <P1/P2/P3 list>
   Affected_Stages: [VERIFY, OPTIMIZE]  # what should have caught this
   Suggested_Fix: <agent + scope>
@@ -360,12 +360,12 @@ JUDGE_TO_LURE_FEEDBACK:
 
 ## Emitting Outbound Handoffs
 
-### To Atelier (`LURE_TO_ATELIER_HANDOFF`)
+### To Atelier (`FUNNEL_TO_ATELIER_HANDOFF`)
 
 When delegating the whole design pipeline (multi-artifact bundle):
 
 ```yaml
-LURE_TO_ATELIER_HANDOFF:
+FUNNEL_TO_ATELIER_HANDOFF:
   Trigger: "LP + slide + 1-pager + marketing captures bundle"
   Primary_Promise: <one sentence>
   Persona: <persona_id>
@@ -379,24 +379,24 @@ LURE_TO_ATELIER_HANDOFF:
   Return_Schedule: "single closed-loop pipeline"
 ```
 
-### To Nexus (`LURE_TO_NEXUS_ESCALATE`)
+### To Nexus (`FUNNEL_TO_NEXUS_ESCALATE`)
 
 When scope exceeds LP axis:
 
 ```yaml
-LURE_TO_NEXUS_ESCALATE:
+FUNNEL_TO_NEXUS_ESCALATE:
   Reason: <multi-page site | full product | infra | brand identity>
   LP_Slice_Completed: <stages cleared so far>
   Open_Items: <what remains>
   Recommended_Routing: <next orchestrator or chain>
 ```
 
-### To User (`LURE_PROGRESS_REPORT`)
+### To User (`FUNNEL_PROGRESS_REPORT`)
 
 After each stage gate:
 
 ```yaml
-LURE_PROGRESS_REPORT:
+FUNNEL_PROGRESS_REPORT:
   Recipe: <recipe>
   Stage_Reached: <stage>
   Gate_Outcome: PASS | FAIL_REPAIR | FAIL_ESCALATE | CONDITIONAL_PASS

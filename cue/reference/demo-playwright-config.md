@@ -866,7 +866,7 @@ Decision-level thresholds. Implementation detail and rationale live in reference
 | 3-sec hook | Open with layered (visual + text + optional audio) hook in 0–3s — TikTok/Reels drop ~70% otherwise | `reference/demo-scenario-guidelines.md`, `reference/demo-storytelling-archetypes.md` |
 | Duration | `<30s` social/hook, `30-60s` standard, `60-90s` LinkedIn/YouTube optimal, `90-120s` complex; **HARD CAP 120s — split or chapterize past this (engagement -40%)** | `reference/demo-scenario-guidelines.md`, `reference/demo-storytelling-archetypes.md` |
 | Archetypes | `30s` social hook, `60s` Product Hunt/LP/X, `90s` LinkedIn/Hero, `180s` walkthrough (chaptered); `3×45s` series for complex products | `reference/demo-storytelling-archetypes.md` |
-| Platform optimal length | TikTok `21–34s` (Explore-friendly), Reels `<90s`, Shorts `<90s`, YouTube long `60–180s`, LinkedIn `15–60s` B2B | `reference/demo-scenario-guidelines.md` |
+| Platform optimal length | TikTok `21–34s` (Explore-friendly), Reels `<90s`, Shorts `≤60s`, YouTube long `60–180s`, LinkedIn `15–60s` B2B | `reference/demo-scenario-guidelines.md` |
 | Embed steps | `6-8` for email/social, `8-15` for website/docs | `reference/demo-scenario-guidelines.md` |
 | Captions | Open captions (burned-in) for muted-autoplay social; closed captions (`.vtt`) for accessibility / SEO; ≤17 CPS, ≤42 chars/line, ≤2 lines | `reference/demo-captions-design.md` |
 | Caption pipeline | GPT-4o-Transcribe (WER 4.1%) preferred; Whisper-large-v3 fallback; always human QC for product names / homophones | `reference/demo-captions-design.md` |

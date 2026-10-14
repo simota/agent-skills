@@ -1,6 +1,6 @@
 # Operational Review Loop
 
-Use for review scheduling and operational Health Score. `reference/enhancement-framework.md` contains a different artifact-assessment rubric: name the rubric in reports and never compare scores across rubrics. The scoring/priority differences are not resolved by silently merging their tables.
+Use for review scheduling and the canonical Health Score rubric (§ Agent Health Score). `reference/enhancement-framework.md` reuses this rubric for IMPROVE prioritization and proposals; it does not define its own.
 
 ## Review Triggers
 
@@ -38,74 +38,96 @@ TRIGGER_DETECTION:
 
 ## Agent Health Score
 
-### Scoring Formula
+### Scoring Components
 
 ```
 HEALTH_SCORE = Structure(30%) + Content(25%) + Integration(20%) + Activity(15%) + Freshness(10%)
 ```
 
-### Score Components
+### Structure Score (30%)
 
-#### Structure (30%)
+| Check Item | Points | Criteria |
+|-----------|--------|----------|
+| SKILL.md exists and well-formed | 10 | Valid frontmatter, owned outcome and boundaries present |
+| Reference delivery | 8 | Every needed reference is reachable at its trigger; zero is valid when none is needed |
+| Handoff contract delivery | 4 | Applicable shared envelope and any unique payload are reachable; no dedicated duplicate file required |
+| Standard sections complete | 5 | Required sections per `_templates/SKILL_TEMPLATE.md` and current lint |
+| Entrypoint size | 3 | Under 500 lines; heavy detail remains on demand, without a size minimum |
 
-| Item | Points | Criteria |
-|------|--------|----------|
-| Frontmatter valid | 6 | name + description present |
-| CAPABILITIES_SUMMARY | 6 | HTML comment with 5-10 items |
-| Boundaries section | 6 | Always/Ask/Never all present |
-| INTERACTION_TRIGGERS | 4 | Table + YAML templates |
-| AUTORUN Support | 4 | _AGENT_CONTEXT + _STEP_COMPLETE |
-| Nexus Hub Mode | 4 | NEXUS_HANDOFF format |
-| **Max** | **30** | |
+**Maximum: 30 points**
 
-#### Content (25%)
+### Content Score (25%)
 
-| Item | Points | Criteria |
-|------|--------|----------|
-| Clear mission statement | 5 | One sentence, specific outcome |
-| Unambiguous boundaries | 5 | No vague terms |
-| Complete YAML templates | 5 | Valid syntax, required fields |
-| Unique philosophy | 5 | Not copied from other agents |
-| Actionable daily process | 5 | Clear, verifiable steps |
-| **Max** | **25** | |
+| Check Item | Points | Criteria |
+|-----------|--------|----------|
+| CAPABILITIES_SUMMARY complete | 5 | All capabilities listed for Nexus routing |
+| Boundaries well-defined | 5 | Explicit mandatory actions, approval gates and prohibitions; no quota |
+| Confirmation coverage | 5 | Required approval gates are actionable; templates only when their format is needed |
+| Domain expertise depth | 5 | Reference files contain actionable knowledge |
+| Workflow defined | 5 | Inputs, decisions and completion checks are executable |
 
-#### Integration (20%)
+**Maximum: 25 points**
 
-| Item | Points | Criteria |
-|------|--------|----------|
-| INPUT partners defined | 5 | At least 1 partner |
-| OUTPUT partners defined | 5 | At least 1 partner |
-| Collaboration patterns | 5 | At least 1 pattern |
-| Overlap < 30% | 5 | With all existing agents |
-| **Max** | **20** | |
+### Integration Score (20%)
 
-#### Activity (15%)
+| Check Item | Points | Criteria |
+|-----------|--------|----------|
+| BIDIRECTIONAL_PARTNERS defined | 5 | Clear INPUT and OUTPUT partners listed |
+| Collaboration patterns | 5 | Declared partner flows have clear ownership; no diagram quota |
+| Handoff templates complete | 5 | Both inbound and outbound handoffs |
+| AUTORUN support | 3 | _AGENT_CONTEXT and _STEP_COMPLETE defined |
+| Nexus Hub Mode | 2 | NEXUS_HANDOFF format defined |
 
-| Item | Points | Criteria |
-|------|--------|----------|
-| Used in last 30 days | 5 | Evidence of invocation |
-| No reported issues | 5 | No open bugs/complaints |
-| Positive feedback | 5 | User satisfaction signals |
-| **Max** | **15** | |
+**Maximum: 20 points**
 
-#### Freshness (10%)
+### Activity Score (15%)
 
-| Item | Points | Criteria |
-|------|--------|----------|
-| Updated within 90 days | 4 | Last modification date |
-| References current patterns | 3 | No deprecated practices |
-| Ecosystem-aligned | 3 | Consistent with current standards |
-| **Max** | **10** | |
+| Check Item | Points | Criteria |
+|-----------|--------|----------|
+| Operational logging | 5 | Relevant logging requirements delivered through the operational contract |
+| Journal section | 5 | Agent journal with clear guidelines |
+| Git guidelines reference | 5 | Canonical `_common/GIT_GUIDELINES.md` resolves |
+
+**Maximum: 15 points**
+
+### Freshness Score (10%)
+
+| Check Item | Points | Criteria |
+|-----------|--------|----------|
+| Recent updates (< 30 days) | 4 | File modified within last 30 days |
+| Ecosystem alignment | 3 | Current role boundaries and registry agree; derive counts rather than maintaining copies |
+| No deprecated patterns | 3 | No stale references or outdated formats |
+
+**Maximum: 10 points**
+
+### Context Efficiency Score (Bonus: +0 to 10)
+
+Applied as a tiebreaker on top of the base 100-point Health Score.
+
+| Check Item | Points | Criteria |
+|-----------|--------|----------|
+| Boilerplate ratio < 15% | 3 | Deduplication applied to common sections |
+| Token budget within target | 3 | Section-level token estimates documented |
+| Layout compliance | 2 | Task constraints and completion remain easy to locate in the canonical template order |
+| Compression equivalence verified | 2 | 4-axis verification passed |
+
+**Maximum Bonus: 10 points** (added to base score, used only as tiebreaker for same-grade agents)
+
+See `reference/context-compression.md` for detailed methodology.
+
+---
 
 ### Score Interpretation
 
-| Score | Grade | Status | Action |
-|-------|-------|--------|--------|
-| 90-100 | A | Excellent | No action needed |
-| 80-89 | B | Good | Minor improvements optional |
-| 70-79 | C | Acceptable | Schedule improvements |
-| 60-69 | D | At risk | Priority queue |
-| <60 | F | Critical | Immediate attention |
+| Score | Grade | Action |
+|-------|-------|--------|
+| 90-100 | A | No action needed |
+| 80-89 | B | Minor improvements optional |
+| 70-79 | C | Schedule improvements |
+| 60-69 | D | Priority improvements |
+| < 60 | F | Immediate attention |
+
+Response times come from § Improvement Queue below — the only SLA ladder.
 
 ---
 
@@ -115,19 +137,14 @@ HEALTH_SCORE = Structure(30%) + Content(25%) + Integration(20%) + Activity(15%) 
 HEALTH_SCORE_CALCULATION:
   agent: "[Agent Name]"
   date: "[YYYY-MM-DD]"
-
-  structure:  # Max 30
-    frontmatter: 0  # 0-6
-    capabilities_summary: 0  # 0-6
-    boundaries: 0  # 0-6
-    interaction_triggers: 0  # 0-4
-    autorun_support: 0  # 0-4
-    nexus_hub_mode: 0  # 0-4
-    subtotal: 0
-
-  content:  # Max 25
-    mission_statement: 0  # 0-5
-# ...
+  structure: 0      # 0-30
+  content: 0        # 0-25
+  integration: 0    # 0-20
+  activity: 0       # 0-15
+  freshness: 0      # 0-10
+  total: 0          # 0-100 (component maxima already sum to 100 — no second weighting)
+  context_efficiency_bonus: 0  # 0-10, tiebreaker only
+  grade: "[A-F]"
 ```
 
 ---

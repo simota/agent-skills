@@ -15,6 +15,6 @@ _STEP_COMPLETE:
   Validations:
     completeness: "[complete | partial | blocked]"
     quality_check: "[passed | flagged | skipped]"
-  Next: [Nexus | Architect] | DONE
+  Next: [Nexus | Architect | Sigil] | DONE
   Reason: [Why this next step]
 ```

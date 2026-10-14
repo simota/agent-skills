@@ -197,27 +197,31 @@ groups:
 
 ## Error Budget Policy
 
+Gates are keyed to **consumed** budget (canonical in `SKILL.md` Core Contract):
+
 ```
-Green (budget remaining > 50%):
-  - Normal feature development
-  - Risky deployments allowed
-  - Encourage experimentation
+< 50% consumed:
+  - Normal feature development; risky deployments allowed
 
-Yellow (budget remaining 25-50%):
-  - Team analysis meeting
-  - Low-risk deploys only
-  - Pause high-risk changes
-  - Prioritize reliability tasks
+50% consumed:
+  - Review incidents and investigate contributing causes
 
-Red (budget remaining < 25%):
-  - Freeze feature development
-  - All resources on reliability
-  - Release freeze (except emergency patches)
-  - Maintain until budget recovers
+75% consumed:
+  - Slow deployments; prioritize stability work
+
+90% consumed:
+  - Freeze non-critical changes (emergency patches only)
+
+100% consumed:
+  - Halt all deployments until the budget resets
+
+Single-incident gate:
+  - One incident consuming > 20% of the 4-week budget -> postmortem within
+    5 business days, regardless of remaining budget
 
 Policy governance:
   - Designate freeze authority explicitly
-  - VP/Cue escalation path
+  - VP/CTO escalation path
   - If policy feels punitive -> SLO is too tight
   - If degradation occurs before freeze -> SLO is too loose
 ```
@@ -416,13 +420,15 @@ spec:
             team: payments
 ```
 
-Sloth auto-generates two MWMB alert rules per SLO:
+Sloth auto-generates two MWMB alert rules per SLO (`page_alert`, `ticket_alert`), each evaluating multiple window pairs:
 
 | Alert | Window pair | Burn rate | When to fire |
 |-------|-------------|-----------|--------------|
-| Page (critical) | 1h + 5m | 14× | 2% budget consumed in 1h |
-| Ticket (warning) | 6h + 30m | 6× | 5% budget consumed in 6h |
-| Ticket (low) | 3d + 6h | 1× | 10% budget consumed in 3d |
+| Page (critical) | 1h + 5m | 14.4× | 2% budget consumed in 1h |
+| Page (critical) | 6h + 30m | 6× | 5% budget consumed in 6h |
+| Ticket (warning) | 3d + 6h | 1× | 10% budget consumed in 3d |
+
+Sloth's ticket rule also evaluates a 3× (1d + 2h) pair by default.
 
 #### CLI Mode (CI validation)
 

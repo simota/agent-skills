@@ -174,7 +174,7 @@ Six quality axes mapped to agent clusters. `funnel premium` is the conductor; ea
 | Asset (raster / AI) | **Builder** | Hero, lifestyle, atmospheric imagery (paid API — Ask First) |
 | Fidelity QA | **Pixel** | Mockup-to-code visual diff verification |
 
-Pattern: Vision (decide) → Muse (encode) → Palette (humanize) → Frame/Ink/Builder (asset) → Pixel (verify). `funnel premium` scores Design Rubric ≥ 18/24 at DESIGN gate.
+Pattern: Vision (decide) → Muse (encode) → Palette (humanize) → Frame/Ink/Builder (asset) → Pixel (verify). `funnel premium` scores Design Rubric ≥ 20/27 at DESIGN gate.
 
 ### Animation Axis
 
@@ -198,7 +198,7 @@ Pattern: Vision sets motion story → Muse tokenizes → Flow implements → Pal
 | Voice execution | **Prose** | Voice & tone realization in copy across all surfaces |
 | Strategy arbitration | **Magi** | Tone-spectrum trade-offs (clarity vs urgency, formal vs casual) |
 
-Pattern: Vision + Saga + Compete jointly author the Brand System record at STRATEGY → Prose carries voice into copy → Vision validates visual coherence → `funnel premium` runs Three-Channel Coherence Audit (visual / voice / experience) at VERIFY. Score Brand Rubric ≥ 14/20.
+Pattern: Vision + Saga + Compete jointly author the Brand System record at STRATEGY → Prose carries voice into copy → Vision validates visual coherence → `funnel premium` runs Three-Channel Coherence Audit (visual / voice / experience) at VERIFY. Score Brand Rubric ≥ 17/24.
 
 ### Marketing Axis
 

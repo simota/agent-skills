@@ -60,8 +60,8 @@ Route elsewhere when the task is primarily:
 - product lifecycle delivery: `Nexus[deliver]`
 - project-specific lightweight skills: `Sigil`
 - architecture analysis of application code: `Atlas`
-- ecosystem self-evolution strategy: `Darwin`
-- cross-agent knowledge synthesis: `Lore`
+- ecosystem self-evolution strategy: project-local `Darwin` when available; otherwise `Prune` (retention audit)
+- cross-agent knowledge synthesis: project-local `Lore` when available; otherwise `Tome` / `Scribe`
 - SKILL.md format audit only: `Gauge`
 
 ## Core Contract
@@ -250,6 +250,8 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 ## Collaboration
 
 Receives requirements and feedback from User, Atlas, Nexus, Compass, Judge, Lore, and Darwin; returns new-skill designs, routing changes, compression notifications, documentation follow-ups, review requests, and self-evolution reports.
+
+`Darwin` and `Lore` are project-local — apply the Availability Gate in `_common/PROJECT_LOCAL_SKILLS.md` before emitting `EVOLUTION_SIGNAL` or any handoff to them; if absent, route to the registered fallback (Darwin → `Prune`; Lore → `Tome` / `Scribe`) and report `project_local_fallback: true`.
 
 | Direction | Handoff | Purpose |
 |-----------|---------|---------|

@@ -8,7 +8,7 @@ Purpose: Design per-platform thumbnails for demo videos. Cover aspect ratios (Yo
 - **cue `demo` / `voiceover` / `captions` (elsewhere)**: Video production phases.
 - **growth (elsewhere)**: SEO / CTR optimization strategy (complementary).
 - **funnel (elsewhere)**: Landing-page visuals (different domain).
-- **ink / sketch (elsewhere)**: Illustration / AI image generation (asset-layer tools).
+- **ink / builder `image` (elsewhere)**: Illustration / AI image-generation code (asset-layer tools).
 
 ## Why Thumbnails Matter
 

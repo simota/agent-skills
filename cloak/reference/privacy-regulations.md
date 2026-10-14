@@ -145,11 +145,11 @@ Plan APPI projects against this trajectory even before the effective date; the c
 
 ## Regulation Comparison Matrix
 
-| Feature | GDPR | CCPA/CPRA | APPI | EU AI Act (2026-08+) |
+| Feature | GDPR | CCPA/CPRA | APPI | EU AI Act (high-risk from 2027-12-02) |
 |---------|------|-----------|------|----------------------|
 | Opt-in vs Opt-out | Opt-in (consent first) | Opt-out (collect, allow opt-out) | Opt-in (consent for sensitive) | N/A — risk-tier based |
 | Territorial scope | EU residents (worldwide) | CA residents (revenue threshold) | Japan residents + Japan-based operators | EU users (worldwide) |
-| Max penalty | €20M or 4% global revenue | $7,500 per intentional violation | ¥100M or criminal penalties | **€35M / 7%** (prohibited), **€15M / 3%** (high-risk) |
+| Max penalty | €20M or 4% global revenue | $2,663 per unintentional; $7,988 per intentional or minor-related violation | ¥100M or criminal penalties | **€35M / 7%** (prohibited), **€15M / 3%** (high-risk) |
 | DPO required | Certain organizations | No | No (recommended) | Conformity assessor for high-risk |
 | Children's age | <16 (member states may lower to 13) | <16 (COPPA <13) | No specific age threshold | N/A |
 | Breach notification | 72h to DPA | No fixed timeline (AG action) | Promptly to PPC | High-risk system serious-incident reporting |

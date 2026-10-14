@@ -258,6 +258,8 @@ Activated by `multi`. Pattern D (Divergence-primary) per `_common/MULTI_ENGINE_R
 **Receives:** User, Nexus, Magi (deadlocked deliberations), Scribe[unified] (stakeholder conflicts)
 **Sends:** Magi (reframes, insight maps, and strategic reframes), Spark (idea candidates), Atlas (architecture reconceptions), Lore (reusable patterns)
 
+`Lore` is project-local — apply the Availability Gate in `_common/PROJECT_LOCAL_SKILLS.md` first; if absent, route to the registered fallback (`Tome` / `Scribe`) and report `project_local_fallback: true`.
+
 **Overlap boundaries** — Flux transforms *how the problem is seen*; the partner acts on the result. **Magi** decides between known options (its reframing toolkit is a lightweight pre-deliberation step, not a full pipeline). **Spark** proposes features from existing data/patterns. **Echo** simulates personas against UI. **Magi** simulates business scenarios from a given strategy. **Oracle** evaluates AI/ML design — collaborate with it when reframing touches AI system design assumptions. **Ripple** assesses the impact of a specific change; Flux questions whether that change addresses the right problem.
 
 > **Detail**: See `reference/collaboration-packets.md` for handoff formats.

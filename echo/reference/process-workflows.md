@@ -135,13 +135,7 @@ Pass only: (1) Persona profile (age, tech level, context in 2-3 lines), (2) Targ
 
 ## AUTORUN _STEP_COMPLETE Format
 
-```text
-_STEP_COMPLETE:
-  Agent: Echo
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output: [Persona / Flow tested / Average score / Key friction points]
-  Next: Palette | Muse | Canvas | Builder | VERIFY | DONE
-```
+Canonical schema: `reference/autorun-schema.md` (protocol in `_common/AUTORUN.md`) — do not restate it here.
 
 ---
 

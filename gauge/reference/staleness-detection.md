@@ -2,7 +2,7 @@
 
 Purpose: load this when running `gauge staleness` to audit `claude-skills` itself for outdated references. Defines the detection pattern catalog, the false-positive guard rules (so that valid historical citations and migration-guide context are not falsely flagged), and the output format consumed by Gauge's compliance report.
 
-> **Not a code-review tool.** Staleness Detection only catches references that are mechanically out of date — archived OSS, EOL runtimes, superseded version numbers, broken internal `reference/` links, unannotated benchmarks. Conceptual drift, technical-debt scoring, and refactor planning belong to `atlas` / `hex` / `zen`.
+> **Not a code-review tool.** Staleness Detection only catches references that are mechanically out of date — archived OSS, EOL runtimes, superseded version numbers, broken internal `reference/` links, unannotated benchmarks. Conceptual drift, technical-debt scoring, and refactor planning belong to `atlas` / `zen`.
 
 ## Contents
 

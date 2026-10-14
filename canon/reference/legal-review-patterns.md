@@ -7,7 +7,7 @@
 
 ## Pattern 1: Single Document Review
 
-**When to use:** Reviewing a single legal document in isolation. Standard `SCOPE → SCAN → ASSESS → REPORT → SUGGEST` workflow — see SKILL.md → Workflow for the step definitions.
+**When to use:** Reviewing a single legal document in isolation. Standard `LEGAL_SCOPE → CLAUSE_SCAN → LEGAL_ASSESS → REPORT → SUGGEST` workflow — see SKILL.md → Legal Document Workflow for the step definitions.
 
 ---
 
@@ -16,7 +16,7 @@
 **When to use:** Verifying consistency across multiple documents such as Terms of Service and Privacy Policy.
 
 ```
-SCOPE → SCAN (per document) → CROSS-CHECK → REPORT → SUGGEST
+LEGAL_SCOPE → CLAUSE_SCAN (per document) → CROSS-CHECK → REPORT → SUGGEST
 ```
 
 ### Check points
@@ -43,7 +43,7 @@ SCOPE → SCAN (per document) → CROSS-CHECK → REPORT → SUGGEST
 **When to use:** Comprehensive legal-document check prior to launching a new service.
 
 ```
-INVENTORY → SCOPE → SCAN (all documents) → CROSS-CHECK → GAP-ANALYSIS → REPORT
+INVENTORY → LEGAL_SCOPE → CLAUSE_SCAN (all documents) → CROSS-CHECK → GAP-ANALYSIS → REPORT
 ```
 
 ### Document inventory

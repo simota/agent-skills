@@ -340,7 +340,7 @@ These rules govern how Design, Animation, and Branding stay aligned:
 
 1. **Brand system precedes design tokens.** Vision + Saga define brand before Muse generates tokens. Tokens must encode brand decisions, not the inverse.
 2. **Motion story comes from brand archetype.** A "Magi" brand uses deliberate, calm motion; a "Jester" brand uses snappy, playful motion. Flow consults Vision's `direction.md` before authoring motion tokens.
-3. **Design rubric scoring happens before Build.** No production code on a < 18/24 design or < 15/20 motion or < 14/20 brand score. Repair or escalate.
+3. **Design rubric scoring happens before Build.** No production code on a < 20/27 design or < 15/20 motion or < 17/24 brand score. Repair or escalate.
 4. **Detail craft is the Verify checklist's secret tier.** Judge re-walks for cursor states, focus rings, empty states, loading states, error states, icon consistency, image craft. Anything missing = P2 finding.
 
 
