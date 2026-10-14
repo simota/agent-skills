@@ -316,6 +316,17 @@ class RenderGateRegressions(CliFixtures):
         result = self.gate("-kit")
         self.assertEqual(result.returncode, 1, result.stderr)
 
+    def test_posix_argument_order_still_scans(self):
+        """Under POSIXLY_CORRECT the first operand ends options; `--` after the
+        pattern became a file name and every scan failed."""
+        kit = self.work / "kit"
+        kit.mkdir()
+        (kit / "README.md").write_text("{{KIT_NAME}}")
+        self.env["POSIXLY_CORRECT"] = "1"
+        result = self.gate(kit)
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertIn("unrendered {{TOKEN}} placeholders", result.stderr)
+
     def test_template_date_placeholders_are_allowed(self):
         kit = self.work / "kit"
         (kit / "_templates").mkdir(parents=True)

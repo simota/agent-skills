@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """Behavioral regressions for report output integrity and kit rendering."""
 
+from pathlib import Path
+import sys
 import re
 import shutil
 import unittest
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from test_launch_regressions import BASH, NODE, ROOT, CliFixtures
 

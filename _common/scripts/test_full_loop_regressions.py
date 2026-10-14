@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """Run the complete loop runner against Git repositories and saved checkpoints."""
 
+import sys
 from pathlib import Path
 import shlex
 import subprocess
 import tempfile
 import unittest
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from test_skill_templates import ROOT, fixture_environment, template
 

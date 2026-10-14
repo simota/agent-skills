@@ -410,7 +410,8 @@ def changed_paths() -> list[Path]:
     """SKILL.md files changed vs HEAD, including new untracked skills.
 
     `git diff HEAD` alone never lists an untracked file, so a brand-new skill
-    reported `OK ... 0 skill(s)` until it was staged.
+    reported `OK ... 0 skill(s)` until it was staged. Paths the full run never
+    lints (`.archive/`, the `.agents/skills/` mirror) are dropped here too.
     """
     def git(*args: str) -> list[str]:
         return subprocess.run(
@@ -423,7 +424,7 @@ def changed_paths() -> list[Path]:
     paths = []
     for p in out:
         path = REPO_ROOT / p
-        if path.name.lower() == "skill.md":
+        if path.name.lower() == "skill.md" and not _corpus.is_excluded_path(path, REPO_ROOT):
             paths.append(path)
     return paths
 

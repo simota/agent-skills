@@ -15,6 +15,7 @@ import unittest
 from unittest import mock
 
 SCRIPTS = pathlib.Path(__file__).resolve().parent
+sys.path.insert(0, str(SCRIPTS))
 
 
 def load(name: str):
@@ -119,6 +120,15 @@ class TestFrontmatterParsing(FixtureCase):
                 mock.patch.object(frontmatter, 'changed_paths', return_value=[]), contextlib.redirect_stdout(output):
             self.assertEqual(frontmatter.main(), 0)
         self.assertEqual(json.loads(output.getvalue()), {'skill_count': 0, 'findings': []})
+
+    def test_changed_only_skips_paths_the_full_run_skips(self):
+        names = ['.archive/old/SKILL.md', '.agents/skills/local/SKILL.md',
+                 '.claude/skills/local/SKILL.md', 'live/SKILL.md']
+        diff = subprocess.CompletedProcess([], 0, stdout='\0'.join(names))
+        untracked = subprocess.CompletedProcess([], 0, stdout='')
+        with mock.patch.object(frontmatter.subprocess, 'run', side_effect=[diff, untracked]):
+            self.assertEqual(frontmatter.changed_paths(),
+                             [self.root / '.claude/skills/local/SKILL.md', self.root / 'live/SKILL.md'])
 
     def test_git_selection_failure_is_an_error(self):
         with mock.patch.object(sys, 'argv', ['lint-frontmatter.py', '--changed-only']), \

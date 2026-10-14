@@ -34,6 +34,7 @@ class InstallRegressionTests(unittest.TestCase):
         for checker in CHECKERS:
             (self.scripts / f"{checker}.py").write_text("print('checked')\n")
         (self.repo / "alpha").mkdir()
+        (self.repo / "alpha" / "SKILL.md").write_text("# alpha\n")
         self.cli = self.root / "cli with spaces" / "skills"
         self.cli.parent.mkdir()
         self.env = os.environ.copy()
@@ -83,6 +84,7 @@ class InstallRegressionTests(unittest.TestCase):
         foreign.mkdir()
         (self.cli / "foreign").symlink_to(foreign, target_is_directory=True)
         (self.repo / "beta").mkdir()
+        (self.repo / "beta" / "SKILL.md").write_text("# beta\n")
         (self.repo / ".private").mkdir()
 
         self.assert_ok(self.run_make("link-claude"))
@@ -91,11 +93,32 @@ class InstallRegressionTests(unittest.TestCase):
         self.assertFalse((self.cli / "alpha").is_symlink())
         self.assertFalse((self.cli / ".private").exists())
 
-        (self.repo / "beta").rmdir()
+        shutil.rmtree(self.repo / "beta")
         self.assert_ok(self.run_make("link-claude"))
         self.assertFalse((self.cli / "beta").is_symlink())
         self.assert_ok(self.run_make("unlink-claude"))
         self.assertEqual(sorted(p.name for p in self.cli.iterdir()), ["alpha", "foreign"])
+
+    def test_link_skips_directories_that_are_not_skills(self):
+        (self.repo / "docs").mkdir()
+        (self.repo / "_templates").mkdir()
+        self.assert_ok(self.run_make("link-claude"))
+        self.assertFalse((self.cli / "docs").exists())
+        self.assertTrue((self.cli / "_common").is_symlink())
+        self.assertTrue((self.cli / "_templates").is_symlink())
+        self.assertTrue((self.cli / "alpha").is_symlink())
+
+        # A link an earlier installer made to a non-skill directory is pruned.
+        (self.cli / "docs").symlink_to(self.repo.resolve() / "docs", target_is_directory=True)
+        result = self.run_make("link-claude")
+        self.assert_ok(result)
+        self.assertFalse((self.cli / "docs").is_symlink())
+        self.assertIn("docs — not a skill", result.stdout)
+
+        status = self.run_make("status")
+        self.assert_ok(status)
+        self.assertIn("3 linkable directories", status.stdout)
+        self.assertIn("3/3 linked", status.stdout)
 
     def test_link_reports_a_failed_symlink_command(self):
         self.stub_command("ln", "echo 'fixture: cannot create link' >&2; exit 23")
@@ -165,7 +188,8 @@ class InstallRegressionTests(unittest.TestCase):
         self.assert_ok(result)
         args = log.read_text().splitlines()
         self.assertEqual(args[0], "-C")
-        self.assertEqual(args[2:], ["--no-print-directory", "validate", "staged in linked worktree"])
+        self.assertEqual(args[2:], ["--no-print-directory", "validate", "test-catalog",
+                                    "staged in linked worktree"])
         self.assertNotEqual(args[1], str(worktree))
         self.assertFalse(Path(args[1]).exists(), "the index snapshot must be removed")
 

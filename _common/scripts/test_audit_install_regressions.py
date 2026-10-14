@@ -25,6 +25,7 @@ class InstallBoundaryTests(unittest.TestCase):
         self.repo.mkdir()
         shutil.copyfile(REPO_ROOT / "Makefile", self.repo / "Makefile")
         (self.repo / "alpha").mkdir()
+        (self.repo / "alpha" / "SKILL.md").write_text("# alpha\n")
         self.cli = self.root / "cli" / "skills"
         self.cli.mkdir(parents=True)
         self.env = {
@@ -153,10 +154,13 @@ class InstallBoundaryTests(unittest.TestCase):
         self.env.update(PATH=str(bin_dir) + os.pathsep + self.env["PATH"], INSTALL_TEST_LOG=str(log))
         hook = self.repo / ".git" / "hooks" / "pre-commit"
         for relative, expected in (
-            ("launch/scripts/日本語.js", "check"),
-            ("launch/templates/line\nbreak.html", "check"),
-            (".github/workflows/checks.yml", "check"),
-            ("README.md", "validate"),
+            ("launch/scripts/日本語.js", ["check"]),
+            ("launch/templates/line\nbreak.html", ["check"]),
+            (".github/workflows/checks.yml", ["check"]),
+            ("README.md", ["check"]),
+            (".agents/skills/orbit/reference/examples.md", ["check"]),
+            # A skill edit (or a new skill) still reaches the catalog tests.
+            ("beta/SKILL.md", ["validate", "test-catalog"]),
         ):
             with self.subTest(path=relative):
                 path = self.repo / relative
@@ -164,7 +168,8 @@ class InstallBoundaryTests(unittest.TestCase):
                 path.write_text("fixture\n")
                 self.assert_ok(self.run_command("git", "add", "--", relative))
                 self.assert_ok(self.run_command(str(hook)))
-                self.assertEqual(log.read_text().splitlines()[-1], expected)
+                args = log.read_text().splitlines()
+                self.assertEqual(args[args.index("--no-print-directory") + 1:], expected)
                 self.assert_ok(self.run_command("git", "reset", "--quiet"))
 
 

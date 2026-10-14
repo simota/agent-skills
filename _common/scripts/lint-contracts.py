@@ -23,8 +23,8 @@ Checks:
   CD-2  Every owned SKILL.md reaches every spine contract. Depth 1 is a direct naming;
         depth 2 means the contract arrives only if the agent opens the intermediate
         document, which is itself conditional. Both are blocking: every spine contract
-        reaches all 90 skills directly today, so anything less is a regression rather
-        than a backlog item.
+        reaches every owned skill directly today, so anything less is a regression
+        rather than a backlog item.
   CD-3  Every `_common/*.md` is reachable from at least one SKILL.md. A contract no
         skill can reach has no addressee -- it is maintained but never applied.
   CD-4  A SKILL.md never names a repo file that does not resolve from its own base
@@ -78,7 +78,7 @@ COMMON = REPO_ROOT / "_common"
 #: CD-3 does not call a deeply-buried file orphaned when a path to it does exist.
 MAX_HOPS = 3
 
-#: Spine contracts should be named directly. Depth above this is reported, not failed.
+#: Spine contracts must be named directly. Depth above this is a blocking P1 (CD-2).
 DIRECT_DEPTH = 1
 
 #: Backtick-quoted references to any file this repository could own.
