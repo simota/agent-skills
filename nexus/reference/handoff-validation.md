@@ -187,7 +187,7 @@ Level 1 confidence inference (applied automatically):
 | BLOCKED | 0.40 |
 | FAILED | 0.20 |
 
-When `status` is absent, it is inferred deterministically before the table above applies: `FAILED` if `verified` records a failing check; else `PARTIAL` if `verified` records at least one passing check and no failing one; else `BLOCKED` (no evidence — below the 0.60 floor, so Nexus pauses for the user instead of routing on an invented status).
+When `status` is absent, it is inferred as `PARTIAL` (0.60 — routes onward to the named `next_agent` with logged assumptions). `BLOCKED` and `FAILED` are never inferred: `verified` records check results, not the step's outcome (a reproduce-first step legitimately cites a failing test), so only an agent that states them explicitly halts routing.
 
 Level 2 without breakdown: all three components assumed equal to overall confidence.
 

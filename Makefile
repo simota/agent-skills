@@ -187,8 +187,14 @@ test:
 # The catalog modules compare index.html and the READMEs with every SKILL.md and
 # finish in seconds, so the hook runs them on every commit: adding or renaming a
 # skill changes what they assert without touching any path in the `check` list.
+# They evaluate index.html's script with Node.js; without it they are skipped
+# here (CI's `make check` still runs them) rather than blocking every commit.
 test-catalog:
-	@python3 -m unittest discover -s "$$SCRIPTS" -p 'test_*catalog_regressions.py'
+	@if command -v node >/dev/null 2>&1; then \
+	  python3 -m unittest discover -s "$$SCRIPTS" -p 'test_*catalog_regressions.py'; \
+	else \
+	  echo "SKIP    test-catalog: node not found — install Node.js to run the catalog tests locally (CI runs them)"; \
+	fi
 
 check: validate test
 
