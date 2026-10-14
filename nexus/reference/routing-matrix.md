@@ -277,7 +277,7 @@ Canonical rule: `SKILL.md` § Boundaries → Always — use Sherpa when unresolv
 - UI changes → add Muse or Palette.
 - Slow database path → add Tuner.
 - `2+` independent implementation tracks → consider Rally.
-- `<10` changed lines with existing tests → Radar may be skipped — **except BUG and REFACTOR**, where the reproduce-first and safety-net rules keep Radar regardless of size.
+- `<10` changed lines with existing tests → Radar may be skipped — **except** BUG, which always keeps the reproduce-first Radar, and REFACTOR, which always keeps the final VERIFY-EQUIVALENCE Radar (its first SAFETY-NET Radar follows the skip rule in § REFACTOR Phase Contract).
 - Pure documentation work → skip Radar and Sentinel unless the change affects executable behavior.
 
 ### Clarification and Decision Rules

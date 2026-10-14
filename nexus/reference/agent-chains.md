@@ -330,7 +330,7 @@ Builder then applies:
 
 ### Skip Triggers
 
-- Changes under 10 lines AND tests exist → May skip Radar — except BUG (reproduce-first failing test) and REFACTOR (safety-net + verify-equivalence), which always keep Radar
+- Changes under 10 lines AND tests exist → May skip Radar — except BUG (always keeps the reproduce-first failing test) and REFACTOR (always keeps the final verify-equivalence Radar; the first safety-net Radar follows the skip rule in `routing-matrix.md` § REFACTOR Phase Contract)
 - Pure documentation changes → Skip Radar/Sentinel
 - Config files only → Only relevant agent
 - Sentinel-only static issues → May skip Probe

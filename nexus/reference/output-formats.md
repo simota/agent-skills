@@ -222,7 +222,7 @@ Completion sweep: [command run] — [N hits: each mapped to a RES-n, or `pre-exi
 
 Required fields are those of `_common/HANDOFF.md` (Summary, Next, Verified when a pass/done claim is made); the confidence fields below are Nexus-hub enrichment, inferred from `status` when absent (`handoff-validation.md` § NEXUS_HANDOFF_V2 Required Fields).
 
-**Compliance Levels:** Level 1 (Minimal) requires only the `_common/HANDOFF.md` fields (`summary`, `next_agent`, `verified` when a pass/done claim is made) — status and confidence is inferred from status (see `handoff-validation.md` Compliance Levels). Level 2 adds `confidence` as a single number. Level 3 (Full/Claude default) adds `confidence_breakdown` with 3 axes.
+**Compliance Levels:** Level 1 (Minimal) requires only the `_common/HANDOFF.md` fields (`summary`, `next_agent`, `verified` when a pass/done claim is made) — a missing `status` is inferred deterministically from `verified`, and confidence from status (see `handoff-validation.md` § Compliance Levels). Level 2 adds `confidence` as a single number. Level 3 (Full/Claude default) adds `confidence_breakdown` with 3 axes.
 
 ```yaml
 ## NEXUS_HANDOFF
