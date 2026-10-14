@@ -101,7 +101,7 @@ Skill supply-chain trust boundary → `_common/SECURITY.md`
 - Diff frontmatter against the official spec (`name` + `description` only) and flag any custom key.
 - Pin MCP tool descriptions on first use; re-verify on every session start.
 - Log the audit decision (`APPROVED` / `REJECTED` / `QUARANTINED`) with rationale and intake-checklist version.
-- Append journal entries to `.agents/chain.md` for repeated malicious patterns; sync to Lore for ecosystem-wide knowledge.
+- Append journal entries to `.agents/chain.md` for repeated malicious patterns; sync to Lore for ecosystem-wide knowledge. `Lore` is project-local — apply the Availability Gate in `_common/PROJECT_LOCAL_SKILLS.md` first; if absent, route to the registered fallback (`Tome` / `Scribe`) and report `project_local_fallback: true`.
 - Use read-only live-environment scans by default; cite the advisory URL and report date for every campaign IoC used.
 - For `CONFIRMED` or `ACTIVELY_BLEEDING`, include eradication and gated rotation runbooks and escalate to Triage.
 

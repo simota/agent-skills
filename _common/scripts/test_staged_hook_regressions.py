@@ -43,6 +43,11 @@ class StagedHookRegressionTests(unittest.TestCase):
         scripts.mkdir(parents=True)
         for name in CHECKERS:
             (scripts / f"{name}.py").write_text("# fixture checker\n")
+        # The hook runs the catalog tests on every commit; discovery must find one.
+        (scripts / "test_catalog_regressions.py").write_text(
+            "import unittest\nclass Catalog(unittest.TestCase):\n"
+            "    def test_fixture(self): pass\n"
+        )
         (scripts / "lint-frontmatter.py").write_text(
             "import os\nfrom pathlib import Path\n"
             "assert Path('alpha/SKILL.md').read_text().startswith('valid'), 'invalid staged skill'\n"

@@ -71,9 +71,9 @@ Security analysis and testing.
 |-------|------|---------|------|
 | **Sentinel** | Static security analysis | Hardcoded-secret detection, SQLi prevention, dependency CVEs | Mixed |
 | **Breach** | Red team | Attack-scenario design, MITRE ATT&CK | No |
-| **Probe** | Dynamic security testing | OWASP ZAP / Burp Suite, penetration testing | Mixed |
-| **Crypt** | Cryptographic architecture | Algorithm selection, key management, E2EE, TLS configuration | Mixed |
-| **Chain** *(optional: `incident-response`)* | Skill/plugin/MCP supply-chain audit and malware response | sha256 manifests, Unicode injection, IoC campaign scans, quarantine, eradication, and credential-rotation runbooks | Mixed |
+| **Probe** | Dynamic security testing | OWASP ZAP / Burp Suite, penetration testing | No |
+| **Crypt** | Cryptographic architecture | Algorithm selection, key management, E2EE, TLS configuration | No |
+| **Chain** *(optional: `incident-response`)* | Skill/plugin/MCP supply-chain audit and malware response | sha256 manifests, Unicode injection, IoC campaign scans, quarantine, eradication, and credential-rotation runbooks | No |
 
 ## Review (6)
 
@@ -81,7 +81,7 @@ Code review and quality checks.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
-| **Judge** | Automated code review | PR review automation, bug detection | Mixed |
+| **Judge** | Automated code review | PR review automation, bug detection | No |
 | **Zen** | Refactoring | Variable renaming, function extraction, dead-code removal | Mixed |
 | **Canon** *(optional: `legal-jp`)* | Standards, regulatory, and legal-document compliance | OWASP/WCAG/OpenAPI, SOC2/PCI-DSS/HIPAA/ISO 27001, ToS/privacy/Tokushoho review | Mixed |
 | **Gauge** | SKILL.md audit | 19-item checklist conformance | No |
@@ -105,7 +105,7 @@ Documentation authoring, visualization, and article writing.
 |-------|------|---------|------|
 | **Scribe** | Technical and cross-team specifications | PRD/SRS/HLD/LLD, `unified` L0-L4 packages, document format conversion (`convert`) | No |
 | **Quill** | Code documentation | JSDoc additions, README updates, fixing `any` types | Mixed |
-| **Prose** | UX writing | Microcopy, error messages, voice and tone | No |
+| **Prose** | UX writing | Microcopy, error messages, voice and tone | Mixed |
 | **Tome** | Learning material and technical publications | Diff → tutorial conversion, design-decision records, articles for note / Zenn / Qiita / dev.to | No |
 | **Canvas** | Diagramming and visualization | Mermaid / ASCII / draw.io for flow, sequence, ER diagrams | Mixed |
 
@@ -115,10 +115,10 @@ System design and structure.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
-| **Atlas** | Architecture analysis | Dependency analysis, ADR / RFC authoring | Mixed |
+| **Atlas** | Architecture analysis | Dependency analysis, ADR / RFC authoring | No |
 | **Schema** | DB and tenant architecture | Normalization, migrations, ER diagrams, tenant isolation/RLS/routing (`tenant`) | Mixed |
 | **Gateway** | API design and messaging integration | OpenAPI generation, versioning, chat adapters / webhooks / WebSocket (`messaging`) | Mixed |
-| **Grove** | Human/LLM repository structure | Directory/docs layout plus LLM navigation and prompt-cache topology (`llm`) | Mixed |
+| **Grove** | Human/LLM repository structure | Directory/docs layout plus LLM navigation and prompt-cache topology (`llm`) | No |
 
 ## UX/Design (11)
 
@@ -136,7 +136,7 @@ UI/UX design and improvement.
 | **Trace** | Session-replay analysis | Behavioral pattern extraction, UX issue discovery | No |
 | **Cast** | Persona casting | Persona generation, management, sync | No |
 | **Funnel** | Landing-page construction | LP conversion and premium nine-stage production (`premium`) | Mixed |
-| **Voice** | User-feedback analysis | NPS design, review analysis, sentiment analysis | No |
+| **Voice** | User-feedback analysis | NPS design, review analysis, sentiment analysis | Mixed |
 
 ## DevOps (5)
 
@@ -146,9 +146,9 @@ Infrastructure, CI/CD, and operations.
 |-------|------|---------|------|
 | **Gear** | Dependency management / CI/CD / GHA | Build errors, pipelines, advanced GitHub Actions (`gha`) | Yes |
 | **Scaffold** | Infrastructure provisioning | Terraform / Docker Compose design | Yes |
-| **Beacon** | Observability and reliability | SLO / SLI design, alert strategy | Mixed |
+| **Beacon** | Observability and reliability | SLO / SLI design, alert strategy | No |
 | **Launch** | Release management and PR reporting | Versioning, CHANGELOG, rollback, weekly/monthly reports and engineering metrics | Mixed |
-| **Ledger** | FinOps | Cloud cost optimization, RI / SP recommendations | No |
+| **Ledger** | FinOps | Cloud cost optimization, RI / SP recommendations | Mixed |
 
 ## Modernization (2)
 
@@ -267,7 +267,7 @@ Specialized skills that don't fit the categories above.
 | **Weave** | Workflow and schedule design | State machines, Saga patterns, cron / timezone / business calendar / backfill (`schedule`) | Mixed |
 | **Omen** | Pre-mortem analysis | Failure-scenario enumeration, RPN scoring | No |
 | **Seek** | Search-engine design | Full-text search, vector search, RAG | Mixed |
-| **Vigil** | Detection engineering | Sigma / YARA rule design | Mixed |
+| **Vigil** | Detection engineering | Sigma / YARA rule design | No |
 | **Magi** | Multi-perspective deliberation, advisory, and strategy simulation | Architecture arbitration, Go / No-Go, founder coaching, named-figure lenses, business scenario simulation (`simulate`) | No |
 | **Saga** | Narrative design | Customer-experience storytelling | No |
 | **Cue** | Video script and demo production | Product videos, storyboards, Playwright-generated demos | Mixed |

@@ -21,7 +21,7 @@ Validation rules and confidence requirements for agent handoffs.
 
 ## Overview
 
-Handoff validation ensures consistent, high-quality communication between agents. All agents must use NEXUS_HANDOFF_V2 format with mandatory confidence scoring.
+Handoff validation ensures consistent, high-quality communication between agents. The required handoff fields are those of `_common/HANDOFF.md` (spine — it wins on conflict): **Summary**, **Next**, and **Verified** whenever the handoff claims something passes, builds, or is done. NEXUS_HANDOFF_V2 adds Nexus-hub enrichment on top — `status`, `confidence`, `confidence_breakdown`, `next_action` — which Nexus uses for routing but never requires in place of the spine fields; when they are absent, Nexus infers them per § Compliance Levels.
 
 ## Communication Invariants
 
@@ -43,17 +43,20 @@ Confidence never repairs a missing invariant. A high score with an unresolved Au
 
 ## NEXUS_HANDOFF_V2 Required Fields
 
+Required = `_common/HANDOFF.md` § Required Fields. ⚪ = optional Nexus-hub enrichment (inferred when absent, § Compliance Levels).
+
 | Field | Required | Description |
 |-------|----------|-------------|
-| `step` | ✅ | Current step in chain (X/Y) |
-| `agent` | ✅ | Agent name that produced this handoff |
-| `status` | ✅ | SUCCESS, PARTIAL, BLOCKED, FAILED |
-| `confidence` | ✅ **NEW** | Overall confidence score (0.0-1.0) |
-| `confidence_breakdown` | ✅ **NEW** | Component scores |
-| `summary` | ✅ | 1-3 line summary of work done |
+| `summary` | ✅ (HANDOFF.md **Summary**) | 1-3 line summary of work done |
+| `next_agent` | ✅ (HANDOFF.md **Next**) | Recommended next agent, a declared next action (HANDOFF.md allows "agent or action", e.g. `rerun tests after credentials are restored` — Nexus classifies an action like a new request before routing), or `DONE` |
+| `verified` | ✅ when a pass/done claim is made (HANDOFF.md **Verified**) | Evidence objects per `_common/HANDOFF.md` § Completed vs Verified |
+| `step` | ⚪ | Current step in chain (X/Y) |
+| `agent` | ⚪ | Agent name that produced this handoff |
 | `artifacts` | ⚪ | Files, commands, links produced |
-| `next_agent` | ✅ | Recommended next agent |
-| `next_action` | ✅ | CONTINUE, MERGE, VERIFY, ESCALATE, ABORT |
+| `status` | ⚪ enrichment | SUCCESS, PARTIAL, BLOCKED, FAILED |
+| `confidence` | ⚪ enrichment | Overall confidence score (0.0-1.0) |
+| `confidence_breakdown` | ⚪ enrichment | Component scores |
+| `next_action` | ⚪ enrichment | CONTINUE, MERGE, VERIFY, ESCALATE, ABORT, DONE (`DONE` = chain complete; matches the skill template's `CONTINUE \| VERIFY \| DONE`) |
 
 ---
 
@@ -113,18 +116,22 @@ Before Nexus routes to next agent, validate:
 
 ```yaml
 validation_checks:
-  required_fields:
+  required_fields:            # _common/HANDOFF.md § Required Fields
+    - summary: non-empty string
+    - next_agent: valid agent name, a non-empty declared action, or "DONE"
+    - verified: one evidence object per pass/done claim (omit only when no such claim)
+
+  enrichment_fields:          # optional; validated only when present, inferred otherwise
     - step: must be "X/Y" format
     - agent: must be valid agent name
     - status: must be enum value
     - confidence: must be 0.0-1.0
     - confidence_breakdown: all three components present
-    - summary: non-empty string
-    - next_agent: valid agent name or "DONE"
-    - next_action: valid enum value
+    - next_action: valid enum value (CONTINUE|MERGE|VERIFY|ESCALATE|ABORT|DONE)
 
   consistency_checks:
     - status == SUCCESS implies confidence >= 0.70
+    - status == PARTIAL implies confidence >= 0.60 (< 0.60 does not flow onward — see Auto-Routing)
     - status == FAILED implies next_action in [ESCALATE, ABORT]
     - status == BLOCKED implies pending_confirmations present
     - confidence_breakdown average ≈ confidence (±0.05)
@@ -132,7 +139,7 @@ validation_checks:
 
 ### Auto-Routing
 
-Confidence bands (≥ 0.75 auto-route · 0.50-0.74 route with logged assumptions · < 0.50 pause for user input) are canonical in `output-formats.md` § Auto-Routing Rules. Independent of the band, `status == BLOCKED` or a pending confirmation pauses, and `status == FAILED` / `next_action == ESCALATE` escalates.
+Confidence bands (≥ 0.75 auto-route · 0.60-0.74 route with logged assumptions · < 0.60 fails the output-validation floor in `nexus/SKILL.md` and pauses for user input) are canonical in `output-formats.md` § Auto-Routing Rules. Independent of the band, `status == BLOCKED` or a pending confirmation pauses, and `status == FAILED` / `next_action == ESCALATE` escalates.
 
 ---
 
@@ -167,7 +174,7 @@ Canonical schema (all fields, including `user_confirmations`) → `output-format
 
 | Level | Fields Required | Use When |
 |-------|----------------|----------|
-| Level 1 (Minimal) | `step`, `agent`, `status`, `summary`, `next_agent`, `next_action` | Model cannot produce reliable confidence scores |
+| Level 1 (Minimal) | `_common/HANDOFF.md` required fields (`summary`, `next_agent`, `verified` when claimed), optionally `step`, `agent`, `status`, `next_action` | Model cannot produce reliable confidence scores |
 | Level 2 (Standard) | Level 1 + `confidence` (single number) | Model can estimate overall confidence |
 | Level 3 (Full/Claude default) | Level 2 + `confidence_breakdown` (3 axes) | Full scoring capability |
 
@@ -179,6 +186,8 @@ Level 1 confidence inference (applied automatically):
 | PARTIAL | 0.60 |
 | BLOCKED | 0.40 |
 | FAILED | 0.20 |
+
+When `status` is absent, it is inferred as `PARTIAL` (0.60 — routes onward to the named `next_agent` with logged assumptions). `BLOCKED` and `FAILED` are never inferred: `verified` records check results, not the step's outcome (a reproduce-first step legitimately cites a failing test), so only an agent that states them explicitly halts routing.
 
 Level 2 without breakdown: all three components assumed equal to overall confidence.
 
@@ -238,7 +247,7 @@ Agent completes work
      │
 ┌────┴────────────────┐
 │ confidence >= 0.75  │ → Auto-route to next_agent
-│ confidence 0.50-0.74│ → Route with logged assumption
-│ confidence < 0.50   │ → Pause for user input
+│ confidence 0.60-0.74│ → Route with logged assumption
+│ confidence < 0.60   │ → Pause for user input
 └─────────────────────┘
 ```

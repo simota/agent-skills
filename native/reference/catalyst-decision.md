@@ -34,9 +34,9 @@ Work through these axes in order — each can independently rule Catalyst out.
 
 | Team size | Feature surface | Recommendation |
 |-----------|------------------|-----------------|
-| Small team, small feature surface, tight timeline | Catalyst, iPad idiom — fastest path to "it exists on Mac" |
-| Small-to-mid team, willing to invest in Mac-specific polish over time | Shared-core two-target (§6) — front-loads a bit more setup, pays off as Mac-specific work grows |
-| Mid-to-large team, Mac is a first-class platform for the product | Native SwiftUI/AppKit from the start, or shared-core if iOS/Mac logic genuinely overlaps |
+| Small team | Small feature surface, tight timeline | Catalyst, iPad idiom — fastest path to "it exists on Mac" |
+| Small-to-mid team | Willing to invest in Mac-specific polish over time | Shared-core two-target (§6) — front-loads a bit more setup, pays off as Mac-specific work grows |
+| Mid-to-large team | Mac is a first-class platform for the product | Native SwiftUI/AppKit from the start, or shared-core if iOS/Mac logic genuinely overlaps |
 
 ### 1.4 Feature surface specifics
 
@@ -192,7 +192,7 @@ Higher upfront cost than Catalyst (must set up the package boundary, decide what
 
 ## 7. "Optimize for Mac" is not a substitute for native — and neither is Catalyst as a default
 
-Per `SKILL.md` Never list: **treat Mac Catalyst as the default path for a Mac-first app is prohibited.** Catalyst exists specifically for porting an *existing iPad app* to Mac with acceptable-not-ideal fidelity and controlled effort. If there is no iPad app to port — greenfield Mac work, or a Mac-first product — start native (§SKILL.md SwiftUI App Scaffold Recipe) or shared-core (§6) if a companion iOS app is also planned from day one. Reaching for Catalyst on a Mac-first app produces exactly the "iPad-app-shaped Mac app" anti-pattern documented in `reference/mac-hig.md` §14.
+**Do not treat Mac Catalyst as the default path for a Mac-first app.** Catalyst exists specifically for porting an *existing iPad app* to Mac with acceptable-not-ideal fidelity and controlled effort. If there is no iPad app to port — greenfield Mac work, or a Mac-first product — start native (`macos` Recipe — `SKILL.md` Recipes table) or shared-core (§6) if a companion iOS app is also planned from day one. Reaching for Catalyst on a Mac-first app produces exactly the "iPad-app-shaped Mac app" anti-pattern documented in `reference/mac-hig.md` §14.
 
 ---
 

@@ -35,7 +35,7 @@ Purpose: load this when `goal.md` is weak, vague, or missing. It converts ambigu
 |------------|-------------|----------------|
 | named tests fail | named failing tests pass | `npm test -- --testPathPattern='<failing>'` |
 | environment issue | clean-environment run passes | `npm ci && npm test` |
-| flaky test | same test passes 5 consecutive runs | `for i in {1..5}; do npm test || exit 1; done` |
+| flaky test | same test passes 5 consecutive runs | `for i in {1..5}; do npm test \|\| exit 1; done` |
 
 ### "refactor X"
 

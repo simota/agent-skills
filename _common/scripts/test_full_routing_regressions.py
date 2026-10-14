@@ -2,11 +2,15 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+import sys
 import contextlib
 import io
 import subprocess
 import unittest
 from unittest.mock import patch
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from test_routing_regressions import TABLE, TempCase, battery, directory, recipes, routing
 
@@ -127,6 +131,17 @@ class ChangedRecipeTests(TempCase):
         self.write("new-skill/SKILL.md", "# New\n")
         with patch.object(recipes, "SKILLS_ROOT", self.root):
             self.assertEqual(recipes.changed_skill_names(), {"owned", "new-skill"})
+
+    def test_a_common_change_selects_the_full_corpus(self):
+        """Checker code under `_common/` governs every skill, not the ones touched."""
+        self.git("init", "--quiet")
+        self.write("owned/SKILL.md", "# Owned\n")
+        self.git("add", ".")
+        self.git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+                 "commit", "--quiet", "-m", "fixture")
+        self.write("_common/scripts/validate-recipes.py", "# changed checker\n")
+        with patch.object(recipes, "SKILLS_ROOT", self.root):
+            self.assertIsNone(recipes.changed_skill_names())
 
     def test_git_failure_falls_back_to_full_validation(self):
         self.git("init", "--quiet")  # An unborn HEAD cannot produce the requested diff.

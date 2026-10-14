@@ -8,10 +8,10 @@ Detailed guide for performing visual review of screenshots from Vector with pers
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                      NAVIGATOR                               │
+│                       VECTOR                                 │
 │  Screenshot capture → Device context → Flow documentation   │
 └─────────────────────┬───────────────────────────────────────┘
-                      ↓ NAVIGATOR_TO_ECHO_HANDOFF
+                      ↓ VECTOR_TO_ECHO_HANDOFF
 ┌─────────────────────────────────────────────────────────────┐
 │                        ECHO                                  │
 │  Visual Review: Perceive → React → Score → Report           │
@@ -32,7 +32,7 @@ Detailed guide for performing visual review of screenshots from Vector with pers
 Receive the following from Vector:
 
 ```markdown
-## NAVIGATOR_TO_ECHO_HANDOFF
+## VECTOR_TO_ECHO_HANDOFF
 
 - Task ID
 - Screenshots (paths, states, context)

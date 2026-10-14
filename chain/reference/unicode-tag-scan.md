@@ -82,7 +82,7 @@ Hits outside allowlist → `P1 REJECT`. BOM mid-file → `P1 FLAG`.
 
 ```bash
 #!/bin/bash
-# chain/scripts/unicode-scan.sh — usage: unicode-scan.sh <skill-dir>
+# Inline script (this reference, § Combined one-shot; no shipped file) — save locally as unicode-scan.sh; usage: unicode-scan.sh <skill-dir>
 # Portable: BSD (macOS) and GNU (Linux) compatible — uses perl instead of grep -P
 set -euo pipefail
 target="$1"
@@ -168,7 +168,7 @@ When a skill passes the Unicode scan, record the scan result in `.chain-manifest
     "bidi_overrides": "clean",
     "zero_width": "clean",
     "scanned_at": "2026-05-12T00:00:00Z",
-    "scanner": "chain/scripts/unicode-scan.sh"
+    "scanner": "chain/reference/unicode-tag-scan.md#combined-one-shot (inline)"
   }
 }
 ```

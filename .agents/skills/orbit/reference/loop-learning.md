@@ -198,7 +198,7 @@ Application process:
 ### Lore Sync Protocol
 
 ```yaml
-ORBIT_TO_LORE_PATTERN:
+ORBIT_TO_LORE_HANDOFF:
   type: LOOP_EXECUTION_PATTERN
   pattern_name: <name>
   source_data:

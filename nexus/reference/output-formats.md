@@ -220,9 +220,9 @@ Completion sweep: [command run] — [N hits: each mapped to a RES-n, or `pre-exi
 
 ## NEXUS_HANDOFF_V2 (Standard - Required)
 
-All agents MUST use V2 format with confidence scoring.
+Required fields are those of `_common/HANDOFF.md` (Summary, Next, Verified when a pass/done claim is made); the confidence fields below are Nexus-hub enrichment, inferred from `status` when absent (`handoff-validation.md` § NEXUS_HANDOFF_V2 Required Fields).
 
-**Compliance Levels:** Level 1 (Minimal) requires only `step`, `agent`, `status`, `summary`, `next_agent`, `next_action` — confidence is inferred from status (see `handoff-validation.md` Compliance Levels). Level 2 adds `confidence` as a single number. Level 3 (Full/Claude default) adds `confidence_breakdown` with 3 axes.
+**Compliance Levels:** Level 1 (Minimal) requires only the `_common/HANDOFF.md` fields (`summary`, `next_agent`, `verified` when a pass/done claim is made) — a missing `status` is inferred as `PARTIAL`, and confidence from status (see `handoff-validation.md` § Compliance Levels). Level 2 adds `confidence` as a single number. Level 3 (Full/Claude default) adds `confidence_breakdown` with 3 axes.
 
 ```yaml
 ## NEXUS_HANDOFF
@@ -230,7 +230,7 @@ step: [X/Y]
 agent: [AgentName]
 status: [SUCCESS|PARTIAL|BLOCKED|FAILED]
 
-# REQUIRED: Confidence scoring for auto-routing
+# ENRICHMENT: confidence scoring for auto-routing (inferred when absent)
 confidence: 0.XX  # Overall score (0.0-1.0)
 confidence_breakdown:
   task_completion: 0.XX   # How complete is the work
@@ -248,6 +248,11 @@ artifacts:
   - type: [file|command|link]
     path: [path]
     description: [what it is]
+
+verified:  # REQUIRED whenever a pass/done claim is made — evidence objects per _common/HANDOFF.md § Completed vs Verified
+  - claim: [what holds]
+    command: [check run, or the observation standing in for it]
+    exit_code: [0 | result: not_run]
 
 risks:
   - [Risk 1]
@@ -268,7 +273,7 @@ user_confirmations:
     answer: [User's A]
 
 next_agent: [AgentName|DONE]
-next_action: [CONTINUE|MERGE|VERIFY|ESCALATE|ABORT]
+next_action: [CONTINUE|MERGE|VERIFY|ESCALATE|ABORT|DONE]
 reason: [Why this next step]
 ```
 
@@ -277,8 +282,9 @@ reason: [Why this next step]
 | Confidence | Status | Action |
 |------------|--------|--------|
 | >= 0.75 | SUCCESS | Auto-route to next_agent |
-| 0.50-0.74 | SUCCESS/PARTIAL | Route with logged assumptions |
-| < 0.50 | any | Pause for user input |
+| 0.70-0.74 | SUCCESS | Route with logged assumptions |
+| 0.60-0.69 | PARTIAL | Route with logged assumptions (SUCCESS requires ≥ 0.70) |
+| < 0.60 | any | Fails the output-validation floor (`SKILL.md`); pause for user input |
 | any | BLOCKED | Present pending_confirmations |
 | any | FAILED | Execute recovery chain or escalate |
 

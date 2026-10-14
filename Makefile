@@ -8,9 +8,10 @@
 # already exists there as a real path is never overwritten — it is skipped and
 # reported, and resolving the collision is a manual decision.
 #
-# Only top-level directories are linked (hidden ones excluded), which covers the
-# skills plus `_common/` and `_templates/`: SKILL.md cross-references and the
-# inspection scripts resolve through the link to the repo root.
+# Only top-level directories holding a SKILL.md are linked, plus `_common/` and
+# `_templates/` by name: SKILL.md cross-references and the inspection scripts
+# resolve through the link to the repo root. Other directories (`docs/`, ...) are
+# not skills and are never linked; a link this installer made to one is pruned.
 #
 # Prerequisite: the repo must already live outside ~/.claude, ~/.codex, ~/.gemini.
 # `make link` refuses to link a CLI directory to itself.
@@ -21,9 +22,12 @@ CODEX_DIR  := $(HOME)/.agents/skills
 AGY_DIR    := $(HOME)/.gemini/antigravity-cli/skills
 export REPO CLAUDE_DIR CODEX_DIR AGY_DIR
 
+# Shell predicate shared by link and status: is repo entry $1 worth linking?
+linkable_fn = linkable() { case "$${1%/}" in */_common|*/_templates) return 0;; esac; [ -f "$${1%/}/SKILL.md" ]; };
+
 .DEFAULT_GOAL := help
 
-.PHONY: help link unlink status validate test check hooks \
+.PHONY: help link unlink status validate test test-catalog check hooks \
 	link-claude link-codex link-agy \
 	unlink-claude unlink-codex unlink-agy
 
@@ -37,16 +41,18 @@ help:
 	@echo ""
 	@echo "make validate       run every checker at blocking severity"
 	@echo "make test           run all repository regression tests"
+	@echo "make test-catalog   run only the fast catalog regression tests"
 	@echo "make check          validate + test — what CI runs"
 	@echo "make hooks          install the pre-commit hook that runs make validate"
 	@echo ""
 	@echo "repo                $$REPO"
 
-# $(1) = exported CLI directory variable. Creates it if absent, then links each top-level
+# $(1) = exported CLI directory variable. Creates it if absent, then links each linkable
 # repo directory into it. Never deletes or overwrites anything it did not create:
-# the only removals are links into this repo whose target the repo has dropped.
+# the only removals are links into this repo whose target the repo has dropped or
+# that is not linkable.
 define do_link
-set -e; r=$$(cd "$$REPO" && pwd -P); t="$${$(1)}"; p=$$(dirname "$$t"); \
+set -e; $(linkable_fn) r=$$(cd "$$REPO" && pwd -P); t="$${$(1)}"; p=$$(dirname "$$t"); \
 if [ ! -d "$$p" ] && [ "$(1)" = "CODEX_DIR" ] && [ "$$t" = "$$HOME/.agents/skills" ] && [ -d "$$HOME/.codex" ]; then \
   h=$$(cd "$$HOME" && pwd -P); \
   case "$$h/.agents" in "$$r"|"$$r"/*) echo "ERROR   $$t is inside this repo — refusing to create skill root"; exit 1;; esac; \
@@ -66,6 +72,7 @@ case "$$(cd "$$t" && pwd -P)" in "$$r"|"$$r"/*) \
   echo "ERROR   $$t is inside this repo — move the repo to an external path first"; exit 1;; esac; \
 nl=0; nk=0; ns=0; np=0; \
 for s in "$$r"/*/; do \
+  linkable "$$s" || continue; \
   name=$$(basename "$$s"); d="$$t/$$name"; \
   if [ -L "$$d" ]; then \
     if [ "$$(readlink "$$d")" = "$$r/$$name" ]; then nk=$$((nk + 1)); \
@@ -76,7 +83,8 @@ done; \
 for d in "$$t"/*; do \
   [ -L "$$d" ] || continue; \
   if [ "$$(readlink "$$d")" = "$$r/$$(basename "$$d")" ]; then \
-    [ -e "$$d" ] || { rm "$$d"; echo "  prune   $$(basename "$$d") — no longer in the repo"; np=$$((np + 1)); }; \
+    if [ ! -e "$$d" ]; then rm "$$d"; echo "  prune   $$(basename "$$d") — no longer in the repo"; np=$$((np + 1)); \
+    elif ! linkable "$$r/$$(basename "$$d")"; then rm "$$d"; echo "  prune   $$(basename "$$d") — not a skill"; np=$$((np + 1)); fi; \
   fi; \
 done; \
 echo "linked  $$t — $$nl new, $$nk already linked, $$ns skipped, $$np pruned"
@@ -126,7 +134,8 @@ unlink-agy:
 	@$(call do_unlink,AGY_DIR)
 
 status:
-	@set -e; r=$$(cd "$$REPO" && pwd -P); total=$$(ls -d "$$r"/*/ | wc -l | tr -d " "); \
+	@set -e; $(linkable_fn) r=$$(cd "$$REPO" && pwd -P); total=0; \
+	for s in "$$r"/*/; do if linkable "$$s"; then total=$$((total + 1)); fi; done; \
 	echo "repo    $$r ($$total linkable directories)"; \
 	for t in "$$CLAUDE_DIR" "$$CODEX_DIR" "$$AGY_DIR"; do \
 	  if [ -L "$$t" ]; then echo "symlink $$t -> $$(readlink "$$t")"; \
@@ -134,7 +143,7 @@ status:
 	    n=0; \
 	    for d in "$$t"/*; do \
 	      [ -L "$$d" ] || continue; \
-	      if [ -d "$$d" ] && [ "$$(readlink "$$d")" = "$$r/$$(basename "$$d")" ]; then n=$$((n + 1)); fi; \
+	      if [ -d "$$d" ] && [ "$$(readlink "$$d")" = "$$r/$$(basename "$$d")" ] && linkable "$$d"; then n=$$((n + 1)); fi; \
 	    done; \
 	    echo "dir     $$t — $$n/$$total linked, $$(ls -A "$$t" | wc -l | tr -d " ") entries total"; \
 	  else echo "none    $$t"; fi; \
@@ -170,9 +179,22 @@ validate:
 # A checker nobody has watched fail is indistinguishable from one that returns
 # zero unconditionally. Slower than `validate` because cases exercise broken
 # repositories and command-line tools, so the hook runs it when executable
-# code, its templates, or the check infrastructure changes — see `hooks` below.
+# code, its templates, the check infrastructure, or a non-skill file the tests
+# read changes — see `hooks` below.
 test:
 	@python3 -m unittest discover -s "$$SCRIPTS" -p 'test_*.py'
+
+# The catalog modules compare index.html and the READMEs with every SKILL.md and
+# finish in seconds, so the hook runs them on every commit: adding or renaming a
+# skill changes what they assert without touching any path in the `check` list.
+# They evaluate index.html's script with Node.js; without it they are skipped
+# here (CI's `make check` still runs them) rather than blocking every commit.
+test-catalog:
+	@if command -v node >/dev/null 2>&1; then \
+	  python3 -m unittest discover -s "$$SCRIPTS" -p 'test_*catalog_regressions.py'; \
+	else \
+	  echo "SKIP    test-catalog: node not found — install Node.js to run the catalog tests locally (CI runs them)"; \
+	fi
 
 check: validate test
 
@@ -184,11 +206,12 @@ hooks:
 	printf '%s\n' \
 	  '#!/bin/sh' \
 	  '# installed by `make hooks`' \
-	  '# Validate the corpus always; run regression tests when executable code,' \
-	  '# its templates, or the check infrastructure changes.' \
+	  '# Validate the corpus and run the fast catalog tests always; run every' \
+	  '# regression test when executable code, its templates, the check' \
+	  '# infrastructure, or a non-skill file the tests read changes.' \
 	  'set -e' \
 	  'repo=$$(git rev-parse --show-toplevel)' \
-	  'changed=$$(git -C "$$repo" diff --cached --name-only -- _common/scripts/ launch/scripts/ launch/templates/ _templates/learning-loop-kit/_scripts/ .github/workflows/ index.html Makefile requirements-checks.txt)' \
+	  'changed=$$(git -C "$$repo" diff --cached --name-only -- _common/scripts/ launch/scripts/ launch/templates/ _templates/learning-loop-kit/_scripts/ .github/workflows/ index.html Makefile requirements-checks.txt README.md README_ja.md CLAUDE.md AGENTS.md compass/reference/catalog.md .claude/skills/orbit/reference/ .agents/skills/orbit/reference/ builder/reference/cross-language-port.md hone/reference/hooks/sessionstart-hook.md)' \
 	  '# Check exactly what will be committed, preserving unstaged and untracked work.' \
 	  'snapshot=$$(python3 -c '\''import tempfile; print(tempfile.mkdtemp(prefix="agent-skills-index."))'\'')' \
 	  'trap '\''rm -rf "$$snapshot"'\'' EXIT' \
@@ -200,7 +223,7 @@ hooks:
 	  'if [ -n "$$changed" ]; then' \
 	  '  make -C "$$snapshot" --no-print-directory check' \
 	  'else' \
-	  '  make -C "$$snapshot" --no-print-directory validate' \
+	  '  make -C "$$snapshot" --no-print-directory validate test-catalog' \
 	  'fi' \
 	  > "$$hook"; \
 	chmod +x "$$hook"; \

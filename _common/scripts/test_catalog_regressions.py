@@ -8,7 +8,11 @@ import json
 from pathlib import Path
 import re
 import subprocess
+import sys
 import unittest
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import _corpus  # noqa: E402 - sibling module, path set above
 
 ROOT = Path(__file__).resolve().parents[2]
 HTML = (ROOT / "index.html").read_text(encoding="utf-8")
@@ -36,9 +40,9 @@ class CatalogDataTests(unittest.TestCase):
     def setUpClass(cls):
         prefix = SCRIPT[:SCRIPT.index("/* ==========================================\n   i18n")]
         cls.data = run_javascript(prefix + "\nconsole.log(JSON.stringify({agents:AGENTS,subs:SUBCOMMANDS,categories:CATEGORIES}));")
-        cls.global_skills = {path.parent.name for path in ROOT.glob("*/SKILL.md")}
+        cls.global_skills = {path.name for path in _corpus.iter_skill_dirs(ROOT)}
         cls.local_skills = {
-            path.parent.name for path in (ROOT / ".claude/skills").glob("*/SKILL.md")
+            path.name for path in _corpus.iter_skill_dirs(ROOT / ".claude/skills")
         }
 
     def test_only_active_skills_are_advertised_once(self):

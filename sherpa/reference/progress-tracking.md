@@ -125,7 +125,7 @@ TaskCreate({
 | Type | Symbol | Meaning |
 | --- | --- | --- |
 | Sequential | `->` | A must finish before B |
-| Parallel | `||` | A and B can run together |
+| Parallel | `\|\|` | A and B can run together |
 | Blocking | `X` | external blocker |
 | Optional | `?` | can be skipped if time is tight |
 

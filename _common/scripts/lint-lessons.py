@@ -20,7 +20,8 @@ Checks:
   LS-4  `F` is one of F1/F2/F3/F4 (`_common/HARNESS_DEBT.md` s 3b). A closed
         vocabulary is what makes the column countable.
   LS-5  IDs are `L###`, unique, and never reused.
-  LS-6  `Added` parses as an ISO date and is not in the future.
+  LS-6  `Added` parses as an ISO date and is not in the future (one day of
+        slack absorbs the timezone gap between a committer and a UTC runner).
   LS-7  A row past `LESSON_AGE_DAYS` is re-justified or deleted (advisory).
 
 Severity tiers:
@@ -176,7 +177,9 @@ def check(text: str) -> list[tuple[str, str, str]]:
         except ValueError:
             findings.append(("P1", "LS-6", f"{ident}: `Added` {added!r} is not an ISO date"))
         else:
-            if when > today:
+            # One day of slack: a committer's local date (e.g. JST) can be
+            # tomorrow relative to a UTC CI runner.
+            if when > today + dt.timedelta(days=1):
                 findings.append(("P1", "LS-6", f"{ident}: `Added` {added} is in the future"))
             elif (today - when).days > LESSON_AGE_DAYS:
                 findings.append((

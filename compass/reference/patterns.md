@@ -54,7 +54,8 @@ User request
   │   └─ Competitive research → Compete
   │
   ├─ DevOps / infrastructure
-  │   ├─ CI / CD → Gear[gha]
+  │   ├─ CI / CD maintenance → Gear[ci]
+  │   ├─ New / redesigned GitHub Actions → Gear[gha]
   │   ├─ IaC → Scaffold
   │   ├─ Dependency management → Gear
   │   └─ Monitoring design → Beacon
@@ -122,7 +123,8 @@ User request
 
 | Situation | Recommendation | Reason |
 |-----------|----------------|--------|
-| CI / CD | Gear[gha] | GitHub Actions specialist |
+| CI / CD maintenance | Gear[ci] | Existing pipeline, provider-agnostic |
+| New GitHub Actions design | Gear[gha] | Create or deeply redesign GHA architecture |
 | Infrastructure | Scaffold | IaC design |
 | Monitoring / alerting | Beacon | SLO / SLI design |
 | Incident response | Triage → Mend | Investigate, then auto-remediate |

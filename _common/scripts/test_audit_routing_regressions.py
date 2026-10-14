@@ -2,12 +2,15 @@
 
 from __future__ import annotations
 
+from pathlib import Path
 import contextlib
 import io
 import json
 import sys
 import unittest
 from unittest.mock import patch
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from test_routing_regressions import TABLE, TempCase, directory, economy, recipes, routing
 

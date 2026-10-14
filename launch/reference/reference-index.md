@@ -16,7 +16,7 @@ name it, or when scanning what this skill can consult at all.
 | `reference/rollback-anti-patterns.md` | Rollback design, DB migration safety, recovery sequencing, or rolling back an AI feature (prompt / model revision / index / embeddings / adapter / runtime / tool schema). |
 | `reference/hotfix-workflow.md` | `hotfix`: emergency patch playbook, 2h SLA, shortened CI gate, hotfix branch, bundled rollback, and backport-to-main planning. |
 | `reference/canary-rollout.md` | `canary`: progressive traffic shifts (1% → 10% → 50% → 100%), guardrail metrics, automatic abort conditions, and observation windows. |
-| `reference/mobile-release.md` | `mobile`: TestFlight phased release / Play staged rollout, store-compliance gating, App Review / Play Review lead-time planning, server-driven feature flag rollback path, and hotfix submission flow. |
+| `reference/mobile-release.md` | `mobile`: TestFlight → App Store Phased Release / Play staged rollout, store-compliance gating, App Review / Play Review lead-time planning, server-driven feature flag rollback path, and hotfix submission flow. |
 | `reference/github-pr-collection.md` | Read-only `gh` collection, field/date filters, pagination, aggregation, and rate-limit handling. |
 | `reference/github-report-cache.md` | Cache TTL, ETag, invalidation, and rate-limit-aware freshness policy. |
 | `reference/github-report-error-handling.md` | Authentication, rate-limit, network, partial-data, and graceful-degradation handling. |

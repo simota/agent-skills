@@ -35,7 +35,7 @@ Production reference for taking a macOS app from build to a user's Dock: channel
 | Mac Installer Distribution | Signing the installer package submitted to App Store Connect | Team |
 
 - Provisioning profiles are generally **not required for Developer ID** direct distribution (Developer ID signing does not consume a profile the way iOS ad hoc/App Store builds historically did). Mac App Store builds use an App Store provisioning profile the same way iOS does, managed automatically by Xcode when "Automatically manage signing" is on.
-- Certificate discovery/import for CI: `reference/macos-xcrun-cli.md` § 5 (`security` keychain commands).
+- Certificate discovery/import for CI: `reference/macos-xcrun-cli.md` § 4 (`security` keychain commands).
 
 ---
 
@@ -72,7 +72,7 @@ Each exception weakens the hardened-runtime guarantee it belongs to — request 
 ```
 
 - `codesign --deep` will *attempt* this walk automatically, but it applies **one flat signing pass with one entitlements file to everything** — it cannot give the outer app one set of entitlements and an XPC service a different, narrower set. Any nontrivial app (embedded XPC service, differently-scoped helper) needs manual per-component signing in the order above; `--deep` is acceptable only for the trivial case of "no embedded components need distinct entitlements."
-- Exact `codesign` flags (`-s`, `--options runtime`, `--entitlements`, `-dv --verbose=4`) → `reference/macos-xcrun-cli.md` § 2.
+- Exact `codesign` flags (`-s`, `--options runtime`, `--entitlements`, `-dv --verbose=4`) → `reference/macos-xcrun-cli.md` § 3.
 
 ---
 
@@ -95,7 +95,7 @@ xcrun notarytool submit <artifact> --keychain-profile <profile> --wait
         └─ Invalid ───▶ xcrun notarytool log <submission-id>   (diagnose, § 5.1)
 ```
 
-- Exact `notarytool`/`stapler`/`spctl` flags and the `store-credentials` keychain-profile setup → `reference/macos-xcrun-cli.md` § 5.
+- Exact `notarytool`/`stapler`/`spctl` flags and the `store-credentials` keychain-profile setup → `reference/macos-xcrun-cli.md` §§ 5–6.
 - Staple the artifact you actually distribute (`.dmg`/`.pkg`), not just the inner `.app` — Gatekeeper checks the outer container's staple on first launch from that container; if you staple only the `.app` before zipping into a `.dmg`, the staple still travels with the `.app` and is checked when the user drags it out, but stapling the `.dmg` itself additionally lets Gatekeeper validate offline before the user even opens it.
 - Notarization requires Hardened Runtime (§ 3) and a Developer ID (or Mac App Distribution, though the Store path skips notarytool entirely — App Review is the gate there) signature; unsigned or ad-hoc-signed artifacts are rejected outright.
 
@@ -121,7 +121,7 @@ xcrun notarytool submit <artifact> --keychain-profile <profile> --wait
 
 - `pkgbuild --component App.app --install-location /Applications ComponentApp.pkg` builds a single-component package; `productbuild --distribution dist.xml --package-path . Final.pkg` composes multiple `.pkg` components (e.g. main app + privileged helper installer) plus a distribution XML controlling install-location choices and welcome/license panes.
 - `create-dmg` (third-party, common in CI) wraps `hdiutil` with background image, icon positions, and Applications-folder symlink placement — evaluate as a build-script dependency, not a standard Apple tool.
-- Exact `hdiutil`/`pkgbuild`/`productbuild`/`productsign` invocations → `reference/macos-xcrun-cli.md` § 6.
+- Exact `hdiutil`/`pkgbuild`/`productbuild`/`productsign` invocations → `reference/macos-xcrun-cli.md` §§ 7–8.
 
 ---
 

@@ -26,7 +26,7 @@ All selected subagents share:
 - Symptom and observed behavior (verbatim error message, stack trace, log lines)
 - Reproduction status (reproduced / partially reproduced / not reproduced) and minimal repro if available
 - Environment context (runtime, version, deployment)
-- Prior investigation state if multi mode was triggered by `consensus` auto-promotion (3 hypotheses exhausted) — include the **ruled-out hypotheses with their elimination evidence** so subagents do not re-traverse dead ends
+- Prior investigation state if `multi` was entered by auto-promotion (3 hypotheses exhausted) — include the **ruled-out hypotheses with their elimination evidence** so subagents do not re-traverse dead ends
 - Affected files / area (optional — subagents read the code themselves; do not pre-commit them)
 
 Do **not** pass RCA frameworks (5 Whys, Fishbone, Fault Tree templates) into subagents — each engine applies its own RCA priors. Frameworks apply at SYNTHESIZE.

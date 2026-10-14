@@ -1,8 +1,11 @@
 """Regression coverage for repository fixture isolation."""
 
+import sys
 import tempfile
 import unittest
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from test_checkers import copy_repository
 

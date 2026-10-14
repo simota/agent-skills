@@ -83,7 +83,7 @@ Scout investigates      Lens captures state
                    ↓
   Triage: Extended verification (30 min)
                    ↓
-  Triage: Close + Mandatory postmortem (24h)
+  Triage: Close + Mandatory postmortem (24h SEV1 / 48h SEV2)
 ```
 
 ---

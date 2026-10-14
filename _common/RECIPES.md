@@ -176,7 +176,7 @@ The following rules are evaluated by **Gauge** during normalization audits.
 
 | Anti-Pattern | Why It's Wrong | Correct Approach |
 |-------------|----------------|-----------------|
-| Defining 2 or fewer Recipes | Output Routing alone is sufficient for binary decisions | Use `## Output Routing` instead |
+| Defining 2 or fewer Recipes | Output Routing alone is sufficient for binary decisions | Keep the `## Recipes` heading (required by lint-frontmatter ST1) with one default recipe, and put the binary choice in `## Output Routing` |
 | Naming a Recipe more abstract than the skill | e.g., `search` in Scout — less specific than "scout" itself | Name must be narrower than the skill's own scope |
 | Over-specific Recipe names | `react-hooks-null-check-bug` — too narrow to be reusable | Use `bug` or `regression` |
 | Requiring user to specify Recipe when auto-triage suffices | Adds friction without benefit | Reserve explicit Recipes for cases with distinct evidence strategies |
@@ -191,7 +191,7 @@ The following rules are evaluated by **Gauge** during normalization audits.
 |------|--------------|----------------|
 | **Tier 1 — Recommended** | Skills that appear in the Nexus routing-matrix Primary Chain (e.g., Scout, Builder, Sentinel) | Adopt Recipes; add Recipe Hints to routing-matrix |
 | **Tier 2 — Optional** | Skills invoked frequently in standalone usage (e.g., Lens, Zen, Radar) | Adopt if 3+ distinct modes exist |
-| **Tier 3 — Defer** | Specialist skills invoked rarely or always through Nexus chains (e.g., Canvas, Scribe, Quill) | Omit `## Recipes`; revisit in Phase 2+ |
+| **Tier 3 — Defer** | Specialist skills invoked rarely or always through Nexus chains (e.g., Canvas, Scribe, Quill) | Historical (Phase 1): omit `## Recipes`. Superseded — the heading is now required for every skill (lint-frontmatter ST1) |
 
 Phase 1 scope: Scout only. Builder, Sentinel, and other Tier 1 skills adopt Recipes in Phase 2+. As of Phase 2J, every global skill and every project-local extension has adopted Recipes.
 

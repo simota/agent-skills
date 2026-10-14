@@ -74,14 +74,14 @@ better-supervised larger one.
 
 | Task Type | Primary Chain | Recipe Hints | Additions |
 |-----------|---------------|-------------|-----------|
-| BUG | Scout → **Sherpa?** → Radar → Builder → Radar → Guardian | Scout[RCA+defect-confirm], Sherpa[epic], Radar[failing repro test], Builder[root-cause fix], Radar[verify+regression], Guardian[pr] | +Sentinel (security), +Trail (regression from a past commit), +Ripple (blast radius). Skip Sherpa only when single-file atomic fix. **Reproduce-before-fix**; phase contract → § Sherpa Skip & Chain Adjustment below |
+| BUG | Scout → **Sherpa?** → Radar → Builder → Radar → Guardian | Scout[RCA+defect-confirm], Sherpa[epic], Radar[failing repro test], Builder[root-cause fix], Radar[verify+regression], Guardian[pr] | +Sentinel (security), +Trail (regression from a past commit), +Ripple (blast radius). Add Sherpa only when unresolved dependencies or cross-component work need specialist decomposition (`SKILL.md` § Boundaries → Always; file count alone does not add it). **Reproduce-before-fix**; phase contract → § Sherpa Skip & Chain Adjustment below |
 | INCIDENT | Triage → Scout → Builder | Triage[respond], Scout[bug], Builder[fix] | +Mend (known pattern), +Radar, +Triage (postmortem), +Flux (deep postmortem), +Matrix[combine] (failure scenarios) |
-| FEATURE | Lens? → **Sherpa** → Forge? → Builder → Radar → Guardian | Lens[map], Sherpa[spec+AC], Forge[ui\|api\|fullstack], Builder[api], Radar[edge+verify-gate+per-AC], Guardian[pr] | +Muse/+Palette (UI), +Artisan (frontend prod), +Matrix (variant exploration), +Flux[reframe] (lateral thinking), +Flux[ideate] (idea exploration). Lens[map] reuse scan on existing codebases (skip greenfield). Forge only when approach unproven (spike, not shipped). Skip Sherpa only when single-file atomic change. Phase contract → § Sherpa Skip & Chain Adjustment below |
+| FEATURE | Lens? → **Sherpa** → Forge? → Builder → Radar → Guardian | Lens[map], Sherpa[spec+AC], Forge[ui\|api\|fullstack], Builder[api], Radar[edge+verify-gate+per-AC], Guardian[pr] | +Muse/+Palette (UI), +Artisan (frontend prod), +Matrix (variant exploration), +Flux[reframe] (lateral thinking), +Flux[ideate] (idea exploration). Lens[map] reuse scan on existing codebases (skip greenfield). Forge only when approach unproven (spike, not shipped). Add Sherpa only when unresolved dependencies or cross-component work need specialist decomposition (`SKILL.md` § Boundaries → Always; file count alone does not add it). Phase contract → § Sherpa Skip & Chain Adjustment below |
 | INVESTIGATE | Lens | Lens[map] | +Scout (bug-related), +Canvas (viz), +Trail[bisect] (git) |
 | BRAINSTORM | Flux | Flux[ideate] | +Flux[reframe] (reframe first), +Spark (spec after), +Magi (decide after), +Void (prune after) |
 | DECISION | Magi | Magi[decide] | +Scribe[unified: vision] (biz-tech), +Flux[reframe] (reframe), +Flux[ideate] (explore before deciding) |
 | SECURITY | Sentinel → Probe? → Builder → Probe/Radar → Vigil? → Guardian | Sentinel[triage+SAST], Probe[confirm-exploit/verify-closed], Builder[root-cause fix], Radar[regression], Vigil[detection rule], Guardian[security-aware PR] | +Breach (red-team scenario), +Shift (dependency CVE → upgrade), +Crypt (crypto fix), +Cloak/+Canon[regulatory] (privacy/compliance). **Confirm-exploit before & verify-closed after**; phase contract → § Sherpa Skip & Chain Adjustment below |
-| REFACTOR | Radar? → Zen → Radar → Guardian | Radar[safety-net characterization], Zen[refactor], Radar[regression: verify-equivalence], Guardian[behavior-neutral PR] | +Atlas[analyze] (architectural), +Grove[audit] (structure), +Grove[llm: audit] (folder structure), +Sherpa (multi-file). **Green-before-refactor**; safety-net skip for tool-assisted pure rename/extract. **→ `quell profile=refactor`** when the refactor must be driven to a clean external review (the loop keeps this contract as its Equivalence Gate — `reference/quell-recipe.md` §5a). Phase contract → § Sherpa Skip & Chain Adjustment below |
+| REFACTOR | Radar? → Zen → Radar → Guardian | Radar[safety-net characterization], Zen[refactor], Radar[regression: verify-equivalence], Guardian[behavior-neutral PR] | +Atlas[analyze] (architectural), +Grove[audit] (structure), +Grove[llm: audit] (folder structure), +Sherpa (cross-component / unresolved dependencies). **Green-before-refactor**; safety-net skip for tool-assisted pure rename/extract. **→ `quell profile=refactor`** when the refactor must be driven to a clean external review (the loop keeps this contract as its Equivalence Gate — `reference/quell-recipe.md` §5a). Phase contract → § Sherpa Skip & Chain Adjustment below |
 | OPTIMIZE | [locate layer] → Bolt/Tuner/Gear/Scaffold → Radar → Guardian | Bolt[profile+optimize: code/render/CPU/alloc/bundle], Tuner[explain+optimize: query/plan/index], Gear[build/CI/bundle], Scaffold[infra/runtime sizing], Radar[verify-speedup+no-regression — **independent of the optimizer**], Guardian[PR w/ Speedup Report] | +Trail (bisect a perf regression to the offending commit), +Scout (localize unknown hotspot layer), +Schema (DB index/migration — Ask First), +Gateway (network/payload contract), +Seek (search/ranking latency), +Siege (load-test), +Beacon (define the budget / prod SLO), +Flux (first-principles), +Matrix (target combos). **Measure-first / prove-with-a-number / profile-validity (Amdahl ≥ 20%)**. **Boundary**: one-shot fix at a measured hotspot on *correct* code — defect-caused slowdown → BUG; continuous parameter self-tuning (GC/threadpool/pool/cache-size loop) → AUTO_TUNING; a **set** of budget violations swept to zero across many targets → `mode=to-zero` (`_common/FINDING_LEDGER.md` member, `optimize-recipe.md` §3a). Deep contract → `reference/optimize-recipe.md`; phase order → § OPTIMIZE Phase Contract below |
 | KAIZEN | (Lens + Pulse?/Echo?/Voice?/Trace?) → Spark → Magi → (Bolt/Tuner ‖ Palette/Prose/Flow ‖ Zen/Sweep ‖ Artisan/Builder)[axis-prioritized] → Radar → Pulse?/Echo? [re-measure] → Guardian | Lens[map], Spark[propose], Magi[decide], Bolt[frontend]/Tuner[explain], Palette[usability]/Prose[microcopy], Zen[refactor]/Sweep[dead], Artisan[component]/Builder[api], Radar[regression], Guardian[pr] | +Scout (root-cause), +Atlas (structural), +Ripple (impact). **Boundary**: existing-feature polishing across multiple axes; differs from REFACTOR (internal-only), OPTIMIZE (perf-only), FEATURE (new capability) |
 | ANALYSIS | Ripple → Builder → Radar | Ripple[impact], Builder[fix], Radar[edge], Canon[owasp], Sweep[dead] | +Canon (standards), +Sweep (cleanup) |
@@ -121,7 +121,7 @@ better-supervised larger one.
 | DEV_EXPERIENCE | Hone → Gear | Hone[env], Gear[deps], Hone[hook] | +Builder[cli] (tooling the environment needs), +Sigil (project skills), +Hone[audit] (AI CLI audit) |
 | LOAD_TEST | Siege → Bolt → Builder | Siege[load], Siege[contract], Siege[chaos], Siege[mutation], Bolt[frontend], Builder[fix], Radar[edge] | +Beacon[slo] (SLO), +Triage (resilience), +Matrix (scenario combos) |
 | DEMO | Cue → Quill | Cue[demo], Cue[record] | +Cue[scenario] (scenario), +Cue[onboard] (onboarding), +Vitrine (catalog), +Growth (marketing) |
-| SPRINT_RETRO | Launch → Canvas | Launch[weekly], Canvas[flow] | +Quill[docstring] (publish), +Triage (incident link) |
+| SPRINT_RETRO | Launch → Canvas | Launch[retro], Canvas[flow] | +Quill[docstring] (publish), +Triage (incident link) |
 | KNOWLEDGE | Scribe | Scribe[prd] | +Quill (polish), +Scribe[convert] (format export) |
 | REVIEW | Judge → Builder | Judge[pr], Builder[fix] | +Zen (refactor), +Sentinel (security), +Matrix (impact dimensions), +Flux (blind-spot) |
 | YAGNI | Void → Sweep/Zen | Void[prune] | +Magi (approval), +Pulse (usage data) |
@@ -178,7 +178,7 @@ better-supervised larger one.
 `feature` is the highest-traffic Recipe; its chain row is a summary. Phase semantics (read before executing a non-trivial feature):
 
 - **SURVEY (Lens, conditional) — reuse before you build** — for any feature added to an **existing** codebase, scan for reusable implementations BEFORE decomposing: does the function / component / hook / pattern already exist? Extend or compose the existing one instead of reinventing it. Skip only for greenfield. The most common feature-implementation waste is re-deriving code that already ships — this step is the guard (repo rule: don't re-implement what already exists).
-- **SPEC (Sherpa)** — decompose into atomic steps AND **lock acceptance criteria + scope boundary before any code** (front-loaded ACs become Radar's test targets and the VERIFY gate). Fold SURVEY's reuse findings into the plan (build-on-existing vs build-new, stated per step). Skip Sherpa only when the change is single-file atomic, but still state the ACs inline.
+- **SPEC (Sherpa)** — decompose into atomic steps AND **lock acceptance criteria + scope boundary before any code** (front-loaded ACs become Radar's test targets and the VERIFY gate). Fold SURVEY's reuse findings into the plan (build-on-existing vs build-new, stated per step). Skip Sherpa when no unresolved dependency or cross-component work needs specialist decomposition — file count alone does not require it — but still state the ACs inline.
 - **PROTOTYPE (Forge, conditional)** — run **only when the approach is unproven** (new UI pattern, uncertain API shape, integration risk). Forge output is a **throwaway spike to validate feasibility, NOT the shipped artifact**. Skip for well-understood CRUD/backend additions — Builder goes straight to production. Prevents both "rebuild from scratch, lose the spike's learnings" and "ship the prototype as production".
 - **BUILD (Builder; +Artisan for frontend production)** — production implementation carrying forward the spike's validated decisions and SURVEY's reuse plan. UI surface routing: **+Muse** when introducing new design tokens/visual primitives, **+Palette** when interaction-heavy, **Artisan** owns frontend production code. Backend/CLI features skip all three.
 - **VERIFY (Radar + gate)** — Radar adds edge-case/regression tests; THEN the **VERIFY gate requires existing build + test + lint/typecheck green** against the locked ACs. Not "new tests pass" — the whole check suite. Additionally confirm **each locked AC is actually satisfied** (covered by a test or demonstrated behavior), not merely that the suite is green — convergence on green ≠ the feature does what the spec required. A feature is not done until the gate passes (repo quality rule).
@@ -191,7 +191,7 @@ better-supervised larger one.
 Bug-fixing has a best-practice order the default chain must honor — **reproduce before you fix**:
 
 - **RCA (Scout)** — root-cause analysis: why the bug occurs, where to fix, reproduction steps, impact/blast radius. **Confirm it IS a defect** (not expected behavior / misconfig / user error) before proceeding — a misread "bug" exits here with an explanation, no code.
-- **DECOMPOSE (Sherpa, conditional)** — only when the fix touches 3+ files or spans components. Skip for single-component atomic fixes.
+- **DECOMPOSE (Sherpa, conditional)** — only when the fix has unresolved dependencies or spans components; file count alone does not trigger it. Skip for single-component atomic fixes.
 - **REPRODUCE-FIRST (Radar)** — encode Scout's reproduction steps as a **failing automated test BEFORE any fix**. The failing test is the acceptance criterion: red now, green after the fix. A regression test written *after* the fix can't prove it actually addresses the reported bug — it never failed.
 - **FIX (Builder)** — fix the **root cause** Scout identified, not the symptom. Symptom-only patches (swallowing the error, masking the output, broad `try/except`) are rejected — repo rule: fix root causes, don't silence.
 - **VERIFY (Radar + gate)** — the repro test now **passes** (bug gone), the existing build + test suite stays green (no new regression), and Scout's blast-radius areas are spot-checked. `+Sentinel` when the bug has a security dimension.
@@ -243,7 +243,7 @@ Refactoring's invariant is **no external behavior change** — and the only proo
 
 - **SAFETY-NET (Radar, first — green before you refactor)** — refactoring is safe **only under a passing suite**; the tests are what prove behavior is preserved. Confirm the code under refactor has green coverage; if it's untested, add **characterization tests that pin current behavior FIRST**. You cannot preserve behavior you never captured. (This is the Fowler precondition the default `Zen → Radar` order inverts.) **Skip only** for tool-assisted pure rename/extract where the compiler/type-system guarantees equivalence.
 - **SCOPE-GUARD** — confirm this is **internal-only**: no public API / signature / output-contract change. If external behavior must change, it is a `feature` or `bug`, not a refactor — redirect. Keeps the invariant honest.
-- **REFACTOR (Zen)** — rename / extract / constant-ify / dead-code removal in **small reversible steps**. `+Atlas` when module boundaries move, `+Grove`/`+Grove[llm]` for structure, `+Sherpa` for multi-file.
+- **REFACTOR (Zen)** — rename / extract / constant-ify / dead-code removal in **small reversible steps**. `+Atlas` when module boundaries move, `+Grove`/`+Grove[llm]` for structure, `+Sherpa` for cross-component work or unresolved dependencies.
 - **VERIFY-EQUIVALENCE (Radar + gate)** — re-run the **SAME suite**: identical pass results (no behavior delta), build/lint green, public surface unchanged. Not just "tests pass" — *the same tests pass the same way*. A refactor that changes a test's expected value is a behavior change masquerading as a refactor.
 - **SHIP (Guardian)** — **behavior-neutral** PR/commit, reviewable as a pure refactor, kept separate from any behavior-changing work.
 
@@ -263,21 +263,21 @@ Full phase-by-phase detail, Add-ons, and Boundary → `reference/optimize-recipe
 
 ### Sherpa Skip Conditions
 
-Skip Sherpa from the default chain only when ALL apply:
-- Task touches ≤ 2 files
+Canonical rule: `SKILL.md` § Boundaries → Always — use Sherpa when unresolved dependencies or cross-component work require specialist decomposition; file count alone does not require another handoff. Skip Sherpa from the default chain when ALL apply:
+- No unresolved dependencies between steps
+- Work stays within one component (any number of files)
 - No implicit intermediate steps
-- Single atomic operation completable in one focused step
 
 ### Chain Adjustment Rules
 
-- `3+` files touched → add Sherpa (if not already in chain).
+- Unresolved dependencies or cross-component work → add Sherpa (if not already in chain); file count alone does not.
 - Ambiguous or multi-step requirements → add Sherpa.
 - `3+` test failures → add Sherpa for re-decomposition.
 - Security-sensitive changes → add Sentinel or Probe.
 - UI changes → add Muse or Palette.
 - Slow database path → add Tuner.
 - `2+` independent implementation tracks → consider Rally.
-- `<10` changed lines with existing tests → Radar may be skipped.
+- `<10` changed lines with existing tests → Radar may be skipped — **except** BUG, which always keeps the reproduce-first Radar, and REFACTOR, which always keeps the final VERIFY-EQUIVALENCE Radar (its first SAFETY-NET Radar follows the skip rule in § REFACTOR Phase Contract).
 - Pure documentation work → skip Radar and Sentinel unless the change affects executable behavior.
 
 ### Clarification and Decision Rules

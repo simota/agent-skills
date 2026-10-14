@@ -56,14 +56,14 @@ Purpose: parameter reference for generated nexus-autoloop runners. Load this whe
 
 | Tier | AC count | `MAX_ITERATIONS` | `EXEC_TIMEOUT` | `RETRY_LIMIT` | `TOOL_TIMEOUT` | `LOOP_TIMEOUT` |
 |------|----------|------------------|----------------|---------------|----------------|----------------|
-| Light | `1-3` | `10` | `300` | `2` | `60` | `3000` |
-| Standard | `3-6` | `20` | `600` | `3` | `120` | `12000` |
-| Heavy | `6-10` | `30` | `900` | `4` | `180` | `27000` |
-| Marathon | `10+` | `50` | `1200` | `5` | `240` | `0` |
+| Light | `3` | `10` | `300` | `2` | `60` | `3000` |
+| Standard | `4-5` | `20` | `600` | `3` | `120` | `12000` |
+| Heavy | `6` | `30` | `900` | `4` | `180` | `27000` |
+| Marathon | upgrade only | `50` | `1200` | `5` | `240` | `0` |
 
 Tier selection rules:
 
-1. Count ACs in `goal.md`.
+1. Count ACs in `goal.md` (the contract allows `3-6`; a goal with more ACs is split at CONTRACT, never up-tiered — `operation-contract.md`). `Marathon` is reached only via rules 2-4.
 2. Upgrade one tier for multi-loop scenarios.
 3. Upgrade one tier when `runner.log` already shows `TOOL_FAILURE`.
 4. Respect explicit `LOOP_TIER` override.

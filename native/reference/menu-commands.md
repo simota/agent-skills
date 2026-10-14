@@ -90,7 +90,7 @@ CommandGroup(before: .help) {
 | **Format** | — (entire menu is app-defined) | Font, text/rich-content formatting — only include this menu if the app edits formatted content |
 | **View** | Toolbar/Sidebar visibility toggles (free when using `.toolbar`/`NavigationSplitView`) | Custom view-mode toggles, zoom |
 | **Window** | Minimize, Zoom, Bring All to Front, open-window list (all free from scene infrastructure) | — (rarely needs additions) |
-| **Help** | Search field (Spotlight-for-help, see §10) | App-specific help menu items |
+| **Help** | Search field (Spotlight-for-help, see §8) | App-specific help menu items |
 
 Do not port an iOS tab-bar / navigation-title mental model onto this structure — macOS menu commands are the primary discoverability surface for actions that don't fit a toolbar button.
 

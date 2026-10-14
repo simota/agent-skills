@@ -21,7 +21,7 @@ name it, or when scanning what this skill can consult at all.
 | `reference/tenant-migration.md` | Rebalancing tenants or upgrading isolation level with zero-downtime cutover and rollback. |
 | `reference/tenant-provisioning.md` | Designing idempotent onboarding, reprovisioning, and deprovisioning lifecycle. |
 | `reference/tenant-quota-throttling.md` | Designing fair-share quotas, burst budgets, overage signals, and billing handoffs. |
-| `reference/tenant-handoffs.md` | Emitting tenant-specific handoffs to Builder, Scaffold, Sentinel, or Gateway. |
+| `reference/tenant-handoffs.md` | Receiving tenant routing context from Gateway, or emitting tenant-specific handoffs to Sentinel or Scaffold. |
 | `reference/advanced-patterns.md` | Event sourcing schema, CQRS projections, pgvector/AI schema, or bitemporal design. |
 | `reference/migration-rollback.md` | Designing reverse-operation DDL, dual-write windows, backfill scripts, or destructive-change alternatives (`rollback` recipe). |
 | `reference/partition-strategies.md` | Designing range/list/hash/time-based partitioning, pruning, maintenance, or staged migration from existing tables (`partition` recipe). |

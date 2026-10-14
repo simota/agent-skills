@@ -198,7 +198,7 @@ Run on pre-commit if rule-file edits happen frequently.
 | Circular `@import` chain → infinite loop or silent truncation | Cycle detection on pre-commit |
 | Shard count > 10 at one level → discovery overhead | Cap shards at 5-7 per directory |
 | Inconsistent axis at same level → confusing | One axis per layer |
-| INDEX.md not maintained → drift | Hand off to Lore for periodic audit |
+| INDEX.md not maintained → drift | Add INDEX.md freshness to the periodic Grove `llm_navigation_audit`; route rewrites to Quill |
 | Each shard independently fine, sum > budget | Measure total post-shard, not per-file |
 | Ignore `@import` resolution depth | Cap depth at 3 levels (root → package → module) |
 

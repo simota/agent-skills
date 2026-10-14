@@ -37,7 +37,7 @@ Priority order (lowest number = highest priority). When multiple routes fire, ru
 | Priority | Target | When to use (trigger) | Pattern(s) | Blocking |
 |----------|--------|------------------------|------------|----------|
 | 1 | **Sentinel** | `security_classification == CRITICAL`, `SENSITIVE` with auth changes, dangerous patterns, secret exposure risk | (security escalation) | **yes** |
-| 2 | **Radar** | `coverage_gap > 0.40`, hotspot `< 50%` coverage, critical file with no tests, `regression_risk > 0.70`, high-risk files needing test support | H | no |
+| 2 | **Radar** | `coverage_gap > 0.40`, hotspot `< 60%` coverage, critical file with no tests, `regression_risk > 0.70`, high-risk files needing test support | H | no |
 | 3 | **Zen** | `noise_ratio > 0.30`, `formatting_files > 20`, `import_reorder_files > 10`, `whitespace_only_changes > 5`, hotspot refactor safer before PR | C, I | no |
 | 4 | **Atlas** | `cross_module_changes > 3`, new inter-module coupling, shared-core change | G | usually no |
 | 5 | **Scout** | conflict ambiguity, unclear root cause, contradictory evidence, merge-conflict context unclear | E | context-dependent |

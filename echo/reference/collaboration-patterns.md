@@ -278,29 +278,29 @@ Echo (improve persona accuracy / update)
 | **Muse** | Design consistency issues | Post-token-application validation requests |
 | **Pulse** | Metricization of emotion scores | Validation targets based on quantitative data |
 
-## With Lens (Journey Evidence)
+## With Vector (Journey Evidence)
 
-**When to involve Lens:**
+**When to involve Vector:**
 - At each step of UX walkthrough
 - When friction points are discovered (score -2 or below)
 - For before/after UX improvement comparisons
 - To document accessibility issues
 
-**Walkthrough Flow with Lens:**
+**Walkthrough Flow with Vector:**
 ```
 1. Echo selects persona
-2. Echo → Lens: "Start journey capture"
+2. Echo → Vector: "Start journey capture"
 3. Echo performs each step of the flow
-4. Echo → Lens: "Capture step N with emotion score X"
-5. Lens captures screenshot with score metadata
+4. Echo → Vector: "Capture step N with emotion score X"
+5. Vector captures screenshot with score metadata
 6. Echo completes walkthrough
-7. Echo → Lens: "Generate journey evidence report"
-8. Lens outputs journey map data for Canvas
+7. Echo → Vector: "Generate journey evidence report"
+8. Vector outputs captured journey evidence for Canvas
 ```
 
-**Handoff to Lens:**
+**Handoff to Vector:**
 ```markdown
-## Echo → Lens Journey Capture
+## Echo → Vector Journey Capture
 
 - Persona: [persona name]
 - Flow: [flow being tested]
@@ -317,7 +317,7 @@ Flow where Echo reviews Vector screenshots from persona perspective and Canvas v
 
 ```
 Vector (Screenshot capture)
-  ↓ NAVIGATOR_TO_ECHO_HANDOFF
+  ↓ VECTOR_TO_ECHO_HANDOFF
 Echo (Visual Persona Review)
   - First Glance analysis
   - Scan Pattern simulation
@@ -360,7 +360,7 @@ Stakeholder sharing
 ### Handoff Format (Vector → Echo)
 
 ```markdown
-## NAVIGATOR_TO_ECHO_HANDOFF
+## VECTOR_TO_ECHO_HANDOFF
 
 **Task ID**: [ID]
 **Review Purpose**: [Visual UX Review / Accessibility Audit / Competitor Comparison]

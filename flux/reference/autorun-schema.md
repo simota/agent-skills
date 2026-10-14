@@ -13,7 +13,7 @@ _STEP_COMPLETE:
     artifact_type: "[Reframing Package | Assumption Map | Perspective Shift Report | Cross-Domain Insight | Tri-Engine Reframe Portfolio]"
     parameters:
       cynefin_domain: "[Clear | Complicated | Complex | Chaotic | Disorder]"
-      work_mode: "[DEEP | RAPID | LENS]"
+      work_mode: "[DEEP | RAPID | LENS | AUDIT]"
       frameworks_applied: "[list of frameworks used]"
       reframed_statements_count: "[3-5]"
       blind_spots_detected: "[count]"

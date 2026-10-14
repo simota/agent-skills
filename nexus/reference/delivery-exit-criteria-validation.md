@@ -110,7 +110,7 @@ Acceptance: Validation report with per-criterion pass/fail and overall score
 |-----------|------------------|--------|---------------|
 | E2E tests passing | Voyager: E2E suite | 0.30 | ≥95% pass |
 | UX validated | Echo: persona review | 0.25 | No critical issues |
-| Experiments configured | Experiment: A/B setup | 0.20 | Config complete | **XL only** — skipped for S/M/L |
+| Experiments configured | Experiment: A/B setup | 0.20 | Config complete (**XL only** — skipped for S/M/L) |
 
 ### LAUNCH Phase Exit
 

@@ -82,7 +82,7 @@ Reference impact:
 - [ ] Is the task truly parallelizable?
 - [ ] Are there at least `2` independent work units?
 - [ ] Is `ownership_map` conflict-free?
-- [ ] Is team size minimal (`2-4` preferred)?
+- [ ] Is team size minimal (`3-5` preferred, `>8` only with explicit justification, never `10+`)?
 - [ ] Does every spawn prompt include enough context?
 - [ ] Are timeout or retry limits defined?
 - [ ] Are synthesis verification criteria explicit?

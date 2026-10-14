@@ -293,7 +293,7 @@ _ERROR_EVENT:
 ```yaml
 recovery_chain_selection:
   test_failure:
-    0-20%: L1_retry
+    0-20%: L2_rerun_and_fix   # guardrails.md § Auto-Recovery Actions: <20% is L2
     20-50%: L2_builder_inject
     50-80%: L3_RECOVERY_CHAIN_A
     80-100%: L3_RECOVERY_CHAIN_B

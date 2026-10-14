@@ -1,24 +1,13 @@
-# Schema[tenant] Handoff Templates
+# Schema Tenant Handoff Templates
+
+Handoff templates used by Schema's `tenant` Recipe. Tenant isolation design (RLS policies, tenant columns, migration steps) is produced inside Schema itself, so there is no internal handoff for it; only cross-agent handoffs are listed. Tokens match the `schema/SKILL.md` handoff table.
 
 ## Receiving Handoffs
-
-### From Schema (DB Design Context)
-
-```yaml
-SCHEMA_TO_SHARD_HANDOFF:
-  source: Schema
-  content:
-    tables: ["[table list with key columns]"]
-    relationships: ["[foreign key relationships]"]
-    current_isolation: "[none | basic | full]"
-    indexes: ["[existing indexes]"]
-  request: "Design tenant isolation for this schema"
-```
 
 ### From Gateway (API Routing Context)
 
 ```yaml
-GATEWAY_TO_SHARD_HANDOFF:
+GATEWAY_TO_SCHEMA:
   source: Gateway
   content:
     api_design: "[OpenAPI spec or summary]"
@@ -29,28 +18,11 @@ GATEWAY_TO_SHARD_HANDOFF:
 
 ## Sending Handoffs
 
-### To Schema (RLS Implementation)
-
-```yaml
-SHARD_TO_SCHEMA_HANDOFF:
-  source: Schema[tenant]
-  destination: Schema
-  content:
-    isolation_strategy: "[database | schema | row-level]"
-    rls_policies:
-      - table: "[table name]"
-        policy: "[SQL policy definition]"
-        indexes_needed: ["[index definitions]"]
-    tenant_column: "tenant_id UUID NOT NULL"
-    migration_steps: ["[ordered migration steps]"]
-  request: "Implement RLS policies and tenant columns"
-```
-
 ### To Sentinel (Security Verification)
 
 ```yaml
-SHARD_TO_SENTINEL_HANDOFF:
-  source: Schema[tenant]
+SCHEMA_TO_SENTINEL:
+  source: Schema
   destination: Sentinel
   content:
     isolation_design: "[architecture summary]"
@@ -66,8 +38,8 @@ SHARD_TO_SENTINEL_HANDOFF:
 ### To Scaffold (Infrastructure)
 
 ```yaml
-SHARD_TO_SCAFFOLD_HANDOFF:
-  source: Schema[tenant]
+SCHEMA_TO_SCAFFOLD:
+  source: Schema
   destination: Scaffold
   content:
     infrastructure_needs:

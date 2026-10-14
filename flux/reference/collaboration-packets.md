@@ -178,6 +178,8 @@ FLUX_TO_ATLAS_HANDOFF:
 
 ### To Lore (Reusable Patterns → Knowledge Curation)
 
+Project-local: apply the Availability Gate in `_common/PROJECT_LOCAL_SKILLS.md`; if Lore is absent, send to `Tome` / `Scribe` and report `project_local_fallback: true`.
+
 ```yaml
 FLUX_TO_LORE_HANDOFF:
   source: Flux

@@ -28,6 +28,7 @@ watches it fail. That rule is the point of the file.
 
 from __future__ import annotations
 
+import datetime
 import shutil
 import subprocess
 import sys
@@ -180,6 +181,15 @@ class TestBaseline(CheckerCase):
 
     def test_index_subcommands_are_fresh(self):
         self.expect_clean("generate-index-subcommands.py", "--check")
+
+    def test_recipes_directory_is_fresh(self):
+        self.expect_clean("generate-recipes-directory.py", "--check")
+
+    def test_task_battery_is_clean(self):
+        self.expect_clean("task-battery-check.py", "--severity", "error")
+
+    def test_project_local_is_clean(self):
+        self.expect_clean("lint-project-local.py", "--severity", "error")
 
 
 class TestInstructionDrift(CheckerCase):
@@ -509,11 +519,44 @@ class TestLessonsRegister(CheckerCase):
         self.add_row(mech="A check enforces it.", added="2099-01-01")
         self.expect_caught("lint-lessons.py", "LS-6", "--severity", "error")
 
+    def test_tomorrow_is_not_the_future_across_timezones(self):
+        """A JST committer's date is often tomorrow on a UTC runner."""
+        tomorrow = (datetime.date.today() + datetime.timedelta(days=1)).isoformat()
+        self.add_row(mech="A check enforces it.", added=tomorrow)
+        self.expect_clean("lint-lessons.py", "--severity", "error")
+
     def test_a_quoted_intention_inside_code_is_not_a_false_positive(self):
         """The mechanism describing a check that *rejects* "remember to" must
         not be caught by its own quotation, or the rule cannot describe itself."""
         self.add_row(mech="The linter rejects any mechanism containing `remember to`.")
         self.expect_clean("lint-lessons.py", "--severity", "error")
+
+
+class TestTaskBattery(CheckerCase):
+    """`task-battery-check.py`. Its blocking exit is the only thing `make
+    validate` sees, so the exit code is tested, not just the findings."""
+
+    def test_a_routing_needle_removed_from_signal_keywords_fails(self):
+        self.edit("nexus/reference/signal-keywords.md",
+                  "`refactor`, `clean up`, `code smell` | `refactor`",
+                  "`refactor`, `code smell` | `refactor`")
+        self.expect_caught("task-battery-check.py", "item 4 (clean up keyword -> refactor)",
+                           "--severity", "error")
+
+    def test_a_crashed_check_blocks_in_error_mode(self):
+        """Fail-open let an unreadable artifact skip every mechanical item and exit 0."""
+        path = self._remember("nexus/reference/signal-keywords.md")
+        path.write_bytes(path.read_bytes() + b"\n\xff\xfe\n")
+        self.expect_caught("task-battery-check.py", "check crashed", "--severity", "error")
+
+
+class TestProjectLocalMirror(CheckerCase):
+    """`lint-project-local.py`. A mirror edited on one side only must block."""
+
+    def test_a_mirror_that_diverges_from_its_canonical_tree_fails(self):
+        self.append(".agents/skills/orbit/reference/examples.md", "\nmirror-only drift\n")
+        self.expect_caught("lint-project-local.py", "orbit: canonical/mirror trees differ",
+                           "--severity", "error")
 
 
 class TestRecipesDirectory(CheckerCase):

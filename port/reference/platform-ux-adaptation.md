@@ -158,7 +158,7 @@ Don't translate web hover states 1:1. Mobile has no hover. Use long-press for "m
 | Asset Catalog colors with `Any`/`Dark` appearance | Material 3 ColorScheme + `darkColorScheme()` |
 | Dynamic colors via `Color(.systemBackground)` etc. | Dynamic Color from wallpaper (API 31+) |
 | Symbol colors via `tint` | `MaterialTheme.colorScheme.primary` |
-| Tint vs accent | `accentColor` modifier | `colorScheme.primary` / `secondary` |
+| Tint vs accent: `accentColor` modifier | Tint vs accent: `colorScheme.primary` / `secondary` |
 
 **Mandatory:** Both platforms ship with full dark-mode support if the web product has it. Dark mode is a baseline expectation, not a feature.
 

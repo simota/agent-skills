@@ -385,8 +385,8 @@ See `_common/INTERACTION.md` for details.
 
 | Task | Description | Chain |
 |------|-------------|-------|
-| BUG/simple | Simple bug fix | Scout > Lens > Builder > Radar |
-| BUG/complex | Complex bug (RCA required) | Scout > Lens > Sherpa > Builder > Radar > Sentinel |
+| BUG/simple | Simple bug fix | Scout > Lens > Radar > Builder > Radar |
+| BUG/complex | Complex bug (RCA required) | Scout > Lens > Sherpa > Radar > Builder > Radar > Sentinel |
 | BUG/frontend | Frontend bug | Scout > Artisan > Radar |
 
 #### Feature Development
@@ -417,7 +417,7 @@ See `_common/INTERACTION.md` for details.
 
 | Task | Description | Chain |
 |------|-------------|-------|
-| REFACTOR/small | Small refactor | Zen > Radar |
+| REFACTOR/small | Small refactor | Radar? > Zen > Radar |
 | REFACTOR/arch | Architecture improvement | Atlas > Sherpa > Zen > Radar |
 | REFACTOR/legacy | Legacy modernization | Shift (detect) > Sherpa > Zen > Radar |
 

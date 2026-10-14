@@ -1,7 +1,7 @@
 # Drag & Drop, Pasteboard, and Services
 
 **Purpose:** `Transferable` + `.draggable`/`.dropDestination`, `NSItemProvider` bridging, raw `NSPasteboard`, `NSFilePromiseProvider`, `NSDraggingSource`/`NSDraggingDestination` (AppKit path), Copy/Paste + Edit-menu wiring, macOS Services, `NSSharingServicePicker`, Quick Look preview extensions.
-**Read when:** Building drag & drop, clipboard, or Services-menu integration (`dragdrop` Recipe).
+**Read when:** Building drag & drop, clipboard, or Services-menu integration (`macos` Recipe).
 
 ---
 

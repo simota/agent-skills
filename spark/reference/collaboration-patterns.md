@@ -269,29 +269,41 @@ Packets:
 
 ## Bidirectional Collaboration Matrix
 
+`spark/SKILL.md` § Collaboration (and its `COLLABORATION_PATTERNS` block) is canonical for the partner set. Rows marked † are reference-only packets defined in this file but not listed in SKILL.md; use them only when that partner is already in the chain. Partners without a dedicated packet use the generic handoff in `_common/HANDOFF.md`.
+
 ### Input partners
 
 | Partner | Input type | Trigger | Handoff |
 | --- | --- | --- | --- |
-| `Echo` | latent needs, confusion points | persona walkthrough complete | `ECHO_TO_SPARK_HANDOFF` |
-| `Field` | personas, insights, journey maps | research synthesis complete | `RESEARCHER_TO_SPARK_HANDOFF` |
+| `Pulse` | funnel data, KPI trends | metrics review complete | `PULSE_TO_SPARK_HANDOFF` |
 | `Voice` | feedback clusters, NPS | feedback analysis complete | `VOICE_TO_SPARK_HANDOFF` |
 | `Compete` | gaps and positioning | competitive analysis complete | `COMPETE_TO_SPARK_HANDOFF` |
-| `Pulse` | funnel data, KPI trends | metrics review complete | `PULSE_TO_SPARK_HANDOFF` |
+| `Growth` | engagement / churn needs | retention opportunity found | `GROWTH_TO_SPARK_REQUIREMENTS` |
+| `Cast` | feature-focused personas | persona set available | `_common/HANDOFF.md` |
+| `Lens` | existing data / logic for reuse | codebase insight complete | `_common/HANDOFF.md` |
+| `Flux` | reframed feature idea | reframing complete | `_common/HANDOFF.md` |
+| `Void` | YAGNI pre-check result | pre-check complete | `_common/HANDOFF.md` |
+| `Magi` | feature priority arbitration | arbitration complete | `_common/HANDOFF.md` |
+| `Echo` † | latent needs, confusion points | persona walkthrough complete | `ECHO_TO_SPARK_HANDOFF` |
+| `Field` † | personas, insights, journey maps | research synthesis complete | `RESEARCHER_TO_SPARK_HANDOFF` |
 
 ### Output partners
 
 | Partner | Output type | Trigger | Handoff |
 | --- | --- | --- | --- |
-| `Sherpa` | task breakdown request | proposal approved | `SPARK_TO_SHERPA_HANDOFF` |
-| `Forge` | prototype request | validation needed | `SPARK_TO_FORGE_HANDOFF` |
+| `Scribe` | formal specification | proposal approved | `_common/HANDOFF.md` |
 | `Builder` | implementation spec | prototype validated or simple feature | `SPARK_TO_BUILDER_HANDOFF` |
+| `Artisan` | UI specification | UI-heavy proposal approved | `_common/HANDOFF.md` |
+| `Scribe[unified]` | integrated specification package | multi-document spec needed | `_common/HANDOFF.md` |
+| `Forge` | prototype request | validation needed | `SPARK_TO_FORGE_HANDOFF` |
 | `Experiment` | test design | hypothesis needs validation | `SPARK_TO_EXPERIMENT_HANDOFF` |
 | `Canvas` | roadmap or matrix visualization | proposal needs visual support | Canvas packet |
-| `Echo` | proposal validation | draft proposal ready | `SPARK_TO_ECHO_VALIDATION` |
-| `Scout` | technical investigation | feasibility unclear | Scout investigation request |
-| `Growth` | SEO/CRO review | growth-sensitive feature | `SPARK_TO_GROWTH_HANDOFF` |
-| `Sentinel` | security review | security-sensitive feature | `SPARK_TO_SENTINEL_HANDOFF` |
+| `Magi` | strategic Go/No-Go | high-risk proposal | `_common/HANDOFF.md` |
+| `Sherpa` † | task breakdown request | proposal approved | `SPARK_TO_SHERPA_HANDOFF` |
+| `Echo` † | proposal validation | draft proposal ready | `SPARK_TO_ECHO_VALIDATION` |
+| `Scout` † | technical investigation | feasibility unclear | Scout investigation request |
+| `Growth` † | SEO/CRO review | growth-sensitive feature | `SPARK_TO_GROWTH_HANDOFF` |
+| `Sentinel` † | security review | security-sensitive feature | `SPARK_TO_SENTINEL_HANDOFF` |
 
 
 ---

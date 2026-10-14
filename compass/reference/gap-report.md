@@ -12,7 +12,7 @@ Nearest skills:
 - [skill-1]: [why it doesn't fit — the specific capability/scope gap]
 - [skill-2]: [why it doesn't fit]
 - [skill-3]: [why it doesn't fit] (omit if fewer than 3 skills are plausibly close)
-Next action: [propose-new-skill (hand off to Architect via `COMPASS_TO_ARCHITECT`) | generic-execution (no skill class fits; proceed ad-hoc) | boundary (the act is outside what any skill may perform — e.g. licensed-human-only filings; see `nexus/reference/routing-matrix.md` LADDER non-closable-gap note)]
+Next action: [propose-new-skill (global gap: hand off to Architect via `COMPASS_TO_ARCHITECT`) | project-local-skill (repo-specific gap: hand off to Sigil via `COMPASS_TO_SIGIL`) | generic-execution (no skill class fits; proceed ad-hoc) | boundary (the act is outside what any skill may perform — e.g. licensed-human-only filings; see `nexus/reference/routing-matrix.md` LADDER non-closable-gap note)]
 ```
 
 Every field is required — an empty "Nearest skills" list (zero candidates considered) or a missing "Next action" makes the report unverifiable and defeats the point of Gap mode.

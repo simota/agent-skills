@@ -144,7 +144,7 @@ A recipe is not "live" until it appears — consistently — in **every** index,
 2. `reference/recipes-index.md` — one row (Recipe · Subcommand · When to Use · Chain Template · Read), **and** the subcommand added to the `SKILL.md` `### Recipe Registry` allowlist. The full table lives in the index file; SKILL.md carries only the dispatch allowlist.
 3. `SKILL.md` `### Recipe Families` — add to the right family (create one only if no family fits); state the within-family distinguishing axis.
 4. *(retired)* — SKILL.md no longer carries an inline Signal Keywords table; anchors live only in #6 (`reference/signal-keywords.md`).
-5. `SKILL.md` `## Reference Map` — one row pointing at the new reference file.
+5. `SKILL.md` `## Reference Map` — covered by the existing wildcard row `reference/<recipe>-recipe.md` (filename = the `Read` column in `recipes-index.md`); add no per-recipe row unless the file breaks that naming pattern or needs a Read-When of its own (e.g. `deliver-recipe.md`).
 6. `reference/signal-keywords.md` — the **canonical full** anchor row, under the **correct section header** (Core / Specialist / Loop-Migration-Reproduction / Package), with English anchors + key non-English paraphrases.
 7. `reference/recipes-detail.md` — ensure the recipe's **family row** covers it (within-family axis); add a per-recipe identity/disambiguation section **only when** the axis needs more than the recipes-index row states. Not every recipe has a section here. **No chain template here** — phase contracts and chain templates live solely in `reference/<name>-recipe.md` (or `inline-recipes.md` for lightweight recipes); `recipes-detail.md` must point there, never duplicate it.
 

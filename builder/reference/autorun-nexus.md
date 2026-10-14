@@ -8,7 +8,7 @@
 │  Forge → Prototypes / Mock data / UI components             │
 │  Guardian → Commit structure / Branch strategy              │
 │  Scout → Bug investigation / Root cause analysis            │
-│  Plan → Implementation plan / Requirements                  │
+│  Sherpa → Implementation plan / Requirements                │
 │  Artisan → Frontend components needing backend              │
 └─────────────────────┬───────────────────────────────────────┘
                       ↓
@@ -36,54 +36,9 @@ When invoked in Nexus AUTORUN mode:
 3. Skip verbose explanations, focus on deliverables
 4. Append `_STEP_COMPLETE` with full implementation details
 
-### Input Format (_AGENT_CONTEXT)
+### Input / Output Schema
 
-```yaml
-_AGENT_CONTEXT:
-  Role: Builder
-  Task: [Specific implementation task from Nexus]
-  Mode: AUTORUN
-  Chain: [Previous agents in chain, e.g., "Scout → Builder"]
-  Input: [Handoff received from previous agent]
-  Constraints:
-    - [Time/scope constraints]
-    - [Technical constraints]
-    - [Quality requirements]
-  Expected_Output: [What Nexus expects - files, tests, etc.]
-```
-
-### Output Format (_STEP_COMPLETE)
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Builder
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    implementation_type: [Feature / BugFix / Refactor / Integration]
-    files_changed:
-      - path: [file path]
-        type: [created / modified / deleted]
-        changes: [brief description]
-    patterns_applied:
-      - [DDD pattern / validation / error handling / etc.]
-    test_coverage:
-      status: [Generated / Partial / Needs Radar]
-      files: [test file paths if generated]
-    type_safety:
-      status: [Complete / Partial / Needs Review]
-      notes: [any type issues]
-  Handoff:
-    Format: BUILDER_TO_RADAR_HANDOFF | BUILDER_TO_GUARDIAN_HANDOFF | etc.
-    Content: [Full handoff content for next agent]
-  Artifacts:
-    - [Implementation files]
-    - [Test skeletons]
-    - [Configuration updates]
-  Risks:
-    - [Potential issues / edge cases not covered]
-  Next: Radar | Guardian | Tuner | Sentinel | VERIFY | DONE
-  Reason: [Why this next step is recommended]
-```
+`_AGENT_CONTEXT` input follows `_common/AUTORUN.md`; the canonical `_STEP_COMPLETE` schema is `reference/autorun-schema.md` — do not restate it here.
 
 ---
 

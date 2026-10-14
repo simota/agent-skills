@@ -297,8 +297,8 @@ Patterns that haven't been matched recently lose confidence over time to prevent
 | Confidence | Classification | Action |
 |------------|---------------|--------|
 | ≥ 90% | High confidence | Auto-execute (if T1/T2) |
-| 70-89% | Medium confidence | Notify + execute |
-| 50-69% | Low confidence | Request approval |
+| 70-89% | Medium confidence | INVESTIGATE — diagnostics + dry-run, present findings; no action without approval |
+| 50-69% | Low confidence | INVESTIGATE — diagnostics + dry-run, present findings; no action without approval |
 | < 50% | No match | Escalate back to Triage |
 
 ### Multi-Pattern Scenarios

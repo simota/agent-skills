@@ -70,7 +70,7 @@ io_combine_limit = '128kB'
 | Method | When to use | Notes |
 |--------|-------------|-------|
 | `worker` (default) | Any OS, conservative deployments, the safe baseline | No kernel dependency; uses background I/O worker processes |
-| `io_uring` | Linux kernel ≥ 5.1 with NVMe and `--with-liburing` build | Best measured throughput; **lower syscall overhead and elimination of I/O worker processes are the recommended setting for maximizing performance on PG18** (`https://aiven.io/blog/exploring-why-postgresql-18-put-asynchronous-io-in-your-database`, `https://pganalyze.com/blog/postgres-18-async-io`). Verify the build flag: `pg_config --configure | grep liburing`. |
+| `io_uring` | Linux kernel ≥ 5.1 with NVMe and `--with-liburing` build | Best measured throughput; **lower syscall overhead and elimination of I/O worker processes are the recommended setting for maximizing performance on PG18** (`https://aiven.io/blog/exploring-why-postgresql-18-put-asynchronous-io-in-your-database`, `https://pganalyze.com/blog/postgres-18-async-io`). Verify the build flag: `pg_config --configure \| grep liburing`. |
 | `sync` | Troubleshooting, A/B comparison vs PG17 | Disables AIO; do not use as a steady-state production setting on PG18+ |
 
 Verify the binary was actually compiled with `liburing` before recommending `io_uring`; managed services often ship without it (Aurora 16/17 compatibility mode notably does not yet expose PG18's AIO knobs). Inspect `pg_aios` to confirm dispatch is async, not silently downgraded to worker/sync.

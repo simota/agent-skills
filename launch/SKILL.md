@@ -14,7 +14,7 @@ CAPABILITIES_SUMMARY:
 - go_nogo_gates: Define release criteria and Go/No-Go decision frameworks
 - hotfix_fast_path: Emergency patch release workflow with shortened CI gates, mandatory rollback readiness, and post-incident backport plan
 - canary_orchestration: Progressive traffic-shifting (1% → 10% → 50% → 100%) with automatic guardrail monitoring and halt triggers
-- mobile_app_store_release: TestFlight phased release (iOS) and Google Play staged rollout (Android) orchestration; store-compliance gate (Privacy Manifest / Data Safety / 5.1.2(i) AI disclosure / Sign in with Apple); server-driven feature flags as primary mobile rollback path
+- mobile_app_store_release: App Store phased release (iOS) and Google Play staged rollout (Android) orchestration; store-compliance gate (Privacy Manifest / Data Safety / 5.1.2(i) AI disclosure / Sign in with Apple); server-driven feature flags as primary mobile rollback path
 - github_pr_collection: Read-only PR retrieval with repository, period, author, label, state, pagination, rate-limit, and cache controls
 - engineering_work_reporting: Weekly, monthly, individual, client-facing, quality-trend, and retrospective reports from PR history
 - delivery_metrics: DORA 5-key metrics plus Reliability and SPACE context, with percentile and 7-archetype interpretation
@@ -68,7 +68,7 @@ Use Launch when the task requires any of the following:
 - Define production readiness checklists with measurable thresholds.
 - Automate release workflows with tools like `semantic-release`, `release-please`, `git-cliff`, or `changesets`.
 - Plan rollback drills or rehearsals to validate recovery procedures.
-- Plan mobile app store releases — TestFlight phased release (iOS), Google Play staged rollout (Android), per-store compliance gating, and server-driven flag-based rollback for pure-native builds handed off from `Native`.
+- Plan mobile app store releases — App Store phased release (iOS), Google Play staged rollout (Android), per-store compliance gating, and server-driven flag-based rollback for pure-native builds handed off from `Native`.
 - Collect GitHub PR history for weekly/monthly work summaries, individual or client reports, release notes, and quality trends.
 - Analyze DORA/SPACE delivery metrics, PR cycle-time percentiles, PR-size risk, review behavior, or PR-to-OKR linkage.
 - Export client-facing Markdown/HTML/PDF reports with explicit effort-estimation and data-quality caveats.
@@ -269,9 +269,9 @@ When pure-native iOS or Android releases flow from `Native`, Launch operates as 
 
 Field list and full YAML schema -> `reference/mobile-release.md`.
 
-Validate completeness on receipt — reject the handoff and route back to Native if any of the following are missing or `false`:
-- `privacy_manifest_complete` (iOS submissions are auto-rejected without `PrivacyInfo.xcprivacy` Required Reasons API declarations)
-- `data_safety_complete` (Google Play blocks submission across all tracks including Internal Testing)
+Validate completeness on receipt — reject the handoff and route back to Native if any of the following that apply to the handoff's `platforms` are missing or `false` (a store field for a platform not being released is not required):
+- `privacy_manifest_complete` — when `platforms` includes iOS (iOS submissions are auto-rejected without `PrivacyInfo.xcprivacy` Required Reasons API declarations)
+- `data_safety_complete` — when `platforms` includes Android (Google Play blocks submission across all tracks including Internal Testing)
 - `feature_flags` (mobile lacks instant rollback; flags are the primary kill-switch)
 - 5.1.2(i) AI disclosure UI when the app invokes third-party AI
 

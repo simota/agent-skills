@@ -15,7 +15,7 @@
 | `Settings` | App preferences — always available via ⌘, regardless of which scene has focus | Single, OS-managed | §4 |
 | `MenuBarExtra` | Menu-bar-resident app or companion UI, with or without a Dock icon | Single, lives in the menu bar | §5 |
 | `DocumentGroup` | File-backed documents (`FileDocument`/`ReferenceFileDocument`, or legacy `NSDocument`) | Many, one per open file | `reference/documents.md` |
-| `UtilityWindow` (unverified — no confirmed public SwiftUI scene type as of this writing; use `Window` + `.windowStyle(.hiddenTitleBar)` or an `NSPanel` bridged via `NSViewControllerRepresentable`) | Floating tool palette that stays above the main window | — | §6 |
+| `UtilityWindow` (unverified — no confirmed public SwiftUI scene type as of this writing; use `Window` + `.windowStyle(.hiddenTitleBar)` or an `NSPanel` bridged via `NSViewControllerRepresentable`) | Floating tool palette that stays above the main window | — | §3 (`Window`), §10 (`NSPanel` via AppKit) |
 
 **When NOT to use `WindowGroup`:** if the app only ever needs one window of a kind (a preferences-like dashboard, a single status monitor), use `Window` — `WindowGroup` implicitly wires up "New Window" duplication that doesn't make sense for a singleton surface.
 

@@ -3,7 +3,8 @@
 Task Battery Check — mechanical checker for the Nexus routing regression
 battery (`nexus/reference/task-battery.md`).
 
-The battery has 64 items across two verification tiers (IDs 1-65, with no #14):
+The battery's items fall into two verification tiers (coverage of every
+documented ID is itself checked -- see check_battery_coverage):
 
   Mechanical items: each item's "Expected routing" column
   claims a specific Recipe/task-type/entry-mode mapping backed by literal text in
@@ -28,17 +29,17 @@ Riff / Helm / Tempo / Anvil — sunset
 prior to the 2026-07-29 routing-matrix.md edit), so a future edit that
 reintroduces a stale reference is caught instead of silently passing.
 
-Fail-open contract (mirrors routing-oracle.py): any unhandled exception
-during a check is caught, printed as a WARNING, and the remaining checks run.
-Warning/error modes do not block on that internal crash; strict mode blocks on
-every warning so incomplete verification cannot appear clean there.
+Crash contract: any unhandled exception during a check is caught, printed,
+and recorded as an ERROR finding, and the remaining checks still run. A crashed
+check verified nothing, so error and strict modes block on it -- incomplete
+verification never appears clean; warning mode still exits 0.
 
 Usage:
   python3 _common/scripts/task-battery-check.py [--severity warning|error|strict]
 
 Severity tiers:
   --severity warning  (default)  print findings, exit 0
-  --severity error    exit 1 if any FAIL (ERROR-level) finding
+  --severity error    exit 1 if any FAIL (ERROR-level) finding, a crashed check included
   --severity strict   exit 1 if any FAIL or STALE (ERROR or WARNING) finding
 
 Exit codes:
@@ -74,7 +75,7 @@ FILES = {
     "recipes-index.md": RECIPES_INDEX,
 }
 
-# Items 1-28: (item, short description, file key, required verbatim substring).
+# Mechanical items: (item, short description, file key, required verbatim substring).
 # Each substring is the literal textual evidence in the routing artifact that
 # backs the item's "Expected routing" claim in task-battery.md.
 MECHANICAL_ITEMS = [
@@ -217,10 +218,10 @@ class Finding:
 def safe_check(fn, findings: list[Finding]):
     try:
         return fn(findings)
-    except Exception as e:  # noqa: BLE001 - intentional catch-all, fail-open contract
+    except Exception as e:  # noqa: BLE001 - intentional catch-all, see crash contract
         findings.append(Finding(
-            fn.__name__, "WARNING",
-            f"check crashed and was skipped (fail-open): {e.__class__.__name__}: {e}",
+            fn.__name__, "ERROR",
+            f"check crashed and was skipped: {e.__class__.__name__}: {e}",
         ))
         traceback.print_exc(file=sys.stderr)
 

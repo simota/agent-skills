@@ -33,7 +33,7 @@
 - `make validate` — 全チェッカーを blocking severity で実行
 - `make test` — 全回帰テスト。チェッカーが実際に落ちることの証明（repoを1箇所ずつ壊す）を含む
 - `make check` — 上記2つ。CI が走らせるもの
-- `make hooks` — clone ごとに1回。pre-commit で `validate` を、`_common/scripts/` に触れたコミットでは `check` を走らせる
+- `make hooks` — clone ごとに1回。pre-commit で `validate` と高速なカタログ回帰テスト（`make test-catalog`）を毎回、`_common/scripts/` やテストが読む入力（README・catalog・orbit reference 等。一覧は Makefile の hook 定義）に触れたコミットでは `check` を走らせる
 - 本リポは main へ直接コミットするため、**hook が実質の強制点**
 - **新しい check には、それが落ちるところを見るテストを `_common/scripts/test_checkers.py` に付ける。** テストのない check は常にゼロを返すものと区別がつかない — 実際に2本そうなっていた（`_common/LESSONS.md` L001/L002）
 - 機構を伴わない教訓は `_common/LESSONS.md` に入らない。`lint-lessons.py` が「remember to」型の記述を拒否する

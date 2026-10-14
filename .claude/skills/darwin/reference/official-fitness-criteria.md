@@ -79,16 +79,16 @@ Add the following official quality signals as supplementary inputs to the existi
 | Condition | OSC ≤ C (below 55) for any agent |
 | Scope | Medium |
 | Action | Propose SKILL.md improvement via Architect |
-| Priority | After ET-01 through ET-08 |
+| Priority | Per `reference/evolution-actions.md` § Trigger Evaluation Order |
 
 ### Linking Official Standards to Existing Triggers
 
 | Existing Trigger | Official Enhancement |
 |-----------------|---------------------|
-| `ET-02`: Health Score drop ≥10 | Also evaluate OSC to determine whether official spec deviation is the cause |
-| `ET-03`: 3+ unprocessed feedback | Prioritize feedback that reports official-standard violations |
-| `ET-05`: Same decision repeated 3+ | Recommend the optimal pattern by matching against official patterns |
-| `ET-08`: Average Health Score < B | Include the OSC grade alongside root-cause analysis |
+| `ET-05`: EFS Emergency Drop (≥10 points) | Also evaluate OSC to determine whether official spec deviation is the cause |
+| `ET-06`: Repeated Feedback Pattern (2+ high-priority entries) | Prioritize feedback that reports official-standard violations |
+| `ET-04`: Journal Pattern Accumulation (5+ unintegrated patterns) | Recommend the optimal pattern by matching Pattern Cards against official patterns |
+| `ET-02`: Quality Plateau (CES flat for 3+ cycles) | Include the OSC grade alongside root-cause analysis |
 
 ---
 

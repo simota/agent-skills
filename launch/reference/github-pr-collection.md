@@ -144,7 +144,7 @@ gh pr list --state merged --limit 200 --json author,additions,deletions |
 
 ## Release Notes Data
 
-Use a tag range or release period, then classify titles with the category rules in `report-templates.md`.
+Use a tag range or release period, then classify titles with the category rules in `engineering-report-templates.md` § Category Detection Rules.
 
 ```bash
 gh pr list \
@@ -176,7 +176,7 @@ GitHub rate-limit constants (`docs.github.com/en/rest/using-the-rest-api/rate-li
 - Secondary: ≤100 concurrent requests (shared across REST + GraphQL); ≤900 REST points/min; ≤2,000 GraphQL points/min; ≤80 content-generating req/min; ≤500 content-generating req/hr.
 - Pause ≥1s between mutative requests; use exponential backoff with jitter on secondary-limit errors.
 
-For retries, backoff, health checks, and graceful degradation, read `error-handling.md`.
+For retries, backoff, health checks, and graceful degradation, read `github-report-error-handling.md`.
 
 ## Adjacent Commands
 

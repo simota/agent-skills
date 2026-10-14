@@ -85,10 +85,10 @@ TRAIL_TO_PORT_HANDOFF:
       reason_to_drop: "[why not]"
 ```
 
-### `RESEARCHER_TO_PORT_HANDOFF` (input)
+### `FIELD_TO_PORT_HANDOFF` (input)
 
 ```yaml
-RESEARCHER_TO_PORT_HANDOFF:
+FIELD_TO_PORT_HANDOFF:
   personas: ["[name + summary]"]
   mobile_usage_patterns:
     - pattern: "[on-the-go | tablet-paired | offline-frequent]"

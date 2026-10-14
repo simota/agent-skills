@@ -202,9 +202,9 @@ Use `_common/CLI_COMPATIBILITY.md`'s canonical spawn/capture template once per s
 | Claude + Codex + agy AVAILABLE | `tri-engine` | Run all three; 3/2/1-of-3 scoring per SCORE table tri-engine row |
 | Claude + Codex AVAILABLE, agy UNAVAILABLE or RUNTIME-BROKEN | `dual-engine` (default) | Run Claude + Codex; 2/1-of-2 scoring per SCORE table dual-engine row; record agy absence as informational header line, NOT as a failure |
 | Only 1 of Claude/Codex AVAILABLE | `single-engine` (degraded) | Single-engine output; treat every finding as CANDIDATE; ground all before reporting; flag reduced confidence explicitly |
-| Both Claude and Codex unavailable | Abort; surface the failure to the user; do not guess findings |
-| User explicitly requests single engine | Skip fan-out entirely; use that engine's normal flow |
-| Scope <50 LOC and low-risk | Optionally use single-engine; record the short-scope rationale |
+| Both Claude and Codex unavailable | `abort` | Abort; surface the failure to the user; do not guess findings |
+| User explicitly requests single engine | `single-engine` (explicit) | Skip fan-out entirely; use that engine's normal flow |
+| Scope <50 LOC and low-risk | `single-engine` (optional) | Optionally use single-engine; record the short-scope rationale |
 
 ---
 

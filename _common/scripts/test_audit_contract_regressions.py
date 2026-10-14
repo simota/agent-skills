@@ -3,12 +3,15 @@
 
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 import shlex
 import shutil
 import subprocess
 import tempfile
 import unittest
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from test_skill_templates import fixture_environment, template
 

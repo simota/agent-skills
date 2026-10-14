@@ -84,7 +84,7 @@
 ## Activity Log
 
 <!--
-All agents MUST add an entry here after completing significant work.
+Add an entry only when the task produced a reusable insight or a decision later agents need (`_common/OPERATIONAL.md` § Activity Log). Routine or trivial tasks need no entry.
 Keep last 30 entries. Delete oldest when adding new.
 Format: YYYY-MM-DD | Agent | Action | Files/Scope | Outcome
 -->
@@ -108,15 +108,15 @@ Format: YYYY-MM-DD | Agent | Action | Files/Scope | Outcome
 
 ## Update Guidelines
 
-**Every agent MUST update this file after completing work:**
+**Update this file when the work produced something later agents need** (`_common/OPERATIONAL.md` § Activity Log — routine tasks need no entry):
 
-1. **Activity Log** (REQUIRED): Add a row after every task completion
+1. **Activity Log**: Add a row when the task produced a reusable insight or cross-agent decision
 2. **Cross-Agent Discoveries**: Add when finding something that affects other agents
 3. **Domain sections**: Update when discovering new constraints or decisions
 
 | Section | When to Update | Primary Agents |
 |---------|----------------|----------------|
-| Activity Log | After every task | ALL |
+| Activity Log | Reusable insight or cross-agent decision | ALL |
 | Architecture Decisions | New tech choices | Atlas, Shift (`radar`/`detect`) |
 | Domain Glossary | New term definitions | Builder, Quill |
 | API & External Services | New integrations, rate limits | Builder, Gear |

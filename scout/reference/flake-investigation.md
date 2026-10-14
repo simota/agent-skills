@@ -177,7 +177,7 @@ done
 | Timezone / clock / cron | **Weave** | time-aware design |
 | CI-only (env drift) | **Scaffold** | env reproducibility |
 | Load-correlated | **Siege** | stress validation |
-| Can't classify after N=50 | `consensus` Recipe | multi-engine hypothesis |
+| Can't classify after N=50 | `multi` Recipe | multi-engine hypothesis |
 
 ## Quarantine Policy
 

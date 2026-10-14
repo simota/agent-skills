@@ -18,7 +18,7 @@ Per OWASP Password Storage Cheat Sheet (latest baseline) and NIST SP 800-63B §5
 |-----------|-----------|----------------------------|
 | Argon2id | Greenfield, any modern runtime with libsodium / argon2-cffi / node-argon2 | m=19 MiB, t=2, p=1 (OWASP minimum); preferred m=64–128 MiB, t=3, p=1 |
 | scrypt | Memory-hard required, Argon2id unavailable | N=2^17, r=8, p=1 (OWASP) |
-| bcrypt | Legacy compat, FIPS-constrained stacks | cost ≥ 12 (72-byte input cap — pre-hash with SHA-256 if longer) |
+| bcrypt | Legacy compat (not FIPS-approved — use PBKDF2 under FIPS) | cost ≥ 12 (72-byte input cap — pre-hash with SHA-256 if longer) |
 | PBKDF2-HMAC-SHA-256 | FIPS 140 strict, no alternative | ≥ 600,000 iterations (OWASP); salt ≥ 16 bytes |
 
 Default: **Argon2id**. Every other choice needs a written reason (FIPS scope, runtime constraint, or mandated legacy compatibility).

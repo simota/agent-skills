@@ -17,11 +17,12 @@ COLLABORATION_PATTERNS:
 - User → Compass (task description or "what agents exist?")
 - Compass → Nexus (recommended agent chain for execution)
 - Compass → Architect (gap signal when no agent fits the need)
+- Compass → Sigil (repo-specific gap: project-local skill layer)
 - Nexus → Compass (explain agent selection rationale to user)
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: User (questions, tasks), Nexus (explain request)
-- OUTPUT: Nexus (chain recommendation), Architect (gap signal), User (guidance)
+- OUTPUT: Nexus (chain recommendation), Architect (global gap signal), Sigil (repo-specific gap), User (guidance)
 
 PROJECT_AFFINITY: universal
 -->
@@ -51,7 +52,7 @@ Route elsewhere when the task is primarily:
 
 - Understand the user's question before recommending. Narrow recommendations to 1-3 skills.
 - Every recommendation includes why it fits and one executable usage example with the matching Recipe/Subcommand. Include the default and other notable Subcommands for onboarding or catalog requests; do not pad a focused recommendation with unrelated commands.
-- When no skill fits, say so honestly and propose a gap signal to Architect.
+- When no skill fits, say so honestly and propose a gap signal: Architect for a global skill, Sigil for a repo-specific one (`_common/BOUNDARIES.md` Key distinctions).
 - Before recommending `Orbit`, `Lore`, or `Darwin`, apply `_common/PROJECT_LOCAL_SKILLS.md`; recommend the registered fallback when the active workspace lacks the local skill.
 - **Cache-first lookup for `recommend`**: at the start of each `recommend` invocation, attempt to read `.claude/compass-cache.md`. If present and valid, use it as the primary source instead of `reference/catalog.md` (~95% context reduction). If missing, prompt the user once per session to run `init` before falling back to full catalog. If `catalog_version` mismatch or TTL expired, prepend a soft warning per `reference/cache-format.md` § 7 and proceed with the stale cache. Never auto-refresh during `recommend` — refresh is always user-initiated. **Non-interactive/AUTORUN callers (e.g. Nexus's LADDER step spawning `compass(recommend)` with no user in the loop) decline the `init` prompt by default and go straight to full-catalog search** — a cold-cache prompt has no one to answer it, and a one-shot lookup doesn't justify persisting a cache file.
 - For `catalog`, `recipes`, `onboard`: bypass the cache and read full `reference/catalog.md` / `reference/recipes-directory.md`. The cache is a slim view scoped to `recommend`.
@@ -161,7 +162,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 ## Collaboration
 
 **Receives:** User (task descriptions, "which agent?" questions), Nexus (agent selection rationale explanation requests)
-**Sends:** Nexus (recommended agent chain for execution), Architect (gap signals when no agent fits)
+**Sends:** Nexus (recommended agent chain for execution), Architect (global gap signals when no agent fits), Sigil (repo-specific gaps needing a project-local skill)
 
 | Direction | Handoff | Purpose |
 |-----------|---------|---------|
@@ -169,6 +170,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 | Nexus → Compass | `NEXUS_TO_COMPASS` | Agent selection rationale explanation request |
 | Compass → Nexus | `COMPASS_TO_NEXUS` | Recommended chain execution request |
 | Compass → Architect | `COMPASS_TO_ARCHITECT` | Gap signal (no matching skill) |
+| Compass → Sigil | `COMPASS_TO_SIGIL` | Repo-specific gap (project-local skill needed) |
 
 ### Overlap Boundaries
 

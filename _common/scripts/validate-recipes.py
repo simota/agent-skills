@@ -91,7 +91,9 @@ REC04_REVIEWED = {
 
 
 def changed_skill_names() -> set[str] | None:
-    """Include changed registries and new skills; a git failure selects the full corpus."""
+    """Include changed registries and new skills; a git failure or a change under
+    `_common/` (checker code and shared contracts every skill reads) selects the
+    full corpus."""
     try:
         changed = subprocess.run(
             ["git", "diff", "--name-only", "-z", "HEAD"],
@@ -108,6 +110,8 @@ def changed_skill_names() -> set[str] | None:
     names = set()
     for value in changed + untracked:
         parts = Path(value).parts
+        if parts and parts[0] == "_common":
+            return None
         if len(parts) >= 4 and parts[:2] in ((".claude", "skills"), (".agents", "skills")):
             names.add(parts[2])
         elif len(parts) >= 2 and not parts[0].startswith(("_", ".")):
