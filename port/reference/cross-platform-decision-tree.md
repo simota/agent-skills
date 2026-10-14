@@ -2,7 +2,7 @@
 
 Choose the right path **once** at SURVEY. After committing, drop the alternatives. This file exists to make the choice deliberate, not to keep cross-platform options alive forever.
 
-Port's primary remit is **pure-native iOS + Android**. KMP-shared-logic is allowed as a **hybrid** option when the survey justifies it. Compose Multiplatform / RN / Flutter are documented here for completeness; if any of them is the right answer, route to `Native` instead.
+Port's primary remit is **pure-native iOS + Android**. KMP-shared-logic is allowed as a **hybrid** option when the survey justifies it. Compose Multiplatform / RN / Flutter are documented here for completeness; if any of them is the right answer, Port stops — `Native` does not take cross-platform UI. RN / Flutter prototypes go to `Forge`; production cross-platform UI is out of roster scope and needs an external implementer.
 
 ---
 
@@ -153,7 +153,7 @@ Path: ★ [Pure-Native | Hybrid (KMP+Native UI) | Compose Multiplatform | React 
 
 ## Handoff
 - If pure-native or hybrid → continue to Port `blueprint`
-- If RN / Flutter / Compose Multiplatform → route to Native; Port stops
+- If RN / Flutter / Compose Multiplatform → Port stops; RN / Flutter prototype → Forge; production → external implementer (out of roster scope)
 ```
 
 This decision is journaled in `.agents/port.md` along with the date and the scoring snapshot. Future Port invocations on the same project should respect the decision unless explicitly revisited.
