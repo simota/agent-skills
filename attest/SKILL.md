@@ -253,6 +253,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 - Operating mode used (FULL / EXTRACT / AUDIT / ADVERSARIAL / GENERATE).
 - Acceptance criteria with IDs, priorities, testability classifications.
 - BDD scenarios with coverage counts per criterion.
+- Generated test artifacts (`GENERATE`) with the criteria each covers; `GENERATE` issues no verdict.
 - Per-criterion verdicts with file:line or spec:section evidence.
 - Traceability matrix mapping spec sections to implementation.
 - Adversarial probe results where applicable.

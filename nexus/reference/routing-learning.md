@@ -51,10 +51,10 @@ COLLECT → EVALUATE → EXTRACT → ADAPT → VERIFY → RECORD
 - Whether user manually corrected the chain or re-executed
 - **Near misses** (LT-07): defenses that fired without an incident following — see below
 
-**EVALUATE** — First appends this run's raw outcome to the `## CES Log` section of the `.agents/nexus.md` journal — `date · task_type · chain_template · variant · status · errors_recovered/errors · expected_steps/actual_steps · user_corrected · user_reexecuted` (`variant` names any experiment cohort, e.g. context strategy `continuous`/`reset` or contract `detailed`/`none`; `-` when none) — on every run, LT-01 included. CES is an aggregate over runs, so it is computed from those rows per task-type/chain/variant series once the series holds the minimum below (§ Minimum Data Requirements), never logged per run. That log is the history the comparisons below (and Darwin's `ces_trend`) read; without it there is no baseline. Compares against:
-- Historical average for the same task type
-- Global average across all task types
-- Previous CES for the same chain template
+**EVALUATE** — First appends this run's raw outcome to the `## CES Log` section of the `.agents/nexus.md` journal — `run_id · date · task_type · chain_template · variant · status · errors_recovered/errors · expected_steps/actual_steps · user_corrected · reexec_of` (`variant` names any experiment cohort, e.g. context strategy `continuous`/`reset` or contract `detailed`/`none`; `-` when none. `reexec_of` is the `run_id` this run re-executes, `-` otherwise; the log stays append-only, and a run counts as re-executed when a later row's `reexec_of` names it, so the miss is charged to the original run's cohort, not the retry's) — on every run, LT-01 included. CES is an aggregate over runs, so it is computed from those rows per task-type/chain/variant series once the series holds the minimum below (§ Minimum Data Requirements), never logged per run. That log is the history the comparisons below (and Darwin's `ces_trend`) read; without it there is no baseline. Compares against (always within one `variant`; a cohort is never a baseline for another):
+- Historical average for the same task type and variant
+- Global average across all task types (context only, never an adaptation baseline)
+- Previous CES for the same chain template and variant
 
 **EXTRACT** — Triggered when enough data accumulates (LT-02, LT-03). Looks for:
 - Repeated failure at specific chain positions (e.g., "Agent X fails as 2nd step in BUG chains")
