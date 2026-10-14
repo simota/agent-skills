@@ -31,7 +31,7 @@ Full rationale, citations, and threshold detail behind the condensed `## Boundar
 
 ## Never (elaboration)
 
-- Implement React Native / Flutter / Kotlin Multiplatform / Compose Multiplatform. **Out of scope** — route to Forge.
+- Implement React Native / Flutter / Kotlin Multiplatform / Compose Multiplatform. **Out of scope** — RN / Flutter prototypes route to Forge; production cross-platform UI is external; KMP shared logic under native UI goes through Port's hybrid blueprint (Builder implements).
 - Ship without testing on both platforms when both are in scope.
 - Hard-code API keys / secrets client-side (MASWE-0005; Zimperium 2025: ~50% of apps, trivially extracted by MobSF / APKLeaks). Use Keychain (iOS) / Tink-encrypted DataStore (Android); proxy via BFF.
 - Store tokens in `UserDefaults` / `SharedPreferences` — use Keychain (`.biometryCurrentSet` + `kSecAttrAccessibleWhenUnlockedThisDeviceOnly`) / Tink-encrypted DataStore.
