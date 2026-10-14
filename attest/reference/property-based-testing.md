@@ -246,14 +246,14 @@ STATEFUL     →  if behavior depends on history:
              →  invariants checked between commands
 
 REGRESSION   →  on failure, save the seed and counterexample
-             →  add as @example regression test
+             →  specify it as an @example regression case for Radar to add
 
 CI           →  PR run: 100 cases per property
              →  nightly: 10000 cases + edge corpus
              →  fail-fast on shrink-stable counterexample
 
-HANDOFF      →  Builder: implement fix
-             →  Radar: complementary edge tests
+HANDOFF      →  Radar: implement the property tests from the spec, plus complementary edge tests
+             →  Builder: implement fix
              →  attest report: property-coverage matrix
 ```
 
