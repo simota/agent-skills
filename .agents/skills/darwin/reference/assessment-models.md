@@ -99,7 +99,10 @@ Hard gate (evaluated BEFORE the weighted score):
 Quality = ces_trend × 0.4 + feedback_ratio × 0.3 + health_score × 0.3
 
 Where:
-  ces_trend    = direction of Nexus CES over last 3 cycles (improving=100, stable=60, declining=20)
+  ces_trend    = direction of Nexus CES over last 3 cycles (improving=100, stable=60, declining=20);
+                 neutral 60, and never `declining` for the gate, until the window holds the
+                 ≥ 10 CES data points `nexus/reference/routing-learning.md` § Minimum Data
+                 Requirements sets for trend analysis
                  (CES, not UQS: UQS is specified, not implemented — _common/TOKEN_ECONOMY.md §6)
   feedback_ratio = positive Reverse Feedback / total Reverse Feedback × 100
   health_score = latest Architect Health Score (if available, else 50)
