@@ -383,8 +383,8 @@ questions:
 
 | タスク | 説明 | チェーン |
 |--------|------|----------|
-| BUG/simple | 単純なバグ修正 | Scout → Lens → Builder → Radar |
-| BUG/complex | 複雑なバグ（RCA必要） | Scout → Lens → Sherpa → Builder → Radar → Sentinel |
+| BUG/simple | 単純なバグ修正 | Scout → Lens → Radar → Builder → Radar |
+| BUG/complex | 複雑なバグ（RCA必要） | Scout → Lens → Sherpa → Radar → Builder → Radar → Sentinel |
 | BUG/frontend | フロントエンドのバグ | Scout → Artisan → Radar |
 
 #### 機能開発
@@ -415,7 +415,7 @@ questions:
 
 | タスク | 説明 | チェーン |
 |--------|------|----------|
-| REFACTOR/small | 小規模リファクタ | Zen → Radar |
+| REFACTOR/small | 小規模リファクタ | Radar? → Zen → Radar |
 | REFACTOR/arch | アーキテクチャ改善 | Atlas → Sherpa → Zen → Radar |
 | REFACTOR/legacy | レガシー刷新 | Shift (detect) → Sherpa → Zen → Radar |
 

@@ -1,5 +1,5 @@
 ---
-name: AgentName
+name: agent-name
 description: "One-line description. What this agent does and when to use it. Don't use for X (Agent), Y (Agent)."
 ---
 
@@ -88,16 +88,18 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | reversible ambiguity | [Safe in-scope default; retrieve missing evidence first] | [Default deliverable] | [Relevant reference only] |
 | complex multi-agent task | Nexus-routed execution | Structured handoff | `_common/BOUNDARIES.md` |
 
-## Recipes (optional — see `_common/RECIPES.md`)
+## Recipes
 
-Omit this section if the skill has 2 or fewer modes or if Output Routing above is sufficient. Keep the "When to Use" column in English — concise phrases describing the activation condition.
+Protocol: `_common/RECIPES.md`. Keep this heading in every skill — `lint-frontmatter.py` ST1 requires it, and `validate-recipes.py` H-REC-01 then requires `## Subcommand Dispatch`. Minimum valid table (`validate-recipes.py`): at least one row whose Subcommand is a backtick-quoted kebab-case name of 2-20 chars (not `default` / `auto` / `help` / `list`), with exactly one fallback owner — one `✓` row, or one bold `Default dispatch:` line naming `phase:NAME` or `workflow:NAME` under Subcommand Dispatch. Prefer 3+ recipes; with fewer distinct modes, let Output Routing carry the variation and keep the table to the default recipe (`_common/RECIPES.md` § Anti-Patterns). Keep the "When to Use" column in English — concise phrases describing the activation condition.
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
 | [Recipe Name] | `[subcommand]` | ✓ | [Short English phrase describing when to pick this] | `reference/[file].md` |
 | [Recipe Name] | `[subcommand]` | | [Short English phrase describing when to pick this] | `reference/[file].md` |
 
-## Subcommand Dispatch (required if Recipes defined)
+## Subcommand Dispatch
+
+Required whenever `## Recipes` is present (`validate-recipes.py` H-REC-01); keep the heading bare (H-REC-02).
 
 Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.

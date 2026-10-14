@@ -21,8 +21,8 @@ Each row is a **deviation** from the `routing-matrix.md` default for that task t
 
 | Type | Complexity | Chain Template |
 |------|------------|----------------|
-| BUG | simple | Scout → Lens → Builder → Radar |
-| BUG | complex | Scout → Lens → Sherpa → Builder → Radar → Sentinel |
+| BUG | simple | Scout → Lens → Radar → Builder → Radar |
+| BUG | complex | Scout → Lens → Sherpa → Radar → Builder → Radar → Sentinel |
 | INCIDENT | SEV1/2 | Triage → Scout → Builder → Radar → Triage (postmortem) |
 | INCIDENT | SEV3/4 | Triage → Scout → Builder → Radar |
 | API | new | Gateway → Builder → Radar → Quill |
@@ -35,7 +35,7 @@ Each row is a **deviation** from the `routing-matrix.md` default for that task t
 | FEATURE | cli | Builder → Radar |
 | FEATURE | innovation | Field → Flux → Spark → Builder → Radar |
 | FEATURE | story-driven | Saga → Spark → Forge → Builder → Radar |
-| REFACTOR | small | Zen → Radar |
+| REFACTOR | small | Radar? → Zen → Radar |
 | REFACTOR | arch | Atlas → Sherpa → Zen → Radar |
 | REFACTOR | rethink | Atlas → Flux → Atlas → Sherpa → Zen → Radar |
 | OPTIMIZE | app | Bolt → Radar |
@@ -322,7 +322,7 @@ Builder then applies:
 ### Rally Non-Escalation (Keep Sequential)
 
 - Investigation-only chains (Lens, Scout, Trail) → No Rally
-- Advisory-only chains (Magi 1on1/triage/retro/pitch) → No Rally; the advisory Recipe is single-session by contract
+- Advisory-only chains (Magi[advisor] office-hours/triage/pitch/expert/conclave/critique/roster) → No Rally; the advisory Recipe is single-session by contract
 - Single-agent chains (Quill, Scribe) → No Rally
 - Changes under 10 lines total → No Rally
 - High-risk security changes → Prefer sequential with checkpoints
@@ -330,7 +330,7 @@ Builder then applies:
 
 ### Skip Triggers
 
-- Changes under 10 lines AND tests exist → May skip Radar
+- Changes under 10 lines AND tests exist → May skip Radar — except BUG (reproduce-first failing test) and REFACTOR (safety-net + verify-equivalence), which always keep Radar
 - Pure documentation changes → Skip Radar/Sentinel
 - Config files only → Only relevant agent
 - Sentinel-only static issues → May skip Probe

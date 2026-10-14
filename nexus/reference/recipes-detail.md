@@ -26,7 +26,7 @@ Extended descriptions for verbose Recipe rows, and the canonical home for the fa
 
 ## kaizen
 
-Existing-feature continuous improvement covering perf / UX / code-quality / feature-extension. **PDCA loop, not single-pass**: improves against a quantified target and stops on target-met or diminishing-returns. Differs from `refactor` (internal-only), `optimize` (perf-only), and `feature` (new addition). Scale: 4-8 agents (× ≤3 cycles).
+Existing-feature continuous improvement covering perf / UX / code-quality / feature-extension. **PDCA loop, not single-pass**: improves against a quantified target and stops on target-met or diminishing-returns. Differs from `refactor` (internal-only), `optimize` (perf-only), and `feature` (new addition). Agent count and cost: canonical in `inline-recipes.md` § Contract elements shared by all four (element 7, Scale) per `recipe-contract.md` §8.
 
 The `⟲{…}⟲` block loops until target-met OR diminishing-returns OR iteration cap. Full phase contract (DIAGNOSE+BASELINE / PROPOSE+TARGET / IMPROVE / VERIFY+LOOP / SHIP) → `reference/inline-recipes.md`.
 
@@ -313,6 +313,6 @@ Read: `reference/eureka-recipe.md`, `reference/research-grounding.md`.
 
 ## package (includes legacy `venture` as `domain=startup`)
 
-**Generalized document-package generator** — **12-domain preset registry**: `startup` (the legacy `venture` blueprint) / generic / research / ai-adoption / legal* / saas / media / growth / career / learning / hiring* / local-gov*. Per-domain swap: directories, role→skill map, traceability anchor (F-/H-/UC-/R-/P-/E-/T-/LO-/I-), risk gates (*=mandatory). Single Phase 0-6 engine. Depth 5-28 agents (`startup` tiers: lite 6-8, mvp(default) 14-18, raise 16-20, full 24-28). **Confirm full depth.**
+**Generalized document-package generator** — **12-domain preset registry**: `startup` (the legacy `venture` blueprint) / generic / research / ai-adoption / legal* / saas / media / growth / career / learning / hiring* / local-gov*. Per-domain swap: directories, role→skill map, traceability anchor (F-/H-/UC-/R-/P-/E-/T-/LO-/I-), risk gates (*=mandatory). Single Phase 0-6 engine. Depth overlay `lite` / `standard` / `raise` / `full`; agent count and cost are canonical in `package-recipe.md` (Scale) per `recipe-contract.md` §8. **Confirm full depth.**
 
 Read: `reference/package-recipe.md`. Startup-preset deep blueprint: `reference/venture-recipe.md`.
