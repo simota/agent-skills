@@ -19,4 +19,4 @@ what Recipes exist at all.
 | API E2E | `api` | | User-journey E2E through an API-only interface (no UI): HTTP call → backend state → downstream API validation chain | `reference/api-e2e-testing.md` |
 | Mobile E2E | `mobile` | | E2E testing for shipped mobile apps (Detox / Maestro / Appium / device farm) | `reference/mobile-testing.md` |
 | Component Test | `component` | | Component tests executed in a real browser (Playwright CT / Cypress CT / Storybook Interactions) | `reference/component-testing.md` |
-| iOS XCUITest & Snapshots | `ios` | | XCUITest, identifier audit, screenshot/App Store snapshot, CI, device-farm, or xcresult work; select `xcuitest|identifier|screenshot|appstore|ci|farm|xcresult` mode | `reference/xcuitest-patterns.md`, matching `reference/ios-*.md` or `reference/fastlane-snapshot.md` |
+| iOS XCUITest & Snapshots | `ios` | | XCUITest, identifier audit, screenshot/App Store snapshot, CI, device-farm, or xcresult work; select `xcuitest\|identifier\|screenshot\|appstore\|ci\|farm\|xcresult` mode | `reference/xcuitest-patterns.md`, matching `reference/ios-*.md` or `reference/fastlane-snapshot.md` |

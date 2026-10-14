@@ -13,7 +13,7 @@ Purpose: Use this file when the package structure, collaboration flow, or scope 
 | ID | Pattern | Failure mode | Guardrail |
 |---|---|---|---|
 | `SA-01` | L0 Skip | no shared context before detail | never skip `L0` |
-| `SA-02` | Kitchen Sink Spec | one package tries to carry everything | split at `10+` requirements and suggest Sherpa |
+| `SA-02` | Kitchen Sink Spec | one package tries to carry everything | at `12+` requirements (`Full` scope), suggest Sherpa decomposition when they are not yet decomposed; a decomposed `12+` set stays one `Full` package |
 | `SA-03` | Solution-First Spec | solution appears before the problem | write `Why` first in `L0` |
 | `SA-04` | Audience Blindness | all sections use the same language | write `L2` by audience |
 | `SA-05` | Static Spec | package drifts from reality | keep status, version, and review flow |

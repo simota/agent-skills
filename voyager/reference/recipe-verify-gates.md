@@ -61,6 +61,7 @@ Behavior notes per Recipe (full VERIFY gate detail in `reference/recipe-verify-g
 - `api`: API-only journey via `APIRequestContext`. VERIFY: ≥1 cross-endpoint state check, mock-vs-real toggle defined at PLAN, real backend pinned for critical-path smoke, stays journey-level (backend internals → Radar, DAST → Probe).
 - `mobile`: shipped-app E2E (Detox/Maestro/Appium, device farm at ≥3 combos). VERIFY: PR gate = 1 sim + 1 emu only (full matrix → nightly), release gated on oldest+newest OS per platform, accessibility-id locators, device flake quarantined from logic flake.
 - `component`: real-browser component tests (not jsdom). VERIFY: one component per test (page-level → `playwright`), executes against Vitrine-owned stories when they exist.
+- `ios`: XCUITest / identifier audit / screenshot / App Store snapshot / CI / farm / xcresult — mode chosen per `SKILL.md` `ios` mode dispatch. VERIFY: `accessibilityIdentifier` contract used as primary locator, Swift Screen Objects by user intent, `.xcresult` evidence attached, a matrix above 3 devices × 3 locales confirmed before running.
 
 ### Signal Keywords → Recipe
 
@@ -76,8 +77,9 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `CI`, `pipeline`, `sharding`, `parallel` | `playwright` (CI scope) |
 | `flaky`, `flake`, `retry`, `instability` | `playwright` (flake diagnosis) |
 | `mobile emulation`, `mobile viewport`, `responsive E2E`, `PWA mobile` | `playwright` (mobile emulation — read `mobile-testing.md`) |
-| `native mobile E2E`, `appium`, `detox`, `maestro`, `xcuitest`, `espresso`, `.ipa`, `.apk`, `.aab` | `mobile` |
+| `native mobile E2E`, `appium`, `detox`, `maestro`, `espresso`, `.ipa`, `.apk`, `.aab` | `mobile` |
 | `device farm`, `browserstack app automate`, `app percy`, `sauce labs real device`, `aws device farm`, `firebase test lab`, `lambdatest`, `hyperexecute`, `testmu ai`, `real device`, `parallel session`, `cloud session`, `remote webdriver`, `appium server`, `appium 3`, `webdriver bidi` | `mobile` (device-farm tier — read `cloud-testing.md` + `mobile-testing.md`) |
+| `xcuitest`, `accessibilityIdentifier`, `xcresult`, `fastlane snapshot`, `App Store screenshots`, `Swift Screen Object` | `ios` (mode dispatch per `SKILL.md` § Subcommand Dispatch) |
 | `foldable`, `galaxy z fold`, `pixel fold`, `window size class`, `compact medium expanded`, `stage manager`, `split view`, `multi-window`, `posture` | `mobile` (adaptive/foldable — read `mobile-testing.md`) |
 | `privacy manifest`, `PrivacyInfo.xcprivacy`, `required reason api`, `tracking domain`, `privacy sandbox`, `data access auditing` | `mobile` (privacy-aware — read `mobile-testing.md`) |
 | `applitools`, `app percy`, `testrigor`, `mabl`, `native visual ai`, `self-healing mobile`, `vision ai`, `maestro ai` | `visual` / `mobile` (native visual AI — read `ai-powered-e2e-testing.md` + `mobile-testing.md`) |

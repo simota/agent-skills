@@ -228,9 +228,9 @@ Always reference teammates by `name`, not `agentId`.
 
 ### Team size
 
-- Recommended: `2-4`
-- Hard maximum: `10`
-- `5+` requires user confirmation
+- Recommended: `3-5` (a planning preference, not a minimum — two independent units can justify two workers)
+- `5+` requires user confirmation (Ask First)
+- Never exceed `8` without explicit justification; never spawn `10+` (`rally/SKILL.md`)
 
 ### Cost
 

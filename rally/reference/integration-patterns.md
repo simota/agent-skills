@@ -243,7 +243,7 @@ Hub mode exchange:
 | Aspect | Nexus `_PARALLEL_BRANCHES` | Rally teams |
 |--------|----------------------------|-------------|
 | Execution model | single session, simulated parallel | multi-session, true parallel |
-| Max branches | `3` (4+ → Rally) | `10` teammates, `2-4` preferred |
+| Max branches | `3` (4+ → Rally) | `3-5` preferred; `>8` needs explicit justification; never `10+` |
 | File ownership | `file_ownership` YAML | teammate `ownership_map` |
 | Conflict handling | `CONCAT` / `RESOLVE` / `MANUAL` | `ON_RESULT_CONFLICT` |
 | Guardrails | per-branch L1-L4 | Rally monitoring via `TaskList` |

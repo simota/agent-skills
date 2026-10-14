@@ -177,7 +177,7 @@ Pre-flight/health gates, 3-Tier Timeout, convergence thresholds, Core Defaults, 
 
 ### Circuit Breaker
 
-**Detect stall/circular patterns, then stop.** `CLOSED` below `CIRCUIT_THRESHOLD` same failures; `HALF_OPEN` at threshold (one probe, fail -> `OPEN`); `OPEN` blocks execution, emits `BLOCKED`. State: `${LOOP_DIR}/.circuit-state`; reset via `recover.sh --reset-circuit`; `OPEN` -> `HALF_OPEN` after `CIRCUIT_COOLDOWN` seconds. Same principle governs summit Phase 5's Agent Tennis breaker (fires after `>= 3` unresolved Improvement/Verification turns; exit, deliver with caveat, escalate — never skipped). Detail -> `reference/core-defaults.md`, `reference/failure-catalog.md`.
+**Detect stall/circular patterns, then stop.** `CLOSED` below `CIRCUIT_THRESHOLD` same failures; `OPEN` at threshold (blocks execution, emits `BLOCKED`); `HALF_OPEN` after cooldown (one probe; success -> `CLOSED`, fail -> `OPEN`). State: `${LOOP_DIR}/.circuit-state`; reset via `recover.sh --reset-circuit`; `OPEN` -> `HALF_OPEN` after `CIRCUIT_COOLDOWN` seconds. Same principle governs summit Phase 5's Agent Tennis breaker (fires after `>= 3` unresolved Improvement/Verification turns; exit, deliver with caveat, escalate — never skipped). Detail -> `reference/core-defaults.md`, `reference/failure-catalog.md`.
 
 ## Output Requirements
 

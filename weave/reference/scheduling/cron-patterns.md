@@ -402,20 +402,20 @@ Date next = ce.getNextValidTimeAfter(new Date());
 
 ## Signal Keywords -> Recipe (full table)
 
-For natural-language input without an explicit subcommand. Subcommand match wins if both apply.
+For natural-language input without an explicit subcommand. Subcommand match wins if both apply. Recipes are Weave's own (`weave/SKILL.md` § Recipes, the canonical table); temporal sub-topics without a dedicated Recipe route to `schedule`.
 
 | Keywords | Recipe |
 |----------|--------|
-| `cron`, `schedule`, `recurring`, `periodic` | `cron` |
-| `timezone`, `TZ`, `DST`, `UTC`, `daylight saving` | `timezone` |
+| `cron`, `schedule`, `recurring`, `periodic` | `schedule` |
+| `timezone`, `TZ`, `DST`, `UTC`, `daylight saving` | `schedule` |
 | `retry`, `backoff`, `DLQ`, `dead letter`, `rate limit`, `throttle`, `token bucket`, `leaky bucket`, `GCRA` | `retry` |
-| `backfill`, `catchup`, `replay`, `reprocess` | `backfill` |
-| `holiday`, `business day`, `fiscal year`, `営業日`, `祝日` | `calendar` |
-| `deadline`, `context deadline`, `timeout budget`, `AbortSignal deadline`, `grpc-timeout` | `deadline` |
-| `window`, `tumbling`, `sliding`, `session window`, `watermark`, `late arrival` | `window` |
-| `idempotent`, `idempotency key`, `dedup`, `exactly-once`, `effectively-once`, `Stripe-Idempotency` | `idempotent` |
-| `GitHub Actions cron`, `GHA schedule` | `cron` (apply UTC-only + best-effort caveat; `.github/workflows/*.yml` snippet) |
-| `EventBridge`, `AWS scheduled rule` | `cron` (6-field + SQS/DLQ plan via `retry`) |
-| `K8s CronJob`, `Kubernetes scheduled` | `cron` (manifest with `concurrencyPolicy` + `startingDeadlineSeconds`) |
-| unclear temporal request | `cron` (full ANALYZE → HARDEN workflow; schedule contract with all six fields) |
+| `backfill`, `catchup`, `replay`, `reprocess` | `schedule` (catchup vs skip-forward with an explicit watermark) |
+| `holiday`, `business day`, `fiscal year`, `営業日`, `祝日` | `schedule` (with `reference/scheduling/business-calendar.md`) |
+| `deadline`, `context deadline`, `timeout budget`, `AbortSignal deadline`, `grpc-timeout` | `timeout` |
+| `window`, `tumbling`, `sliding`, `session window`, `watermark`, `late arrival` | `schedule` |
+| `idempotent`, `idempotency key`, `dedup`, `exactly-once`, `effectively-once`, `Stripe-Idempotency` | `retry` (idempotency contract) |
+| `GitHub Actions cron`, `GHA schedule` | `schedule` (apply UTC-only + best-effort caveat; `.github/workflows/*.yml` snippet) |
+| `EventBridge`, `AWS scheduled rule` | `schedule` (6-field + SQS/DLQ plan via `retry`) |
+| `K8s CronJob`, `Kubernetes scheduled` | `schedule` (manifest with `concurrencyPolicy` + `startingDeadlineSeconds`) |
+| unclear temporal request | `schedule` (full `CAPTURE → MODEL → VALIDATE → REFINE → HANDOFF` workflow; schedule contract with all six fields) |
 

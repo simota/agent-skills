@@ -205,7 +205,7 @@ Total maximum: `3` parameter default changes per session.
 ### Lore Sync Protocol
 
 ```yaml
-RALLY_TO_LORE_PATTERN:
+RALLY_TO_LORE_HANDOFF:
   type: PARALLEL_EXECUTION_PATTERN
   pattern_name: <descriptive name>
   source_data:

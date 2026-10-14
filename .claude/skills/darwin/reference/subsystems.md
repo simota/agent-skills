@@ -63,8 +63,8 @@ Evaluates each agent's ongoing relevance to the current project.
 
 **Process:**
 1. Calculate RS for every agent in the ecosystem
-2. Flag agents with RS <40 as Dormant
-3. Flag agents with RS <20 as Sunset candidates
+2. Classify each agent by `reference/assessment-models.md` § RS Status Classification: Dormant (RS 40-59), Declining (RS 20-39)
+3. Flag agents with RS <20 (Sunset) as Sunset candidates
 4. Cross-reference with lifecycle phase (some dormancy is expected)
 5. Generate Staleness Report with recommended actions
 

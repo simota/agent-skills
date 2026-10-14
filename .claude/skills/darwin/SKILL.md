@@ -21,7 +21,7 @@ CAPABILITIES_SUMMARY:
 - state_sync_failure_detection: State synchronization failure detection (race conditions in shared state across concurrent agents)
 - token_cost_assessment: Token cost efficiency assessment (15× cost multiplication awareness for multi-agent vs single-agent)
 - multi_agent_trap_detection: Multi-agent trap detection (single-agent sufficiency check before delegation)
-- evolution_trigger_evaluation: Evolution trigger evaluation (8 trigger types)
+- evolution_trigger_evaluation: Evolution trigger evaluation (trigger types ET-01…ET-10)
 
 COLLABORATION_PATTERNS:
 - Pattern A: Health Check (Darwin → Canvas for EFS dashboard)
@@ -122,7 +122,7 @@ Agent role boundaries → `_common/BOUNDARIES.md` (Meta-Orchestration section)
 |-------|-----------------|----------|------|
 | `SENSE` | Collect signals from git, files, activity logs, journals, existing scores. Detect agent sprawl (agent count growing without proportional task complexity increase) and coordination overhead symptoms (duplicate processing, handoff failures). | Confidence ≥0.60 for single phase; below → report as mixed | `reference/signal-collection.md` |
 | `ASSESS` | Calculate EFS across 5 dimensions; evaluate RS per agent; calculate OSC. Distinguish trajectory metrics (reasoning path quality, tool selection, handoff execution) from outcome metrics (task completion, business goal achievement) — trajectory metrics enable debugging, outcome metrics validate value | Grade: S(95+) A(85+) B(70+) C(55+) D(40+) F(<40) | `reference/assessment-models.md`, `reference/official-fitness-criteria.md` |
-| `EVOLVE` | Execute actions on triggers (8 trigger types) | Propose, never force; small mutations over big rewrites | `reference/evolution-actions.md` |
+| `EVOLVE` | Execute actions on triggers (ET-01…ET-10) | Propose, never force; small mutations over big rewrites | `reference/evolution-actions.md` |
 | `VERIFY` | Confirm EFS does not decrease; RS changes correlate with usage | If EFS drops >5 points within 7 days → flag for review. Coordination quality plateaus at ~7 evolution iterations and degrades sharply at 10+ — cap remediation cycles accordingly. Feed below-threshold production traces back into the evaluation baseline — drift that escapes detection becomes the new normal | `reference/verification-metrics.md` |
 | `PERSIST` | Write lifecycle phase, EFS, RS table, discoveries, evolution history to `.agents/ECOSYSTEM.md` | Always persist after every check | `reference/subsystems.md` |
 

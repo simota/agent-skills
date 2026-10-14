@@ -22,4 +22,4 @@ Also provide the verified root condition, contributing factors, causal-link test
 - Multiple interacting factor families -> Scout `fishbone`.
 - Timeline uncertainty -> Trail or Triage timeline reconstruction.
 - Fix implementation -> Builder.
-- Incident learning record -> Triage; recurring pattern -> Lore.
+- Incident learning record -> Triage; recurring pattern -> Lore. `Lore` is project-local — apply the Availability Gate in `_common/PROJECT_LOCAL_SKILLS.md` first; if absent, route to the registered fallback (`Tome` / `Scribe`) and report `project_local_fallback: true`.

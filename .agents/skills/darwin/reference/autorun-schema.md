@@ -14,7 +14,7 @@ _STEP_COMPLETE:
       confidence: "[0.0-1.0]"
       efs_score: "[0-100]"
       efs_grade: "[S | A | B | C | D | F]"
-      triggers_fired: ["[ET-01 | ET-02 | ... | ET-08]"]
+      triggers_fired: ["[ET-01 | ET-02 | ... | ET-10]"]
     evolution_actions: ["[action descriptions]"]
     risks: ["[risk descriptions]"]
   Next: Architect | Nexus | Prune | Canvas | DONE

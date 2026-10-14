@@ -17,7 +17,7 @@ what Recipes exist at all.
 | Normalization | `normalize` |  | Normalization vs denormalization decisions | — |
 | Index Strategy | `index` | | Design-time index design from access patterns and the migration that ships it; EXPLAIN-backed tuning of an observed slow workload → Tuner `index` | `reference/index-strategies.md` |
 | Migration Rollback | `rollback` | | Reverse-operation design for destructive migrations (reverse DDL / dual-write / backfill / alternatives to destructive changes) | `reference/migration-rollback.md` |
-| Multi-Tenant Design | `tenant` | | Tenant isolation, RLS, routing, migration, provisioning, quota, or cross-tenant security; select `isolation|rls|routing|scale|migration|provisioning|quota` mode from the request | `reference/multi-tenant-patterns.md`, matching `reference/tenant-*.md` |
+| Multi-Tenant Design | `tenant` | | Tenant isolation, RLS, routing, migration, provisioning, quota, or cross-tenant security; select `isolation\|rls\|routing\|scale\|migration\|provisioning\|quota` mode from the request | `reference/multi-tenant-patterns.md`, matching `reference/tenant-*.md` |
 | Partitioning | `partition` | | range / list / hash / time-based partition design (pruning / maintenance / migration) | `reference/partition-strategies.md` |
 | Audit Log | `audit-log` | | Append-only audit-log schema — temporal tables, logical replication, before/after image, retention | `reference/audit-log-schema.md` |
 | Event Sourcing | `event-sourcing` | | Event store schema — events / projections / snapshots / outbox, aggregate boundaries | `reference/event-sourcing-schema.md` |
