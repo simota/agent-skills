@@ -146,9 +146,11 @@ CES = Success_Rate × 0.35 + Recovery_Efficiency × 0.20 + Step_Economy × 0.20 
 
 ### Minimum Data Requirements
 
-- CES calculation requires ≥ 3 data points for the same task-type/chain combination
-- Grades are provisional until ≥ 5 data points
-- Trend analysis requires ≥ 10 data points
+All three thresholds count runs in one series — the same task type, chain template and `variant`; runs from different variants never pool toward a minimum.
+
+- CES calculation requires ≥ 3 data points in the series
+- Grades are provisional until the series holds ≥ 5 data points
+- Trend analysis requires ≥ 10 data points in the series
 
 ## Routing Adaptation Rules
 
