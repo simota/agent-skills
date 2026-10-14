@@ -48,7 +48,7 @@ Required = `_common/HANDOFF.md` § Required Fields. ⚪ = optional Nexus-hub enr
 | Field | Required | Description |
 |-------|----------|-------------|
 | `summary` | ✅ (HANDOFF.md **Summary**) | 1-3 line summary of work done |
-| `next_agent` | ✅ (HANDOFF.md **Next**) | Recommended next agent, or `DONE` |
+| `next_agent` | ✅ (HANDOFF.md **Next**) | Recommended next agent, a declared next action (HANDOFF.md allows "agent or action", e.g. `rerun tests after credentials are restored` — Nexus classifies an action like a new request before routing), or `DONE` |
 | `verified` | ✅ when a pass/done claim is made (HANDOFF.md **Verified**) | Evidence objects per `_common/HANDOFF.md` § Completed vs Verified |
 | `step` | ⚪ | Current step in chain (X/Y) |
 | `agent` | ⚪ | Agent name that produced this handoff |
@@ -118,7 +118,7 @@ Before Nexus routes to next agent, validate:
 validation_checks:
   required_fields:            # _common/HANDOFF.md § Required Fields
     - summary: non-empty string
-    - next_agent: valid agent name or "DONE"
+    - next_agent: valid agent name, a non-empty declared action, or "DONE"
     - verified: one evidence object per pass/done claim (omit only when no such claim)
 
   enrichment_fields:          # optional; validated only when present, inferred otherwise

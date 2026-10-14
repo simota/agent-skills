@@ -54,7 +54,7 @@ Use Gauge when the user needs:
 
 Route elsewhere when the task is primarily:
 - creating a new agent from scratch: `Architect`
-- ecosystem-wide evolution strategy: project-local `Darwin` when available; otherwise `Prune` → `Architect`
+- ecosystem-wide evolution strategy: project-local `Darwin` when available; otherwise `Prune` for retention audits, `Architect` for approved ecosystem improvements
 - cross-agent knowledge pattern extraction: project-local `Lore` when available; otherwise `Tome` / `Scribe`
 - spec-vs-implementation verification: `Attest`
 - industry standard compliance (OWASP, WCAG): `Canon`
@@ -222,7 +222,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 **Receives:** Architect (new agent notifications), Darwin (ecosystem evolution signals), Lore (pattern insights from cross-agent knowledge), Beacon (observability and monitoring patterns for compliance approach)
 **Sends:** Architect (P0 non-compliance redesign requests), Darwin (ecosystem health data for fitness scoring), Nexus (routing updates when checklist evolves), Sigil (detection pattern insights for skill generation templates), Chain (supply chain security review for untrusted/community skills)
 
-`Darwin` and `Lore` are project-local — apply the Availability Gate in `_common/PROJECT_LOCAL_SKILLS.md` first; if absent, route to the registered fallback (Darwin → `Prune` / `Architect`; Lore → `Tome` / `Scribe`) and report `project_local_fallback: true`.
+`Darwin` and `Lore` are project-local — apply the Availability Gate in `_common/PROJECT_LOCAL_SKILLS.md` first; if absent, route to the registered fallback (Darwin → `Prune` for retention audits, `Architect` for approved ecosystem improvements; Lore → `Tome` / `Scribe`) and report `project_local_fallback: true`.
 
 **Overlap boundaries:**
 - **vs Darwin**: Darwin = ecosystem macro-evolution and fitness. Gauge = individual SKILL.md micro-structural audit.
