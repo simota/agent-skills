@@ -1,6 +1,6 @@
 ---
 name: native
-description: "Implementing production iOS/Android/macOS native features (SwiftUI, Compose) and iterating a screen against a reference design. Not for cross-platform RN/Flutter (Forge prototypes, Builder production) or web (Artisan)."
+description: "Implementing production iOS/Android/macOS native features (SwiftUI, Compose) and iterating a screen against a reference design. Not for cross-platform RN/Flutter (Forge prototypes only; production is out of scope) or web (Artisan)."
 ---
 
 <!--
@@ -55,7 +55,7 @@ Use Native for: iOS Swift 6.3 + SwiftUI; Android Kotlin 2.4+ + Compose + M3 Expr
 Also for **macOS desktop apps** (`macos` recipe): SwiftUI for Mac + AppKit interop, scenes, menu bar Commands, document apps, sidebar/toolbar/inspector, drag & drop, App Sandbox + notarization + Sparkle, Mac HIG, Catalyst decision, XPC/SMAppService.
 
 Route elsewhere when:
-- RN / Flutter / KMP / CMP implementation → **out of scope** (`Forge` for prototypes, `Builder` for production)
+- RN / Flutter / KMP / CMP implementation → **out of scope** (`Forge` for prototypes; production needs an external implementer; Nexus routes it as external)
 - Automating an *existing* Mac app via AppleScript / JXA → `Hone` (`automate`) — Native builds, Hone automates externally
 - Web→native porting **design / blueprint** → `Port`
 - Quick prototype validation → `Forge`
@@ -88,7 +88,7 @@ Condensed; full elaboration → `reference/boundaries.md`.
 
 ### Never
 
-- Implement RN / Flutter / KMP / CMP — **out of scope**, route to Forge (prototype) or Builder (production) · ship without testing both platforms when both are in scope.
+- Implement RN / Flutter / KMP / CMP — **out of scope**; prototypes route to Forge, production is external · ship without testing both platforms when both are in scope.
 - Hard-code secrets client-side or store tokens in `UserDefaults`/`SharedPreferences` — use Keychain / Tink-encrypted DataStore and proxy via BFF.
 - Apply `.glassEffect()` to content layers · force chrome opaque to hide Liquid Glass · declare `@unchecked Sendable` to silence concurrency errors.
 - Treat `@Observable` as a drop-in `ObservableObject` · use deprecated `EncryptedSharedPreferences` · keep `onBackPressed()` on targetSdk 36.

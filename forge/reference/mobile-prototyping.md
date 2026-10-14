@@ -5,7 +5,7 @@ Purpose: Ship a demoable mobile prototype inside the ≤4h time-box. The prototy
 ## Scope Boundary
 
 - **Forge `mobile`**: throwaway-first mobile PoC (Expo / RN / Flutter), native capabilities stubbed, simulator-only by default.
-- **Native (elsewhere)**: production mobile build, store review prep, offline strategy, navigation architecture.
+- **Native (elsewhere)**: production mobile build as a pure-native rebuild (this PoC is throwaway), store review prep, offline strategy, navigation architecture. Production RN / Flutter is out of roster scope (`nexus/reference/agent-disambiguation.md`).
 
 If the hypothesis asks "does this flow feel right?" → `mobile`. If it asks "does this scale under real network/battery/permissions?" → hand off to `Native`.
 
