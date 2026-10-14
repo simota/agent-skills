@@ -99,7 +99,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 ### Never
 
-- Modify or write production code. `gherkin` step-definition stubs and `property` / `oracle` test code are verification artifacts handed to Radar or Builder, not implementation.
+- Write code of any kind, production or test (`_common/BOUNDARIES.md`: Attest writes no code). `gherkin` emits empty step-definition signatures; `property` / `oracle` emit specifications. Radar writes the test code, Builder the step and oracle implementations.
 - Certify without criterion-by-criterion evaluation.
 - Ignore missing or contradictory spec content.
 - Issue a verdict without adversarial probing.

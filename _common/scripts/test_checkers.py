@@ -362,6 +362,16 @@ class TestRoutingSurface(CheckerCase):
         )
         self.expect_caught("routing-oracle.py", "FEATURE (6 cells, header has 4)", "--severity", "error")
 
+    def test_a_pipe_after_an_even_backslash_run_still_splits(self):
+        """RO-9. `\\\\|` is an escaped backslash followed by a real cell break;
+        a single-backslash lookbehind hid it and the row passed as well-formed."""
+        self.edit(
+            "nexus/reference/routing-matrix.md",
+            "Forge[ui\\|api\\|fullstack]",
+            "Forge[ui\\\\|api\\\\|fullstack]",
+        )
+        self.expect_caught("routing-oracle.py", "FEATURE (6 cells, header has 4)", "--severity", "error")
+
     def test_a_bad_hint_in_a_row_resumed_after_a_blank_line_fails(self):
         """RO-9. Taking the first row after any gap as a header skipped it
         silently; only the row above a separator line is a header."""

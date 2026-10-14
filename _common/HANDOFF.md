@@ -169,8 +169,11 @@ and never ships on its own.
       command: "pytest tests/security/test_search_sqli.py -q"
       exit_code: 1
       head: 3b7e0d4
+      verified_at: 2026-08-17T14:05:40Z
     - claim: "audit covered all public endpoints"
       observation: "endpoint inventory cross-checked in `reports/security-audit.md` § Scope"
+      head: 3b7e0d4
+      verified_at: 2026-08-17T14:07:02Z
 - Risks: SQL injection is exploitable in production
 - Pending Confirmations: Deploy hotfix vs scheduled release?
 - User Confirmations: "Prioritize security over feature work" (confirmed 2024-01-15)

@@ -304,6 +304,28 @@ RO3_REVIEWED_EXCEPTIONS = {
 }
 
 
+def _split_cells(line: str) -> list[str]:
+    """Split a table row on unescaped pipes.
+
+    A pipe is escaped only by an odd run of backslashes: in `a\\\\|b` the
+    first backslash escapes the second, so the pipe still separates cells.
+    """
+    body = line.strip()
+    if body.startswith("|"):
+        body = body[1:]
+    cells, current, backslashes = [], [], 0
+    for char in body:
+        if char == "|" and backslashes % 2 == 0:
+            cells.append("".join(current))
+            current = []
+        else:
+            current.append(char)
+        backslashes = backslashes + 1 if char == "\\" else 0
+    if "".join(current).strip():
+        cells.append("".join(current))
+    return cells
+
+
 def _matrix_rows(content: str, malformed: list[str] | None = None):
     """Yield body-row cells of every routing-matrix table, honoring `\\|` escapes.
 
@@ -319,7 +341,7 @@ def _matrix_rows(content: str, malformed: list[str] | None = None):
             continue
         if separator.fullmatch(line.strip()) and "-" in line:
             continue
-        cells = [c.strip() for c in re.split(r"(?<!\\)\|", line.strip().strip("|"))]
+        cells = [c.strip() for c in _split_cells(line)]
         following = lines[index + 1].strip() if index + 1 < len(lines) else ""
         if separator.fullmatch(following) and "-" in following:
             # A header is the row directly above a separator line; a row resumed

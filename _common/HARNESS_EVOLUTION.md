@@ -68,9 +68,9 @@ Orchestrators (Nexus, Rally) should be stateless and replaceable. Session state 
 | HE-01 | Guardrail Levels | Models frequently make critical mistakes | L2+ trigger frequency drops 50% over baseline | Count L2/L3/L4 triggers per 100 tasks |
 | HE-02 | Agent Chain Length | Multi-agent decomposition produces better results | CES grade A + step_economy approaches 1.0 | CES score with single-agent vs multi-agent |
 | HE-03 | Recovery Chains | Auto-recovery is frequently needed | Recovery invocation rate drops below 5% | Recovery triggers per 100 executions |
-| HE-04 | Context Reset Strategy | Sonnet struggles with large context | `continuous` strategy shows no quality degradation vs `reset` | CES comparison across strategies (separate `variant` cohorts in the Nexus CES Log) |
+| HE-04 | Context Reset Strategy | Sonnet struggles with large context | `continuous` strategy shows no quality degradation vs `reset` | CES comparison across strategies (declared A/B of two `variant` cohorts, same task type and chain — `nexus/reference/routing-learning.md` EVALUATE) |
 | HE-05 | Evaluator Loop Iterations | Multiple loops needed for quality | First-iteration ACCEPT rate exceeds 80% | ACCEPT rate at iteration 1 |
-| HE-06 | Sprint Contract Detail | Detailed contracts needed for alignment | Contract-free executions show no quality degradation | CES comparison with/without contracts (separate `variant` cohorts in the Nexus CES Log) |
+| HE-06 | Sprint Contract Detail | Detailed contracts needed for alignment | Contract-free executions show no quality degradation | CES comparison with/without contracts (declared A/B of two `variant` cohorts, same task type and chain — `nexus/reference/routing-learning.md` EVALUATE) |
 
 ---
 
