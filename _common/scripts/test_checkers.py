@@ -232,6 +232,12 @@ class TestInstructionDrift(CheckerCase):
         )
         self.expect_clean("lint-instructions.py", "--severity", "error")
 
+    def test_a_count_wrapped_across_a_soft_line_break_still_fails(self):
+        """I1. Barring newlines outright let a drifted count escape the check
+        through an ordinary line wrap inside one paragraph."""
+        self.edit("AGENTS.md", "90 global specialist skill", "91 global specialist\nskill")
+        self.expect_caught("lint-instructions.py", "claims 91 skills", "--severity", "error")
+
     def test_a_list_number_does_not_pair_with_skills_on_the_next_line(self):
         """I1. `\\s*` crossed blank lines and read "step 7" + "Skills" as a claim."""
         self.append("CLAUDE.md", "\n1. step 7\n\nSkills are listed in the catalog.\n")
