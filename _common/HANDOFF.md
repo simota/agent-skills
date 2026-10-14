@@ -161,8 +161,8 @@ and never ships on its own.
 ## NEXUS_HANDOFF
 - Step: 3/7
 - Agent: Sentinel
-- Summary: Security audit complete. 2 critical, 1 medium vulnerability found
-- Findings: SQL injection in search endpoint, XSS in comment rendering, weak CSRF token
+- Summary: Security audit complete. 2 critical, 1 medium vulnerability found (1 critical verified below; the rest UNVERIFIED)
+- Findings: SQL injection in search endpoint (verified); XSS in comment rendering, weak CSRF token (UNVERIFIED — scanner output only, no reproduction yet)
 - Artifacts: `reports/security-audit.md`
 - Verified:
     - claim: "SQL injection in search endpoint is exploitable"

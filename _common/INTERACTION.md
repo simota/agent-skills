@@ -90,7 +90,7 @@ interrupted; it never changes what requires their consent.
 
 Criteria for assessing task complexity and auto-selecting execution mode.
 
-Step thresholds follow `nexus/reference/execution-phases.md` § Phase 1 (SIMPLE 1-2, MEDIUM 3-5, COMPLEX 6+).
+Step thresholds follow `nexus/reference/execution-phases.md` § Phase 1: PLAN (SIMPLE 1-2, MEDIUM 3-5, COMPLEX 6+).
 
 | Indicator | SIMPLE | COMPLEX |
 |-----------|--------|---------|

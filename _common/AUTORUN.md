@@ -130,8 +130,8 @@ action; the rows below cite it rather than restate it.
 | Trigger | Action |
 |---------|--------|
 | `test_failure` (minor — goal reachable by local fix; ~<50% guideline) | Per `guardrails.md` § Auto-Recovery Actions (<20%: re-run, fix if obvious; 20-50%: inject Builder) → retest (max 3) |
-| `security_warning` (non-critical) | Add Sentinel scan |
-| `type_error` | Auto-fix attempt (max 2) |
+| `security_warning` (non-critical) | Per `guardrails.md` § Auto-Recovery Actions: add Sentinel scan, block if critical |
+| `type_error` | Per `guardrails.md` § Auto-Recovery Actions: return to Builder for type strengthening |
 | `performance_regression` (minor; ~<10% guideline) | Log, optional Bolt |
 | `dependency_vulnerability` (Low/Medium) | Log, suggest update |
 

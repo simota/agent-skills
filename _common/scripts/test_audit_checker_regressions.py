@@ -221,6 +221,12 @@ class MarkdownMaskTests(unittest.TestCase):
         self.assertNotIn("hidden", masked)
         self.assertTrue(masked.endswith("\nvisible"))
 
+    def test_sections_are_found_in_crlf_files(self):
+        # Splitting on "\n" alone leaves "\r" on each line; headings must still match.
+        sys.path.insert(0, str(SCRIPTS))
+        from _markdown import markdown_section
+        self.assertEqual(markdown_section("# A\r\n\r\n## Sec\r\nbody\r\n", "Sec").strip(), "body")
+
 
 if __name__ == "__main__":
     unittest.main()

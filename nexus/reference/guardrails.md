@@ -37,7 +37,7 @@ differently. A failure between the guidelines is classified by that question, ne
 | Level | Name | Trigger | Action |
 |-------|------|---------|--------|
 | L1 | MONITORING | lint_warning, minor_deprecation, minor coverage drop (~<5%) | Log only, continue execution |
-| L2 | CHECKPOINT | **minor** test_failure (goal reachable; ~<20%), security_warning, type_error | Auto-verify, attempt auto-fix, conditional continue |
+| L2 | CHECKPOINT | **minor** test_failure (goal reachable; ~<50%), security_warning, type_error | Auto-verify, attempt auto-fix, conditional continue |
 | L3 | PAUSE | **major** test_failure (goal not locally fixable; ~>50%), breaking_change, build_failure, merge_conflict | Pause, attempt auto-recovery |
 | L4 | ABORT | critical_security, data_integrity_risk, user abort | Immediate stop, rollback |
 

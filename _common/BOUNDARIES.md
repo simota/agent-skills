@@ -50,7 +50,7 @@ yet distinct from its neighbour, and `architect`'s overlap check is the place th
 | **Prune** | Roster cleanup proposals | Overlap and inactivity audit, merge and sunset plans — propose-only | Never |
 
 **Key distinctions:**
-- Compass answers *which skill*; Nexus answers *in what order and runs it*. Compass never executes the work it recommends, and Nexus's LADDER spawns Compass before hand-rolling a chain for an unmatched request (`nexus/reference/routing-matrix.md` § LADDER)
+- Compass answers *which skill*; Nexus answers *in what order and runs it*. Compass never executes the work it recommends, and Nexus's LADDER spawns Compass before hand-rolling a chain for an unmatched request (`nexus/reference/routing-matrix.md` § Classify Flow (LADDER))
 - Compass recommends from the **global** roster as it stands; Sigil designs a **project-local** operating layer that does not exist yet. "Nothing here fits" is Compass's Gap mode, which routes to Architect for a global skill or Sigil for a repo-specific one — the split is global-permanent vs project-scoped, not recommend vs design
 - Compass reports a gap; Architect closes it. A request Compass cannot match is not Compass's to solve
 - Prune proposes removals and never performs them: a merge is executed by Architect, a sunset needs user approval, and target skills are read-only during the audit. Prune measures the roster as it is (overlap, activity, retention score); project-local Darwin judges where the ecosystem should go; Void cuts scope inside product code, not skills. Prune also owns the `HD-ENTROPY` near-duplication sweep one level below the roster — `_common/` protocols and `*/reference/` files (`_common/HARNESS_DEBT.md` §4)

@@ -311,18 +311,22 @@ def _matrix_rows(content: str, malformed: list[str] | None = None):
     into columns no check reads. Rows whose width differs from their header are
     appended to `malformed` (when given) as well as yielded.
     """
+    separator = re.compile(r"\|?[\s:|-]+\|?")
+    lines = content.splitlines()
     header_width = None
-    for line in content.splitlines():
+    for index, line in enumerate(lines):
         if not line.startswith("|"):
-            header_width = None
+            continue
+        if separator.fullmatch(line.strip()) and "-" in line:
             continue
         cells = [c.strip() for c in re.split(r"(?<!\\)\|", line.strip().strip("|"))]
-        if header_width is None:
+        following = lines[index + 1].strip() if index + 1 < len(lines) else ""
+        if separator.fullmatch(following) and "-" in following:
+            # A header is the row directly above a separator line; a row resumed
+            # after a blank line or masked comment keeps the previous header.
             header_width = len(cells)
             continue
-        if re.fullmatch(r"\|[\s:|-]+\|?", line.strip()):
-            continue
-        if malformed is not None and len(cells) != header_width:
+        if malformed is not None and header_width is not None and len(cells) != header_width:
             malformed.append(f"{cells[0]} ({len(cells)} cells, header has {header_width})")
         yield cells
 

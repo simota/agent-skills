@@ -89,7 +89,7 @@ def markdown_section(text: str, title: str, *, allow_suffix: bool = False) -> st
     lines = []
     found = False
     for original, line in zip(text.split("\n"), visible.split("\n")):
-        heading = re.match(r"^ {0,3}(#{1,6})[ \t]+(.*?)(?:[ \t]+#+)?[ \t]*$", line)
+        heading = re.match(r"^ {0,3}(#{1,6})[ \t]+(.*?)(?:[ \t]+#+)?[ \t]*$", line.rstrip("\r"))
         if heading and len(heading.group(1)) <= 2:
             if found:
                 break

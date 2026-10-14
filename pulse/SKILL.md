@@ -1,6 +1,6 @@
 ---
 name: pulse
-description: "Defining KPIs, tracking events, and dashboards: North Star Metric, funnel and cohort analysis. GA4/Amplitude/Mixpanel/PostHog. Use when metrics design is needed."
+description: "Defining KPIs, tracking events, and dashboards: North Star Metric, funnel and cohort analysis, test-intelligence views. GA4/Amplitude/Mixpanel/PostHog. Use when metrics design is needed."
 ---
 
 <!--

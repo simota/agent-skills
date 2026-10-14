@@ -25,8 +25,8 @@ The templates below are the **largest** form of each envelope, not a per-run flo
 | Run shape | Form |
 |-----------|------|
 | SIMPLE — one agent, one step, no branches, no guardrail events | **Compact Form** below |
-| MEDIUM — 2–3 steps, sequential | `NEXUS_COMPLETE`, empty ledgers collapsed to one line |
-| COMPLEX — 4+ steps, parallel branches, or any guardrail event | `NEXUS_COMPLETE_FULL` |
+| MEDIUM — 2–5 steps, sequential | `NEXUS_COMPLETE`, empty ledgers collapsed to one line |
+| COMPLEX — 6+ steps (`execution-phases.md` § Phase 1: PLAN), parallel branches, or any guardrail event | `NEXUS_COMPLETE_FULL` |
 
 Collapse rules, binding on every form:
 

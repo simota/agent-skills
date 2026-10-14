@@ -362,6 +362,18 @@ class TestRoutingSurface(CheckerCase):
         )
         self.expect_caught("routing-oracle.py", "FEATURE (6 cells, header has 4)", "--severity", "error")
 
+    def test_a_bad_hint_in_a_row_resumed_after_a_blank_line_fails(self):
+        """RO-9. Taking the first row after any gap as a header skipped it
+        silently; only the row above a separator line is a header."""
+        self.edit(
+            "nexus/reference/routing-matrix.md",
+            "| DESIGN_AUDIT | Pixel[gap] → Canon/Judge |",
+            "\n| DESIGN_AUDIT | Pixel[gap-report] → Canon/Judge |",
+        )
+        self.expect_caught(
+            "routing-oracle.py", "Pixel[gap-report]", "--severity", "error"
+        )
+
     def test_a_recipe_hint_naming_an_unknown_subcommand_fails(self):
         """RO-9. `Pixel[gap-report]` read as a hint but Pixel has no such
         Recipe, so dispatch fell back to the code-generating default."""

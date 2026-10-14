@@ -333,7 +333,7 @@ All three are formulas defined in `_common/HARNESS_EVOLUTION.md` and
 
 **Disposition: applied.** All three items below are now in the corpus — the 70% trigger is gone
 from `nexus/reference/context-strategy.md:200`, and `HARNESS_EVOLUTION.md` marks TES
-`specified, not implemented`, drops it from the grading band (UQS is likewise marked, its bands labelled not a measured gate), and removes it from the
+`specified, not implemented`, drops it from the grading band (UQS is likewise marked: in-run only, its bands not a cross-run gate), and removes it from the
 `CES/TES` rollback and evaluation-ladder thresholds. What follows is the reasoning, kept
 because the *rule* it establishes outlives the three fixes: **a formula with no data source
 is never presented with a grade band or wired into a gate.** Re-apply it to the next metric,

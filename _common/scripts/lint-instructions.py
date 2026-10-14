@@ -56,13 +56,13 @@ INSTRUCTION_FILES = ["AGENTS.md", "CLAUDE.md"]
 # Also recognised: an open-ended "90+ skills", a Japanese counter ("90 個のスキル",
 # "90件のスキル"), "agent"/"repository-local" qualifiers, and comma-grouped numbers
 # ("1,234 skills" is 1234, never 234). The lookbehind stops a match from starting
-# in the middle of a longer number. Separators are spaces and tabs only, so a list
+# in the middle of a longer number. Separators are non-newline whitespace (NBSP and U+3000 included), so a list
 # number at the end of one line never pairs with "Skills" opening the next.
 COUNT_PATTERN = re.compile(
-    r"(?<![\d,.])(\d{1,3}(?:,\d{3})+|\d{1,4})\+?[ \t]*(?:個|件|本)?[ \t]*(?:の)?[ \t]*"
+    r"(?<![\d,.])(\d{1,3}(?:,\d{3})+|\d{1,4})\+?[^\S\n]*(?:個|件|本)?[^\S\n]*(?:の)?[^\S\n]*"
     r"((?:(?:global|specialist|agent|project-local|repository-local|repo-local"
-    r"|グローバル|プロジェクトローカル|専用の?)[ \t]*)*)"
-    r"(?:skill[ \t]+agents?|skills?|スキルエージェント|スキル)",
+    r"|グローバル|プロジェクトローカル|専用の?)[^\S\n]*)*)"
+    r"(?:skill[^\S\n]+agents?|skills?|スキルエージェント|スキル)",
     re.I,
 )
 
