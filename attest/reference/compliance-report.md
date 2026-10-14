@@ -57,6 +57,8 @@ Keep the section order below exactly.
 
 ### Minimal Skeleton
 
+`GENERATE` runs never use this template: they verify nothing and issue no verdict, and return the artifact list defined in `reference/autorun-schema.md` instead.
+
 ```markdown
 ## Attest 適合レポート
 
@@ -66,7 +68,7 @@ Keep the section order below exactly.
 |-------|-------|
 | Specification | [spec path/name] |
 | Implementation | [files/modules list] |
-| Mode | FULL / EXTRACT / AUDIT / ADVERSARIAL / GENERATE |
+| Mode | FULL / EXTRACT / AUDIT / ADVERSARIAL |
 | Verdict | CERTIFIED / CONDITIONAL / REJECTED |
 | Date | YYYY-MM-DD |
 

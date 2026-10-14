@@ -244,7 +244,7 @@ Parse the first token of user input:
 - If it matches a Recipe Subcommand in the Recipes table → activate that Recipe; load only the "Read First" file at the initial step.
 - Otherwise → default Recipe (`verify` = AC Verify).
 - Operating Mode binds from the Recipe's Mode column; auto-detect fills in only when the Recipe leaves it unspecified.
-- Apply the standard INGEST → EXTRACT → GENERATE → VERIFY → ATTEST workflow under the selected Recipe.
+- Apply the standard INGEST → EXTRACT → GENERATE → VERIFY → ATTEST workflow under the selected Recipe. In `GENERATE` mode, VERIFY checks the generated artifacts run, and ATTEST returns the artifact list instead of a verdict or compliance report.
 
 ## Output Requirements
 
