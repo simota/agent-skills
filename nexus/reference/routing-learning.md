@@ -51,7 +51,7 @@ COLLECT → EVALUATE → EXTRACT → ADAPT → VERIFY → RECORD
 - Whether user manually corrected the chain or re-executed
 - **Near misses** (LT-07): defenses that fired without an incident following — see below
 
-**EVALUATE** — Computes CES (see below). Compares against:
+**EVALUATE** — Computes CES (see below), then appends one line to the `## CES Log` section of the `.agents/nexus.md` journal — `date · task_type · chain_template · CES` — on every run, LT-01 included. That log is the history the comparisons below (and Darwin's `ces_trend`) read; without it there is no baseline. Compares against:
 - Historical average for the same task type
 - Global average across all task types
 - Previous CES for the same chain template
@@ -83,7 +83,7 @@ COLLECT → EVALUATE → EXTRACT → ADAPT → VERIFY → RECORD
 
 | ID | Condition | Scope | Actions |
 |----|-----------|-------|---------|
-| LT-01 | Chain execution complete (every time) | Lightweight | COLLECT + EVALUATE only |
+| LT-01 | Chain execution complete (every time) | Lightweight | COLLECT + EVALUATE only (EVALUATE still appends its CES Log line) |
 | LT-02 | Same task type fails/PARTIAL 3+ times | Full cycle | All 6 phases |
 | LT-03 | User manually overrides chain selection | Full cycle | All 6 phases |
 | LT-04 | Quality feedback from Judge arrives | Medium | COLLECT → EVALUATE → EXTRACT |
