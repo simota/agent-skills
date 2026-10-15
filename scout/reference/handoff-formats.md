@@ -3,7 +3,7 @@
 Canonical YAML schemas for all Scout outbound handoffs. SKILL.md only lists handoff names; this file owns the schemas.
 
 Universal handoff conventions: `_common/HANDOFF.md`.
-Cross-cluster escalation handoffs (LENS_TO_SCOUT, SCOUT_TO_LENS): `_common/INVESTIGATION_ESCALATION.md`.
+Cross-cluster escalation handoffs (LENS_TO_SCOUT_HANDOFF, SCOUT_TO_LENS_HANDOFF): `_common/INVESTIGATION_ESCALATION.md`.
 
 ## SCOUT_TO_BUILDER_HANDOFF
 

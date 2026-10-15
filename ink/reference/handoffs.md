@@ -68,7 +68,7 @@ INK_TO_ARTISAN_HANDOFF:
 ### To Vitrine (Storybook Catalog)
 
 ```yaml
-INK_TO_SHOWCASE_HANDOFF:
+INK_TO_VITRINE_HANDOFF:
   source: Ink
   destination: Vitrine
   content:

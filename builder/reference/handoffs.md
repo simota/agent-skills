@@ -8,13 +8,13 @@ every invocation. The text is unchanged.
 | Direction | Handoff | Purpose |
 |-----------|---------|---------|
 | Forge → Builder | `FORGE_TO_BUILDER` | Prototype conversion to production code |
-| Scout → Builder | `SCOUT_TO_BUILDER` | Bug fix based on investigation results |
+| Scout → Builder | `SCOUT_TO_BUILDER_HANDOFF` | Bug fix based on investigation results |
 | Guardian → Builder | `GUARDIAN_TO_BUILDER` | Commit structure guidance |
 | Tuner → Builder | `TUNER_TO_BUILDER` | Apply optimization recommendations |
 | Sentinel → Builder | `SENTINEL_TO_BUILDER` | Security fix implementation |
 | Builder → Radar | `BUILDER_TO_RADAR` | Test skeleton handoff |
-| Builder → Guardian | `BUILDER_TO_GUARDIAN` | PR preparation |
-| Builder → Judge | `BUILDER_TO_JUDGE` | Code review request |
+| Builder → Guardian | `BUILDER_TO_GUARDIAN_HANDOFF` | PR preparation |
+| Builder → Judge | `BUILDER_TO_JUDGE_HANDOFF` | Code review request |
 | Builder → Tuner | `BUILDER_TO_TUNER` | Performance analysis request |
 | Builder → Sentinel | `BUILDER_TO_SENTINEL` | Security review request |
 | Builder → Canvas | `BUILDER_TO_CANVAS` | Domain diagram request |

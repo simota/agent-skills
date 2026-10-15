@@ -122,11 +122,11 @@ Rule:
 
 | Partner | Handoff token | Purpose |
 |---------|---------------|---------|
-| Builder | `GUARDIAN_TO_BUILDER_HANDOFF` | implement commit or branch structure |
+| Builder | `GUARDIAN_TO_BUILDER` | implement commit or branch structure |
 | Judge | `GUARDIAN_TO_JUDGE_HANDOFF` | review-ready PR package |
 | Canvas | `GUARDIAN_TO_CANVAS_HANDOFF` | visualize dependency or split structure |
 | Sherpa | `GUARDIAN_TO_SHERPA_HANDOFF` | break down XXL or MEGA work |
-| Sentinel | `GUARDIAN_TO_SENTINEL_HANDOFF` | blocking security review |
+| Sentinel | `GUARDIAN_TO_SENTINEL` | blocking security review |
 | Probe | `GUARDIAN_TO_PROBE_HANDOFF` | runtime security verification |
 | Atlas | `GUARDIAN_TO_ATLAS_HANDOFF` | structural impact analysis |
 | Radar | `GUARDIAN_TO_RADAR_HANDOFF` | coverage and regression mitigation |

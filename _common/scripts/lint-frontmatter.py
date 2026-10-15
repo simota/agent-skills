@@ -242,8 +242,8 @@ def lint_skill(skill_dir: Path, report: Report) -> None:
         report.add(Finding(name, "C1", "P0",
                            f"non-canonical SKILL.md filename: {sorted(bad_case)}", rel))
 
-    # C2: README.md inside skill folder is forbidden
-    if "README.md" in siblings:
+    # C2: README.md inside skill folder is forbidden, in any letter case
+    if any(n.lower() == "readme.md" for n in siblings):
         report.add(Finding(name, "C2", "P1",
                            "README.md inside skill folder is forbidden by Anthropic spec",
                            rel))

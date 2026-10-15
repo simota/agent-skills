@@ -84,7 +84,7 @@ SCRIBE_TO_FLUX_HANDOFF:
 ### To Magi (Reframed Problem → Decision)
 
 ```yaml
-FLUX_TO_MAGI_HANDOFF:
+FLUX_TO_MAGI:
   source: Flux
   deliverable: "Reframing Package"
   cynefin_domain: "[Clear | Complicated | Complex | Chaotic]"
@@ -140,7 +140,7 @@ FLUX_TO_SPARK_HANDOFF:
 ### To Magi (Strategic Reframe → Scenario Analysis)
 
 ```yaml
-FLUX_TO_MAGI_HANDOFF:
+FLUX_TO_MAGI:
   source: Flux
   deliverable: "Strategic Reframing for Scenario Planning"
   original_strategy_question: "[Original strategic question]"
@@ -298,7 +298,7 @@ _STEP_COMPLETE:
       blind_spots_detected: 3
       serendipity_injections: 2
   Handoff:
-    Format: FLUX_TO_MAGI_HANDOFF
+    Format: FLUX_TO_MAGI
     Content: "[Full handoff]"
   Artifacts:
     - "3-5 reframed problem statements"

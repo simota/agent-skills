@@ -201,7 +201,7 @@ Multiple subagents implement different solutions to the same problem, then the b
 | File ownership | **Exclusive** | No two subagents modify the same file |
 | Cost awareness | **Each subagent consumes runtime resources** | Only parallelize when benefit > overhead |
 | Spawn decision | **Agent's judgment** | Unless Nexus explicitly instructs `multi-engine` |
-| Nesting | **Prohibited** | Subagents cannot spawn other subagents |
+| Nesting | **Prohibited** | Repo policy, not a host limit: a subagent does not spawn further subagents, which keeps file ownership and cost bounded even where the host allows nesting (`_common/CLI_COMPATIBILITY.md` § Claude Code Subagent Context) |
 | Output style | **No completion preamble** | See `_common/OUTPUT_STYLE.md §Subagent Completion Pattern` — open with the deliverable, never with "completed/finished/here is the report" |
 
 ## Subagent Output Rules

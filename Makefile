@@ -43,7 +43,8 @@ help:
 	@echo "make test           run all repository regression tests"
 	@echo "make test-catalog   run only the fast catalog regression tests"
 	@echo "make check          validate + test — what CI runs"
-	@echo "make hooks          install the pre-commit hook that runs make validate"
+	@echo "make hooks          install the pre-commit hook: validate + test-catalog,"
+	@echo "                    or check when code or a file the tests read is staged"
 	@echo ""
 	@echo "repo                $$REPO"
 
@@ -160,6 +161,11 @@ status:
 SCRIPTS := $(REPO)/_common/scripts
 export SCRIPTS
 
+# Fingerprint of the `hooks` recipe below (its text up to the first blank line).
+# `make hooks` stamps it into the installed hook and `validate` compares, so a
+# clone that installed the hook before the recipe changed is told to reinstall.
+hook_stamp = sed -n '/^hooks:/,/^$$/p' "$$REPO/Makefile" | cksum | cut -d' ' -f1
+
 validate:
 	@python3 "$$SCRIPTS/lint-frontmatter.py" --severity error
 	@python3 "$$SCRIPTS/lint-frontmatter.py" --severity error --paths "$(REPO)/.claude/skills"
@@ -173,14 +179,17 @@ validate:
 	@python3 "$$SCRIPTS/generate-index-subcommands.py" --check
 	@python3 "$$SCRIPTS/generate-recipes-directory.py" --check
 	@if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then :; \
-	elif hook=$$(git rev-parse --git-path hooks/pre-commit 2>/dev/null) && [ -x "$$hook" ]; then echo "hooks on"; else \
-	  echo "hooks off — run 'make hooks' so these run without being remembered"; fi
+	elif hook=$$(git rev-parse --git-path hooks/pre-commit 2>/dev/null) && [ -x "$$hook" ]; then \
+	  if grep -Fqx '# installed by `make hooks`' "$$hook" && ! grep -Fqx "# hook-version: $$($(hook_stamp))" "$$hook"; then \
+	    echo "hooks on — hook stale: the Makefile's hook recipe changed since it was installed; rerun 'make hooks'"; \
+	  else echo "hooks on"; fi; \
+	else echo "hooks off — run 'make hooks' so these run without being remembered"; fi
 
 # A checker nobody has watched fail is indistinguishable from one that returns
 # zero unconditionally. Slower than `validate` because cases exercise broken
 # repositories and command-line tools, so the hook runs it when executable
-# code, its templates, the check infrastructure, or a non-skill file the tests
-# read changes — see `hooks` below.
+# code, its templates, the check infrastructure, or a file the tests read
+# changes — see `hooks` below.
 test:
 	@python3 -m unittest discover -s "$$SCRIPTS" -p 'test_*.py'
 
@@ -203,15 +212,21 @@ hooks:
 	if [ -L "$$hook" ] || { [ -e "$$hook" ] && ! grep -Fqx '# installed by `make hooks`' "$$hook"; }; then \
 	  echo "ERROR   $$hook already exists — preserve or integrate your custom hook before installing"; exit 1; fi; \
 	mkdir -p "$$(dirname "$$hook")"; \
+	stamp=$$($(hook_stamp)); \
 	printf '%s\n' \
 	  '#!/bin/sh' \
 	  '# installed by `make hooks`' \
+	  "# hook-version: $$stamp" \
 	  '# Validate the corpus and run the fast catalog tests always; run every' \
 	  '# regression test when executable code, its templates, the check' \
-	  '# infrastructure, or a non-skill file the tests read changes.' \
+	  '# infrastructure, or a file the tests read changes.' \
 	  'set -e' \
 	  'repo=$$(git rev-parse --show-toplevel)' \
-	  'changed=$$(git -C "$$repo" diff --cached --name-only -- _common/scripts/ launch/scripts/ launch/templates/ _templates/learning-loop-kit/_scripts/ .github/workflows/ index.html Makefile requirements-checks.txt README.md README_ja.md CLAUDE.md AGENTS.md compass/reference/catalog.md .claude/skills/orbit/reference/ .agents/skills/orbit/reference/ builder/reference/cross-language-port.md hone/reference/hooks/sessionstart-hook.md)' \
+	  'changed=$$(git -C "$$repo" diff --cached --no-renames --name-only -- _common/scripts/ launch/scripts/ launch/templates/ _templates/learning-loop-kit/ .github/workflows/ index.html Makefile requirements-checks.txt README.md README_ja.md CLAUDE.md AGENTS.md compass/reference/catalog.md .claude/skills/orbit/reference/ .agents/skills/orbit/reference/ builder/reference/cross-language-port.md hone/reference/hooks/sessionstart-hook.md)' \
+	  '# A test that edits or reads a corpus file names it verbatim (an edit anchor' \
+	  '# asserts text in it), so a staged path any test module names selects check.' \
+	  'staged=$$(git -C "$$repo" -c core.quotePath=false diff --cached --no-renames --name-only)' \
+	  'if [ -z "$$changed" ] && [ -n "$$staged" ] && printf "%s\n" "$$staged" | git -C "$$repo" grep --cached -q -F -f - -- "_common/scripts/test_*.py"; then changed=named-by-a-test; fi' \
 	  '# Check exactly what will be committed, preserving unstaged and untracked work.' \
 	  'snapshot=$$(python3 -c '\''import tempfile; print(tempfile.mkdtemp(prefix="agent-skills-index."))'\'')' \
 	  'trap '\''rm -rf "$$snapshot"'\'' EXIT' \

@@ -211,17 +211,21 @@ Schedule submission Mon-Wed to leave hotfix room before weekend. Avoid Fri / pre
 
 ```yaml
 NATIVE_TO_LAUNCH_HANDOFF:
+  # Field contract owned by the sender: native/reference/handoffs.md (NATIVE_TO_LAUNCH_HANDOFF).
   app_version: "[semver]"
-  platforms: ["iOS", "Android"]
+  build_number: "[iOS build / Android versionCode]"
+  platforms:                                # one key per platform being released
+    ios: {min_os: "[..]", bundle_id: "[..]", build_artifact: "[..]", signing: "[reference only]"}
+    android: {min_sdk: "[..]", package: "[..]", build_artifact: "[..]", signing: "[reference only]"}
   store_compliance_notes: ["[Compliance items verified]"]
-  privacy_manifest_complete: true | false  # required when platforms includes iOS
-  data_safety_complete: true | false       # required when platforms includes Android
+  privacy_manifest_complete: true | false  # required when platforms has an `ios` key
+  data_safety_complete: true | false       # required when platforms has an `android` key
   build_artifacts: ["[IPA/AAB paths]"]
-  release_notes: "[User-facing changelog]"
+  release_notes: {"[locale]": "[User-facing changelog]"}
   rollout_plan:
     ios: "TestFlight Internal → External → App Review → Phased Release"
     android: "Play Internal → Closed → Open → Production Staged Rollout"
-  feature_flags: ["[server-driven flags wired for kill-switch]"]
+  feature_flags: [{name: "[flag]", default: false, ramp_plan: "[..]"}]   # server-driven kill-switch flags
 ```
 
 ### Outgoing: `LAUNCH_TO_NATIVE_HANDOFF`

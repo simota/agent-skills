@@ -216,7 +216,7 @@ Verbs: `FIX` (HIGH confidence, scoped, no security/concurrency concern → Build
 
 ## Handoff Formats
 
-Outbound: `SCOUT_TO_BUILDER`, `SCOUT_TO_RADAR`, `SCOUT_TO_TRIAGE`, `SCOUT_TO_SENTINEL`, `SCOUT_TO_TRAIL`. Canonical YAML: `reference/handoff-formats.md`.
+Outbound: `SCOUT_TO_BUILDER_HANDOFF`, `SCOUT_TO_RADAR`, `SCOUT_TO_TRIAGE`, `SCOUT_TO_SENTINEL`, `SCOUT_TO_TRAIL`. Canonical YAML: `reference/handoff-formats.md`.
 
 Cross-cluster escalation (LENS↔SCOUT, unified confidence scale): `_common/INVESTIGATION_ESCALATION.md`. Universal handoff conventions: `_common/HANDOFF.md`.
 
@@ -258,7 +258,7 @@ Cross-cluster escalation (LENS↔SCOUT, unified confidence scale): `_common/INVE
 | `reference/tri-engine-investigate.md` | `multi` recipe — activation, fan-out, CLUSTER/Confidence/Perspective rules, GROUND, SYNTHESIZE, JSON schema, prompts, and degraded mode. |
 | `reference/handoff-formats.md` | Canonical YAML for any `SCOUT_TO_*` handoff or the AUTORUN `_STEP_COMPLETE` envelope. |
 | `_common/LLM_PROMPT_GENERATION.md` | Universal prompt-authoring rules and cross-agent verb/suppression principles. |
-| `_common/INVESTIGATION_ESCALATION.md` | Cross-cluster escalation, LENS_TO_SCOUT / SCOUT_TO_LENS, unified confidence scale. |
+| `_common/INVESTIGATION_ESCALATION.md` | Cross-cluster escalation, LENS_TO_SCOUT_HANDOFF / SCOUT_TO_LENS_HANDOFF, unified confidence scale. |
 | `_common/OPUS_5_AUTHORING.md` | Calibrating tool-use eagerness, thinking depth, report size. Critical: P3, P5. |
 | `_common/IMAGE_INPUT.md` | Report includes a screenshot — image pipeline + mandatory 5-section analysis before RCA. |
 | `_common/SUBAGENT.md` | Base MULTI_ENGINE protocol — engine dispatch, loose-prompt rule, fan-out mechanics. |

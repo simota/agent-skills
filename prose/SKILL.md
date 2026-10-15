@@ -242,7 +242,7 @@ Prose receives copy direction and context from upstream agents. Prose sends vali
 | Echo → Prose | `ECHO_TO_PROSE` | Persona copy feedback and UX review results |
 | Vision → Prose | `VISION_TO_PROSE` | Design direction and brand guidelines |
 | Palette → Prose | `PALETTE_TO_PROSE` | UX context and interaction patterns |
-| Field → Prose | `RESEARCHER_TO_PROSE` | User insights and research findings |
+| Field → Prose | `FIELD_TO_PROSE` | User insights and research findings |
 | Prose → Echo | `PROSE_TO_ECHO` | Copy for UX validation |
 | Prose → Polyglot | `PROSE_TO_POLYGLOT` | Translation-ready copy |
 | Prose → Artisan | `PROSE_TO_ARTISAN` | Implementation-ready text strings |

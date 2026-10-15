@@ -244,7 +244,7 @@ Palette receives UX direction and testing results from upstream agents. Palette 
 |-----------|---------|---------|
 | Vision → Palette | `VISION_TO_PALETTE` | Design direction and visual system constraints |
 | Echo → Palette | `ECHO_TO_PALETTE` | Persona testing results and friction findings |
-| Field → Palette | `RESEARCHER_TO_PALETTE` | Usability research and user pain points |
+| Field → Palette | `FIELD_TO_PALETTE` | Usability research and user pain points |
 | Palette → Artisan | `PALETTE_TO_ARTISAN` | Implementation specs and interaction requirements |
 | Palette → Flow | `PALETTE_TO_FLOW` | Animation and transition requirements |
 | Palette → Muse | `PALETTE_TO_MUSE` | Token adjustment requests |

@@ -29,12 +29,14 @@ watches it fail. That rule is the point of the file.
 from __future__ import annotations
 
 import datetime
+import os
 import shutil
 import subprocess
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SCRIPTS = Path("_common/scripts")
@@ -253,6 +255,38 @@ class TestInstructionDrift(CheckerCase):
         self.append("CLAUDE.md", "\n1. step 7\n\nSkills are listed in the catalog.\n")
         self.expect_clean("lint-instructions.py", "--severity", "error")
 
+    def test_a_dead_at_import_in_an_instruction_file_fails(self):
+        """I2. CLAUDE.md loads `@path` imports into every session; the backtick-only
+        matcher never read them, so a renamed import target passed."""
+        self.edit("CLAUDE.md", "@_common/GIT_GUIDELINES.md", "@_common/NO_SUCH_GUIDELINES.md")
+        self.expect_caught("lint-instructions.py", "NO_SUCH_GUIDELINES.md", "--severity", "error")
+
+    def test_an_at_word_inside_an_inline_code_span_is_not_an_import(self):
+        """I2. A shell example such as `curl -d @file` is code, not a CLAUDE.md
+        import; reading it as one blocked validate on a false P1."""
+        self.append("CLAUDE.md", "\nUse `curl -d @payload/body.json https://example.invalid` to post.\n")
+        self.expect_clean("lint-instructions.py", "--severity", "error")
+
+    def test_an_at_word_inside_a_fenced_code_block_is_not_an_import(self):
+        """I2. Claude Code does not load imports from fenced code blocks, so a
+        fenced `@path` makes no claim that the file exists."""
+        self.append("CLAUDE.md", "\n```text\n@docs/no-such-example.md\n```\n")
+        self.expect_clean("lint-instructions.py", "--severity", "error")
+
+    def test_a_dead_import_after_a_code_span_still_fails_on_its_own_line(self):
+        """I2. Blanking code must keep offsets: the finding still names the
+        dead import, and the code before it does not hide it."""
+        self.append(
+            "CLAUDE.md",
+            "\n```sh\ncurl -d @payload/body.json\n```\n\nSee `x` then @_common/NO_SUCH_IMPORT.md\n",
+        )
+        self.expect_caught("lint-instructions.py", "NO_SUCH_IMPORT.md", "--severity", "error")
+
+    def test_a_dead_script_path_in_an_instruction_file_fails(self):
+        """I2. Only `.md` paths were checked; a moved checker script passed."""
+        self.edit("CLAUDE.md", "`_common/scripts/_corpus.py`", "`_common/scripts/_no_such_corpus.py`")
+        self.expect_caught("lint-instructions.py", "_no_such_corpus.py", "--severity", "error")
+
 
 class TestContractDelivery(CheckerCase):
     """`lint-contracts.py`."""
@@ -317,6 +351,12 @@ class TestContractDelivery(CheckerCase):
         )
         self.expect_caught("lint-contracts.py", "ORPHAN_FIXTURE.md", "--severity", "error")
 
+    def test_a_dead_path_with_a_section_suffix_fails(self):
+        """CD-5. `reference/x.md §Section` is the corpus's usual pointer shape, but
+        the matcher required the whole code span to be a path and skipped it."""
+        self.append("zen/SKILL.md", "\nSee `reference/no-such-section-file.md §Intro`.\n")
+        self.expect_caught("lint-contracts.py", "no-such-section-file.md", "--severity", "error")
+
 
 class TestSkillStructure(CheckerCase):
     """`lint-frontmatter.py`."""
@@ -333,10 +373,15 @@ class TestSkillStructure(CheckerCase):
         self.append("zen/SKILL.md", "\n" + ("padding sentence for the size check. " * 900))
         self.expect_reported("lint-frontmatter.py", "S2", "--severity", "warning")
 
+    def test_a_lowercase_readme_in_a_skill_folder_fails(self):
+        """C2. The check compared names case-sensitively, so `readme.md` passed."""
+        self.write_new("zen/readme.md", "# zen\n")
+        self.expect_caught("lint-frontmatter.py", "C2", "--severity", "error")
+
 
 class TestRoutingSurface(CheckerCase):
-    """`routing-oracle.py`. Fail-open by design, so these assert the finding is
-    reported; a bug in the oracle must not block an unrelated change."""
+    """`routing-oracle.py`. Most of these assert the finding is reported; a
+    crashed check blocks in error mode, because it verified nothing."""
 
     def test_a_dead_reference_in_the_nexus_surface_is_reported(self):
         self.edit(
@@ -467,6 +512,69 @@ class TestRoutingSurface(CheckerCase):
             "routing-oracle.py", "`legal` is not a canon subcommand", "--severity", "error"
         )
 
+    def test_a_pointer_in_a_nested_reference_directory_fails(self):
+        """RO-10. The scan globbed `reference/*.md` only, so pointers one directory
+        deeper (`scribe/reference/unified-spec/`) were never read; eight named
+        `unified` modes as Scribe subcommands."""
+        self.edit(
+            "scribe/reference/unified-spec/raci-matrix.md",
+            "**scribe `unified raci`**",
+            "**scribe `raci`**",
+        )
+        self.expect_caught(
+            "routing-oracle.py", "`raci` is not a scribe subcommand", "--severity", "error"
+        )
+
+    def test_a_crashed_check_blocks_in_error_mode(self):
+        """A crash was a WARNING, so one undecodable reference file disabled RO-10
+        for the whole corpus and `--severity error` still exited 0."""
+        path = self._remember("zen/reference/consistency-audit.md")
+        path.write_bytes(path.read_bytes() + b"\n\xff\xfe\n")
+        self.expect_caught("routing-oracle.py", "check crashed", "--severity", "error")
+
+    def test_a_bad_hint_in_the_additions_column_fails(self):
+        """RO-9. Only the Primary Chain and Recipe Hints columns were read; the
+        Additions column carries `Skill[token]` hints too."""
+        self.edit(
+            "nexus/reference/routing-matrix.md",
+            "+Flux[reframe] (lateral thinking)",
+            "+Flux[refrme] (lateral thinking)",
+        )
+        self.expect_caught("routing-oracle.py", "Flux[refrme]", "--severity", "error")
+
+    def test_a_handoff_token_naming_no_skill_fails(self):
+        """RO-11. The showcase -> vitrine and researcher -> field renames left
+        live `X_TO_Y` tokens naming skills that no longer exist; nothing caught it."""
+        self.append("zen/reference/agent-integrations.md", "\nEmit `FOO_TO_SHOWCASE_HANDOFF`.\n")
+        self.expect_caught("routing-oracle.py", "FOO_TO_SHOWCASE", "--severity", "error")
+
+    def test_a_retired_receiver_from_a_live_sender_fails(self):
+        """RO-11. The sender is a live skill; the receiver alone is stale."""
+        self.append("zen/SKILL.md", "\n- Zen -> Vitrine: `ZEN_TO_SHOWCASE_HANDOFF`\n")
+        self.expect_caught("routing-oracle.py", "ZEN_TO_SHOWCASE", "--severity", "error")
+
+    def test_a_bare_token_with_one_live_endpoint_still_fails(self):
+        """RO-11. Without a `_HANDOFF` suffix the token is still handoff-shaped
+        when one side names a live skill and the other does not."""
+        self.append("zen/SKILL.md", "\n- Zen -> Vitrine: `ZEN_TO_SHOWCASE`\n")
+        self.expect_caught("routing-oracle.py", "ZEN_TO_SHOWCASE", "--severity", "error")
+
+    def test_a_bare_token_between_two_retired_names_fails(self):
+        """RO-11. Two renames left in one token (`RESEARCHER_TO_SHOWCASE`) name
+        no live skill on either side, yet it is the stale handoff RO-11 exists
+        for: a retired or renamed endpoint keeps it in scope without a suffix."""
+        self.append("zen/SKILL.md", "\n- legacy: `RESEARCHER_TO_SHOWCASE`\n")
+        self.expect_caught("routing-oracle.py", "RESEARCHER_TO_SHOWCASE", "--severity", "error")
+
+    def test_an_identifier_that_merely_contains_to_passes(self):
+        """RO-11. Any UPPER_CASE identifier with `_TO_` was read as a handoff, so
+        a config key or metric name in a reference file blocked validate."""
+        self.append(
+            "gear/SKILL.md",
+            "\nSet `PATH_TO_CONFIG`, watch `TIME_TO_FIRST_BYTE` and `MAX_TIME_TO_LIVE`.\n",
+        )
+        self.expect_clean("routing-oracle.py", "--severity", "error")
+
 
 class TestLessonsRegister(CheckerCase):
     """`lint-lessons.py`. The register's entire value is what it refuses, so
@@ -489,6 +597,20 @@ class TestLessonsRegister(CheckerCase):
 
     def test_remember_to_is_rejected_as_a_mechanism(self):
         self.add_row(mech="Remember to re-run the matcher against both files.")
+        self.expect_caught("lint-lessons.py", "LS-2", "--severity", "error")
+
+    def test_a_curly_apostrophe_intention_is_rejected(self):
+        """LS-2. "Don’t forget" with a typographic apostrophe missed "don't forget"."""
+        self.add_row(mech="Don\u2019t forget to re-run the matcher.")
+        self.expect_caught("lint-lessons.py", "LS-2", "--severity", "error")
+
+    def test_shouldnt_is_rejected(self):
+        """LS-2. Whole-word "should" does not match inside "shouldn't"."""
+        self.add_row(mech="Reviewers shouldn't skip the matcher.")
+        self.expect_caught("lint-lessons.py", "LS-2", "--severity", "error")
+
+    def test_ought_to_is_rejected(self):
+        self.add_row(mech="Reviewers ought to re-run the matcher.")
         self.expect_caught("lint-lessons.py", "LS-2", "--severity", "error")
 
     def test_a_mechanism_living_nowhere_fails(self):
@@ -549,6 +671,21 @@ class TestTaskBattery(CheckerCase):
         path.write_bytes(path.read_bytes() + b"\n\xff\xfe\n")
         self.expect_caught("task-battery-check.py", "check crashed", "--severity", "error")
 
+    def test_a_bold_battery_id_is_counted(self):
+        """`**66**` was not read as an ID, so an item with no check passed."""
+        self.edit("nexus/reference/task-battery.md",
+                  "| 35 | **[out-of-coverage]**",
+                  "| **66** | \"fixture item\" | Build | `deliver` |\n| 35 | **[out-of-coverage]**")
+        self.expect_caught("task-battery-check.py", "items without a check: [66]",
+                           "--severity", "error")
+
+    def test_a_non_integer_battery_id_fails(self):
+        """`66a` matched nothing and the row was silently uncounted."""
+        self.edit("nexus/reference/task-battery.md",
+                  "| 35 | **[out-of-coverage]**",
+                  "| 66a | \"fixture item\" | Build | `deliver` |\n| 35 | **[out-of-coverage]**")
+        self.expect_caught("task-battery-check.py", "unrecognised item ID", "--severity", "error")
+
 
 class TestProjectLocalMirror(CheckerCase):
     """`lint-project-local.py`. A mirror edited on one side only must block."""
@@ -557,6 +694,19 @@ class TestProjectLocalMirror(CheckerCase):
         self.append(".agents/skills/orbit/reference/examples.md", "\nmirror-only drift\n")
         self.expect_caught("lint-project-local.py", "orbit: canonical/mirror trees differ",
                            "--severity", "error")
+
+
+class TestRecipeValidator(CheckerCase):
+    """`validate-recipes.py`."""
+
+    def test_a_missing_recipes_section_cites_the_requirement_that_owns_it(self):
+        """R-REC-05 still called the section RECOMMENDED for Tier 1-2 after
+        `_common/RECIPES.md` made it historical: lint-frontmatter ST1 requires it."""
+        self.edit("zen/SKILL.md", "## Recipes", "## Recipe Notes")
+        with mock.patch.dict(os.environ, {"VERBOSE": "1"}):
+            _, out = self.run_checker("validate-recipes.py", "--severity", "error")
+        self.assertIn("superseded by lint-frontmatter ST1", out)
+        self.assertNotIn("RECOMMENDED for Tier 1-2", out)
 
 
 class TestRecipesDirectory(CheckerCase):

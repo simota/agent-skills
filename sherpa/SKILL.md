@@ -298,7 +298,7 @@ Use this shape:
 
 ## Collaboration
 
-**Receives:** Nexus (task chains), Nexus[deliver] (product phases), Scribe[unified] (spec packages), Lens (codebase analysis findings for informed decomposition), Magi (priority decisions for plan ordering)
+**Receives:** Nexus (task chains), Nexus[deliver] (product phases), Scribe[unified] (spec packages), Lens (codebase analysis for decomposition), Magi (priority decisions for plan ordering), Void, Matrix, PDM
 **Sends:** Nexus (decomposed steps), Rally (parallelizable tasks), Builder/Artisan (atomic implementation tasks), Lore (reusable decomposition patterns via EVOLUTION_SIGNAL), Canvas (workflow visualization requests)
 
 `Lore` is project-local — Availability Gate and fallback (`Tome` / `Scribe`, `project_local_fallback: true`) per `_common/PROJECT_LOCAL_SKILLS.md`.

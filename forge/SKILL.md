@@ -159,7 +159,7 @@ Behavior notes per Recipe:
 - Always state the hypothesis or slice, chosen strategy (Throwaway or Evolutionary), mock strategy, prototype status, test instructions, known debt, known edge cases, next action, and one explicit decision: ADOPT, ITERATE, or DISCARD.
 - Add a screenshot or GIF description when relevant.
 - Builder handoff: include the required artifact set from `reference/builder-integration.md` and a `## BUILDER_HANDOFF` section.
-- Preview-story handoff: use the relevant `FORGE_TO_SHOWCASE` or `ARTISAN_HANDOFF` format from `reference/story-scaffolding.md`.
+- Preview-story handoff: use the relevant `FORGE_TO_VITRINE` or `ARTISAN_HANDOFF` format from `reference/story-scaffolding.md`.
 
 ## Collaboration
 
@@ -173,7 +173,7 @@ Forge receives concepts and direction from upstream agents, builds rapid prototy
 | Lens → Forge | Code insight handoff | Code-level insight informs prototype structure or mock strategy |
 | Forge → Builder | `BUILDER_HANDOFF` | Prototype validated, needs production logic |
 | Forge → Artisan | `ARTISAN_HANDOFF` | Frontend prototype needs production-quality implementation |
-| Forge → Vitrine | `FORGE_TO_SHOWCASE` | Preview story exists, needs full coverage |
+| Forge → Vitrine | `FORGE_TO_VITRINE` | Preview story exists, needs full coverage |
 | Forge → Muse | Style-polish handoff | Functional prototype needs token-driven polish |
 | Forge → Sentinel | Security review request | AI-generated prototype code needs vulnerability scan before handoff |
 

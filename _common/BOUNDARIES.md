@@ -269,7 +269,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 |-------|-------------|-------|-------------|
 | **Polyglot** | Internationalization (i18n/l10n) | Translations, locale formatting, RTL | Yes |
 
-- Messaging-platform integration (chat adapters, bots, webhooks, realtime transports) → Gateway `messaging`, listed under API & Data
+- Messaging-platform integration (chat adapters, bots, webhooks, realtime transports) → Gateway `messaging`, listed under Architecture & Structure
 
 ## Observability
 

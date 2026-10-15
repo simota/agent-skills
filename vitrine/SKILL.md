@@ -24,18 +24,17 @@ CAPABILITIES_SUMMARY:
 
 COLLABORATION_PATTERNS:
 - Pattern A: Prototype→Docs(Forge→Vitrine→Quill)
-- Pattern B: Design→Catalog(Vision→Vitrine→Vision)
+- Pattern B: Catalog→DesignReview(Vitrine→Vision)
 - Pattern C: Story→Test(Vitrine→Radar+Voyager)
 - Pattern D: TokenAudit(Vitrine→Muse→Vitrine)
 - Pattern E: Animation(Flow→Vitrine→Flow)
-- Pattern F: UXReview(Palette→Vitrine→Vision)
 - Pattern G: Demo→Story(Cue→Vitrine→Radar)
 - Pattern H: ProductionPolish(Artisan→Vitrine→Muse)
 - Pattern I: PortableStory→UnitTest(Vitrine→Radar via composeStories)
 - Pattern J: A11yGate(Vitrine→Canon for WCAG compliance)
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Forge (preview stories), Artisan (production components), Flow (animation states), Vision (design direction), Cue (demo interactions), Palette (UX review findings)
+- INPUT: Forge (preview stories), Artisan (production components), Flow (animation states), Cue (demo interactions), Muse (token documentation), Ink (icon catalog), Builder (generated assets), Native (native component previews)
 - OUTPUT: Muse (token audit), Radar (test coverage sync via portable stories), Voyager (E2E boundary), Vision (catalog review), Quill (documentation), Flow (animation requests), Canon (WCAG compliance audit)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Dashboard(H) Library(H) DesignSystem(H) Mobile(M)
@@ -224,19 +223,23 @@ Vitrine receives components and design context from upstream agents. Vitrine sen
 
 | Direction | Handoff | Purpose |
 |-----------|---------|---------|
-| Forge → Vitrine | `FORGE_TO_SHOWCASE` | Preview stories for production enhancement |
-| Artisan → Vitrine | `ARTISAN_TO_SHOWCASE` | Production components for story creation |
-| Flow → Vitrine | `FLOW_TO_SHOWCASE` | Animation states for visual stories |
-| Vision → Vitrine | `VISION_TO_SHOWCASE` | Design direction for catalog review |
+| Forge → Vitrine | `FORGE_TO_VITRINE` | Preview stories for production enhancement |
+| Artisan → Vitrine | `ARTISAN_TO_VITRINE` | Production components for story creation |
+| Flow → Vitrine | `FLOW_TO_VITRINE` | Animation states for visual stories |
 | Cue → Vitrine | `CUE_TO_VITRINE` | Demo interactions for story capture |
-| Palette → Vitrine | `PALETTE_TO_SHOWCASE` | UX review findings for story updates |
-| Vitrine → Muse | `SHOWCASE_TO_MUSE` | Token audit requests from catalog |
-| Vitrine → Radar | `SHOWCASE_TO_RADAR` | Test coverage sync from stories |
-| Vitrine → Voyager | `SHOWCASE_TO_VOYAGER` | E2E boundary handoff from play functions |
-| Vitrine → Vision | `SHOWCASE_TO_VISION` | Catalog review for design alignment |
-| Vitrine → Quill | `SHOWCASE_TO_QUILL` | Component documentation from stories |
-| Vitrine → Flow | `SHOWCASE_TO_FLOW` | Animation requests from story gaps |
-| Vitrine → Canon | `SHOWCASE_TO_CANON` | WCAG compliance audit from a11y test results |
+| Muse → Vitrine | `MUSE_TO_VITRINE` | Token documentation updates for Storybook |
+| Ink → Vitrine | `INK_TO_VITRINE_HANDOFF` | Icon catalog for Storybook |
+| Builder → Vitrine | `BUILDER_TO_VITRINE` | Generated assets for catalogs or stories |
+| Native → Vitrine | `NATIVE_TO_VITRINE_HANDOFF` | Native component previews for the catalog |
+| Vitrine → Muse | `VITRINE_TO_MUSE` | Token audit requests from catalog |
+| Vitrine → Radar | `VITRINE_TO_RADAR` | Test coverage sync from stories |
+| Vitrine → Voyager | `VITRINE_TO_VOYAGER` | E2E boundary handoff from play functions |
+| Vitrine → Vision | `VITRINE_TO_VISION` | Catalog review for design alignment |
+| Vitrine → Quill | `VITRINE_TO_QUILL` | Component documentation from stories |
+| Vitrine → Flow | `VITRINE_TO_FLOW` | Animation requests from story gaps |
+| Vitrine → Canon | `VITRINE_TO_CANON` | WCAG compliance audit from a11y test results |
+
+Tokens spelled with `SHOWCASE` (`*_TO_SHOWCASE*`, `SHOWCASE_TO_*`) are legacy names from before the `showcase` → `vitrine` rename; accept them as aliases of the `VITRINE` forms above and reply with the `VITRINE` spelling.
 
 ### Overlap Boundaries
 

@@ -2,9 +2,9 @@
 """
 Routing Oracle — mechanical reliability checks for Nexus's routing machinery.
 
-Ten checks, with fail-open execution (S4: a script crash prints a warning
-and the remaining checks still run). Warning/error modes do not block on an
-internal crash; strict mode blocks on every warning, including incomplete checks:
+Eleven checks. A check that crashes is recorded as an ERROR and the remaining
+checks still run; a crashed check verified nothing, so error and strict modes
+block on it (mirrors task-battery-check.py's crash contract):
 
   RO-1 Dead-reference check
        Every `reference/*.md` / `_common/*.md` path cited inside nexus/SKILL.md
@@ -64,7 +64,8 @@ internal crash; strict mode blocks on every warning, including incomplete checks
        arithmetic or fixed clarification bonuses.
 
   RO-9 Recipe-hint subcommand existence
-       In routing-matrix.md's Primary Chain and Recipe Hints columns, every
+       In every routing-matrix.md column after Task Type (Primary Chain,
+       Recipe Hints, Additions), every
        single-token hint `Skill[token]` naming a live skill must name a token
        that skill actually dispatches (its `## Recipes` allowlist / table, or
        an alias declared on an `alias` line of that section). `_common/RECIPES.md` defines the
@@ -78,8 +79,9 @@ internal crash; strict mode blocks on every warning, including incomplete checks
   RO-10 Corpus-wide subcommand references
        RO-9's rule, applied outside the routing matrix, but only to the two
        forms that are unambiguous across the whole corpus (every SKILL.md and
-       reference/*.md of a live skill, plus _common/*.md; fenced examples and
-       CHANGELOG.md excluded):
+       reference/**/*.md of a live skill, nested directories included but not
+       through symlinks, plus _common/*.md; fenced examples and CHANGELOG.md
+       excluded):
          (a) a bold lead-in `**Skill `token`**` / `**Skill `token mode`**`
              — the Scope Boundary convention, where the backticked first token
              names the skill's Recipe. Found live: `**Shift `migrate`**`,
@@ -109,6 +111,31 @@ internal crash; strict mode blocks on every warning, including incomplete checks
                     at load time instead of prose, or fold into RO-9 when the
                     corpus adopts one hint notation everywhere
 
+  RO-11 Handoff-token endpoints
+       Every `SENDER[_MODE...]_TO_RECEIVER` token in an owned or project-local
+       SKILL.md or reference/**/*.md (fenced examples included -- templates
+       are what agents emit) must name a live skill as its sender (first
+       segment) and receiver (first segment after `_TO_`). Also accepted: a
+       pseudo-endpoint in HANDOFF_PSEUDO_ENDPOINTS, a Recipe token of the
+       skill that owns the file (an intra-skill transition such as
+       `MAGI_SIMULATE_TO_DECIDE`), and the reviewed legacy aliases in
+       HANDOFF_TOKEN_ALLOWLIST, each pinned to the files that document it.
+       Only handoff-shaped tokens are read: one carrying a `_HANDOFF` segment
+       after the receiver, or one with exactly one known endpoint. An
+       identifier naming no endpoint at all (`PATH_TO_CONFIG`,
+       `TIME_TO_FIRST_BYTE`) is a config key or metric, not a handoff.
+       Found live: the showcase -> vitrine and researcher -> field renames
+       left live tokens naming skills that no longer exist.
+       Complexity Budget (`_common/HARNESS_DEBT.md` 3b):
+         failure  — F3: a skill rename that never reaches the `X_TO_Y` tokens,
+                    so the sender emits a handoff no receiver matches
+         effect   — a token naming a retired or misspelled skill cannot land.
+                    Does NOT check that sender and receiver both document the
+                    same token, or the payload fields
+         owner    — gauge (it owns the checker suite)
+         removal  — delete when handoffs are declared as structured data whose
+                    endpoints are resolved at load time instead of prose tokens
+
 Usage:
   python3 _common/scripts/routing-oracle.py [--severity warning|error|strict]
 
@@ -117,9 +144,10 @@ Severity tiers (mirrors lint-frontmatter.py / validate-recipes.py):
   --severity error    exit 1 if any ERROR-level finding is reported
   --severity strict   exit 1 if any finding (ERROR or WARNING) is reported
 
-Fail-open contract: any unhandled exception during a check is caught, printed
-as a single WARNING line, and the check is skipped. The warning blocks only
-under --severity strict, so incomplete verification cannot appear clean there.
+Crash contract: any unhandled exception during a check is caught, printed as a
+single ERROR line with its traceback on stderr, and the remaining checks still
+run. It blocks under --severity error and strict, so incomplete verification
+never appears clean; --severity warning still exits 0.
 
 Exit codes:
   0  no blocking findings under the chosen severity
@@ -129,6 +157,7 @@ Exit codes:
 from __future__ import annotations
 
 import argparse
+import os
 import re
 import sys
 import traceback
@@ -176,13 +205,13 @@ class Finding:
 
 
 def safe_check(fn, findings: list[Finding]):
-    """Run a check function; on any exception, fail open with a WARNING, never raise."""
+    """Run a check function; on any exception, record an ERROR, never raise."""
     try:
         fn(findings)
-    except Exception as e:  # noqa: BLE001 - intentional catch-all, fail-open contract
+    except Exception as e:  # noqa: BLE001 - intentional catch-all, see crash contract
         findings.append(Finding(
-            fn.__name__, "WARNING",
-            f"check crashed and was skipped (fail-open): {e.__class__.__name__}: {e}",
+            fn.__name__, "ERROR",
+            f"check crashed and was skipped: {e.__class__.__name__}: {e}",
         ))
         traceback.print_exc(file=sys.stderr)
 
@@ -591,6 +620,26 @@ def _dispatchable_tokens(skill_md: Path) -> set[str] | None:
     return tokens or None
 
 
+def _reference_markdown(skill_dir: Path) -> list[Path]:
+    """Every `.md` under `skill_dir/reference/`, nested directories included.
+
+    Symlinks are not followed: skills link `_common/` and sibling skills' trees
+    into `reference/`, and those files belong to (and are scanned with) their
+    owner, so following them would report one defect under several paths.
+    """
+    reference = skill_dir / "reference"
+    if not reference.is_dir() or reference.is_symlink():
+        return []
+    found = []
+    for directory, _, names in os.walk(reference):
+        for name in names:
+            path = Path(directory) / name
+            if name.endswith(".md") and not path.is_symlink() \
+                    and not _corpus.is_excluded_path(path, REPO_ROOT):
+                found.append(path)
+    return sorted(found)
+
+
 def _live_skills() -> dict[str, Path]:
     """Lower-cased live skill name -> SKILL.md: owned top-level skills, then
     the canonical project-local `.claude/skills/` copies (never the mirror)."""
@@ -606,8 +655,8 @@ def _live_skills() -> dict[str, Path]:
 
 
 def check_recipe_hint_subcommands(findings: list[Finding]):
-    """RO-9: single-token `Skill[token]` hints in routing-matrix.md's Primary
-    Chain / Recipe Hints columns must name a subcommand the skill dispatches."""
+    """RO-9: single-token `Skill[token]` hints in every routing-matrix.md
+    column after Task Type must name a subcommand the skill dispatches."""
     if not ROUTING_MATRIX.is_file():
         findings.append(Finding("RO-9", "WARNING", "routing-matrix.md not found — recipe-hint check skipped"))
         return
@@ -620,7 +669,7 @@ def check_recipe_hint_subcommands(findings: list[Finding]):
     for cells in _matrix_rows(content, malformed):
         if len(cells) < 3:
             continue
-        for column in (cells[1], cells[2]):
+        for column in cells[1:]:
             for agent, token in RECIPE_HINT_RE.findall(column):
                 skill_md = skills.get(agent.lower())
                 if skill_md is None:
@@ -689,9 +738,7 @@ def check_corpus_subcommand_references(findings: list[Finding]):
     files: list[Path] = []
     for skill_md in skills.values():
         files.append(skill_md)
-        reference = skill_md.parent / "reference"
-        if reference.is_dir():
-            files.extend(sorted(reference.glob("*.md")))
+        files.extend(_reference_markdown(skill_md.parent))
     files.extend(sorted((REPO_ROOT / "_common").glob("*.md")))
 
     checked = 0
@@ -740,6 +787,98 @@ def check_corpus_subcommand_references(findings: list[Finding]):
         findings.append(Finding("RO-10", "WARNING", "no `**Skill `token`` / `skill[token]` references found — corpus check may be stale vs prose format"))
 
 
+# RO-11. Endpoints that are not skills but are documented handoff parties:
+# the human requester, a generic agent placeholder, and "whichever skill
+# implements the step" (Sherpa -> Builder/Forge).
+HANDOFF_PSEUDO_ENDPOINTS = frozenset({"USER", "AGENT", "IMPL"})
+
+# RO-11 reviewed exceptions: token -> (files that document it, why it stays).
+# Pinned to files so a legacy spelling cannot spread as a live emission.
+HANDOFF_TOKEN_ALLOWLIST = {
+    "NATIVE_TO_SHOWCASE": (("native/reference/handoffs.md",),
+                           "legacy name, normalised to NATIVE_TO_VITRINE on receipt"),
+    "COMPETE_TO_RESEARCHER": (("compete/SKILL.md", "field/SKILL.md"),
+                              "documented Compete -> Field exception, agreed on both sides"),
+    "ACCORD_TO_SCRIBE": (("scribe/reference/unified-spec/README.md",
+                          "scribe/reference/unified-spec/handoff-formats.md"),
+                         "legacy Accord alias, consumed until the reactivation window closes"),
+    "RESEARCHER_TO_ACCORD": (("scribe/reference/unified-spec/handoff-formats.md",), "legacy Accord alias"),
+    "CAST_TO_ACCORD": (("scribe/reference/unified-spec/handoff-formats.md",), "legacy Accord alias"),
+    "VOICE_TO_ACCORD": (("scribe/reference/unified-spec/handoff-formats.md",), "legacy Accord alias"),
+    "UNIFIED_TO_FORMAL": (("scribe/reference/unified-spec/handoff-formats.md",),
+                          "internal Scribe recipe transition, documented as not a handoff"),
+}
+
+# Group 3 (a lookahead, so group 0 stays `SENDER_TO_RECEIVER` for the
+# allowlist) holds the segments after the receiver, e.g. `_HANDOFF`.
+HANDOFF_TOKEN_RE = re.compile(
+    r"(?<![A-Za-z0-9_])([A-Z][A-Z0-9]*(?:_[A-Z0-9]+)*?)_TO_([A-Z][A-Z0-9]*)(?=((?:_[A-Z0-9]+)*))"
+)
+# The corpus's handoff payloads end in `_HANDOFF`; other suffixes (FEEDBACK,
+# REQUEST, ...) occur only between two live skills, so they decide nothing.
+HANDOFF_SUFFIXES = frozenset({"HANDOFF"})
+
+
+RENAME_ROW_RE = re.compile(r"\|\s*`([a-z0-9-]+)`\s*→\s*`[a-z0-9-]+`")
+
+
+def _retired_endpoint_names() -> set[str]:
+    """Names a token may still carry after a skill left: archived skill
+    directories plus the old side of every `old → new` rename in CHANGELOG.md.
+    Derived, so a future rename or archive needs no edit here."""
+    names = set()
+    archive = REPO_ROOT / ".archive"
+    if archive.is_dir():
+        names |= {p.name for p in archive.iterdir() if p.is_dir()}
+    changelog = REPO_ROOT / "CHANGELOG.md"
+    if changelog.is_file():
+        names |= set(RENAME_ROW_RE.findall(changelog.read_text(encoding="utf-8")))
+    return {name.upper().replace("-", "_") for name in names}
+
+
+def check_handoff_token_endpoints(findings: list[Finding]):
+    """RO-11: `X_TO_Y` handoff tokens must name live skills (or a documented
+    pseudo-endpoint, own-Recipe transition, or reviewed legacy alias)."""
+    skills = _live_skills()
+    names = {name.upper().replace("-", "_") for name in skills}
+    retired = _retired_endpoint_names() - names
+    own_tokens: dict[str, set[str]] = {}
+    checked = 0
+    bad: list[str] = []
+    for name, skill_md in skills.items():
+        own = {token.upper().replace("-", "_") for token in (_dispatchable_tokens(skill_md) or ())}
+        for path in [skill_md, *_reference_markdown(skill_md.parent)]:
+            if _corpus.is_excluded_path(path, REPO_ROOT):
+                continue
+            rel = path.relative_to(REPO_ROOT).as_posix()
+            for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+                for match in HANDOFF_TOKEN_RE.finditer(line):
+                    token = match.group(0)
+                    sender = match.group(1).split("_")[0]
+                    receiver = match.group(2)
+                    unknown = [seg for seg in (sender, receiver)
+                               if seg not in names and seg not in HANDOFF_PSEUDO_ENDPOINTS
+                               and seg not in own]
+                    suffixed = not HANDOFF_SUFFIXES.isdisjoint(match.group(3).split("_"))
+                    if len(unknown) == 2 and not suffixed and retired.isdisjoint(unknown):
+                        continue  # names no endpoint: `PATH_TO_CONFIG`, not a handoff
+                    checked += 1
+                    if rel in HANDOFF_TOKEN_ALLOWLIST.get(token, ((), ""))[0]:
+                        continue
+                    if unknown:
+                        bad.append(f"{rel}:{number}: `{token}` — not a live skill: "
+                                   + ", ".join(f"`{seg}`" for seg in dict.fromkeys(unknown)))
+    if bad:
+        findings.append(Finding(
+            "RO-11", "ERROR",
+            "handoff token(s) naming no live skill (a rename that never reached the token; "
+            "fix the spelling, or add a reviewed legacy alias to HANDOFF_TOKEN_ALLOWLIST): "
+            + "; ".join(bad),
+        ))
+    if checked == 0:
+        findings.append(Finding("RO-11", "WARNING", "no `X_TO_Y` handoff tokens found — check may be stale vs prose format"))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--severity", choices=("warning", "error", "strict"), default="warning")
@@ -756,6 +895,7 @@ def main() -> int:
     safe_check(check_confidence_gate_shape, findings)
     safe_check(check_recipe_hint_subcommands, findings)
     safe_check(check_corpus_subcommand_references, findings)
+    safe_check(check_handoff_token_endpoints, findings)
 
     errors = [f for f in findings if f.level == "ERROR"]
     warnings = [f for f in findings if f.level == "WARNING"]

@@ -39,7 +39,7 @@ Required fields:
   - `Severity`
 - `Confusion Points`
 
-### `## RESEARCHER_TO_SPARK_HANDOFF`
+### `## FIELD_TO_SPARK_HANDOFF`
 
 Required fields:
 - `Research Type`
@@ -107,7 +107,7 @@ Required fields:
 - `Validation Questions`
 - `Expected Echo Output`
 
-### `## SPARK_TO_EXPERIMENT_HANDOFF`
+### `## SPARK_TO_EXPERIMENT`
 
 Required fields:
 - `Feature Proposal`
@@ -285,7 +285,7 @@ Packets:
 | `Void` | YAGNI pre-check result | pre-check complete | `_common/HANDOFF.md` |
 | `Magi` | feature priority arbitration | arbitration complete | `_common/HANDOFF.md` |
 | `Echo` † | latent needs, confusion points | persona walkthrough complete | `ECHO_TO_SPARK_HANDOFF` |
-| `Field` † | personas, insights, journey maps | research synthesis complete | `RESEARCHER_TO_SPARK_HANDOFF` |
+| `Field` † | personas, insights, journey maps | research synthesis complete | `FIELD_TO_SPARK_HANDOFF` |
 
 ### Output partners
 
@@ -296,7 +296,7 @@ Packets:
 | `Artisan` | UI specification | UI-heavy proposal approved | `_common/HANDOFF.md` |
 | `Scribe[unified]` | integrated specification package | multi-document spec needed | `_common/HANDOFF.md` |
 | `Forge` | prototype request | validation needed | `SPARK_TO_FORGE_HANDOFF` |
-| `Experiment` | test design | hypothesis needs validation | `SPARK_TO_EXPERIMENT_HANDOFF` |
+| `Experiment` | test design | hypothesis needs validation | `SPARK_TO_EXPERIMENT` |
 | `Canvas` | roadmap or matrix visualization | proposal needs visual support | Canvas packet |
 | `Magi` | strategic Go/No-Go | high-risk proposal | `_common/HANDOFF.md` |
 | `Sherpa` † | task breakdown request | proposal approved | `SPARK_TO_SHERPA_HANDOFF` |

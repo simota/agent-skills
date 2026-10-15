@@ -248,8 +248,9 @@ following, or be labeled as not satisfying them:
    belongs to before combining it with anything else.
 4. **Label any `char_count / 3.5` figure as an unverified proxy.** No offline tokenizer
    exists for Claude models in this repo. `lint-frontmatter.py`'s S2 check and any similar
-   estimate must carry "(estimate, unverified)" or equivalent — never presented as a
-   measured token count.
+   estimate must carry an estimate marker — "(estimate, unverified)", or the `~` prefix S2
+   prints (`~N tokens`), which counts as that marker — never presented as a measured token
+   count.
 5. **Handle the live-corpus self-pollution problem.** The transcript corpus grows while it
    is being measured, because the measuring session runs inside the measured directory
    (observed: +6.7M tokens / +0.58% during one 30-minute measurement run). Any report citing

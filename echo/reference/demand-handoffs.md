@@ -40,10 +40,10 @@ VOICE_TO_ECHO_DEMAND_HANDOFF:
     underrepresented in real feedback.
 ```
 
-### From Field (RESEARCHER_TO_ECHO_DEMAND_HANDOFF)
+### From Field (FIELD_TO_ECHO_DEMAND_HANDOFF)
 
 ```yaml
-RESEARCHER_TO_ECHO_DEMAND_HANDOFF:
+FIELD_TO_ECHO_DEMAND_HANDOFF:
   research_findings:
     key_insights: ["[Insight 1]", "[Insight 2]"]
     unmet_needs: ["[Unmet need 1]"]

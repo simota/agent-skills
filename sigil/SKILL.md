@@ -34,7 +34,7 @@ COLLABORATION_PATTERNS:
 - Sigil -> Orbit/Hone: Loop and hook specifications discovered during blueprinting
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Lens (codebase analysis), Atlas (architecture topology), Architect (ecosystem patterns), Judge (quality feedback), Canon (standards), Grove (project structure), Gauge (normalization checklist)
+- INPUT: Lens (codebase analysis), Compass (repo-specific capability gap), Atlas (architecture topology), Architect (ecosystem patterns), Judge (quality feedback), Canon (standards), Grove (project structure), Gauge (normalization checklist)
 - OUTPUT: Grove (skill structure/placement), Nexus (skill and routing notifications), Judge (review requests), Lore (reusable patterns), Hone (config and hook optimization), Orbit (loop specs)
 
 PROJECT_AFFINITY: Game(H) SaaS(H) E-commerce(H) Dashboard(H) Marketing(H)
@@ -223,7 +223,7 @@ Sigil never silently degrades — every error surfaces in `## Sigil's Report` wi
 
 ## Collaboration
 
-Receives: `Lens` (codebase analysis) · `Architect` (ecosystem patterns) · `Judge` (quality feedback) · `Canon` (standards) · `Grove` (project structure) · `Gauge` (normalization checklist).
+Receives: `Lens` (codebase analysis) · `Compass` (repo-specific capability gap, `COMPASS_TO_SIGIL`) · `Architect` (ecosystem patterns) · `Judge` (quality feedback) · `Canon` (standards) · `Grove` (project structure) · `Gauge` (normalization checklist).
 Sends: `Grove` (skill structure) · `Nexus` (new-skill notification) · `Judge` (review requests) · `Lore` (reusable patterns) · `Hone` (config optimization). Payload fields for the direct Handoffs below -> next section.
 
 `Lore` and `Orbit` are project-local — apply the Availability Gate in `_common/PROJECT_LOCAL_SKILLS.md` first; if absent, route to the registered fallback (Lore → `Tome` / `Scribe`; Orbit → `Nexus[goal/apex]` / `Sherpa`) and report `project_local_fallback: true`.

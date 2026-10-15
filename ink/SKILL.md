@@ -182,7 +182,7 @@ Behavior notes per Recipe:
 | Vision → Ink | `VISION_TO_INK_HANDOFF` | Art direction for icon style |
 | Muse → Ink | `MUSE_TO_INK_HANDOFF` | Design tokens for palette |
 | Ink → Artisan | `INK_TO_ARTISAN_HANDOFF` | SVG components for integration |
-| Ink → Vitrine | `INK_TO_SHOWCASE_HANDOFF` | Icon catalog for Storybook |
+| Ink → Vitrine | `INK_TO_VITRINE_HANDOFF` | Icon catalog for Storybook |
 
 ## Reference Map
 

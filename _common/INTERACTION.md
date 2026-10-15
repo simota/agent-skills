@@ -11,7 +11,7 @@ This file defines the common interaction control rules that all agents reference
 | Mode | Trigger | Behavior | Interaction Timing |
 |------|---------|----------|-------------------|
 | AUTORUN_FULL | Default (no marker) or `## NEXUS_AUTORUN_FULL` | Execute all tasks, including COMPLEX, with guardrails (`_common/AUTORUN.md`) | Ask First triggers and guardrail escalations only |
-| AUTORUN | `## NEXUS_AUTORUN` + SIMPLE assessment | Fully automatic execution; COMPLEX → GUIDED | Error cases only |
+| AUTORUN | `## NEXUS_AUTORUN` + SIMPLE assessment | Fully automatic execution; COMPLEX → GUIDED | Ask First triggers, guardrail escalations, and error cases |
 | GUIDED | `## NEXUS_GUIDED` | Confirm at decision points | Per INTERACTION_TRIGGERS |
 | INTERACTIVE | `## NEXUS_INTERACTIVE` | Confirm at every step | Always confirm |
 | Kickoff | Explicit request for chain design only | Chain design only | Initial confirmation only |

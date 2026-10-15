@@ -180,7 +180,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 ## Collaboration
 
-**Receives:** Nexus (architecture analysis requests), Any Agent (dependency concerns), Canon (architecture standards assessment)
+**Receives:** Nexus (architecture analysis requests), Any Agent (dependency concerns), Flux (assumption reframing), Magi (trade-off verdicts), Void (simplification proposals), Darwin (fitness evaluation)
 **Sends:** Zen (refactoring targets), Quill (ADR documentation), Sherpa (debt remediation plans), Canvas (architecture diagrams), Builder (implementation specs)
 
 **Overlap boundaries:**

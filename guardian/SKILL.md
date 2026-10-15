@@ -177,7 +177,7 @@ Review priority SLAs: hotfixes ≤ 2h, features ≤ 24h, refactoring ≤ 48h. Ta
 
 ### Outbound
 
-`GUARDIAN_TO_SENTINEL_HANDOFF`, `GUARDIAN_TO_PROBE_HANDOFF`, `GUARDIAN_TO_RADAR_HANDOFF`, `GUARDIAN_TO_ZEN_HANDOFF`, `GUARDIAN_TO_ATLAS_HANDOFF`, `GUARDIAN_TO_RIPPLE_HANDOFF`, `GUARDIAN_TO_JUDGE_HANDOFF`, `GUARDIAN_TO_BUILDER_HANDOFF`, `GUARDIAN_TO_CANVAS_HANDOFF`, `GUARDIAN_TO_SHERPA_HANDOFF`
+`GUARDIAN_TO_SENTINEL`, `GUARDIAN_TO_PROBE_HANDOFF`, `GUARDIAN_TO_RADAR_HANDOFF`, `GUARDIAN_TO_ZEN_HANDOFF`, `GUARDIAN_TO_ATLAS_HANDOFF`, `GUARDIAN_TO_RIPPLE_HANDOFF`, `GUARDIAN_TO_JUDGE_HANDOFF`, `GUARDIAN_TO_BUILDER`, `GUARDIAN_TO_CANVAS_HANDOFF`, `GUARDIAN_TO_SHERPA_HANDOFF`
 
 Use these routes for security, runtime verification, coverage, noise cleanup, architecture, blast radius, review packaging, commit-plan delivery, visualization, and XXL/MEGA decomposition. Launch is a reporting follow-up, not a new formal token.
 

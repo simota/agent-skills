@@ -223,7 +223,7 @@ Artisan receives prototypes, design direction, and review feedback from upstream
 | Palette → Artisan | `PALETTE_TO_ARTISAN` | UX improvement recommendations |
 | Lens → Artisan | `LENS_TO_ARTISAN` | Implementation context with code evidence |
 | Artisan → Builder | `ARTISAN_TO_BUILDER` | API integration needs from frontend |
-| Artisan → Vitrine | `ARTISAN_TO_SHOWCASE` | Component stories and demos |
+| Artisan → Vitrine | `ARTISAN_TO_VITRINE` | Component stories and demos |
 | Artisan → Radar | `ARTISAN_TO_RADAR` | Test specifications for components |
 | Artisan → Flow | `ARTISAN_TO_FLOW` | Animation specs for motion work |
 | Artisan → Quill | `ARTISAN_TO_QUILL` | Component documentation |

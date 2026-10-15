@@ -48,7 +48,7 @@ Choose ONE recipe. Recipe choice is locked at the RECIPE phase and logged to `.a
 
 **Skip rules**: none. If a stage is genuinely irrelevant (e.g., monolingual LP → no Polyglot), the delegate is skipped *within* the stage, but the stage gate still runs.
 
-**Quality bar**: Lighthouse all ≥ 90, CWV all Green, WCAG 2.2 AA, GEO ≥ 90, Judge no P1/P2, first A/B variant queued.
+**Quality bar**: Lighthouse all ≥ 90, CWV all Green, WCAG 2.2 AA, GEO ≥ 15/20, Judge no P1/P2, first A/B variant queued.
 
 ---
 

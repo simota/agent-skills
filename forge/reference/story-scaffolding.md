@@ -8,7 +8,7 @@
 - Storybook preview template
 - React Cosmos fixture template
 - Output structure
-- `FORGE_TO_SHOWCASE`
+- `FORGE_TO_VITRINE`
 - `ARTISAN_HANDOFF`
 - Story trigger
 
@@ -78,10 +78,10 @@ feature/
 └── forge-insights.md           # required
 ```
 
-## `FORGE_TO_SHOWCASE`
+## `FORGE_TO_VITRINE`
 
 ```markdown
-## FORGE_TO_SHOWCASE: Story Enhancement Request
+## FORGE_TO_VITRINE: Story Enhancement Request
 
 ### Prototype Info
 - Component: `[path/to/ComponentName.tsx]`

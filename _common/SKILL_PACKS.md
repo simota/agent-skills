@@ -8,7 +8,7 @@ Skill membership matrix for selective enablement across the global skill ecosyst
 
 Anthropic guidance is **8-12 skills** before "context tax" (token overhead per turn) starts to dominate; routing degradation begins in the **dozens**, and a **15,000-character cap** on the available skills list is a hard ceiling. This repository's packages (every global skill plus the project-local extensions) exceed all three thresholds when loaded together.
 
-This file defines **11 Packs** (overlapping subsets of the ecosystem) so that any single workstream can enable ~20-30 skills instead of the full global set. Selective enablement is driven by the Claude Code `skills` filter in `~/.claude/settings.json` (`"all"` / `[list]` / `[]`); Codex CLI and agy use equivalent allowlist mechanisms when available.
+This file defines a set of **Packs** (overlapping subsets of the ecosystem) so that any single workstream can enable a narrow working set (each Pack bounded by rule 3 below) instead of the full global set. Selective enablement is driven by the Claude Code `skills` filter in `~/.claude/settings.json` (`"all"` / `[list]` / `[]`); Codex CLI and agy use equivalent allowlist mechanisms when available.
 
 **Sources:**
 - claude.com/blog/lessons-from-building-claude-code-how-we-use-skills (8-12 sweet spot, context tax)
@@ -20,7 +20,7 @@ This file defines **11 Packs** (overlapping subsets of the ecosystem) so that an
 
 1. **Overlapping membership is allowed.** A skill may belong to multiple packs; union when multiple packs are enabled.
 2. **`core` is always-on.** Loaded regardless of which other packs are active.
-3. **Pack size target: 20-30 skills.** A single pack must stay under the Anthropic guidance for "dozens" — keep the working set narrow.
+3. **Pack size: a single Pack MUST NOT exceed 30 skills.** Stay under the Anthropic guidance for "dozens" — keep the working set narrow. A Pack that would exceed the bound is split per § Update policy. The bound is per Pack: a profile is a union of Packs and can land somewhat above it, while a profile that far exceeds it carries an explicit exception note (`package-author`, below).
 4. **Domain trigger words.** Each pack lists English anchor keywords so Nexus CLASSIFY can auto-suggest a pack from a free-form request.
 5. **No silent demotion.** If the active packs do not cover a request, Nexus must surface "pack mismatch" rather than route to a fallback skill.
 
@@ -28,28 +28,28 @@ This file defines **11 Packs** (overlapping subsets of the ecosystem) so that an
 
 Each profile sets the Claude Code `skills` field. Use one at a time per workspace; switch with `/nexus pack <name>` or by editing `settings.json` directly.
 
-| Profile | Packs active | Total skills (approx) |
-|---------|-------------|----------------------|
-| `web-dev` | `core + web + design` | 32 |
-| `mobile-dev` | `core + mobile + design` | 27 |
-| `security` | `core + security` | 17 |
-| `growth` | `core + growth + research` | 31 |
-| `infra-ops` | `core + infra` | 24 |
-| `research` | `core + research` | 26 |
-| `package-author` | `core + package-gen + design + research` | 47 |
-| `skill-meta` | `core + skill-meta` | 12 |
-| `ai-eval` | `core + ai-eval` | 20 |
-| `incident-response` | `core + chain` | 9 |
-| `legal-jp` | `core + canon` | 9 |
-| `personal-env` | `core + hone` | 9 |
-| `ai-cli-admin` | `core + hone` | 9 |
-| `all` | `"all"` (no filter) | every global skill; this repository additionally discovers the project-local skills |
+| Profile | Packs active | Notes |
+|---------|-------------|-------|
+| `web-dev` | `core + web + design` | |
+| `mobile-dev` | `core + mobile + design` | |
+| `security` | `core + security` | |
+| `growth` | `core + growth + research` | |
+| `infra-ops` | `core + infra` | |
+| `research` | `core + research` | |
+| `package-author` | `core + package-gen + design + research` | **Exception to rule 3:** this union of Packs far exceeds the 30-skill bound by design, because document-package production spans research, design, and authoring; use it only for `package` Recipe work and switch back to a narrower profile afterward |
+| `skill-meta` | `core + skill-meta` | |
+| `ai-eval` | `core + ai-eval` | |
+| `incident-response` | `core + chain` | |
+| `legal-jp` | `core + canon` | |
+| `personal-env` | `core + hone` | |
+| `ai-cli-admin` | `core + hone` | |
+| `all` | `"all"` (no filter) | Every global skill; this repository additionally discovers the project-local skills |
 
 ---
 
 ## Packs
 
-### `core` (always-on, 8 skills)
+### `core` (always-on)
 
 **Purpose:** orchestration + universal investigation/implementation/review primitives required for any workstream.
 
@@ -57,7 +57,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 **Triggers:** loaded unconditionally.
 
-### `skill-meta` (ecosystem authoring and governance, 4 skills)
+### `skill-meta` (ecosystem authoring and governance)
 
 **Purpose:** explicit maintenance of skill packages, project-local operating layers, format compliance, and portfolio retention. This Pack is not loaded for ordinary product work.
 
@@ -67,7 +67,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 ---
 
-### `web` (web frontend + backend, 21 skills)
+### `web` (web frontend + backend)
 
 **Purpose:** browser-tier feature work — React/Vue/Svelte/Next.js, API design, perf, E2E.
 
@@ -77,7 +77,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 ---
 
-### `mobile` (iOS/Android/macOS native + cross-platform, 5 skills)
+### `mobile` (iOS/Android/macOS native + cross-platform)
 
 **Purpose:** pure-native app development — iOS/Android mobile (Swift/SwiftUI, Kotlin/Compose) **and macOS desktop** (SwiftUI for Mac / AppKit) — plus cross-platform (RN/Flutter/KMP/CMP) and store/direct release. Named `mobile` for backward compatibility with the `mobile-dev` profile; scope is native-app, not mobile-only.
 
@@ -87,7 +87,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 ---
 
-### `security` (SAST + DAST + crypto + compliance, 9 skills)
+### `security` (SAST + DAST + crypto + compliance)
 
 **Purpose:** static + dynamic security analysis, threat modeling, crypto, privacy, compliance, supply-chain.
 
@@ -97,7 +97,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 ---
 
-### `ai-eval` (LLM eval + observability + multi-engine review, 12 skills)
+### `ai-eval` (LLM eval + observability + multi-engine review)
 
 **Purpose:** LLM/agent evaluation, multi-engine review, observability, reliability eng, failure mode analysis.
 
@@ -107,7 +107,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 ---
 
-### `growth` (product growth + analytics + LP, 14 skills)
+### `growth` (product growth + analytics + LP)
 
 **Purpose:** funnel/LP optimization, A/B testing, retention, KPI design, persona-driven UX validation.
 
@@ -117,7 +117,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 ---
 
-### `infra` (DevOps + DB + scheduling + repo ops, 16 skills)
+### `infra` (DevOps + DB + scheduling + repo ops)
 
 **Purpose:** infrastructure provisioning, CI/CD, observability, DB design, scheduling, repo health.
 
@@ -127,7 +127,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 ---
 
-### `design` (design system + visual + media, 16 skills)
+### `design` (design system + visual + media)
 
 **Purpose:** design system construction, visual asset generation, slide/video production, brand work.
 
@@ -137,7 +137,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 ---
 
-### `research` (user research + discovery + brainstorming + advisory, 18 skills)
+### `research` (user research + discovery + brainstorming + advisory)
 
 **Purpose:** discovery-side work — user research, brainstorming, strategic decisions, and prose authoring.
 
@@ -147,7 +147,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 ---
 
-### `package-gen` (document-package generation, 29 skills)
+### `package-gen` (document-package generation)
 
 **Purpose:** end-to-end document package production via the `package` Recipe (12 domain presets — startup / career / learning / hiring / local-gov / etc.). Heavy union with `research`, `design`, and `core`.
 
@@ -182,7 +182,7 @@ When `/nexus pack` is invoked or when a user request arrives:
 4. **Surface to user** as `Recommended profile: <name> (covers <N>/<total> matched anchors). Switch? [Y/n/customize]`.
 5. **On Y** → write to `~/.claude/settings.json` `skills` array (union of pack members), reload Claude Code, log to `.agents/PROJECT.md`.
 
-If 0 anchors match → fall through to `all` profile with `skillListingBudgetFraction: 0.02` and let Claude's built-in priority-drop handle the listing.
+If 0 anchors match → surface `pack mismatch` (rule 5) and offer the `all` profile (with `skillListingBudgetFraction: 0.02`, letting Claude's built-in priority-drop handle the listing) as an explicit choice; never switch to it silently.
 
 ## Update policy
 

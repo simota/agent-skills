@@ -61,7 +61,7 @@ Vision receives research and analysis from upstream agents. Vision sends design 
 
 | Direction | Handoff | Purpose |
 |-----------|---------|---------|
-| Field → Vision | `RESEARCHER_TO_VISION` | User research insights and usability findings |
+| Field → Vision | `FIELD_TO_VISION` | User research insights and usability findings |
 | Compete → Vision | `COMPETE_TO_VISION` | Competitive analysis and positioning data |
 | Spark → Vision | `SPARK_TO_VISION` | Feature proposals requiring design direction |
 | Vision → Muse | `VISION_TO_MUSE` | Token direction and design system strategy |

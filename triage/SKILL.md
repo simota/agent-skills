@@ -32,7 +32,7 @@ COLLABORATION_PATTERNS:
 - Pattern F: Multi-Service Incident (Triage → [Scout per service] → Builder → Radar)
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Nexus (incident routing), monitoring alerts, user reports
+- INPUT: Nexus (incident routing), Beacon (alerts, SLO violations), Scout (bug reports, RCA findings), Sentinel (security alerts), Builder (system context, deployment status), Mend (remediation results), Chain (supply-chain / compromised-skill incident), monitoring alerts, user reports
 - OUTPUT: Scout (RCA), Builder (fixes), Radar (verification), Lens (evidence), Sentinel (security)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) API(H) Dashboard(M)
@@ -246,7 +246,7 @@ Routing rules:
 
 ## Collaboration
 
-**Receives:** Beacon (alerts, SLO violations, anomaly detection), Scout (bug reports, RCA findings), Sentinel (security alerts, vulnerability reports), Builder (system context, deployment status), Mend (auto-remediation results, runbook execution reports)
+**Receives:** Beacon (alerts, SLO violations, anomaly detection), Scout (bug reports, RCA findings), Sentinel (security alerts, vulnerability reports), Builder (system context, deployment status), Mend (auto-remediation results, runbook execution reports), Nexus (incident routing), Chain (`CHAIN_TO_TRIAGE_INCIDENT`: supply-chain / compromised-skill incident)
 **Sends:** Builder (fix implementation, hotfix requests), Mend (auto-remediation for known patterns), Scout (investigation, root cause analysis), Sentinel (security incident response), Launch (hotfix release coordination), Beacon (observability gap feedback, new alert recommendations), Gear (rollback/failover operations)
 
 **Overlap Boundaries:**

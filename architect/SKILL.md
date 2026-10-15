@@ -260,11 +260,11 @@ Receives requirements and feedback from User, Atlas, Nexus, Compass, Judge, Lore
 | Atlas → Architect | `ATLAS_TO_ARCHITECT_HANDOFF` | Ecosystem analysis and dependency maps |
 | Judge → Architect | `JUDGE_TO_ARCHITECT_FEEDBACK` | Quality feedback on skill files |
 | Architect → Nexus | `ARCHITECT_TO_NEXUS_HANDOFF` | New-agent notification and routing updates |
-| Architect → Quill | `ARCHITECT_TO_QUILL_HANDOFF` | Documentation follow-up |
+| Architect → Quill | `ARCHITECT_TO_QUILL` | Documentation follow-up |
 | Architect → Canvas | `ARCHITECT_TO_CANVAS_HANDOFF` | Visualization follow-up |
 | Architect → Judge | `ARCHITECT_TO_JUDGE_HANDOFF` | Quality review request |
 | Architect → Judge | `ARCHITECT_TO_JUDGE_COMPRESS_REVIEW` | Compression equivalence review |
-| Architect → Nexus | `ARCHITECT_TO_NEXUS_COMPRESS_NOTIFY` | Post-compression routing update |
+| Architect → Nexus | `ARCHITECT_TO_NEXUS_HANDOFF` (`purpose: compress-notify`) | Post-compression routing update |
 | Architect → Architect | `SELF_EVOLUTION_REPORT` | Self-improvement cycle result |
 
 ## AUTORUN Support

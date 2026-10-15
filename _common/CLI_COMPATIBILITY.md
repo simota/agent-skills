@@ -73,6 +73,19 @@ Return: <artifact paths/revisions, findings, actual checks, unresolved items, st
 
 Do not append forced internal reasoning, a second copy of the specialist's methods, or model-specific compensation directives. Start independent branches together only after their inputs and ownership are ready; serialize shared state and join before integration.
 
+### Claude Code Subagent Context
+
+Claude Code facts verified 2026-10-15 against code.claude.com/docs/en/sub-agents — not universal across hosts (`_common/SUBAGENT.md` § Context Inheritance Rules). Re-verify against the installed version before relying on any row.
+
+| Aspect | Behavior |
+|--------|----------|
+| **Conversation history** | Subagents start with a fresh context: no parent conversation history, no skills the parent already invoked, no files it already read. Pass what they need in the prompt (a fork is the exception: it inherits the conversation) |
+| **Skills** | The `skills` field preloads listed skills' full content at startup; it does not limit access. Unlisted project/user/plugin skills stay discoverable through the Skill tool unless `Skill` is removed from `tools` or added to `disallowedTools` |
+| **Permissions** | An unset `permissionMode` inherits the parent's mode. When the parent is in `bypassPermissions`, `acceptEdits`, or `auto`, the child runs in that mode and its own `permissionMode` is ignored |
+| **Auto-compaction** | Triggers as the subagent's own context window fills; `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` also applies to subagents (per-agent window: `autoCompactWindow`) |
+| **Transcript** | Saved to `~/.claude/projects/{project}/{sessionId}/subagents/agent-{agentId}.jsonl`; deleted after `cleanupPeriodDays` (default 30) |
+| **Nesting** | Subagents can spawn subagents up to three layers below the main conversation by default; `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH` changes the limit (`1` disables nesting) |
+
 ## 4. Model Selection
 
 | Provider / runtime | Current documented stable coding/general reasoning option | Availability caveat |
@@ -86,6 +99,13 @@ Do not append forced internal reasoning, a second copy of the specialist's metho
 Prefer the latest **stable, available, authorized** model that meets the task's capability and quality needs. Inherit a user's explicit model/effort selection. Change it only with applicable authorization; do not silently substitute an unavailable model, enable paid usage, or fall back to another provider to bypass a refusal or policy constraint. Record an unavailable required model as a limitation and name any explicitly allowed alternative.
 
 Model identifiers belong here, not in SKILL.md role rules. Do not equate generations with exact behavior. Native tools, context capacity, compaction, structured output, and independent sessions must be verified separately. Larger context helps retain necessary evidence, but does not justify loading every reference.
+
+### Anthropic Model-Specific Prompt-Cache Facts
+
+Release facts that `_common/PROMPT_CACHE_HIERARCHY.md` § anti-patterns #9 and #11 point to. Verify against current Anthropic documentation for the active model:
+
+- Opus 5 lowered the **minimum cacheable prompt to 512 tokens** (from 1,024).
+- On Opus 5, the `mid-conversation-tool-changes-2026-07-01` beta lifts cache invalidation on `tools` array changes.
 
 Effort is a runtime setting, not an instruction to expose private reasoning. Use only values documented for the installed model/runtime; no universal low/medium/high mapping or mandatory maximum applies. For agy the current headless interface documents `--model <slug>` and `--effort low|medium|high`. For Codex and Claude, inspect the current configuration documentation and effective settings rather than copying an old enum. Benchmark on fixed tasks before asserting a cost/quality improvement.
 

@@ -152,8 +152,8 @@ Each row is a **deviation** from the `routing-matrix.md` default for that task t
 | LOAD_TEST | chaos | Siege → Bolt → Triage → Builder → Beacon |
 | DEMO | ui-demo | Cue[demo] → Voyager → Vitrine |
 | DEMO | full | Cue[demo] → Vitrine → Quill |
-| SPRINT_RETRO | quick | Launch[weekly] |
-| SPRINT_RETRO | full | Launch[weekly] → Canvas → Quill |
+| SPRINT_RETRO | quick | Launch[retro] |
+| SPRINT_RETRO | full | Launch[retro] → Canvas → Quill |
 | KNOWLEDGE | full | Scribe → Quill → Scribe |
 | KNOWLEDGE | research | Field → Scribe |
 | SPEC_VERIFY | quick | Attest → Scribe |

@@ -159,6 +159,8 @@ class InstallBoundaryTests(unittest.TestCase):
             (".github/workflows/checks.yml", ["check"]),
             ("README.md", ["check"]),
             (".agents/skills/orbit/reference/examples.md", ["check"]),
+            # test_full_runtime_regressions reads the kit's base/ and README, not only _scripts/.
+            ("_templates/learning-loop-kit/README.md", ["check"]),
             # A skill edit (or a new skill) still reaches the catalog tests.
             ("beta/SKILL.md", ["validate", "test-catalog"]),
         ):
@@ -171,6 +173,85 @@ class InstallBoundaryTests(unittest.TestCase):
                 args = log.read_text().splitlines()
                 self.assertEqual(args[args.index("--no-print-directory") + 1:], expected)
                 self.assert_ok(self.run_command("git", "reset", "--quiet"))
+
+    def test_hook_runs_every_test_when_a_test_names_a_staged_file(self):
+        """A regression test that edits a corpus file asserts an anchor in it;
+        committing a change to that file without running the tests broke `make
+        test` on main while the hook passed. The path list cannot be kept by
+        hand, so any staged path a test module names verbatim selects `check`."""
+        scripts = self.repo / "_common" / "scripts"
+        scripts.mkdir(parents=True)
+        (scripts / "test_reads_fixture.py").write_text(
+            'ANCHORED = "gamma/reference/anchored file.md"\n'
+        )
+        for relative in ("gamma/reference/anchored file.md", "delta/SKILL.md"):
+            path = self.repo / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("baseline\n")
+        for args in (
+            ("init", "--quiet"),
+            ("config", "user.name", "Install Test"),
+            ("config", "user.email", "install-test@example.invalid"),
+            ("add", "."),
+            ("commit", "--quiet", "-m", "test: create fixture"),
+        ):
+            self.assert_ok(self.run_command("git", *args))
+        self.assert_ok(self.make("hooks"))
+        bin_dir = self.root / "bin"
+        bin_dir.mkdir()
+        stub = bin_dir / "make"
+        stub.write_text('#!/bin/sh\nprintf "%s\\n" "$@" > "$INSTALL_TEST_LOG"\n')
+        stub.chmod(0o755)
+        log = self.root / "hook.log"
+        self.env.update(PATH=str(bin_dir) + os.pathsep + self.env["PATH"], INSTALL_TEST_LOG=str(log))
+        hook = self.repo / ".git" / "hooks" / "pre-commit"
+        for relative, expected in (
+            ("gamma/reference/anchored file.md", ["check"]),
+            ("delta/SKILL.md", ["validate", "test-catalog"]),
+        ):
+            with self.subTest(path=relative):
+                (self.repo / relative).write_text("edited\n")
+                self.assert_ok(self.run_command("git", "add", "--", relative))
+                self.assert_ok(self.run_command(str(hook)))
+                args = log.read_text().splitlines()
+                self.assertEqual(args[args.index("--no-print-directory") + 1:], expected)
+                self.assert_ok(self.run_command("git", "reset", "--quiet"))
+
+    def test_hook_runs_every_test_when_a_test_named_file_is_renamed(self):
+        """With rename detection on, `diff --cached --name-only` lists only the
+        NEW path of a staged rename, so moving a file a test names selected
+        validate-only and `make test` then failed in CI. The hook must see both
+        sides of the rename."""
+        scripts = self.repo / "_common" / "scripts"
+        scripts.mkdir(parents=True)
+        (scripts / "test_reads_fixture.py").write_text(
+            'ANCHORED = "gamma/reference/anchored.md"\n'
+        )
+        path = self.repo / "gamma" / "reference" / "anchored.md"
+        path.parent.mkdir(parents=True)
+        path.write_text("baseline content that is long enough to pair as a rename\n")
+        for args in (
+            ("init", "--quiet"),
+            ("config", "user.name", "Install Test"),
+            ("config", "user.email", "install-test@example.invalid"),
+            ("config", "diff.renames", "true"),
+            ("add", "."),
+            ("commit", "--quiet", "-m", "test: create fixture"),
+        ):
+            self.assert_ok(self.run_command("git", *args))
+        self.assert_ok(self.make("hooks"))
+        bin_dir = self.root / "bin"
+        bin_dir.mkdir()
+        stub = bin_dir / "make"
+        stub.write_text('#!/bin/sh\nprintf "%s\\n" "$@" > "$INSTALL_TEST_LOG"\n')
+        stub.chmod(0o755)
+        log = self.root / "hook.log"
+        self.env.update(PATH=str(bin_dir) + os.pathsep + self.env["PATH"], INSTALL_TEST_LOG=str(log))
+        self.assert_ok(self.run_command(
+            "git", "mv", "gamma/reference/anchored.md", "gamma/reference/moved.md"))
+        self.assert_ok(self.run_command(str(self.repo / ".git" / "hooks" / "pre-commit")))
+        args = log.read_text().splitlines()
+        self.assertEqual(args[args.index("--no-print-directory") + 1:], ["check"])
 
 
 if __name__ == "__main__":

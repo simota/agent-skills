@@ -17,11 +17,11 @@ Purpose: Provide the canonical handoff tokens and minimum fields for Palette coo
 | Partner | Palette receives | Palette sends | Token |
 |---------|------------------|---------------|-------|
 | `Echo` | friction points, persona findings, emotion score | validation request | `ECHO_TO_PALETTE_HANDOFF`, `PALETTE_TO_ECHO_VALIDATION` |
-| `Flow` | animation completion | motion spec | `PALETTE_TO_FLOW_HANDOFF`, `FLOW_TO_PALETTE_COMPLETION` |
-| `Muse` | token response | token request | `PALETTE_TO_MUSE_TOKEN_REQUEST`, `MUSE_TO_PALETTE_TOKEN_RESPONSE` |
-| `Sentinel` | security feedback | review request | `PALETTE_TO_SENTINEL_REVIEW`, `SENTINEL_TO_PALETTE_FEEDBACK` |
-| `Radar` | test report | test request | `PALETTE_TO_RADAR_TEST_REQUEST`, `RADAR_TO_PALETTE_TEST_REPORT` |
-| `Canvas` | visualization artifacts | diagram request | `PALETTE_TO_CANVAS_VISUALIZATION` |
+| `Flow` | animation completion | motion spec | `PALETTE_TO_FLOW`, `FLOW_TO_PALETTE` |
+| `Muse` | token response | token request | `PALETTE_TO_MUSE`, `MUSE_TO_PALETTE` |
+| `Sentinel` | security feedback | review request | `PALETTE_TO_SENTINEL`, `SENTINEL_TO_PALETTE_FEEDBACK` |
+| `Radar` | test report | test request | `PALETTE_TO_RADAR`, `RADAR_TO_PALETTE_TEST_REPORT` |
+| `Canvas` | visualization artifacts | diagram request | `PALETTE_TO_CANVAS` |
 
 ## Validation Loop
 
@@ -54,7 +54,7 @@ Purpose: Provide the canonical handoff tokens and minimum fields for Palette coo
 ## Animation Handoff
 
 ```markdown
-## PALETTE_TO_FLOW_HANDOFF
+## PALETTE_TO_FLOW
 
 **Interaction**: [interaction]
 **Trigger**: [onClick / onHover / onLoad / onStateChange]
@@ -68,7 +68,7 @@ Purpose: Provide the canonical handoff tokens and minimum fields for Palette coo
 ```
 
 ```markdown
-## FLOW_TO_PALETTE_COMPLETION
+## FLOW_TO_PALETTE
 
 **Implemented**: [animation]
 **Files Modified**: [files]
@@ -80,7 +80,7 @@ Purpose: Provide the canonical handoff tokens and minimum fields for Palette coo
 ## Token Coordination
 
 ```markdown
-## PALETTE_TO_MUSE_TOKEN_REQUEST
+## PALETTE_TO_MUSE
 
 **Interaction Pattern**: [pattern]
 **Current Issue**: [gap]
@@ -93,7 +93,7 @@ Purpose: Provide the canonical handoff tokens and minimum fields for Palette coo
 ```
 
 ```markdown
-## MUSE_TO_PALETTE_TOKEN_RESPONSE
+## MUSE_TO_PALETTE
 
 **Tokens Defined**:
 | Token Name | Value | Semantic Purpose |
@@ -106,7 +106,7 @@ Purpose: Provide the canonical handoff tokens and minimum fields for Palette coo
 ## Security Review
 
 ```markdown
-## PALETTE_TO_SENTINEL_REVIEW
+## PALETTE_TO_SENTINEL
 
 **UX Change**: [description]
 **Security-Relevant Aspects**:
@@ -133,7 +133,7 @@ Purpose: Provide the canonical handoff tokens and minimum fields for Palette coo
 ## Test Handoff
 
 ```markdown
-## PALETTE_TO_RADAR_TEST_REQUEST
+## PALETTE_TO_RADAR
 
 **UX Improvement**: [change]
 **Component**: [component]
@@ -161,7 +161,7 @@ Purpose: Provide the canonical handoff tokens and minimum fields for Palette coo
 ## Visualization Handoff
 
 ```markdown
-## PALETTE_TO_CANVAS_VISUALIZATION
+## PALETTE_TO_CANVAS
 
 **Visualization Type**: Before/After Comparison | Heuristic Score Chart | Interaction Flow
 **Audience**: [design / product / engineering / leadership]

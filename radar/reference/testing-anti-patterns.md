@@ -34,7 +34,7 @@ Purpose: Detect weak tests before they create false confidence. Read this when a
 | Metric | Target |
 |--------|--------|
 | Line coverage | `80%+` |
-| Branch coverage | `80%+` project-wide; `85%+` business logic, `90%+` utilities (`coverage-strategy.md`) |
+| Branch coverage | `80%+` for logic-heavy modules, `85%+` on core logic (`coverage-strategy.md`) |
 | Mutation score | `60%+`, or `85%+` for critical modules |
 | Assertion density | `1-3` meaningful assertions per test |
 | Unit suite runtime | `< 5min` |
