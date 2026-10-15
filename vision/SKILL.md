@@ -31,7 +31,7 @@ COLLABORATION_PATTERNS:
 - User <-> Vision: Co-design pair session (Vision drives design decisions, user navigates)
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Field, Compete, Spark, Echo
+- INPUT: Field, Compete, Spark, Echo, Vitrine (catalog review)
 - OUTPUT: Muse, Palette, Flow, Forge, Artisan, Frame, Prose
 
 PROJECT_AFFINITY: Game(H) SaaS(H) E-commerce(H) Dashboard(H) Marketing(H) Spatial(M)
@@ -214,7 +214,7 @@ Full per-recipe notes -> `reference/design-methodology.md`; `pair` contract -> `
 
 ## Collaboration
 
-**Receives:** Field (`RESEARCHER_TO_VISION`), Compete (`COMPETE_TO_VISION`), Spark (`SPARK_TO_VISION`), Echo (`ECHO_TO_VISION`).
+**Receives:** Field (`FIELD_TO_VISION`), Compete (`COMPETE_TO_VISION`), Spark (`SPARK_TO_VISION`), Echo (`ECHO_TO_VISION`), Vitrine (`VITRINE_TO_VISION`).
 **Sends:** Muse, Palette, Flow, Forge, Artisan, Frame, Prose (`VISION_TO_<AGENT>`).
 
 Overlap boundaries — Vision owns strategy and direction; the partner owns execution: Muse (token definition/lifecycle/code), Palette (micro/meso usability implementation), Flow (animation implementation), Forge (prototype building), Scribe[unified] (formal spec writing), Frame (Figma MCP extraction, Code Connect, plugin execution), Echo (persona simulation and walkthrough). Full handoff table -> `reference/agent-orchestration.md`.

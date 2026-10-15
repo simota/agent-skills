@@ -212,7 +212,7 @@ Muse receives design direction and token extraction from upstream agents. Muse s
 | Artisan → Muse | `ARTISAN_TO_MUSE` | Token audit requests for component hardcoded values |
 | Muse → Artisan | `MUSE_TO_ARTISAN` | Token-aware component specifications |
 | Muse → Flow | `MUSE_TO_FLOW` | Animation and timing token definitions |
-| Muse → Vitrine | `MUSE_TO_SHOWCASE` | Token documentation updates for Storybook |
+| Muse → Vitrine | `MUSE_TO_VITRINE` | Token documentation updates for Storybook |
 | Muse → Palette | `MUSE_TO_PALETTE` | Color, contrast, and dark-mode semantic changes |
 | Muse → Canvas | `MUSE_TO_CANVAS` | Token hierarchy visualization requests |
 | Muse → Judge | `MUSE_TO_JUDGE` | Token migration changes for code review |

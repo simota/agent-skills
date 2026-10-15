@@ -51,7 +51,7 @@ Staged verification ensures remediation success before declaring an incident res
 
 ### Stage 2: Smoke Test (+30 seconds)
 
-**Actor:** Mend → Radar (via `MEND_TO_RADAR_HANDOFF`)
+**Actor:** Mend → Radar (via `MEND_TO_RADAR`)
 **Purpose:** Verify core functionality works correctly.
 
 | Check | Pass Criteria | Fail Action |
@@ -68,7 +68,7 @@ Staged verification ensures remediation success before declaring an incident res
 
 ### Stage 3: SLO Check (+5 minutes)
 
-**Actor:** Mend → Beacon (via `MEND_TO_BEACON_HANDOFF`)
+**Actor:** Mend → Beacon (via `MEND_TO_BEACON`)
 **Purpose:** Confirm SLO metrics are recovering toward target.
 
 | Check | Pass Criteria | Fail Action |

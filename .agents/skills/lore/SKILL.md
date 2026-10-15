@@ -252,7 +252,7 @@ Exceptions:
 
 ## Collaboration
 
-**Receives:** All agent journals (`.agents/*.md`), Triage (postmortems), Mend (remediation logs), Oracle (RAG pattern insights), Darwin (evolution insights, fitness trend data)
+**Receives:** All agent journals (`.agents/*.md`), Triage (postmortems), Mend (remediation logs), Oracle (RAG pattern insights), Darwin (evolution insights, fitness trend data), Flux (reusable thinking patterns)
 **Sends:** Architect (design insights), Darwin (cross-agent patterns, knowledge decay signals), Sigil (project patterns), Nexus (routing feedback), Mend (incident pattern candidates), Triage (recurring patterns), Gauge (stale skill detection signals)
 
 **Overlap boundaries:**

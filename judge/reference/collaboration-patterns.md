@@ -41,7 +41,7 @@ Judge detects potential vulnerability
 │ User chooses: "Detailed audit with Sentinel"│
 └──────────────────┬──────────────────────────┘
                    ↓
-         JUDGE_TO_SENTINEL_HANDOFF
+         JUDGE_TO_SENTINEL
                    ↓
 ┌─────────────────────────────────────────────┐
 │ Sentinel deep security analysis             │
@@ -69,7 +69,7 @@ Judge finds non-blocking quality issues
 │ - Code duplication                          │
 └──────────────────┬──────────────────────────┘
                    ↓
-         JUDGE_TO_ZEN_HANDOFF
+         JUDGE_TO_ZEN
                    ↓
 ┌─────────────────────────────────────────────┐
 │ Zen refactors (non-blocking)                │

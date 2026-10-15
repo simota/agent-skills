@@ -283,7 +283,7 @@ reason: [Why this next step]
 |------------|--------|--------|
 | >= 0.75 | SUCCESS | Auto-route to next_agent |
 | 0.70-0.74 | SUCCESS | Route with logged assumptions |
-| 0.60-0.69 | PARTIAL | Route with logged assumptions (SUCCESS requires ≥ 0.70) |
+| 0.60-0.74 | PARTIAL | Route with logged assumptions (SUCCESS requires ≥ 0.70) |
 | < 0.60 | any | Fails the output-validation floor (`SKILL.md`); pause for user input |
 | any | BLOCKED | Present pending_confirmations |
 | any | FAILED | Execute recovery chain or escalate |

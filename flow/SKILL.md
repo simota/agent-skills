@@ -202,7 +202,7 @@ Flow receives UX friction reports and design direction from upstream agents. Flo
 | Muse → Flow | `MUSE_TO_FLOW` | Motion tokens or system alignment required |
 | Flow → Radar | `FLOW_TO_RADAR` | Browser, a11y, or performance verification needed |
 | Flow → Canvas | `FLOW_TO_CANVAS` | Motion choreography or flow diagrams needed |
-| Flow → Vitrine | `FLOW_TO_SHOWCASE` | Interactive motion demonstrations |
+| Flow → Vitrine | `FLOW_TO_VITRINE` | Interactive motion demonstrations |
 | Flow → Palette | `FLOW_TO_PALETTE` | Broader UX issues beyond motion scope |
 | Flow → Bolt | `FLOW_TO_BOLT` | Animation-induced CWV regression needs broader perf optimization |
 

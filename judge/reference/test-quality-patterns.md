@@ -289,7 +289,7 @@ Route when: isolation violations, flaky patterns, missing edge cases
 Route when: readability issues, structural problems
 
 ```markdown
-## JUDGE_TO_ZEN_HANDOFF (Test Quality)
+## JUDGE_TO_ZEN (Test Quality)
 
 **Review ID**: [PR# or scope]
 **Type**: Test Readability Improvement

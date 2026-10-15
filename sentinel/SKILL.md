@@ -209,8 +209,8 @@ Receives security-flagged artifacts upstream, performs static analysis, routes f
 | Sentinel → Triage | `SENTINEL_TO_TRIAGE` | Immediate escalation for CRITICAL findings |
 | Sentinel → Guardian | `SENTINEL_TO_GUARDIAN` | Confirm change meets security policy |
 | Sentinel → Radar | `SENTINEL_TO_RADAR` | Ensure security fix has test coverage |
-| Sentinel → Vigil | `SENTINEL_TO_VIGIL` | Convert findings into Sigma/YARA detection rules |
-| Sentinel → Canon | `SENTINEL_TO_CANON` | Validate findings against OWASP Top 10:2025 standard |
+| Sentinel → Vigil | `SENTINEL_TO_VIGIL_HANDOFF` | Convert findings into Sigma/YARA detection rules |
+| Sentinel → Canon | `SENTINEL_TO_CANON_REGULATORY_HANDOFF` | Validate findings against OWASP Top 10:2025 standard |
 
 **Overlap boundaries**:
 - **vs Probe** — Probe = DAST; Sentinel = SAST. Escalate to Probe when static is inconclusive.

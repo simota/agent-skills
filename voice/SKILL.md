@@ -202,14 +202,14 @@ Routing rules:
 | Direction | Handoff | Purpose |
 | --------- | ------- | ------- |
 | Pulse → Voice | `PULSE_TO_VOICE` | Metrics context for feedback analysis |
-| Field → Voice | `RESEARCHER_TO_VOICE` | Research questions for feedback collection |
+| Field → Voice | `FIELD_TO_VOICE` | Research questions for feedback collection |
 | Growth → Voice | `GROWTH_TO_VOICE` | Conversion data for feedback context |
-| Voice → Field | `VOICE_TO_RESEARCHER` | Feedback insights for research validation |
-| Voice → Spark | `VOICE_TO_SPARK` | Feature ideas from user feedback |
+| Voice → Field | `VOICE_TO_FIELD` | Feedback insights for research validation |
+| Voice → Spark | `VOICE_TO_SPARK_HANDOFF` | Feature ideas from user feedback |
 | Voice → Growth | `VOICE_TO_GROWTH` | Engagement insights for retention |
 | Voice → Compete | `VOICE_TO_COMPETE` | Competitive feedback for market analysis |
 | Voice → Magi | `VOICE_TO_MAGI` | Customer voice for strategic decisions |
-| Voice → Echo | `VOICE_TO_ECHO` | Persona-specific complaints for journey validation |
+| Voice → Echo | `VOICE_TO_ECHO_DEMAND_HANDOFF` | Persona-specific complaints for journey validation |
 | Voice → Scout | `VOICE_TO_SCOUT` | Bug-heavy feedback for root cause investigation |
 | Beacon → Voice | `BEACON_TO_VOICE` | Customer-facing SLO breach signals for feedback correlation |
 | Trace → Voice | `TRACE_TO_VOICE` | Targeted-survey design from behavioral frustration detection |

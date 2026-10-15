@@ -89,10 +89,10 @@ Per-finding emission uses the schema in `_common/CONSISTENCY_FRAMEWORK.md` (Find
 
 ## Handoff to Zen
 
-When consistency violations are detected, include in `JUDGE_TO_ZEN_HANDOFF`:
+When consistency violations are detected, include in `JUDGE_TO_ZEN`:
 
 ```markdown
-## JUDGE_TO_ZEN_HANDOFF (Consistency)
+## JUDGE_TO_ZEN (Consistency)
 
 **Review ID**: [PR# or audit scope]
 **Type**: Consistency Violation

@@ -217,33 +217,48 @@ Crash spike / ANR spike / severe error?
 The `Launch` agent generates and manages release notes. Native hands over the changes in structured form:
 
 ```yaml
-NATIVE_TO_LAUNCH_RELEASE_HANDOFF:
+# Example only — values in [brackets] are placeholders. Field contract: `reference/handoffs.md` (`NATIVE_TO_LAUNCH_HANDOFF`).
+NATIVE_TO_LAUNCH_HANDOFF:
   app_version: "2.4.0"
-  ios_build: "2400"
-  android_version_code: 2400
-  changes:
-    user_facing:
-      - "Real-time inventory display on the new order screen"
-      - "Live Activities for delivery tracking"
-    fixes:
-      - "Re-login flow when the auth token expires"
-    technical:
-      - "Migrated to Swift 6.2 Approachable Concurrency"
-      - "Adopted Compose BOM 2025.05 + Material 3 Expressive"
-  feature_flags_for_kill_switch:
+  build_number: "2400"                       # iOS build / Android versionCode
+  platforms:
+    ios:
+      min_os: "[iOS min version]"
+      bundle_id: "[com.example.app]"
+      build_artifact: "[path/to/App.ipa]"
+      signing: "[distribution profile reference — never the credential]"
+    android:
+      min_sdk: "[min SDK]"
+      package: "[com.example.app]"
+      build_artifact: "[path/to/app-release.aab]"
+      signing: "[upload key reference — never the credential]"
+  store_compliance:
+    privacy: "[evidence + unresolved items]"
+    iap: "[evidence + unresolved items, or n/a]"
+    content: "[evidence + unresolved items]"
+  store_compliance_notes: ["[Compliance items verified]"]
+  privacy_manifest_complete: true            # required because platforms includes iOS
+  data_safety_complete: true                 # required because platforms includes Android
+  build_artifacts: ["[path/to/App.ipa]", "[path/to/app-release.aab]"]
+  release_notes:
+    en-US: |
+      - Real-time inventory display on the new order screen
+      - Live Activities for delivery tracking
+      - Fixed re-login flow when the auth token expires
+  rollout_plan:
+    ios: "TestFlight Internal → External (48h) → App Review → Phased Release"
+    android: "Play Internal → Open Testing (48h) → Production staged 5/20/50/100"
+  feature_flags:
     - name: "live_activities"
       default: false
       ramp_plan: "1% → 25% → 100% over 7 days"
     - name: "new_order_screen"
       default: true
       can_revert_via_flag: true
-  rollout_plan:
-    ios: "TestFlight Internal → External (48h) → App Review → Phased Release"
-    android: "Play Internal → Open Testing (48h) → Production staged 5/20/50/100"
-  rollback_strategy:
+  rollback_plan:
     primary: "Feature flag OFF for live_activities and new_order_screen"
     secondary: "Halt phased release / staged rollout"
-    tertiary: "Hotfix build with revert"
+    tertiary: "Hotfix build with revert (a released store binary cannot be instantly reverted)"
 ```
 
 ---

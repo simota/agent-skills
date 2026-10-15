@@ -26,12 +26,12 @@ CAST_TO_SAGA_HANDOFF:
     audience: "[target audience]"
 ```
 
-### RESEARCHER_TO_SAGA_HANDOFF
+### FIELD_TO_SAGA_HANDOFF
 
 Receive research findings from Field and convert them into a narrative.
 
 ```yaml
-RESEARCHER_TO_SAGA_HANDOFF:
+FIELD_TO_SAGA_HANDOFF:
   research_type: "[interview | usability_test | journey_map | survey]"
   key_findings:
     - "[Finding 1]"

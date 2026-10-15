@@ -200,7 +200,7 @@ Bug patterns (null/undefined, off-by-one, race, resource leaks, API contract) ->
 
 ## Collaboration
 
-**Receives:** Builder (code), Scout (bug RCA), Guardian (PR prep), Sentinel (security audit)
+**Receives:** Builder (code), Scout (bug RCA), Guardian (PR prep), Sentinel (security audit), Pixel (design-fidelity gaps)
 **Sends:** Builder (fixes), Sentinel (security deep-dive), Zen (refactoring), Radar (tests), Atlas (architecture)
 
 **Overlap boundaries** — Judge detects and reports; the partner acts. **Sentinel** owns deep audit and threat modeling (Judge does surface screening). **Zen** implements refactoring and drives `pair`-mode lean fixes. **Void** *decides* whether waste is justified (YAGNI verdict, cost-of-keeping, blast radius) — Judge flags, Void rules, Zen/Builder excise. **Radar** writes and executes tests. **Lens** owns codebase understanding.

@@ -115,7 +115,7 @@ PERSONA_VALIDATION_REPORT:
 ### Handoff to Field
 
 ```markdown
-## RESEARCHER_HANDOFF (from Trace)
+## TRACE_TO_FIELD (from Trace)
 
 ### Persona Validation: Cautious Comparison Shopper
 
@@ -292,10 +292,10 @@ CUSTOM_SEGMENT:
 
 | Direction | Handoff | Purpose |
 |-----------|---------|---------|
-| Field → Trace | `RESEARCHER_TO_TRACE` | Persona definitions for session filtering |
+| Field → Trace | `FIELD_TO_TRACE` | Persona definitions for session filtering |
 | Echo → Trace | `ECHO_TO_TRACE` | Verify predictions with real sessions |
 | Pulse → Trace | `PULSE_TO_TRACE` | Quantitative anomaly triggers qualitative analysis |
-| Trace → Field | `TRACE_TO_RESEARCHER` | Real data validates/updates personas |
+| Trace → Field | `TRACE_TO_FIELD` | Real data validates/updates personas |
 | Trace → Echo | `TRACE_TO_ECHO` | Discovered issues for simulation verification |
 | Trace → Canvas | `TRACE_TO_CANVAS` | Behavior data to journey diagrams |
 | Trace → Palette | `TRACE_TO_PALETTE` | UX fix recommendations based on behavior analysis |

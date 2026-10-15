@@ -269,7 +269,7 @@ Source citation format: `[N]` inline reference → `## Sources` section at the e
 
 `Lore` is project-local — apply the Availability Gate in `_common/PROJECT_LOCAL_SKILLS.md` first; if absent, route to the registered fallback (`Tome` / `Scribe`) and report `project_local_fallback: true`.
 
-Handoff tokens follow `<Source>_TO_<Target>` for every direction above (e.g. `VOICE_TO_COMPETE`, `PULSE_TO_COMPETE`, `COMPETE_TO_SPARK`, `COMPETE_TO_GROWTH`, `COMPETE_TO_CANVAS`, `COMPETE_TO_MAGI`, `COMPETE_TO_LORE`, `COMPETE_TO_ORACLE`), except Compete -> Field, which uses `COMPETE_TO_RESEARCHER`.
+Handoff tokens follow `<Source>_TO_<Target>` for every direction above (e.g. `VOICE_TO_COMPETE`, `PULSE_TO_COMPETE`, `COMPETE_TO_GROWTH`, `COMPETE_TO_CANVAS`, `COMPETE_TO_MAGI`, `COMPETE_TO_LORE`, `COMPETE_TO_ORACLE`), except Compete -> Spark, which uses Spark's `COMPETE_TO_SPARK_HANDOFF`, and Compete -> Field, which uses `COMPETE_TO_RESEARCHER`.
 
 **Overlap boundaries:**
 - **vs Magi**: Magi = business strategy simulation; Compete = competitive intelligence and analysis.
