@@ -105,18 +105,16 @@ Agents retain their own naming. This table is for conceptual alignment only — 
 
 Generic template adaptable to any agent's domain. Each agent defines its own Primary_Outcome metric.
 
-### Formula
+### Rubric
 
-**Status: specified, not computed.** No script in this repo computes ES or persists its inputs, so an
-ES value is a structured judgment over the dimensions below, not a measurement. Per
-`_common/TOKEN_ECONOMY.md` (a formula with no data source is never presented with a grade band or wired
-into a gate), it does not drive any gate; report it with the evidence behind each dimension.
+**Status: qualitative, not computed.** No script in this repo computes ES or persists its inputs, so ES is
+a structured judgment, not a measurement. Per `_common/TOKEN_ECONOMY.md` (a formula with no data source is
+never presented with a grade band or wired into a gate), it drives no gate; report it with the evidence
+behind each dimension.
 
-```
-ES = (Primary_Outcome × 0.35) + (Efficiency × 0.20) + (Quality × 0.20) + (Adaptability × 0.15) + (User_Autonomy × 0.10)
-```
+Rate each dimension A–F (labels below), citing the evidence for each:
 
-| Dimension | What it measures | Example metrics |
+| Dimension | What it measures | Example evidence |
 |-----------|-----------------|-----------------|
 | Primary_Outcome | Core mission success | Task completion rate, accuracy, coverage |
 | Efficiency | Resource usage relative to outcome | Time spent, token usage, iteration count |
@@ -124,9 +122,10 @@ ES = (Primary_Outcome × 0.35) + (Efficiency × 0.20) + (Quality × 0.20) + (Ada
 | Adaptability | Response to novel/unexpected situations | Graceful degradation, creative solutions |
 | User_Autonomy | User empowerment vs. dependency creation | Knowledge transfer, self-service enablement |
 
-### Judgment Labels (not measured)
+**Overall label (deterministic):** start from the Primary_Outcome label; if any other dimension is two or
+more labels lower, lower the overall label by one. The same per-dimension labels always yield the same ES.
 
-Labels for the judgment above. They carry no score range, because no measured score exists to bin.
+### Judgment Labels (not measured)
 
 | Label | Meaning |
 |-------|---------|
@@ -138,7 +137,7 @@ Labels for the judgment above. They carry no score range, because no measured sc
 
 ### Minimum Data Requirements
 
-- **3+ data points** required before calculating a meaningful ES
+- **3+ data points** required before assigning an ES label
 - Below 3 data points: record observations only (OBSERVE + PERSIST), skip MEASURE–ADAPT
 - Agents with existing scoring (CES/AES/etc.) may map their judgments to these labels
 
