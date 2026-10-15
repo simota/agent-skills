@@ -39,6 +39,7 @@ import sys
 from pathlib import Path
 
 import _corpus
+import _markdown
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
@@ -151,10 +152,29 @@ def _common_fix_hint(is_local: bool) -> str:
     return f"update the sentence or count {where} again (`_common/OPERATIONAL.md` s Derived Numbers)"
 
 
+def _without_code(text: str) -> str:
+    """Blank fenced blocks and inline code spans, keeping every offset.
+
+    Only `@path` imports are read from this view: `curl -d @body.json` in a code
+    span or a fenced `@docs/x.md` is an example, not an import Claude Code loads.
+    Backticked paths are the code spans themselves, so they read the raw text.
+    """
+    fenced = _markdown.without_fenced_examples(text).split("\n")
+    lines = [
+        line if fenced[i] or not line else " " * len(line)
+        for i, line in enumerate(text.split("\n"))
+    ]
+    return _markdown.without_inline_code("\n".join(lines))
+
+
 def check_paths(path: Path, text: str) -> list[tuple[str, str, str]]:
     findings = []
     seen: set[str] = set()
-    matches = [*PATH_PATTERN.finditer(text), *LINK_PATTERN.finditer(text), *IMPORT_PATTERN.finditer(text)]
+    matches = [
+        *PATH_PATTERN.finditer(text),
+        *LINK_PATTERN.finditer(text),
+        *IMPORT_PATTERN.finditer(_without_code(text)),
+    ]
     for m in sorted(matches, key=lambda match: match.start()):
         ref = m.group(1)
         if ref in seen or "*" in ref or ref.startswith("<"):

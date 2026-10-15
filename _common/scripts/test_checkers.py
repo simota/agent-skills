@@ -261,6 +261,27 @@ class TestInstructionDrift(CheckerCase):
         self.edit("CLAUDE.md", "@_common/GIT_GUIDELINES.md", "@_common/NO_SUCH_GUIDELINES.md")
         self.expect_caught("lint-instructions.py", "NO_SUCH_GUIDELINES.md", "--severity", "error")
 
+    def test_an_at_word_inside_an_inline_code_span_is_not_an_import(self):
+        """I2. A shell example such as `curl -d @file` is code, not a CLAUDE.md
+        import; reading it as one blocked validate on a false P1."""
+        self.append("CLAUDE.md", "\nUse `curl -d @payload/body.json https://example.invalid` to post.\n")
+        self.expect_clean("lint-instructions.py", "--severity", "error")
+
+    def test_an_at_word_inside_a_fenced_code_block_is_not_an_import(self):
+        """I2. Claude Code does not load imports from fenced code blocks, so a
+        fenced `@path` makes no claim that the file exists."""
+        self.append("CLAUDE.md", "\n```text\n@docs/no-such-example.md\n```\n")
+        self.expect_clean("lint-instructions.py", "--severity", "error")
+
+    def test_a_dead_import_after_a_code_span_still_fails_on_its_own_line(self):
+        """I2. Blanking code must keep offsets: the finding still names the
+        dead import, and the code before it does not hide it."""
+        self.append(
+            "CLAUDE.md",
+            "\n```sh\ncurl -d @payload/body.json\n```\n\nSee `x` then @_common/NO_SUCH_IMPORT.md\n",
+        )
+        self.expect_caught("lint-instructions.py", "NO_SUCH_IMPORT.md", "--severity", "error")
+
     def test_a_dead_script_path_in_an_instruction_file_fails(self):
         """I2. Only `.md` paths were checked; a moved checker script passed."""
         self.edit("CLAUDE.md", "`_common/scripts/_corpus.py`", "`_common/scripts/_no_such_corpus.py`")
@@ -531,6 +552,21 @@ class TestRoutingSurface(CheckerCase):
         """RO-11. The sender is a live skill; the receiver alone is stale."""
         self.append("zen/SKILL.md", "\n- Zen -> Vitrine: `ZEN_TO_SHOWCASE_HANDOFF`\n")
         self.expect_caught("routing-oracle.py", "ZEN_TO_SHOWCASE", "--severity", "error")
+
+    def test_a_bare_token_with_one_live_endpoint_still_fails(self):
+        """RO-11. Without a `_HANDOFF` suffix the token is still handoff-shaped
+        when one side names a live skill and the other does not."""
+        self.append("zen/SKILL.md", "\n- Zen -> Vitrine: `ZEN_TO_SHOWCASE`\n")
+        self.expect_caught("routing-oracle.py", "ZEN_TO_SHOWCASE", "--severity", "error")
+
+    def test_an_identifier_that_merely_contains_to_passes(self):
+        """RO-11. Any UPPER_CASE identifier with `_TO_` was read as a handoff, so
+        a config key or metric name in a reference file blocked validate."""
+        self.append(
+            "gear/SKILL.md",
+            "\nSet `PATH_TO_CONFIG`, watch `TIME_TO_FIRST_BYTE` and `MAX_TIME_TO_LIVE`.\n",
+        )
+        self.expect_clean("routing-oracle.py", "--severity", "error")
 
 
 class TestLessonsRegister(CheckerCase):

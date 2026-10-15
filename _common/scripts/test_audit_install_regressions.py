@@ -217,6 +217,42 @@ class InstallBoundaryTests(unittest.TestCase):
                 self.assertEqual(args[args.index("--no-print-directory") + 1:], expected)
                 self.assert_ok(self.run_command("git", "reset", "--quiet"))
 
+    def test_hook_runs_every_test_when_a_test_named_file_is_renamed(self):
+        """With rename detection on, `diff --cached --name-only` lists only the
+        NEW path of a staged rename, so moving a file a test names selected
+        validate-only and `make test` then failed in CI. The hook must see both
+        sides of the rename."""
+        scripts = self.repo / "_common" / "scripts"
+        scripts.mkdir(parents=True)
+        (scripts / "test_reads_fixture.py").write_text(
+            'ANCHORED = "gamma/reference/anchored.md"\n'
+        )
+        path = self.repo / "gamma" / "reference" / "anchored.md"
+        path.parent.mkdir(parents=True)
+        path.write_text("baseline content that is long enough to pair as a rename\n")
+        for args in (
+            ("init", "--quiet"),
+            ("config", "user.name", "Install Test"),
+            ("config", "user.email", "install-test@example.invalid"),
+            ("config", "diff.renames", "true"),
+            ("add", "."),
+            ("commit", "--quiet", "-m", "test: create fixture"),
+        ):
+            self.assert_ok(self.run_command("git", *args))
+        self.assert_ok(self.make("hooks"))
+        bin_dir = self.root / "bin"
+        bin_dir.mkdir()
+        stub = bin_dir / "make"
+        stub.write_text('#!/bin/sh\nprintf "%s\\n" "$@" > "$INSTALL_TEST_LOG"\n')
+        stub.chmod(0o755)
+        log = self.root / "hook.log"
+        self.env.update(PATH=str(bin_dir) + os.pathsep + self.env["PATH"], INSTALL_TEST_LOG=str(log))
+        self.assert_ok(self.run_command(
+            "git", "mv", "gamma/reference/anchored.md", "gamma/reference/moved.md"))
+        self.assert_ok(self.run_command(str(self.repo / ".git" / "hooks" / "pre-commit")))
+        args = log.read_text().splitlines()
+        self.assertEqual(args[args.index("--no-print-directory") + 1:], ["check"])
+
 
 if __name__ == "__main__":
     unittest.main()

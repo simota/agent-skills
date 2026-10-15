@@ -222,10 +222,10 @@ hooks:
 	  '# infrastructure, or a file the tests read changes.' \
 	  'set -e' \
 	  'repo=$$(git rev-parse --show-toplevel)' \
-	  'changed=$$(git -C "$$repo" diff --cached --name-only -- _common/scripts/ launch/scripts/ launch/templates/ _templates/learning-loop-kit/ .github/workflows/ index.html Makefile requirements-checks.txt README.md README_ja.md CLAUDE.md AGENTS.md compass/reference/catalog.md .claude/skills/orbit/reference/ .agents/skills/orbit/reference/ builder/reference/cross-language-port.md hone/reference/hooks/sessionstart-hook.md)' \
+	  'changed=$$(git -C "$$repo" diff --cached --no-renames --name-only -- _common/scripts/ launch/scripts/ launch/templates/ _templates/learning-loop-kit/ .github/workflows/ index.html Makefile requirements-checks.txt README.md README_ja.md CLAUDE.md AGENTS.md compass/reference/catalog.md .claude/skills/orbit/reference/ .agents/skills/orbit/reference/ builder/reference/cross-language-port.md hone/reference/hooks/sessionstart-hook.md)' \
 	  '# A test that edits or reads a corpus file names it verbatim (an edit anchor' \
 	  '# asserts text in it), so a staged path any test module names selects check.' \
-	  'staged=$$(git -C "$$repo" -c core.quotePath=false diff --cached --name-only)' \
+	  'staged=$$(git -C "$$repo" -c core.quotePath=false diff --cached --no-renames --name-only)' \
 	  'if [ -z "$$changed" ] && [ -n "$$staged" ] && printf "%s\n" "$$staged" | git -C "$$repo" grep --cached -q -F -f - -- "_common/scripts/test_*.py"; then changed=named-by-a-test; fi' \
 	  '# Check exactly what will be committed, preserving unstaged and untracked work.' \
 	  'snapshot=$$(python3 -c '\''import tempfile; print(tempfile.mkdtemp(prefix="agent-skills-index."))'\'')' \

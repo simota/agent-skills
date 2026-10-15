@@ -120,6 +120,10 @@ block on it (mirrors task-battery-check.py's crash contract):
        skill that owns the file (an intra-skill transition such as
        `MAGI_SIMULATE_TO_DECIDE`), and the reviewed legacy aliases in
        HANDOFF_TOKEN_ALLOWLIST, each pinned to the files that document it.
+       Only handoff-shaped tokens are read: one carrying a `_HANDOFF` segment
+       after the receiver, or one with exactly one known endpoint. An
+       identifier naming no endpoint at all (`PATH_TO_CONFIG`,
+       `TIME_TO_FIRST_BYTE`) is a config key or metric, not a handoff.
        Found live: the showcase -> vitrine and researcher -> field renames
        left live tokens naming skills that no longer exist.
        Complexity Budget (`_common/HARNESS_DEBT.md` 3b):
@@ -798,16 +802,20 @@ HANDOFF_TOKEN_ALLOWLIST = {
     "ACCORD_TO_SCRIBE": (("scribe/reference/unified-spec/README.md",
                           "scribe/reference/unified-spec/handoff-formats.md"),
                          "legacy Accord alias, consumed until the reactivation window closes"),
-    "RESEARCHER_TO_ACCORD": (("scribe/reference/unified-spec/handoff-formats.md",), "legacy Accord alias"),
     "CAST_TO_ACCORD": (("scribe/reference/unified-spec/handoff-formats.md",), "legacy Accord alias"),
     "VOICE_TO_ACCORD": (("scribe/reference/unified-spec/handoff-formats.md",), "legacy Accord alias"),
     "UNIFIED_TO_FORMAL": (("scribe/reference/unified-spec/handoff-formats.md",),
                           "internal Scribe recipe transition, documented as not a handoff"),
-    "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24": (("gear/reference/github-actions.md",),
-                                           "GitHub Actions environment variable, not a handoff"),
 }
 
-HANDOFF_TOKEN_RE = re.compile(r"(?<![A-Za-z0-9_])([A-Z][A-Z0-9]*(?:_[A-Z0-9]+)*?)_TO_([A-Z][A-Z0-9]*)")
+# Group 3 (a lookahead, so group 0 stays `SENDER_TO_RECEIVER` for the
+# allowlist) holds the segments after the receiver, e.g. `_HANDOFF`.
+HANDOFF_TOKEN_RE = re.compile(
+    r"(?<![A-Za-z0-9_])([A-Z][A-Z0-9]*(?:_[A-Z0-9]+)*?)_TO_([A-Z][A-Z0-9]*)(?=((?:_[A-Z0-9]+)*))"
+)
+# The corpus's handoff payloads end in `_HANDOFF`; other suffixes (FEEDBACK,
+# REQUEST, ...) occur only between two live skills, so they decide nothing.
+HANDOFF_SUFFIXES = frozenset({"HANDOFF"})
 
 
 def check_handoff_token_endpoints(findings: list[Finding]):
@@ -827,14 +835,17 @@ def check_handoff_token_endpoints(findings: list[Finding]):
             for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
                 for match in HANDOFF_TOKEN_RE.finditer(line):
                     token = match.group(0)
-                    checked += 1
-                    if rel in HANDOFF_TOKEN_ALLOWLIST.get(token, ((), ""))[0]:
-                        continue
                     sender = match.group(1).split("_")[0]
                     receiver = match.group(2)
                     unknown = [seg for seg in (sender, receiver)
                                if seg not in names and seg not in HANDOFF_PSEUDO_ENDPOINTS
                                and seg not in own]
+                    suffixed = not HANDOFF_SUFFIXES.isdisjoint(match.group(3).split("_"))
+                    if len(unknown) == 2 and not suffixed:
+                        continue  # names no endpoint: `PATH_TO_CONFIG`, not a handoff
+                    checked += 1
+                    if rel in HANDOFF_TOKEN_ALLOWLIST.get(token, ((), ""))[0]:
+                        continue
                     if unknown:
                         bad.append(f"{rel}:{number}: `{token}` — not a live skill: "
                                    + ", ".join(f"`{seg}`" for seg in dict.fromkeys(unknown)))
