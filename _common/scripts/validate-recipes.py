@@ -13,7 +13,9 @@ Validates every SKILL.md against the rules defined in `_common/RECIPES.md`:
             hub skills (HUB_SKILLS) → always INFO (recipe breadth by design)
             reviewed skills (REC04_REVIEWED) → INFO while at or below the reviewed
             count; warns again if the count grows past it
-  R-REC-05: Recipes section is RECOMMENDED for Tier 1-2 skills (INFO)
+  R-REC-05: historical (`_common/RECIPES.md`) -- superseded by lint-frontmatter
+            ST1, which requires `## Recipes` in every skill. A skill without the
+            section is only noted here (INFO); ST1 owns the requirement
 
 Plus heading integrity:
   H-REC-01: `## Subcommand Dispatch` heading exists alongside `## Recipes` (ERROR)
@@ -206,7 +208,8 @@ def validate(skill: str, path: Path) -> tuple[list[str], list[str], list[str]]:
 
     block = extract_recipes_block(content, path.parent)
     if block is None:
-        infos.append("R-REC-05: no `## Recipes` section (RECOMMENDED for Tier 1-2)")
+        infos.append("R-REC-05: no `## Recipes` section — required for every skill "
+                     "(historical rule, superseded by lint-frontmatter ST1)")
         return errors, warnings, infos
 
     rows = parse_rows(block, errors)

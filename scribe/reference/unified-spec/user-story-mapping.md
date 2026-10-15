@@ -4,8 +4,8 @@ Purpose: Apply Jeff Patton's User Story Mapping to transform a flat backlog into
 
 ## Scope Boundary
 
-- **scribe `story-map`**: Story mapping (this document).
-- **scribe `vision` / `requirements` / `detail` / `ac` (elsewhere)**: L0-L3 canonical staged elaboration.
+- **scribe `unified story-map`**: Story mapping (this document).
+- **scribe `unified vision` / `unified requirements` / `unified detail` / `unified ac` (elsewhere)**: L0-L3 canonical staged elaboration.
 - **saga `story` (elsewhere)**: Narrative storytelling. Story Mapping is structural; Saga is emotional.
 - **sherpa (elsewhere)**: Atomic step decomposition. Sherpa consumes the map slices.
 - **rank (elsewhere)**: Priority scoring for backlog. Complements mapping.

@@ -4,9 +4,9 @@ Purpose: Map stakeholders on a Power × Interest grid, assign an engagement mode
 
 ## Scope Boundary
 
-- **scribe `stakeholder`**: Power/Interest grid + engagement design (this document).
-- **scribe `vision` (elsewhere)**: L0 Vision Block — stakeholder map informs the audience section.
-- **scribe `raci` (elsewhere)**: Per-item responsibility assignment (different question).
+- **scribe `unified stakeholder`**: Power/Interest grid + engagement design (this document).
+- **scribe `unified vision` (elsewhere)**: L0 Vision Block — stakeholder map informs the audience section.
+- **scribe `unified raci` (elsewhere)**: Per-item responsibility assignment (different question).
 - **cast (elsewhere)**: User personas. Stakeholder ≠ user; an admin, a regulator, a vendor, a board member are stakeholders but not users.
 - **saga (elsewhere)**: Narrative for external audiences.
 - **Magi (elsewhere)**: Multi-perspective arbitration.

@@ -13,7 +13,7 @@ Checks:
 
   LS-1  Every row carries a mechanism. An empty cell is a lesson nobody is keeping.
   LS-2  The mechanism is not an intention. "Remember to", "be careful", "always
-        try to", "make sure", "should" -- phrasings that describe a disposition
+        try to", "make sure", "should", "ought to" -- phrasings that describe a disposition
         rather than a check. This is the rule the file exists for.
   LS-3  `Where` resolves to a file in this repository. A mechanism living
         nowhere is an intention with a filename attached.
@@ -62,6 +62,7 @@ INTENTION_PHRASES = (
     "keep in mind", "don't forget", "do not forget", "take care to", "be sure to",
     "we should", "one should", "agents should", "should always", "should remember",
     "aim to", "strive to", "be mindful", "pay attention", "bear in mind",
+    "shouldn't", "ought to",
     # Bare "should" (LS-2 above) -- "reviewers should run the checker" names who
     # ought to act, not what catches the failure. Matched as a whole word.
     "should",
@@ -72,9 +73,11 @@ def intention_phrase(mechanism: str) -> str | None:
     """The first intention phrasing in `mechanism`, ignoring code spans.
 
     Whitespace is collapsed first, so a doubled space or a line wrap inside a
-    phrase ("be  careful") cannot slip past a literal substring match.
+    phrase ("be  careful") cannot slip past a literal substring match, and
+    typographic apostrophes are folded to ASCII so "Don’t forget" is "don't forget".
     """
     lowered = re.sub(r"\s+", " ", strip_code(mechanism)).lower()
+    lowered = lowered.replace("\u2019", "'").replace("\u2018", "'")
     for phrase in INTENTION_PHRASES:
         if re.search(r"(?<![a-z])" + re.escape(phrase) + r"(?![a-z])", lowered):
             return phrase

@@ -72,7 +72,7 @@ A skill whose Recipes table has grown large enough to push `SKILL.md` toward the
 
 Rules:
 
-1. The `## Recipes` section stays in `SKILL.md` — only its table moves. Removing the section entirely trips `R-REC-05`.
+1. The `## Recipes` section stays in `SKILL.md` — only its table moves. Removing the section entirely trips lint-frontmatter `ST1` (the historical `R-REC-05` also reports it).
 2. The section must name the registry as a backticked path matching `reference/*recipes-index.md`; the validators follow that pointer and validate the table wherever it lives.
 3. The allowlist must list **every** subcommand. Mark the default Recipe when one exists; otherwise declare the explicit `Default dispatch` in `## Subcommand Dispatch`. A token absent from the allowlist is not a subcommand.
 4. The registry file states its own purpose and read-trigger like any other reference.

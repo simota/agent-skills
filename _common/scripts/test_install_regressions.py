@@ -209,6 +209,26 @@ class InstallRegressionTests(unittest.TestCase):
         self.assert_ok(result)
         self.assertIn("hooks on", result.stdout)
 
+    def test_validate_reports_a_hook_installed_from_an_older_recipe(self):
+        """`make hooks` runs once per clone, so a clone keeps whatever hook it
+        installed first; a changed recipe must say so instead of staying silent."""
+        self.initialize_git()
+        self.assert_ok(self.run_make("hooks"))
+        result = self.run_make("validate")
+        self.assert_ok(result)
+        self.assertIn("hooks on", result.stdout)
+        self.assertNotIn("stale", result.stdout)
+        makefile = self.repo / "Makefile"
+        text = makefile.read_text()
+        self.assertIn("'set -e' \\", text)
+        makefile.write_text(text.replace("'set -e' \\", "'set -eu' \\", 1))
+        result = self.run_make("validate")
+        self.assert_ok(result)  # advisory, never blocking
+        self.assertIn("hook stale", result.stdout)
+        self.assertIn("make hooks", result.stdout)
+        self.assert_ok(self.run_make("hooks"))
+        self.assertNotIn("stale", self.run_make("validate").stdout)
+
     def test_hooks_preserve_an_existing_custom_hook(self):
         self.initialize_git()
         hook = self.repo / ".git" / "hooks" / "pre-commit"

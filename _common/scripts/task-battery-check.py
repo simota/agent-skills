@@ -248,16 +248,47 @@ def check_mechanical_items(findings: list[Finding]):
     return passed
 
 
+def battery_item_ids(text: str) -> list[str]:
+    """First cell of every body row in a table whose header's first cell is `#`.
+
+    Reading the first cell rather than matching a digit run is what lets a
+    malformed ID (`66a`) be reported instead of silently not counting. A row
+    resumed after a blank line keeps the previous header, as in routing-oracle.
+    """
+    ids: list[str] = []
+    lines = text.splitlines()
+    in_battery = False
+    for index, line in enumerate(lines):
+        stripped = line.strip()
+        if not re.match(r"^ {0,3}\|", line):
+            continue
+        cells = [cell.strip() for cell in stripped.strip("|").split("|")]
+        if re.fullmatch(r"[\s|:-]+", stripped):
+            continue
+        following = lines[index + 1].strip() if index + 1 < len(lines) else ""
+        if following.startswith("|") and re.fullmatch(r"[\s|:-]+", following) and "-" in following:
+            in_battery = cells[0] == "#"
+            continue
+        if in_battery:
+            ids.append(cells[0])
+    return ids
+
+
 def check_battery_coverage(findings: list[Finding]):
     """Every documented item must have exactly one mechanical or judgment check."""
     if not TASK_BATTERY.is_file():
         findings.append(Finding("battery-coverage", "ERROR", "task-battery.md not found"))
         return
-    documented = Counter(int(value) for value in re.findall(
-        r"^ {0,3}\|\s*(\d+)\s*\|", active_text(TASK_BATTERY.read_text(encoding="utf-8")), re.MULTILINE,
-    ))
-    registered = Counter(item[0] for item in MECHANICAL_ITEMS + JUDGMENT_ITEMS)
+    documented: Counter[int] = Counter()
     problems = []
+    for raw in battery_item_ids(active_text(TASK_BATTERY.read_text(encoding="utf-8"))):
+        # Emphasis is formatting, not part of the ID: `**66**` is item 66.
+        value = re.sub(r"^(\*\*|__|\*|_)(.*)\1$", r"\2", raw).strip()
+        if re.fullmatch(r"\d+", value):
+            documented[int(value)] += 1
+        else:
+            problems.append(f"unrecognised item ID {raw!r} (IDs are integers)")
+    registered = Counter(item[0] for item in MECHANICAL_ITEMS + JUDGMENT_ITEMS)
     for label, counts in (("documented", documented), ("registered", registered)):
         duplicates = sorted(num for num, count in counts.items() if count > 1)
         if duplicates:

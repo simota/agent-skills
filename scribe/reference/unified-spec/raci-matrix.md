@@ -4,9 +4,9 @@ Purpose: Assign unambiguous responsibility for every spec item, decision, or del
 
 ## Scope Boundary
 
-- **scribe `raci`**: Responsibility assignment matrix (this document).
-- **scribe `stakeholder` (elsewhere)**: Who the stakeholders are and how to engage them.
-- **scribe `story-map` / `vision` / `requirements` / `detail` / `ac` (elsewhere)**: The content being assigned.
+- **scribe `unified raci`**: Responsibility assignment matrix (this document).
+- **scribe `unified stakeholder` (elsewhere)**: Who the stakeholders are and how to engage them.
+- **scribe `unified story-map` / `unified vision` / `unified requirements` / `unified detail` / `unified ac` (elsewhere)**: The content being assigned.
 - **magi (elsewhere)**: Multi-perspective decision arbitration.
 - **sherpa (elsewhere)**: Atomic step execution (RACI feeds into step ownership).
 

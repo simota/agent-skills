@@ -81,8 +81,11 @@ MAX_HOPS = 3
 #: Spine contracts must be named directly. Depth above this is a blocking P1 (CD-2).
 DIRECT_DEPTH = 1
 
-#: Backtick-quoted references to any file this repository could own.
-TICKED_ANY = re.compile(r"`([A-Za-z0-9_~.][A-Za-z0-9_./~-]*\.(?:md|py|ya?ml|json))(?:#[^`\s]*)?`")
+#: Backtick-quoted references to any file this repository could own. A section
+#: pointer after the path (`reference/x.md §Section`, `x.md § 9.1`) is the corpus's
+#: usual shape and still names the file, so it is allowed after the extension.
+TICKED_ANY = re.compile(
+    r"`([A-Za-z0-9_~.][A-Za-z0-9_./~-]*\.(?:md|py|ya?ml|json))(?:#[^`\s]*)?(?:\s*§[^`]*)?`")
 
 #: Markdown link targets, e.g. [`token-economy.py`](scripts/token-economy.py).
 MD_LINK = re.compile(r"\]\(([A-Za-z0-9_.][A-Za-z0-9_./-]*\.(?:md|py|ya?ml|json))(?:#[^)\s]*)?\)")

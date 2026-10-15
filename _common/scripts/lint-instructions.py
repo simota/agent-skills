@@ -15,8 +15,9 @@ Checks:
       nothing reporting it. Claims are split by scope, because the repo asserts two counts
       (global skills at the repo root, project-local skills under `.claude/skills`), and a
       check that accepted either would pass a global count written as the local one.
-  I2  Referenced repo-relative paths exist. A pointer to a moved or deleted file
-      routes agents to a dead end.
+  I2  Referenced repo-relative paths exist -- backticked paths, Markdown links,
+      and CLAUDE.md `@path` imports (which load the file into every session).
+      A pointer to a moved or deleted file routes agents to a dead end.
   I3  AGENTS.md and CLAUDE.md do not restate the same rule. AGENTS.md declares
       "tool-specific files should contain only deltas, not duplicates" -- duplicated
       text is what drifts apart later. Reported as a warning (P2), never blocking.
@@ -76,14 +77,22 @@ LOCAL_MARKERS = ("project-local", "repository-local", "repo-local", "プロジ�
 # Project-local skills live here; `_common/PROJECT_LOCAL_SKILLS.md` is their contract.
 LOCAL_SKILLS_DIR = ".claude/skills"
 
-# Backtick-quoted repo-relative file references, e.g. `_common/HANDOFF.md`.
+# Backtick-quoted repo-relative file references, e.g. `_common/HANDOFF.md` or
+# `_common/scripts/_corpus.py`.
 #
-# Deliberately narrow: a ref counts only if it has a directory part AND a .md suffix.
-# Bare filenames (`SKILL.md`, `GEMINI.md`) and directory conventions (`reference/`)
-# are naming patterns, not claims that a specific file exists -- flagging them trains
-# readers to ignore this lint, which costs more than the coverage it would buy.
-PATH_PATTERN = re.compile(r"`([A-Za-z0-9_.][A-Za-z0-9_.-]*(?:/[A-Za-z0-9_.-]+)+\.md)(?:#[^`\s]*)?`")
-LINK_PATTERN = re.compile(r"\]\(([A-Za-z0-9_.][A-Za-z0-9_.-]*(?:/[A-Za-z0-9_.-]+)+\.md)(?:#[^)\s]*)?\)")
+# Deliberately narrow: a ref counts only if it has a directory part AND a known file
+# suffix. Bare filenames (`SKILL.md`, `GEMINI.md`) and directory conventions
+# (`reference/`) are naming patterns, not claims that a specific file exists --
+# flagging them trains readers to ignore this lint, which costs more than the
+# coverage it would buy.
+_EXT = r"\.(?:md|py|sh|json|ya?ml)"
+PATH_PATTERN = re.compile(rf"`([A-Za-z0-9_.][A-Za-z0-9_.-]*(?:/[A-Za-z0-9_.-]+)+{_EXT})(?:#[^`\s]*)?`")
+LINK_PATTERN = re.compile(rf"\]\(([A-Za-z0-9_.][A-Za-z0-9_.-]*(?:/[A-Za-z0-9_.-]+)+{_EXT})(?:#[^)\s]*)?\)")
+# CLAUDE.md `@path` imports: a word starting with `@` outside a code span. Unlike a
+# backticked mention, an import is an explicit claim that the file exists, so a bare
+# filename (`@AGENTS.md`) counts too. Home-relative and absolute imports are outside
+# this repository and are not checked.
+IMPORT_PATTERN = re.compile(rf"(?<![^\s(])@([A-Za-z0-9_.][A-Za-z0-9_./-]*{_EXT})(?![\w/-])")
 
 
 def actual_skill_count() -> int:
@@ -145,7 +154,8 @@ def _common_fix_hint(is_local: bool) -> str:
 def check_paths(path: Path, text: str) -> list[tuple[str, str, str]]:
     findings = []
     seen: set[str] = set()
-    for m in sorted([*PATH_PATTERN.finditer(text), *LINK_PATTERN.finditer(text)], key=lambda match: match.start()):
+    matches = [*PATH_PATTERN.finditer(text), *LINK_PATTERN.finditer(text), *IMPORT_PATTERN.finditer(text)]
+    for m in sorted(matches, key=lambda match: match.start()):
         ref = m.group(1)
         if ref in seen or "*" in ref or ref.startswith("<"):
             continue
