@@ -190,7 +190,7 @@ The following rules are evaluated by **Gauge** during normalization audits.
 | Tier | Target Skills | Recommendation |
 |------|--------------|----------------|
 | **Tier 1 — Recommended** | Skills that appear in the Nexus routing-matrix Primary Chain (e.g., Scout, Builder, Sentinel) | Adopt Recipes; add Recipe Hints to routing-matrix |
-| **Tier 2 — Optional** | Skills invoked frequently in standalone usage (e.g., Lens, Zen, Radar) | Adopt if 3+ distinct modes exist |
+| **Tier 2 — Optional** | Skills invoked frequently in standalone usage (e.g., Lens, Zen, Radar) | Historical (Phase 1): adopt if 3+ distinct modes exist. Superseded — the heading is now required for every skill (lint-frontmatter ST1) |
 | **Tier 3 — Defer** | Specialist skills invoked rarely or always through Nexus chains (e.g., Canvas, Scribe, Quill) | Historical (Phase 1): omit `## Recipes`. Superseded — the heading is now required for every skill (lint-frontmatter ST1) |
 
 Phase 1 scope: Scout only. Builder, Sentinel, and other Tier 1 skills adopt Recipes in Phase 2+. As of Phase 2J, every global skill and every project-local extension has adopted Recipes.

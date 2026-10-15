@@ -262,7 +262,7 @@ Mode: GUIDED
 Chain: [Executed chain]
 
 ### Summary
-[Results from manual execution]
+[Results of the chain, including decisions confirmed at decision points]
 ```
 
 ---

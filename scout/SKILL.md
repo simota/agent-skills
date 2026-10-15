@@ -216,7 +216,7 @@ Verbs: `FIX` (HIGH confidence, scoped, no security/concurrency concern → Build
 
 ## Handoff Formats
 
-Outbound: `SCOUT_TO_BUILDER`, `SCOUT_TO_RADAR`, `SCOUT_TO_TRIAGE`, `SCOUT_TO_SENTINEL`, `SCOUT_TO_TRAIL`. Canonical YAML: `reference/handoff-formats.md`.
+Outbound: `SCOUT_TO_BUILDER_HANDOFF`, `SCOUT_TO_RADAR`, `SCOUT_TO_TRIAGE`, `SCOUT_TO_SENTINEL`, `SCOUT_TO_TRAIL`. Canonical YAML: `reference/handoff-formats.md`.
 
 Cross-cluster escalation (LENS↔SCOUT, unified confidence scale): `_common/INVESTIGATION_ESCALATION.md`. Universal handoff conventions: `_common/HANDOFF.md`.
 

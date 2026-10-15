@@ -324,7 +324,7 @@ Use **Nexus** for complex tasks. Nexus operates in the following modes:
 | Mode | Trigger | Behavior | Interaction |
 |------|---------|----------|-------------|
 | **Full Auto** (default) | no marker, or `## NEXUS_AUTORUN_FULL` | Executes all tasks with guardrails | Only on Ask First / errors |
-| **Auto** | `## NEXUS_AUTORUN` | Executes simple tasks only; complex tasks fall back to Guided | Only on errors |
+| **Auto** | `## NEXUS_AUTORUN` | Executes simple tasks only; complex tasks fall back to Guided | Ask First triggers, guardrail escalations, and errors |
 | **Guided** | `## NEXUS_GUIDED` | Confirms at decision points | Option-based interaction |
 | **Interactive** | `## NEXUS_INTERACTIVE` | Confirms at each step | Always interactive |
 | **Continue** | `## NEXUS_HANDOFF` | Result handoff | Interaction as needed |
@@ -762,25 +762,25 @@ _STEP_COMPLETE:
 
 **No copy-paste needed** - automatically executes to the final deliverable.
 
-#### GUIDED Mode (Manual Handoff)
+#### GUIDED Mode (Confirm at Decision Points)
 
-When invoking each agent manually:
+Nexus runs the chain itself and pauses only at decision points (Ask First triggers, guardrail escalations, or a skill's interaction triggers). Use `## NEXUS_INTERACTIVE` to confirm every step instead:
 
 ```
 ## NEXUS_GUIDED
 I want to add a search feature.
 ```
 
-Nexus designs the chain and presents the next step:
+Nexus designs the chain, runs it, and stops when a decision needs you:
 
 ```
 ## Nexus Plan: Add search feature
 - Chain: **Spark** > **Sherpa** > **Builder** > **Radar**
-- Current step: 1/4
+- Current step: 1/4 (Spark)
 
-### Next Step: Spark
-Invoke **Spark** with the following context:
-[Context information]
+### Decision needed
+Spark proposed two search scopes. Which should Sherpa plan for?
+[Options]
 ```
 
 ---

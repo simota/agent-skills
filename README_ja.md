@@ -322,7 +322,7 @@ Codexのスキル配置先は `~/.agents/skills`、設定は引き続き `~/.cod
 | モード | トリガー | 動作 | 対話 |
 |--------|----------|------|------|
 | **Full Auto**（デフォルト） | マーカーなし、または `## NEXUS_AUTORUN_FULL` | ガードレール付きで全タスクを実行 | Ask First / エラー時のみ |
-| **Auto** | `## NEXUS_AUTORUN` | 単純タスクのみ実行、複雑なタスクは Guided に切替 | エラー時のみ |
+| **Auto** | `## NEXUS_AUTORUN` | 単純タスクのみ実行、複雑なタスクは Guided に切替 | Ask First 該当時・ガードレール発動時・エラー時 |
 | **Guided** | `## NEXUS_GUIDED` | 判断ポイントで確認 | 選択肢形式で対話 |
 | **Interactive** | `## NEXUS_INTERACTIVE` | 各ステップで確認 | 常に対話 |
 | **Continue** | `## NEXUS_HANDOFF` | 結果の引き継ぎ | 必要に応じて対話 |
@@ -760,25 +760,25 @@ _STEP_COMPLETE:
 
 **コピペ不要** - 最終成果物まで自動実行されます。
 
-#### GUIDEDモード（手動引き継ぎ）
+#### GUIDEDモード（判断ポイントで確認）
 
-手動で各エージェントを呼び出す場合：
+Nexus がチェーンを自分で実行し、判断ポイント（Ask First 該当、ガードレール発動、各スキルの対話トリガー）でのみ停止します。全ステップで確認したい場合は `## NEXUS_INTERACTIVE` を使います：
 
 ```
 ## NEXUS_GUIDED
 検索機能を追加したいです。
 ```
 
-Nexusがチェーンを設計し、次のステップを提示：
+Nexusがチェーンを設計・実行し、判断が必要な箇所で停止：
 
 ```
 ## Nexus Plan: 検索機能の追加
 - Chain: **Spark** → **Sherpa** → **Builder** → **Radar**
-- Current step: 1/4
+- Current step: 1/4 (Spark)
 
-### Next Step: Spark
-Invoke **Spark** with the following context:
-[コンテキスト情報]
+### Decision needed
+Spark が検索範囲を2案提示しました。Sherpa はどちらで計画しますか？
+[選択肢]
 ```
 
 ---

@@ -202,7 +202,7 @@ If context is unclear, inspect git state and `.agents/PROJECT.md`; if confidence
 Every deliverable carries `## NEXUS_COMPLETE`, task + ACs, chain + mode, per-step agent/status/summary, verification evidence, and summary status. Four ledgers are non-optional in substance:
 - **Acceptance Provenance** — every intent-contract criterion classified, none silent; prohibited outcomes on their own axis (Q15).
 - **Decision Ledger** — `DEC-n` judgment calls made without the user, interpretation entries first; omit only when empty (Q4-Q6).
-- **Residual Ledger** — each leftover as `RES-n` (class, blocker/owner, marker location, route), bound bidirectionally to any `#TODO(agent):` left behind, plus the completion-sweep line (`scanned, 0 hits` when clean — never omitted).
+- **Residual Ledger** — each leftover as `RES-n` (class, blocker/owner, marker location, route), bound bidirectionally to any `#TODO(agent):` left behind, plus the completion-sweep line (`scanned, 0 hits` when clean — never omitted at Light/Full tier).
 - **`## Prompt Tuning`** — delta-only trace when a spawn's directives were adapted; omit entirely when none were.
 
 Scale the envelope to the run: empty ledgers are one line (`Residuals: none`); SIMPLE single-agent runs use `output-formats.md` § Compact Form; per-step results are one line. Never drop the completion sweep.

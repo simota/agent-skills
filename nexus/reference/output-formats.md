@@ -34,7 +34,7 @@ Collapse rules, binding on every form:
 - **Acceptance Provenance stays a table** whenever there is ≥1 criterion — this is the one ledger that must not collapse, because a criterion silently absent is the defect it exists to catch. With a single criterion, one row is the whole table.
 - **`### Changes` lists files, not narration.** One line per file; no restatement of what the diff shows.
 - **Never emit `N/A`, "none identified", or placeholder rows** to satisfy a template.
-- **The completion sweep line is never dropped**, in any form, including Compact. It carries two counts: residue found, and files written / files evidenced. While the second pair differs the status is not `SUCCESS` — a file in neither the evidence nor the Residual Ledger is an unverified change with nothing declaring it so (`_common/OPERATIONAL.md` § Completion Contract).
+- **The completion sweep line is never dropped** at Light/Full tier (`_common/OPERATIONAL.md` § Completion Contract; a Skip-tier answer has none), in any form, including Compact. It carries two counts: residue found, and files written / files evidenced. While the second pair differs the status is not `SUCCESS` — a file in neither the evidence nor the Residual Ledger is an unverified change with nothing declaring it so (`_common/OPERATIONAL.md` § Completion Contract).
 
 ---
 
