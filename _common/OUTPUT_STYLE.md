@@ -14,7 +14,7 @@ Skills inherit these rules so each agent does not re-invent its own output style
 
 ## Why This Exists
 
-Opus 5 calibrates verbosity to task complexity (`OPUS_5_AUTHORING.md` P2), but without a shared style baseline each skill drifts. Symptoms in the wild:
+`OPUS_5_AUTHORING.md` P2 makes length an explicit ceiling set by the artifact's needs rather than leaving it to the model's own calibration, and this file is the shared baseline P2 points to — without it each skill drifts. Symptoms in the wild:
 
 - Filler preamble before the actual answer ("Let me now…", "I'll proceed to…")
 - Restating the user's request in different words
@@ -59,7 +59,7 @@ is stated once, in one place. Two format defects remain worth naming:
 
 ### 1. Header echo
 
-If the SKILL.md has sections `Analysis / Proposal / Risks`, do NOT auto-emit those three headers in every response. Headers are for L/XL tier only.
+If the SKILL.md has sections `Analysis / Proposal / Risks`, do NOT auto-emit those three headers in every response. Section headers are for L/XL tier; M tier allows at most one short header (§ Tier-Specific Rules), S tier none.
 
 ### 2. Same-meaning repetition
 

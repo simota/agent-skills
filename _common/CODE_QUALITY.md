@@ -21,7 +21,7 @@ Consumers: all agents whose `Writes Code` value in `_common/BOUNDARIES.md` is `Y
 | Newly added code revised within two weeks (rework rate) | 5.5% (2020) → **7.9%** (2024) | [GitClear 2025](https://www.gitclear.com/ai_assistant_code_quality_2025_research) |
 | Security degradation across iterative AI refinement rounds | Vulnerabilities accumulate as the model iterates on its own output | [arXiv 2506.11022 — Security Degradation in Iterative AI Code Generation](https://arxiv.org/pdf/2506.11022) |
 
-Read: the dominant AI-codegen failure modes are **insecure defaults** and **duplication instead of abstraction** — so `SEC` and `MNT` carry the highest weight in the Gate below.
+Read: the dominant AI-codegen failure modes are **insecure defaults** and **duplication instead of abstraction** — so `SEC` and `MNT` deserve the closest scrutiny in the Gate below. The Gate itself is unweighted: axes are not scored or summed, and only `SEC: risk` blocks completion (§ Code Quality Gate, Blocking rule).
 
 ---
 

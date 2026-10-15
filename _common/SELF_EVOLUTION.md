@@ -107,6 +107,11 @@ Generic template adaptable to any agent's domain. Each agent defines its own Pri
 
 ### Formula
 
+**Status: specified, not computed.** No script in this repo computes ES or persists its inputs, so an
+ES value is a structured judgment over the dimensions below, not a measurement. Per
+`_common/TOKEN_ECONOMY.md` (a formula with no data source is never presented with a grade band or wired
+into a gate), it does not drive any gate; report it with the evidence behind each dimension.
+
 ```
 ES = (Primary_Outcome × 0.35) + (Efficiency × 0.20) + (Quality × 0.20) + (Adaptability × 0.15) + (User_Autonomy × 0.10)
 ```
@@ -119,21 +124,23 @@ ES = (Primary_Outcome × 0.35) + (Efficiency × 0.20) + (Quality × 0.20) + (Ada
 | Adaptability | Response to novel/unexpected situations | Graceful degradation, creative solutions |
 | User_Autonomy | User empowerment vs. dependency creation | Knowledge transfer, self-service enablement |
 
-### Grading Scale
+### Judgment Labels (not measured)
 
-| Grade | Score | Meaning |
-|-------|-------|---------|
-| A | 90–100 | Excellent — maintain current approach |
-| B | 75–89 | Good — minor refinements |
-| C | 60–74 | Adequate — targeted improvements needed |
-| D | 40–59 | Below expectations — full cycle required |
-| F | 0–39 | Critical — immediate intervention |
+Labels for the judgment above. They carry no score range, because no measured score exists to bin.
+
+| Label | Meaning |
+|-------|---------|
+| A | Excellent — maintain current approach |
+| B | Good — minor refinements |
+| C | Adequate — targeted improvements needed |
+| D | Below expectations — full cycle required |
+| F | Critical — immediate intervention |
 
 ### Minimum Data Requirements
 
 - **3+ data points** required before calculating a meaningful ES
 - Below 3 data points: record observations only (OBSERVE + PERSIST), skip MEASURE–ADAPT
-- Agents with existing scoring (CES/TES/AES/etc.) should map their scores to this scale
+- Agents with existing scoring (CES/AES/etc.) may map their judgments to these labels
 
 ### Comparison Discipline (before a score is allowed to justify a change)
 
@@ -244,7 +251,7 @@ denominator, the dismissal count is reported with the metric).
 | ID | Mechanism | Condition | Response |
 |----|-----------|-----------|----------|
 | RP-01 | Budget enforcement | Session/monthly limit reached | Block until budget resets |
-| RP-02 | Diminishing returns | 3 consecutive cycles with ES improvement < 2 points | Pause until next external trigger (CT-02/03/04) |
+| RP-02 | Diminishing returns | 3 consecutive cycles with no recorded improvement (no evidenced gain in the calibration records) | Pause until next external trigger (CT-02/03/04) |
 | RP-03 | Oscillation prevention | Change → revert → re-change detected twice | Full stop; require human review |
 | RP-04 | Chain prevention | 3 consecutive cycles without intervening task | Defer remaining to next task completion |
 | RP-05 | Rollback guarantee | Before any ADAPT phase | Snapshot current state; restore on SAFEGUARD failure |
@@ -335,7 +342,7 @@ This protocol does NOT redefine EVOLUTION_SIGNAL format or ECOSYSTEM.md reading 
 
 **Trigger:** [CT-01–06 ID and description]
 **Scope:** Lightweight | Medium | Full
-**ES Score:** [Grade] ([Score]/100) — Previous: [Grade] ([Score]/100)
+**ES judgment:** [Label A–F + evidence per dimension] — Previous: [Label]
 **Observations:** [What happened during the task]
 **Adjustments:** [What was changed, or "None (lightweight)"]
 **Evidence:** [Data points supporting the adjustment]

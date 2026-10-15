@@ -324,10 +324,10 @@ Based on the Managed Agents virtualization pattern (Anthropic), session state (t
 | Data | Persist (journal/PROJECT.md) | Pass inline (prompt) |
 |------|------------------------------|---------------------|
 | Step completion status | When the chain is 4+ steps (checkpoint) or the step is non-trivial | Always |
-| File paths modified | Always | Always |
-| Detailed investigation notes | Always | Summary only |
-| Full error traces | Always | Key error + file:line only |
-| Acceptance criteria | Always (at chain start) | Reference only |
+| File paths modified | When the chain is 4+ steps (checkpoint) or the step is non-trivial | Always |
+| Detailed investigation notes | When the chain is 4+ steps (checkpoint) or the step is non-trivial | Summary only |
+| Full error traces | When the chain is 4+ steps (checkpoint) or the step is non-trivial | Key error + file:line only |
+| Acceptance criteria | At chain start, when the chain is 4+ steps (checkpoint) or non-trivial | Reference only |
 
 ---
 

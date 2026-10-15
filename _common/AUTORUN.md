@@ -17,9 +17,9 @@ This protocol works across different AI platforms (Claude Code, Codex CLI, Gemin
 
 | Mode | Trigger | Behavior | Platform |
 |------|---------|----------|----------|
-| AUTORUN_FULL | `## NEXUS_AUTORUN_FULL` | Execute all steps including COMPLEX tasks | All |
+| AUTORUN_FULL | Default (no marker) or `## NEXUS_AUTORUN_FULL` | Execute all steps including COMPLEX tasks | All |
 | AUTORUN | `## NEXUS_AUTORUN` | Execute SIMPLE tasks only | All |
-| GUIDED | `## NEXUS_GUIDED` | Manual agent invocation | All |
+| GUIDED | `## NEXUS_GUIDED` | Confirm at decision points | All |
 | INTERACTIVE | `## NEXUS_INTERACTIVE` | Confirm each step | All |
 
 ---
@@ -88,12 +88,14 @@ After receiving `_STEP_COMPLETE` from a spawned agent, Nexus automatically:
 2. Extracts handoff context from the result
 3. Spawns the next agent in the chain with accumulated context
 
-### Manual Transition (GUIDED)
+### Decision-Point Transition (GUIDED)
 
-After receiving the agent's result, Nexus:
+After receiving the agent's result, Nexus continues automatically unless the transition is a decision point (an Ask First trigger, a guardrail escalation, or an entry in the active skill's `INTERACTION_TRIGGERS`). At a decision point, Nexus:
 1. Outputs the `## NEXUS_HANDOFF` block to the user
 2. Waits for user to confirm continuation
 3. Spawns the next agent when confirmed
+
+Confirming after every step is `INTERACTIVE`, not `GUIDED`.
 
 ---
 
@@ -317,17 +319,7 @@ CLASSIFY → CHAIN_SELECT → (first inference starts immediately)
 
 ## Subagent Context Rules
 
-Understanding context inheritance is critical for reliable chain execution:
-
-| Aspect | Behavior |
-|--------|----------|
-| **Conversation history** | Subagents do not inherit the parent's conversation history. Pass it explicitly via the prompt |
-| **Skills** | Subagents do not inherit the parent's skills. Explicit injection via the `skills` field is required |
-| **Permissions** | Inherits parent's permission settings. If parent is `bypassPermissions`, so is the child (cannot be overridden) |
-| **Auto mode** | When the parent is in `auto` mode, the child's `permissionMode` is ignored |
-| **Auto-compaction** | Triggers automatically at ~95% capacity. Can be changed via `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` |
-| **Transcript** | Saved to `~/.claude/projects/{project}/{sessionId}/subagents/agent-{agentId}.jsonl` |
-| **Nesting** | Subagents cannot spawn other subagents (one level only) |
+Context inheritance is host-specific; do not assume a parent's history, skills, permissions, or nesting depth carry over. The Claude Code facts (history, skills, permissions, auto mode, compaction, transcript path, nesting) live in `_common/CLI_COMPATIBILITY.md` § Claude Code Subagent Context; verify the equivalent for any other host there. Pass history and required skills explicitly in the spawn prompt regardless of host.
 
 ---
 

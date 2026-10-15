@@ -38,7 +38,7 @@ Key properties:
 
 ### `## Recipes` table
 
-Include this table when the skill defines 3 or more distinct modes.
+The `## Recipes` heading is required corpus-wide (lint-frontmatter ST1, `REQUIRED_HEADINGS`). Every skill carries the table with at least one row, and exactly one fallback owner (R-REC-01) — a skill with fewer than 3 distinct modes keeps a single default row.
 
 ```markdown
 ## Recipes
@@ -168,7 +168,7 @@ The following rules are evaluated by **Gauge** during normalization audits.
 | R-REC-02 | All Subcommand values must match `^(?=.{2,20}$)[a-z0-9]+(?:-[a-z0-9]+)*$` (kebab-case, 2-20 chars; leading digit allowed for domain terms like `5whys`) and be backtick-quoted in the Recipe table | ERROR |
 | R-REC-03 | Subcommand values must not be reserved words: `default`, `auto`, `help`, `list` | ERROR |
 | R-REC-04 | Recipe count, tiered (calibrated 2026-07-03 against the 132-skill corpus, where 54% exceeded the old flat max-7): ≤7 recommended; 8-10 = INFO (corpus norm band, ≤10 = P95); 11+ = WARNING (consolidation review candidate); hub skills (`HUB_SKILLS` in validator, currently `nexus`) always INFO — recipe breadth by design; a skill whose count was reviewed and found to be breadth rather than duplication is INFO while it stays at or below its reviewed count (`REC04_REVIEWED`, see below) | INFO / WARNING (tiered) |
-| R-REC-05 | Presence of `## Recipes` section is RECOMMENDED for skills in Adoption Tiers 1-2, but not required | INFO |
+| R-REC-05 | Historical (Phase 1): presence of `## Recipes` was RECOMMENDED for Adoption Tiers 1-2, not required. Superseded — the heading is now required for every skill (lint-frontmatter ST1) | — (historical) |
 
 ---
 
