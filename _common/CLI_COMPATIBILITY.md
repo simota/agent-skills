@@ -75,17 +75,16 @@ Do not append forced internal reasoning, a second copy of the specialist's metho
 
 ### Claude Code Subagent Context
 
-Claude Code facts as of the snapshot date at the top of this file — not universal across hosts (`_common/SUBAGENT.md` § Context Inheritance Rules). Re-verify against the installed version before relying on any row.
+Claude Code facts verified 2026-10-15 against code.claude.com/docs/en/sub-agents — not universal across hosts (`_common/SUBAGENT.md` § Context Inheritance Rules). Re-verify against the installed version before relying on any row.
 
 | Aspect | Behavior |
 |--------|----------|
-| **Conversation history** | Subagents do not inherit the parent's conversation history. Pass it explicitly via the prompt |
-| **Skills** | Subagents do not inherit the parent's skills. Explicit injection via the `skills` field is required |
-| **Permissions** | Inherits parent's permission settings. If parent is `bypassPermissions`, so is the child (cannot be overridden) |
-| **Auto mode** | When the parent is in `auto` mode, the child's `permissionMode` is ignored |
-| **Auto-compaction** | Triggers automatically at ~95% capacity. Can be changed via `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` |
-| **Transcript** | Saved to `~/.claude/projects/{project}/{sessionId}/subagents/agent-{agentId}.jsonl` |
-| **Nesting** | Subagents cannot spawn other subagents (one level only) |
+| **Conversation history** | Subagents start with a fresh context: no parent conversation history, no skills the parent already invoked, no files it already read. Pass what they need in the prompt (a fork is the exception: it inherits the conversation) |
+| **Skills** | The `skills` field preloads listed skills' full content at startup; it does not limit access. Unlisted project/user/plugin skills stay discoverable through the Skill tool unless `Skill` is removed from `tools` or added to `disallowedTools` |
+| **Permissions** | An unset `permissionMode` inherits the parent's mode. When the parent is in `bypassPermissions`, `acceptEdits`, or `auto`, the child runs in that mode and its own `permissionMode` is ignored |
+| **Auto-compaction** | Triggers as the subagent's own context window fills; `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` also applies to subagents (per-agent window: `autoCompactWindow`) |
+| **Transcript** | Saved to `~/.claude/projects/{project}/{sessionId}/subagents/agent-{agentId}.jsonl`; deleted after `cleanupPeriodDays` (default 30) |
+| **Nesting** | Subagents can spawn subagents up to three layers below the main conversation by default; `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH` changes the limit (`1` disables nesting) |
 
 ## 4. Model Selection
 

@@ -559,6 +559,13 @@ class TestRoutingSurface(CheckerCase):
         self.append("zen/SKILL.md", "\n- Zen -> Vitrine: `ZEN_TO_SHOWCASE`\n")
         self.expect_caught("routing-oracle.py", "ZEN_TO_SHOWCASE", "--severity", "error")
 
+    def test_a_bare_token_between_two_retired_names_fails(self):
+        """RO-11. Two renames left in one token (`RESEARCHER_TO_SHOWCASE`) name
+        no live skill on either side, yet it is the stale handoff RO-11 exists
+        for: a retired or renamed endpoint keeps it in scope without a suffix."""
+        self.append("zen/SKILL.md", "\n- legacy: `RESEARCHER_TO_SHOWCASE`\n")
+        self.expect_caught("routing-oracle.py", "RESEARCHER_TO_SHOWCASE", "--severity", "error")
+
     def test_an_identifier_that_merely_contains_to_passes(self):
         """RO-11. Any UPPER_CASE identifier with `_TO_` was read as a handoff, so
         a config key or metric name in a reference file blocked validate."""

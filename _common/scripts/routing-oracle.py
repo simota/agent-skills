@@ -802,6 +802,7 @@ HANDOFF_TOKEN_ALLOWLIST = {
     "ACCORD_TO_SCRIBE": (("scribe/reference/unified-spec/README.md",
                           "scribe/reference/unified-spec/handoff-formats.md"),
                          "legacy Accord alias, consumed until the reactivation window closes"),
+    "RESEARCHER_TO_ACCORD": (("scribe/reference/unified-spec/handoff-formats.md",), "legacy Accord alias"),
     "CAST_TO_ACCORD": (("scribe/reference/unified-spec/handoff-formats.md",), "legacy Accord alias"),
     "VOICE_TO_ACCORD": (("scribe/reference/unified-spec/handoff-formats.md",), "legacy Accord alias"),
     "UNIFIED_TO_FORMAL": (("scribe/reference/unified-spec/handoff-formats.md",),
@@ -818,11 +819,29 @@ HANDOFF_TOKEN_RE = re.compile(
 HANDOFF_SUFFIXES = frozenset({"HANDOFF"})
 
 
+RENAME_ROW_RE = re.compile(r"\|\s*`([a-z0-9-]+)`\s*→\s*`[a-z0-9-]+`")
+
+
+def _retired_endpoint_names() -> set[str]:
+    """Names a token may still carry after a skill left: archived skill
+    directories plus the old side of every `old → new` rename in CHANGELOG.md.
+    Derived, so a future rename or archive needs no edit here."""
+    names = set()
+    archive = REPO_ROOT / ".archive"
+    if archive.is_dir():
+        names |= {p.name for p in archive.iterdir() if p.is_dir()}
+    changelog = REPO_ROOT / "CHANGELOG.md"
+    if changelog.is_file():
+        names |= set(RENAME_ROW_RE.findall(changelog.read_text(encoding="utf-8")))
+    return {name.upper().replace("-", "_") for name in names}
+
+
 def check_handoff_token_endpoints(findings: list[Finding]):
     """RO-11: `X_TO_Y` handoff tokens must name live skills (or a documented
     pseudo-endpoint, own-Recipe transition, or reviewed legacy alias)."""
     skills = _live_skills()
     names = {name.upper().replace("-", "_") for name in skills}
+    retired = _retired_endpoint_names() - names
     own_tokens: dict[str, set[str]] = {}
     checked = 0
     bad: list[str] = []
@@ -841,7 +860,7 @@ def check_handoff_token_endpoints(findings: list[Finding]):
                                if seg not in names and seg not in HANDOFF_PSEUDO_ENDPOINTS
                                and seg not in own]
                     suffixed = not HANDOFF_SUFFIXES.isdisjoint(match.group(3).split("_"))
-                    if len(unknown) == 2 and not suffixed:
+                    if len(unknown) == 2 and not suffixed and retired.isdisjoint(unknown):
                         continue  # names no endpoint: `PATH_TO_CONFIG`, not a handoff
                     checked += 1
                     if rel in HANDOFF_TOKEN_ALLOWLIST.get(token, ((), ""))[0]:
