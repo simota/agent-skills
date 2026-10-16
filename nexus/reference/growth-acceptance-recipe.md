@@ -225,7 +225,7 @@ Phase 4 (Cross-Cutting Audits, background):
 
 **Note**: Phase 1 cost varies per acceptance recipe Tier (Tier-S full UI 9-15×, Tier-A full UI 5-8×, etc.). Total cost = Phase 1 cost + Tier C overhead from above.
 
-**Confirm with user before launching Step 3 or Step 4** — costs and organizational requirements rise sharply. **Strongly confirm before Step 4** — Brand Compiler blocking changes the brand-team workflow.
+Step 3 and Step 4 adoption is gated in § Confirm / Safety Gate below (costs and organizational requirements rise sharply).
 
 ---
 
@@ -241,7 +241,7 @@ Extends the engine's **Acceptance Dossier** (`reference/acceptance-recipe.md`) r
 
 ## Confirm / Safety Gate
 
-Inherits the engine's gates unchanged (`reference/acceptance-recipe.md`) — **Confirm before launch when `tier == S`**, plus standard **Ask First** tiers. Layer C adds one of its own: **Ask First before any ship-time action that touches an external surface** (market listing, brand asset publication, regulatory filing), since those are outward-facing and not reversible by a revert.
+Inherits the engine's gates unchanged (`reference/acceptance-recipe.md`) — **Confirm before launch when `tier == S`**, plus standard **Ask First** tiers. Layer C adds two of its own: **Confirm before launch when Step 3 or Step 4 is adopted** (§ Cost & Scale Profile — costs and organizational requirements rise sharply; for Step 4 the confirm prompt must state that Brand Compiler blocking changes the brand-team workflow — the same tier, not a stronger unnamed one), and **Ask First before any ship-time action that touches an external surface** (market listing, brand asset publication, regulatory filing), since those are outward-facing and not reversible by a revert.
 
 ## Resume
 

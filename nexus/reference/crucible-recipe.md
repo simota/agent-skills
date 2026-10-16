@@ -35,9 +35,9 @@ Read this file before executing the `crucible` Recipe.
 | E2E regression suite authoring | `voyager` (skill) | Crucible *uses* Voyager to execute cells; it does not own the suite |
 | Prove the design is distinguishable from competitors | `silhouette` | Distinctiveness, not operability |
 
-**Scale: 16-34 agents × ≤3 cycles, 5-11× `feature` cost.** Per-phase: P0-P1 ≈ 2 · P1.5 ≈ 1-2 (matrix reduction) · P2 ≈ 2-3 (ideal-condition baseline) · P3 ≈ 6-12 executors + 2-4 remediators **per cycle** · P4 ≈ 3-4 (independent full re-run) · P5 ≈ 1.
+**Scale: 17-35 agents × ≤3 cycles, 5-11× `feature` cost.** Per-phase: P0-P1 ≈ 2 · P1.5 ≈ 1-2 (matrix reduction) · P2 ≈ 2-3 (ideal-condition baseline) · P3 ≈ 6-12 executors + 2-4 remediators **per cycle** · P4 ≈ 3-4 (independent full re-run) · P5 ≈ 1.
 
-*Range derivation (keep reconciled when a phase figure changes):* floor = 3 tasks × a reduced 8-cell matrix, ACCEPT on cycle 1 → 2+1+2+(6+2)+3+1 = **16**; ceiling = 5 tasks × a reduced 20-cell matrix, 3 cycles → 2+2+3+(12+2 on cycle 1, +5 and +4 on the shrinking re-runs of cycles 2-3 ≈ 23)+4+1 = **34**. The stated range is the sum of the per-phase figures, not an independent estimate. **Confirm-before-launch always** (intentional parity with `runway`/`summit`).
+*Range derivation (keep reconciled when a phase figure changes):* floor = 3 tasks × a reduced 8-cell matrix, ACCEPT on cycle 1 → 2+1+2+(6+2)+3+1 = **17**; ceiling = 5 tasks × a reduced 20-cell matrix, 3 cycles → 2+2+3+(12+2 on cycle 1, +5 and +4 on the shrinking re-runs of cycles 2-3 ≈ 23)+4+1 = **35**. The stated range is the sum of the per-phase figures, not an independent estimate. **Confirm-before-launch always** (intentional parity with `runway`/`summit`).
 
 **Model selection (Plan-and-Execute):** Phase 1 task/condition declaration and the Phase 4 gate adjudication are judgment-heavy → plan-tier (opus / Fable 5). Cell execution, remediation, and re-runs → Sonnet 5 default.
 

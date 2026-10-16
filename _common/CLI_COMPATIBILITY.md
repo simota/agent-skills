@@ -171,7 +171,7 @@ Local CLI versions, model/account entitlements, rollout defaults, native tool si
 
 ## 12. Source Tier
 
-Primary documentation reviewed 2026-09-17 (JST); re-check these pages on a model/runtime upgrade or observed incompatibility:
+Primary documentation reviewed 2026-09-17 (JST); the sub-agents page was re-checked 2026-10-15 for § Claude Code Subagent Context; re-check these pages on a model/runtime upgrade or observed incompatibility:
 
 - Anthropic: [models](https://platform.claude.com/docs/en/models/overview), [model configuration](https://code.claude.com/docs/en/model-config), [changelog](https://code.claude.com/docs/en/changelog), [skills](https://code.claude.com/docs/en/skills), [subagents](https://code.claude.com/docs/en/sub-agents), [MCP](https://code.claude.com/docs/en/mcp).
 - OpenAI: [models](https://developers.openai.com/codex/models), [changelog](https://developers.openai.com/codex/changelog), [skills](https://developers.openai.com/codex/skills), [subagents](https://developers.openai.com/codex/subagents), [MCP](https://developers.openai.com/codex/mcp), [skill/prompt guidance](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra).

@@ -415,7 +415,7 @@ DESIGN_INTENT_HANDOFF:
     test: "Playwright a11y + visual regression"
   Registry_Ref: ".agents/design-system/observability-2026.json"
   Vision_Ref: ".agents/vision/direction-2026-04.md"
-  Handoff_Bundle: ".agents/atelier/bundle-dashboard-2026-04.json"
+  Handoff_Bundle: ".agents/atelier/bundle-dashboard-2026-04-18-a1b2c3.json"
   Do_Not:
     - "Pastel colors"
     - "Illustrations or hero images"

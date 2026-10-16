@@ -63,4 +63,4 @@ CAPTURE → ANALYZE → REVIEW → PROMOTE → ENFORCE
 - **Human approval mandatory** in every mode; respect the promotion threshold.
 - **Every {{RULE_NOUN}} traces to evidence** (a `{{SIGNAL_LOG}}` ID; `baseline` only for seeds).
 - **Deprecate, don't delete** — Archive section keeps the active (ENFORCE) list lean.
-- **{{REVIEW_CADENCE}} re-review** of {{RULE_NOUN_PLURAL}} with `Last reviewed` > 90 days; archive prior-year signals in the same pass.
+- **{{REVIEW_CADENCE}} re-review** of {{RULE_NOUN_PLURAL}} whose `Last reviewed` is older than one {{REVIEW_CADENCE}} review period; archive prior-year signals in the same pass.

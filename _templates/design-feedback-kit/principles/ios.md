@@ -1,6 +1,6 @@
 # iOS Principles — deltas only
 
-iOS-specific rules layered on top of `core.md`, aligned with Apple Human Interface Guidelines (HIG). Add here only platform-specific rules (gestures, system integration, HIG idioms, Liquid Glass / iOS 26 conventions). Schema: `_templates/principle-entry.md`. ID prefix: `P-IOS-<slug>`.
+iOS-specific rules layered on top of `core.md`, aligned with Apple Human Interface Guidelines (HIG). Add here only platform-specific rules (gestures, system integration, HIG idioms, Liquid Glass / iOS 26 conventions). Schema: `_templates/principle-entry.md`. ID prefix: `P-IOS-` followed by a mnemonic slug.
 
 ---
 

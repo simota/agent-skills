@@ -27,7 +27,7 @@ These sections are **sha256-pinned at loop start** (Orbit AP-13 / AP-16 / AP-20 
 Orbit already forbids agent self-assessment for termination and requires an external gate + independent critic. Under a Charter-driven loop, the external DONE gate **is the §10 per-package DoD checklist**:
 
 - Loop is `DONE`/`SUCCESS` only when **every** DoD item passes (AC met + tests green + lint/build/typecheck + review).
-- Partial pass → `PARTIAL`; unrecoverable after the recovery ladder → hand back to `enact` as `SKIPPED(blocked, reason)`.
+- Every DoD item that ran passes but some item is still open → `PARTIAL`; any DoD item still failing after the recovery ladder → `FAILED` (a failing item is never `PARTIAL`) (reported with output); could not be executed (blocked) → hand back to `enact` as `SKIPPED(blocked, reason)`.
 - This composes with Orbit's existing `CRITIC_MODEL` gate and `PLACEHOLDER_GREP` / mutation checks — DoD is the contract, the critic is the independent verifier of it.
 
 ## Run-log: append in enact's §9 vocabulary
@@ -36,7 +36,7 @@ Beyond Orbit's own `progress.md` (loop mechanics), Orbit **also appends to the e
 
 - `PKG_START` at loop entry (pkg id, owner skill, engine)
 - `PKG_RECOVER` per recovery-ladder step (retry / `fallback_engine` / Scout+Builder / alt-owner)
-- `PKG_DONE` at terminal (`SUCCESS` | `PARTIAL` | `SKIPPED`) with the DoD result
+- `PKG_DONE` at terminal (`SUCCESS` | `PARTIAL` | `FAILED` | `SKIPPED(blocked, reason)`) with the DoD result
 
 Append-only, one line per event, written immediately, atomic (temp-then-rename). Two layers, deliberately separate: **Orbit loop state** (`state.env` / `progress.md`) = mechanics for Orbit's own resume; **enact run-log** = the package-level timeline the hub reads.
 
@@ -62,6 +62,6 @@ Build-loop packages run on the engine assigned in §5. Verify its advertised spa
 - `Task`: build-loop the §4 package `<id>`
 - `Input`: Charter slice (§4 package + §5 entry + §7 package gates + §10 DoD + §3 commands + §9 run-log path)
 - `Constraints`: engine + `fallback_engine`; file ownership (from §6); budget ceiling (from §8)
-- `Expected_Output`: terminal status (`SUCCESS`/`PARTIAL`/`SKIPPED`) + DoD result + run-log lines appended
+- `Expected_Output`: terminal status (`SUCCESS`/`PARTIAL`/`FAILED`/`SKIPPED(blocked, reason)`) + DoD result + run-log lines appended
 
 Orbit returns `_STEP_COMPLETE:` with `Status`, `Output` (DoD result + artifacts), `Handoff` (Builder/Radar/Guardian as needed), `Next` (`CONTINUE`/`VERIFY`/`DONE`).

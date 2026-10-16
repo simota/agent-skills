@@ -46,9 +46,9 @@ Scope: <core|frontend|ios|android>
 **Conflict resolution** — if a draft contradicts an existing `accepted` principle (beyond the core-vs-platform delta rule), the human decides at REVIEW: (a) **supersede** — deprecate the old (move to its file's `## Archive`, set `Superseded by:`) and accept the new; (b) **scope-narrow** — keep both, restricting one to a platform/context; or (c) **reject** the draft. Never leave two accepted principles in direct conflict.
 
 ### Step 4 — PROMOTE
-- Append the accepted entry to the correct `principles/*.md` using a kebab-case slug ID (`P-<scope>-<slug>`) — check existing IDs and recheck concurrent additions before merging. Reuse an ID only for an approved edit to the same principle; give distinct principles distinct slugs.
+- Append the accepted entry to the correct `principles/*.md` using a kebab-case slug ID (`P-`, the uppercase scope, and a mnemonic — e.g. `P-CORE-control-feedback`) — check existing IDs and recheck concurrent additions before merging. Reuse an ID only for an approved edit to the same principle; give distinct principles distinct slugs.
 - Add the principle's row to `principles/INDEX.md` (by-tag + by-scope).
-- Mark source feedback `status: promoted` + `Promoted to: P-<scope>-<slug>`.
+- Mark source feedback `status: promoted` + `Promoted to:` that principle's slug ID.
 - If the principle has a **quantitative** part (spacing, color, type scale, durations), encode it as a design token via `muse` so it's machine-enforceable, and record the token name in the entry's `Token:` field.
 - Add a reference mockup to `mockups/` (Do, and Before/After if applicable) — `forge` for HTML, `frame` for Figma bridge.
 

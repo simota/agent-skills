@@ -163,6 +163,12 @@ Magi confirms the relevant dimensions in Phase 3; Phase 4 builds against them; P
 
 ---
 
+## Shared protocols
+
+Cited per `reference/recipe-contract.md` §6 (the recipe adds only its specializations):
+
+- `reference/autonomy-quality-protocol.md` — intent contract, Decision Ledger, producer ≠ verifier, evidence-bound claims, and completion integrity (Q16-Q19 typed Residual Ledger + completion sweep); cited, not re-derived; parity oracles satisfy Q3/Q10 via `_common/DIFFERENTIAL_PARITY.md`.
+
 ## 5. Failure Modes Prevented
 
 Each gate below states its own failure mode in full (§3a Fusion Map, §3b Selective-Oracle, §3c Coherence, §3d IP/Trade-Dress); this table is the index, not a re-explanation.

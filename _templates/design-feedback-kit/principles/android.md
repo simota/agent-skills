@@ -1,6 +1,6 @@
 # Android Principles — deltas only
 
-Android-specific rules layered on top of `core.md`, aligned with Material Design (Material 3 / M3 Expressive). Add here only platform-specific rules (back navigation, system bars, Material idioms, predictive back). Schema: `_templates/principle-entry.md`. ID prefix: `P-AND-<slug>`.
+Android-specific rules layered on top of `core.md`, aligned with Material Design (Material 3 / M3 Expressive). Add here only platform-specific rules (back navigation, system bars, Material idioms, predictive back). Schema: `_templates/principle-entry.md`. ID prefix: `P-AND-` followed by a mnemonic slug.
 
 ---
 

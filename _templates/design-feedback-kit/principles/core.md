@@ -1,6 +1,6 @@
 # Core Design Principles (platform-agnostic)
 
-Binding for **all** surfaces (web, iOS, Android). Platform layers (`frontend.md`, `ios.md`, `android.md`) may add deltas but must not contradict these. Each entry follows `_templates/principle-entry.md`. IDs are slugs (`P-CORE-<slug>`), not numbers — see `INDEX.md` for the cross-layer index.
+Binding for **all** surfaces (web, iOS, Android). Platform layers (`frontend.md`, `ios.md`, `android.md`) may add deltas but must not contradict these. Each entry follows `_templates/principle-entry.md`. IDs are slugs (`P-CORE-` followed by a mnemonic), not numbers — see `INDEX.md` for the cross-layer index.
 
 > Status legend: `proposed` (awaiting human review — NOT yet binding) · `accepted` (binding) · `deprecated` (moved to Archive below).
 

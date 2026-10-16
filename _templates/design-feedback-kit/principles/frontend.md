@@ -1,6 +1,6 @@
 # Frontend (Web) Principles — deltas only
 
-Web-specific rules layered on top of `core.md`. Add an entry here only when the rule is web-specific (responsive, pointer+keyboard, browser, SEO/a11y semantics). Shared rules belong in `core.md`. Schema: `_templates/principle-entry.md`. ID prefix: `P-FE-<slug>`.
+Web-specific rules layered on top of `core.md`. Add an entry here only when the rule is web-specific (responsive, pointer+keyboard, browser, SEO/a11y semantics). Shared rules belong in `core.md`. Schema: `_templates/principle-entry.md`. ID prefix: `P-FE-` followed by a mnemonic slug.
 
 ---
 

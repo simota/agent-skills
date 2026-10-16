@@ -25,7 +25,7 @@
 
 Podium is a **content-quality maximization recipe** for documentation and high-quality slide creation. It mobilizes five functional teams (Research / Narrative / Production / Verification / Improvement) across multiple engines to produce a **unified deliverable package** — typically a primary document plus a derived slide deck (or vice versa) — from a single source-of-truth outline.
 
-Where `summit` triangulates strategic code decisions, podium triangulates **prose, narrative arc, visual asset, and format rendering** quality. The recipe is intentionally lighter than summit (16-53 agents vs summit's 20-50) because content artifacts are lower-stakes than production code merges, and most polish iterations are cheap.
+Where `summit` triangulates strategic code decisions, podium triangulates **prose, narrative arc, visual asset, and format rendering** quality. The recipe is intentionally lighter than summit (16-53 agents vs summit's 32-119) because content artifacts are lower-stakes than production code merges, and most polish iterations are cheap.
 
 **Default baseline: Claude + Codex (dual-engine).** Claude owns prose, narrative judgment, story arc, audience walkthrough, and tone arbitration (irreducibly judgment-heavy). Codex owns code samples, diagram-as-code rendering, slide framework compilation (Marp/reveal.js/Slidev), and format conversion (Scribe). agy is added as an optional third axis when AVAILABLE — it contributes long-context source synthesis (1M window for whole-codebase learning docs), multimodal asset reading (existing decks, screenshots, mockups), and AI image generation (Builder/Ink hero imagery and illustrations).
 
@@ -33,7 +33,7 @@ Where `summit` triangulates strategic code decisions, podium triangulates **pros
 - **Doc and Slide are produced in parallel from the same outline** — Phase 2 narrative locks the story arc, Phase 3 forks into Content / Visual / Layout tracks, and the slide deck cross-references the document.
 - **Audience analysis is mandatory at Phase 1** (Field) — content without grounded audience model regresses to ChatGPT-residue prose. Echo is reserved for Phase 4 cognitive walkthrough on the finished artifact, not pre-task persona modeling.
 - **6×6 rule and WPM budget are enforced at Phase 4** for slides (Stage agent contract).
-- **Improvement loop is capped at 2 iterations** (vs summit's 3) — content polish converges faster than code polish; loops are arbitrated by magi.
+- **Improvement loop: `loop ≤ N cycles (default N=2)`** (vs summit's N=3) — content polish converges faster than code polish; loops are arbitrated by magi.
 - **User confirmation is recommended but not mandatory** — podium does not modify production code, so the cost ceiling is much lower than summit/apex. AUTORUN_FULL is acceptable when the user has already confirmed the goal.
 
 ---
@@ -398,7 +398,7 @@ layout_track:
 
 **Engine attribution tagging (per file, mandatory):** every file produced in Phase 3 is tagged in `manifest.yaml` with the engine that produced it: `[claude-prose]`, `[claude-cue]`, `[codex-canvas]`, `[codex-stage]`, `[codex-quill]`, `[agy-sketch]`, `[agy-ink]`, `[agy-frame]`, `[agy-tome]`. The manifest feeds Phase 6's Engine Distribution Audit and lets the user trace any quality issue back to the engine that owned the file. Files touched by multiple engines list all attributions in order of contribution magnitude.
 
-**Checkpoint:** after each track completes, persist outputs (Core Rule: 4+ step chains need checkpoint-resume).
+**Checkpoint:** after each track completes, persist outputs (Checkpoint-resume per `reference/recipe-contract.md` §4: recipes with ≥ 4 phases persist phase outputs at each boundary so an interrupted run resumes from the last checkpoint.)
 
 **Output:** working doc artifact + working slide deck + asset bundle + cross-reference map.
 
@@ -479,9 +479,9 @@ parallel:
 
 ---
 
-### Phase 5: Improvement Team (PDCA loop, 2-5 agents per loop, max 2 loops)
+### Phase 5: Improvement Team (PDCA loop, 2-5 agents per loop, `loop ≤ N cycles (default N=2)`)
 
-**Driver:** project-local Orbit when available; otherwise Nexus drives the bounded loop directly and records `project_local_fallback: true` — same as summit but capped at 2 iterations (`_common/PROJECT_LOCAL_SKILLS.md`).
+**Driver:** project-local Orbit when available; otherwise Nexus drives the bounded loop directly and records `project_local_fallback: true` — same as summit but with `loop ≤ N cycles (default N=2)` (`_common/PROJECT_LOCAL_SKILLS.md`).
 
 **Per-loop process:**
 
@@ -541,8 +541,8 @@ loop_iteration:
 ### Phase 6: Publish (Claude + Codex, 1-4 agents)
 
 **Agents:**
-1. **Image materialization (conditional)** — if `--materialize-images` flag AND `image_generation_code/` exists from Track B Visual: run the Builder-authored scripts under the user's `GEMINI_API_KEY` to produce final `assets/<anchor>.png`. Owned by Nexus (Bash execution), not a separate spawned agent. If the flag is omitted, the code is kept as-is and a `#TODO(user): execute image_generation_code/*` note is added to the execution report.
-2. Scribe[convert] — produce all target formats (MD/DOCX/PPTX/PDF/HTML) and bundle. Runs AFTER image materialization so that final imagery is embedded in PPTX/PDF (otherwise placeholders ship).
+1. **Image materialization (conditional)** — if `materialize_images: true` (`--materialize-images`) AND `image_generation_code/` exists from Track B Visual: run the Builder-authored scripts under the user's `GEMINI_API_KEY` to produce final `assets/<anchor>.png`. Owned by Nexus (Bash execution), not a separate spawned agent. If the user chose `materialize_images: false`, "ship code only" is the declared contract, not a residual: no status cap; optionally record a `RES-n` of class `user-declined` (citing the input contract where it was declined). If materialization was requested but `GEMINI_API_KEY` is missing, the unrendered imagery is a typed residual, not a note: emit `RES-n` (class `blocked-external` — blocker: missing `GEMINI_API_KEY` · owner: user · marker: `image_generation_code/*` · route: supply the key and re-run Phase 6 with `materialize_images: true`), and the run's status is capped at `PARTIAL` (Q16 — the artifact is part of Done; never `SUCCESS` over unrendered requested assets).
+2. Scribe[convert] — produce all target formats (MD/DOCX/PPTX/PDF/HTML) and bundle. Runs AFTER image materialization so that final imagery is embedded in PPTX/PDF; when requested materialization was blocked, the conversion output is covered by the `blocked-external` `RES-n` above.
 3. Guardian[PR-prep] — when artifact is committed to repo: classify changes, commit strategy
 4. Launch[plan] — when artifact is a release announcement: versioning, CHANGELOG section, embargo handling
 
@@ -597,7 +597,11 @@ Mode: AUTORUN_FULL
 - Drift:   within | outside target
 
 ### Summary
-<status, recommended next steps, follow-ups>
+<status>
+
+### Residual Ledger
+- RES-<n>: <what> (class <Q17 class> · owner <agent/user> · marker <file:line | none> · route <recipe/agent>)
+- Completion sweep: <command> → <hit count>; each hit accounted as a RES-n or `pre-existing`; plus the coverage pair (changed / evidenced), reported on one line as `swept, 0 hits; 7 changed / 7 evidenced` per `_common/OPERATIONAL.md` § Completion Contract
 
 ### Cost
 - Wall time:        N minutes
@@ -706,12 +710,18 @@ Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`. 
 - **Grounding record** — every load-bearing claim with its source, plus each critical gap raised at the Phase 1 gate and how it was closed
 - **Exit reason** (canonical vocabulary) + residual gap when not `ACCEPT`
 
+## Shared protocols
+
+Cited per `reference/recipe-contract.md` §6 (the recipe adds only its specializations):
+
+- `reference/autonomy-quality-protocol.md` — intent contract, Decision Ledger, producer ≠ verifier, evidence-bound claims, and completion integrity (Q16-Q19 typed Residual Ledger + completion sweep); cited, not re-derived.
+
 ## Failure Modes Prevented
 
 | Failure | Mitigation |
 |---------|-----------|
 | The producer grading its own content | Verification Team is Generator-excluded (Q9); the rubric is the single termination oracle per `reference/evaluator-loop-protocol.md` |
-| Endless polish on content that has already converged | Improvement loop **capped at 2 iterations** (vs summit's 3 — content converges faster than code; intentional difference, not drift) with a `diminishing-returns` exit |
+| Endless polish on content that has already converged | Improvement loop **`loop ≤ N cycles (default N=2)`** (vs summit's N=3 — content converges faster than code; intentional difference, not drift) with a `diminishing-returns` exit |
 | Ungrounded prose surviving into the deliverable | Doc Quality Gate W12 per `reference/doc-quality-protocol.md`, discharged by the Verification Team |
 
 Phase-triggered failures — release-critical shipped without human sign-off, a headline claim with no source, narrative-lock drift, a render failure shipping stale — are detection/threshold rows in § Failure Escalation below, not restated here.
@@ -771,7 +781,7 @@ Phase-triggered failures — release-critical shipped without human sign-off, a 
 | `podium` both formats, no loops | 21-43 | 39-100 min | 4-6× |
 | `podium` both formats, 2 loops | 27-53 | 55-130 min | 5-8× |
 | `apex` | 8-25 | 30-90 min | 4-8× |
-| `summit` | 20-50 (tri) / 14-36 (dual) | 49-193 min | 7-25× |
+| `summit` | 32-119 (per `summit-recipe.md` § Cost and Latency Profile) | 49-193 min | 7-25× |
 
 **Rule of thumb:** podium costs 3-8× a typical `feature` chain. Use when the content artifact's polish materially affects external perception (audience impression, technical credibility, sales conversion) — not for internal scratch notes. For internal-only routine docs, prefer single-skill direct call.
 
@@ -786,8 +796,8 @@ Phase-triggered failures — release-critical shipped without human sign-off, a 
 | **Engines** | 1 (Claude usually) | Mixed (atelier picks per step) | 2-3 (Claude + Codex, agy optional) | 2-3 (Claude + Codex, agy optional) |
 | **Teams** | 1 | Sub-orchestration (design-domain) | 5 (Research / Narrative / Production / Verification / Improvement) | 5 (Analysis / Design / Execution / Verification / Improvement) |
 | **Verification** | Self-only | Vitrine + Canvas audit | Multi-branch cross-engine quorum on content | Multi-engine quorum on code |
-| **Loop** | None | None (single-pass pipeline) | Max 2 loops (magi-arbitrated) | Max 3 loops (magi-arbitrated) |
-| **Agents** | 1 | 5-10 | 16-53 | 20-50 (tri) / 14-36 (dual) |
+| **Loop** | None | None (single-pass pipeline) | `loop ≤ N cycles (default N=2)` (magi-arbitrated) | `loop ≤ N cycles (default N=3)` (magi-arbitrated) |
+| **Agents** | 1 | 5-10 | 16-53 | 32-119 (per `summit-recipe.md` § Cost and Latency Profile) |
 | **Wall time** | 3-15 min | 20-60 min | 35-130 min | 49-193 min |
 | **Cost vs feature** | 0.5-1× | 2-4× | 3-8× | 7-25× |
 | **agy required** | No | No | No (optional) | No (optional) |

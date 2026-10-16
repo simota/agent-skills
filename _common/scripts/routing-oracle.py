@@ -821,12 +821,27 @@ HANDOFF_SUFFIXES = frozenset({"HANDOFF"})
 
 RENAME_ROW_RE = re.compile(r"\|\s*`([a-z0-9-]+)`\s*→\s*`[a-z0-9-]+`")
 
+# Skills no longer in the tree. Mostly packages deleted from `.archive/` in commit 7969059 (CHANGELOG "Removed —
+# retired skill packages"). With the directory gone this is the only record of
+# their names short of git history, which a shallow CI checkout does not have.
+# A future sunset keeps its package under `.archive/` and is read from there.
+REMOVED_SKILLS = frozenset({
+    "accord", "anvil", "bazaar", "bond", "clause", "crest", "cull", "director",
+    "grok", "harvest", "hearth", "helm", "latch", "loom", "mint", "morph", "nest",
+    "oath", "pipe", "plea", "relay", "riff", "sage", "shard", "sketch", "snap",
+    "summon", "tempo", "titan", "trawl", "zine",
+    # Retired without an archived package: absorbed in CHANGELOG prose
+    # (`dock`, `wield`), renamed then retired (`agora`), or guarded only by the
+    # task-battery stale-agent list (`dawn`, `hex`, `sonar`, `realm`, `haul`).
+    "dock", "wield", "agora", "dawn", "hex", "sonar", "realm", "haul",
+})
+
 
 def _retired_endpoint_names() -> set[str]:
     """Names a token may still carry after a skill left: archived skill
-    directories plus the old side of every `old → new` rename in CHANGELOG.md.
-    Derived, so a future rename or archive needs no edit here."""
-    names = set()
+    directories, the packages removed from the archive, and the old side of
+    every `old → new` rename in CHANGELOG.md."""
+    names = set(REMOVED_SKILLS)
     archive = REPO_ROOT / ".archive"
     if archive.is_dir():
         names |= {p.name for p in archive.iterdir() if p.is_dir()}
@@ -860,8 +875,11 @@ def check_handoff_token_endpoints(findings: list[Finding]):
                                if seg not in names and seg not in HANDOFF_PSEUDO_ENDPOINTS
                                and seg not in own]
                     suffixed = not HANDOFF_SUFFIXES.isdisjoint(match.group(3).split("_"))
-                    if len(unknown) == 2 and not suffixed and retired.isdisjoint(unknown):
-                        continue  # names no endpoint: `PATH_TO_CONFIG`, not a handoff
+                    if len(unknown) == 2 and not suffixed and not set(unknown) <= retired:
+                        # names no live endpoint: `PATH_TO_CONFIG`, or `SNAP_TO_GRID`
+                        # where one retired name is an ordinary word. Both sides
+                        # retired (`RESEARCHER_TO_SHOWCASE`) is a stale handoff.
+                        continue
                     checked += 1
                     if rel in HANDOFF_TOKEN_ALLOWLIST.get(token, ((), ""))[0]:
                         continue

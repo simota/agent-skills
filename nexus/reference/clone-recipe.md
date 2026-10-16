@@ -129,7 +129,7 @@ Phase 5 PARITY VERIFY ∥ Pixel/Voyager[VISUAL parity: differential diff vs Phas
                        judge[FIDELITY review: faithful copy vs approximate look-alike?]
                        → DRIFT RE-CHECK (§3b): spot-recapture a sample of target screens; if the live target diverged
                          from the stamped baseline, the baseline is stale → re-capture, do not "fix" the clone to a moved target
-                       → loop to Phase 4 on any dimension below its parity threshold (loop ≤ 3 cycles (default 3))
+                       → loop to Phase 4 on any dimension below its parity threshold (loop ≤ N cycles (default N=3))
 Phase 6 SHIP           Guardian[PR with Fidelity Report + per-screen parity scores + incremental scope]
 ```
 
@@ -219,6 +219,13 @@ The core knowledge of this recipe. Magi confirms the relevant dimensions in Phas
 > Reproduce *idiomatically on the target stack* — a faithful copy is faithful in **observable result**, not in internal implementation. Re-expressing the original's UI in the target framework's idioms is correct; transliterating its internal code (when source exists) is not the goal — `judge` Phase 5 distinguishes faithful-result from cargo-cult-internals.
 
 ---
+
+## Shared protocols
+
+Cited per `reference/recipe-contract.md` §6 (the recipe adds only its specializations):
+
+- `reference/dialogue-protocol.md` — question craft, answer processing, Assumption Ledger, checkpoint presentation for the Phase 0.1 Stack Dialogue.
+- `reference/autonomy-quality-protocol.md` — intent contract, Decision Ledger, producer ≠ verifier, evidence-bound claims, and completion integrity (Q16-Q19 typed Residual Ledger + completion sweep); cited, not re-derived; parity oracles satisfy Q3/Q10 via `_common/DIFFERENTIAL_PARITY.md`.
 
 ## 5. Failure Modes Prevented
 

@@ -149,6 +149,12 @@ The core knowledge of this recipe — and its rulebook. Magi confirms the releva
 
 **`N/A` for a convergence loop** — `transmute` terminates on its **differential-parity oracle** (`_common/DIFFERENTIAL_PARITY.md`): the rewrite is done when the comparator reports zero semantic divergence against the stamped baseline across the agreed corpus. Parity failures return to the per-module fix step; they do not iterate a rubric. A divergence that cannot be closed exits `BLOCK` with the residual divergence set reported, never silently accepted.
 
+## Shared protocols
+
+Cited per `reference/recipe-contract.md` §6 (the recipe adds only its specializations):
+
+- `reference/autonomy-quality-protocol.md` — intent contract, Decision Ledger, producer ≠ verifier, evidence-bound claims, and completion integrity (Q16-Q19 typed Residual Ledger + completion sweep); cited, not re-derived; parity oracles satisfy Q3/Q10 via `_common/DIFFERENTIAL_PARITY.md`.
+
 ## 5. Failure Modes Prevented
 
 | Failure | Mitigation |

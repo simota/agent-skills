@@ -53,7 +53,7 @@ Engine routing follows summit principles: **Codex owns code-gen** (Artisan / Flo
 
 | # | Element | Contract |
 |---|---------|----------|
-| 1 | Termination bound | `loop ≤ 3 cycles (default 3)`; exits `ACCEPT`/`target-met` · `diminishing-returns (Δ < ε)` · `cap-reached` · `BLOCK`. Non-`ACCEPT` exits report best-so-far + residual gap per rubric axis. |
+| 1 | Termination bound | `loop ≤ N cycles (default N=3)`; exits `ACCEPT`/`target-met` · `diminishing-returns (Δ < ε)` · `cap-reached` · `BLOCK`. Non-`ACCEPT` exits report best-so-far + residual gap per rubric axis. |
 | 2 | Confirm / safety gate | ✓direction-gate: **Confirm-before-launch when** no-target sweep / full-surface redesign / brand-token change / 10+ files. Standard **Ask First** on 10+ files. |
 | 3 | Resume | **checkpoint-resume** (5 phases; `restyle resume` re-enters from the last completed phase, Design Brief + baseline carried forward). |
 | 4 | Output report | Named **Lookbook** — per surface: Before/After rubric scores, friction-score delta, a11y result vs baseline, cycles run + stop reason, token changes, and the Design Brief's non-goals honored. |

@@ -14,6 +14,7 @@
 | Reusable orchestration value | PASS | The absorbed delivery workflow carried independent `small`, `medium`, and `epic` request shapes; all need the same scope-classification and anti-stall contract with different chain sizes. |
 | No ownership overlap | PASS | `feature` owns one bounded capability; `apex` owns a high-investment discovery-to-ship run; `deliver` owns scope-adaptive product/MVP delivery. |
 | Closed execution contract | PASS | Nexus owns orchestration; specialists own phase artifacts; Radar/Attest/Guardian are independent verification oracles; termination and residual routes are defined below. |
+| Budgeted | PASS | `failure`: F1 — a product/MVP request is forced into a fixed chain size (under-scoped as one `feature`, or over-built as `apex`) because nothing classifies scope first. `effect`: CLASSIFY records the declared tier and its evidence, so a mis-sized chain is visible in the Delivery Report against the tier it ran at; it does not catch a correctly-sized chain that ships the wrong product (that is CLASSIFY's frozen intent + VERIFY's AC disposition). `owner`: Nexus (recipe owner). `removal`: delete when `feature` and `apex` each carry a scope classifier that routes `small`/`medium`/`epic` requests to a correctly sized chain on their own, or when `scope=auto` resolves to the same tier on every run recorded in the delivery checkpoints — either way the tiering no longer changes the chain. |
 
 ## Parameters
 
