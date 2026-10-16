@@ -373,6 +373,16 @@ class RenderGateRegressions(CliFixtures):
         result = self.gate(kit)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
+    def test_longer_rule_id_is_not_seed_skeleton(self):
+        """A `\\b` boundary matched `X-CORE-example-driven` and is not portable ERE."""
+        kit = self.work / "kit"
+        kit.mkdir()
+        (kit / "core.md").write_text("X-CORE-example-driven — Prefer examples\n")
+        result = self.gate(kit)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        (kit / "core.md").write_text("X-CORE-example — seed\n")
+        self.assertEqual(self.gate(kit).returncode, 1)
+
     def test_shipped_design_feedback_kit_passes_gate(self):
         """INSTANCES.md registers it as a rendered instance; its format docs
         used `FB-YYYYMMDD-<slug>` and failed the gate."""

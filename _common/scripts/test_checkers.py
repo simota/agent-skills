@@ -569,7 +569,8 @@ class TestRoutingSurface(CheckerCase):
     def test_a_bare_token_between_two_absorbed_names_fails(self):
         """RO-11. Absorbed skills are recorded only in CHANGELOG prose
         (`shard` → `schema`, `sketch` → `builder`) once their packages leave the
-        tree, so the retired set must come from that history, not `.archive/`."""
+        tree, so the retired set cannot come from `.archive/` alone: routing-oracle
+        carries them in its hard-coded `REMOVED_SKILLS` list (transcribed from that history)."""
         self.append("zen/SKILL.md", "\n- legacy: `SHARD_TO_SKETCH`\n")
         self.expect_caught("routing-oracle.py", "SHARD_TO_SKETCH", "--severity", "error")
 

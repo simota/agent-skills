@@ -339,7 +339,7 @@ PORT_TO_LAUNCH_HANDOFF:
 
 ## Handoff Bundle (multi-target output)
 
-When `_STEP_COMPLETE` lists multiple handoffs (typical for blueprint completion), assemble them into a `handoff-bundle.json` referencing each target. See `_templates/handoff-bundle.template.json` for the canonical structure.
+When `_STEP_COMPLETE` lists multiple handoffs (typical for blueprint completion), assemble them into a `handoff-bundle.json` referencing each target. This is Port's own multi-target envelope, **not** `_templates/handoff-bundle.template.json` (that file is the design → code bundle schema — `design_system`, `constraints.a11y`, … — and does not fit a porting blueprint). Shape: `{ "blueprint": <path to the porting blueprint>, "handoffs": [ { "target": "<agent>", "type": "PORT_TO_<AGENT>_HANDOFF", "payload": <that handoff's fields as defined in § Outbound> } ] }` — one entry per handoff listed in `_STEP_COMPLETE`.
 
 ---
 

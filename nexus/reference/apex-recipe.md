@@ -136,7 +136,7 @@ This is the **Confirm-before-launch** tier (`reference/recipe-contract.md` §3),
 |------|----------|
 | `INTERACTIVE` | Always confirm; user can edit goal before proceeding |
 | `GUIDED` | Always confirm; user approves or aborts |
-| `AUTORUN` | Confirm with explicit Y/N; defaults to abort on no response |
+| `AUTORUN` | Confirm with explicit Y/N; no response → persist the Phase 0 goal artifact as the checkpoint and stop (resumable), never a timed auto-proceed |
 | `AUTORUN_FULL` | Same Confirm-before-launch tier — show selected goal with rationale and require an explicit Y / edit / abort; no response → persist the Phase 0 goal artifact as the checkpoint and stop (resumable), never a timed auto-proceed. An edit re-runs Phase 0 with the hint. |
 
 The confirmation message includes: goal title, rationale, top 2 rejected alternatives, estimated cost (agent count / time / token budget), and "edit/abort" instructions. Once explicitly approved (in every mode, `AUTORUN_FULL` included), Apex proceeds to Phase 1 with the goal bound and **no further human input is required** unless an internal Risk Gate or Orbit circuit breaker fires.
@@ -302,7 +302,7 @@ Apex emits `NEXUS_COMPLETE` with the base `## Nexus Execution Report` (`referenc
 | Loop iterations | **`runner: codex \| claude-fallback \| agy-fallback`** + the envelope it was scored against, Orbit iteration count, per-task cost, convergence reason, circuit-breaker status | Phase 6 |
 | AC-verify / attest | attest conformance % + traceability matrix (AC → evidence → verdict); unmet must-haves = 0; **negative pass: non-goal violations = 0, with any ratified out-of-boundary change named** | Phase 6 → Ship gate |
 | Upstream packet | Which input contract was consumed (`spec` / `clone` / none) and which phases it collapsed — so the run's phase count reads correctly against its cost | § Input Contracts |
-| Residual Ledger | Typed per `reference/autonomy-quality-protocol.md` Q17-Q19 — one `RES-n (class · owner · marker · route)` row per residual: perf ACs left unmet within the envelope → route `optimize` (target + budget handed over); coverage gaps → route `feature` (the follow-on residual route). Completion sweep: the Q19 probe over the touched files — command, hit count, each hit a `RES-n` or `pre-existing` | Ship |
+| Residual Ledger | Typed per `reference/autonomy-quality-protocol.md` Q17-Q19 — one `RES-n (class · owner · marker · route)` row per residual: perf ACs left unmet within the envelope → route `optimize` (target + budget handed over); coverage gaps → route `feature` (the follow-on residual route). Completion sweep: the Q19 probe over the touched files — command, hit count, each hit a `RES-n` or `pre-existing`; plus the coverage pair (changed / evidenced), reported on one line as `swept, 0 hits; 7 changed / 7 evidenced` per `_common/OPERATIONAL.md` § Completion Contract | Ship |
 | Ship status | guardian PR + launch release/rollback plan; cumulative budget vs ceiling | Ship |
 
 On any non-ship exit (budget ceiling, Risk-Gate No-Go, attest fail past re-entry cap), the Delivery Report still emits with best-so-far per phase + the residual gap + the resumable checkpoint, never a silent stop.
@@ -413,7 +413,7 @@ Consolidated view of what apex's gates and phases guard against, merging the ope
 | Phase 0 no candidates | spark (autonomous mode); project state extremely stable | Apex aborts, suggests user invoke with explicit goal |
 | Phase 0 all ICE < threshold | rank (autonomous mode); no clearly worthwhile work | Present top 3 to user for manual selection |
 | Phase 0 split tie-break | magi (autonomous mode) | Escalate top 2 to user with magi rationale |
-| Phase 0 boundary rejected | user (autonomous mode) | Apex aborts; user input within 60s window cancels |
+| Phase 0 boundary rejected | user (autonomous mode) | Apex aborts (explicit abort at the Confirm-before-launch gate; no response → persist goal artifact and stop, resumable — no timed window) |
 | Build the wrong thing | No evidence anchor for the feature | Phase 0 discovery (spark + rank + magi[advisor]) + Phase 1 (echo[demand] + field evidence anchor) + boundary Confirm-before-launch |
 | Phase 3 split decision | magi | Pause for human verdict; prevents an arbitrarily-resolved deadlock |
 | Weak / unmeasurable spec | "Done" is subjective; scope creeps | Phase 4 scribe[unified] traceability threshold + L3 measurable, orbit-consumable ACs |

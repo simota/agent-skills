@@ -213,7 +213,7 @@ team_missions:
   improvement:  "<what improvement axis to optimize>"
 cost_budget:
   max_agents: 119   # ceiling of § Cost and Latency Profile (UI, 3 loops); lower it to tighten the budget
-  max_wall_time_minutes: 120
+  max_wall_time_minutes: 193   # ceiling of the same profile row (UI, 3 loops)
   max_loops: 3
 risk_tier: strategic | release-critical | major-refactor
 user_acknowledged: true
@@ -522,7 +522,7 @@ Mode: AUTORUN_FULL with mandatory pre-launch confirmation
 
 ### Residual Ledger
 - RES-<n>: <what> (class <Q17 class> · owner <agent/user> · marker <file:line | none> · route <recipe/agent>)
-- Completion sweep: <command> → <hit count>; each hit accounted as a RES-n or `pre-existing`
+- Completion sweep: <command> → <hit count>; each hit accounted as a RES-n or `pre-existing`; plus the coverage pair (changed / evidenced), reported on one line as `swept, 0 hits; 7 changed / 7 evidenced` per `_common/OPERATIONAL.md` § Completion Contract
 
 ### Cost
 - Wall time:        N minutes

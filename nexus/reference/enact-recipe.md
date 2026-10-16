@@ -104,7 +104,7 @@ Under `AUTORUN_FULL`, enact is bound to finish what it starts. It removes every 
 **No-stop rules (recoverable conditions never halt the run):**
 - **Progress confirmations are suppressed.** No "continue?" prompts between packages or phases. The single ★ Confirm Gate announce-and-proceeds.
 - **Recoverable failures auto-recover and continue.** Per package: retry (max 3) → `fallback_engine` (per §5) → recovery-chain injection (Scout RCA → Builder fix) → alternate owner skill. The run does not pause to ask.
-- **A package that still cannot complete is marked `SKIPPED(blocked, reason)`, logged to §9, and the run continues with the remaining packages.** One unsatisfiable package never aborts the whole run.
+- **A package that still cannot complete is given its terminal status and logged to §9, and the run continues with the remaining packages:** could not be executed (blocked) → `SKIPPED(blocked, reason)`; executed but its DoD still fails after the recovery ladder → `FAILED` (reported with output). One unsatisfiable package never aborts the whole run.
 - **Cost does not pause the run.** Enact proceeds to the Charter §8 budget ceiling automatically; only a genuine ceiling breach escalates, per §8 policy.
 - **Interruptions auto-resume.** On context limit / crash / harness restart, enact resumes from the run-log tail (as if `resume`) without asking. The run is "done" only at DELIVER.
 
@@ -151,7 +151,7 @@ Execute Charter §4 via the §6 Orchestration Plan. Standard Nexus EXECUTE → A
 
 - **Spawn per work package** in §4 order; pass only state deltas (`reference/context-strategy.md`). Independent packages run as parallel branches with file ownership from §6 (`_common/PARALLEL.md`); no shared mutable state.
 - **Build loops** (multi-iteration implementation packages) apply `_common/PROJECT_LOCAL_SKILLS.md`: delegate to project-local `orbit` when available; otherwise Nexus drives the same bounded build → judge → test → converge loop directly and records `project_local_fallback: true`, as in Apex Phase 6. Engine per Charter §5 (Codex CLI for high-volume coding loops where available). On the local path, Orbit drives these **Charter-natively** — it receives the read-only §4/§5/§7/§10 slice, uses the §10 per-package DoD as its external DONE gate, and appends `PKG_*` events to the same §9 run-log (`.claude/skills/orbit/reference/charter-loop-driver.md`). The selected loop driver owns the single package's loop; enact retains cross-package sequencing and aggregation (hub-spoke).
-- **Guardrails** L1-L4 + resume per `reference/recipe-contract.md` §4 (here **run-log-tail**); max-hop limit enforced; destructive/L4/out-of-scope actions pause per §3/§8 (safety red line). The circuit breaker after 3 consecutive package failures does **not** abort the run — it marks that package `SKIPPED(blocked, reason)` and moves on (run-to-completion).
+- **Guardrails** L1-L4 + resume per `reference/recipe-contract.md` §4 (here **run-log-tail**); max-hop limit enforced; destructive/L4/out-of-scope actions pause per §3/§8 (safety red line). The circuit breaker after 3 consecutive package failures does **not** abort the run — it marks that package terminal — `FAILED` if its DoD ran and still fails, `SKIPPED(blocked, reason)` if it could not be executed — and moves on (run-to-completion).
 - **Run-to-completion recovery:** a failing package walks the recovery ladder (§ Run-to-Completion Contract) before being skipped; the run never pauses to ask on recoverable failures.
 - **Aggregate** branch outputs hub-spoke; validate schema + semantic correctness at each boundary.
 - **Definition of Done.** A package is `SUCCESS` only when its Charter §10 per-package DoD checklist fully passes (AC met + tests green + lint/build/typecheck + review); partial pass → `PARTIAL`; DoD run to completion but failing after the recovery ladder → `FAILED` (reported with output, never masked); could not be executed → `SKIPPED(blocked, reason)`. DoD is the objective terminal-state criterion, not prose judgment.
@@ -205,7 +205,7 @@ Nexus AUTORUN enact docs/CHARTER.md
        append run-log: PKG_START → PKG_RECOVER* → PKG_DONE (immediately)
          → tick §10 progress-tracker row at PKG_DONE
        on recoverable failure: walk the recovery ladder (§ Run-to-Completion Contract)
-         → still failing: mark SKIPPED(blocked, reason), CONTINUE (no abort)
+         → still failing: mark FAILED (DoD ran, failed) or SKIPPED(blocked, reason) (could not execute), CONTINUE (no abort)
        on safety red line (L4/destructive/out-of-scope per §8): pause + confirm
        on interruption: auto-resume from run-log tail
        mirror §9 pointer per package boundary
@@ -251,7 +251,7 @@ Merges the operational trigger/escalation view with the failure-mode rationale (
 | Charter missing/invalid section — improvising past a bad Charter | enact parse | **Stop (precondition)** — report which section; recommend `charter` to re-author. A missing section is never silently patched |
 | §5 roster names a non-existent skill | enact bind | **Stop (precondition)** at Phase 1; report the gap; do not improvise an owner |
 | Phase 1 engine prereq unmet (e.g. Codex rejects the planned child depth) — an engine outage hard-failing the run | Nexus | **Continue** — apply package `fallback_engine` (default `claude-code`; log substitution + cost/throughput trade-off); hard-fail only that package when no fallback is defined |
-| Phase 2 package repeat failure — stalling on a recoverable failure, or one blocked package aborting an otherwise-complete delivery | judge/radar | **Continue** — walk the recovery ladder (§ Run-to-Completion Contract) without asking; if still failing, mark `SKIPPED(blocked, reason)` + log §9 and proceed to remaining packages. The 3-failure circuit breaker skips that package, never aborts the run |
+| Phase 2 package repeat failure — stalling on a recoverable failure, or one blocked package aborting an otherwise-complete delivery | judge/radar | **Continue** — walk the recovery ladder (§ Run-to-Completion Contract) without asking; if still failing, mark `FAILED` (DoD ran, failed) or `SKIPPED(blocked, reason)` (could not execute) + log §9 and proceed to remaining packages. The 3-failure circuit breaker skips that package, never aborts the run |
 | Build loop stuck / over budget — spend prompts interrupting an authorized run | orbit | **Continue** — orbit switches strategy and keeps going; spend proceeds to the Charter §8 budget ceiling automatically, and only a genuine ceiling breach escalates per §8 |
 | Interruption (crash / context limit / harness restart) — progress lost, run restarts from scratch | harness | **Continue** — auto-resume from the append-only run-log tail (last `PKG_DONE` is the checkpoint); terminal packages skipped, no re-confirmation |
 | Safety red line (L4 / destructive / out-of-scope per §8) — force mode acting outside the Charter's scope | Nexus / §8 | **Stop + confirm** — the one intentional mid-run pause, not bypassed by run-to-completion (which pre-authorizes only what the Charter already scoped); resumes on approval, aborts only that action on denial |

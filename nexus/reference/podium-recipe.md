@@ -541,8 +541,8 @@ loop_iteration:
 ### Phase 6: Publish (Claude + Codex, 1-4 agents)
 
 **Agents:**
-1. **Image materialization (conditional)** — if `--materialize-images` flag AND `image_generation_code/` exists from Track B Visual: run the Builder-authored scripts under the user's `GEMINI_API_KEY` to produce final `assets/<anchor>.png`. Owned by Nexus (Bash execution), not a separate spawned agent. If the flag is omitted, the code is kept as-is and the unrendered imagery is a typed residual, not a note: emit `RES-n` (class `blocked-external` — materialization needs the user's `--materialize-images` + `GEMINI_API_KEY` · owner: user · marker: `image_generation_code/*` · route: re-run `podium resume --materialize-images`), and the run's status is capped at `PARTIAL` (Q17 — never `SUCCESS` over unrendered assets).
-2. Scribe[convert] — produce all target formats (MD/DOCX/PPTX/PDF/HTML) and bundle. Runs AFTER image materialization so that final imagery is embedded in PPTX/PDF; when materialization was skipped, the conversion output is covered by the `RES-n` above.
+1. **Image materialization (conditional)** — if `materialize_images: true` (`--materialize-images`) AND `image_generation_code/` exists from Track B Visual: run the Builder-authored scripts under the user's `GEMINI_API_KEY` to produce final `assets/<anchor>.png`. Owned by Nexus (Bash execution), not a separate spawned agent. If the user chose `materialize_images: false`, "ship code only" is the declared contract, not a residual: no status cap; optionally record a `RES-n` of class `user-declined` (citing the input contract where it was declined). If materialization was requested but `GEMINI_API_KEY` is missing, the unrendered imagery is a typed residual, not a note: emit `RES-n` (class `blocked-external` — blocker: missing `GEMINI_API_KEY` · owner: user · marker: `image_generation_code/*` · route: supply the key and re-run Phase 6 with `materialize_images: true`), and the run's status is capped at `PARTIAL` (Q16 — the artifact is part of Done; never `SUCCESS` over unrendered requested assets).
+2. Scribe[convert] — produce all target formats (MD/DOCX/PPTX/PDF/HTML) and bundle. Runs AFTER image materialization so that final imagery is embedded in PPTX/PDF; when requested materialization was blocked, the conversion output is covered by the `blocked-external` `RES-n` above.
 3. Guardian[PR-prep] — when artifact is committed to repo: classify changes, commit strategy
 4. Launch[plan] — when artifact is a release announcement: versioning, CHANGELOG section, embargo handling
 
@@ -601,7 +601,7 @@ Mode: AUTORUN_FULL
 
 ### Residual Ledger
 - RES-<n>: <what> (class <Q17 class> · owner <agent/user> · marker <file:line | none> · route <recipe/agent>)
-- Completion sweep: <command> → <hit count>; each hit accounted as a RES-n or `pre-existing`
+- Completion sweep: <command> → <hit count>; each hit accounted as a RES-n or `pre-existing`; plus the coverage pair (changed / evidenced), reported on one line as `swept, 0 hits; 7 changed / 7 evidenced` per `_common/OPERATIONAL.md` § Completion Contract
 
 ### Cost
 - Wall time:        N minutes

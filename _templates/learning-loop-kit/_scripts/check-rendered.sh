@@ -40,7 +40,7 @@ scan 'leftover skeleton markers above — fill in concrete values.' \
   '<slug>|<LAYER>|<kit-slug>' -rnE --include='*.md' --exclude-dir='_templates'
 # The base seed rule (rules/core.md, rules/INDEX.md) must be replaced or removed.
 scan 'leftover seed skeleton above — replace or remove the example rule.' \
-  '<(imperative title|testable rule|why|tag|example|anti-example)>|-CORE-example\b' \
+  '<(imperative title|testable rule|why|tag|example|anti-example)>|-CORE-example([^A-Za-z0-9_-]|$)' \
   -rnE --include='*.md' --exclude-dir='_templates'
 
 if [ "$fail" -eq 0 ]; then

@@ -107,7 +107,7 @@ Two distinct gates; a brush-up must pass **both**:
 - **Deferred + residual** — the long-tail not slated this run, plus any `BLOCK`ed items, with why (recorded, never dropped).
 - **ADRs** — structural decisions made during the brush-up.
 - **Loop trajectory** — cycles run + exit reason.
-- **Residual Ledger** — per `reference/autonomy-quality-protocol.md` Q17-Q19, typed, never a free-text follow-up list: one `RES-n (class · owner · marker · route)` row per deferred cluster, with the route naming the next recipe (`refactor` for a known single restructure, `optimize` for a perf-tagged item, `kaizen` for a feature-vs-target, `trim` for dead-weight features, `security` for a Sentinel-flagged vuln). **Completion sweep:** the Q19 probe over the files the run touched — command, hit count, and each hit accounted as a `RES-n` or `pre-existing` (a scanned zero, never asserted).
+- **Residual Ledger** — per `reference/autonomy-quality-protocol.md` Q17-Q19, typed, never a free-text follow-up list: one `RES-n (class · owner · marker · route)` row per deferred cluster, with the route naming the next recipe (`refactor` for a known single restructure, `optimize` for a perf-tagged item, `kaizen` for a feature-vs-target, `trim` for dead-weight features, `security` for a Sentinel-flagged vuln). **Completion sweep:** the Q19 probe over the files the run touched — command, hit count, and each hit accounted as a `RES-n` or `pre-existing` (a scanned zero, never asserted); plus the coverage pair (changed / evidenced), reported on one line as `swept, 0 hits; 7 changed / 7 evidenced` per `_common/OPERATIONAL.md` § Completion Contract.
 
 ## Failure Modes Prevented
 
