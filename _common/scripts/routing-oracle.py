@@ -821,12 +821,23 @@ HANDOFF_SUFFIXES = frozenset({"HANDOFF"})
 
 RENAME_ROW_RE = re.compile(r"\|\s*`([a-z0-9-]+)`\s*→\s*`[a-z0-9-]+`")
 
+# Packages deleted from `.archive/` in commit 7969059 (CHANGELOG "Removed —
+# retired skill packages"). With the directory gone this is the only record of
+# their names short of git history, which a shallow CI checkout does not have.
+# A future sunset keeps its package under `.archive/` and is read from there.
+REMOVED_ARCHIVE_PACKAGES = frozenset({
+    "accord", "anvil", "bazaar", "bond", "clause", "crest", "cull", "director",
+    "grok", "harvest", "hearth", "helm", "latch", "loom", "mint", "morph", "nest",
+    "oath", "pipe", "plea", "relay", "riff", "sage", "shard", "sketch", "snap",
+    "summon", "tempo", "titan", "trawl", "zine",
+})
+
 
 def _retired_endpoint_names() -> set[str]:
     """Names a token may still carry after a skill left: archived skill
-    directories plus the old side of every `old → new` rename in CHANGELOG.md.
-    Derived, so a future rename or archive needs no edit here."""
-    names = set()
+    directories, the packages removed from the archive, and the old side of
+    every `old → new` rename in CHANGELOG.md."""
+    names = set(REMOVED_ARCHIVE_PACKAGES)
     archive = REPO_ROOT / ".archive"
     if archive.is_dir():
         names |= {p.name for p in archive.iterdir() if p.is_dir()}
