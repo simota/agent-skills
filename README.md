@@ -71,7 +71,7 @@ This repository contains 90 globally reusable AI agents and 3 repository-local o
 - **90 global skills** are the active, reusable roster under `<skill-name>/SKILL.md`.
 - **3 project-local extensions** (`orbit`, `lore`, and `darwin`) are repository operating skills and are not included in the global count or global profiles.
 - `.claude/skills/` is the canonical project-local location; `.agents/skills/` is a cross-tool mirror, not an additional set of skills.
-- `.archive/` contains inactive rollback packages and is excluded from every active-roster count.
+- `.archive/` holds a retired skill only while `prune`'s sunset protocol keeps it, and is excluded from every active-roster count. It is currently empty; earlier retired packages are recoverable from git history.
 
 The active repository surface is therefore **90 global + 3 project-local = 93 distinct skills**.
 

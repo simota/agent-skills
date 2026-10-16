@@ -26,4 +26,4 @@ Canonical tokens use `SCRIBE` (`FIELD/CAST/VOICE_TO_SCRIBE`, `SCRIBE_TO_BUILDER`
 
 The former `ACCORD_TO_SCRIBE` handoff is now an internal transition from a unified package to a formal PRD/SRS/HLD/LLD. It must not be emitted as `SCRIBE_TO_SCRIBE`.
 
-The archived source remains under `.archive/accord/` for rollback; active recipes must not depend on archived files.
+The retired `accord` source is recoverable from git history for rollback; active recipes must not depend on it.

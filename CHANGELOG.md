@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Removed — retired skill packages (2026-10-16)
+
+- **Deleted the 31 retired packages under `.archive/` before their documented retention dates (2026-11-17 / 2026-11-18).** No checker, route or installer read them; they remain recoverable from git history at the commit before this removal.
+
 ### Added — contract-delivery checking, and every SKILL.md body under the size advisory (2026-08-20)
 
 - **`_common/scripts/lint-contracts.py` asks whether a contract can reach a running agent.** Nothing under `_common/` loads automatically; it arrives only because a file already open names it, and a reference resolves from the skill's own directory. Neither condition was checked anywhere. CD-1 compares the spine roster in `OPERATIONAL.md` against the files declaring `Tier: spine`; CD-2 measures per-skill reachability depth; CD-3 finds contracts no skill can reach; CD-4/CD-5 catch a named path that resolves for a reader browsing the repo and to nothing for the agent; CD-6 catches a missing tier line. `--report` prints the depth table. Wired into `skill-lint.yml`, `CONTRIBUTING.md`, and the 30-day evaluation cycle.

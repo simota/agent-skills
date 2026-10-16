@@ -56,7 +56,7 @@ If a project-local skill references `_common/` or `_templates/`, both canonical 
 
 ### Archived skills
 
-`.archive/` contains inactive rollback packages and historical source material. Archived packages are excluded from all active-roster counts and must not be reintroduced into routing, profiles, or public counts accidentally.
+`.archive/` holds a retired skill only while `prune`'s sunset protocol keeps it; it is currently empty, and earlier packages are recoverable from git history. Archived packages are excluded from all active-roster counts and must not be reintroduced into routing, profiles, or public counts accidentally.
 
 ## Authoritative sources
 
