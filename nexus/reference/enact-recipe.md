@@ -104,11 +104,11 @@ Under `AUTORUN_FULL`, enact is bound to finish what it starts. It removes every 
 **No-stop rules (recoverable conditions never halt the run):**
 - **Progress confirmations are suppressed.** No "continue?" prompts between packages or phases. The single ★ Confirm Gate announce-and-proceeds.
 - **Recoverable failures auto-recover and continue.** Per package: retry (max 3) → `fallback_engine` (per §5) → recovery-chain injection (Scout RCA → Builder fix) → alternate owner skill. The run does not pause to ask.
-- **A package that still cannot complete is marked `SKIPPED(blocked)` with reason, logged to §9, and the run continues with the remaining packages.** One unsatisfiable package never aborts the whole run.
+- **A package that still cannot complete is marked `SKIPPED(blocked, reason)`, logged to §9, and the run continues with the remaining packages.** One unsatisfiable package never aborts the whole run.
 - **Cost does not pause the run.** Enact proceeds to the Charter §8 budget ceiling automatically; only a genuine ceiling breach escalates, per §8 policy.
 - **Interruptions auto-resume.** On context limit / crash / harness restart, enact resumes from the run-log tail (as if `resume`) without asking. The run is "done" only at DELIVER.
 
-**Completion guarantee:** Phase 2 loops until **every** §4 work package is in a terminal state — `SUCCESS`, `PARTIAL`, or `SKIPPED(blocked, reason)`. `BLOCKED` is never a resting state: the recovery ladder above must be exhausted first. DELIVER reports the full per-package status set.
+**Completion guarantee:** Phase 2 loops until **every** §4 work package is in a terminal state — the one package-status enum `SUCCESS` / `PARTIAL` / `FAILED` / `SKIPPED(blocked, reason)` (defined under Phase 2 → Definition of Done; every status mention in this file uses it). `BLOCKED` is never a resting state: the recovery ladder above must be exhausted first. DELIVER reports the full per-package status set.
 
 **Safety red lines (the only intentional stops — NOT bypassed by run-to-completion):**
 - Charter §8 human-confirm triggers: **L4 security, destructive/irreversible data actions, external system modifications, and edits beyond the file scope §6 pre-authorized** (e.g. 10+ files not covered by package ownership). These pause for confirmation even in force mode — run-to-completion pre-authorizes only what the Charter already scoped, not actions outside it.
@@ -137,7 +137,7 @@ The orchestrator maintains a single **append-only run-log file** and writes one 
 | `CONFIRM` | ★ Gate | announce-and-proceed / approved / rejected |
 | `PKG_START` | a package begins | pkg id, owner skill, engine |
 | `PKG_RECOVER` | recovery-ladder step fires | pkg id, step (retry/fallback/scout/alt-owner) |
-| `PKG_DONE` | a package reaches terminal | pkg id, status (SUCCESS/PARTIAL/SKIPPED+reason) |
+| `PKG_DONE` | a package reaches terminal | pkg id, status (SUCCESS/PARTIAL/FAILED/SKIPPED(blocked, reason)) |
 | `SAFETY_STOP` | §8 red line hit | trigger, awaiting-confirm / resolved |
 | `VERIFY` | §7 gate result | gate, pass/fail + output ref |
 | `RESUME` | run restarts | resumed-from event, packages skipped |
@@ -151,13 +151,13 @@ Execute Charter §4 via the §6 Orchestration Plan. Standard Nexus EXECUTE → A
 
 - **Spawn per work package** in §4 order; pass only state deltas (`reference/context-strategy.md`). Independent packages run as parallel branches with file ownership from §6 (`_common/PARALLEL.md`); no shared mutable state.
 - **Build loops** (multi-iteration implementation packages) apply `_common/PROJECT_LOCAL_SKILLS.md`: delegate to project-local `orbit` when available; otherwise Nexus drives the same bounded build → judge → test → converge loop directly and records `project_local_fallback: true`, as in Apex Phase 6. Engine per Charter §5 (Codex CLI for high-volume coding loops where available). On the local path, Orbit drives these **Charter-natively** — it receives the read-only §4/§5/§7/§10 slice, uses the §10 per-package DoD as its external DONE gate, and appends `PKG_*` events to the same §9 run-log (`.claude/skills/orbit/reference/charter-loop-driver.md`). The selected loop driver owns the single package's loop; enact retains cross-package sequencing and aggregation (hub-spoke).
-- **Guardrails** L1-L4 + checkpoint-resume on 4+ step chains; max-hop limit enforced; destructive/L4/out-of-scope actions pause per §3/§8 (safety red line). The circuit breaker after 3 consecutive package failures does **not** abort the run — it marks that package `SKIPPED(blocked)` and moves on (run-to-completion).
+- **Guardrails** L1-L4 + resume per `reference/recipe-contract.md` §4 (here **run-log-tail**); max-hop limit enforced; destructive/L4/out-of-scope actions pause per §3/§8 (safety red line). The circuit breaker after 3 consecutive package failures does **not** abort the run — it marks that package `SKIPPED(blocked, reason)` and moves on (run-to-completion).
 - **Run-to-completion recovery:** a failing package walks the recovery ladder (§ Run-to-Completion Contract) before being skipped; the run never pauses to ask on recoverable failures.
 - **Aggregate** branch outputs hub-spoke; validate schema + semantic correctness at each boundary.
-- **Definition of Done.** A package is `SUCCESS` only when its Charter §10 per-package DoD checklist fully passes (AC met + tests green + lint/build/typecheck + review); partial pass → `PARTIAL`, unrecoverable → `SKIPPED`. DoD is the objective terminal-state criterion, not prose judgment.
+- **Definition of Done.** A package is `SUCCESS` only when its Charter §10 per-package DoD checklist fully passes (AC met + tests green + lint/build/typecheck + review); partial pass → `PARTIAL`; DoD run to completion but failing after the recovery ladder → `FAILED` (reported with output, never masked); could not be executed → `SKIPPED(blocked, reason)`. DoD is the objective terminal-state criterion, not prose judgment.
 - **Append** one run-log line per event (`PKG_START` / `PKG_RECOVER` / `PKG_DONE` / `SAFETY_STOP` …) the moment it occurs; at `PKG_DONE` also tick that package's row in the §10 progress tracker. Mirror a compact pointer into Charter §9, so an interrupted run auto-resumes from the run-log tail (see **Run Log**).
 
-**Exit gate:** **every** work package is in a terminal state — `SUCCESS` / `PARTIAL` / `SKIPPED(blocked, reason)`; none left pending or merely `BLOCKED`. Outputs aggregated; skipped packages carry unblock conditions in §9.
+**Exit gate:** **every** work package is in a terminal state — `SUCCESS` / `PARTIAL` / `FAILED` / `SKIPPED(blocked, reason)`; none left pending or merely `BLOCKED`. Outputs aggregated; skipped packages carry unblock conditions in §9.
 
 ## Phase 3: Verify & Deliver
 
@@ -168,7 +168,7 @@ Execute Charter §4 via the §6 Orchestration Plan. Standard Nexus EXECUTE → A
 | `guardian` | Commit policy, branch strategy, PR preparation | Yes (if code changed) |
 | `launch` | Release/rollback plan | Conditional: release in scope |
 
-Run §7 gates (tests/build/security/AC), appending a `VERIFY` line per gate and a final `RUN_END` line to the run log. Then work the Charter §10 **final delivery checklist** (all gates pass, no release-critical SKIPPED, run-log RUN_END written, rollback ready) — each unticked item is surfaced in DELIVER, not silently passed. Update the Charter (§9 summary/pointer + §4 AC status + §10 tracker/checklist ticks) so the delivered document reflects what was actually done — the living Charter. `DELIVER` returns `NEXUS_COMPLETE` with the Charter path, run-log path, per-package status, the completed §10 checklists, verification results, and follow-ups.
+Run §7 gates (tests/build/security/AC), appending a `VERIFY` line per gate and a final `RUN_END` line to the run log. Then work the Charter §10 **final delivery checklist** (all gates pass, no release-critical SKIPPED, run-log RUN_END written, rollback ready) — each unticked item is surfaced in DELIVER, not silently passed. Update the Charter (§9 summary/pointer + §4 AC status + §10 tracker/checklist ticks) so the delivered document reflects what was actually done — the living Charter. `DELIVER` returns `NEXUS_COMPLETE` with the Charter path, run-log path, per-package status, the completed §10 checklists, verification results, and the Residual Ledger (`RES-n` · class · owner · marker · route) with the completion-sweep line.
 
 **Exit gate:** §7 verification passes (or failures surfaced honestly with output, per global quality rules); Charter persisted and current.
 
@@ -197,11 +197,11 @@ Nexus AUTORUN enact docs/CHARTER.md
   ── ★ Confirm Gate ───────────────────────────────────
   → AUTORUN_FULL: announce construction summary → proceed immediately (no wait)
   ── Phase 2 End-to-End Orchestration (run to completion) ─
-  → loop until every §4 package is terminal (SUCCESS|PARTIAL|SKIPPED):
+  → loop until every §4 package is terminal (SUCCESS|PARTIAL|FAILED|SKIPPED(blocked, reason)):
        spawn(owner_skill, contract=package.AC, model=§5.tier, engine=§5.engine)
        ‖ parallel branches with §6 file ownership
        build-loop packages → orbit(sub-orchestrator)
-       terminal = §10 per-package DoD checklist result (SUCCESS|PARTIAL|SKIPPED)
+       terminal = §10 per-package DoD checklist result (SUCCESS|PARTIAL|FAILED|SKIPPED(blocked, reason))
        append run-log: PKG_START → PKG_RECOVER* → PKG_DONE (immediately)
          → tick §10 progress-tracker row at PKG_DONE
        on recoverable failure: walk the recovery ladder (§ Run-to-Completion Contract)
@@ -224,17 +224,23 @@ Nexus AUTORUN enact docs/CHARTER.md
 
 ## Scale
 
-**Charter-dependent: typically 15-50 agents across all work packages, single pass per package, high cost.** The Charter's package count is the multiplier; `dry-run` mode costs 2-4 agents (constructability check only).
+**Charter-dependent: 6-30+ agents across all work packages, single pass per package, medium-to-high cost** — canonical per-profile figures in § Cost and Latency Profile (small 6-12 · standard 12-20 · large 20-30+); `dry-run` is excluded from the range (2-4 agents, constructability check only). *Range derivation:* floor = the small-Charter floor **6**; ceiling = the large-Charter figure **30+** (open-ended — the Charter's package count is the multiplier).
 
 ## Output Report — **Execution Report** (named)
 
 Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
 
 - **Charter provenance** — which Charter drove the run and its §10 pre-flight checklist result
-- **Per-package disposition** — every work package with its owner, terminal status (DONE / FAILED / PARTIAL / SKIPPED), and verification output reference
+- **Per-package disposition** — every work package with its owner, terminal status (`SUCCESS` / `PARTIAL` / `FAILED` / `SKIPPED(blocked, reason)`), and verification output reference
 - **Run log tail** — the append-only event sequence (`PKG_START` / `PKG_RECOVER` / `PKG_DONE` / `SAFETY_STOP` …) that also serves as the resume state
 - **Constructability gaps** — roster entries that could not be resolved to a spawnable owner, with the `charter` re-authoring recommendation
 - **Truthful verification result** — §7 gate outcomes reported with output; a FAILED package is reported as FAILED, never masked (§8 honesty red line)
+
+## Shared protocols
+
+Cited per `reference/recipe-contract.md` §6 (the recipe adds only its specializations):
+
+- `reference/autonomy-quality-protocol.md` — intent contract, Decision Ledger, producer ≠ verifier, evidence-bound claims, and completion integrity (Q16-Q19 typed Residual Ledger + completion sweep); cited, not re-derived.
 
 ## Failure Escalation
 
@@ -267,12 +273,12 @@ Decision tree: have a Charter (from `charter` or hand-written) and want it run e
 
 | Profile | Phases active | Approx agent count | Approx cost |
 |---------|---------------|--------------------|-------------|
-| dry-run | 1 | per §5 roster size (no execution) | Low |
+| dry-run | 1 | 2-4 (constructability check only — §5 roster resolved, not executed) | Low |
 | small Charter (no build loops) | 1, 2, 3 | 6-12 | Medium |
 | standard Charter (1-2 build loops) | All | 12-20 | Medium-High |
 | large Charter (multiple build loops + sub-orchestrators) | All + orbit loops + Vision/Rally | 20-30+ | High |
 
-Enact is the expensive half of the pair; the ★ Confirm Gate, 5+-agent chain confirmation, orbit cost-per-task tracking, and L4 gates bound spend. Because the team is reconstructed from the Charter, `enact` can be re-run (or `resume`d) without re-paying for analysis/authoring.
+Enact is the expensive half of the pair; the ★ Confirm Gate (announce-and-proceed under `AUTORUN_FULL`), the Charter §8 budget ceiling, orbit cost-per-task tracking, and L4 gates bound spend. Because the team is reconstructed from the Charter, `enact` can be re-run (or `resume`d) without re-paying for analysis/authoring.
 
 ---
 

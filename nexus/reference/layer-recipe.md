@@ -115,6 +115,7 @@ Checkpoint-resume: with ≥ 4 phases, the blueprint persists at the CONFIRM boun
 - `_common/MECHANISM_SELECTION.md` — hook/rule/subagent/skill mechanism choice.
 - `_common/SUBAGENT.md` — parallelism layer for a designed workflow.
 - `reference/recipe-contract.md` — this recipe's authoring standard.
+- `reference/doc-quality-protocol.md` — reader contract, grounding / UNKNOWN-over-fabrication, single source of truth, Doc Quality Gate (W12) for the blueprint document.
 
 ---
 

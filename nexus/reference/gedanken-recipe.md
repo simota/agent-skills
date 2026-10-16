@@ -110,7 +110,7 @@ Want a rigorous answer about a hypothetical / claim (no code)?
 
 ## Shared protocols & Add-ons
 
-- **Shared:** REFUTE → `_common/ADVERSARIAL_REFUTATION.md` (skeptic panel, evidence-vs-novelty, polarity). Downstream handoff → `nexus/reference/verdict-gate.md` / `magi` / `spec`.
+- **Shared:** REFUTE → `_common/ADVERSARIAL_REFUTATION.md` (skeptic panel, evidence-vs-novelty, polarity). Downstream handoff → `nexus/reference/verdict-gate.md` / `magi` / `spec`. INTERACTIVE-mode questioning and checkpoint presentation → `reference/dialogue-protocol.md`.
 - **Add-ons:** +`Lens`/`Compete` (ground the hypothetical in a real system/market in FRAME), +`Cast` (persona-anchored scenario), +`Matrix` (systematic multi-axis variation in PERTURB), +`Omen` (failure-mode variation), +`Atlas`/`Magi`/`Oracle`/`Ripple` (domain-specialist lens in REASON), +`Scribe` (author the Gedanken Report).
 
 ## Chain template

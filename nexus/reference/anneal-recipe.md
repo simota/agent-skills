@@ -107,7 +107,7 @@ Two distinct gates; a brush-up must pass **both**:
 - **Deferred + residual** — the long-tail not slated this run, plus any `BLOCK`ed items, with why (recorded, never dropped).
 - **ADRs** — structural decisions made during the brush-up.
 - **Loop trajectory** — cycles run + exit reason.
-- **Follow-ups** — recommended next recipe per deferred cluster (`refactor` for a known single restructure, `optimize` for a perf-tagged item, `kaizen` for a feature-vs-target, `trim` for dead-weight features, `security` for a Sentinel-flagged vuln).
+- **Residual Ledger** — per `reference/autonomy-quality-protocol.md` Q17-Q19, typed, never a free-text follow-up list: one `RES-n (class · owner · marker · route)` row per deferred cluster, with the route naming the next recipe (`refactor` for a known single restructure, `optimize` for a perf-tagged item, `kaizen` for a feature-vs-target, `trim` for dead-weight features, `security` for a Sentinel-flagged vuln). **Completion sweep:** the Q19 probe over the files the run touched — command, hit count, and each hit accounted as a `RES-n` or `pre-existing` (a scanned zero, never asserted).
 
 ## Failure Modes Prevented
 
@@ -137,13 +137,13 @@ Two distinct gates; a brush-up must pass **both**:
 | `converge` | execution-control wrapper ↔ task shape (audit→fix design) | `converge anneal` is valid — it wraps the Phase 4 brush-up generators under one termination oracle |
 | `delve` | forward-looking evolution directions for one shipped feature, no code ↔ backward-looking hardening that ships code | expansion → `delve`; hardening → `anneal` |
 | `trim` | removes dead-weight features ↔ strengthens the design of features that stay | dead-weight feature noticed here → `trim`; its `SIMPLIFY` (overbuilt-but-necessary) outcome → brushed up here |
-| `summit` / `acceptance` | PR/change-gated quality maximization (28-119 agents / proof-carrying merge) ↔ standing-codebase sweep untied to a PR (6-16 agents) | release-critical specific change → `summit`/`acceptance` |
+| `summit` / `acceptance` | PR/change-gated quality maximization (32-119 agents per `summit-recipe.md` § Cost and Latency Profile / proof-carrying merge) ↔ standing-codebase sweep untied to a PR (6-16 agents) | release-critical specific change → `summit`/`acceptance` |
 | `atlas` (agent) | single-agent, proposal-only architecture analysis ↔ orchestration adding the prioritize → fix → verify machinery | `atlas` is one CRITIQUE lens *inside* `anneal` |
 | `spec` / `attest` / `pdm` (spec-axis neighbors) | author a new spec via dialogue (`spec`) or report conformance/drift without fixing (`attest`/`pdm`) ↔ audit **and brush up** the spec↔code health of existing code | new spec → `spec`; report only → `attest`/`pdm`; gate one PR → `acceptance`; genuine code-conformance defects route out to `bug`/`feature` |
 
 ## Scale
 
-6-16 agents × ≤ 3 cycles; medium-to-high cost. A scoped `anneal <target>` with a small slate is the low end (MAP→one or two CRITIQUE lenses→PRIORITIZE→a few brush-ups→VERIFY ≈ 6-8 agents). A whole-codebase no-target sweep fanning every CRITIQUE dimension (the six core lenses + conditional Gateway/Schema/Sentinel) across the repo with a full brush-up loop is the high end. Lighter than `summit` (28-119); heavier than `refactor`. Cost scales with the slate size, not the codebase size — PRIORITIZE is the cost governor.
+6-16 agents × ≤ 3 cycles; medium-to-high cost. A scoped `anneal <target>` with a small slate is the low end (MAP→one or two CRITIQUE lenses→PRIORITIZE→a few brush-ups→VERIFY ≈ 6-8 agents). A whole-codebase no-target sweep fanning every CRITIQUE dimension (the six core lenses + conditional Gateway/Schema/Sentinel) across the repo with a full brush-up loop is the high end. Lighter than `summit` (32-119, per its § Cost and Latency Profile); heavier than `refactor`. Cost scales with the slate size, not the codebase size — PRIORITIZE is the cost governor.
 
 ## Shared protocols & Add-ons
 

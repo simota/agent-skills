@@ -130,7 +130,7 @@ Every recipe finishes what its contract covers, and finishes it at the bar it se
 
 A recipe whose report has a free-text "Recommended follow-ups" list instead of a typed Residual Ledger is out of contract — that list is where unfinished in-scope work hides.
 
-`_common/FINDING_LEDGER.md` is the reference implementation: its disposition vocabulary (§5) and disposition integrity (§6, the fixer never disposes) are Q17–Q18 specialized to a review loop, and other recipes should follow that shape rather than invent a parallel one. `quell` and `burnish` are its two members.
+`_common/FINDING_LEDGER.md` is the reference implementation: its disposition vocabulary (§5) and disposition integrity (§6, the fixer never disposes) are Q17–Q18 specialized to a review loop, and other recipes should follow that shape rather than invent a parallel one. Its members are listed in `_common/FINDING_LEDGER.md` §13.
 
 ## 7. Authoring checklist
 

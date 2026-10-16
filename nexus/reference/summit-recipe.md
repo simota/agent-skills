@@ -33,8 +33,8 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
 - **Claude is always the hub**; Codex and (optionally) Antigravity are accessed exclusively through `rally` (no direct CLI invocation from Nexus).
 - **agy is optional** — see Overview for the tri-engine/dual-engine mode switch.
 - **Multi-engine triangulation is load-bearing** in Phase 1 (Analysis) and Phase 4 (Verification) — and the dual-engine baseline satisfies it (the third axis is a quality lift, not a correctness gate).
-- **Improvement loop is capped at 3 iterations** with Agent Tennis circuit breaker to prevent runaway cost.
-- **Confirm before launch — always** (unconditional; same gate as `apex`/`wish`. Intentionally stronger than `podium`'s conditional gate — stated to prevent drift). Summit spawns 20-50 agents per run (tri-engine) or 14-36 (dual-engine).
+- **Improvement loop: `loop ≤ N cycles (default N=3)`** with Agent Tennis circuit breaker to prevent runaway cost.
+- **Confirm before launch — always** (unconditional in every Mode, `AUTORUN_FULL` included; the same Confirm-before-launch tier as `apex`/`wish`. Intentionally stronger than `podium`'s conditional gate — stated to prevent drift). Summit spawns 44-68 agents (UI) / 32-52 (non-UI) with no improvement loops, up to 83-119 / 62-94 at the 3-loop cap — canonical in § Cost and Latency Profile.
 
 ---
 
@@ -69,7 +69,7 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
 - Final pre-release verification for high-risk launches (financial, medical, safety-critical)
 - Large refactors where blind spots compound (legacy modernization, security overhauls)
 - Decisive differentiator features where competitor analysis must triangulate with internal user research and creative reframing
-- Any task where the cost of an undetected error exceeds the cost of 20-50 agents and 1-2 hours of wall time
+- Any task where the cost of an undetected error exceeds the agent and wall-time envelope in § Cost and Latency Profile
 
 ### Do NOT use Summit for
 
@@ -212,7 +212,7 @@ team_missions:
   verification: "<what verification must validate>"
   improvement:  "<what improvement axis to optimize>"
 cost_budget:
-  max_agents: 50
+  max_agents: 119   # ceiling of § Cost and Latency Profile (UI, 3 loops); lower it to tighten the budget
   max_wall_time_minutes: 120
   max_loops: 3
 risk_tier: strategic | release-critical | major-refactor
@@ -223,7 +223,7 @@ user_acknowledged: true
 
 ---
 
-### Phase 1: Analysis Team (tri-engine parallel + optional Design sub-track, 6-11 agents, 8-15 min)
+### Phase 1: Analysis Team (tri-engine parallel + optional Design sub-track, 13-16 / 11-14 agents (UI / non-UI), 8-15 min)
 
 **Input:** `mission_charter.yaml`
 
@@ -301,11 +301,11 @@ parallel_groups:
 
 ---
 
-### Phase 3: Design + Execution Teams (parallel tracks, 7-22 agents, 25-75 min)
+### Phase 3: Design + Execution Teams (parallel tracks, 13-27 / 5-15 agents (UI / non-UI), 25-75 min)
 
 When `ui_dimension != none`, Phase 3 splits into **two parallel tracks** that run concurrently and converge through Frame (design → code bridging) before Phase 4.
 
-**Track A: Design Team** (5-10 agents, 10-25 min) — aggressive codex/agy usage
+**Track A: Design Team** (8-12 agents = Phase 3 UI − non-UI, 10-25 min) — aggressive codex/agy usage
 
 ```yaml
 design_track:
@@ -354,13 +354,13 @@ design_track:
 
 **Track convergence:** When both tracks complete, Frame (Claude) bridges design tokens and component contracts into the implementation, and rally[Artisan / Native] applies UI bindings. If `ui_dimension == none`, only Track B runs.
 
-**Checkpoint:** after each parallel_group completes in either track, persist outputs (Core Rule: 4+ step chains need checkpoint-resume).
+**Checkpoint:** after each parallel_group completes in either track, persist outputs (Checkpoint-resume per `reference/recipe-contract.md` §4: recipes with ≥ 4 phases persist phase outputs at each boundary so an interrupted run resumes from the last checkpoint.)
 
 **Output:** Working implementation + design direction + tokens + prototypes + per-task execution log + engine attribution per file.
 
 ---
 
-### Phase 4: Verification Team (tri-engine quorum + optional Design sub-track, 4-9 agents, 10-25 min)
+### Phase 4: Verification Team (tri-engine quorum + optional Design sub-track, 14-18 / 12-16 agents (UI / non-UI), 10-25 min)
 
 **Parallel branches.** Rosters per § Engine × Team Matrix (Verification row); each branch names its cell plus any phase-specific delta:
 
@@ -421,7 +421,7 @@ judge keeps its own internal tri-engine fan-out unchanged.
 
 ---
 
-### Phase 5: Improvement Team (PDCA loop, 3-6 agents per loop, max 3 loops)
+### Phase 5: Improvement Team (PDCA loop, 13-17 / 10-14 agents per loop (UI / non-UI), loop ≤ N cycles (default N=3))
 
 **Driver:** project-local Orbit when available; otherwise Nexus drives the bounded loop directly and records `project_local_fallback: true` (`_common/PROJECT_LOCAL_SKILLS.md`).
 
@@ -489,7 +489,7 @@ loop_iteration:
 ## Nexus Execution Report
 
 Task: <goal>
-Chain: summit (3-engine, 4-team)
+Chain: summit (5-team — 4-team when `ui_dimension: none`; dual-engine | tri-engine)
 Mode: AUTORUN_FULL with mandatory pre-launch confirmation
 
 ### Phase Results
@@ -518,7 +518,11 @@ Mode: AUTORUN_FULL with mandatory pre-launch confirmation
 - Ripple:       impact scope
 
 ### Summary
-<status, recommended next steps, follow-ups>
+<status>
+
+### Residual Ledger
+- RES-<n>: <what> (class <Q17 class> · owner <agent/user> · marker <file:line | none> · route <recipe/agent>)
+- Completion sweep: <command> → <hit count>; each hit accounted as a RES-n or `pre-existing`
 
 ### Cost
 - Wall time:        N minutes
@@ -656,6 +660,13 @@ Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
 - **Release disposition** — blocked / delivered-with-caveat per the CONFIRMED × severity table
 - **Exit reason** (canonical vocabulary) + residual gap when not `ACCEPT`
 
+## Shared protocols
+
+Cited per `reference/recipe-contract.md` §6 (the recipe adds only its specializations):
+
+- `reference/evaluator-loop-protocol.md` — Generator-Evaluator separation, single termination oracle, flatten rule for the Phase 5 improvement loop.
+- `reference/autonomy-quality-protocol.md` — intent contract, Decision Ledger, producer ≠ verifier, evidence-bound claims, and completion integrity (Q16-Q19 typed Residual Ledger + completion sweep); cited, not re-derived.
+
 ## Failure Escalation
 
 Merged view of every failure mode Summit guards against, with detection phase and escalation threshold (supersedes a separate "Failure Modes Prevented" table — same content, one table).
@@ -699,10 +710,12 @@ Agent counts updated to reflect the rebalanced engine routing (more Codex + agy 
 
 | Scenario | Agents (UI / non-UI) | Wall Time (UI / non-UI) | Tokens |
 |----------|----------------------|--------------------------|--------|
-| No improvement loops | 44-68 / 32-50 | 54-133 min / 49-113 min | 1.45-2.7M |
-| 1 loop | 57-85 / 42-64 | 64-153 min / 59-128 min | 1.65-3.0M |
-| 2 loops | 70-102 / 52-78 | 74-173 min / 69-143 min | 1.85-3.3M |
-| 3 loops (max) | 83-119 / 62-92 | 84-193 min / 79-158 min | 2.05-3.6M |
+| No improvement loops | 44-68 / 32-52 | 54-133 min / 49-113 min | 1.45-2.7M |
+| 1 loop | 57-85 / 42-66 | 64-153 min / 59-128 min | 1.65-3.0M |
+| 2 loops | 70-102 / 52-80 | 74-173 min / 69-143 min | 1.85-3.3M |
+| 3 loops (max) | 83-119 / 62-94 | 84-193 min / 79-158 min | 2.05-3.6M |
+
+**Range derivation** (sum of the per-phase rows; this profile is canonical — phase headers restate it): no loops UI floor 1+13+2+13+14+1 = 44, ceiling 2+16+3+27+18+2 = 68; non-UI floor 1+11+2+5+12+1 = 32, ceiling 2+14+3+15+16+2 = 52. Each improvement loop adds 13-17 (UI) / 10-14 (non-UI): 3 loops → 44+39 = 83 to 68+51 = 119 (UI), 32+30 = 62 to 52+42 = 94 (non-UI).
 
 ### Engine distribution targets
 
@@ -720,9 +733,9 @@ Phase 6 DELIVER includes an "Engine Distribution Audit" section showing actual v
 |--------|--------|-----------|------------------|
 | `feature` | 3-5 | 5-15 min | 1× (baseline) |
 | `apex` | 8-25 | 30-90 min | 4-8× |
-| `summit` non-UI (no loops) | 32-50 | 49-113 min | 7-13× |
+| `summit` non-UI (no loops) | 32-52 | 49-113 min | 7-13× |
 | `summit` UI (no loops) | 44-68 | 54-133 min | 9-16× |
-| `summit` non-UI (3 loops) | 62-92 | 79-158 min | 11-20× |
+| `summit` non-UI (3 loops) | 62-94 | 79-158 min | 11-20× |
 | `summit` UI (3 loops) | 83-119 | 84-193 min | 13-25× |
 
 **Rule of thumb:** Summit costs 7-25× a typical `feature` chain depending on UI inclusion and loop count. Use only when the cost of failure exceeds the cost of triangulation by at least an order of magnitude. For pure-backend strategic work, force `ui_dimension: none` in Phase 0 to skip the Design Team and recover ~25% of cost.
@@ -738,13 +751,13 @@ Phase 6 DELIVER includes an "Engine Distribution Audit" section showing actual v
 | **Structure** | Phase-driven linear with sub-orchestration | Single-phase parallel review | 5-team × 3-engine matrix with PDCA loop |
 | **Teams** | Implicit (sub-orchestrators) | Single (verification) | Explicit (analysis / **design** / execution / verification / improvement; Design conditional on `ui_dimension`) |
 | **Verification** | Risk Gate (pre-implementation) + Judge in loop | Tri-engine quorum review | Cross-engine quorum + grounded verification + UX walkthrough + improvement loop |
-| **Loop** | Implementation loop (Orbit) | None (single-shot) | Improvement loop (max 3, magi-arbitrated, includes design refinement) |
-| **Agents** | 8-25 | 3-6 | 20-50 (tri-engine) / 14-36 (dual-engine) |
+| **Loop** | Implementation loop (Orbit) | None (single-shot) | Improvement loop (`loop ≤ N cycles (default N=3)`, magi-arbitrated, includes design refinement) |
+| **Agents** | 8-25 | 3-6 | 44-68 UI / 32-52 non-UI (no loops); up to 83-119 / 62-94 at 3 loops — § Cost and Latency Profile |
 | **Wall time** | 30-90 min | 5-15 min | 49-193 min |
 | **Cost multiplier vs feature** | 4-8× | 0.5-1× | 7-25× (lowered vs previous 8-28× due to engine rebalance) |
 | **Engine distribution** | Claude + Codex (apex spec) | judge built-in multi | tri-engine: ~50-55% Codex / ~25-30% agy / ~20% Claude · dual-engine fallback: ~65-70% Codex / ~30-35% Claude |
 | **agy required** | No (optional) | No (optional — judge falls back to dual-engine) | No (optional — dual-engine fallback) |
-| **User confirmation** | Yes (mandatory) | No | Yes (mandatory) |
+| **User confirmation** | Yes — Confirm-before-launch, every Mode (incl. `AUTORUN_FULL`) | No | Yes — Confirm-before-launch, every Mode (incl. `AUTORUN_FULL`) |
 | **Best for** | New features needing full lifecycle | PR review, pre-commit checks | Strategic decisions, high-stakes releases, design-critical launches |
 
 ### Decision tree

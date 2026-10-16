@@ -300,7 +300,7 @@ Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`, 
 | AI use case missing eval/human-review | Phase 5 ai gate | Return ai-adoption track |
 | Format syntax invalid | Phase 6 lint | Fix file, re-lint before zipping |
 | Secrets/PII detected | Phase 6 scrub | Remove and re-package; never ship |
-| Novel domain outside the 9 presets | Phase 0 | Use `generic` + flag the missing dedicated skill; recommend `architect` for a new skill if recurring |
+| Novel domain outside the registry | Phase 0 | Use `generic` + flag the missing dedicated skill; recommend `architect` for a new skill if recurring |
 
 ## Cost and Latency Profile
 

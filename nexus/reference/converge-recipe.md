@@ -26,7 +26,7 @@ Use `converge` when a single deliverable must reach a **rubric-defined quality b
 | Full implementation discovery→ship with an internal loop | `apex` | converge exposes only the loop, for a single deliverable |
 | Just need the pattern spec, not an invocation | read `evaluator-loop-protocol.md` | converge *executes* it; the protocol *defines* it |
 
-Scale: 4-10 agents × cycles (cap 3 default). Mid cost (multiplied by cycle count). **Confirm before launch when `max_cycles` is raised above 3, or when a wrapped Tier-S recipe is the generator.**
+Scale: 4-10 agents × cycles (`loop ≤ N cycles (default N=3)`). Mid cost (multiplied by cycle count). **Confirm before launch when `max_cycles` is raised above 3, or when a wrapped Tier-S recipe is the generator.**
 
 ---
 
@@ -80,7 +80,7 @@ Run `_common/LOOP_PRECONDITIONS.md` before cycle 1. Two of the five are structur
 
 ## 4. Flatten Rule — wrapping a loop-recipe
 
-`converge <recipe>` runs the inner recipe as the Generator. But several recipes **own their own termination loop** (`kaizen` = PDCA cap 3, `apex`, `summit`). Nesting two loops causes **cost blowup** (cycles × inner-cycles) and **dueling termination oracles** (inner metric vs outer rubric).
+`converge <recipe>` runs the inner recipe as the Generator. But several recipes **own their own termination loop** (`kaizen` = PDCA `loop ≤ N cycles (default N=3)`, `apex`, `summit`). Nesting two loops causes **cost blowup** (cycles × inner-cycles) and **dueling termination oracles** (inner metric vs outer rubric).
 
 **Rule:**
 - **Inner recipe is non-loop** (`feature`, a single build, `transmute` per-module) → true wrapper: the whole inner recipe is the Generator each cycle.
@@ -88,7 +88,7 @@ Run `_common/LOOP_PRECONDITIONS.md` before cycle 1. Two of the five are structur
 
 **Which agents flatten cleanly:**
 - `kaizen` → **well-defined**: its generator agents are `Bolt`/`Tuner`/`Palette`/etc. (the worked example below).
-- `apex` / `summit` → flattening means using only their **build/generation-phase** agents (apex's Builder/loop body; summit's execution-team generators), dropping their internal risk-gate/improvement loops. This is **advanced and rarely worth it** — wrapping summit (28-119 agents) in an outer loop multiplies an already-huge cost. Prefer running apex/summit standalone (they already converge internally) and reserve `converge <recipe>` for non-loop generators.
+- `apex` / `summit` → flattening means using only their **build/generation-phase** agents (apex's Builder/loop body; summit's execution-team generators), dropping their internal risk-gate/improvement loops. This is **advanced and rarely worth it** — wrapping summit (32-119 agents per `summit-recipe.md` § Cost and Latency Profile) in an outer loop multiplies an already-huge cost. Prefer running apex/summit standalone (they already converge internally) and reserve `converge <recipe>` for non-loop generators.
 
 **Worked example — `converge kaizen`:**
 - ❌ Do NOT run full kaizen (its own ≤3 PDCA cycles) inside each converge cycle.
@@ -98,6 +98,12 @@ Run `_common/LOOP_PRECONDITIONS.md` before cycle 1. Two of the five are structur
 This flatten rule is what makes "converge kaizen-like" coherent instead of a loop-on-loop anti-pattern.
 
 ---
+
+## Shared protocols
+
+Cited per `reference/recipe-contract.md` §6 (the recipe adds only its specializations):
+
+- `reference/autonomy-quality-protocol.md` — intent contract, Decision Ledger, producer ≠ verifier, evidence-bound claims, and completion integrity (Q16-Q19 typed Residual Ledger + completion sweep); cited, not re-derived.
 
 ## 5. Failure Modes Prevented
 
