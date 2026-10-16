@@ -131,17 +131,6 @@ Both are project-local extensions. Apply `_common/PROJECT_LOCAL_SKILLS.md` befor
 | "3-perspective review (logic/empathy/pragmatism)" | **Magi** | V.A.I.R.E.-style evaluation |
 | Problem is well-defined, options are clear | **Magi** | Decision among known options |
 | Problem is ill-defined or framing seems wrong | **Flux** | Redefine the problem itself |
-
-**Rule of thumb**: "Which option?" → Magi. "Are we asking the right question?" → Flux. Flux reframes; Magi decides.
-
-**Chain pattern**: Flux (reframe) → Magi (decide) → Builder (implement)
-
----
-
-### Flux vs Magi (Thinking Support)
-
-| Signal | Route to | Rationale |
-|--------|----------|-----------|
 | "Reframe this", "shift perspective", single-shot analysis | **Flux[reframe]** | One-time perspective shift |
 | "Bounce ideas", "brainstorm with me", "rubber-duck session", iterative dialogue | **Flux[ideate]** | Multi-turn interactive exploration |
 | "Which should we pick?", "Go/No-Go", verdict needed | **Magi** | Structured decision with vote |
@@ -151,11 +140,12 @@ Both are project-local extensions. Apply `_common/PROJECT_LOCAL_SKILLS.md` befor
 | User has options and needs a verdict, not more ideas | **Magi** | Converge and decide |
 | User wants *a specific documented thinker's* frame, not any new frame | **Magi[advisor]** | Flux invents a frame; Magi applies a documented person's |
 
-**Rule of thumb**: "Help me think about this" → Flux[ideate]. "Help me see this differently" → Flux[reframe]. "Help me decide" → Magi[decide]. **"Help me see this as _<named person>_" → Magi[advisor].**
+**Rule of thumb**: "Which option?" → Magi. "Are we asking the right question?" → Flux. Flux reframes; Magi decides. "Help me think about this" → Flux[ideate]. "Help me see this differently" → Flux[reframe]. "Help me decide" → Magi[decide]. **"Help me see this as _<named person>_" → Magi[advisor].**
 
 **The named-figure Recipe boundary is a documented individual.** A real, *named* person → Magi[advisor expert|conclave|critique]. A school/movement/collective, or no person at all → Flux. A synthetic user persona → Cast. A fixed founder-mentor archetype (no name) → Magi[advisor office-hours]. Named-figure Recipes produce a **reading, not a verdict** — every claim is tagged `ATTESTED` / `INFERRED` / `SPECULATIVE`; a requested decision continues to Magi[decide].
 
 **Chain patterns**:
+- Flux (reframe) → Magi (decide) → Builder (implement)
 - Flux[reframe] (new frame) → Flux[ideate] (explore it) → Magi (decide) → Builder (implement)
 - Flux[ideate] (brainstorm) → Spark (formalize as spec) → Builder (implement)
 - Flux[ideate] (brainstorm) → Void (cut scope) → Builder (implement)
