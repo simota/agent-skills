@@ -22,7 +22,7 @@ CAPTURE → ANALYZE → REVIEW → PROMOTE → ENFORCE
 | **PROMOTE** | Merge accepted rule into the right layer with a slug ID; index it; encode machine-checkable parts. | `RULE_PREFIX`, `LAYERS`, `MACHINE_ENCODING`, `PROMOTE_SKILLS` |
 | **ENFORCE** | Every future task reads the rules first; PR gate blocks violations; gaps become new signals. | `ENFORCE_SKILLS`, `GATE_SKILLS` |
 
-Shared invariants (do not change per instance): unique slug-based IDs (checked again when concurrent work is merged), evidence-traceable rules, deprecate-don't-delete (Archive section), `INDEX.md` discoverability, quarterly re-review cadence.
+Shared invariants (do not change per instance): unique slug-based IDs (checked again when concurrent work is merged), evidence-traceable rules, deprecate-don't-delete (Archive section), `INDEX.md` discoverability, a periodic re-review (its cadence is the `REVIEW_CADENCE` knob).
 
 ---
 
@@ -78,7 +78,7 @@ Rendering is **part scriptable, part human judgment**. Scalar tokens substitute 
    ```bash
    _templates/learning-loop-kit/_scripts/check-rendered.sh _templates/<kit-slug>-kit
    ```
-   Must print `✓ … clean`. It fails on leftover `{{TOKEN}}`, `YYYY-MM-DD`, or `<slug>`/`<LAYER>` markers outside `_templates/`.
+   Must print `✓ … clean`. It fails on leftover `{{TOKEN}}`, `YYYY-MM-DD`, `<slug>`/`<LAYER>` markers, or the unreplaced `-CORE-example` seed skeleton outside `_templates/`.
 6. **Register** in `INSTANCES.md`.
 7. **Install** into a project, running from this repository's root:
    ```bash

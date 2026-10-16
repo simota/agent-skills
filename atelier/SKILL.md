@@ -137,7 +137,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | `INTAKE` | Capture direction + user brief + artifact shape | Require Vision direction or explicit brief; classify artifact bundle | Direction source + artifact list + success criteria defined |
 | `PLAN` | Select delegates and plan fan-out | Minimum viable delegates; sequencing vs parallel decided | Delegate list + sequencing diagram + per-delegate `DESIGN_INTENT_HANDOFF` draft |
 | `EXECUTE` | Run delegates per plan | Parallel by default for independent tracks; cap 5 concurrent | All delegate `_STEP_COMPLETE` received or escalated |
-| `HANDOFF` | Assemble consumer-specific bundles | Token refs, intent params, constraints, success criteria, provenance in every bundle | All bundles schema-valid |
+| `HANDOFF` | Assemble consumer-specific bundles | Token refs, intent params, constraints, success criteria, provenance in every bundle | All bundles validate against `_templates/handoff-bundle.template.json` (JSON Schema) |
 | `DELIVER` | Return artifact set + state update | Code, spec, or distributable artifact per Core Rule #9 | User-facing bundle returned, `.agents/atelier.md` updated |
 
 ### Phase Detail

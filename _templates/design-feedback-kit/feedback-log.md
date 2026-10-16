@@ -3,7 +3,7 @@
 The audit trail of every UI/UX feedback item and what became of it. **Append new entries; preserve their original date, source, platform, and raw feedback.** Fill or update Analysis, Proposed principle, Status, Reviewed by, Decision date, Promoted to, and Reject reason as the entry progresses through the loop. Record later decision changes as appended notes so prior review history remains visible. Each entry follows `_templates/feedback-entry.md`.
 
 > Status flow: `new` → `analyzed` → (`promoted` | `rejected`). A `promoted` entry links to the principle slug it produced.
-> ID format: `FB-YYYYMMDD-<slug>` (date + short mnemonic; check uniqueness and add a source/session suffix on collision).
+> ID format: `FB-`, the capture date as eight digits, and a short mnemonic (example: `FB-20260115-double-save`); check uniqueness and add a source/session suffix on collision.
 > Promotion threshold: ≥2 independent items on a theme, OR a single high-severity item (data loss / blocked task / a11y blocker).
 > Archive: move resolved prior-year entries to `feedback-log-<YEAR>.md` when this file grows large.
 

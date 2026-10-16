@@ -245,6 +245,13 @@ Path(sys.argv[-1]).write_bytes(b'%PDF-1.7\\n' + b'x' * 1100 + b'\\n%%EOF\\n')
         self.assertIn("Done (wkhtmltopdf)", result.stdout)
         self.assertTrue(self.output.read_bytes().startswith(b"%PDF-"))
 
+    def test_generic_environment_variables_are_ignored(self):
+        """TIMEOUT/VERBOSE from the caller's shell overrode the defaults;
+        TIMEOUT=30s failed a call that passed no --timeout."""
+        self.env.update(TIMEOUT="30s", VERBOSE="true")
+        result = self.pdf("--method", "chrome", self.input, self.output)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_unknown_options_and_extra_paths_are_rejected(self):
         for args in [("--bad", self.input), ("--timeout", "0", self.input),
                      (self.input, self.output, self.work / "extra.pdf")]:
@@ -333,6 +340,88 @@ class RenderGateRegressions(CliFixtures):
         (kit / "README.md").write_text("A fully rendered kit")
         (kit / "_templates/entry.md").write_text("YYYY-MM-DD <slug>")
         self.assertEqual(self.gate(kit).returncode, 0)
+
+    def render_base(self):
+        """Copy the base kit with every token and seeded date filled in."""
+        import re
+        kit = self.work / "rendered"
+        shutil.copytree(ROOT / "_templates/learning-loop-kit/base", kit, symlinks=True)
+        for path in kit.rglob("*.md"):
+            if path.is_symlink() or "_common" in path.relative_to(kit).parts:
+                continue
+            text = re.sub(r"\{\{[A-Z_][A-Z0-9_]*\}\}", "RULE", path.read_text())
+            if "_templates" not in path.relative_to(kit).parts:
+                text = text.replace("YYYY-MM-DD", "2026-01-15")
+            path.write_text(text)
+        return kit
+
+    def test_seed_rule_skeleton_is_residue(self):
+        """A kit whose seed rule is still `<testable rule>` / `-CORE-example`
+        was reported clean."""
+        kit = self.render_base()
+        result = self.gate(kit)
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertIn("seed skeleton", result.stderr)
+        core, index = kit / "rules/core.md", kit / "rules/INDEX.md"
+        core.write_text(core.read_text()
+                        .replace("RULE-CORE-example — <imperative title>", "RULE-CORE-validate-input — Validate input")
+                        .replace("<testable rule>", "Inputs are validated").replace("<why>", "Bad data spreads")
+                        .replace("<tag>", "input").replace("<anti-example>", "Trust input")
+                        .replace("<example>", "Check types"))
+        index.write_text(index.read_text().replace("<tag>", "input")
+                         .replace("RULE-CORE-example", "RULE-CORE-validate-input"))
+        result = self.gate(kit)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_shipped_design_feedback_kit_passes_gate(self):
+        """INSTANCES.md registers it as a rendered instance; its format docs
+        used `FB-YYYYMMDD-<slug>` and failed the gate."""
+        result = self.gate(ROOT / "_templates/design-feedback-kit")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+
+class ReportTemplateRegressions(unittest.TestCase):
+    def test_every_generated_category_has_a_tag_style(self):
+        """generate-report.js emits chore/perf/style/other tags the template
+        had no `.category-*` rule for, so they rendered unstyled."""
+        import re
+        script = (ROOT / "launch/scripts/generate-report.js").read_text()
+        labels = re.search(r"const categoryLabels = \{(.*?)\};", script, re.S).group(1)
+        categories = re.findall(r"^\s*(\w+):", labels, re.M)
+        self.assertIn("other", categories)
+        html = (ROOT / "launch/templates/client-report.html").read_text()
+        for category in categories:
+            with self.subTest(category=category):
+                self.assertRegex(html, rf"\.category-{category}\s*\{{")
+
+class HandoffBundleSchema(unittest.TestCase):
+    """The template declared draft 2020-12 with no keywords, so `{}` and a
+    bundle with both Registry_Ref and inline_tokens were "schema-valid"."""
+
+    def setUp(self):
+        self.schema = json.loads((ROOT / "_templates/handoff-bundle.template.json").read_text())
+        self.example = self.schema["$template_example"]
+
+    def test_required_matches_documented_fields(self):
+        self.assertEqual(self.schema.get("type"), "object")
+        self.assertEqual(self.schema.get("required"), self.schema["$fields"]["required"])
+
+    def test_schema_rejects_invalid_bundles(self):
+        try:
+            import jsonschema
+        except ImportError:
+            self.skipTest("jsonschema is not installed")
+        validator = jsonschema.Draft202012Validator(self.schema)
+        jsonschema.Draft202012Validator.check_schema(self.schema)
+        self.assertEqual(list(validator.iter_errors(self.example)), [])
+        both = json.loads(json.dumps(self.example))
+        both["design_system"]["inline_tokens"] = {"color.primary": "#000"}
+        neither = json.loads(json.dumps(self.example))
+        neither["design_system"]["Registry_Ref"] = None
+        missing = dict(self.example)
+        del missing["acceptance_criteria"]
+        for bad in ({}, both, neither, missing):
+            self.assertFalse(validator.is_valid(bad), bad)
 
 
 if __name__ == "__main__":

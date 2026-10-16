@@ -3,6 +3,36 @@
   "title": "Handoff Bundle Template",
   "description": "Structured payload for design → code handoff. Inspired by Claude Design's handoff bundle (2026-04-17). Usage: Atelier/Vision/Forge produces this; Artisan/Builder/Claude Code consumes. Agent names are Capitalized throughout.",
   "version": "1.0.0",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "bundle_id",
+    "created_by",
+    "created_at",
+    "target",
+    "intent",
+    "design_system",
+    "acceptance_criteria",
+    "constraints",
+    "code_instructions"
+  ],
+  "properties": {
+    "bundle_id": { "type": "string", "pattern": "^bundle-[a-z0-9-]+-[0-9]{4}-[0-9]{2}-[0-9]{2}-[a-z0-9]{6}$" },
+    "design_system": {
+      "type": "object",
+      "required": ["Registry_Ref", "inline_tokens"],
+      "oneOf": [
+        { "properties": { "Registry_Ref": { "type": "string" }, "inline_tokens": { "type": "null" } } },
+        { "properties": { "Registry_Ref": { "type": "null" }, "inline_tokens": { "not": { "type": "null" } } } }
+      ]
+    },
+    "acceptance_criteria": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "constraints": {
+      "type": "object",
+      "required": ["a11y"],
+      "properties": { "a11y": { "type": "object", "required": ["wcag_level"] } }
+    }
+  },
   "$template_example": {
     "schema_version": "1.0.0",
     "bundle_id": "bundle-dashboard-2026-04-18-a1b2c3",
@@ -143,7 +173,7 @@
   "$usage": {
     "producers": ["Atelier", "Vision (via Atelier)", "Forge", "Frame"],
     "consumers": ["Artisan", "Builder", "Pixel", "Vitrine", "Claude Code"],
-    "storage": ".agents/atelier/bundle-{slug}-{date}.json",
+    "storage": ".agents/atelier/{bundle_id}.json",
     "indexing": "Append entry to .agents/atelier/INDEX.md when bundle is created"
   },
   "$rules": [

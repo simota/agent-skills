@@ -16,9 +16,9 @@ mockups/
   FB-20260115-double-save__before.png
   FB-20260115-double-save__after.png
 ```
-- Prefix with the **principle slug** (`P-<scope>-<slug>`) or **feedback ID** (`FB-YYYYMMDD-<slug>`) it belongs to so links never rot.
+- Prefix with the **principle slug** (e.g. `P-CORE-control-feedback`) or **feedback ID** (e.g. `FB-20260115-double-save`) it belongs to so links never rot.
 - Use `__do` / `__dont` / `__before` / `__after` suffixes for comparisons.
-- For Figma sources, add `P-<scope>-<slug>__name.md` with the file URL + node id (bridge via `frame` / Figma MCP).
+- For Figma sources, add a `.md` file named with the principle slug plus a `__name` suffix (e.g. `P-CORE-control-feedback__flow.md`) holding the file URL + node id (bridge via `frame` / Figma MCP).
 
 ## Linking
 Reference mockups from principle entries (in `principles/*.md`) and from feedback entries by filename, e.g. `Do: see mockups/P-CORE-control-feedback__do.png`.

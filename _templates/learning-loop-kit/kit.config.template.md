@@ -35,7 +35,7 @@ GATE_SKILLS:         ["<skill>", "..."]          # PR gate
 # --- policy ---
 PROMOTION_THRESHOLD: "<when a theme becomes a rule, e.g. '>=2 independent items OR 1 high-severity'>"
 MACHINE_ENCODING:    "<how quantitative rules auto-check, e.g. 'lint rule (Semgrep)' | 'design token' | 'alert rule' | 'none'>"
-REVIEW_CADENCE:      "quarterly"                 # re-validate rules whose Last reviewed > 90d
+REVIEW_CADENCE:      "quarterly"                 # re-validate rules whose Last reviewed is older than one period (quarterly = 90d)
 ```
 
 ## Notes per knob

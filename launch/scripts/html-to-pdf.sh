@@ -4,8 +4,9 @@
 #                       [--timeout seconds] [--verbose] input.html [output.pdf]
 set -euo pipefail
 
-TIMEOUT=${TIMEOUT:-60}
-VERBOSE=${VERBOSE:-false}
+# Defaults only: generic TIMEOUT/VERBOSE from the caller's environment are ignored.
+TIMEOUT=60
+VERBOSE=false
 METHOD=""
 INPUT_FILE=""
 OUTPUT_FILE=""
