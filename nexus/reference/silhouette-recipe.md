@@ -36,9 +36,9 @@ Silhouette's identity is four things no sibling carries together:
 | Invent a novel *mechanism* (not a look) | `eureka` | Same pre-commit discipline, different object: mechanism novelty vs visual distinctiveness |
 | Prove the surface is usable under hostile conditions | `crucible` | Floor proof; silhouette holds that floor constant but does not raise it |
 
-**Scale: 17-32 agents × ≤3 cycles, 5-9× `feature` cost.** Per-phase: P0 ≈ 1 · P1 ≈ 3 (blind default-move panel) · P1.5 ≈ 3-6 (visual prior-art sweep) · P2 ≈ 3-4 (recognition panel + sameness scoring) · P3 ≈ 3-6 per cycle (direction + implementation + re-measure + regression guards) · P4 ≈ 3 (fresh panel + derivation check) · P5 ≈ 1.
+**Scale: 17-36 agents × ≤3 cycles, 5-9× `feature` cost.** Per-phase: P0 ≈ 1 · P1 ≈ 3 (blind default-move panel) · P1.5 ≈ 3-6 (visual prior-art sweep) · P2 ≈ 3-4 (recognition panel + sameness scoring) · P3 ≈ 3-6 per cycle (direction + implementation + re-measure + regression guards) · P4 ≈ 3 (fresh panel + derivation check) · P5 ≈ 1.
 
-*Range derivation* (convention: `reference/recipe-contract.md` §1 element 7): floor = one surface, ACCEPT on cycle 1 → P0 1 + P1 3 + P1.5 3 + P2 3 + P3 3 + P4 3 + P5 1 = **17**; ceiling = a surface set, 3 cycles, wide competitor pool → P0 1 + P1 3 + P1.5 6 + P2 4 + P3 (6×3=18 with shrinking re-measures ≈ 14) + P4 3 + P5 1 = **32**. **Confirm-before-launch always** (intentional parity with `runway`/`wish`).
+*Range derivation* (convention: `reference/recipe-contract.md` §1 element 7): floor = one surface, ACCEPT on cycle 1 → P0 1 + P1 3 + P1.5 3 + P2 3 + P3 3 + P4 3 + P5 1 = **17**; ceiling = a surface set, 3 cycles, wide competitor pool → P0 1 + P1 3 + P1.5 6 + P2 4 + P3 6×3 = 18 + P4 3 + P5 1 = **36**. **Confirm-before-launch always** (intentional parity with `runway`/`wish`).
 
 **Model selection (Plan-and-Execute):** the Phase 1 default-move panel, the Phase 4 derivation check, and threshold adjudication are judgment-heavy → plan-tier (opus / Fable 5). The recognition panels, sweep, and implementation → Sonnet 5 default. The recognition panel is **engine-diverse where the hub allows** (`_common/CLI_COMPATIBILITY.md §4`) — a single model family attributing surfaces carries one set of visual priors, which is exactly the bias the test is meant to exclude.
 

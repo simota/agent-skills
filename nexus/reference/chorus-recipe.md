@@ -37,9 +37,9 @@ Chorus's identity is four things no sibling carries together:
 | Maximize one flagship screen's design | `runway` | Ceiling on one surface |
 | Only one platform ships today | `restyle` / `native` | Chorus's precondition is ≥ 2 platforms with a shared product surface |
 
-**Scale: 15-31 agents × ≤3 cycles, 5-10× `feature` cost.** Per-phase: P0 ≈ 1 · P1 ≈ 2-3 (contract authoring) · P2 ≈ 2 per platform (audit, parallel) · P3 ≈ 4-6 (both gates: idiom scoring per platform + kinship panel + transfer test) · P4 ≈ 3-7 per cycle (reconcile + re-measure both gates) · P5 ≈ 1.
+**Scale: 15-38 agents × ≤3 cycles, 5-10× `feature` cost.** Per-phase: P0 ≈ 1 · P1 ≈ 2-3 (contract authoring) · P2 ≈ 2 per platform (audit, parallel) · P3 ≈ 4-6 (both gates: idiom scoring per platform + kinship panel + transfer test) · P4 ≈ 3-7 per cycle (reconcile + re-measure both gates) · P5 ≈ 1.
 
-*Range derivation (keep reconciled when a phase figure changes):* floor = 2 platforms, one flow, ACCEPT on cycle 1 → 1+2+4+4+3+1 = **15**; ceiling = 3 platforms, multiple flows, 3 cycles → 1+3+6+6+(7+4+3, each cycle within P4's 3-7)+1 = **31**. The stated range is the sum of the per-phase figures, not an independent estimate. **Confirm-before-launch always** (intentional parity with `runway`/`silhouette`).
+*Range derivation (keep reconciled when a phase figure changes):* floor = 2 platforms, one flow, ACCEPT on cycle 1 → 1+2+4+4+3+1 = **15**; ceiling = 3 platforms, multiple flows, 3 cycles → 1+3+6+6+(7×3 = 21, P4's ceiling every cycle)+1 = **38**. The stated range is the sum of the per-phase figures, not an independent estimate. **Confirm-before-launch always** (intentional parity with `runway`/`silhouette`).
 
 **Model selection (Plan-and-Execute):** the Phase 1 Invariant/Variant Contract and the Phase 4 conflict adjudication are judgment-heavy → plan-tier (opus / Fable 5). Platform audits, gate measurement, and implementation → Sonnet 5 default. The kinship panel is engine-diverse where the hub allows.
 

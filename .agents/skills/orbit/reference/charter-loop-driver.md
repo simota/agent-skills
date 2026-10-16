@@ -27,7 +27,7 @@ These sections are **sha256-pinned at loop start** (Orbit AP-13 / AP-16 / AP-20 
 Orbit already forbids agent self-assessment for termination and requires an external gate + independent critic. Under a Charter-driven loop, the external DONE gate **is the §10 per-package DoD checklist**:
 
 - Loop is `DONE`/`SUCCESS` only when **every** DoD item passes (AC met + tests green + lint/build/typecheck + review).
-- Partial pass → `PARTIAL`; DoD run but still failing after the recovery ladder → `FAILED` (reported with output); could not be executed (blocked) → hand back to `enact` as `SKIPPED(blocked, reason)`.
+- Every DoD item that ran passes but some item is still open → `PARTIAL`; any DoD item still failing after the recovery ladder → `FAILED` (a failing item is never `PARTIAL`) (reported with output); could not be executed (blocked) → hand back to `enact` as `SKIPPED(blocked, reason)`.
 - This composes with Orbit's existing `CRITIC_MODEL` gate and `PLACEHOLDER_GREP` / mutation checks — DoD is the contract, the critic is the independent verifier of it.
 
 ## Run-log: append in enact's §9 vocabulary

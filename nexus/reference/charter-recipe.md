@@ -210,7 +210,7 @@ Derived from the human-agent-team diagnostic [Source: claude.com/blog/building-e
 
 ### Final delivery
 - [ ] All §7 gates pass (or failures reported honestly)
-- [ ] No SKIPPED or FAILED package is release-critical (else flagged in DELIVER)
+- [ ] No release-critical package is left PARTIAL, FAILED or SKIPPED (else flagged in DELIVER)
 - [ ] Run log RUN_END written; Charter §9 pointer current
 - [ ] Rollback plan (§8) ready; launch artifacts (if in scope) prepared
 ```
