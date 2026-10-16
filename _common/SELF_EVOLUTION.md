@@ -63,7 +63,7 @@ OBSERVE → MEASURE → EXTRACT → ADAPT → SAFEGUARD → PERSIST
 | Phase | Purpose | Input | Output |
 |-------|---------|-------|--------|
 | **OBSERVE** | Collect raw execution data | Task results, user feedback, tool outputs | Structured observation record |
-| **MEASURE** | Quantify effectiveness | Observation record + scoring template | Effectiveness Score (A–F) |
+| **MEASURE** | Judge effectiveness | Observation record + scoring template | Effectiveness Score (A–F) |
 | **EXTRACT** | Identify actionable patterns | Score + observation + historical journal | Candidate adjustments (max 3) |
 | **ADAPT** | Apply adjustments to internal parameters | Candidate adjustments | Updated heuristics / weights / thresholds |
 | **SAFEGUARD** | Validate changes are safe | Pre/post comparison | Approved or rolled-back changes |
@@ -73,7 +73,7 @@ OBSERVE → MEASURE → EXTRACT → ADAPT → SAFEGUARD → PERSIST
 
 **OBSERVE:** Record what happened — inputs, decisions made, outcomes, user reactions. Raw data only, no interpretation.
 
-**MEASURE:** Apply the Effectiveness Score Template (below) to quantify performance. Requires 3+ data points for meaningful scoring.
+**MEASURE:** Apply the Effectiveness Score rubric (below): rate each dimension A–F with evidence. Requires 3+ data points before assigning a label.
 
 **EXTRACT:** Compare current score against historical baseline. Identify what worked, what didn't, and why. Generate max 3 candidate adjustments per cycle.
 
@@ -122,8 +122,10 @@ Rate each dimension A–F (labels below), citing the evidence for each:
 | Adaptability | Response to novel/unexpected situations | Graceful degradation, creative solutions |
 | User_Autonomy | User empowerment vs. dependency creation | Knowledge transfer, self-service enablement |
 
-**Overall label (deterministic):** start from the Primary_Outcome label; if any other dimension is two or
-more labels lower, lower the overall label by one. The same per-dimension labels always yield the same ES.
+**Overall label (deterministic):** order the labels A > B > C > D > F, so one step is one position
+(D→F is one step). Start from the Primary_Outcome label; if any other dimension is two or more steps
+lower, lower the overall label by exactly one step (never below F). The same per-dimension labels always
+yield the same ES.
 
 ### Judgment Labels (not measured)
 

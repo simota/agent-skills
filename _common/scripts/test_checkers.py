@@ -573,6 +573,19 @@ class TestRoutingSurface(CheckerCase):
         self.append("zen/SKILL.md", "\n- legacy: `SHARD_TO_SKETCH`\n")
         self.expect_caught("routing-oracle.py", "SHARD_TO_SKETCH", "--severity", "error")
 
+    def test_a_bare_token_between_names_retired_outside_the_archive_fails(self):
+        """RO-11. `dock`/`wield` were absorbed (CHANGELOG prose only), `hex` and
+        `sonar` are battery-guarded retirees never archived: still stale names."""
+        self.append("zen/SKILL.md", "\n- legacy: `DOCK_TO_WIELD`, `HEX_TO_SONAR`\n")
+        self.expect_caught("routing-oracle.py", "DOCK_TO_WIELD", "--severity", "error")
+        self.expect_caught("routing-oracle.py", "HEX_TO_SONAR", "--severity", "error")
+
+    def test_a_common_word_beside_one_retired_name_passes(self):
+        """RO-11. Retired names that are ordinary words (`snap`, `pipe`, `hex`)
+        must not turn `SNAP_TO_GRID` or `HEX_TO_RGB` into handoff errors."""
+        self.append("gear/SKILL.md", "\nUse `SNAP_TO_GRID`, `PIPE_TO_FILE` and `HEX_TO_RGB`.\n")
+        self.expect_clean("routing-oracle.py", "--severity", "error")
+
     def test_an_identifier_that_merely_contains_to_passes(self):
         """RO-11. Any UPPER_CASE identifier with `_TO_` was read as a handoff, so
         a config key or metric name in a reference file blocked validate."""

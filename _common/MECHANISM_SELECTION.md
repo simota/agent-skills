@@ -18,7 +18,7 @@
 | **CLAUDE.md (subdir)** | when that dir is touched | lost until touched again | Low | soft | dir-specific conventions; monorepo per-team (`claudeMdExcludes`) |
 | **Rules** `.claude/rules/` | unscoped=start / scoped=on match | re-injected | Medium (Low if scoped) | soft | file-specific constraints, cross-cutting concerns |
 | **Skills** `.claude/skills/` | name+desc at start; body on invoke | re-injected, **shared budget, oldest dropped first** | **Low** | soft | procedural workflows, runbooks, checklists |
-| **Subagents** `.claude/agents/` | name+desc+tools at start; **body never enters parent** | only final message returns | **Zero until called** | soft | isolated side tasks; **nests ≤ 5 deep** |
+| **Subagents** `.claude/agents/` | name+desc+tools at start; **body never enters parent** | only final message returns | **Zero until called** | soft | isolated side tasks; nesting depth per `_common/CLI_COMPATIBILITY.md` § Claude Code Subagent Context (repo policy: no nesting — `_common/SUBAGENT.md`) |
 | **Hooks** | lifecycle events | **bypasses compaction entirely** | Low | **HARD (deterministic)** | every-time automation, hard blocks |
 | **Output styles** `.claude/output-styles/` | every session start | **never compacted** | High | **strongest file-based** | role / instruction-set changes |
 | **append-system-prompt** (CLI flag) | invocation, single run, additive only | cached after first request | Moderate | soft, **decays as you add more** | one-off tone / formatting / length |
