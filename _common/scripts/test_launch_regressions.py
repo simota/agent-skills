@@ -432,6 +432,19 @@ class HandoffBundleSchema(unittest.TestCase):
         del missing["acceptance_criteria"]
         for bad in ({}, both, neither, missing):
             self.assertFalse(validator.is_valid(bad), bad)
+        # Every required field is typed, and the subfields a consumer reads
+        # (who builds it, what it is for, which files) are themselves required.
+        for field, value in (("schema_version", None), ("created_by", False),
+                             ("created_at", 0), ("target", []), ("intent", None),
+                             ("code_instructions", None)):
+            wrong = json.loads(json.dumps(self.example))
+            wrong[field] = value
+            self.assertFalse(validator.is_valid(wrong), field)
+        for field, sub in (("target", "agent"), ("intent", "summary"),
+                           ("code_instructions", "files_to_create")):
+            hollow = json.loads(json.dumps(self.example))
+            del hollow[field][sub]
+            self.assertFalse(validator.is_valid(hollow), f"{field}.{sub}")
 
 
 if __name__ == "__main__":
