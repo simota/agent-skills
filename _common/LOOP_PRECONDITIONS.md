@@ -57,7 +57,7 @@ typed, not a failure, and it is the only honest way past a question analysis can
 
 Two further loop-engineering moves are satisfied **structurally by the executing engine**, not by this gate:
 
-- **handoff / isolation** — `orbit` runs each iteration in its own `git worktree`.
+- **handoff / isolation** — `orbit` commits each iteration on its own iteration branch (`loop/iter-<name>`), squashed on DONE; a separate `git worktree` per iteration is a design option, not what the shipped runner template does.
 - **discovery** — the goal or skill supplies the per-turn work.
 
 ## Who runs it, and when
