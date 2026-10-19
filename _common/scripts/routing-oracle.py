@@ -797,8 +797,6 @@ HANDOFF_PSEUDO_ENDPOINTS = frozenset({"USER", "AGENT", "IMPL"})
 HANDOFF_TOKEN_ALLOWLIST = {
     "NATIVE_TO_SHOWCASE": (("native/reference/handoffs.md",),
                            "legacy name, normalised to NATIVE_TO_VITRINE on receipt"),
-    "COMPETE_TO_RESEARCHER": (("compete/SKILL.md", "field/SKILL.md"),
-                              "documented Compete -> Field exception, agreed on both sides"),
     "ACCORD_TO_SCRIBE": (("scribe/reference/unified-spec/README.md",
                           "scribe/reference/unified-spec/handoff-formats.md"),
                          "legacy Accord alias, consumed until the reactivation window closes"),

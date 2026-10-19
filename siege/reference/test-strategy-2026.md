@@ -37,7 +37,7 @@ Coverage is a Goodhart-vulnerable floor metric — target → tautological tests
 | Metric | Role | Recommended threshold | Why |
 |--------|------|----------------------|-----|
 | Line coverage | floor | `≥ 80%` | Guarantees the test suite at least *executes* most lines |
-| Branch coverage | floor | `≥ 70%` | Both true and false outcomes of conditionals |
+| Branch coverage | floor | `≥ 80%` on logic-heavy modules (matches `radar/reference/coverage-strategy.md`) | Both true and false outcomes of conditionals |
 | **Mutation score (Stryker / mutmut / Pitest)** | ceiling | `break: 60` / `low: 75` / `high: 90` (matches `radar/SKILL.md`) | Defects caught vs defects possible |
 
 Teams holding a mutation gate in CI report ~70% fewer production bugs vs coverage-only teams. Apply mutation gate to changed files only (incremental mutation) to keep CI under 5 minutes.

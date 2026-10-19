@@ -14,7 +14,7 @@ These are Guardian routing/scoring thresholds, not universal test-quality guaran
 
 Route to Radar on any of:
 - High-risk file with `coverage_gap > 0.40`.
-- Hotspot with coverage `< 0.50`, or critical file with no tests.
+- Hotspot with coverage `< 0.60`, or critical file with no tests.
 - Coverage regression `> 5%` with high risk, or `regression_risk > 0.70`.
 
 ## Score

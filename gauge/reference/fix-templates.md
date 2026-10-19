@@ -285,6 +285,7 @@ When input contains `## NEXUS_ROUTING`, do not call other agents directly. Retur
 - Open questions: [blocking / non-blocking]
 - Pending Confirmations: [Trigger/Question/Options/Recommended]
 - User Confirmations: [received confirmations]
+- Verified: [claim + evidence object per `_common/HANDOFF.md`; omit only when nothing is claimed to pass/build/be done]
 - Suggested next agent: [Agent] (reason)
 - Next action: CONTINUE | VERIFY | DONE
 \```

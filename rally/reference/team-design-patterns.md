@@ -100,6 +100,6 @@ When teammate output must pass a quality bar before downstream work, spawn a ded
 
 ### Memory + Dreaming
 
-Per-teammate notes belong in `.agents/{teammate-name}.md` (journal). Cross-team learnings belong in Lore's `MEMORY.md` curation — Rally hands them off via `NEXUS_TO_LORE_HANDOFF`. Do not let teammates write directly into Lore-managed files; Lore validates and propagates patterns.
+Per-teammate notes belong in `.agents/{teammate-name}.md` (journal). Cross-team learnings belong in Lore's `MEMORY.md` curation — Rally hands them off via `RALLY_TO_LORE_HANDOFF`. Do not let teammates write directly into Lore-managed files; Lore validates and propagates patterns.
 
 When the same team pattern reappears across sessions (e.g., Pattern C Pipeline used for the third time on the same repo), prefer surfacing the pattern + ownership split to Lore so it is reused without re-derivation next session. This is the local-hub equivalent of Managed Agents' `Dreaming` between-session memory refinement.

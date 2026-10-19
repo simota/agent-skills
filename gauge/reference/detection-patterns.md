@@ -272,11 +272,11 @@
 1. Search for heading matching: `## Nexus Hub Mode` or `## Nexus` (case-insensitive, must relate to hub mode)
 2. Search for `NEXUS_ROUTING` keyword in section body
 3. Search for `NEXUS_HANDOFF` keyword
-4. Within NEXUS_HANDOFF block, verify presence of:
-   - `Step:` field
-   - `Agent:` field
+4. Within NEXUS_HANDOFF block, verify presence of the `_common/HANDOFF.md` required fields:
    - `Summary:` field
-   - `Next action:` field with `CONTINUE | VERIFY | DONE`
+   - `Next` field (`Suggested next agent:` / `Next action:` satisfy it)
+   - `Verified:` field (evidence objects) — required only when the block claims something passes, builds, or is done
+   - `Step:` / `Agent:` are optional — do not flag their absence
 
 **PARTIAL trigger:** Section exists but NEXUS_HANDOFF block missing required fields.
 

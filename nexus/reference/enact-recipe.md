@@ -60,7 +60,7 @@ The machine-readable companion (`CHARTER.roster.yaml`) is preferred for §5-§6 
 | `/nexus enact resume` | Resume from the **run-log tail** (last terminal package); skips completed packages. Run-to-completion still applies. |
 | `/nexus enact log=<path>` | Override the run-log file path. Default: derived from the Charter path (`docs/CHARTER.md` → `docs/CHARTER.run.log.md`). |
 
-Run-to-completion is the **default and enforced** behavior under `AUTORUN_FULL`. To re-introduce intermediate stops, drop to a confirming mode: `## NEXUS_GUIDED` (confirm at phase boundaries) or `## NEXUS_INTERACTIVE` (confirm every step). These are the only opt-outs; there is no per-package "pause and ask" inside `AUTORUN_FULL`.
+Run-to-completion is the **default and enforced** behavior under `AUTORUN_FULL`. To re-introduce intermediate stops, drop to a confirming mode: `## NEXUS_GUIDED` (confirm at decision points — Ask First triggers, guardrail escalations, `INTERACTION_TRIGGERS`; `_common/AUTORUN.md` § Decision-Point Transition) or `## NEXUS_INTERACTIVE` (confirm every step). These are the only opt-outs; there is no per-package "pause and ask" inside `AUTORUN_FULL`.
 
 ## Topology
 
