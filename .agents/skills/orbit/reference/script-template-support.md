@@ -132,7 +132,7 @@ echo ""
 echo "=== Bootstrap Complete ==="
 echo "Loop directory: ${LOOP_DIR}"
 echo "Artifacts: goal.md, progress.md, state.env, run-loop.sh, notify.sh${VERIFY_CMD:+, verify.sh}"
-echo "Next: run 'bash ${LOOP_DIR}/run-loop.sh' to start execution"
+echo "Next: run 'LOOP_TIMEOUT=<seconds> bash ${LOOP_DIR}/run-loop.sh' to start execution (or set USD_PER_RUN_CAP / USD_PER_ITER_CAP — the runner refuses to start without an external terminator)"
 ````
 
 ## Recovery Template (`recover.sh`)
@@ -143,10 +143,10 @@ Usage: `recover.sh [--reset-circuit] [--repin-goal] [--clear-stall] [--migrate] 
 
 | Flag | Recovers | Class |
 |------|----------|-------|
-| (none) | rebuild `state.env` from `progress.md` evidence (durable checkpoint-replay) | `STATE_DRIFT` |
+| (none) | rebuild `state.env` from `progress.md` evidence (durable checkpoint-replay); a `DONE` iteration stays `DONE` — the runner re-runs the DONE gate on every `DONE` resume and continues (or stops `BLOCKED` past `MAX_ITERATIONS`) when it fails | `STATE_DRIFT` |
 | `--reset-circuit` | delete `.circuit-state` | `CIRCUIT_OPEN` |
 | `--clear-stall` | delete `.action-sig.log` so the stall counter resets after disambiguation | `CONVERGENCE_STALL` / `OSCILLATION_LOOP` |
-| `--repin-goal` | re-pin `.goal.sha256` to current `goal.md` (only after confirming it is the intended baseline) | `GOAL_DRIFT` |
+| `--repin-goal` | re-pin `.goal.sha256` to current `goal.md` and drop `.pins.sha256` so the runner re-pins `verify.sh` / `PROMPT.md` / `.claude/settings*.json` / `PIN_PATHS` on next start (only after confirming the current files are the intended baseline) | `GOAL_DRIFT` / `VALIDATOR_GAP` / `PERMISSION_HIJACK` |
 | `--migrate` | set `CONTRACT_VERSION` to current and add missing optional fields with defaults | contract migration |
 
 ```bash
@@ -174,6 +174,14 @@ done
 echo "=== Orbit Recovery (${LOOP_DIR}) ==="
 
 CURRENT_CONTRACT_VERSION="1.2.0"
+
+# Temp-then-rename: a crash never leaves a truncated checksum or pin.
+write_atomic() {
+  local tmp
+  tmp=$(mktemp "$1.XXXXXX")
+  printf '%s\n' "$2" > "${tmp}"
+  mv "${tmp}" "$1"
+}
 
 #--- Preserve resumable fields from existing state.env (branch isolation, version, cost) ---
 ORIGIN_BRANCH=""; ITER_BRANCH=""; CONTRACT_VERSION="${CURRENT_CONTRACT_VERSION}"
@@ -213,8 +221,9 @@ if [[ "${DO_CLEAR_STALL}" == "true" ]]; then
   echo "[OK] Convergence signature log cleared — stall counter reset"
 fi
 if [[ "${DO_REPIN_GOAL}" == "true" ]] && [[ -f "${LOOP_DIR}/goal.md" ]]; then
-  shasum -a 256 "${LOOP_DIR}/goal.md" | awk '{print $1}' > "${LOOP_DIR}/.goal.sha256"
-  echo "[OK] goal.md re-pinned — confirm it is the intended baseline (GOAL_DRIFT recovery)"
+  write_atomic "${LOOP_DIR}/.goal.sha256" "$(shasum -a 256 "${LOOP_DIR}/goal.md" | awk '{print $1}')"
+  rm -f "${LOOP_DIR}/.pins.sha256"
+  echo "[OK] goal.md re-pinned; artifact pins re-taken on next runner start — confirm both are the intended baseline"
 fi
 
 # Read only the last iteration section. Free text such as "not completed" is not
@@ -235,6 +244,8 @@ if [[ -f "${LOOP_DIR}/progress.md" ]]; then
   read -r LATEST_ITER RECOVERED_STATUS <<< "${RECOVERED_EVIDENCE}"
 fi
 
+# A recovered DONE is a claim, not evidence: the runner re-runs the DONE gate
+# (done.md + verify + pins + placeholders) on every DONE resume and continues on failure.
 if [[ "${RECOVERED_STATUS}" == "BLOCKED" || "${RECOVERED_STATUS}" == "INTERRUPTED" ]]; then
   NEXT_ITER=$((LATEST_ITER > 0 ? LATEST_ITER : 1))
   [[ "${RECOVERED_STATUS}" == "INTERRUPTED" ]] && RECOVERED_STATUS="CONTINUE"
@@ -263,7 +274,7 @@ EOF
 mv "${state_tmp}" "${LOOP_DIR}/state.env"
 
 #--- Refresh checksum so the runner does not re-trigger recovery on resume ---
-shasum -a 256 "${LOOP_DIR}/state.env" | awk '{print $1}' > "${LOOP_DIR}/state.env.sha256"
+write_atomic "${LOOP_DIR}/state.env.sha256" "$(shasum -a 256 "${LOOP_DIR}/state.env" | awk '{print $1}')"
 echo "[OK] Rebuilt ${LOOP_DIR}/state.env and refreshed state.env.sha256"
 
 #--- Append recovery note to progress.md ---

@@ -298,6 +298,7 @@ When input contains `## NEXUS_ROUTING`, do not instruct direct agent calls. Retu
   - Scope: [system / service / boundary / module]
   - Threshold result: [pass / fail / conditional]
 - Artifacts: [report paths, scripts, contracts]
+- Verified: [check + result — required when claiming pass/done; omit otherwise] (`_common/HANDOFF.md`)
 - Risks: [blast radius, SLO violation, CI cost, unresolved gaps]
 - Open questions: [items that block confident execution]
 - Pending Confirmations (Trigger/Question/Options/Recommended): [if needed]

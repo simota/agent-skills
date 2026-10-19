@@ -95,7 +95,7 @@ signals:
   documentation: minimal (README only or empty)
   branches: main/master only
   age: < 30 days
-weight: 0.15 per matching signal (max 8 signals)
+weight: 0.15 per matching signal (max 8 signals; phase score capped at 1.0)
 ```
 
 ### ACTIVE_BUILD

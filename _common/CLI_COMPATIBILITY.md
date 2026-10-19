@@ -24,7 +24,7 @@ Claude Code, Codex CLI, and agy have repository installer targets. Gemini CLI an
 |---------|-------------|-----------|-----|
 | User settings | `~/.claude/settings.json` | `~/.codex/config.toml` | `~/.gemini/antigravity-cli/settings.json` |
 | Project settings | `.claude/settings.json`; local overrides `.claude/settings.local.json` | `.codex/config.toml` in trusted projects | Verify active project settings with the installed CLI; do not copy Gemini CLI paths blindly |
-| Project rules | `CLAUDE.md` plus the repository's explicit `AGENTS.md` linkage | `AGENTS.md` and applicable ancestor instructions | Verify loaded rules; apply this repository's `AGENTS.md` and agy-specific deltas |
+| Project rules | `CLAUDE.md` only — `AGENTS.md` is loaded only if `CLAUDE.md` imports it (`@AGENTS.md`); this repository's `CLAUDE.md` does not | `AGENTS.md` and applicable ancestor instructions | Verify loaded rules; apply this repository's `AGENTS.md` and agy-specific deltas |
 | MCP | `.mcp.json` project; user/local MCP config in `~/.claude.json` | `[mcp_servers.<name>]` in `config.toml` | `~/.gemini/config/mcp_config.json`; project `.agents/mcp_config.json` |
 
 Inspect only non-secret configuration needed for the task. Never recursively read auth stores, credentials, tokens, shell environments, or private global instructions merely to detect a runtime. Managed policy and enforced permissions cannot be overridden by a skill or AUTORUN mode.

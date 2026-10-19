@@ -18,6 +18,7 @@ Canonical inbound/outbound handoff token vocabulary for Orbit. Preserve token sp
 |-----------|-------|
 | Nexus -> Orbit | `NEXUS_TO_ORBIT_CONTEXT` |
 | PDM -> Orbit | `PDM_TO_ORBIT_HANDOFF` |
+| Sigil -> Orbit | `SIGIL_BLUEPRINT_TO_ORBIT_HANDOFF` (`loop_spec`: workflow, goal, stop condition, operation contract — `sigil/reference/operating-layer-handoffs.md`) |
 | Orbit -> Nexus | `ORBIT_TO_NEXUS_HANDOFF` |
 | Orbit -> Builder | `ORBIT_TO_BUILDER_HANDOFF` |
 | Orbit -> Guardian | `ORBIT_TO_GUARDIAN_HANDOFF` |
@@ -27,6 +28,8 @@ Canonical inbound/outbound handoff token vocabulary for Orbit. Preserve token sp
 | Orbit -> Beacon | `ORBIT_TO_BEACON_HANDOFF` |
 | Orbit -> Triage | `ORBIT_TO_TRIAGE_HANDOFF` |
 | Judge -> Orbit | `QUALITY_FEEDBACK` |
+
+Outbound `ORBIT_TO_*` tokens are subject to each receiver's own input contract. Orbit is project-local; global skills do not list project-local senders by design (`_common/PROJECT_LOCAL_SKILLS.md`: "Global profiles MUST NOT list project-local skills"), so a receiver will not name Orbit or these tokens. Send the payload in a shape the receiver already accepts (via Nexus where it routes), and do not treat a missing receiver-side entry as a broken handoff. Likewise `NEXUS_TO_ORBIT_CONTEXT` is Orbit's name for the Nexus delegation context (`_AGENT_CONTEXT` / `## NEXUS_ROUTING`), not a token Nexus is required to emit.
 
 ## Mode Priority
 
@@ -78,7 +81,7 @@ _STEP_COMPLETE:
 - Agent: Orbit
 - Task_Type: LOOP_OPS
 - Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-- Output: <contract-focused summary>
+- Output: <contract-focused summary; package terminal status such as SKIPPED goes here, never in Status>
 - Handoff: <target agent or NONE>
 - Next: <CONTINUE|VERIFY|DONE>
 - Reason: <why this next action is safest>

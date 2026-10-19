@@ -913,7 +913,7 @@ a:focus-visible, .btn:focus-visible, .filter-btn:focus-visible, .lang-btn:focus-
     <h1 data-i18n="hero.title"><span class="accent">90</span>のグローバルAIエージェント<br><small>+ 3 project-local extensions</small></h1>
     <p data-i18n="hero.desc">バグ調査、セキュリティ監査、UI/UX、リリース管理まで — 開発のあらゆる領域を専門エージェントがカバー。Claude Code・Codex CLI・Antigravity CLI で今日から使えるオープンソースエコシステム。</p>
     <div class="hero-copy-cmd">
-      <code>git clone https://github.com/simota/agent-skills.git ~/.claude/skills</code>
+      <code>git clone https://github.com/simota/agent-skills.git ~/repos/agent-skills &amp;&amp; cd ~/repos/agent-skills &amp;&amp; make link</code>
       <button class="hero-copy-btn" id="heroCopyBtn" aria-label="コマンドをコピー">Copy</button>
     </div>
     <div class="hero-cta">
@@ -976,7 +976,7 @@ a:focus-visible, .btn:focus-visible, .filter-btn:focus-visible, .lang-btn:focus-
     <div class="section-header fade-in">
       <div class="section-label">Features</div>
       <h2 class="section-title" data-i18n="features.title">なぜ Agent Skills なのか</h2>
-      <p class="section-desc" data-i18n="features.desc">git clone ひとつで、専門エージェントチームがあなたのCLIに加わります</p>
+      <p class="section-desc" data-i18n="features.desc">git clone と make link だけで、専門エージェントチームがあなたのCLIに加わります</p>
     </div>
     <div class="features-grid">
       <div class="feature-card fade-in">
@@ -991,8 +991,8 @@ a:focus-visible, .btn:focus-visible, .filter-btn:focus-visible, .lang-btn:focus-
       </div>
       <div class="feature-card fade-in">
         <div class="feature-icon" style="background: rgba(63,185,80,0.12); color: var(--c-implementation);">D+</div>
-        <h3 data-i18n="features.evolve.title">自己進化エコシステム</h3>
-        <p data-i18n="features.evolve.desc">Darwin がフィットネスを監視し、Lore が横断知識を伝播。エージェント間で学びが循環し、プロジェクトを重ねるほど連携が洗練されていきます。</p>
+        <h3 data-i18n="features.evolve.title">自己進化するリポジトリ</h3>
+        <p data-i18n="features.evolve.desc">このリポジトリ内部では Darwin がフィットネスを監視し、Lore が横断知識を伝播してスキル群自体を磨き続けます（project-local スキルのため <code>make link</code> ではインストールされません）。</p>
       </div>
     </div>
   </div>
@@ -1226,17 +1226,17 @@ a:focus-visible, .btn:focus-visible, .filter-btn:focus-visible, .lang-btn:focus-
       <div class="platform-card">
         <span class="platform-icon" style="font-family:var(--font-mono); font-size:1.2rem; color:var(--c-orchestration);">~/.claude</span>
         <h3>Claude Code</h3>
-        <p data-i18n="platforms.claude.desc">~/.claude/skills/ にクローンすれば準備完了。/Scout や /Nexus のようにスラッシュコマンドでエージェントを即座に呼び出せます。</p>
+        <p data-i18n="platforms.claude.desc"><code>make link-claude</code> で ~/.claude/skills/ に symlink（直接クローンも可）。/Scout や /Nexus のようにスラッシュコマンドでエージェントを即座に呼び出せます。</p>
       </div>
       <div class="platform-card">
         <span class="platform-icon" style="font-family:var(--font-mono); font-size:1.2rem; color:var(--c-investigation);">AGENTS</span>
         <h3>Codex CLI</h3>
-        <p data-i18n="platforms.codex.desc">AGENTS.md にスキルパスを記述して統合。詳細は共通の CLI 互換性ガイドを参照してください。</p>
+        <p data-i18n="platforms.codex.desc"><code>make link-codex</code> で各スキルを ~/.agents/skills/ に symlink。実行の詳細は共通の CLI 互換性ガイドを参照してください。</p>
       </div>
       <div class="platform-card">
         <span class="platform-icon" style="font-family:var(--font-mono); font-size:1.2rem; color:var(--c-implementation);">GEMINI</span>
         <h3>Antigravity CLI</h3>
-        <p data-i18n="platforms.gemini.desc">GEMINI.md にスキルパスを設定して統合。Builder の画像レシピを使えば Gemini API 画像生成も活用できます。</p>
+        <p data-i18n="platforms.gemini.desc"><code>make link-agy</code> で各スキルを ~/.gemini/antigravity-cli/skills/ に symlink。Builder の画像レシピを使えば Gemini API 画像生成も活用できます。</p>
       </div>
     </div>
     <div class="platform-note fade-in" data-i18n="platforms.note">
@@ -1603,13 +1603,13 @@ const TRANSLATIONS = {
     'hero.desc': 'From bug investigation and security audits to UI/UX and release management — specialist agents cover every area of development. An open-source ecosystem for Claude Code, Codex CLI, and Antigravity CLI.',
     'hero.github': 'View on GitHub',
     'features.title': 'Why Agent Skills',
-    'features.desc': 'One git clone adds a team of specialist agents to your CLI',
+    'features.desc': 'One git clone and make link add a team of specialist agents to your CLI',
     'features.nexus.title': 'Nexus Orchestrator',
     'features.nexus.desc': 'Just say "fix this bug" and it auto-designs Scout → Builder → Radar. Analyzes task type and complexity to instantly assemble the optimal agent chain.',
     'features.team.title': 'Expert Team Across 14 Domains',
     'features.team.desc': '14 categories covering investigation, implementation, testing, security, UI/UX, AI/ML, infrastructure, and documentation. Each agent brings deep domain expertise to make expert decisions on your behalf.',
-    'features.evolve.title': 'Self-Evolving Ecosystem',
-    'features.evolve.desc': 'Darwin monitors fitness while Lore propagates cross-cutting knowledge. Learning circulates between agents, refining collaboration with every project.',
+    'features.evolve.title': 'Self-Evolving Repository',
+    'features.evolve.desc': 'Inside this repository, Darwin monitors fitness and Lore propagates cross-cutting knowledge to keep refining the skills themselves (repository-internal project-local skills — <code>make link</code> does not install them).',
     'workflow.title': 'Just Tell It. The Team Moves.',
     'workflow.desc': 'Describe your task in natural language. Nexus handles the rest.',
     'workflow.step1.title': 'Describe Your Task',
@@ -1641,9 +1641,9 @@ const TRANSLATIONS = {
     'catalog.empty': 'No matching agents found',
     'platforms.title': 'Multi-Platform Support',
     'platforms.desc': 'Markdown-based skill files work with any AI CLI',
-    'platforms.claude.desc': 'Clone to ~/.claude/skills/ and you\'re ready. Invoke agents instantly with slash commands like /Scout or /Nexus.',
-    'platforms.codex.desc': 'Integrate by adding skill paths to AGENTS.md. See the shared CLI compatibility guide for execution details.',
-    'platforms.gemini.desc': 'Integrate by setting skill paths in GEMINI.md. Use Builder image recipes to leverage Gemini API image generation.',
+    'platforms.claude.desc': '<code>make link-claude</code> symlinks into ~/.claude/skills/ (or clone straight there). Invoke agents instantly with slash commands like /Scout or /Nexus.',
+    'platforms.codex.desc': '<code>make link-codex</code> symlinks each skill into ~/.agents/skills/. See the shared CLI compatibility guide for execution details.',
+    'platforms.gemini.desc': '<code>make link-agy</code> symlinks each skill into ~/.gemini/antigravity-cli/skills/. Use Builder image recipes to leverage Gemini API image generation.',
     'platforms.note': 'All skills are written in standard Markdown (SKILL.md) and work with any AI CLI tool',
     'install.title': 'Get Started Now',
     'install.desc': 'Two ways in — share one tree across every CLI, or clone straight in',
@@ -2110,7 +2110,7 @@ document.querySelectorAll('.copy-btn').forEach(btn => {
    Hero Copy Button
    ========================================== */
 document.getElementById('heroCopyBtn').addEventListener('click', function() {
-  const text = 'git clone https://github.com/simota/agent-skills.git ~/.claude/skills';
+  const text = 'git clone https://github.com/simota/agent-skills.git ~/repos/agent-skills && cd ~/repos/agent-skills && make link';
   copyCommand(this, text);
 });
 </script>

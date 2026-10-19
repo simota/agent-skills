@@ -488,7 +488,7 @@ Orbit is project-local. Apply `_common/PROJECT_LOCAL_SKILLS.md`; when unavailabl
 | "Adopt Liquid Glass / Material 3 Expressive" | **Native** | iOS 26 / Android 16 modern surfaces |
 | "Finalize Privacy Manifest / Data Safety" | **Native** → Cloak | Implementation then privacy review |
 | "Integrate Passkey / Credential Manager" | **Native** → Crypt | Implementation then crypto review |
-| "TestFlight phased release / Play staged rollout" | **Native** → Launch | Implementation then release planning |
+| "App Store phased release / Play staged rollout" | **Native** → Launch | Implementation then release planning |
 | "Implement in React Native / Flutter / KMP / CMP" | **out of scope** | Out of Native scope. Forge for RN / Flutter / Expo prototypes only; production cross-platform UI requires external implementation; KMP shared logic under native UI → Port hybrid blueprint, Builder implements |
 | "Version migration of framework / library / DB (same language)" | **Shift** `framework`/`lang` | Same-language migration orchestrator |
 | "Detect deprecated libraries and replace with native APIs" | **Shift** `detect`/`modernize` | Modernization scan (absorbed from horizon) |

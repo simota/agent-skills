@@ -56,18 +56,18 @@ PREMIUM_LP_STAGE_BUNDLE:
 
 ## AUTORUN-Gate Matrix
 
-When `_AGENT_CONTEXT.mode = AUTORUN` or `AUTORUN_FULL`, the following stage activities MUST emit `_STEP_COMPLETE.Status = NEED_INFO` and pause — they never proceed silently:
+When `_AGENT_CONTEXT.mode = AUTORUN` or `AUTORUN_FULL`, the following stage activities MUST emit `_STEP_COMPLETE.Status = BLOCKED` with a pending confirmation (`_common/HANDOFF.md` Pending Confirmations) and pause — they never proceed silently:
 
 | Trigger | Action |
 |---------|--------|
-| Brand System triple lock incomplete at STRATEGY exit | NEED_INFO with missing piece (archetype / story / positioning) |
-| External paid API would be called (Builder image gen, etc.) | NEED_INFO with budget estimate |
-| Recipe switch mid-pipeline | NEED_INFO with artifact-compatibility list |
-| Fan-out would exceed 5 concurrent delegates (including cross-stage specialists) | NEED_INFO with batching proposal |
-| `Brief carries two unrelated value propositions` detected | NEED_INFO with one-promise question |
-| Stage gate fails twice in a row | NEED_INFO with repair-or-cut choice |
-| External API outage > 2 retries (Frame/Figma MCP, Builder) | NEED_INFO with fallback options |
-| Sentinel high-severity finding requires Builder dispatch | NEED_INFO with routing recommendation |
+| Brand System triple lock incomplete at STRATEGY exit | BLOCKED + pending confirmation: missing piece (archetype / story / positioning) |
+| External paid API would be called (Builder image gen, etc.) | BLOCKED + pending confirmation: budget estimate |
+| Recipe switch mid-pipeline | BLOCKED + pending confirmation: artifact-compatibility list |
+| Fan-out would exceed 5 concurrent delegates (including cross-stage specialists) | BLOCKED + pending confirmation: batching proposal |
+| `Brief carries two unrelated value propositions` detected | BLOCKED + pending confirmation: one-promise question |
+| Stage gate fails twice in a row | BLOCKED + pending confirmation: repair-or-cut choice |
+| External API outage > 2 retries (Frame/Figma MCP, Builder) | BLOCKED + pending confirmation: fallback options |
+| Sentinel high-severity finding requires Builder dispatch | BLOCKED + pending confirmation: routing recommendation |
 
 ## Delegate Outage Protocol
 

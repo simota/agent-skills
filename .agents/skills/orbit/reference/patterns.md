@@ -154,17 +154,26 @@ case "$current_mode" in
   build) prompt_file="PROMPT_build.md" ;;
 esac
 
-cat "$prompt_file" | $EXEC_CMD
+# EXEC_CMD is one shell string (executor contract): parse it with bash -c, never word-split.
+bash -c "${EXEC_CMD}" < "${prompt_file}"
 
 # Mode switch after iteration
-fix_plan_items=$(grep -c '^- \[ \]' fix_plan.md 2>/dev/null || echo 0)
+# grep -c prints 0 *and* exits 1 on no match; `|| echo 0` would yield "0\n0".
+fix_plan_items=$(grep -c '^- \[ \]' fix_plan.md 2>/dev/null) || fix_plan_items=0
+# The runner never writes a stall marker to state.env and stops BLOCKED once
+# CONVERGENCE_WINDOW signatures repeat — flip to plan mode one repeat earlier.
+sig_log="${LOOP_DIR}/.action-sig.log"
+stalling=false
+if [[ -f "${sig_log}" ]] && [[ "$(wc -l < "${sig_log}")" -ge 2 ]] \
+   && [[ "$(tail -n 2 "${sig_log}" | sort -u | wc -l)" -eq 1 ]]; then
+  stalling=true
+fi
 case "$current_mode" in
   plan)
-    [[ $fix_plan_items -ge 1 ]] && echo "build" > "$mode_file"
+    [[ "${fix_plan_items}" -ge 1 ]] && echo "build" > "$mode_file"
     ;;
   build)
-    if [[ $fix_plan_items -eq 0 ]] || \
-       grep -q "CONVERGENCE_STALL\|OSCILLATION_LOOP" "${LOOP_DIR}/state.env"; then
+    if [[ "${fix_plan_items}" -eq 0 ]] || [[ "${stalling}" == "true" ]]; then
       echo "plan" > "$mode_file"
       # Archive disposable plan on re-entry
       cp fix_plan.md "IMPLEMENTATION_PLAN_archive_$(date -u +%Y%m%dT%H%M%SZ).md"
@@ -176,11 +185,11 @@ esac
 Rules:
 - `PROMPT_plan.md` may write `fix_plan.md`, `IMPLEMENTATION_PLAN.md`; must not touch source or tests.
 - `PROMPT_build.md` may write source, tests, `progress.md`; must not touch spec, plan, AGENTS.md.
-- Mode flips on empty plan, convergence stall, or oscillation; never on a single failed iter.
+- Mode flips on empty plan or a repeated iteration signature (one short of the runner's `CONVERGENCE_STALL` stop); never on a single failed iter. Oscillation detection is an audit/design-time guard — not enforced by the shipped template.
 
 ## 11. Worktree-per-Iteration Isolation
 
-Use when `WORKTREE_ISOLATION=true` (default for Ralph-style runners; recommended for any unattended loop).
+Design pattern for a custom runner (audit/design-time guard — not enforced by the shipped template: the shipped `run-loop.sh` has no `WORKTREE_ISOLATION` switch and isolates with `BRANCH_ISOLATION`). Recommended for Ralph-style and parallel unattended loops.
 
 ```bash
 # Per-iteration worktree
@@ -191,7 +200,7 @@ branch_name="orbit/${LOOP_NAME}/${iter_id}"
 git worktree add -b "$branch_name" "$worktree_dir" HEAD
 
 # Run iteration inside the worktree
-( cd "$worktree_dir" && $EXEC_CMD < "$prompt_file" )
+( cd "$worktree_dir" && bash -c "${EXEC_CMD}" < "$prompt_file" )
 iter_status=$?
 
 # Verify still runs against the worktree
@@ -212,17 +221,17 @@ fi
 ```
 
 Guarantees:
-- Iteration cannot mutate the parent worktree's `.git/`, `tests/`, or `verify.sh` if they are sha256-pinned in the parent.
+- Iteration cannot mutate the parent worktree's `.git/`, `tests/`, or `verify.sh`; the shipped runner's pins (`.pins.sha256`: `verify.sh`, plus `tests/` via `PIN_PATHS`) detect such a mutation when there is no worktree.
 - Rollback is `git worktree remove` — no `git reset --hard`, no risk of `.git/` corruption (AP-14).
 - Parallel loops share the same `.git/` safely via worktree isolation rather than separate clones.
 
 ## 12. Independent Critic Gate
 
-Use as part of the `VERIFY` phase before the DONE Evidence Gate.
+Use as part of the `VERIFY` phase before the DONE Evidence Gate. This is an audit/design-time guard — not enforced by the shipped template — enforce it by calling the critic from `verify.sh` (a `REJECT` makes verify fail).
 
 ```bash
 # Run primary iteration with PRIMARY_MODEL
-primary_output=$(cat "$prompt_file" | claude --model "$PRIMARY_MODEL")
+primary_output=$(claude -p --model "$PRIMARY_MODEL" < "$prompt_file")
 
 # Independent critic with different model + different system prompt
 critic_prompt=$(cat <<EOF
@@ -241,7 +250,7 @@ CHECK FOR:
 Output a single line: APPROVE | REJECT: <one-line reason>
 EOF
 )
-critic_verdict=$(echo "$critic_prompt" | claude --model "$CRITIC_MODEL" --system "Be skeptical. Default to REJECT when in doubt.")
+critic_verdict=$(claude -p --model "$CRITIC_MODEL" --system-prompt "Be skeptical. Default to REJECT when in doubt." <<< "$critic_prompt")
 
 if [[ "$critic_verdict" =~ ^APPROVE ]]; then
   # Advance to DONE Evidence Gate

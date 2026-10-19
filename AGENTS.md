@@ -1,6 +1,6 @@
 # AGENTS.md — claude-skills
 
-Cross-tool agent instructions for this repository. Read by **Antigravity CLI (`agy`)**, **Claude Code**, **Cursor**, and any other tool that honors the Agentic AI Foundation `AGENTS.md` standard.
+Cross-tool agent instructions for this repository. Read by **Codex CLI**, **Antigravity CLI (`agy`)**, **Cursor**, and any other tool that honors the Agentic AI Foundation `AGENTS.md` standard. **Claude Code** loads `CLAUDE.md`, not this file — `CLAUDE.md` does not import `AGENTS.md`, so these rules reach Claude Code sessions only where `CLAUDE.md` restates them.
 
 > **Authority order**: `AGENTS.md` (this file, cross-tool common rules) → tool-specific overrides (`CLAUDE.md` for Claude Code; `GEMINI.md` for agy, if present). Tool-specific files should contain only deltas, not duplicates.
 

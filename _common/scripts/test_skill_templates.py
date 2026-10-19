@@ -55,6 +55,7 @@ class LoopTemplateTests(unittest.TestCase):
             "AUTOCOMMIT": "false", "BRANCH_ISOLATION": "false",
             "MAX_ITERATIONS": "1", "RETRY_LIMIT": "1", "EXEC_CMD": "true",
             "CONVERGENCE_WINDOW": "3", "SQUASH_ON_DONE": "false",
+            "SQUASH_MSG_ENGINE": "none", "ALLOW_UNBOUNDED_RUN": "true",
         }
         return subprocess.run(["bash", str(path), *args], cwd=self.cwd,
                               env={**fixture_environment(), **defaults, **(env or {})},
@@ -244,7 +245,7 @@ class LoopTemplateTests(unittest.TestCase):
         prefix = template("run-loop.sh").split("#--- Circuit breaker ---", 1)[0]
         result = subprocess.run(["bash", "-c", prefix + '\nemit_log INFO sample detail "$DETAIL"\n'],
                                 cwd=self.cwd, env={**fixture_environment(), "LOOP_DIR": str(self.loop),
-                                "AUTOCOMMIT": "false", "DETAIL": 'a "quote" and\\slash\nnext\tline'},
+                                "AUTOCOMMIT": "false", "ALLOW_UNBOUNDED_RUN": "true", "DETAIL": 'a "quote" and\\slash\nnext\tline'},
                                 text=True, capture_output=True, timeout=10)
         self.assertEqual(result.returncode, 0, result.stderr)
         rows = [json.loads(line) for line in (self.loop / "runner.jsonl").read_text().splitlines()]

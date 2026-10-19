@@ -18,9 +18,15 @@ Primary output of Orbit. Drives autonomous loop execution from goal to `DONE`.
 set -euo pipefail
 
 #--- Configuration (customize per goal) ---
-LOOP_DIR="${LOOP_DIR:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)}"
-LOOP_DIR="$(cd -- "${LOOP_DIR}" && pwd)"
+# Physical paths (pwd -P): git reports the physical top level, so a symlinked
+# checkout path must not defeat runtime-file exclusion.
+LOOP_DIR="${LOOP_DIR:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)}"
+LOOP_DIR="$(cd -- "${LOOP_DIR}" && pwd -P)"
+# The executor runs in the project root (default: the directory the runner was launched from).
+PROJECT_ROOT="$(cd -- "${PROJECT_ROOT:-.}" && pwd -P)"
+cd -- "${PROJECT_ROOT}"
 REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || true)
+[[ -z "${REPO_ROOT}" ]] || REPO_ROOT="$(cd -- "${REPO_ROOT}" && pwd -P)"
 MAX_ITERATIONS="${MAX_ITERATIONS:-20}"
 RETRY_LIMIT="${RETRY_LIMIT:-3}"
 RETRY_BACKOFF_BASE="${RETRY_BACKOFF_BASE:-2}"
@@ -44,47 +50,98 @@ CIRCUIT_COOLDOWN="${CIRCUIT_COOLDOWN:-300}"
 TOOL_TIMEOUT="${TOOL_TIMEOUT:-120}"
 ITER_TIMEOUT="${ITER_TIMEOUT:-${EXEC_TIMEOUT}}"
 STRUCTURED_LOG="${STRUCTURED_LOG:-true}"
-COST_TRACKING="${COST_TRACKING:-false}"
-TOKEN_BUDGET="${TOKEN_BUDGET:-0}"
+KILL_GRACE="${KILL_GRACE:-10}"               # seconds between SIGTERM and SIGKILL inside a timeout
 
 #--- External terminators (beyond MAX_ITERATIONS) ---
 # Core Contract: termination MUST be enforced externally (iteration cap, timeout, budget).
 LOOP_TIMEOUT="${LOOP_TIMEOUT:-0}"            # total wall-clock seconds; 0 = unlimited
 USD_PER_RUN_CAP="${USD_PER_RUN_CAP:-0}"      # absolute USD cap per run; 0 = unlimited
 USD_PER_ITER_CAP="${USD_PER_ITER_CAP:-0}"    # absolute USD cap per iteration; 0 = unlimited
+ALLOW_UNBOUNDED_RUN="${ALLOW_UNBOUNDED_RUN:-false}" # true only for an attended run with all three at 0
 # Executors that know their cost append a USD float line to ${LOOP_DIR}/.cost-usd each iteration.
+# Validate before use: "1m" or "2.5" would pass the refusal below yet disable the deadline.
+for limit_var in LOOP_TIMEOUT EXEC_TIMEOUT KILL_GRACE; do
+  [[ "${!limit_var}" =~ ^(0|[1-9][0-9]*)$ ]] || { echo "[ABORT] ${limit_var}=${!limit_var} must be whole seconds"; exit 1; }
+done
+for limit_var in USD_PER_RUN_CAP USD_PER_ITER_CAP; do
+  [[ "${!limit_var}" =~ ^[0-9]+([.][0-9]+)?$ ]] || { echo "[ABORT] ${limit_var}=${!limit_var} must be a USD amount"; exit 1; }
+done
+limit_set() { awk -v v="$1" 'BEGIN{exit !(v + 0 > 0)}'; }
+if ! limit_set "${LOOP_TIMEOUT}" && ! limit_set "${USD_PER_RUN_CAP}" && ! limit_set "${USD_PER_ITER_CAP}" \
+   && [[ "${ALLOW_UNBOUNDED_RUN}" != "true" ]]; then
+  echo "[ABORT] No external terminator beyond MAX_ITERATIONS — set LOOP_TIMEOUT, USD_PER_RUN_CAP or USD_PER_ITER_CAP (ALLOW_UNBOUNDED_RUN=true only for an attended run)"
+  exit 1
+fi
 
 #--- Semantic-stall & evidence gates ---
-CONVERGENCE_THRESHOLD="${CONVERGENCE_THRESHOLD:-0.85}"
 CONVERGENCE_WINDOW="${CONVERGENCE_WINDOW:-3}"
 PLACEHOLDER_GREP="${PLACEHOLDER_GREP:-true}"
 GOAL_IMMUTABLE="${GOAL_IMMUTABLE:-true}"
+# Pinned at first start, rechecked every iteration (AP-13 / AP-20 / RP-1): verify.sh and
+# PROMPT.md in LOOP_DIR and PROJECT_ROOT, PROJECT_ROOT/.claude/settings{,.local}.json,
+# plus PIN_PATHS (colon-separated, PROJECT_ROOT-relative files or directories, e.g. "tests").
+ARTIFACT_PINS="${ARTIFACT_PINS:-true}"
+PIN_PATHS="${PIN_PATHS:-}"
+
+#--- Process groups (macOS + Linux) ---
+# Every executor/verify job leads its own process group — with or without a local
+# limit — so a stop signal reaches the whole tree, grandchildren included. setsid
+# where available (Linux); perl's POSIX::setsid otherwise (macOS). The job has no
+# controlling terminal: EXEC_CMD must be a non-interactive (headless) invocation.
+if command -v setsid >/dev/null 2>&1; then
+  GROUP_CMD=(setsid)
+  setsid -w true >/dev/null 2>&1 && GROUP_CMD=(setsid -w)
+elif command -v perl >/dev/null 2>&1; then
+  GROUP_CMD=(perl -MPOSIX -e 'POSIX::setsid(); exec { $ARGV[0] } @ARGV or die "exec: $!\n"')
+else
+  GROUP_CMD=() # no group: signals reach the job's top process only
+fi
 
 #--- Portable timeout (macOS + Linux) ---
+# SIGTERM first, SIGKILL at the hard limit: TERM fires at secs - grace, KILL at secs,
+# grace = min(KILL_GRACE, secs / 2). Sets TIMEOUT_CMD, the prefix run_with_budget
+# places between the process-group launcher and the command.
 portable_timeout() {
-  local secs="$1"; shift
-  if command -v timeout >/dev/null 2>&1; then
-    timeout --signal=KILL "${secs}" "$@"
+  local secs="$1" grace
+  grace=$(( KILL_GRACE < secs / 2 ? KILL_GRACE : secs / 2 ))
+  if command -v timeout >/dev/null 2>&1 && [[ "${grace}" -gt 0 ]]; then
+    TIMEOUT_CMD=(timeout --signal=TERM --kill-after="${grace}" "$((secs - grace))")
+  elif command -v timeout >/dev/null 2>&1; then
+    TIMEOUT_CMD=(timeout --signal=KILL "${secs}")
+  elif command -v gtimeout >/dev/null 2>&1 && [[ "${grace}" -gt 0 ]]; then
+    TIMEOUT_CMD=(gtimeout --signal=TERM --kill-after="${grace}" "$((secs - grace))")
   elif command -v gtimeout >/dev/null 2>&1; then
-    gtimeout --signal=KILL "${secs}" "$@"
+    TIMEOUT_CMD=(gtimeout --signal=KILL "${secs}")
   else
-    perl -e '
+    TIMEOUT_CMD=(perl -e '
       use POSIX ":sys_wait_h";
-      my $timeout = shift @ARGV;
+      my ($timeout, $grace) = splice @ARGV, 0, 2;
       my $pid = fork // die "fork: $!";
       if ($pid == 0) {
         setpgrp(0, 0) or die "setpgrp: $!";
         exec { $ARGV[0] } @ARGV or die "exec: $!";
       }
-      local $SIG{ALRM} = sub {
+      # The group outlives its leader: wait for the group, not just the direct child.
+      sub stop {
+        my ($code) = @_;
+        kill "TERM", -$pid; kill "TERM", $pid;
+        for (1 .. $grace) { waitpid($pid, WNOHANG); last unless kill 0, -$pid; sleep 1; }
         kill 9, -$pid; kill 9, $pid;
-        waitpid($pid, 0); exit 124;
-      };
-      alarm $timeout;
+        waitpid($pid, 0); exit $code;
+      }
+      local $SIG{ALRM} = sub { stop(124) };
+      local $SIG{TERM} = sub { stop(143) };
+      alarm($timeout - $grace);
       waitpid($pid, 0);
       my $status = $?;
+      if (kill 0, -$pid) { # leader gone, descendants left: reap them (alarm still armed)
+        kill "TERM", -$pid;
+        for (1 .. $grace) { last unless kill 0, -$pid; sleep 1; }
+        kill 9, -$pid;
+      }
+      alarm(0);
       exit(($status & 127) ? 128 + ($status & 127) : $status >> 8);
-    ' "${secs}" "$@"
+    ' "${secs}" "${grace}")
   fi
 }
 
@@ -214,12 +271,15 @@ load_circuit_state() {
 }
 
 save_circuit_state() {
-  cat > "${CIRCUIT_FILE}" <<CB_EOF
+  local tmp
+  tmp=$(mktemp "${CIRCUIT_FILE}.XXXXXX")
+  cat > "${tmp}" <<CB_EOF
 CB_STATE=${CB_STATE:-CLOSED}
 CB_FAIL_COUNT=${CB_FAIL_COUNT}
 CB_LAST_SIGNATURE=${CB_LAST_SIGNATURE}
 CB_LAST_UPDATED=$(date +%s)
 CB_EOF
+  mv "${tmp}" "${CIRCUIT_FILE}"
 }
 
 check_circuit() {
@@ -276,8 +336,9 @@ record_circuit_success() {
 }
 
 #--- Budget gate (reads optional executor-emitted ${LOOP_DIR}/.cost-usd) ---
-# Never run unmonitored loops without budget caps. Enforcement is a no-op only when
-# both caps are 0 AND no cost signal exists; otherwise caps are hard external terminators.
+# A cap of 0 disables that cap. A non-zero cap is a hard external terminator, but it
+# can only fire when the executor appends its cost to .cost-usd — no cost signal means
+# no budget enforcement, so pair USD caps with LOOP_TIMEOUT for executors that emit none.
 cost_total_usd() {
   [[ -f "${LOOP_DIR}/.cost-usd" ]] || { echo 0; return; }
   awk '{s+=$1} END{printf "%.4f", s+0}' "${LOOP_DIR}/.cost-usd"
@@ -394,6 +455,14 @@ load_state() {
   done < "${LOOP_DIR}/state.env"
 }
 
+# Temp-then-rename: a crash never leaves a truncated checkpoint or pin.
+write_atomic() {
+  local tmp
+  tmp=$(mktemp "$1.XXXXXX")
+  printf '%s\n' "$2" > "${tmp}"
+  mv "${tmp}" "$1"
+}
+
 write_state() {
   local next="$1" status="$2" tmp key
   tmp=$(mktemp "${LOOP_DIR}/state.env.XXXXXX")
@@ -412,17 +481,57 @@ STATE_EOF
     fi
   done
   mv "${tmp}" "${LOOP_DIR}/state.env"
-  shasum -a 256 "${LOOP_DIR}/state.env" | awk '{print $1}' > "${LOOP_DIR}/state.env.sha256"
+  write_atomic "${LOOP_DIR}/state.env.sha256" "$(shasum -a 256 "${LOOP_DIR}/state.env" | awk '{print $1}')"
+}
+
+#--- Dirty-path bookkeeping (see the dirty baseline snapshot below) ---
+dirty_paths() {
+  git -C "${REPO_ROOT}" diff --name-only -z -- 2>/dev/null || true
+  git -C "${REPO_ROOT}" diff --cached --name-only -z -- 2>/dev/null || true
+  git -C "${REPO_ROOT}" ls-files --others --exclude-standard -z 2>/dev/null || true
+}
+nul_list_has() { # FILE PATH: exact-match membership in a NUL-delimited list
+  local entry
+  [[ -f "$1" ]] || return 1
+  while IFS= read -r -d '' entry; do [[ "${entry}" == "$2" ]] && return 0; done < "$1"
+  return 1
+}
+record_loop_dirty() {
+  [[ "${AUTOCOMMIT}" == "true" && -f "${LOOP_DIR}/dirty-start-paths.nul" ]] || return 0
+  local tmp path
+  tmp=$(mktemp "${LOOP_DIR}/loop-dirty-paths.XXXXXX")
+  dirty_paths | while IFS= read -r -d '' path; do
+    nul_list_has "${LOOP_DIR}/dirty-start-paths.nul" "${path}" || printf '%s\0' "${path}"
+  done > "${tmp}"
+  mv "${tmp}" "${LOOP_DIR}/loop-dirty-paths.nul"
 }
 
 #--- Graceful shutdown (SIGINT/SIGTERM) ---
 SHUTDOWN=0
+CHILD_PID=""
+# The job leads its own group (GROUP_CMD); fall back to its PID where none exists.
+job_alive() { kill -0 -- "-${CHILD_PID}" 2>/dev/null || kill -0 "${CHILD_PID}" 2>/dev/null; }
+signal_job() {
+  kill -s "$1" -- "-${CHILD_PID}" 2>/dev/null || kill -s "$1" "${CHILD_PID}" 2>/dev/null || true
+}
 cleanup() {
   echo "[SIGNAL] Caught signal — initiating graceful shutdown"
   SHUTDOWN=1
 
-  # Step 1: State snapshot
+  # Step 0: SIGTERM the running job's process group; SIGKILL the group once
+  # KILL_GRACE (+1s, so a wrapping timeout's own kill-after lands first) has passed.
+  if [[ -n "${CHILD_PID}" ]] && job_alive; then
+    signal_job TERM
+    local waited=0
+    while job_alive && [[ "${waited}" -le "${KILL_GRACE}" ]]; do
+      sleep 1; waited=$((waited + 1))
+    done
+    signal_job KILL
+  fi
+
+  # Step 1: State snapshot (incl. the paths this run left dirty — not human edits)
   write_state "${ITER:-1}" CONTINUE
+  record_loop_dirty || true
 
   # Step 2: Partial results summary
   {
@@ -438,11 +547,174 @@ cleanup() {
   emit_log "WARN" "graceful_shutdown" "iteration" "${ITER}" "verify" "${VERIFY_RESULT:-N/A}"
 
   # Step 4: Cleanup
-  rm -f "${LOOP_DIR}/.run-loop.lock"
+  rm -f "${LOOP_DIR}/.run-loop.lock" "${LOOP_DIR}"/.verify-pinned.*
   echo "[SIGNAL] State saved — safe to resume from iteration ${ITER}"
   exit 130
 }
 trap cleanup SIGINT SIGTERM
+
+#--- Goal/AC immutability pin (AP-16: mid-run goal drift ABORTs) ---
+GOAL_SHA_FILE="${LOOP_DIR}/.goal.sha256"
+if [[ "${GOAL_IMMUTABLE}" == "true" ]] && [[ -f "${LOOP_DIR}/goal.md" ]]; then
+  if [[ ! -f "${GOAL_SHA_FILE}" ]]; then
+    write_atomic "${GOAL_SHA_FILE}" "$(shasum -a 256 "${LOOP_DIR}/goal.md" | awk '{print $1}')"
+  fi
+fi
+# The pin file is executor-writable, so its value is anchored in this process at
+# start: deleting or regenerating .goal.sha256 mid-run cannot hide a goal change.
+GOAL_SHA=""
+[[ ! -f "${GOAL_SHA_FILE}" ]] || GOAL_SHA=$(cat "${GOAL_SHA_FILE}")
+check_goal_immutable() {
+  [[ "${GOAL_IMMUTABLE}" == "true" ]] || return 0
+  [[ -n "${GOAL_SHA}" ]] || return 0
+  local now; now=$(shasum -a 256 "${LOOP_DIR}/goal.md" 2>/dev/null | awk '{print $1}')
+  [[ "${now}" == "${GOAL_SHA}" ]]
+}
+
+#--- Artifact pins (AP-13 / AP-20 / RP-1: mid-run mutation ABORTs) ---
+# One manifest line per target: sha256 (directories: hash of sorted per-file hashes)
+# or "absent", so creating a pinned file mid-run is a mutation too.
+PINS_FILE="${LOOP_DIR}/.pins.sha256"
+PIN_TARGETS=("${LOOP_DIR}/verify.sh" "${LOOP_DIR}/PROMPT.md" "${PROJECT_ROOT}/verify.sh"
+  "${PROJECT_ROOT}/PROMPT.md" "${PROJECT_ROOT}/.claude/settings.json" "${PROJECT_ROOT}/.claude/settings.local.json")
+if [[ -n "${PIN_PATHS}" ]]; then
+  IFS=':' read -r -a PIN_EXTRA <<< "${PIN_PATHS}"
+  for pin_path in "${PIN_EXTRA[@]}"; do PIN_TARGETS+=("${PROJECT_ROOT}/${pin_path}"); done
+fi
+# Directories in a Git work tree hash tracked + untracked-not-ignored files, so ignored
+# build output (tests/__pycache__) is not a mutation; outside Git, every file.
+# Symlinks are listed too: they are pinned by their target, not by what they reach.
+pin_dir_files() {
+  if git -C "$1" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    git -C "$1" ls-files -co --exclude-standard -z -- . 2>/dev/null |
+      while IFS= read -r -d '' file; do
+        if [[ -f "$1/${file}" || -L "$1/${file}" ]]; then printf './%s\0' "${file}"; fi
+      done
+  else
+    (cd -- "$1" && find . \( -type f -o -type l \) -print0)
+  fi
+}
+# Reads sorted NUL paths in the directory: "link <target>" per symlink, then one
+# sha256 line per regular file.
+pin_dir_entries() {
+  local file regular=()
+  while IFS= read -r -d '' file; do
+    if [[ -L "${file}" ]]; then
+      printf 'link %s  %s\n' "$(readlink -- "${file}")" "${file}"
+    else
+      regular+=("${file}")
+    fi
+  done
+  [[ "${#regular[@]}" -eq 0 ]] || printf '%s\0' "${regular[@]}" | xargs -0 shasum -a 256 2>/dev/null
+}
+pin_manifest() {
+  local path
+  for path in "${PIN_TARGETS[@]}"; do
+    if [[ -d "${path}" ]]; then
+      printf '%s  %s/\n' "$( (pin_dir_files "${path}" | LC_ALL=C sort -z |
+        (cd -- "${path}" && pin_dir_entries) || true) | shasum -a 256 | awk '{print $1}')" "${path}"
+    elif [[ -f "${path}" ]]; then
+      printf '%s  %s\n' "$(shasum -a 256 < "${path}" | awk '{print $1}')" "${path}"
+    else
+      printf 'absent  %s\n' "${path}"
+    fi
+  done
+}
+if [[ "${ARTIFACT_PINS}" == "true" ]] && [[ ! -f "${PINS_FILE}" ]]; then
+  write_atomic "${PINS_FILE}" "$(pin_manifest)"
+fi
+# The manifest lives where the executor can write, so its digest is anchored in this
+# process at start: deleting or rewriting it mid-run is itself a pin violation.
+PINS_SHA=""
+[[ "${ARTIFACT_PINS}" != "true" ]] || PINS_SHA=$(shasum -a 256 < "${PINS_FILE}" | awk '{print $1}')
+check_pins() {
+  [[ "${ARTIFACT_PINS}" == "true" ]] || return 0
+  if [[ ! -f "${PINS_FILE}" ]] \
+     || [[ "$(shasum -a 256 < "${PINS_FILE}" | awk '{print $1}')" != "${PINS_SHA}" ]]; then
+    echo "[ABORT] pin manifest ${PINS_FILE} removed or rewritten mid-run (AP-13 / AP-20)"
+    return 1
+  fi
+  local changed
+  changed=$(diff <(cat "${PINS_FILE}") <(pin_manifest) | sed -n 's/^> [^ ]*  //p' || true)
+  [[ -z "${changed}" ]] && return 0
+  echo "[ABORT] pinned artifact changed mid-run (AP-13 / AP-20): ${changed//$'\n'/, }"
+  return 1
+}
+# Callers check pins before verification, then run a copy whose hash matches the pin:
+# what was checked is what runs, so a replacement that restores the pinned file before
+# exiting cannot pass. The copy sits next to verify.sh, so $(dirname "$0") still works.
+run_pinned_verify() {
+  local copy status=0
+  copy=$(mktemp "${LOOP_DIR}/.verify-pinned.XXXXXX") || return 1
+  if ! cp "${LOOP_DIR}/verify.sh" "${copy}" || { [[ "${ARTIFACT_PINS}" == "true" ]] \
+     && ! grep -qxF "$(shasum -a 256 < "${copy}" | awk '{print $1}')  ${LOOP_DIR}/verify.sh" "${PINS_FILE}"; }; then
+    echo "[ABORT] verify.sh does not match its pin (AP-13)"
+    rm -f "${copy}"; return 1
+  fi
+  run_with_budget 0 bash "${copy}" || status=$?
+  rm -f "${copy}"
+  return "${status}"
+}
+
+#--- Loop-level external terminator (wall clock) ---
+LOOP_START_TS=$(date +%s)
+LOOP_DEADLINE=0
+[[ "${LOOP_TIMEOUT}" -eq 0 ]] || LOOP_DEADLINE=$((LOOP_START_TS + LOOP_TIMEOUT))
+
+# Executor attempts, retry delays, and verification share this one deadline.
+# A zero command limit means no local limit; the remaining loop budget still applies.
+# The command runs as a background job so the SIGINT/SIGTERM trap fires at once
+# (bash defers traps until a foreground command returns); cleanup forwards the signal.
+# Only the clock marks the budget spent — a command's own exit 124/137 (verify.sh
+# running `timeout`, say) is an ordinary failure. SIGTERM lands up to the grace before
+# the hard limit, so a job cut off by the loop budget ends within that grace of it.
+LOOP_BUDGET_SPENT=false
+# `timeout` (and its KILL) watches only the command it started: once that exits, a
+# TERM-ignoring descendant left in the job's group would outlive the limit. TERM, then
+# KILL at epoch $1 (the job's hard limit, or one grace from now if that is sooner),
+# whatever is left. Without GROUP_CMD there is no group.
+reap_job_group() {
+  [[ "${#GROUP_CMD[@]}" -gt 0 ]] && kill -0 -- "-${CHILD_PID}" 2>/dev/null || return 0
+  kill -s TERM -- "-${CHILD_PID}" 2>/dev/null || true
+  while kill -0 -- "-${CHILD_PID}" 2>/dev/null && [[ "$(date +%s)" -lt "$1" ]]; do
+    sleep 1
+  done
+  kill -s KILL -- "-${CHILD_PID}" 2>/dev/null || true
+}
+run_with_budget() {
+  local limit="$1" remaining status=0 bound=false grace; shift
+  if [[ "${LOOP_DEADLINE}" -gt 0 ]]; then
+    remaining=$((LOOP_DEADLINE - $(date +%s)))
+    [[ "${remaining}" -gt 0 ]] || { LOOP_BUDGET_SPENT=true; return 124; }
+    if [[ "${limit}" -eq 0 || "${remaining}" -lt "${limit}" ]]; then
+      limit="${remaining}"; bound=true
+    fi
+  fi
+  TIMEOUT_CMD=()
+  grace="${KILL_GRACE}"
+  if [[ "${limit}" -ne 0 ]]; then
+    portable_timeout "${limit}"
+    grace=$(( KILL_GRACE < limit / 2 ? KILL_GRACE : limit / 2 ))
+  fi
+  local hard_at=$(( $(date +%s) + limit )) reap_at
+  # ${a[@]+...}: an empty array is "unbound" under set -u in bash < 4.4 (macOS).
+  ${GROUP_CMD[@]+"${GROUP_CMD[@]}"} ${TIMEOUT_CMD[@]+"${TIMEOUT_CMD[@]}"} "$@" <&0 &
+  CHILD_PID=$!
+  wait "${CHILD_PID}" || status=$?
+  reap_at=$(( $(date +%s) + grace ))
+  [[ "${limit}" -eq 0 || "${reap_at}" -le "${hard_at}" ]] || reap_at="${hard_at}"
+  reap_job_group "${reap_at}"
+  CHILD_PID=""
+  if [[ "${bound}" == "true" && "${status}" -ne 0 ]]; then
+    [[ $((LOOP_DEADLINE - $(date +%s))) -gt "${grace}" ]] || LOOP_BUDGET_SPENT=true
+  fi
+  return "${status}"
+}
+
+loop_timeout_reached() {
+  [[ "${LOOP_BUDGET_SPENT}" == "true" ]] && return 0
+  [[ "${LOOP_DEADLINE}" -gt 0 ]] && [[ "$(date +%s)" -ge "${LOOP_DEADLINE}" ]]
+}
 
 #--- Validate checksum before consuming checkpoint values ---
 ITER=1
@@ -468,6 +740,52 @@ ITER="${NEXT_ITERATION:-1}"
 STATUS="${LAST_STATUS:-READY}"
 LOOP_BASE="${LOOP_BASE:-$(git rev-parse --verify "${ORIGIN_BRANCH:-HEAD}" 2>/dev/null || true)}"
 
+#--- Pending squash: a conflicted squash waits for its human, not for a new suffix ---
+# Written when the post-loop squash conflicts: line 1 the summary branch, line 2 the
+# iteration branch. Deleting the iteration branch marks the squash done; deleting the
+# summary branch asks for a fresh squash attempt. Until then every run stops here.
+SQUASH_PENDING_FILE="${LOOP_DIR}/.squash-pending"
+if [[ -f "${SQUASH_PENDING_FILE}" ]]; then
+  PENDING_SUMMARY=$(sed -n 1p "${SQUASH_PENDING_FILE}")
+  PENDING_ITER=$(sed -n 2p "${SQUASH_PENDING_FILE}")
+  if [[ -n "${PENDING_SUMMARY}" && -n "${PENDING_ITER}" ]] \
+     && git show-ref --verify --quiet "refs/heads/${PENDING_SUMMARY}" \
+     && git show-ref --verify --quiet "refs/heads/${PENDING_ITER}"; then
+    echo "[BRANCH:PENDING] Squash of ${PENDING_ITER} into ${PENDING_SUMMARY} still needs a human — not retrying"
+    echo "[BRANCH:PENDING] Resolved: commit the resolution on ${PENDING_SUMMARY}, then mark the squash done: git branch -D ${PENDING_ITER}"
+    echo "[BRANCH:PENDING] Aborted: update ${PENDING_ITER} (e.g. merge ${ORIGIN_BRANCH:-the origin branch}), then retry the squash: git branch -D ${PENDING_SUMMARY}"
+    emit_log "ERROR" "squash_pending" "summary_branch" "${PENDING_SUMMARY}"
+    echo ""
+    echo "NEXUS_LOOP_STATUS: CONTINUE"
+    echo "NEXUS_LOOP_SUMMARY: Iteration ${ITER}/${MAX_ITERATIONS}, status=BLOCKED, squash pending on ${PENDING_SUMMARY}"
+    exit 1
+  fi
+  rm -f "${SQUASH_PENDING_FILE}"
+fi
+
+#--- Resume gate: a DONE checkpoint is not evidence; re-run the DONE gate ---
+if [[ "${STATUS}" == "DONE" ]]; then
+  RESUME_VERIFY="SKIP"
+  RESUME_PINS=true
+  check_pins || RESUME_PINS=false
+  if [[ "${RESUME_PINS}" == "true" ]] && [[ -f "${LOOP_DIR}/verify.sh" ]]; then
+    if run_pinned_verify; then RESUME_VERIFY="PASS"; else RESUME_VERIFY="FAIL"; fi
+  fi
+  if [[ ! -f "${LOOP_DIR}/done.md" || "${RESUME_VERIFY}" == "FAIL" || "${RESUME_PINS}" != "true" ]] \
+     || ! check_goal_immutable || ! placeholder_clean; then
+    emit_log "WARN" "resume_done_rejected" "verify" "${RESUME_VERIFY}"
+    # Checkpoint the verdict before any branch work, so a rerun never re-trusts DONE.
+    if [[ "${ITER}" -gt "${MAX_ITERATIONS}" ]]; then
+      echo "[RESUME] DONE checkpoint fails the DONE gate (done.md + verify=${RESUME_VERIFY} + pins + placeholders) and no iteration is left (MAX_ITERATIONS=${MAX_ITERATIONS}) — BLOCKED; raise MAX_ITERATIONS to resume"
+      STATUS="BLOCKED"
+    else
+      echo "[RESUME] DONE checkpoint fails the DONE gate (done.md + verify=${RESUME_VERIFY} + pins + placeholders) — continuing"
+      STATUS="CONTINUE"
+    fi
+    write_state "${ITER}" "${STATUS}"
+  fi
+fi
+
 #--- Branch isolation (pre-loop) ---
 if [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${AUTOCOMMIT}" == "true" ]]; then
   LOOP_NAME=$(basename "${LOOP_DIR}" | sed 's/^\.//')
@@ -478,10 +796,17 @@ if [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${AUTOCOMMIT}" == "true" ]]; the
   if [[ -z "${ORIGIN_BRANCH:-}" ]]; then
     ORIGIN_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "main")
   fi
+  # Squash needs a named branch to return to.
+  if [[ "${ORIGIN_BRANCH}" == "HEAD" ]]; then
+    echo "[ABORT] detached HEAD — check out a branch first, or set BRANCH_ISOLATION=false"
+    exit 1
+  fi
 
   CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-  # DONE can be resumed after squash has already removed the iteration branch.
-  if [[ "${STATUS}" != "DONE" ]] && [[ "${CURRENT_BRANCH}" != "${ITER_BRANCH}" ]]; then
+  # DONE can be resumed after squash has already removed the iteration branch; past
+  # MAX_ITERATIONS no iteration runs, so there is nothing to isolate.
+  if [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]] \
+     && [[ "${CURRENT_BRANCH}" != "${ITER_BRANCH}" ]]; then
     # Stash dirty worktree before branch switch
     STASHED_FOR_BRANCH=false
     if ! git diff --quiet 2>/dev/null || ! git diff --cached --quiet 2>/dev/null; then
@@ -502,12 +827,24 @@ if [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${AUTOCOMMIT}" == "true" ]]; the
 fi
 
 #--- Dirty baseline snapshot (NUL preserves spaces, quotes, and newlines) ---
+# Taken at loop start and kept across resumes: the loop's own uncommitted work from a
+# BLOCKED/interrupted iteration is not pre-existing user work. Whenever the runner stops
+# it records that work in loop-dirty-paths.nul; on resume, any other path that became
+# dirty meanwhile is a human edit made during the pause and joins the baseline. The
+# split is per path: a human edit to a file the loop left dirty is committed with it.
+# Both files are cleared at DONE.
 if [[ "${AUTOCOMMIT}" == "true" ]]; then
-  {
-    git -C "${REPO_ROOT}" diff --name-only -z -- 2>/dev/null || true
-    git -C "${REPO_ROOT}" diff --cached --name-only -z -- 2>/dev/null || true
-    git -C "${REPO_ROOT}" ls-files --others --exclude-standard -z 2>/dev/null || true
-  } > "${LOOP_DIR}/dirty-start-paths.nul"
+  BASELINE_TMP=$(mktemp "${LOOP_DIR}/dirty-start-paths.XXXXXX")
+  if [[ ! -f "${LOOP_DIR}/dirty-start-paths.nul" ]]; then
+    dirty_paths > "${BASELINE_TMP}"
+  else
+    cat "${LOOP_DIR}/dirty-start-paths.nul" > "${BASELINE_TMP}"
+    dirty_paths | while IFS= read -r -d '' path; do
+      nul_list_has "${LOOP_DIR}/dirty-start-paths.nul" "${path}" \
+        || nul_list_has "${LOOP_DIR}/loop-dirty-paths.nul" "${path}" || printf '%s\0' "${path}"
+    done >> "${BASELINE_TMP}"
+  fi
+  mv "${BASELINE_TMP}" "${LOOP_DIR}/dirty-start-paths.nul"
 fi
 
 #--- Adaptive timeout ---
@@ -532,47 +869,6 @@ if [[ "${ADAPTIVE_TIMEOUT}" == "true" ]] && [[ -f "${TIMING_LOG}" ]]; then
   fi
 fi
 
-#--- Goal/AC immutability pin (AP-16: mid-run goal drift ABORTs) ---
-GOAL_SHA_FILE="${LOOP_DIR}/.goal.sha256"
-if [[ "${GOAL_IMMUTABLE}" == "true" ]] && [[ -f "${LOOP_DIR}/goal.md" ]]; then
-  if [[ ! -f "${GOAL_SHA_FILE}" ]]; then
-    shasum -a 256 "${LOOP_DIR}/goal.md" | awk '{print $1}' > "${GOAL_SHA_FILE}"
-  fi
-fi
-check_goal_immutable() {
-  [[ "${GOAL_IMMUTABLE}" == "true" ]] || return 0
-  [[ -f "${GOAL_SHA_FILE}" ]] || return 0
-  local now; now=$(shasum -a 256 "${LOOP_DIR}/goal.md" 2>/dev/null | awk '{print $1}')
-  [[ "${now}" == "$(cat "${GOAL_SHA_FILE}")" ]]
-}
-
-#--- Loop-level external terminator (wall clock) ---
-LOOP_START_TS=$(date +%s)
-LOOP_DEADLINE=0
-[[ "${LOOP_TIMEOUT}" -gt 0 ]] && LOOP_DEADLINE=$((LOOP_START_TS + LOOP_TIMEOUT))
-
-# Executor attempts, retry delays, and verification share this one deadline.
-# A zero command limit means no local limit; the remaining loop budget still applies.
-run_with_budget() {
-  local limit="$1" remaining; shift
-  if [[ "${LOOP_DEADLINE}" -gt 0 ]]; then
-    remaining=$((LOOP_DEADLINE - $(date +%s)))
-    [[ "${remaining}" -gt 0 ]] || return 124
-    if [[ "${limit}" -eq 0 || "${remaining}" -lt "${limit}" ]]; then
-      limit="${remaining}"
-    fi
-  fi
-  if [[ "${limit}" -gt 0 ]]; then
-    portable_timeout "${limit}" "$@"
-  else
-    "$@"
-  fi
-}
-
-loop_timeout_reached() {
-  [[ "${LOOP_DEADLINE}" -gt 0 ]] && [[ "$(date +%s)" -ge "${LOOP_DEADLINE}" ]]
-}
-
 write_terminal_state() {
   write_state "${ITER}" "$1"
 }
@@ -580,12 +876,15 @@ write_terminal_state() {
 #--- Main loop ---
 VERIFY_RESULT="N/A"
 COMMIT_HASH="no-commit"
+if [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -gt "${MAX_ITERATIONS}" ]]; then
+  echo "[CAP] Iteration ${ITER} exceeds MAX_ITERATIONS=${MAX_ITERATIONS} — nothing to run; raise MAX_ITERATIONS to resume"
+fi
 
 while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
   [[ "${SHUTDOWN}" -eq 1 ]] && break
 
   #--- External terminators: wall-clock timeout & budget caps ---
-  if [[ "${LOOP_DEADLINE}" -gt 0 ]] && [[ "$(date +%s)" -ge "${LOOP_DEADLINE}" ]]; then
+  if loop_timeout_reached; then
     echo "[TIMEOUT] LOOP_TIMEOUT=${LOOP_TIMEOUT}s exceeded — external terminator" | tee -a "${LOOP_DIR}/runner.log"
     emit_log "WARN" "loop_timeout" "elapsed" "$(( $(date +%s) - LOOP_START_TS ))"
     STATUS="BLOCKED"; write_terminal_state BLOCKED; break
@@ -598,6 +897,11 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
   if ! check_goal_immutable; then
     echo "[ABORT] goal.md changed mid-run (GOAL_DRIFT / AP-16)" | tee -a "${LOOP_DIR}/runner.log"
     emit_log "ERROR" "goal_drift" "file" "goal.md"
+    STATUS="BLOCKED"; write_terminal_state BLOCKED; break
+  fi
+  if ! PIN_MSG=$(check_pins); then
+    echo "${PIN_MSG}" | tee -a "${LOOP_DIR}/runner.log"
+    emit_log "ERROR" "pin_drift" "detail" "${PIN_MSG}"
     STATUS="BLOCKED"; write_terminal_state BLOCKED; break
   fi
   if convergence_stalled; then
@@ -646,7 +950,7 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
   while [[ "${RETRY_COUNT}" -lt "${RETRY_LIMIT}" ]]; do
     LAST_EXIT_CODE=0
     # EXEC_CMD is trusted operator-authored shell configuration, never model output.
-    run_with_budget "${EFFECTIVE_TIMEOUT}" bash -c "${EXEC_CMD}" 2>&1 | tee -a "${LOOP_DIR}/runner.log" || LAST_EXIT_CODE=$?
+    run_with_budget "${EFFECTIVE_TIMEOUT}" bash -c "${EXEC_CMD}" > >(tee -a "${LOOP_DIR}/runner.log") 2>&1 || LAST_EXIT_CODE=$?
     if loop_timeout_reached; then
       echo "[TIMEOUT] LOOP_TIMEOUT=${LOOP_TIMEOUT}s exceeded during executor" | tee -a "${LOOP_DIR}/runner.log"
       STATUS="BLOCKED"; write_terminal_state BLOCKED; break 2
@@ -705,10 +1009,15 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
     break
   fi
 
-  #--- Verification gate ---
+  #--- Verification gate (pins first: the executor must not swap the verifier) ---
+  if ! PIN_MSG=$(check_pins); then
+    echo "${PIN_MSG}" | tee -a "${LOOP_DIR}/runner.log"
+    emit_log "ERROR" "pin_drift" "detail" "${PIN_MSG}"
+    STATUS="BLOCKED"; write_terminal_state BLOCKED; break
+  fi
   VERIFY_RESULT="SKIP"
   if [[ -f "${LOOP_DIR}/verify.sh" ]]; then
-    if run_with_budget 0 bash "${LOOP_DIR}/verify.sh"; then
+    if run_pinned_verify; then
       VERIFY_RESULT="PASS"
     else
       VERIFY_RESULT="FAIL"
@@ -721,33 +1030,28 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
     echo "[ABORT] goal.md changed mid-run (GOAL_DRIFT / AP-16)" | tee -a "${LOOP_DIR}/runner.log"
     STATUS="BLOCKED"; write_terminal_state BLOCKED; break
   fi
+  if ! PIN_MSG=$(check_pins); then
+    echo "${PIN_MSG}" | tee -a "${LOOP_DIR}/runner.log"
+    emit_log "ERROR" "pin_drift" "detail" "${PIN_MSG}"
+    STATUS="BLOCKED"; write_terminal_state BLOCKED; break
+  fi
   if BUDGET_MSG=$(budget_exceeded); then
     echo "[ABORT] ${BUDGET_MSG}" | tee -a "${LOOP_DIR}/runner.log"
     STATUS="BLOCKED"; write_terminal_state BLOCKED; break
   fi
-  if [[ "${LOOP_DEADLINE}" -gt 0 ]] && [[ "$(date +%s)" -ge "${LOOP_DEADLINE}" ]]; then
+  if loop_timeout_reached; then
     echo "[TIMEOUT] LOOP_TIMEOUT=${LOOP_TIMEOUT}s exceeded" | tee -a "${LOOP_DIR}/runner.log"
     STATUS="BLOCKED"; write_terminal_state BLOCKED; break
   fi
 
   #--- Scoped auto-commit ---
   if [[ "${AUTOCOMMIT}" == "true" ]]; then
-    {
-      git -C "${REPO_ROOT}" diff --name-only -z -- 2>/dev/null || true
-      git -C "${REPO_ROOT}" diff --cached --name-only -z -- 2>/dev/null || true
-      git -C "${REPO_ROOT}" ls-files --others --exclude-standard -z 2>/dev/null || true
-    } > "${LOOP_DIR}/current-changes.nul"
+    dirty_paths > "${LOOP_DIR}/current-changes.nul"
     CANDIDATES=()
     while IFS= read -r -d '' path; do
       # Runtime files must never enter a source commit, even without .gitignore.
       [[ "${REPO_ROOT}/${path}" == "${LOOP_DIR}/"* ]] && continue
-      BASELINE_PATH=false
-      while IFS= read -r -d '' baseline; do
-        if [[ "${path}" == "${baseline}" ]]; then BASELINE_PATH=true; break; fi
-      done < "${LOOP_DIR}/dirty-start-paths.nul"
-      if [[ "${BASELINE_PATH}" != "true" ]]; then
-        CANDIDATES+=("${path}")
-      fi
+      nul_list_has "${LOOP_DIR}/dirty-start-paths.nul" "${path}" || CANDIDATES+=("${path}")
     done < "${LOOP_DIR}/current-changes.nul"
     rm -f "${LOOP_DIR}/current-changes.nul"
     if [[ "${#CANDIDATES[@]}" -gt 0 ]]; then
@@ -802,34 +1106,48 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
   ITER=${NEXT_ITER}
 done
 
+# Uncommitted work this run leaves behind is the loop's own, not a human edit.
+record_loop_dirty
+
 #--- Branch isolation (post-loop squash) ---
+# Covers every SQUASH_MSG_ENGINE; a human Co-Authored-By trailer is kept.
+ASSISTANT_RE='claude|anthropic|codex|openai|chatgpt|gpt-|copilot|gemini|antigravity|agy'
+# squash_iteration_branch is called as an `if` condition, where errexit is off: every
+# step that must not be skipped carries an explicit `|| return 1`.
+strip_tool_trailers() {
+  # _common/GIT_GUIDELINES.md rule 6: no assistant session/tool metadata in commits.
+  grep -viE "^[[:space:]]*([A-Za-z-]*Session(-Id)?:|Co-Authored-By:.*(${ASSISTANT_RE})|.*Generated (with|by) .*(${ASSISTANT_RE}))|https?://(claude\.ai/code|chatgpt\.com|([a-z]+\.)?openai\.com)/" || true
+}
+
 squash_iteration_branch() {
   # Empty loops and changes reverted during the loop have nothing to summarize.
   if git diff --quiet "${ORIGIN_BRANCH}" "${ITER_BRANCH}" --; then
-    git checkout "${ORIGIN_BRANCH}"
-    git branch -D "${ITER_BRANCH}"
+    git checkout "${ORIGIN_BRANCH}" || return 1
+    git branch -D "${ITER_BRANCH}" || return 1
     echo "[BRANCH] No source changes to squash — returned to ${ORIGIN_BRANCH}"
     return 0
   fi
 
-  # Preserve prior summaries: a repeated loop name must not delete user commits.
-  if git show-ref --verify --quiet "refs/heads/${SUMMARY_BRANCH}"; then
-    echo "[ABORT] Summary branch ${SUMMARY_BRANCH} already exists — choose another loop name"
-    return 1
-  fi
+  # Preserve prior summaries: a repeated loop name must not delete user commits,
+  # and must not fail the loop either — take the next free suffix.
+  local base="${SUMMARY_BRANCH}" suffix=2
+  while git show-ref --verify --quiet "refs/heads/${SUMMARY_BRANCH}"; do
+    SUMMARY_BRANCH="${base}-${suffix}"; suffix=$((suffix + 1))
+  done
+  [[ "${SUMMARY_BRANCH}" == "${base}" ]] || echo "[BRANCH] ${base} already exists — using ${SUMMARY_BRANCH}"
 
   # Scoped iteration commits leave prior staged work untouched. Keep that work
   # out of the squash index too, then restore its original staged/unstaged state.
   local stashed=false
   if ! git diff --quiet || ! git diff --cached --quiet; then
-    git stash push -m "orbit-pre-squash"
+    git stash push -m "orbit-pre-squash" || return 1
     stashed=true
   fi
 
-  ITER_COMMIT_COUNT=$(git rev-list --count "${ORIGIN_BRANCH}..${ITER_BRANCH}")
+  ITER_COMMIT_COUNT=$(git rev-list --count "${ORIGIN_BRANCH}..${ITER_BRANCH}") || return 1
   echo "[BRANCH] Loop DONE — squashing ${ITER_COMMIT_COUNT} iteration commits"
-  git checkout "${ORIGIN_BRANCH}"
-  git checkout -b "${SUMMARY_BRANCH}"
+  git checkout "${ORIGIN_BRANCH}" || return 1
+  git checkout -b "${SUMMARY_BRANCH}" || return 1
 
   # Squash merge with conflict handling
   if git merge --squash "${ITER_BRANCH}"; then
@@ -882,6 +1200,7 @@ ${DIFF_STAT}
       fi
     fi
     rm -f "${SQUASH_MSG_FILE}"
+    SQUASH_MSG=$(printf '%s\n' "${SQUASH_MSG}" | strip_tool_trailers)
 
     # Heuristic fallback when no LLM available
     if [[ -z "${SQUASH_MSG}" ]]; then
@@ -893,10 +1212,19 @@ Iterations: $((ITER - 1)), Verify: ${VERIFY_RESULT}"
       echo "[BRANCH] LLM unavailable — using heuristic commit message"
     fi
 
-    git commit -m "${SQUASH_MSG}"
+    if ! git commit -m "${SQUASH_MSG}"; then
+      echo "[BRANCH:FAILED] Summary commit rejected — the squash is staged on ${SUMMARY_BRANCH}"
+      echo "[BRANCH:FAILED] Resolve: fix the cause (e.g. the pre-commit hook) && git commit"
+      [[ "${stashed}" != "true" ]] || echo "[BRANCH:FAILED] Then restore prior work: git stash pop --index"
+      echo "[BRANCH:FAILED] Then: git branch -D ${ITER_BRANCH}; or retry: git reset --merge && git checkout ${ITER_BRANCH} && git branch -D ${SUMMARY_BRANCH}"
+      write_atomic "${SQUASH_PENDING_FILE}" "${SUMMARY_BRANCH}"$'\n'"${ITER_BRANCH}"
+      return 1
+    fi
 
-    if [[ "${stashed}" == "true" ]]; then
-      git stash pop --index || { echo "[ABORT] Stash restore conflict — resolve before resuming"; return 1; }
+    if [[ "${stashed}" == "true" ]] && ! git stash pop --index; then
+      echo "[ABORT] Stash restore conflict — resolve, then: git branch -D ${ITER_BRANCH}"
+      write_atomic "${SQUASH_PENDING_FILE}" "${SUMMARY_BRANCH}"$'\n'"${ITER_BRANCH}"
+      return 1
     fi
 
     # Delete iteration branch
@@ -915,21 +1243,31 @@ Iterations: $((ITER - 1)), Verify: ${VERIFY_RESULT}"
     if [[ "${stashed}" == "true" ]]; then
       echo "[BRANCH:CONFLICT] After resolving or aborting, restore prior work: git stash pop --index"
     fi
+    echo "[BRANCH:CONFLICT] Then: resolved → git branch -D ${ITER_BRANCH}; aborted → git branch -D ${SUMMARY_BRANCH} to retry the squash"
+    write_atomic "${SQUASH_PENDING_FILE}" "${SUMMARY_BRANCH}"$'\n'"${ITER_BRANCH}"
     return 1
   fi
 }
 
+SQUASH_FAILED=false
 if [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${AUTOCOMMIT}" == "true" ]] \
    && [[ -n "${ORIGIN_BRANCH:-}" ]] && [[ "${STATUS}" == "DONE" ]] \
    && [[ "${SQUASH_ON_DONE}" == "true" ]] \
    && git show-ref --verify --quiet "refs/heads/${ITER_BRANCH}"; then
-  squash_iteration_branch
-elif [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${STATUS}" != "DONE" ]] && [[ -n "${ITER_BRANCH:-}" ]]; then
+  # state.env keeps DONE: the work passed its gate; only the squash needs a human.
+  if ! squash_iteration_branch; then
+    SQUASH_FAILED=true
+    STATUS="BLOCKED"
+    emit_log "ERROR" "squash_failed" "summary_branch" "${SUMMARY_BRANCH}"
+  fi
+elif [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${STATUS}" != "DONE" ]] && [[ -n "${ITER_BRANCH:-}" ]] \
+     && [[ "$(git rev-parse --abbrev-ref HEAD 2>/dev/null)" == "${ITER_BRANCH}" ]]; then
   echo "[BRANCH] STATUS=${STATUS} — staying on ${ITER_BRANCH} for resume"
 fi
 
-#--- Release lock ---
+#--- Release lock; a finished loop's dirty baseline must not leak into the next loop ---
 rm -f "${LOOP_DIR}/.run-loop.lock"
+[[ "${STATUS}" != "DONE" ]] || rm -f "${LOOP_DIR}/dirty-start-paths.nul" "${LOOP_DIR}/loop-dirty-paths.nul"
 
 #--- Status footer ---
 FINAL_STATUS="${STATUS}"
@@ -941,4 +1279,7 @@ emit_log "INFO" "loop_complete" "final_status" "${FINAL_STATUS}" "iterations" "$
 echo ""
 echo "NEXUS_LOOP_STATUS: ${FINAL_STATUS}"
 echo "NEXUS_LOOP_SUMMARY: Iteration ${ITER}/${MAX_ITERATIONS}, status=${STATUS}, verify=${VERIFY_RESULT}"
+# The footer has no BLOCKED token, so a failed squash prints CONTINUE with status=BLOCKED
+# and exits non-zero: the caller must stop for a human instead of resuming.
+[[ "${SQUASH_FAILED}" != "true" ]] || exit 1
 ```

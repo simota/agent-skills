@@ -79,7 +79,7 @@ Each evolution action type has specific verification criteria:
 
 ```
 Success criteria:
-  - Routing decisions align with overrides (check next 5 Nexus invocations)
+  - Routing decisions align with overrides (check next 5 Nexus invocations; an override never observed in routing is "not applied", not a success — see evolution-actions.md § Override Rules)
   - Override agents are actually invoked for relevant tasks
   - No increase in chain failures involving overridden agents
 

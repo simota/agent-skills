@@ -1,29 +1,16 @@
 # Repository Guide
 
-> Current-state guide for maintainers and contributors. Last verified against `main` at merge commit `36e603095413e3f5536e00de514f32ccae3b2213` (2026-09-15 JST).
+> Current-state guide for maintainers and contributors.
 
 This document explains how the repository is organized, what is authoritative, how the active skill roster is counted, and which checks define a valid change. It complements the public catalog in `README.md` / `README_ja.md` and the authoring rules in `CONTRIBUTING.md`.
 
 ## Current baseline
 
-The active repository surface is:
+The active repository surface is the global skills at `<skill-name>/SKILL.md` plus the project-local skills `orbit`, `lore`, and `darwin`.
 
-- **90 global skills** at `<skill-name>/SKILL.md`
-- **3 project-local skills**: `orbit`, `lore`, and `darwin`
-- **93 distinct active skills** total
-- **835 registered recipes** at the last corpus consistency audit
-- **317 regression tests passing** on the latest merged validation change
-- **57/57 task-battery mechanical checks passing**
+This guide deliberately records no measured quantities (skill, recipe, test, or contract counts): they drift with every change and nothing here re-derives them (`_common/OPERATIONAL.md` § Derived Numbers). For the current numbers, run `make check` — each checker prints its own counts and findings, and the test runner prints the number of tests run. The public roster counts in `README.md` / `README_ja.md` / `index.html` are re-derived by `_common/scripts/test_catalog_regressions.py`.
 
-The latest merged project-local validation change also reported:
-
-- project-local frontmatter: 3 skills, no findings
-- project-local mirror/wiring validation: 3 skills mirrored, shared references resolved
-- recipe validation: 93 skills, 0 errors
-- routing oracle: 0 errors
-- contract delivery: 90 global skills, 58 contracts, 9 spine contracts, OK
-
-Known non-blocking advisories at that baseline are intentionally not represented as failures: the `guardian` size P3 advisory, the `gateway` recipe-count warning, and two reviewed routing exceptions.
+Non-blocking advisories (size or recipe-count warnings, reviewed routing exceptions) are printed by the same checkers and are not failures; their reviewed-exception lists live in the owning checker.
 
 ## Repository model
 
@@ -50,7 +37,7 @@ Repository operating extensions live in two synchronized trees:
 
 The active project-local roster is defined by `_common/PROJECT_LOCAL_SKILLS.md`. Today it contains `orbit`, `lore`, and `darwin`.
 
-Project-local skills are active corpus members, but they are **not global skills** and must not be added to global profiles. The two trees represent the same three skills and are not counted twice.
+Project-local skills are active corpus members, but they are **not global skills** and must not be added to global profiles. The two trees represent the same skills and are not counted twice.
 
 If a project-local skill references `_common/` or `_templates/`, both canonical and mirror copies must contain the corresponding resolving symlink beside `SKILL.md`. With the current directory depth, the shared-root target is `../../../_common` or `../../../_templates`.
 
@@ -92,7 +79,7 @@ make hooks      # install the repository-managed pre-commit hook
 
 ### What `make validate` checks
 
-At the current baseline it runs, in order:
+It runs, in order:
 
 1. global `SKILL.md` frontmatter/structure validation
 2. project-local canonical frontmatter/structure validation
@@ -103,6 +90,10 @@ At the current baseline it runs, in order:
 7. contract-delivery validation
 8. lessons validation
 9. mechanical task-battery validation
+10. `index.html` `SUBCOMMANDS` freshness (`generate-index-subcommands.py --check`)
+11. Compass Recipes directory freshness (`generate-recipes-directory.py --check`)
+
+It then reports the pre-commit hook state: `hooks on`, `hooks off` (run `make hooks`), or `hook stale` when the Makefile's hook recipe changed since the hook was installed (rerun `make hooks`).
 
 The exact list is executable policy: consult the `validate` target in `Makefile` instead of copying an old ad-hoc command list into new documentation.
 
@@ -124,7 +115,7 @@ Changes to the skill ecosystem can require updates in more than one public or ro
 |---|---|
 | Add/remove/rename a global skill | `README.md`, `README_ja.md`, `index.html`, `compass/reference/catalog.md`, `_common/SKILL_PACKS.md`, `AGENTS.md`, `CLAUDE.md` |
 | Change a skill's public capability | README catalogs, Compass catalog, affected collaboration/routing references |
-| Add/change Recipes | owning `SKILL.md`, recipe references, generated Compass Recipes directory; run recipe validation |
+| Add/change Recipes | owning `SKILL.md`, recipe references; regenerate the Compass Recipes directory (`python3 _common/scripts/generate-recipes-directory.py`) and `index.html` `SUBCOMMANDS` (`python3 _common/scripts/generate-index-subcommands.py`); run recipe validation |
 | Change global routing | Nexus/Compass routing material and routing-oracle expectations |
 | Change a project-local skill | canonical `.claude/skills/*`, mirrored `.agents/skills/*`, `_common/PROJECT_LOCAL_SKILLS.md` when roster/fallback changes |
 | Add a shared contract | `_common/` contract metadata/precedence plus reachability; run contract-delivery validation |
@@ -163,7 +154,7 @@ The merged change behind commit `36e6030` added dedicated validation for project
 
 ### 2026-09-14 — corpus/runtime audit repair
 
-The preceding merged audit repaired staged-content validation, installer-path protection, Markdown parsing, recipe registration, catalog metadata, token-usage checks, execution-loop preservation, atomic report output, HTML escaping, print layout, and kit setup. It also added 56 regression tests. That change reported all 93 skills and 835 recipes consistent before the project-local validation suite raised the test baseline to 317 passing tests.
+The preceding merged audit repaired staged-content validation, installer-path protection, Markdown parsing, recipe registration, catalog metadata, token-usage checks, execution-loop preservation, atomic report output, HTML escaping, print layout, and kit setup. It also added regression tests for each repaired defect; current test and corpus counts come from `make check`, not from this history.
 
 ## Maintenance rule
 

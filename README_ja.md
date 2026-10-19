@@ -321,7 +321,7 @@ Codexのスキル配置先は `~/.agents/skills`、設定は引き続き `~/.cod
 
 | モード | トリガー | 動作 | 対話 |
 |--------|----------|------|------|
-| **Full Auto**（デフォルト） | マーカーなし、または `## NEXUS_AUTORUN_FULL` | ガードレール付きで全タスクを実行 | Ask First / エラー時のみ |
+| **Full Auto**（デフォルト） | マーカーなし、または `## NEXUS_AUTORUN_FULL` | COMPLEX を含む全タスクをガードレール付きで実行 | Ask First 該当時・ガードレール発動時のみ |
 | **Auto** | `## NEXUS_AUTORUN` | 単純タスクのみ実行、複雑なタスクは Guided に切替 | Ask First 該当時・ガードレール発動時・エラー時 |
 | **Guided** | `## NEXUS_GUIDED` | 判断ポイントで確認 | 選択肢形式で対話 |
 | **Interactive** | `## NEXUS_INTERACTIVE` | 各ステップで確認 | 常に対話 |
@@ -331,7 +331,7 @@ Codexのスキル配置先は `~/.agents/skills`、設定は引き続き `~/.cod
 
 各エージェントは重要な判断ポイントでユーザーに確認を求めます（プラットフォームの対話機能を使用）：
 
-- **開始時確認**: チェーン設計後、実行前に方針を確認
+- **開始時確認**（Interactive のみ）: チェーン設計後、実行前に方針を確認 — Guided は判断ポイントでのみ確認
 - **判断ポイント確認**: セキュリティリスク、破壊的変更、複数アプローチなど
 - **質問は選択肢形式**: 2〜4つの選択肢から選択（「その他」も選択可能）
 
@@ -366,247 +366,121 @@ questions:
 
 ### タスクタイプ別チェーンテンプレート
 
-> **正本:** 基本チェーンは `nexus/reference/routing-matrix.md`、バリアントは `nexus/reference/agent-chains.md` が定義する。この要約と食い違う場合はそちらが優先。
+> **正本:** `/variant` のない行は `nexus/reference/routing-matrix.md` の基本チェーン、`TYPE/variant` 行は `nexus/reference/agent-chains.md` のバリアント。ここは代表的な抜粋で、食い違う場合はそちらが優先。バリアント行はコード変更時に基本チェーンが付ける末尾の Guardian（SHIP）を省略している。`?` は任意ステップ。
 
-#### 調査・理解
+#### 調査・インシデント
 
-| タスク | 説明 | チェーン |
+| タスク | 用途 | チェーン |
 |--------|------|----------|
-| INVESTIGATE/feature | 機能の有無・実装状況調査 | Lens |
+| INVESTIGATE | 機能の有無・実装状況調査 | Lens |
 | INVESTIGATE/flow | データフロー・処理フロー追跡 | Lens → Canvas |
 | INVESTIGATE/onboarding | コードベース全体理解 | Lens → Scribe |
 | INVESTIGATE/pre-impl | 調査→実装 | Lens → Builder → Radar |
+| INVESTIGATE/regression | リグレッション調査 | Trail → Scout → Builder → Radar |
+| BUG/simple | 単純なバグ修正 | Scout → Lens → Radar → Builder → Radar |
+| BUG/complex | 複雑なバグ（RCA必要） | Scout → Lens → Sherpa → Radar → Builder → Radar → Sentinel |
+| INCIDENT/SEV1/2 | 重大インシデント | Triage → Scout → Builder → Radar → Triage (postmortem) |
 
 > **Lens vs Scout**: Lens = コードベース理解・機能探索（「〇〇はあるか」「フローはどうか」）、Scout = バグ調査・根本原因分析（「なぜ壊れたか」）
 
-#### バグ修正
+#### 機能開発・API・連携
 
-| タスク | 説明 | チェーン |
-|--------|------|----------|
-| BUG/simple | 単純なバグ修正 | Scout → Lens → Radar → Builder → Radar |
-| BUG/complex | 複雑なバグ（RCA必要） | Scout → Lens → Sherpa → Radar → Builder → Radar → Sentinel |
-| BUG/frontend | フロントエンドのバグ | Scout → Artisan → Radar |
-
-#### 機能開発
-
-| タスク | 説明 | チェーン |
+| タスク | 用途 | チェーン |
 |--------|------|----------|
 | FEATURE/S | 小規模機能 | Builder → Radar |
 | FEATURE/M | 中規模機能 | Sherpa → Forge → Builder → Radar |
 | FEATURE/L | 大規模機能 | Spark → Sherpa → Forge → Builder → Radar → Quill |
+| FEATURE/UI | UI中心の機能 | Spark → Forge → Muse → Builder → Lens → Radar |
 | FEATURE/frontend | フロントエンド機能 | Forge → Artisan → Radar |
-| FEATURE/fullstack | フルスタック機能 | Sherpa → Forge → Artisan → Builder → Radar |
-| FEATURE/api | API開発 | Gateway → Builder → Radar → Quill |
+| API/new | 新規API | Gateway → Builder → Radar → Quill |
+| MESSAGING | Bot・チャネル連携・WebSocket/SSE | Gateway → Builder → Radar |
+| WEBHOOK | Webhook契約・ハンドラ | Gateway → Builder |
 
-#### UI/UX
+#### デザイン・UX
 
-| タスク | 説明 | チェーン |
+| タスク | 用途 | チェーン |
 |--------|------|----------|
-| UI/new | 新規UI実装 | Vision → Forge → Vitrine → Muse → Artisan → Radar |
-| UI/redesign | UIリデザイン | Vision → Muse → Palette → Flow → Artisan → Radar |
-| UI/component | コンポーネント作成 | Forge → Vitrine → Muse → Artisan → Radar |
-| UI/animation | アニメーション追加 | Flow → Artisan → Radar |
-| UX/research | UXリサーチ | Field → Echo → Palette |
-| UX/improve | UX改善 | Echo → Palette → Artisan → Radar |
-| UX/session-analysis | セッション分析 | Trace → Echo → Palette |
-| UX/persona-validation | ペルソナ検証 | Field → Trace → Echo |
+| DESIGN/creative | 新しいビジュアル方針からUI実装 | Vision → Muse → Forge → Artisan → Radar |
+| DESIGN/flow | アニメーション・インタラクション | Flow → Artisan → Radar |
+| DESIGN/usability-audit | ユーザビリティ改善 | Palette → Artisan → Radar |
+| DESIGN_SYSTEM/full | デザインシステム構築 | Vision → Muse → Vitrine → Artisan → Quill → Radar |
+| UX_RESEARCH | UXリサーチ | Field → Echo → Palette |
+| UX_RESEARCH/session-replay | セッション分析 | Trace → Field → Echo → Palette |
 
-#### リファクタリング
+#### リファクタリング・性能・品質
 
-| タスク | 説明 | チェーン |
+| タスク | 用途 | チェーン |
 |--------|------|----------|
 | REFACTOR/small | 小規模リファクタ | Radar? → Zen → Radar |
 | REFACTOR/arch | アーキテクチャ改善 | Atlas → Sherpa → Zen → Radar |
-| REFACTOR/legacy | レガシー刷新 | Shift (detect) → Sherpa → Zen → Radar |
-
-#### パフォーマンス
-
-| タスク | 説明 | チェーン |
-|--------|------|----------|
-| PERF/frontend | フロントエンド最適化 | Bolt → Artisan → Radar |
-| PERF/backend | バックエンド最適化 | Bolt → Builder → Radar |
-| PERF/db | データベース最適化 | Tuner → Schema → Builder → Radar |
-
-#### AI/ML
-
-| タスク | 説明 | チェーン |
-|--------|------|----------|
-| AI/rag | RAGパイプライン設計 | Oracle → Gateway → Builder → Radar |
-| AI/llm-app | LLMアプリケーション設計 | Oracle → Builder → Radar |
-| AI/safety | AI安全性レビュー | Oracle → Sentinel → Oracle |
-| AI/prompt-ops | プロンプトエンジニアリング＆評価 | Oracle → Radar |
-| AI/prompt-spec | 曖昧なプロンプトを実行仕様へ変換 | Chisel |
-
-#### 可観測性/SRE
-
-| タスク | 説明 | チェーン |
-|--------|------|----------|
-| SRE/slo | SLO定義＆監視 | Beacon → Gear → Builder → Radar |
-| SRE/observability | 完全可観測性セットアップ | Beacon → Gear → Builder → Radar |
-
-#### セキュリティ
-
-| タスク | 説明 | チェーン |
-|--------|------|----------|
-| SECURITY/audit | 静的解析 | Sentinel → Builder → Radar → Sentinel |
-| SECURITY/pentest | 動的テスト | Sentinel → Probe → Builder → Radar → Probe |
-| SECURITY/full | 完全監査 | Sentinel → Probe → Builder → Radar → Sentinel → Probe |
-
-#### テスト
-
-| タスク | 説明 | チェーン |
-|--------|------|----------|
-| TEST/unit | ユニットテスト追加 | Radar |
-| TEST/e2e | E2Eテスト追加 | Voyager → Lens → Radar |
-| TEST/coverage | カバレッジ向上 | Radar → Voyager |
-| TEST/load | 負荷テスト | Siege → Bolt |
-| TEST/chaos | カオスエンジニアリング | Siege → Bolt → Triage → Builder → Beacon |
-| TEST/contract | 契約テスト | Gateway → Siege → Radar |
-| TEST/mutation | ミューテーションテスト | Siege → Radar |
-
-#### レビュー
-
-| タスク | 説明 | チェーン |
-|--------|------|----------|
-| REVIEW/pr | PRレビュー | Judge → Builder/Zen/Sentinel (based on findings) → Radar |
-| REVIEW/security | セキュリティレビュー | Judge → Sentinel |
-
-#### Git/PR
-
-| タスク | 説明 | チェーン |
-|--------|------|----------|
-| GIT/pr-prep | PR準備 | Guardian → Judge |
-| GIT/commit-split | コミット分割 | Guardian |
-| GIT/pr-full | 実装→PR→レビュー | Builder → Guardian → Judge → Zen |
-| GIT/release | リリースノート生成 | Guardian |
-
-#### 意思決定
-
-| タスク | 説明 | チェーン |
-|--------|------|----------|
-| DECISION/arch | アーキテクチャ選定 | Magi → Builder/Zen |
-| DECISION/strategy | 戦略的判断 | Scribe[unified] → Magi → Spark |
-| DECISION/office-hours | 創業者向けオフィスアワー相談 | Magi → Builder/Echo[demand]/Sherpa |
-| DECISION/retro | 直近の意思決定・結果の振り返り | Magi |
-
-#### 分析
-
-| タスク | 説明 | チェーン |
-|--------|------|----------|
-| ANALYSIS/impact | 変更影響分析 | Ripple → Builder → Radar |
-| ANALYSIS/standards | 標準準拠確認 | Canon → Builder → Radar |
+| OPTIMIZE/app | アプリケーションのホットスポット | Bolt → Radar |
+| OPTIMIZE/db | DB最適化 | Tuner → Schema → Builder → Radar |
+| YAGNI/standard | 過剰設計の削減 | Void → Sweep → Zen → Radar |
+| ANALYSIS | 変更影響分析 | Ripple → Builder → Radar |
 | ANALYSIS/cleanup | コードクリーンアップ | Sweep → Zen → Radar |
+| QUALITY/standard | 品質監査 | Judge → Zen → Radar → Sentinel → Canvas |
 
-#### 引き算・文化
+#### セキュリティ・テスト・レビュー
 
-| タスク | 説明 | チェーン |
+| タスク | 用途 | チェーン |
 |--------|------|----------|
-| SUBTRACT/feature-gate | 機能提案の引き算ゲート | Spark → Void → Magi |
-| SUBTRACT/scope-check | スコープ検証 | Sherpa → Void → Sherpa |
-| SUBTRACT/arch-simplify | アーキテクチャ過剰設計検出 | Atlas → Void → Zen |
+| SECURITY/static | 静的解析 | Sentinel → Builder → Radar → Sentinel |
+| SECURITY/dynamic | 動的テスト | Sentinel → Probe → Builder → Radar → Probe |
+| SECURITY/full | フル監査 | Sentinel → Probe → Builder → Radar → Sentinel → Probe |
+| TEST | ユニット・カバレッジ | Radar |
+| TEST/e2e | E2Eテスト | Voyager → Lens → Radar |
+| LOAD_TEST/chaos | カオスエンジニアリング | Siege → Bolt → Triage → Builder → Beacon |
+| REVIEW/PR | PRレビュー | Judge → Builder/Zen/Sentinel (based on findings) → Radar |
 
-#### ドキュメント
+#### AI・運用・リリース
 
-| タスク | 説明 | チェーン |
+| タスク | 用途 | チェーン |
 |--------|------|----------|
-| DOCS/prd | PRD作成 | Scribe |
-| DOCS/srs | SRS作成 | Scribe |
-| DOCS/design | 設計書作成 | Scribe |
-| DOCS/spec-to-build | 仕様から実装 | Spark → Scribe → Sherpa → Builder |
-| DOCS/code | コードドキュメント | Quill |
-| DOCS/component | コンポーネント文書化 | Vitrine → Quill |
-| DOCS/architecture | アーキテクチャ図 | Canvas |
-| DOCS/convert | フォーマット変換 | Scribe |
-| DOCS/report | PR報告書 | Launch[weekly] → Scribe |
-| DOCS/learning | 変更ベース学習資料 | Tome |
-| DOCS/onboarding | オンボーディング教材 | Trail → Tome |
-
-#### デモ・録画
-
-| タスク | 説明 | チェーン |
-|--------|------|----------|
-| DEMO/prototype | プロトタイプのデモ | Forge → Cue → Growth |
-
-#### インフラ・DevOps
-
-| タスク | 説明 | チェーン |
-|--------|------|----------|
-| INFRA/ci | CI/CD構築 | Gear → Radar |
-| INFRA/cloud | クラウド構築 | Scaffold → Gear |
-| INFRA/cli | CLI開発 | Builder → Radar |
-
-#### デプロイ・リリース
-
-| タスク | 説明 | チェーン |
-|--------|------|----------|
-| DEPLOY/release | リリース実行 | Guardian → Launch |
-| DEPLOY/full | 完全パイプライン | Radar → Guardian → Launch |
-
-#### モダナイゼーション
-
-| タスク | 説明 | チェーン |
-|--------|------|----------|
+| AI_FEATURE | LLM機能 | Oracle → Builder → Radar |
+| AI_FEATURE/rag | RAGパイプライン | Oracle → Gateway → Builder → Radar |
+| PROMPT_SPEC | 曖昧なプロンプトを実行可能な仕様へ | Chisel |
+| OBSERVABILITY/slo-design | SLO定義・監視 | Beacon → Gear → Builder → Radar |
+| INFRA | インフラ構築 | Scaffold → Gear → Radar |
+| GHA_WORKFLOW/new | GitHub Actions ワークフロー新規作成 | Gear[gha] → Radar |
+| PRERELEASE/full | リリース前ゲート | Sentinel → Radar → Guardian → Launch |
+| DEPLOY/full | フルリリースパイプライン | Radar → Guardian → Launch |
 | MODERNIZE/stack | 技術スタック刷新 | Lens → Shift (detect+modernize) → Sherpa → Builder → Radar |
-| MODERNIZE/i18n | 国際化対応 | Polyglot → Artisan → Radar |
-| MODERNIZE/structure | リポジトリ構造改善 | Grove → Sherpa → Zen → Radar |
 
-#### 戦略・グロース
+#### 意思決定・戦略・ドキュメント
 
-| タスク | 説明 | チェーン |
+| タスク | 用途 | チェーン |
 |--------|------|----------|
-| STRATEGY/seo | SEO改善 | Growth → Artisan → Radar |
-| STRATEGY/compete | 競合分析→実装 | Compete → Spark → Builder → Radar |
-| STRATEGY/feedback | フィードバック反映 | Voice → Spark → Builder → Radar |
-| STRATEGY/metrics | メトリクス基盤 | Pulse → Builder → Radar |
-| STRATEGY/retention | リテンション施策 | Growth → Spark → Builder → Radar |
-| STRATEGY/ab-test | A/Bテスト設計 | Experiment → Builder → Radar |
-| STRATEGY/data | データパイプライン | Stream → Schema → Builder → Radar |
+| DECISION/architecture | アーキテクチャ選定 | Magi → Builder/Zen (based on verdict) |
+| DECISION/strategy | 戦略的意思決定 | Scribe[unified] → Magi → Spark |
+| ADVISORY | オフィスアワー型の助言 | Magi → (Builder/Echo/Sherpa) |
+| STRATEGY/compete | 競合分析から実装 | Compete → Spark → Builder → Radar |
+| MARKETING/quick | 簡易マーケティング計画 | Compete → Growth → Funnel |
+| REQUIREMENTS/complex | PRD・要件定義 | Scribe[unified] → Magi → Scribe → Sherpa → Canvas |
+| DOCS | コードドキュメント | Quill |
+| DOCS/report | PRレポート | Launch[weekly] → Scribe |
+| PROJECT/full | 曖昧なゴールからのプロダクト開発 | Nexus[deliver] → Sherpa → Builder → Radar → Guardian → Launch |
 
-#### 並列実行（Rally統合）
+#### 並列実行（Rally連携）
 
-大規模タスクで並列実行が有効な場合、NexusはRallyにエスカレーションします。
+並列実行が有効な大規模タスクでは、Nexus が Rally にエスカレーションします（`agent-chains.md` § Rally Parallel Chain Variants）。
 
-| タスク | 説明 | 並列チェーン |
-|--------|------|-------------|
-| FEATURE/L (並列) | 大規模フルスタック | Spark → Sherpa → Rally(Forge+Artisan, Builder, Radar) |
-| FEATURE/fullstack (並列) | フロントエンド＋バックエンド | Rally(Artisan, Builder, Radar) |
-| FEATURE/multi (並列) | 複数独立機能 | Sherpa → Rally(Builder×N, Radar) |
-| BUG/multiple (並列) | 複数独立バグ修正 | Rally(Builder×N) → Radar |
-| REFACTOR/arch (並列) | 複数モジュールリファクタ | Atlas → Sherpa → Rally(Zen×N) → Radar |
-| SECURITY/full (並列) | 静的＋動的並行スキャン | Rally(Sentinel, Probe) → Builder → Radar |
-| TEST/coverage (並列) | Unit＋E2E並行テスト | Rally(Radar, Voyager) |
-| MODERNIZE/stack (並列) | マルチエリア刷新 | Lens → Shift (detect+modernize) → Sherpa → Rally(Builder×N) → Radar |
-| DOCS/full (並列) | コード文書＋図＋ストーリー | Rally(Quill, Canvas, Vitrine) |
+| 基本チェーン | 並列チェーン |
+|--------------|--------------|
+| FEATURE/L | Spark → Sherpa → Rally(Forge+Artisan, Builder, Radar) |
+| FEATURE/M (multi-unit) | Sherpa → Rally(Builder×N, Radar) |
+| FEATURE/fullstack | Rally(Artisan, Builder, Radar) |
+| BUG/multiple | Rally(Builder×N) → Radar |
+| REFACTOR/arch (multi-module) | Atlas → Sherpa → Rally(Zen×N) → Radar |
+| SECURITY/full | Rally(Sentinel, Probe) → Builder → Radar |
+| TEST/coverage | Rally(Radar, Voyager) |
+| MODERNIZE/stack | Lens → Shift (detect+modernize) → Sherpa → Rally(Builder×N) → Radar |
+| DOCS/full | Rally(Quill, Canvas, Vitrine) |
 
 > **Rallyエスカレーション基準**: 2つ以上の独立した実装ステップ、4ファイル以上で2ドメイン以上にまたがる場合、またはSherpaが`parallel_group`を検出した場合にRallyが起動されます。
 
 > **Nexus並列 vs Rally**: Nexus内蔵の`_PARALLEL_BRANCHES`は軽量な並列（各ブランチ50行未満）向け。本格的な実装作業にはRallyのマルチセッション並列が使用されます。
 
-#### プロダクトライフサイクル（Nexus[deliver]）
-
-| タスク | 説明 | チェーン |
-|--------|------|----------|
-| PROJECT/full | 曖昧なゴールからプロダクト完成 | Nexus[deliver] → Sherpa → Builder → Radar → Guardian → Launch |
-| PROJECT/mvp | MVP重視のデリバリー | `Nexus deliver`（最小限の専門チェーン） |
-
 > **Nexus のビルドモード**: `feature` は単一機能、`deliver` は規模に応じた製品/MVP、`apex` は高投資の discovery-to-ship を担当します。
-
-#### その他
-
-| タスク | 説明 | チェーン |
-|--------|------|----------|
-| INCIDENT | 障害対応 | Triage → Scout → Builder |
-| TEST/quality | 品質反復改善 | Judge → Zen → Radar |
-| INVESTIGATE/regression | リグレッション調査 | Trail → Scout → Builder → Radar |
-
-#### メッセージング・リアルタイム
-
-| タスク | 説明 | チェーン |
-|--------|------|----------|
-| MESSAGING/bot | Bot開発 | Gateway → Builder → Radar |
-| WEBHOOK | Webhookハンドラ | Gateway → Builder |
-| MESSAGING/realtime | リアルタイム通信 | Gateway → Scaffold → Builder → Radar |
-| MESSAGING/multi-channel | マルチチャネル統合 | Gateway → Builder → Radar |
 
 ## 共有ナレッジ
 
@@ -614,7 +488,7 @@ questions:
 
 | ファイル | 目的 | 更新タイミング |
 |---------|------|---------------|
-| `PROJECT.md` | 共有知識 + アクティビティログ | **全エージェントが作業完了後に必須** |
+| `PROJECT.md` | 共有知識 + アクティビティログ | 再利用できる知見や、後続エージェントが知るべき決定が生じたとき（`_common/OPERATIONAL.md` § Activity Log） |
 | `{agent}.md` | エージェント固有の学習 | ドメイン固有の発見時 |
 
 ### PROJECT.md の構成
@@ -629,14 +503,7 @@ questions:
 
 ## エージェントの原則
 
-各エージェントは以下の原則に従います：
-
-### 共通ルール
-
-- **変更は50行以内** - 小さく安全な変更を心がける
-- **既存パターンの尊重** - プロジェクトの規約に従う
-- **テスト実行** - 変更前後でテストを実行
-- **ジャーナルは重要な学習のみ** - ルーチンワークは記録しない
+共通ルールは `_common/`（`BOUNDARIES.md`、`OPERATIONAL.md`、`INTERACTION.md` など）にあり、各スキルの `## Boundaries` 節がそのスキル固有の Always / Ask first / Never を定めます。
 
 ### 境界の種類
 
@@ -674,7 +541,7 @@ agent-skills/
 - バリデーションあり
 - 保存成功時にトースト表示
 
-## NEXUS_AUTORUN
+## NEXUS_AUTORUN_FULL
 ```
 
 **実行チェーン**: Spark（仕様策定）→ Sherpa（タスク分解）→ Forge（プロトタイプ）→ Builder（本番実装）→ Radar（テスト）→ Quill（ドキュメント）
@@ -688,7 +555,7 @@ agent-skills/
 本番環境でのみ発生する決済エラーを調査・修正してください。
 ローカルでは再現しません。
 
-## NEXUS_AUTORUN
+## NEXUS_AUTORUN_FULL
 ```
 
 **実行チェーン**: Scout（調査）→ Sherpa（タスク分解）→ Builder（修正）→ Radar（回帰テスト）→ Sentinel（セキュリティ確認）
@@ -726,7 +593,11 @@ Clean Architectureに沿ってリファクタリングしたいです。
 ```
 /Nexus
 検索機能を追加したいです。
+
+## NEXUS_INTERACTIVE
 ```
+
+`## NEXUS_INTERACTIVE` は各ステップの前に確認します。マーカーなしの `/Nexus` は AUTORUN_FULL で実行されます。
 
 #### AUTORUNモード（自動実行・推奨）
 
@@ -819,10 +690,7 @@ CartItem, CartSummary インターフェースを定義してください。
 
 ### 新しいエージェントの追加
 
-1. リポジトリ直下に `<skill-name>/SKILL.md` を作成（小文字 kebab-case）
-2. frontmatter に `name` と `description` を定義
-3. 境界（Always do / Ask first / Never do）を明記
-4. AUTORUN SupportとNexus Hub Modeのセクションを追加
+[CONTRIBUTING.md § 新しいグローバルエージェントの追加](CONTRIBUTING.md#新しいグローバルエージェントの追加) に従ってください。必須セクション、Complexity Budget の宣言、手作業で更新するロスター、再実行する生成スクリプトをまとめています。`make check` が通れば完了です。
 
 ### エージェントの修正
 

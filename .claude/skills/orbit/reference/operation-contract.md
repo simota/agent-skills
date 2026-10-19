@@ -39,9 +39,9 @@ Before a contract is accepted (and before `generate` consumes it), assert:
 | Gate | Rule | On fail |
 |------|------|---------|
 | AC-oracle completeness | every AC in `goal.md` resolves to a verify command (in `verify.sh` or inline) | classify `ON_GOAL_CONTRACT_WEAK`; strengthen before execution |
-| Terminator bound | ≥ 1 of `LOOP_TIMEOUT` / `USD_PER_RUN_CAP` is set, or `MAX_ITERATIONS` is explicitly justified for an attended run | reject for unattended runs; require an explicit bound |
+| Terminator bound | ≥ 1 of `LOOP_TIMEOUT` / `USD_PER_RUN_CAP` / `USD_PER_ITER_CAP` is `> 0`, or `MAX_ITERATIONS` is explicitly justified for an attended run (`ALLOW_UNBOUNDED_RUN=true`) | reject for unattended runs; the runner itself refuses to start with all three at `0` unless `ALLOW_UNBOUNDED_RUN=true` |
 | Measurability | no AC uses generic verbs ("improve", "clean", "better") without a numeric/boolean threshold | apply Three-Hypothesis Protocol (`vague-goal-handling.md`) |
-| Scope guard | `goal.md` + AC files are sha256-pinnable (stable, no TODO placeholders) so the runner can enforce `GOAL_IMMUTABLE` | resolve placeholders before pinning |
+| Scope guard | `goal.md` + AC files are sha256-pinnable (stable, no TODO placeholders) so the runner can enforce `GOAL_IMMUTABLE` (separate AC files via `PIN_PATHS`) | resolve placeholders before pinning |
 
 ## Footer Contract
 
@@ -76,7 +76,11 @@ Companion loop artifacts (not in `state.env`, but part of the resumable contract
 
 | Artifact | Role | Owner |
 |----------|------|-------|
-| `.goal.sha256` | pin of `goal.md` at loop start; mid-run mismatch ABORTs (`GOAL_IMMUTABLE`, AP-16) | runner pins; never hand-edit |
+| `.goal.sha256` | pin of `goal.md` at loop start; mid-run mismatch ABORTs, and so does deleting or rewriting the manifest (the runner holds its digest from start) (`GOAL_IMMUTABLE`, AP-16) | runner pins; never hand-edit |
+| `.pins.sha256` | manifest pinning `verify.sh`, `PROMPT.md`, `.claude/settings{,.local}.json` and `PIN_PATHS` (directories in Git: tracked + untracked-not-ignored files; symlinks by their target) at loop start; mid-run mismatch ABORTs, and so does deleting or rewriting the manifest (the runner holds its digest from start) (`ARTIFACT_PINS`, AP-13 / AP-20) | runner pins; re-pin via `recover.sh --repin-goal` |
+| `dirty-start-paths.nul` | pre-existing dirty paths excluded from auto-commit; taken at loop start, kept across resumes and extended on resume with paths a human dirtied while the loop was stopped, removed at `DONE` | runner only |
+| `loop-dirty-paths.nul` | paths the loop itself left uncommitted when it stopped (BLOCKED / interrupted); on resume these stay auto-commit candidates while other newly dirty paths join the baseline; removed at `DONE` | runner only |
+| `.squash-pending` | summary + iteration branch of a failed squash (conflict, rejected summary commit, stash restore); reruns stop `[BRANCH:PENDING]` until the human deletes the iteration branch (resolved) or the summary branch (retry) | runner writes; human resolves |
 | `.cost-usd` | append-only per-iteration USD floats; runner sums them to enforce `USD_PER_RUN_CAP` / `USD_PER_ITER_CAP` | executor appends; runner reads |
 | `.action-sig.log` | per-iteration change signature; `CONVERGENCE_WINDOW` identical lines → `CONVERGENCE_STALL` | runner only |
 | `state.env.sha256` | atomic-write integrity guard for `state.env` | runner only |
@@ -106,17 +110,18 @@ Cumulative `state.env` fields above are for **resume and reporting**. Hard budge
 
 | Condition | Action | Tier |
 |-----------|--------|------|
-| `ESTIMATED_COST_USD > TOKEN_BUDGET * 0.8` | emit `[COST:WARN]` in runner.log | soft |
-| `ESTIMATED_COST_USD > TOKEN_BUDGET` | emit `[COST:BLOCKED]`, set `LAST_STATUS=BLOCKED` | soft |
+| `ESTIMATED_COST_USD > TOKEN_BUDGET * 0.8` | emit `[COST:WARN]` in runner.log — _audit/design-time guard — not enforced by the shipped template_ | soft |
+| `ESTIMATED_COST_USD > TOKEN_BUDGET` | emit `[COST:BLOCKED]`, set `LAST_STATUS=BLOCKED` — _audit/design-time guard — not enforced by the shipped template_ | soft |
 | `sum(.cost-usd) > USD_PER_RUN_CAP` (cap > 0) | `[ABORT]` run; PAUSE, require explicit human resume (no auto-continue) | **hard** |
 | `last(.cost-usd) > USD_PER_ITER_CAP` (cap > 0) | `[ABORT]` run; PAUSE, require explicit human resume | **hard** |
-| all caps `0`/unset **and** no `.cost-usd` | no budget enforcement — **forbidden for unattended runs** (SKILL Never-list) | — |
+| `LOOP_TIMEOUT`, `USD_PER_RUN_CAP`, `USD_PER_ITER_CAP` all `0`/unset | runner refuses to start (`[ABORT]`) unless `ALLOW_UNBOUNDED_RUN=true` — attended runs only (SKILL Never-list) | **hard** |
+| a USD cap set but no `.cost-usd` written | the cap cannot fire — pair it with `LOOP_TIMEOUT` for executors that emit no cost | — |
 
-Soft alerts require `COST_TRACKING=true`. Hard caps are enforced by the runner whenever the cap is set, independent of `COST_TRACKING`. For any unattended run, the Terminator-bound validation gate requires ≥ 1 hard cap or `LOOP_TIMEOUT`.
+Soft alerts (`COST_TRACKING`, `TOKEN_BUDGET`) are an audit/design-time guard — the shipped template defines neither variable. Hard caps are enforced by the runner whenever the cap is set. For any unattended run, the Terminator-bound validation gate requires ≥ 1 hard cap or `LOOP_TIMEOUT`.
 
 ### Cost in Done Report
 
-When `COST_TRACKING=true`, `done.md` should include:
+When cost is tracked (by the executor or a custom runner), `done.md` should include:
 
 ```text
 ## Resource Usage

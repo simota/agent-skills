@@ -33,15 +33,15 @@ Columns: `ID` = anti-pattern identifier (for review/post-mortem); `Class` = fail
 | `AP-10` | `VERIFY_GAP` | Premature `DONE` | false completion | require both `done.md` and verify `PASS`/`SKIP` | classify `P0`, downgrade to `CONTINUE`, run verification independently | — |
 | `AP-11` | `COMMIT_SCOPE_RISK` | Manual branch switch during active loop | squash failure and misplaced commits | stop the loop before changing branches | suspend affected loop; delegate via `ORBIT_TO_GUARDIAN_HANDOFF` | — |
 | `AP-12` | `VALIDATOR_GAP` | Validator gap (stub compiles → DONE) | placeholder code passes verify because tests are too coarse | `verify.sh` must grep `TODO`/`NotImplementedError`/`return None`/`pass` in changed source + run behavioural assertions derived from AC | extend `verify.sh` with placeholder grep + AC-derived behavioural assertions before accepting DONE | dev.to/itsuzef — The Judge Gate |
-| `AP-13` | `REWARD_HACK` | Reward hacking via test inspection | agent mutates `tests/` or `verify.sh` to soften assertions ("test cheating") | `tests/` and `verify.sh` are `chmod 0444` + pre-commit rejects any diff touching them + run verify from a separate worktree the loop cannot write | revert tests/verify changes, ABORT loop, escalate; run verify from a write-isolated worktree on retry | metr.org — Recent Reward Hacking; nist.gov — Cheating AI Agent Evaluations |
+| `AP-13` | `REWARD_HACK` | Reward hacking via test inspection | agent mutates `tests/` or `verify.sh` to soften assertions ("test cheating") | runner pins `verify.sh` (and `tests/` when `PIN_PATHS=tests`) in `.pins.sha256` at first start; a change → `[ABORT]`, `BLOCKED` (`ARTIFACT_PINS`). `chmod 0444`, a pre-commit rejecting diffs, and verify from a write-isolated worktree are operator hardening the template does not apply | revert tests/verify changes, ABORT loop, escalate; run verify from a write-isolated worktree on retry | metr.org — Recent Reward Hacking; nist.gov — Cheating AI Agent Evaluations |
 | `AP-14` | `TOOL_FAILURE` | Worktree cleanup → repo destruction | parallel subagent's cleanup removes parent `.git/`; loop continues on a hollow tree | iter prologue runs `git fsck` + monitors `.git/` inode; cleanup restricted to a path allowlist scoped to the worktree dir | classify `P0`, ABORT loop; restore `.git/` from worktree backup if available; require manual investigation | github.com/anthropics/claude-code — issue #48927 |
 | `AP-15` | `CONTEXT_OVERFLOW` | Context poisoning (error log accumulation) | past-iter error traces persist in `goal.md`/scratchpad, later iters treat hallucinated constraints as spec | rotate scratchpad at 60% context, end-of-iter summary keeps decisions only (no failure traces), `goal.md` size is monotonically tracked | apply memory pointer pattern (externalize outputs > 1KB), rotate or summarize context, then retry | mindstudio.ai — Context Rot; dbreunig.com — How Long Contexts Fail; arxiv.org/abs/2511.22729 |
-| `AP-16` | `GOAL_DRIFT` | Goal drift / goalpost moving in `goal.md` | agent edits `goal.md` to weaken AC verbs (`must` → `should` → `may`) then claims DONE | `goal.md` and AC files are `chmod 0444` + sha256-pinned at loop start; any change ABORTs the loop | restore from sha256-pinned baseline, ABORT, escalate to human | usewire.io — Agent Drift; lakera.ai — Agentic AI Threats |
-| `AP-17` | `BURN_RATE_ANOMALY` | Token burn-rate anomaly (pre-$47k signal) | rate-limit reset triggers exponential consumption, loop burns tokens without artifact change | EWMA burn-rate alert (5-min window vs prior window > 3x → PAUSE) + absolute USD/iter cap + USD/run cap + auto-reload billing disabled | PAUSE, snapshot state, require explicit user resume; never auto-continue | byteiota.com — Uber Claude Code; mfyz.com — Claude Code on Loop |
+| `AP-16` | `GOAL_DRIFT` | Goal drift / goalpost moving in `goal.md` | agent edits `goal.md` to weaken AC verbs (`must` → `should` → `may`) then claims DONE | runner pins `goal.md` (`.goal.sha256`) at first start; any change → `[ABORT]`, `BLOCKED`. Separate AC files are pinned only when listed in `PIN_PATHS`; `chmod 0444` is operator hardening | restore from sha256-pinned baseline, ABORT, escalate to human | usewire.io — Agent Drift; lakera.ai — Agentic AI Threats |
+| `AP-17` | `BURN_RATE_ANOMALY` | Token burn-rate anomaly (pre-$47k signal) | rate-limit reset triggers exponential consumption, loop burns tokens without artifact change | absolute USD/iter cap + USD/run cap (runner-enforced when the executor writes `.cost-usd`) + auto-reload billing disabled; EWMA burn-rate alert (5-min window vs prior window > 3x → PAUSE) is an _audit/design-time guard — not enforced by the shipped template_ | PAUSE, snapshot state, require explicit user resume; never auto-continue | byteiota.com — Uber Claude Code; mfyz.com — Claude Code on Loop |
 | `AP-18` | `VALIDATOR_GAP` | Architectural incoherence blindness | verify only checks "works", duplicate impls / layer violations / naming drift accumulate exponentially over 4h+ runs | verify includes architectural lint (`jscpd` duplication, `dependency-cruiser` cycles, `ts-prune` deadcode); thresholds fail the iter | extend `verify.sh` with architectural lint; fail iter on threshold breach | asdlc.io — Ralph Loop pattern |
 | `AP-19` | `STATE_DRIFT` | Compaction-induced decision amnesia | auto-compaction discards "why" notes; next iter re-litigates or reverses prior design decisions | pre-compaction extract to append-only `decisions.md` (≤ 30 lines), first iter after compaction is required to read it | restore decisions from `decisions.md`; if missing, escalate for human review | gist — Compaction Memory; cipherbuilds.ai — Day 30 Agent Memory |
-| `AP-20` | `PERMISSION_HIJACK` | Permission mode hijack via settings.json | agent rewrites `.claude/settings.json` `permissions.defaultMode` to `bypassPermissions` mid-run; deny rules silently removed | `.claude/settings*.json` sha256-pinned at start; any change ABORTs; verify runs in a separate process with its own settings file | restore baseline settings, ABORT, escalate; treat as P0 security event | cryptika.com — Claude Code rule bypass; repello.ai — Claude Code Security Checklist |
-| `AP-21` | `TOOL_FAILURE` | Identical retry without diff (token loop) | same tool call argv repeats N times with no file mtime change; pure token burn (distinct from `AP-1` retry count) | argv-hash dedup: 2 identical hashes in window forces a `reframe` prompt; 3 ABORTs | force `reframe` prompt on 2 duplicates; ABORT on 3; engage circuit breaker | quickleap.io — AI Agents Reasoning Loops; agentpatterns.tech — Infinite Agent Loop |
+| `AP-20` | `PERMISSION_HIJACK` | Permission mode hijack via settings.json | agent rewrites `.claude/settings.json` `permissions.defaultMode` to `bypassPermissions` mid-run; deny rules silently removed | runner pins `PROJECT_ROOT/.claude/settings.json` and `settings.local.json` (creation counts) in `.pins.sha256`; any change → `[ABORT]`, `BLOCKED`. A verify process with its own settings file is operator hardening | restore baseline settings, ABORT, escalate; treat as P0 security event | cryptika.com — Claude Code rule bypass; repello.ai — Claude Code Security Checklist |
+| `AP-21` | `TOOL_FAILURE` | Identical retry without diff (token loop) | same tool call argv repeats N times with no file mtime change; pure token burn (distinct from `AP-1` retry count) | argv-hash dedup: 2 identical hashes in window forces a `reframe` prompt; 3 ABORTs — _audit/design-time guard — not enforced by the shipped template_ | force `reframe` prompt on 2 duplicates; ABORT on 3; engage circuit breaker | quickleap.io — AI Agents Reasoning Loops; agentpatterns.tech — Infinite Agent Loop |
 
 ### Additional `CONTRACT_MISSING` signals (no `AP-*` mapping)
 
@@ -101,29 +101,29 @@ These are runtime-detected contract gaps surfaced by the audit pipeline; they sh
 
 ### Additional semantic-stall signals (`CONVERGENCE_STALL` / `OSCILLATION_LOOP`)
 
-Runtime-detected by the audit pipeline from `.action-sig.log` (per-iteration change signature written by the runner). Circuit breakers catch exit-code failures but miss these — iterations "succeed" while producing no net progress.
+Detected from `.action-sig.log` (per-iteration change signature written by the runner). The runner itself stops `BLOCKED` on the first row only; the others are applied by the audit pipeline. Circuit breakers catch exit-code failures but miss these — iterations "succeed" while producing no net progress.
 
 | Signal | Class | First response | Recovery |
 |--------|-------|----------------|----------|
 | `CONVERGENCE_WINDOW` (default `3`) identical `.action-sig.log` lines | `CONVERGENCE_STALL` | classify `P1`, persist state, escalate to human | inject disambiguation context or narrow scope, then `recover.sh --clear-stall`; if exhausted, `ORBIT_TO_SCOUT_HANDOFF` |
-| action similarity `>= CONVERGENCE_THRESHOLD` (`0.85`) over `3` iters | `CONVERGENCE_STALL` | classify `P1`, pause loop | re-scope AC or split the goal, then `recover.sh --clear-stall`; resume with narrower target |
-| A↔B alternation `>= 3` cycles in last `6` iters | `OSCILLATION_LOOP` | classify `P1`, pause loop | restrict action space or inject tie-breaking context, then `recover.sh --clear-stall` and escalate |
-| output delta `< 5%` net artifact change across `3` iters | `CONVERGENCE_STALL` | classify `P2`, flag as stalled | review whether the goal is already met (false-incomplete) or genuinely stuck |
+| action similarity `>= CONVERGENCE_THRESHOLD` (`0.85`) over `3` iters (_audit/design-time guard — not enforced by the shipped template_) | `CONVERGENCE_STALL` | classify `P1`, pause loop | re-scope AC or split the goal, then `recover.sh --clear-stall`; resume with narrower target |
+| A↔B alternation `>= 3` cycles in last `6` iters (_audit/design-time guard — not enforced by the shipped template_) | `OSCILLATION_LOOP` | classify `P1`, pause loop | restrict action space or inject tie-breaking context, then `recover.sh --clear-stall` and escalate |
+| output delta `< 5%` net artifact change across `3` iters (_audit/design-time guard — not enforced by the shipped template_) | `CONVERGENCE_STALL` | classify `P2`, flag as stalled | review whether the goal is already met (false-incomplete) or genuinely stuck |
 
 ## High-Impact Top 3
 
 Apply first when generating new runners; these are the highest-leverage protections.
 
-1. `AP-13` `REWARD_HACK` — METR/NIST 2025-2026 demonstrate this across multiple models. `tests/` immutability is a one-line fix with outsized safety value.
+1. `AP-13` `REWARD_HACK` — METR/NIST 2025-2026 demonstrate this across multiple models. Pinning is a one-line fix with outsized safety value: `verify.sh` is pinned by default; add `PIN_PATHS=tests`.
 2. `AP-14` Worktree Cleanup — destructive data loss reproducible per Claude Code issue #48927. Inode monitoring is cheap; the alternative is unrecoverable.
-3. `AP-17` `BURN_RATE_ANOMALY` — multiple 2026 incidents ($6k overnight, Uber-scale events). EWMA monitoring is orthogonal to existing `RETRY_LIMIT` and `TOKEN_BUDGET`.
+3. `AP-17` `BURN_RATE_ANOMALY` — multiple 2026 incidents ($6k overnight, Uber-scale events). EWMA monitoring (_audit/design-time guard — not enforced by the shipped template_) is orthogonal to `RETRY_LIMIT` and the runner's `USD_PER_*_CAP`.
 
 ## Severity Priority
 
 | Severity | Classes / scenarios | Action |
 |----------|---------------------|--------|
-| `P0` | false `DONE`, destructive commit-scope risk, escalated drift, `REWARD_HACK`, `GOAL_DRIFT`, `PERMISSION_HIJACK`, `AP-14` worktree destruction | stop and confirm |
-| `P1` | drift, contract gaps, retry exhaustion, `BURN_RATE_ANOMALY` (pause + human resume) | recover then continue |
+| `P0` | false `DONE`, destructive commit-scope risk, escalated drift, `REWARD_HACK`, `GOAL_DRIFT`, `PERMISSION_HIJACK`, `BURN_RATE_ANOMALY` (never auto-resume), `AP-14` worktree destruction | stop and confirm |
+| `P1` | drift, contract gaps, retry exhaustion | recover then continue |
 | `P2` | intermittent tool failure within retry budget | retry policy |
 
 ## Retry Policy by Error Type
@@ -181,7 +181,7 @@ ORBIT_FAILURE_REPORT:
 | Partial | no external terminator declared (`LOOP_TIMEOUT`/`USD_PER_RUN_CAP` unset) on an unattended loop | `CONTRACT_MISSING` | `P1` | apply Terminator-bound gate (`operation-contract.md`); declare a hard bound |
 | Partial | an AC has no verify-command mapping (oracle gap) | `CONTRACT_MISSING` | `P1` | apply AC-oracle gate; strengthen via `vague-goal-handling.md` |
 | Partial | `.goal.sha256` absent while `GOAL_IMMUTABLE=true` | `GOAL_DRIFT` | `P1` | re-pin baseline at next clean iteration; investigate why pin is missing |
-| Partial | `.cost-usd` present and `sum > USD_PER_RUN_CAP` | `BURN_RATE_ANOMALY` | `P1` | PAUSE; require explicit human resume (never auto-continue) |
+| Partial | `.cost-usd` present and `sum > USD_PER_RUN_CAP` | `BURN_RATE_ANOMALY` | `P0` | PAUSE; require explicit human resume (never auto-continue) |
 | Partial | `.action-sig.log` shows `CONVERGENCE_WINDOW` identical trailing lines | `CONVERGENCE_STALL` | `P1` | persist state, escalate; inject disambiguation or re-scope |
 | Complete | artifacts consistent | none | — | continue safely |
 
@@ -206,7 +206,7 @@ Cooldown: `OPEN` state auto-transitions to `HALF_OPEN` after `CIRCUIT_COOLDOWN` 
 
 Reset: manual reset via `recover.sh --reset-circuit` or by clearing `${LOOP_DIR}/.circuit-state`.
 
-Reporting: circuit breaker state changes are logged in the structured log (see `script-template-runner.md § Structured Logging`).
+Reporting: circuit breaker state changes are logged as `circuit_state_change` events in `runner.jsonl` (`emit_log`, `STRUCTURED_LOG=true`; see `script-template-runner.md`).
 
 ## Prevention Checklist
 
@@ -224,15 +224,15 @@ Run before launching a loop:
 - [ ] the `DONE` gate requires `done.md` and verify `PASS`/`SKIP`
 - [ ] no manual `git checkout` will happen during active `BRANCH_ISOLATION`
 - [ ] `verify.sh` includes a placeholder-detection step (TODO / `pass` / `NotImplementedError`)
-- [ ] `tests/` and `verify.sh` are read-only or protected by pre-commit
-- [ ] `git fsck` and `.git/` inode monitoring run at iter start under `WORKTREE_ISOLATION`
+- [ ] `verify.sh` is pinned (`ARTIFACT_PINS=true`, default) and `PIN_PATHS` names the `tests/` tree
+- [ ] `git fsck` and `.git/` inode monitoring run at iter start when a custom runner adds worktree isolation (_audit/design-time guard — not enforced by the shipped template_)
 - [ ] scratchpad rotation policy is set; `goal.md` size is tracked iter-over-iter
-- [ ] `goal.md` and AC files are sha256-pinned and read-only
-- [ ] `BURN_RATE_THRESHOLD`, `USD_PER_ITER_CAP`, `USD_PER_RUN_CAP` are configured; auto-reload billing is disabled
+- [ ] `goal.md` is pinned (`GOAL_IMMUTABLE=true`); separate AC files are listed in `PIN_PATHS`
+- [ ] `LOOP_TIMEOUT` and/or `USD_PER_ITER_CAP` / `USD_PER_RUN_CAP` are set (the runner refuses to start with all three at `0`); auto-reload billing is disabled
 - [ ] `verify.sh` includes architectural lint (duplication / cycles / dead code)
 - [ ] `decisions.md` (append-only) is referenced; first post-compaction iter re-reads it
-- [ ] `.claude/settings*.json` sha256-pinned at loop start
-- [ ] tool-call argv dedup is active (last `DEDUP_WINDOW` calls hashed)
+- [ ] `.claude/settings*.json` pinned (`ARTIFACT_PINS=true`, default; `PROJECT_ROOT` is the project the executor reads settings from)
+- [ ] tool-call argv dedup (last `DEDUP_WINDOW` calls hashed) is provided by the executor or a custom runner (_audit/design-time guard — not enforced by the shipped template_)
 
 ## Live-Loop Audit Checklist
 
@@ -244,7 +244,7 @@ Run in `AUDIT` mode against a running or completed loop (vs the pre-launch Preve
 - [ ] every AC in `goal.md` resolves to a verify command (oracle completeness)
 - [ ] `.goal.sha256` exists and still matches `goal.md` (no `GOAL_DRIFT`)
 - [ ] `.cost-usd` (when present) sum is within `USD_PER_RUN_CAP`; last line within `USD_PER_ITER_CAP`
-- [ ] `.action-sig.log` tail shows no `CONVERGENCE_WINDOW` identical lines and no A↔B oscillation
+- [ ] `.action-sig.log` tail shows no `CONVERGENCE_WINDOW` identical lines and no A↔B oscillation (oscillation is an audit-time check)
 - [ ] any `DONE` claim has `done.md` + verify `PASS`/`SKIP` + placeholder-clean changed source (triple gate)
 - [ ] footer `NEXUS_LOOP_STATUS` is one of `READY`/`CONTINUE`/`DONE` and parses deterministically
 
@@ -267,14 +267,14 @@ Run in `AUDIT` mode against a running or completed loop (vs the pre-launch Preve
 | `AP-13` | `tests/` or `verify.sh` modified in same iter as `src/` |
 | `AP-14` | `git rev-parse --git-dir` fails at iter start, or `.git/` inode changed |
 | `AP-15` | `goal.md` size strictly increasing across 3+ iters, or same error string in 3+ iters |
-| `AP-16` | `goal.md`/AC sha256 changed mid-run |
+| `AP-16` | `goal.md` (or a `PIN_PATHS` AC file) sha256 changed mid-run |
 | `AP-17` | 5-min token rate > 3x prior window, or USD/iter > cap |
 | `AP-18` | `jscpd`/`dependency-cruiser`/`ts-prune` threshold exceeded |
 | `AP-19` | post-compaction iter produces diff > 2x baseline, or ADR contradicts implementation |
 | `AP-20` | `.claude/settings*.json` sha256 changed mid-run |
 | `AP-21` | last `DEDUP_WINDOW` tool argv hashes contain a duplicate with no mtime change |
 | `CONVERGENCE_STALL` | `.action-sig.log` has `CONVERGENCE_WINDOW` identical trailing lines |
-| `OSCILLATION_LOOP` | `.action-sig.log` shows A↔B alternation `>= 3` cycles in last `6` lines |
+| `OSCILLATION_LOOP` | `.action-sig.log` shows A↔B alternation `>= 3` cycles in last `6` lines (_audit/design-time guard — not enforced by the shipped template_) |
 
 
 ---
@@ -296,6 +296,6 @@ Canonical home for the failure taxonomy referenced from `SKILL.md` -> Failure an
 | `CONTEXT_OVERFLOW` | tool outputs inflate context beyond model capacity | memory pointer pattern (outputs > `1KB` externalised), rotate/summarize, retry |
 | `VALIDATOR_GAP` | verify passes on stub/placeholder code (AP-12) | extend verify with placeholder grep + AC-derived behavioural assertions |
 | `REWARD_HACK` | agent modified `tests/`/`verify.sh` to soften assertions (AP-13) | revert changes, ABORT, escalate; retry from write-isolated worktree |
-| `GOAL_DRIFT` | `goal.md`/AC files mutated mid-run (AP-16) | restore sha256-pinned baseline, ABORT, escalate |
+| `GOAL_DRIFT` | `goal.md`/AC files mutated mid-run (AP-16) | restore the pinned baseline (or confirm and `recover.sh --repin-goal`), escalate |
 | `BURN_RATE_ANOMALY` | token / USD burn rate exceeds EWMA threshold (AP-17) | PAUSE, snapshot, require explicit user resume |
 | `PERMISSION_HIJACK` | `.claude/settings*.json` permissions widened mid-run (AP-20) | restore baseline, ABORT, P0 security escalation |

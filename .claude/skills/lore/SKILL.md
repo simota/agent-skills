@@ -27,10 +27,11 @@ COLLABORATION_PATTERNS:
 - Pattern F: Knowledge Graph Sync (Lore <-> Oracle for RAG pattern alignment)
 - Pattern G: Decay Alert (Lore -> Gauge for stale skill detection)
 - Flux -> Lore: Reusable thinking pattern delivery
+- Pattern H: Loop Learning (Lore <-> Orbit: Orbit sends reusable loop patterns; Lore sends loop-pattern updates that fire Orbit `RF-05`)
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: All agent journals (.agents/*.md), Triage (postmortems), Mend (remediation logs), Oracle (RAG patterns), Darwin (evolution insights, fitness trend data), Flux (reusable thinking patterns)
-- OUTPUT: Architect, Darwin, Sigil, Nexus, Mend, Gauge, Triage
+- INPUT: All agent journals (.agents/*.md), Triage (postmortems), Mend (remediation logs), Oracle (RAG patterns), Darwin (evolution insights, fitness trend data), Flux (reusable thinking patterns), Orbit (reusable loop patterns)
+- OUTPUT: Architect, Darwin, Sigil, Nexus, Mend, Gauge, Triage, Orbit
 
 PROJECT_AFFINITY: universal
 -->
@@ -166,7 +167,7 @@ Parse the first token of user input.
 Behavior notes per Recipe:
 - `curate`: Full HARVEST → SYNTHESIZE → CATALOG cycle. Confidence classification (Anecdote/Emerging/Pattern/Established/Foundational). Update METAPATTERNS.md.
 - `decay`: Evaluate freshness score (0-100). Identify STALE patterns (>180 days) and decide on archival. Apply TTL multiplier.
-- `propagate`: Deliver patterns at PATTERN (3+) confidence or higher to consuming agents. Send in LORE_INSIGHT / LORE_ALERT format.
+- `propagate`: Deliver patterns at PATTERN (3+) confidence or higher to consuming agents; FAILURE/ANTI at EMERGING (2) or higher. Send in LORE_INSIGHT / LORE_ALERT format.
 - `extract`: Scan .agents/*.md. Focus on HARVEST phase. Process within 48 hours.
 
 ## Output Routing
@@ -252,8 +253,8 @@ Exceptions:
 
 ## Collaboration
 
-**Receives:** All agent journals (`.agents/*.md`), Triage (postmortems), Mend (remediation logs), Oracle (RAG pattern insights), Darwin (evolution insights, fitness trend data), Flux (reusable thinking patterns)
-**Sends:** Architect (design insights), Darwin (cross-agent patterns, knowledge decay signals), Sigil (project patterns), Nexus (routing feedback), Mend (incident pattern candidates), Triage (recurring patterns), Gauge (stale skill detection signals)
+**Receives:** All agent journals (`.agents/*.md`), Triage (postmortems), Mend (remediation logs), Oracle (RAG pattern insights), Darwin (evolution insights, fitness trend data), Flux (reusable thinking patterns), Orbit (reusable loop patterns)
+**Sends:** Architect (design insights), Darwin (cross-agent patterns, knowledge decay signals), Sigil (project patterns), Nexus (routing feedback), Mend (incident pattern candidates), Triage (recurring patterns), Gauge (stale skill detection signals), Orbit (loop-pattern updates → `RF-05`; project-local — apply `_common/PROJECT_LOCAL_SKILLS.md` § Availability Gate)
 
 **Overlap boundaries:**
 - **vs Architect**: Architect = agent SKILL.md design/editing; Lore = cross-agent pattern extraction and knowledge propagation.

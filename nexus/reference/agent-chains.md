@@ -219,7 +219,7 @@ Each row is a **deviation** from the `routing-matrix.md` default for that task t
 | ADVISORY | feature-reality-check | Spark → Magi[advisor] |
 | ADVISORY | research-to-action | Field → Magi[advisor] → Sherpa → Builder |
 
-**Single-agent sub-type variants** are not tabled — they are the Recipe Hints in `routing-matrix.md`. Examples: `ADVISORY/{1on1,group,triage,retro,pitch}` = `Magi[<mode>]`; `FIGURE_CHANNELING/{single,panel}` = `Magi[advisor]` / `Magi[advisor]`.
+**Single-agent sub-type variants** are not tabled — they are the Recipe Hints in `routing-matrix.md`. Examples: `ADVISORY/{office-hours,triage,pitch,expert,conclave,critique,roster}` = `Magi[advisor <variant>]` (`magi/SKILL.md` § Subcommand Dispatch); `FIGURE_CHANNELING/{single,panel}` = `Magi[advisor]` / `Magi[advisor]`.
 
 ---
 

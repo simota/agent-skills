@@ -32,7 +32,7 @@ Evaluates trigger conditions (ET-01 through ET-08 as the base set; ET-09 *Offici
 
 ## 3. Journal Synthesizer
 
-Analyzes `.agents/*.md` journals to extract cross-cutting patterns.
+Analyzes `.agents/*.md` journals to extract cross-cutting patterns. Fallback only: when Lore is available Darwin consumes Lore's `METAPATTERNS.md` instead (`evolution-actions.md` § Journal Synthesis precedence).
 
 **Process:**
 1. Scan all journal files for entries with `reusable: true` tag or high-value patterns
@@ -49,7 +49,7 @@ Computes Dynamic AFFINITY overrides based on lifecycle, usage, and feedback.
 2. Map phase to dominant agent profiles (see Lifecycle table)
 3. Cross-reference with actual usage from PROJECT.md
 4. Apply feedback modifiers from Reverse Feedback
-5. Output override entries for ECOSYSTEM.md
+5. Output override entries for ECOSYSTEM.md, each with a removal condition (`evolution-actions.md` § Override Rules)
 
 ## 5. Discovery Propagator
 

@@ -286,6 +286,7 @@ Detect `NEXUS_ROUTING` in the incoming handoff to identify which failure domain 
   - Critical (RPN > 200 or AP=H): [count]
   - Top risk: [description]
 - Artifacts: [file paths or "none"]
+- Verified: [check + result — required when claiming pass/done; omit otherwise] (`_common/HANDOFF.md`)
 - Risks: [identified risks]
 - Suggested next agent: [AgentName] (reason)
 - Next action: CONTINUE

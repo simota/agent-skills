@@ -19,7 +19,7 @@ COLLABORATION_PATTERNS:
 - Lens -> Sherpa: Codebase analysis for informed decomposition
 - Magi -> Sherpa: Priority decisions for plan ordering
 - Sherpa -> Nexus: Decomposed steps
-- Sherpa -> Rally: Parallelizable tasks (2+ independent steps, speedup ≥ 1.5×)
+- Sherpa -> Rally: Parallelizable tasks (4+ workers or complex ownership, speedup ≥ 1.5×; 2-3 branches stay in Nexus L2)
 - Sherpa -> Builder/Artisan: Atomic implementation tasks
 - Sherpa -> Lore: Reusable decomposition patterns
 - Sherpa -> Canvas: Workflow visualization requests
@@ -203,7 +203,7 @@ Use this map during `GUIDE` to assign the right agent for each step type.
 | Test creation | `Radar` / `Voyager` | Radar for unit/edge, Voyager for E2E |
 | UI/frontend implementation | `Artisan` / `Forge` | Artisan for production, Forge for prototype |
 | Commit / PR strategy | `Guardian` | Commit boundary decisions |
-| Parallel independent steps (`2+`) | `Rally` | `2+` independent steps with no shared writable files, when parallel speedup ≥ `1.5×` justifies coordination cost (Rally's threshold) |
+| Parallel independent steps (`4+` workers) | `Rally` | `2-3` independent branches with clear file ownership stay in Nexus L2 parallel spawn; a `4th` worker, complex ownership, or multi-step branches → Rally (`_common/PARALLEL.md` layer rule) |
 | Priority tradeoff needed | `Magi` | Multiple valid paths, unclear priority |
 | Priority scoring | `Rank` | ICE/RICE/WSJF ordering of a task list |
 | Emergency / critical blocker | `Triage` | Cascading failure, production issue |
@@ -212,7 +212,8 @@ Use this map during `GUIDE` to assign the right agent for each step type.
 ### Rally Delegation Threshold
 
 - `1` step, or independent steps whose parallel speedup would be < `1.5×`: Sherpa sequences them directly
-- `2+` independent steps with no shared writable files and speedup ≥ `1.5×`: delegate to `Rally` via `SHERPA_TO_RALLY_HANDOFF` (threshold owned by Rally — its Trigger Guidance / Core Contract)
+- `2-3` independent steps with no shared writable files and clear ownership: mark them as parallel branches for Nexus L2 parallel spawn — no Rally
+- `4+` workers, complex ownership, or multi-step branches (speedup ≥ `1.5×`): delegate to `Rally` via `SHERPA_TO_RALLY_HANDOFF` (layer rule owned by `_common/PARALLEL.md`: max 3 L2 branches; a 4th worker is L3 Rally)
 
 ### Parking Lot Promotion
 
@@ -309,7 +310,7 @@ Use this shape:
 |-------|------------|------------------|
 | Guardian | commit timing suggestions during workflow | commit message content, PR strategy, branch naming |
 | Nexus | step-level decomposition and sequencing | cross-Epic orchestration, agent spawning |
-| Rally | identifying parallelizable steps, handing over `2+` independent steps (Rally's threshold) | actual parallel execution and synchronization |
+| Rally | identifying parallelizable steps, handing over `4+`-worker parallel work (`_common/PARALLEL.md`; 2-3 branches stay in Nexus L2) | actual parallel execution and synchronization |
 | Magi | requesting priority input when plan has tradeoffs | multi-path analysis, decision framework |
 | PDM | live execution decomposition into <15-min atomic steps + drift prevention | static WBS scope *view* (Project→Epic→Feature) reconciled from plan vs code |
 

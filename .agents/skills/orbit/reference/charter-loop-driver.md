@@ -20,15 +20,15 @@
 | §10 per-package DoD checklist | the **external DONE gate** (see below) |
 | §3 conventions + §9 run-log path | commit/test/lint/build commands; where to append events |
 
-These sections are **sha256-pinned at loop start** (Orbit AP-13 / AP-16 / AP-20 immutability rule): Orbit consumes them read-only and never edits §4/§5/§7/§10. It appends only to the §9 run-log and its own loop artifacts.
+Orbit consumes these sections read-only and never edits §4/§5/§7/§10 (AP-13 / AP-16 / AP-20 immutability rule). The shipped runner pins only `goal.md`, `verify.sh`, `PROMPT.md` and `.claude/settings*.json`; to make the Charter slice abort-on-change, list its file in `PIN_PATHS` (e.g. `PIN_PATHS=docs/CHARTER.md`). It appends only to the §9 run-log and its own loop artifacts.
 
 ## DONE gate = §10 DoD (not agent self-assessment)
 
 Orbit already forbids agent self-assessment for termination and requires an external gate + independent critic. Under a Charter-driven loop, the external DONE gate **is the §10 per-package DoD checklist**:
 
 - Loop is `DONE`/`SUCCESS` only when **every** DoD item passes (AC met + tests green + lint/build/typecheck + review).
-- Every DoD item that ran passes but some item is still open → `PARTIAL`; any DoD item still failing after the recovery ladder → `FAILED` (a failing item is never `PARTIAL`) (reported with output); could not be executed (blocked) → hand back to `enact` as `SKIPPED(blocked, reason)`.
-- This composes with Orbit's existing `CRITIC_MODEL` gate and `PLACEHOLDER_GREP` / mutation checks — DoD is the contract, the critic is the independent verifier of it.
+- Every DoD item that ran passes but some item is still open → `PARTIAL`; any DoD item still failing after the recovery ladder → `FAILED` (a failing item is never `PARTIAL`) (reported with output); could not be executed (blocked) → hand back to `enact` as package status `SKIPPED(blocked, reason)` (step `Status: BLOCKED`; see the mapping below).
+- This composes with the runner's `PLACEHOLDER_GREP` gate and any `CRITIC_MODEL` / mutation check wired into `verify.sh` (a critic is an audit/design-time guard — not enforced by the shipped template otherwise) — DoD is the contract, the critic is the independent verifier of it.
 
 ## Run-log: append in enact's §9 vocabulary
 
@@ -65,3 +65,12 @@ Build-loop packages run on the engine assigned in §5. Verify its advertised spa
 - `Expected_Output`: terminal status (`SUCCESS`/`PARTIAL`/`FAILED`/`SKIPPED(blocked, reason)`) + DoD result + run-log lines appended
 
 Orbit returns `_STEP_COMPLETE:` with `Status`, `Output` (DoD result + artifacts), `Handoff` (Builder/Radar/Guardian as needed), `Next` (`CONTINUE`/`VERIFY`/`DONE`).
+
+`Status` stays in the `_common/AUTORUN.md` enum (`SUCCESS | PARTIAL | BLOCKED | FAILED`); the package terminal status travels inside `Output` as `package_status`:
+
+| `package_status` (enact §9 vocabulary) | `_STEP_COMPLETE` `Status` |
+|----------------------------------------|---------------------------|
+| `SUCCESS` | `SUCCESS` |
+| `PARTIAL` | `PARTIAL` |
+| `FAILED` | `FAILED` |
+| `SKIPPED(blocked, reason)` | `BLOCKED` |

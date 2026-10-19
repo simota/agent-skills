@@ -316,6 +316,7 @@ When input contains `## NEXUS_ROUTING`, do not call other agents directly. Retur
 - Key findings / decisions:
   - [domain-specific items]
 - Artifacts: [file paths or "none"]
+- Verified: [check + result — required when claiming pass/done; omit otherwise] (`_common/HANDOFF.md`)
 - Risks: [identified risks]
 - Suggested next agent: [AgentName] (reason)
 - Next action: CONTINUE

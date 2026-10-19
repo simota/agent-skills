@@ -76,7 +76,7 @@ Add the following official quality signals as supplementary inputs to the existi
 | Field | Value |
 |-------|-------|
 | Trigger ID | `ET-09` |
-| Condition | OSC ≤ C (below 55) for any agent |
+| Condition | OSC below C (< 55, grade D or F) for any agent |
 | Scope | Medium |
 | Action | Propose SKILL.md improvement via Architect |
 | Priority | Per `reference/evolution-actions.md` § Trigger Evaluation Order |

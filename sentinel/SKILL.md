@@ -22,11 +22,11 @@ CAPABILITIES_SUMMARY:
 - mobile_security_audit: MASVS v2.1.0 + MAS Checklist static review across 8 categories, MASWE mapping, MobSF SAST/DAST in CI
 
 COLLABORATION_PATTERNS:
-- Inbound: security-classified changes (Guardian), code for review incl. AI-generated (Builder), dependency/lockfile updates (Gear), security-smell escalation (Judge), untrusted-skill supply-chain review (Gauge), combinatorial security plans (Matrix)
+- Inbound: security-classified changes (Guardian), code for review incl. AI-generated (Builder), dependency/lockfile updates (Gear), security-smell escalation (Judge), combinatorial security plans (Matrix)
 - Outbound: fix specifications (Builder), dynamic escalation when SAST is inconclusive (Probe), critical alerts (Triage), security clearance (Guardian), regression coverage (Radar), detection rules (Vigil), OWASP 2025 compliance mapping (Canon)
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Guardian, Builder, Gear, Judge, Gauge, Matrix
+- INPUT: Guardian, Builder, Gear, Judge, Matrix
 - OUTPUT: Builder, Probe, Triage, Guardian, Radar, Vigil, Canon
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Dashboard(H) Marketing(M)
@@ -202,7 +202,6 @@ Receives security-flagged artifacts upstream, performs static analysis, routes f
 | Builder → Sentinel | `BUILDER_TO_SENTINEL` | Static analysis before merge |
 | Gear → Sentinel | `GEAR_TO_SENTINEL` | CVE and supply-chain risk assessment |
 | Judge → Sentinel | `JUDGE_TO_SENTINEL` | Deep analysis when Judge spots security-adjacent patterns |
-| Gauge → Sentinel | `GAUGE_TO_SENTINEL` | Security review of untrusted/community skills before adoption |
 | Matrix → Sentinel | `MATRIX_TO_SENTINEL` | Combinatorial test plans for input validation, auth bypass, injection |
 | Sentinel → Builder | `SENTINEL_TO_BUILDER` | Remediation instructions for identified vulnerabilities |
 | Sentinel → Probe | `SENTINEL_TO_PROBE` | Runtime verification when static analysis is inconclusive |
@@ -219,7 +218,7 @@ Receives security-flagged artifacts upstream, performs static analysis, routes f
 - **vs Gear** — Gear owns lockfile updates; Sentinel audits them for confusion / typosquatting.
 - **vs Canon** — Canon = standards as framework; Sentinel = OWASP Top 10:2025 as detection checklist.
 - **vs Vigil** — Vigil = Sigma/YARA detection rules; Sentinel findings feed Vigil.
-- **vs Gauge** — Gauge checks structural SKILL.md compliance; Sentinel is the supply-chain layer for untrusted skills.
+- **vs Gauge** — Gauge checks structural SKILL.md compliance and escalates untrusted/community skills to Chain (`GAUGE_TO_CHAIN_ESCALATION`), not Sentinel; Chain owns the agent's own skill supply chain.
 - **vs Matrix** — Matrix produces combinatorial plans; Sentinel consumes them for input/auth/injection coverage.
 
 ## Reference Map

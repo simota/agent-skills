@@ -14,9 +14,8 @@ This file defines the common interaction control rules that all agents reference
 | AUTORUN | `## NEXUS_AUTORUN` + SIMPLE assessment | Fully automatic execution; COMPLEX → GUIDED | Ask First triggers, guardrail escalations, and error cases |
 | GUIDED | `## NEXUS_GUIDED` | Confirm at decision points | Per INTERACTION_TRIGGERS |
 | INTERACTIVE | `## NEXUS_INTERACTIVE` | Confirm at every step | Always confirm |
-| Kickoff | Explicit request for chain design only | Chain design only | Initial confirmation only |
 
-Default mode is `AUTORUN_FULL` — `_common/AUTORUN.md` and `nexus/SKILL.md` § Modes own the mode set.
+Default mode is `AUTORUN_FULL` — `_common/AUTORUN.md` and `nexus/SKILL.md` § Modes own the mode set. A request for chain design only is not a separate mode: it is a design-only deliverable produced under the active mode.
 
 ---
 

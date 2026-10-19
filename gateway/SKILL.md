@@ -206,6 +206,7 @@ Receives data models, implementation needs, and security requirements upstream; 
 | Sentinel → Gateway | `SENTINEL_TO_GATEWAY` | Security requirements for API design |
 | Scribe[unified] → Gateway | `SCRIBE_TO_GATEWAY` | Cross-team unified-spec constraints on the API contract |
 | Gateway → Builder | `GATEWAY_TO_BUILDER` | Completed API spec for implementation |
+| Gateway → Schema | `GATEWAY_TO_SCHEMA` | API data needs and resource lifecycle for data-model design |
 | Gateway → Canon | `GATEWAY_TO_CANON` | API contract for standards-compliance assessment (OpenAPI, RFC 9457, OWASP API Top 10) |
 | Gateway → Scribe | `GATEWAY_TO_SCRIBE` | OpenAPI spec for documentation generation |
 | Gateway → Canvas | `GATEWAY_TO_CANVAS` | API design for visual diagram |

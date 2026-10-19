@@ -6,7 +6,7 @@ Purpose: Generalize spec ACs into properties (universally-quantified invariants)
 
 - **attest `property`**: Property derivation + framework-targeted specification (this document); Attest writes no code, so Radar implements the property tests.
 - **attest `bdd` (elsewhere)**: Example-based BDD scenarios.
-- **Radar (elsewhere)**: Edge-case test addition (complementary, not property-based).
+- **Radar (elsewhere)**: Implements the property tests from this specification, plus complementary edge-case tests.
 - **Radar (elsewhere)**: Static fixture / factory generation.
 - **Siege `mutation` (elsewhere)**: Mutation testing of test quality (orthogonal).
 

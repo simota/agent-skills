@@ -15,11 +15,13 @@ Purpose: load this when selecting or changing `EXEC_CMD`. It defines the non-int
 
 ## Shared Executor Requirements
 
-Orbit runs `EXEC_CMD` through `portable_timeout`:
+The runner first `cd`s into `PROJECT_ROOT` (default: the directory it was launched from), then runs `EXEC_CMD` through `run_with_budget` → `portable_timeout` as a background job, so a `SIGINT`/`SIGTERM` to the runner is handled at once and forwarded to the executor:
 
 ```bash
-portable_timeout "${EFFECTIVE_TIMEOUT}" bash -c "${EXEC_CMD}" 2>&1 | tee -a "${LOOP_DIR}/runner.log"
+run_with_budget "${EFFECTIVE_TIMEOUT}" bash -c "${EXEC_CMD}" > >(tee -a "${LOOP_DIR}/runner.log") 2>&1
 ```
+
+Timeout signals: for a limit of `N` seconds the executor gets `SIGTERM` at `N - min(KILL_GRACE, N/2)` and `SIGKILL` at `N` (`KILL_GRACE` default `10`), so `N` stays a hard bound. Each job leads its own process group, so on runner shutdown the executor and all its descendants get `SIGTERM`, then `SIGKILL` after `KILL_GRACE` + 1 seconds; when the executor's top process exits, whatever it left in its group gets `SIGTERM`, then `SIGKILL` after the grace or at the limit `N`, whichever comes first, so a background child cannot outlive the job or its hard bound. The group has no controlling terminal: `EXEC_CMD` must be a headless invocation.
 
 The whole `EXEC_CMD` string is parsed by Bash once, preserving quoted executable paths and multiword prompts. It is trusted operator-authored shell configuration and must never be populated from untrusted task text or model output. Prefer a wrapper script when constructing complex invocations; pass external text as quoted arguments within that wrapper.
 
@@ -29,10 +31,10 @@ Any executor must provide:
 |-------------|-----|
 | non-interactive mode | Orbit has no TTY |
 | existing scoped grants; no unresolved prompts | loops cannot grant themselves permission |
-| CWD-based operation | runner changes into project root first |
+| CWD-based operation | runner `cd`s into `PROJECT_ROOT` first (default: launch directory) |
 | process status plus actual completion evidence | `0` alone is not a passed DONE gate |
 | stdout/stderr output | runner logs through `tee` |
-| SIGTERM handling | `portable_timeout` terminates hung runs |
+| SIGTERM handling | timeouts and runner shutdown send `SIGTERM` first, `SIGKILL` after the grace period |
 
 ### 3-Tier Timeout Architecture
 
@@ -41,8 +43,8 @@ Orbit enforces timeouts at three independent layers:
 | Layer | Variable | Default | Scope | On timeout |
 |-------|----------|---------|-------|------------|
 | Tool | `TOOL_TIMEOUT` | `120s` | single tool/command invocation within executor | kill tool process, log `[TIMEOUT:TOOL]`, continue iteration |
-| Iteration | `ITER_TIMEOUT` (alias: `EXEC_TIMEOUT`) | `600s` | one full iteration of the main loop | kill executor, log `[TIMEOUT:ITER]`, trigger retry policy |
-| Loop | `LOOP_TIMEOUT` | `0` (unlimited) | entire loop execution from start to finish | graceful shutdown sequence (see `script-template-runner.md`) |
+| Iteration | `ITER_TIMEOUT` (alias: `EXEC_TIMEOUT`) | `600s` | one executor attempt | `SIGTERM`, then `SIGKILL` at the limit; the attempt fails (exit `124`/`137`) and the retry policy applies |
+| Loop | `LOOP_TIMEOUT` | `0` (unlimited; the runner refuses to start when the USD caps are also `0`, unless `ALLOW_UNBOUNDED_RUN=true`) | entire loop execution from start to finish | running command terminated, state saved `BLOCKED`, footer emitted |
 
 #### Layer Interaction
 
@@ -76,8 +78,8 @@ Orbit enforces timeouts at three independent layers:
 | Timeout hit | Fallback action |
 |-------------|-----------------|
 | `TOOL_TIMEOUT` | log warning, skip tool result, let executor decide next action |
-| `ITER_TIMEOUT` | kill executor, apply retry policy (transient classification) |
-| `LOOP_TIMEOUT` | trigger graceful shutdown: save state → log partial results → cleanup → exit |
+| `ITER_TIMEOUT` | `SIGTERM` then `SIGKILL` the executor, apply retry policy (transient classification) |
+| `LOOP_TIMEOUT` | terminate the running command, save state `BLOCKED`, release the lock, emit the footer |
 
 Note: `TOOL_TIMEOUT` is advisory — it requires executor-level support. Executors that do not support per-tool timeouts will rely on `ITER_TIMEOUT` as the effective boundary.
 

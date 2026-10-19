@@ -290,13 +290,14 @@ Where:
 #### Feedback (20%)
 
 ```
-Feedback = (positive_count - negative_count × 1.5) / total_feedback × 100
+Feedback = clamp((positive_count - negative_count × 1.5) / total_feedback × 100, 0, 100)
 
 Where:
   positive_count = positive Reverse Feedback entries for this agent
   negative_count = negative Reverse Feedback entries (weighted 1.5× to penalize issues)
   total_feedback = total feedback entries for this agent
 
+  Raw value spans -150..100; clamp to 0-100 so RS stays on its 0-100 scale.
   If no feedback exists: Feedback = 50 (neutral default)
 ```
 
@@ -330,20 +331,23 @@ Scale: 100 at 0 days, 0 at 67+ days. This encourages regular agent maintenance.
 ```
 1. COLLECT signals (see signal-collection.md)
 2. For each phase P in [GENESIS, ACTIVE_BUILD, STABILIZATION, PRODUCTION, MAINTENANCE, SCALING, SUNSET]:
-     score[P] = sum(signal_match[P][s] × weight[P][s] for s in signals)
+     score[P] = min(1.0, sum(signal_match[P][s] × weight[P][s] for s in signals))
 3. Sort phases by score, descending
 4. If score[top_phase] >= 0.60:
      detected_phase = top_phase
      confidence = score[top_phase]
-5. Else:
+5. Else if score[top_phase] >= 0.40:
      detected_phase = MIXED
      phases = top 2 phases with scores
      confidence = max(scores)
-6. Compare detected_phase with previous_phase (from ECOSYSTEM.md)
-7. If transition detected:
+6. Else:
+     detected_phase = UNKNOWN
+     confidence = max(scores)
+7. Compare detected_phase with previous_phase (from ECOSYSTEM.md)
+8. If transition detected (§ Transition Detection):
      Fire ET-01 trigger
      Record transition in history
-8. Return {phase, confidence, signals_breakdown, transition}
+9. Return {phase, confidence, signals_breakdown, transition}
 ```
 
 ### Confidence Interpretation

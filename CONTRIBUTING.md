@@ -38,7 +38,7 @@ make check
 
 | コマンド | 用途 |
 |---|---|
-| `make validate` | スキル構造、project-local 配線、Recipes、routing、instructions、contract delivery、lessons、task battery、`index.html` の Recipe 一覧の鮮度を検証 |
+| `make validate` | スキル構造、project-local 配線、Recipes、routing、instructions、contract delivery、lessons、task battery、`index.html` の Recipe 一覧（`SUBCOMMANDS`）と Compass の Recipes directory の鮮度を検証し、pre-commit hook の状態（on / off / stale）を表示 |
 | `make test` | 検証スクリプトと周辺ツールの回帰テストを実行 |
 | `make check` | `make validate` + `make test`。PR 前の標準コマンド |
 | `make hooks` | リポジトリ管理の pre-commit hook を有効化 |
@@ -88,8 +88,11 @@ Route elsewhere when the task is primarily:
 ## Workflow
 [Phases and what each produces]
 
-## Recipes / ## Subcommand Dispatch
+## Recipes
 [Required by ST1 (a missing heading is a P2 warning) — see `_common/RECIPES.md`]
+
+## Subcommand Dispatch
+[Required by ST1 alongside `## Recipes` — see `_common/RECIPES.md`]
 
 ## Output Requirements
 [What every deliverable must carry]
@@ -171,7 +174,7 @@ type(scope): description
 
 Examples:
 - feat(agents): add new DataFlow agent
-- fix(Builder): resolve type inference issue
+- fix(builder): resolve type inference issue
 - docs(README): update usage examples
 ```
 

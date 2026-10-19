@@ -243,6 +243,8 @@ Templates in `reference/handoffs.md`.
 | PDM → Scribe | `PDM_TO_SCRIBE_HANDOFF` | Spec gaps needing authoring |
 | PDM → Canvas | `PDM_TO_CANVAS_HANDOFF` | Roadmap/status for visualization |
 
+`Orbit` is project-local — apply the Availability Gate in `_common/PROJECT_LOCAL_SKILLS.md` first; if absent, route to the registered fallback (`Nexus[goal/apex]` for bounded execution; `Sherpa` for decomposition) and report `project_local_fallback: true`.
+
 ### Overlap Boundaries
 
 - **vs Lens**: Lens = current-state code comprehension ("how does X work"); PDM = product-status reconciliation across plan + code. PDM consumes Lens findings as the "built" side. (~20%)

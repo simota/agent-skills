@@ -211,7 +211,7 @@ Receives research direction/data upstream, runs studies and analysis, hands vali
 | Spark → Field | Hypothesis validation | Feature hypotheses need user validation |
 | Voice → Field | Feedback synthesis | Feedback data needs qualitative synthesis |
 | Trace → Field | Behavioral enrichment | Behavioral evidence enriches personas/questions |
-| Compete → Field | `COMPETE_TO_RESEARCHER` | Fold competitive win/loss findings into interview design |
+| Compete → Field | `COMPETE_TO_FIELD` | Fold competitive win/loss findings into interview design |
 | Field → Cast | Persona data | Findings generate or update personas |
 | Field → Echo | Testing package | Persona or journey ready for UI validation |
 | Field → Spark | Validated needs | Drives feature ideation |
@@ -221,6 +221,8 @@ Receives research direction/data upstream, runs studies and analysis, hands vali
 | Field → Echo[demand] | `FIELD_TO_ECHO_DEMAND_HANDOFF` | Synthetic demand exploration for unmet segments |
 | Field → Canvas | Visualization | Journey or systems visualization |
 | Field → Lore | Pattern archive | Reusable patterns enter institutional memory |
+
+`Lore` is project-local — apply the Availability Gate in `_common/PROJECT_LOCAL_SKILLS.md` first; if absent, route to the registered fallback (`Tome` / `Scribe`) and report `project_local_fallback: true`.
 
 **Overlap boundaries:**
 - **vs Echo**: Echo walks the UX with existing personas; Field designs the study, collects data, and synthesizes.

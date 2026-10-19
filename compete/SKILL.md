@@ -36,7 +36,7 @@ COLLABORATION_PATTERNS:
 - Flux -> Compete: Market assumption reframing and differentiation axis discovery
 - Launch -> Compete: PR and contribution evidence becomes professional achievement narratives
 - Field -> Compete: Audience research informs professional positioning and content targeting
-- Compete -> Field: COMPETE_TO_RESEARCHER — interview design suggestions based on win/loss analysis results
+- Compete -> Field: COMPETE_TO_FIELD — interview design suggestions based on win/loss analysis results
 - Compete -> Saga/Prose: Engineer-centered narrative direction and profile-copy refinement
 - Compete -> Growth/Canvas: Personal-site discoverability and professional-brand visualization
 
@@ -269,7 +269,7 @@ Source citation format: `[N]` inline reference → `## Sources` section at the e
 
 `Lore` is project-local — apply the Availability Gate in `_common/PROJECT_LOCAL_SKILLS.md` first; if absent, route to the registered fallback (`Tome` / `Scribe`) and report `project_local_fallback: true`.
 
-Handoff tokens follow `<Source>_TO_<Target>` for every direction above (e.g. `VOICE_TO_COMPETE`, `PULSE_TO_COMPETE`, `COMPETE_TO_GROWTH`, `COMPETE_TO_CANVAS`, `COMPETE_TO_MAGI`, `COMPETE_TO_LORE`, `COMPETE_TO_ORACLE`), except Compete -> Spark, which uses Spark's `COMPETE_TO_SPARK_HANDOFF`, and Compete -> Field, which uses `COMPETE_TO_RESEARCHER`.
+Handoff tokens follow `<Source>_TO_<Target>` for every direction above (e.g. `VOICE_TO_COMPETE`, `PULSE_TO_COMPETE`, `COMPETE_TO_GROWTH`, `COMPETE_TO_CANVAS`, `COMPETE_TO_MAGI`, `COMPETE_TO_LORE`, `COMPETE_TO_ORACLE`), except Compete -> Spark, which uses Spark's `COMPETE_TO_SPARK_HANDOFF`. Compete -> Field uses `COMPETE_TO_FIELD` (the pre-rename Researcher-named token is retired).
 
 **Overlap boundaries:**
 - **vs Magi**: Magi = business strategy simulation; Compete = competitive intelligence and analysis.

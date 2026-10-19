@@ -15,10 +15,10 @@ Purpose: load this when debugging loop behavior or explaining how the generated 
 | Stage | Main actions | Key guardrails |
 |-------|--------------|----------------|
 | Bootstrap | create loop directory, `goal.md`, `progress.md`, `state.env`, optional `verify.sh`, always `run-loop.sh` and `notify.sh` | do not overwrite existing `goal.md`, `progress.md`, or `state.env` |
-| Pre-flight | disk `>= 100MB`, lock liveness, git health, log rotation, checksum validation | abort on `[PREFLIGHT:FAIL]` unless an explicit bypass exists |
-| Branch setup | record `ORIGIN_BRANCH`, prepare `ITER_BRANCH`, stash and restore dirt when needed | only when `BRANCH_ISOLATION=true` and `AUTOCOMMIT=true` |
+| Pre-flight | `cd` to `PROJECT_ROOT`; refuse when `LOOP_TIMEOUT`/`USD_PER_RUN_CAP`/`USD_PER_ITER_CAP` are all `0`; disk `>= 100MB`, lock liveness, git health, log rotation, goal + artifact pins, checksum validation (a `DONE` checkpoint re-runs the DONE gate) | abort on `[PREFLIGHT:FAIL]` unless an explicit bypass exists |
+| Branch setup | record `ORIGIN_BRANCH` (detached HEAD aborts), prepare `ITER_BRANCH`, stash and restore dirt when needed | only when `BRANCH_ISOLATION=true` and `AUTOCOMMIT=true` |
 | Main loop | external-terminator gates (wall-clock / budget / goal-drift / convergence), health check, executor run, verification, scoped auto-commit, `DONE` gate, signature record, state write, notify | bounded retry, **triple** `DONE` gate (done.md + verify + placeholder-clean), atomic `state.env` writes, external termination by `LOOP_TIMEOUT` / `USD_*_CAP` |
-| Post-loop squash | move from iteration branch to summary branch and squash if configured | only when `STATUS=DONE`, `BRANCH_ISOLATION=true`, `SQUASH_ON_DONE=true` |
+| Post-loop squash | move from iteration branch to summary branch (next free `-N` suffix if the name exists) and squash; tool/session metadata from any engine is stripped from generated messages (human co-author trailers kept) | only when `STATUS=DONE`, `BRANCH_ISOLATION=true`, `SQUASH_ON_DONE=true`; a failure still prints the footer (`status=BLOCKED`) and exits non-zero, and records `.squash-pending`: every rerun stops `[BRANCH:PENDING]` (no new suffix) until the human deletes the iteration branch (squash resolved) or the summary branch (retry) |
 | Footer | emit `NEXUS_LOOP_STATUS` and `NEXUS_LOOP_SUMMARY` | non-`DONE` states collapse to footer `CONTINUE` |
 
 ## Recovery Flow (`recover.sh`)
@@ -26,8 +26,8 @@ Purpose: load this when debugging loop behavior or explaining how the generated 
 Usage: `recover.sh [--reset-circuit] [--repin-goal] [--clear-stall] [--migrate] [LOOP_DIR]`
 
 1. parse flags + `LOOP_DIR`; preserve resumable fields (`ORIGIN_BRANCH`, `ITER_BRANCH`, `CONTRACT_VERSION`, cost) from the existing `state.env`
-2. apply targeted flags (`--reset-circuit` → delete `.circuit-state`; `--clear-stall` → delete `.action-sig.log`; `--repin-goal` → re-pin `.goal.sha256`; `--migrate` → bump `CONTRACT_VERSION`)
-3. read latest iteration from `progress.md`; infer recovered status from recent evidence
+2. apply targeted flags (`--reset-circuit` → delete `.circuit-state`; `--clear-stall` → delete `.action-sig.log`; `--repin-goal` → re-pin `.goal.sha256` and drop `.pins.sha256`; `--migrate` → bump `CONTRACT_VERSION`)
+3. read latest iteration from `progress.md`; infer recovered status from recent evidence — a `DONE` section stays `DONE`, which the runner's resume gate re-checks (done.md + verify + pins + placeholders) before trusting it
 4. rebuild `state.env` atomically **with preserved fields**, then refresh `state.env.sha256` so the runner does not re-trigger recovery on resume
 5. append a recovery note (incl. which flags ran) to `progress.md`
 
@@ -56,7 +56,7 @@ Effect on `DONE`:
 |----------|----------|----------|
 | `bootstrap.sh` | `goal.md`, `progress.md`, `state.env`, optional `verify.sh`, `run-loop.sh`, `notify.sh` | bootstrap initializes the loop contract |
 | `run-loop.sh` | reads `state.env`, `goal.md`, optional `verify.sh`, optional `notify.sh`, optional `done.md` | main execution loop |
-| `run-loop.sh` | writes `progress.md`, `runner.log`, `state.env`, `state.env.sha256`, `.run-loop.lock`, `.goal.sha256`, `.action-sig.log`, optional `.iter-timings.log`; reads optional `.cost-usd` | resumable execution state + stall/budget/immutability evidence |
+| `run-loop.sh` | writes `progress.md`, `runner.log`, `state.env`, `state.env.sha256`, `.run-loop.lock`, `.goal.sha256`, `.pins.sha256`, `.circuit-state`, `dirty-start-paths.nul`, `loop-dirty-paths.nul`, `.action-sig.log`, optional `.squash-pending`, optional `.iter-timings.log`; reads optional `.cost-usd` | resumable execution state + stall/budget/immutability evidence |
 | `run-loop.sh` | creates `loop/iter-{name}` and `loop/summary-{name}` | branch isolation and final squash |
 | `recover.sh` | reads `progress.md` and rewrites `state.env` | evidence-based recovery |
 | `notify.sh` | reads commit metadata and writes notification logs/audio | non-fatal notification hook |
@@ -67,11 +67,12 @@ Effect on `DONE`:
 - termination is enforced **externally**: `MAX_ITERATIONS` (count), `LOOP_TIMEOUT` (wall clock), `USD_PER_RUN_CAP` / `USD_PER_ITER_CAP` (budget, via executor-emitted `.cost-usd`)
 - semantic-stall guard: identical change-signature over `CONVERGENCE_WINDOW` iterations → `CONVERGENCE_STALL` and stop
 - `goal.md` is sha256-pinned at loop start; mid-run change ABORTs (`GOAL_IMMUTABLE`, AP-16)
+- `verify.sh`, `PROMPT.md`, `.claude/settings{,.local}.json` and `PIN_PATHS` are pinned in `.pins.sha256` and checked before and after every executor run and again before verification, which runs a copy of `verify.sh` matching its pin (`ARTIFACT_PINS`, AP-13 / AP-20)
 - retry is bounded by `RETRY_LIMIT`
-- executor attempts, retry delays, and verification share the remaining `LOOP_TIMEOUT` budget through `run_with_budget`; `portable_timeout` terminates the process group at the limit
-- dirty baseline uses NUL-delimited paths; scoped commits preserve pre-existing staged work and exclude loop runtime files
-- `state.env` is written atomically and protected by checksum
-- the runner traps shutdown signals and writes resumable state
+- executor attempts, retry delays, and verification share the remaining `LOOP_TIMEOUT` budget through `run_with_budget`, which runs each command as a background job leading its own process group (`setsid`, or perl `POSIX::setsid` on macOS) so `SIGINT`/`SIGTERM` interrupt it at once; `portable_timeout` sends `SIGTERM` `min(KILL_GRACE, limit/2)` seconds before the limit and `SIGKILL` at it; only the clock — not a command's own exit `124`/`137` — marks the loop budget spent
+- dirty baseline uses NUL-delimited paths; scoped commits preserve pre-existing staged work and exclude loop runtime files; paths that became dirty while the loop was stopped, other than the ones it left dirty (`loop-dirty-paths.nul`), join the baseline on resume
+- `state.env`, `state.env.sha256`, `.circuit-state`, `.goal.sha256` and `.pins.sha256` are written temp-then-rename; `state.env` is protected by checksum
+- the runner traps shutdown signals, sends `SIGTERM` to the running job's process group (`SIGKILL` to the group after `KILL_GRACE` + 1 s, so TERM-ignoring descendants do not survive), and writes resumable state; `run_with_budget` likewise terminates descendants left in the job's group once its top process exits (`SIGKILL` no later than the command's hard limit), so none outlives it
 - only `READY`, `CONTINUE`, and `DONE` are valid footer statuses
 - pre-flight uses `100MB`; iteration health uses `50MB`
 - adaptive timeout uses median of the last `5` executions times `2`, bounded to `[EXEC_TIMEOUT, EXEC_TIMEOUT x 3]`

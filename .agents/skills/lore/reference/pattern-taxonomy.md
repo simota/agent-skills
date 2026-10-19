@@ -160,4 +160,4 @@ CANDIDATE → REGISTERED → REINFORCED → PROMOTED → ... → AGING → ARCHI
 | **CONTESTED** | Contradictory evidence found | Document both sides, seek resolution |
 | **AGING** | No new evidence for 90+ days | Flag for review |
 | **ARCHIVED** | Superseded or no longer applicable | Move to archive section |
-| **REMOVED** | Evidence invalidated | Delete from catalog |
+| **REMOVED** | Evidence invalidated | Move to archive section with the invalidation reason; evidence rows are retained, never deleted (`decay-detection.md` § Knowledge-Decay Adversarial Signals) |

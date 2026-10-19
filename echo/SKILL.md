@@ -201,8 +201,8 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 ## Collaboration
 
-**Receives:** Field (persona data), Voice (real feedback), Pulse (quantitative metrics), Experiment (context), Cast (synthetic personas)
-**Sends:** Palette (interaction fixes), Experiment (A/B hypotheses), Growth (CRO insights), Canon (accessibility evidence against the engagement’s adopted standard), Canvas (visualization data), Spark (feature ideas), Scout (bug investigation), Muse (design tokens), Cast (persona evolution data + PERSONA_FEEDBACK for confidence adjustment)
+**Receives:** Field (persona data), Voice (real feedback), Pulse (quantitative metrics), Experiment (context), Cast (synthetic personas), Vector (captured screens for visual review)
+**Sends:** Palette (interaction fixes), Experiment (A/B hypotheses), Growth (CRO insights), Canon (accessibility evidence against the engagement’s adopted standard), Canvas (visualization data), Spark (feature ideas), Scout (bug investigation), Muse (design tokens), Cast (persona evolution data + PERSONA_FEEDBACK for confidence adjustment), Vector (journey capture requests with step emotion scores)
 
 **Overlap boundaries:**
 - **vs Palette**: Palette = UX design fixes; Echo = friction discovery and emotion scoring.

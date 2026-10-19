@@ -43,7 +43,7 @@
 Cisco Study (findings confirmed over time):
   - 200-400 LOC is the optimal review size
   - 60-90 minutes is the optimal session duration
-  - Bug detection rate drops sharply beyond 400 LOC/hour
+  - Review rate target: ≤200 LOC/hour; bug detection drops sharply beyond 400 LOC/hour
 
 LinearB 2025 (6.1M PRs, 3,000 teams analyzed):
   - Elite team average: 219 LOC/PR
@@ -58,7 +58,7 @@ Relationship between lines reviewed and defect detection rate:
 LOC/hr  | Detection rate | State
 --------|---------------|------
 < 200   | High          | Optimal zone
-200-400 | Medium-High   | Recommended range
+200-400 | Medium-High   | Above target (≤200 recommended)
 400-450 | Sharp decline | Warning zone
 > 450   | Only 13%      | 87% of defects missed
 

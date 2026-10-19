@@ -63,7 +63,7 @@ LES = Completion_Rate × 0.30
 
 #### Resource Efficiency Bonus
 
-When `COST_TRACKING=true`, an optional resource efficiency modifier can be applied:
+When per-iteration cost is tracked (`.cost-usd` written by the executor; `COST_TRACKING` itself is not a shipped-template variable), an optional resource efficiency modifier can be applied:
 
 ```text
 Resource_Efficiency = 1 - (actual_cost / budget_cost)
@@ -113,11 +113,13 @@ When `ADAPTIVE_TIMEOUT=true`, timeout values are dynamically adjusted based on h
 
 #### Algorithm
 
+Matches `run-loop.sh` (computed once at runner start from `.iter-timings.log`; needs `>= 3` timings):
+
 ```text
 effective_timeout = max(
   EXEC_TIMEOUT,
   min(
-    moving_average(last_N_durations) + 1.5 * stddev(last_N_durations),
+    median(last_N_durations) * 2,
     EXEC_TIMEOUT * 3
   )
 )
@@ -125,8 +127,8 @@ effective_timeout = max(
 
 | Parameter | Default | Description |
 |-----------|---------|-------------|
-| `N` (window size) | `5` | number of recent timings to consider |
-| multiplier | `1.5σ` | standard deviation multiplier for safety margin |
+| `N` (window size) | `5` | number of recent timings to consider (fewer than `3` → no adjustment) |
+| multiplier | `2×` median | safety margin over the median duration |
 | floor | `EXEC_TIMEOUT` | never go below the configured base timeout |
 | ceiling | `EXEC_TIMEOUT * 3` | never exceed 3x the configured base timeout |
 
@@ -174,7 +176,7 @@ Application process:
 | rollback snapshot | save state before every adaptation |
 | diminishing returns | `3` consecutive LES improvements `< 0.02` pauses REFINE |
 | Lore sync | all reusable patterns must be shared |
-| anti-pattern invariant | reject any change violating `AP-1` to `AP-11` |
+| anti-pattern invariant | reject any change violating `AP-1` to `AP-21` (`failure-catalog.md`) |
 
 ### Rollback Protocol
 

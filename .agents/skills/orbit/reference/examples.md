@@ -27,7 +27,7 @@ Purpose: load this when matching a live issue to a known Orbit scenario. Each ex
 | F. Cross-loop `COMMIT_SCOPE_RISK` | parallel loops stage each other's files | `severity: P1`, unstage, isolate scopes per loop, handoff to Guardian |
 | G. Sequential handoff gap | successor loop says "continue from loop-1" but has no measurable ACs or handoff checklist | `severity: P1`, rebuild successor contract, trigger `ON_GOAL_CONTRACT_WEAK`, handoff to Nexus |
 | H. Loop-of-loops scoped failure | inner loop fails repeatedly while outer loop continues | `severity: P1`, classify inner failure independently, update outer progress, do not start dependent inner loops |
-| I. `PREFLIGHT:FAIL` | disk below `100MB`, stale lock exists, checksum valid | stale lock auto-clears, disk failure aborts run before iteration start |
+| I. `PREFLIGHT:FAIL` | disk below `100MB`, stale lock exists, checksum valid | disk check runs first and aborts before iteration start; the stale lock is **not** cleared on this run (lock detection is never reached) — it auto-clears on the next run once disk is freed |
 | J. Branch-isolation squash | `BRANCH_ISOLATION=true`, `SQUASH_ON_DONE=true`, verify `PASS`, iter branch has 8 commits | squash to summary branch, commit once, delete iteration branch, final footer `DONE` |
 | K. `CONVERGENCE_STALL` | `.action-sig.log` last `3` lines identical; iters report success but no net artifact change | `status_assessment: CONVERGENCE_STALL`, `severity: P1`, persist state, inject disambiguation / re-scope, escalate to human |
 | L. `BURN_RATE_ANOMALY` budget cap | `.cost-usd` sum `> USD_PER_RUN_CAP`; loop still running | `severity: P1`, PAUSE, require explicit human resume (never auto-continue), snapshot state |
@@ -37,7 +37,7 @@ Purpose: load this when matching a live issue to a known Orbit scenario. Each ex
 
 - Example D preserves the `ON_GOAL_CONTRACT_WEAK` trigger because it changes contract recovery behavior.
 - Example G preserves sequential handoff enforcement because it distinguishes "done file exists" from "prerequisites independently verified."
-- Example I preserves the `100MB` pre-flight threshold and stale-lock auto-clear behavior.
+- Example I preserves the `100MB` pre-flight threshold and the pre-flight order (disk → lock → git): stale-lock auto-clear happens only on a run that passes the disk check.
 - Example J preserves the `BRANCH_ISOLATION` plus `SQUASH_ON_DONE` completion path.
 - Example K anchors semantic-stall classification to `.action-sig.log` evidence (exit-code success ≠ progress).
 - Examples L and M preserve the hard-cap / mandatory-terminator contract added in operation-contract `v1.2.0`.

@@ -31,9 +31,9 @@ Contents:
 | Generated code | Exclude | — | Exclude | Do not game the metric |
 | Config / constants | Exclude | — | Exclude | No logic to test |
 
-## Judge Integration
+## UQS Integration
 
-If coverage must feed Judge's UQS, keep the composite weighting intact:
+If coverage must feed the Unified Quality Score (UQS — Nexus's in-run quality-iteration metric, `nexus/reference/quality-iteration.md` § Unified Quality Score), keep the composite weighting intact:
 
 ```text
 radar_score = (line × 0.4) + (branch × 0.4) + (function × 0.2)

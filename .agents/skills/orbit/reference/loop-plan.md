@@ -36,7 +36,7 @@ Write one markdown document. Default path: `LOOP_PLAN.md` in the target `loop_di
 |---|---------|------------------|
 | §1 | Goal & Why | one-line objective, why it matters, expected end state |
 | §2 | Operation Contract | `3-6` measurable ACs, **each mapped to a machine-checkable verify command**; out-of-scope notes; ≥ 1 external terminator (`LOOP_TIMEOUT` and/or `USD_PER_RUN_CAP`) — never `MAX_ITERATIONS` alone for unattended runs (`operation-contract.md`) |
-| §3 | Loop Tier & Defaults | selected Loop Tier + the Core Defaults that deviate from baseline (`MAX_ITERATIONS`, `LOOP_TIMEOUT`, `USD_PER_RUN_CAP`, `CIRCUIT_THRESHOLD`, `DEDUP_WINDOW`) with rationale (`core-defaults.md`) |
+| §3 | Loop Tier & Defaults | selected Loop Tier + the Core Defaults that deviate from baseline (`MAX_ITERATIONS`, `LOOP_TIMEOUT`, `USD_PER_RUN_CAP`, `CIRCUIT_THRESHOLD`; `DEDUP_WINDOW` only as an audit/design-time guard — not enforced by the shipped template) with rationale (`core-defaults.md`) |
 | §4 | Script Set Design | which scripts `generate` will emit (`bootstrap.sh` / `run-loop.sh` / `recover.sh` / `verify.sh` / `notify.sh`), executor engine (`EXEC_CMD`), commit convention, branch policy / `AUTOCOMMIT` — **described, not generated** (`script-templates.md`, `executor-engines.md`) |
 | §5 | Resilience & Bounded Autonomy | retry+timeout+circuit-breaker as one unit; idempotency keys for effectful calls; memory-pointer for outputs > 1KB; escalation paths; audit trail; staged-autonomy rollout level (`resilience-patterns.md`) |
 | §6 | Verification & DONE Gate | AC→verify mapping table; placeholder-grep / mutation / `CRITIC_MODEL` plan; rollback note requirement (`operation-contract.md` DONE Evidence Gate) |
@@ -93,7 +93,7 @@ Then each constituent loop goal flows to `generate` (or `contract` first when it
 `generate` treats an approved `LOOP_PLAN.md` as its input contract:
 
 - §2 → `goal.md` (ACs, terminators, out-of-scope)
-- §3 → Core Defaults overrides in `state.env` / runner config
+- §3 → Core Defaults overrides as environment variables at launch (`MAX_ITERATIONS=30 LOOP_TIMEOUT=12000 bash run-loop.sh`) or edited into the generated runner's configuration block — never `state.env`, whose parser accepts only the fixed checkpoint keys (`NEXT_ITERATION`, `LAST_STATUS`, branch/base fields, `CONTRACT_VERSION`, cost counters) and ignores the rest
 - §4 → which templates to emit and how to configure `EXEC_CMD`, commit convention, branch policy
 - §5–§7 → resilience wiring (circuit breaker, idempotency, escalation, critic gate) in the generated scripts
 

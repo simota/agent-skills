@@ -8,9 +8,9 @@ Purpose: Design touch-first UX where every primary action sits within thumb reac
 - **Palette `a11y` (elsewhere)**: WCAG 2.2 SC 2.5.8 (target size minimum), SC 2.5.7 (dragging movements) conformance audit.
 - **Flow (elsewhere)**: gesture animation choreography (swipe-to-dismiss curve, pull-to-refresh elasticity).
 - **Prose (elsewhere)**: CTA label length on narrow screens, mobile error-message copy tightening.
-- **Artisan (elsewhere)**: production React Native / Flutter / SwiftUI / Jetpack Compose implementation, native gesture recognizer wiring, platform-specific haptic APIs.
+- **Native (elsewhere)**: pure-native SwiftUI / Jetpack Compose implementation, native gesture recognizer wiring, platform-specific haptic APIs. **Forge**: React Native / Flutter / Expo prototypes. Production RN / Flutter UI is out of scope (external implementer — `_common/BOUNDARIES.md`).
 
-If the question is "does this feel right on a phone held in one hand?" → `mobile`. If it's "does the React Native gesture handler code work?" → Artisan. If it's "does this pass WCAG target-size SC?" → `a11y`.
+If the question is "does this feel right on a phone held in one hand?" → `mobile`. If it's "does the SwiftUI / Compose gesture recognizer code work?" → Native. If it's "does this pass WCAG target-size SC?" → `a11y`.
 
 ## Thumb Zone Map
 
@@ -141,7 +141,7 @@ When the software keyboard opens, the layout must remain usable.
 
 ## Handoff
 
-- **→ Artisan**: React Native / Flutter / SwiftUI / Jetpack Compose production implementation, native gesture recognizers, platform haptic APIs, keyboard-accessory view.
+- **→ Native**: pure-native SwiftUI / Jetpack Compose implementation, native gesture recognizers, platform haptic APIs, keyboard-accessory view. RN / Flutter / Expo prototypes → Forge; production RN / Flutter is out of scope (external implementer).
 - **→ Flow**: swipe-to-dismiss animation curve, pull-to-refresh elasticity, sheet drag-to-close easing, haptic + motion synchronization.
 - **→ Prose**: CTA label length tightening (mobile shows less horizontal copy), mobile error-message voice.
 - **→ a11y recipe**: WCAG 2.2 SC 2.5.7 (drag alternative) and SC 2.5.8 (target size) audit, VoiceOver / TalkBack rotor testing.

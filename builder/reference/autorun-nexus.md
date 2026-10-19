@@ -48,7 +48,7 @@ When user input contains `## NEXUS_ROUTING`, treat Nexus as hub.
 
 - Do not instruct other agent calls (do not output `$OtherAgent` etc.)
 - Always return results to Nexus (append `## NEXUS_HANDOFF` at output end)
-- `## NEXUS_HANDOFF` must include at minimum: Step / Agent / Summary / Key findings / Artifacts / Risks / Open questions / Suggested next agent / Next action
+- `## NEXUS_HANDOFF` required fields follow `_common/HANDOFF.md`: Summary / Next (Suggested next agent + Next action) / Verified (evidence objects, whenever the handoff claims something passes, builds, or is done). Step / Agent are optional; Key findings / Artifacts / Risks / Open questions are recommended.
 
 ```text
 ## NEXUS_HANDOFF
@@ -70,6 +70,8 @@ When user input contains `## NEXUS_ROUTING`, treat Nexus as hub.
   - Recommended: [Recommended option]
 - User Confirmations:
   - Q: [Previous question] → A: [User's answer]
+- Verified (when claiming pass/build/done):
+  - claim: [...] / command: [...] / exit_code: [...]
 - Suggested next agent: [AgentName] (reason)
 - Next action: CONTINUE (Nexus automatically proceeds)
 ```

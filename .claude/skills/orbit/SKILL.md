@@ -13,10 +13,10 @@ CAPABILITIES_SUMMARY:
 - state_recovery: Recover from state drift, corrupted evidence, or inconsistent artifacts
 - proactive_health_review: Pre-failure health assessment and risk reporting
 - loop_learning: Evidence-based parameter adaptation with LES scoring and guardrails
-- convergence_detection: Detect stuck loops via action similarity, oscillation, output delta
+- convergence_detection: Detect stuck loops via repeated signatures (runner); similarity, oscillation, output delta (audit)
 - deduplication_guard: Block duplicate or equivalent tool calls within a sliding window
 - context_overflow_prevention: Memory-pointer pattern + terminal states prevent context inflation
-- apex_loop_driver: Drive nexus apex Phase 6 via Codex CLI spawn_agent/wait_agent
+- apex_loop_driver: Drive nexus apex Phase 6 — runner invokes the Codex CLI executor, which spawns agents (Orbit orchestrates none)
 - summit_improvement_driver: Drive nexus summit Phase 5 PDCA (max 3 iter, tri-engine, Agent Tennis breaker)
 - enact_loop_driver: Drive a nexus enact work package Charter-natively — §10 DoD gate, `PKG_*` run-log, two-level resume
 
@@ -27,6 +27,7 @@ COLLABORATION_PATTERNS:
 - Scout -> Orbit: Bug investigation context for loop issues
 - Lore -> Orbit: Reusable loop pattern updates
 - Judge -> Orbit: Quality feedback for loop improvement
+- Sigil -> Orbit: Autonomous loop specs from an operating-layer blueprint (`SIGIL_BLUEPRINT_TO_ORBIT_HANDOFF`)
 - Orbit -> Nexus: Loop completion reports + handoffs
 - Orbit -> Builder: Implementation handoffs for loop issues
 - Orbit -> Guardian: Commit policy + branch management handoffs
@@ -39,7 +40,7 @@ COLLABORATION_PATTERNS:
 - Nexus[apex/summit/enact] -> Orbit: recipe-loop delegation (apex Phase 6 Codex context, summit Phase 5 tri-engine+magi, enact Charter DoD gate)
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Nexus, User, PDM, Scout, Lore, Judge, Beacon, Triage
+- INPUT: Nexus, User, PDM, Sigil, Scout, Lore, Judge, Beacon, Triage
 - OUTPUT: Nexus, Builder, Guardian, Radar, Lore, Scout, Beacon, Triage
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(M) Dashboard(M) Marketing(L)
@@ -97,7 +98,7 @@ An action may rewrite or discard existing user changes; `DONE` criteria and veri
 
 ### Never
 
-- Declare `DONE` without artifact evidence, or trust verify PASS alone — pair it with `PLACEHOLDER_GREP`, mutation score, or `CRITIC_MODEL` (AP-12 / AP-18).
+- Declare `DONE` without artifact evidence, or trust verify PASS alone — pair it with `PLACEHOLDER_GREP` (runner-enforced), mutation score, or a `CRITIC_MODEL` check wired into `verify.sh` (AP-12 / AP-18).
 - Mix dirty-baseline files into auto-commit recommendations, or use broad staging where path-scoped works.
 - Bypass verification gates silently, or rewrite `progress.md`/`done.md` without explicit reason.
 - Replace Nexus orchestration responsibilities.
@@ -105,9 +106,9 @@ An action may rewrite or discard existing user changes; `DONE` criteria and veri
 - Adapt parameters with fewer than `3` data points, skip `SAFEGUARD` when changing defaults or the taxonomy, or override Lore-validated patterns without human approval.
 - Disable the circuit breaker without approval, create per-instance breakers, stack retry layers across load balancer/service/client, retry without exponential backoff, or use stateless recovery for long-running workflows.
 - Rely on the agent to guarantee loop termination — enforcement must be external.
-- Allow duplicate tool calls without de-dup (`DEDUP_WINDOW=5`), or treat oscillation (A->B->A->B) as progress.
-- Run unmonitored loops without token/USD budget caps.
-- Allow the agent to write `tests/`, `verify.sh`, `goal.md`, AC files, or `.claude/settings*.json` mid-loop — sha256-pinned at loop start; mutation is an ABORT trigger (AP-13 / AP-16 / AP-20).
+- Allow duplicate tool calls without de-dup (`DEDUP_WINDOW=5`), or treat oscillation (A->B->A->B) as progress (audit-time guards; the template does not enforce them).
+- Run unattended loops without `LOOP_TIMEOUT` or a USD cap — the runner refuses all-zero limits unless `ALLOW_UNBOUNDED_RUN=true` (attended only).
+- Allow the agent to write `goal.md`, `verify.sh`, `PROMPT.md`, `.claude/settings*.json`, `tests/`, or AC files mid-loop — the runner sha256-pins the first four every iteration; `tests/`/AC files only via `PIN_PATHS`. Mutation → `BLOCKED` (AP-13 / AP-16 / AP-20).
 - Auto-resume on `BURN_RATE_ANOMALY` — PAUSE, require explicit human resume.
 
 ## Operating Modes
@@ -207,7 +208,7 @@ MTTR, cost-per-completed-task, human-intervention rate, completion rate + escala
 
 ### Input Contract
 
-`INPUT_FORMAT`: `source: Nexus, User, or PDM`; `type: LOOP_CONTEXT`. Min useful fields: `goal_file`, `progress_file`, `state_file`, `iteration`, `last_status`.
+`INPUT_FORMAT`: `source: Nexus, User, PDM, or Sigil`; `type: LOOP_CONTEXT`. Min useful fields: `goal_file`, `progress_file`, `state_file`, `iteration`, `last_status`.
 
 ### Output Contract
 
@@ -215,15 +216,15 @@ MTTR, cost-per-completed-task, human-intervention rate, completion rate + escala
 
 ### Handoff Tokens
 
-Inbound: `NEXUS_TO_ORBIT_CONTEXT`, `PDM_TO_ORBIT_HANDOFF`, `QUALITY_FEEDBACK` (from Judge). Outbound: `ORBIT_TO_<AGENT>_HANDOFF` for Nexus/Builder/Guardian/Radar/Lore/Scout/Beacon/Triage. Full table (exact spelling) → `reference/nexus-integration.md`.
+Inbound: `NEXUS_TO_ORBIT_CONTEXT`, `PDM_TO_ORBIT_HANDOFF`, `SIGIL_BLUEPRINT_TO_ORBIT_HANDOFF`, `QUALITY_FEEDBACK` (from Judge). Outbound: `ORBIT_TO_<AGENT>_HANDOFF` for Nexus/Builder/Guardian/Radar/Lore/Scout/Beacon/Triage, subject to each receiver's own inputs. Full table (exact spelling) → `reference/nexus-integration.md`.
 
 ## Collaboration
 
-**Receives:** `Nexus`, `User`, `PDM`, `Scout`, `Lore`, `Judge`, `Beacon`, `Triage`
+**Receives:** `Nexus`, `User`, `PDM`, `Sigil`, `Scout`, `Lore`, `Judge`, `Beacon`, `Triage`
 **Sends:** `Nexus`, `Builder`, `Guardian`, `Radar`, `Lore`, `Scout`, `Beacon`, `Triage`
 **Uses (no handoff):** Cast `SPEAK` conventions — generated `notify.sh` follows the Cast SPEAK engine and optional persona-voice file at script run time; no agent is invoked, so no token exists (`reference/script-template-support.md`).
 
-Overlap: Orbit owns loop execution lifecycle (Nexus owns multi-agent orchestration — Orbit never orchestrates agents directly), loop health metrics (Beacon owns dashboards/alerting; Orbit sends metric definitions), loop failure classification (Triage owns incident response; Orbit escalates past loop-level recovery).
+Overlap: Orbit owns loop execution lifecycle (Nexus owns multi-agent orchestration — Orbit never orchestrates agents itself; its runner invokes an executor CLI that may spawn its own agents), loop health metrics (Beacon owns dashboards/alerting; Orbit sends metric definitions), loop failure classification (Triage owns incident response; Orbit escalates past loop-level recovery).
 
 ## Output Contract
 
