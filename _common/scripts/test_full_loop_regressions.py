@@ -374,6 +374,25 @@ class FullLoopRegressions(unittest.TestCase):
         self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
         self.assertIn("tests", result.stdout)
 
+    def test_pin_paths_detect_a_retargeted_root_symlink(self):
+        # The pinned path is itself a symlink; retargeting it to identical content
+        # must still count, since what it points at can steer verify.sh.
+        for name in ("safe", "other"):
+            (self.repo / name).mkdir()
+            (self.repo / name / "check.sh").write_text("exit 0\n")
+        (self.repo / "tests").mkdir()
+        (self.repo / "tests/current").symlink_to("../safe")
+        self.git("add", ".")
+        self.git("commit", "-qm", "symlinked tree")
+        (self.loop / "verify.sh").write_text(
+            '#!/bin/bash\n[[ "$(readlink tests/current)" != ../safe ]]\n')
+        result = self.run_loop('ln -sfn ../other tests/current\ntouch "$LOOP_DIR/done.md"\n',
+                               AUTOCOMMIT="false", PIN_PATHS="tests/current")
+        self.assert_success(result)
+        self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+        self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
+        self.assertIn("tests/current", result.stdout)
+
     def test_symlinked_repository_path_keeps_runtime_files_out_of_commits(self):
         (self.repo / ".gitignore").write_text("")
         self.git("commit", "-qam", "track loop directory")
