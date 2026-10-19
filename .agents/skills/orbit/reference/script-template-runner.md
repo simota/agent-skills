@@ -547,7 +547,7 @@ cleanup() {
   emit_log "WARN" "graceful_shutdown" "iteration" "${ITER}" "verify" "${VERIFY_RESULT:-N/A}"
 
   # Step 4: Cleanup
-  rm -f "${LOOP_DIR}/.run-loop.lock"
+  rm -f "${LOOP_DIR}/.run-loop.lock" "${LOOP_DIR}"/.verify-pinned.*
   echo "[SIGNAL] State saved — safe to resume from iteration ${ITER}"
   exit 130
 }
@@ -621,6 +621,21 @@ check_pins() {
   [[ -z "${changed}" ]] && return 0
   echo "[ABORT] pinned artifact changed mid-run (AP-13 / AP-20): ${changed//$'\n'/, }"
   return 1
+}
+# Callers check pins before verification, then run a copy whose hash matches the pin:
+# what was checked is what runs, so a replacement that restores the pinned file before
+# exiting cannot pass. The copy sits next to verify.sh, so $(dirname "$0") still works.
+run_pinned_verify() {
+  local copy status=0
+  copy=$(mktemp "${LOOP_DIR}/.verify-pinned.XXXXXX") || return 1
+  if ! cp "${LOOP_DIR}/verify.sh" "${copy}" || { [[ "${ARTIFACT_PINS}" == "true" ]] \
+     && ! grep -qxF "$(shasum -a 256 < "${copy}" | awk '{print $1}')  ${LOOP_DIR}/verify.sh" "${PINS_FILE}"; }; then
+    echo "[ABORT] verify.sh does not match its pin (AP-13)"
+    rm -f "${copy}"; return 1
+  fi
+  run_with_budget 0 bash "${copy}" || status=$?
+  rm -f "${copy}"
+  return "${status}"
 }
 
 #--- Loop-level external terminator (wall clock) ---
@@ -733,11 +748,13 @@ fi
 #--- Resume gate: a DONE checkpoint is not evidence; re-run the DONE gate ---
 if [[ "${STATUS}" == "DONE" ]]; then
   RESUME_VERIFY="SKIP"
-  if [[ -f "${LOOP_DIR}/verify.sh" ]]; then
-    if run_with_budget 0 bash "${LOOP_DIR}/verify.sh"; then RESUME_VERIFY="PASS"; else RESUME_VERIFY="FAIL"; fi
+  RESUME_PINS=true
+  check_pins || RESUME_PINS=false
+  if [[ "${RESUME_PINS}" == "true" ]] && [[ -f "${LOOP_DIR}/verify.sh" ]]; then
+    if run_pinned_verify; then RESUME_VERIFY="PASS"; else RESUME_VERIFY="FAIL"; fi
   fi
-  if [[ ! -f "${LOOP_DIR}/done.md" || "${RESUME_VERIFY}" == "FAIL" ]] \
-     || ! check_goal_immutable || ! check_pins || ! placeholder_clean; then
+  if [[ ! -f "${LOOP_DIR}/done.md" || "${RESUME_VERIFY}" == "FAIL" || "${RESUME_PINS}" != "true" ]] \
+     || ! check_goal_immutable || ! placeholder_clean; then
     emit_log "WARN" "resume_done_rejected" "verify" "${RESUME_VERIFY}"
     # Checkpoint the verdict before any branch work, so a rerun never re-trusts DONE.
     if [[ "${ITER}" -gt "${MAX_ITERATIONS}" ]]; then
@@ -974,10 +991,15 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
     break
   fi
 
-  #--- Verification gate ---
+  #--- Verification gate (pins first: the executor must not swap the verifier) ---
+  if ! PIN_MSG=$(check_pins); then
+    echo "${PIN_MSG}" | tee -a "${LOOP_DIR}/runner.log"
+    emit_log "ERROR" "pin_drift" "detail" "${PIN_MSG}"
+    STATUS="BLOCKED"; write_terminal_state BLOCKED; break
+  fi
   VERIFY_RESULT="SKIP"
   if [[ -f "${LOOP_DIR}/verify.sh" ]]; then
-    if run_with_budget 0 bash "${LOOP_DIR}/verify.sh"; then
+    if run_pinned_verify; then
       VERIFY_RESULT="PASS"
     else
       VERIFY_RESULT="FAIL"

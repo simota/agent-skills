@@ -329,6 +329,20 @@ class FullLoopRegressions(unittest.TestCase):
         self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
         self.assertIn(".pins.sha256", result.stdout)
 
+    def test_self_restoring_verify_replacement_cannot_pass(self):
+        # The replacement restores the pinned verify.sh before exiting 0, so a pin
+        # check that only runs after verification sees nothing.
+        (self.loop / "verify.sh").write_text("#!/bin/bash\nexit 1\n")
+        result = self.run_loop(
+            'cp "$LOOP_DIR/verify.sh" "$LOOP_DIR/verify.orig"\n'
+            "printf '#!/bin/bash\\ncp \"$LOOP_DIR/verify.orig\" \"$LOOP_DIR/verify.sh\"\\nexit 0\\n'"
+            ' > "$LOOP_DIR/verify.sh"\ntouch "$LOOP_DIR/done.md"\n', AUTOCOMMIT="false",
+        )
+        self.assert_success(result)
+        self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+        self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
+        self.assertIn("verify.sh", result.stdout)
+
     def test_symlinked_repository_path_keeps_runtime_files_out_of_commits(self):
         (self.repo / ".gitignore").write_text("")
         self.git("commit", "-qam", "track loop directory")

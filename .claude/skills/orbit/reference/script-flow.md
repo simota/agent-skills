@@ -67,7 +67,7 @@ Effect on `DONE`:
 - termination is enforced **externally**: `MAX_ITERATIONS` (count), `LOOP_TIMEOUT` (wall clock), `USD_PER_RUN_CAP` / `USD_PER_ITER_CAP` (budget, via executor-emitted `.cost-usd`)
 - semantic-stall guard: identical change-signature over `CONVERGENCE_WINDOW` iterations → `CONVERGENCE_STALL` and stop
 - `goal.md` is sha256-pinned at loop start; mid-run change ABORTs (`GOAL_IMMUTABLE`, AP-16)
-- `verify.sh`, `PROMPT.md`, `.claude/settings{,.local}.json` and `PIN_PATHS` are pinned in `.pins.sha256` and checked before and after every executor run (`ARTIFACT_PINS`, AP-13 / AP-20)
+- `verify.sh`, `PROMPT.md`, `.claude/settings{,.local}.json` and `PIN_PATHS` are pinned in `.pins.sha256` and checked before and after every executor run and again before verification, which runs a copy of `verify.sh` matching its pin (`ARTIFACT_PINS`, AP-13 / AP-20)
 - retry is bounded by `RETRY_LIMIT`
 - executor attempts, retry delays, and verification share the remaining `LOOP_TIMEOUT` budget through `run_with_budget`, which runs each command as a background job leading its own process group (`setsid`, or perl `POSIX::setsid` on macOS) so `SIGINT`/`SIGTERM` interrupt it at once; `portable_timeout` sends `SIGTERM` `min(KILL_GRACE, limit/2)` seconds before the limit and `SIGKILL` at it; only the clock — not a command's own exit `124`/`137` — marks the loop budget spent
 - dirty baseline uses NUL-delimited paths; scoped commits preserve pre-existing staged work and exclude loop runtime files; paths that became dirty while the loop was stopped, other than the ones it left dirty (`loop-dirty-paths.nul`), join the baseline on resume
