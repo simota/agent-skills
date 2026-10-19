@@ -560,11 +560,15 @@ if [[ "${GOAL_IMMUTABLE}" == "true" ]] && [[ -f "${LOOP_DIR}/goal.md" ]]; then
     write_atomic "${GOAL_SHA_FILE}" "$(shasum -a 256 "${LOOP_DIR}/goal.md" | awk '{print $1}')"
   fi
 fi
+# The pin file is executor-writable, so its value is anchored in this process at
+# start: deleting or regenerating .goal.sha256 mid-run cannot hide a goal change.
+GOAL_SHA=""
+[[ ! -f "${GOAL_SHA_FILE}" ]] || GOAL_SHA=$(cat "${GOAL_SHA_FILE}")
 check_goal_immutable() {
   [[ "${GOAL_IMMUTABLE}" == "true" ]] || return 0
-  [[ -f "${GOAL_SHA_FILE}" ]] || return 0
+  [[ -n "${GOAL_SHA}" ]] || return 0
   local now; now=$(shasum -a 256 "${LOOP_DIR}/goal.md" 2>/dev/null | awk '{print $1}')
-  [[ "${now}" == "$(cat "${GOAL_SHA_FILE}")" ]]
+  [[ "${now}" == "${GOAL_SHA}" ]]
 }
 
 #--- Artifact pins (AP-13 / AP-20 / RP-1: mid-run mutation ABORTs) ---
@@ -579,22 +583,36 @@ if [[ -n "${PIN_PATHS}" ]]; then
 fi
 # Directories in a Git work tree hash tracked + untracked-not-ignored files, so ignored
 # build output (tests/__pycache__) is not a mutation; outside Git, every file.
+# Symlinks are listed too: they are pinned by their target, not by what they reach.
 pin_dir_files() {
   if git -C "$1" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     git -C "$1" ls-files -co --exclude-standard -z -- . 2>/dev/null |
       while IFS= read -r -d '' file; do
-        if [[ -f "$1/${file}" ]]; then printf './%s\0' "${file}"; fi
+        if [[ -f "$1/${file}" || -L "$1/${file}" ]]; then printf './%s\0' "${file}"; fi
       done
   else
-    (cd -- "$1" && find . -type f -print0)
+    (cd -- "$1" && find . \( -type f -o -type l \) -print0)
   fi
+}
+# Reads sorted NUL paths in the directory: "link <target>" per symlink, then one
+# sha256 line per regular file.
+pin_dir_entries() {
+  local file regular=()
+  while IFS= read -r -d '' file; do
+    if [[ -L "${file}" ]]; then
+      printf 'link %s  %s\n' "$(readlink -- "${file}")" "${file}"
+    else
+      regular+=("${file}")
+    fi
+  done
+  [[ "${#regular[@]}" -eq 0 ]] || printf '%s\0' "${regular[@]}" | xargs -0 shasum -a 256 2>/dev/null
 }
 pin_manifest() {
   local path
   for path in "${PIN_TARGETS[@]}"; do
     if [[ -d "${path}" ]]; then
       printf '%s  %s/\n' "$( (pin_dir_files "${path}" | LC_ALL=C sort -z |
-        (cd -- "${path}" && xargs -0 shasum -a 256 2>/dev/null) || true) | shasum -a 256 | awk '{print $1}')" "${path}"
+        (cd -- "${path}" && pin_dir_entries) || true) | shasum -a 256 | awk '{print $1}')" "${path}"
     elif [[ -f "${path}" ]]; then
       printf '%s  %s\n' "$(shasum -a 256 < "${path}" | awk '{print $1}')" "${path}"
     else

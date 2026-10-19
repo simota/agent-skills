@@ -343,6 +343,37 @@ class FullLoopRegressions(unittest.TestCase):
         self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
         self.assertIn("verify.sh", result.stdout)
 
+    def test_goal_pin_cannot_be_deleted_or_rewritten_to_hide_goal_drift(self):
+        for action in ('rm -f "$LOOP_DIR/.goal.sha256"\n',
+                       'shasum -a 256 "$LOOP_DIR/goal.md" | awk \'{print $1}\' > "$LOOP_DIR/.goal.sha256"\n'):
+            with self.subTest(action=action):
+                for name in ("state.env", "state.env.sha256", ".goal.sha256", ".pins.sha256", "done.md"):
+                    (self.loop / name).unlink(missing_ok=True)
+                (self.loop / "goal.md").write_text("# Goal\n\n## Objective\nFinish the fixture\n")
+                result = self.run_loop(
+                    'echo "## Objective" > "$LOOP_DIR/goal.md"\n' + action
+                    + 'touch "$LOOP_DIR/done.md"\n', AUTOCOMMIT="false")
+                self.assert_success(result)
+                self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+                self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
+                self.assertIn("goal.md changed", result.stdout)
+
+    def test_pin_paths_detect_a_retargeted_directory_symlink(self):
+        for name, code in (("safe", 1), ("malicious", 0)):
+            (self.repo / name).mkdir()
+            (self.repo / name / "check.sh").write_text(f"exit {code}\n")
+        (self.repo / "tests").mkdir()
+        (self.repo / "tests/current").symlink_to("../safe")
+        self.git("add", ".")
+        self.git("commit", "-qm", "symlinked check")
+        (self.loop / "verify.sh").write_text("#!/bin/bash\nbash tests/current/check.sh\n")
+        result = self.run_loop('ln -sfn ../malicious tests/current\ntouch "$LOOP_DIR/done.md"\n',
+                               AUTOCOMMIT="false", PIN_PATHS="tests")
+        self.assert_success(result)
+        self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+        self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
+        self.assertIn("tests", result.stdout)
+
     def test_symlinked_repository_path_keeps_runtime_files_out_of_commits(self):
         (self.repo / ".gitignore").write_text("")
         self.git("commit", "-qam", "track loop directory")
