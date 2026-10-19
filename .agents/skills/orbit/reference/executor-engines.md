@@ -21,7 +21,7 @@ The runner first `cd`s into `PROJECT_ROOT` (default: the directory it was launch
 run_with_budget "${EFFECTIVE_TIMEOUT}" bash -c "${EXEC_CMD}" > >(tee -a "${LOOP_DIR}/runner.log") 2>&1
 ```
 
-Timeout signals: for a limit of `N` seconds the executor gets `SIGTERM` at `N - min(KILL_GRACE, N/2)` and `SIGKILL` at `N` (`KILL_GRACE` default `10`), so `N` stays a hard bound. Each job leads its own process group, so on runner shutdown the executor and all its descendants get `SIGTERM`, then `SIGKILL` after `KILL_GRACE` + 1 seconds; when the executor's top process exits, whatever it left in its group is terminated the same way, so a background child cannot outlive the job. The group has no controlling terminal: `EXEC_CMD` must be a headless invocation.
+Timeout signals: for a limit of `N` seconds the executor gets `SIGTERM` at `N - min(KILL_GRACE, N/2)` and `SIGKILL` at `N` (`KILL_GRACE` default `10`), so `N` stays a hard bound. Each job leads its own process group, so on runner shutdown the executor and all its descendants get `SIGTERM`, then `SIGKILL` after `KILL_GRACE` + 1 seconds; when the executor's top process exits, whatever it left in its group gets `SIGTERM`, then `SIGKILL` after the grace or at the limit `N`, whichever comes first, so a background child cannot outlive the job or its hard bound. The group has no controlling terminal: `EXEC_CMD` must be a headless invocation.
 
 The whole `EXEC_CMD` string is parsed by Bash once, preserving quoted executable paths and multiword prompts. It is trusted operator-authored shell configuration and must never be populated from untrusted task text or model output. Prefer a wrapper script when constructing complex invocations; pass external text as quoted arguments within that wrapper.
 

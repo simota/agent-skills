@@ -638,13 +638,13 @@ LOOP_DEADLINE=0
 LOOP_BUDGET_SPENT=false
 # `timeout` (and its KILL) watches only the command it started: once that exits, a
 # TERM-ignoring descendant left in the job's group would outlive the limit. TERM, then
-# KILL after the grace ($1), whatever is left. Without GROUP_CMD there is no group.
+# KILL at epoch $1 (the job's hard limit, or one grace from now if that is sooner),
+# whatever is left. Without GROUP_CMD there is no group.
 reap_job_group() {
   [[ "${#GROUP_CMD[@]}" -gt 0 ]] && kill -0 -- "-${CHILD_PID}" 2>/dev/null || return 0
   kill -s TERM -- "-${CHILD_PID}" 2>/dev/null || true
-  local waited=0
-  while kill -0 -- "-${CHILD_PID}" 2>/dev/null && [[ "${waited}" -lt "$1" ]]; do
-    sleep 1; waited=$((waited + 1))
+  while kill -0 -- "-${CHILD_PID}" 2>/dev/null && [[ "$(date +%s)" -lt "$1" ]]; do
+    sleep 1
   done
   kill -s KILL -- "-${CHILD_PID}" 2>/dev/null || true
 }
@@ -663,11 +663,14 @@ run_with_budget() {
     portable_timeout "${limit}"
     grace=$(( KILL_GRACE < limit / 2 ? KILL_GRACE : limit / 2 ))
   fi
+  local hard_at=$(( $(date +%s) + limit )) reap_at
   # ${a[@]+...}: an empty array is "unbound" under set -u in bash < 4.4 (macOS).
   ${GROUP_CMD[@]+"${GROUP_CMD[@]}"} ${TIMEOUT_CMD[@]+"${TIMEOUT_CMD[@]}"} "$@" <&0 &
   CHILD_PID=$!
   wait "${CHILD_PID}" || status=$?
-  reap_job_group "${grace}"
+  reap_at=$(( $(date +%s) + grace ))
+  [[ "${limit}" -eq 0 || "${reap_at}" -le "${hard_at}" ]] || reap_at="${hard_at}"
+  reap_job_group "${reap_at}"
   CHILD_PID=""
   if [[ "${bound}" == "true" && "${status}" -ne 0 ]]; then
     [[ $((LOOP_DEADLINE - $(date +%s))) -gt "${grace}" ]] || LOOP_BUDGET_SPENT=true

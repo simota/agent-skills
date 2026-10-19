@@ -31,7 +31,7 @@ Purpose: parameter reference for generated nexus-autoloop runners. Load this whe
 | `TOOL_TIMEOUT` | `120` | per-tool invocation timeout |
 | `LOOP_TIMEOUT` | `0` | total loop timeout in whole seconds; `0` = unlimited. When `LOOP_TIMEOUT`, `USD_PER_RUN_CAP` and `USD_PER_ITER_CAP` are all `0`, the runner refuses to start; a non-integer `LOOP_TIMEOUT` / `EXEC_TIMEOUT` / `KILL_GRACE` (e.g. `1m`, `2.5`) or non-numeric USD cap is `[ABORT]` |
 | `ALLOW_UNBOUNDED_RUN` | `false` | `true` lets a run start with all three external limits at `0` — attended runs only |
-| `KILL_GRACE` | `10` | seconds between `SIGTERM` and `SIGKILL`; a command limit of `N` sends `SIGTERM` at `N - min(KILL_GRACE, N/2)` and `SIGKILL` at `N`. On runner shutdown the job's whole process group gets `SIGTERM`, then `SIGKILL` after `KILL_GRACE` + 1 s; descendants still in the group when the job's top process exits get `SIGTERM`, then `SIGKILL` after the same grace |
+| `KILL_GRACE` | `10` | seconds between `SIGTERM` and `SIGKILL`; a command limit of `N` sends `SIGTERM` at `N - min(KILL_GRACE, N/2)` and `SIGKILL` at `N`. On runner shutdown the job's whole process group gets `SIGTERM`, then `SIGKILL` after `KILL_GRACE` + 1 s; descendants still in the group when the job's top process exits get `SIGTERM`, then `SIGKILL` after the same grace or at the command limit, whichever comes first |
 | `PROJECT_ROOT` | launch directory | runner `cd`s here before running anything; the executor's working directory |
 | `STRUCTURED_LOG` | `true` | emit JSON Lines to `runner.jsonl` |
 | `COST_TRACKING` | — (not in template) | token and cost tracking — _audit/design-time guard — not enforced by the shipped template_ |

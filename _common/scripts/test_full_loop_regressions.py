@@ -482,6 +482,24 @@ class FullLoopRegressions(unittest.TestCase):
             os.kill(pid, signal.SIGKILL)
         self.assertFalse(alive, f"TERM-ignoring child {pid} outlived the job\n{result.stdout}")
 
+    def test_reaping_descendants_does_not_extend_the_hard_limit(self):
+        # Top process and child both ignore TERM: `timeout` KILLs the top at the hard
+        # limit, and the child must die then too, not a second grace later.
+        start = time.monotonic()
+        result = self.run_loop(
+            "trap '' TERM\n(exec sleep 30 >/dev/null 2>&1) &\n"
+            'echo $! > "$LOOP_DIR/child.pid"\nwhile :; do wait || true; done\n',
+            AUTOCOMMIT="false", ITER_TIMEOUT="6", KILL_GRACE="3",
+        )
+        elapsed = time.monotonic() - start
+        self.assert_success(result)
+        pid = int((self.loop / "child.pid").read_text())
+        alive = self.process_alive(pid)
+        if alive:
+            os.kill(pid, signal.SIGKILL)
+        self.assertFalse(alive, result.stdout)
+        self.assertLess(elapsed, 8, result.stdout)
+
     # --- External terminator required for unattended runs ---
     def test_unbounded_unattended_run_is_refused(self):
         result = self.run_loop('touch "$LOOP_DIR/executed"\n', ALLOW_UNBOUNDED_RUN="false")
