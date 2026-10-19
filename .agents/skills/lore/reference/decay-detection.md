@@ -239,7 +239,7 @@ OpenClaw and related 2026 agent-memory work separate ingestion from promotion in
 
 - The Light-equivalent step is journal harvest (Builder / Scout / Mend / etc. writing into `.agents/*.md`). Lore reads but does not promote.
 - The REM-equivalent step is `knowledge-synthesis.md` clustering + contradiction resolution + confidence scoring.
-- Only the Deep-equivalent step — registering a `PATTERN` or higher into `METAPATTERNS.md` — writes to long-term memory.
+- Only the Deep-equivalent step — a pattern reaching `PATTERN` or higher in `METAPATTERNS.md` — commits it to long-term memory. `ANECDOTE` / `EMERGING` entries are registered in `METAPATTERNS.md` as evidence-tracked candidates (`pattern-taxonomy.md` § Pattern Lifecycle) but are not long-term guidance and are not propagated as such (`SKILL.md` § Never).
 
 Generative-Agents-style ablation studies show that removing the reflection phase degrades coherent multi-day planning within ~48 simulated hours. Treat a missed monthly synthesis cycle as an outage, not a backlog. When `Reflection latency` exceeds the threshold above, prioritise running synthesis over expanding the catalog.
 

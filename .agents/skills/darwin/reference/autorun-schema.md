@@ -10,7 +10,7 @@ _STEP_COMPLETE:
     deliverable: [artifact path or inline]
     artifact_type: "[EFS Dashboard | RS Table | Lifecycle Report | Evolution Proposal | Sunset Report | Journal Synthesis]"
     parameters:
-      lifecycle_phase: "[GENESIS | ACTIVE_BUILD | STABILIZATION | PRODUCTION | MAINTENANCE | SCALING | SUNSET]"
+      lifecycle_phase: "[GENESIS | ACTIVE_BUILD | STABILIZATION | PRODUCTION | MAINTENANCE | SCALING | SUNSET | MIXED | UNKNOWN]"
       confidence: "[0.0-1.0]"
       efs_score: "[0-100]"
       efs_grade: "[S | A | B | C | D | F]"

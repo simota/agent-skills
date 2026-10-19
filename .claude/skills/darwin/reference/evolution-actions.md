@@ -1,6 +1,6 @@
 # Evolution Actions
 
-Defines the 8 evolution triggers, Dynamic AFFINITY calculation, and Discovery Propagation brief format.
+Defines the evolution triggers (ET-NN; ET-09 lives in `official-fitness-criteria.md`), Dynamic AFFINITY calculation, and Discovery Propagation brief format.
 
 > **2026-05 industry signals to monitor as evolution evidence**
 > - **Anthropic Claude Managed Agents** (announced 2026-05-06 at *Code w/ Claude*, SF): four production-grade features now usable as Darwin's own evolution primitives — **Outcomes** (public beta; rubric-driven success criteria, measured +up to 10 percentage-point task-success lift vs. standard prompting loop, +8.4 pp on docx and +10.1 pp on pptx in Anthropic's internal benchmarks), **Webhooks** (HTTP callback on agent completion), **Multiagent Orchestration** (public beta; lead-agent decomposition), and **Dreaming** (research preview; between-session memory consolidation that extracts patterns from past sessions to reduce repeated mistakes). Treat *Outcomes* rubrics as the new external standard for Darwin's "expected impact" field on evolution proposals, and treat *Dreaming* as the upstream prior art for Pattern Card synthesis (ET-04). Source: `https://claude.com/blog/new-in-claude-managed-agents`.
@@ -67,11 +67,11 @@ days_since_last_use(agent) > 30
 count(journal_entries WHERE reusable = true AND NOT in ECOSYSTEM.md discoveries) >= 5
 ```
 
-**Action:** Launch Journal Synthesizer to cluster and extract Pattern Cards.
+**Action:** Lore available → hand the backlog to Lore and consume the resulting `METAPATTERNS.md` entries. Lore unavailable → launch Journal Synthesizer (fallback) to cluster and extract Pattern Cards. See § Journal Synthesis precedence.
 
 **Priority:** MEDIUM — knowledge is being lost without synthesis.
 
-**Output:** New Pattern Cards added to ECOSYSTEM.md Cross-Agent Discoveries.
+**Output:** Lore handoff (primary), or — fallback only — new Pattern Cards added to ECOSYSTEM.md Cross-Agent Discoveries.
 
 ### ET-05: EFS Emergency Drop
 
@@ -209,21 +209,21 @@ Dynamic AFFINITY overrides are stored in ECOSYSTEM.md:
 ```markdown
 ### Dynamic Affinity Override
 
-| Agent | Base | Override | Reason | Date |
-|-------|------|---------|--------|------|
-| Bolt | M | H | SCALING phase, performance focus | 2026-02-19 |
-| Growth | H | M | STABILIZATION phase, reduced marketing need | 2026-02-19 |
+| Agent | Base | Override | Reason | Removal condition | Date |
+|-------|------|---------|--------|-------------------|------|
+| Bolt | M | H | SCALING phase, performance focus | Lifecycle phase leaves SCALING | 2026-02-19 |
+| Growth | H | M | STABILIZATION phase, reduced marketing need | Lifecycle phase leaves STABILIZATION | 2026-02-19 |
 ```
 
-**Application by Nexus:**
-1. Nexus reads `.agents/ECOSYSTEM.md` Dynamic Affinity Override section
-2. For agents with overrides, use override value instead of base affinity
-3. Override expires after 90 days if not refreshed by Darwin
-4. Manual overrides by user always take precedence
+**Application:** the consumer-side protocol is `_common/EVOLUTION.md` § Dynamic AFFINITY Override Application; Darwin only writes the row. `nexus/SKILL.md` does not currently load that protocol, so an override is a recorded proposal until a human or Architect applies it (or the routing hub reads it per that section) — verify by observed routing, never assume it took effect. User explicit overrides always take precedence.
+
+**Expiry** (`_common/EVOLUTION.md` § Override Expiry): every row carries a removal condition. At 90 days after `Date` Darwin re-checks the condition — still holds → renew with a new `Date`; no longer holds, or no condition recorded → retire the row. Never expire on the date alone.
 
 ---
 
 ## Journal Synthesis
+
+**Precedence with Lore:** Lore owns pattern cataloging (`METAPATTERNS.md`). When Lore is available (`_common/PROJECT_LOCAL_SKILLS.md` § Availability Gate), Darwin reads Lore's `METAPATTERNS.md` as its cross-agent pattern input and does not synthesize; an unintegrated-pattern backlog is handed to Lore. Darwin runs its own synthesis only as fallback when Lore is unavailable, records `project_local_fallback: true`, and keeps its Pattern Cards in ECOSYSTEM.md (never in `METAPATTERNS.md`).
 
 ### Pattern Card Format
 

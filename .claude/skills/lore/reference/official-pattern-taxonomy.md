@@ -10,15 +10,15 @@ Official pattern integration reference that Lore consults during the CATALOG / P
 
 ### Official 5 Patterns → Lore Taxonomy Conversion
 
-| Official Pattern | Lore Domain | Lore Type | Default Confidence | Scope |
+| Official Pattern | Lore Domain | Lore Type | Initial Confidence | Scope |
 |-----------------|-------------|-----------|-------------------|-------|
-| Sequential Workflow Orchestration | `PROCESS` | `SUCCESS` | `ESTABLISHED` | `ECOSYSTEM` |
-| Multi-MCP Coordination | `INFRA` | `SUCCESS` | `ESTABLISHED` | `ECOSYSTEM` |
-| Iterative Refinement | `PROCESS` | `HEURISTIC` | `ESTABLISHED` | `ECOSYSTEM` |
-| Context-Aware Tool Selection | `APP` | `HEURISTIC` | `ESTABLISHED` | `ECOSYSTEM` |
-| Domain-Specific Intelligence | `DESIGN` | `SUCCESS` | `ESTABLISHED` | `ECOSYSTEM` |
+| Sequential Workflow Orchestration | `PROCESS` | `SUCCESS` | by local evidence count | `ECOSYSTEM` |
+| Multi-MCP Coordination | `INFRA` | `SUCCESS` | by local evidence count | `ECOSYSTEM` |
+| Iterative Refinement | `PROCESS` | `HEURISTIC` | by local evidence count | `ECOSYSTEM` |
+| Context-Aware Tool Selection | `APP` | `HEURISTIC` | by local evidence count | `ECOSYSTEM` |
+| Domain-Specific Intelligence | `DESIGN` | `SUCCESS` | by local evidence count | `ECOSYSTEM` |
 
-> Official patterns start at the `ESTABLISHED` level based on Anthropic's observations. They can be promoted to `FOUNDATIONAL` once enough evidence accumulates within the ecosystem.
+> Official patterns are reference templates, not evidence: they fix the domain, type, and scope of a matching local pattern, never its confidence. A local pattern mapped to one is registered only with ecosystem journal evidence, at the level its evidence count gives (`SKILL.md` § Core Contract: 1 = Anecdote … 11+ = Foundational), and promoted by the same rules as any other pattern.
 
 ### Official 3 Use-Case Categories → Lore Domain Conversion
 

@@ -52,6 +52,7 @@ How Lore distributes insights to consuming agents effectively.
 | **Radar** | TEST-* | Testing best practices, coverage patterns |
 | **Beacon** | PERF-*, INFRA-HEURISTIC | Observability insights, SLO patterns |
 | **Gear** | INFRA-SUCCESS, INFRA-ANTI | CI/CD and infrastructure patterns |
+| **Orbit** | PROCESS-* and INFRA-* loop / autonomous-runner patterns | Fires Orbit `RF-05` (medium REFINE cycle); project-local — apply `_common/PROJECT_LOCAL_SKILLS.md` § Availability Gate, else skip and report `project_local_fallback: true` |
 
 ### Meta Consumers (Notify for ecosystem patterns)
 
