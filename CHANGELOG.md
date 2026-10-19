@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed — `orbit` runner refuses unbounded runs and pins artifacts (2026-10-19)
+
+- **Behaviour change: the generated `run-loop.sh` refuses to start when `LOOP_TIMEOUT`, `USD_PER_RUN_CAP` and `USD_PER_ITER_CAP` are all 0.** Set one of them, or `ALLOW_UNBOUNDED_RUN=true` for an attended run.
+- **Behaviour change: `verify.sh`, `PROMPT.md` and `.claude/settings*.json` are now sha256-pinned at first start (`ARTIFACT_PINS=true` by default; `PIN_PATHS` adds trees such as `tests`).** A change mid-run stops the loop BLOCKED; `recover.sh --repin-goal` re-takes the pins after an intended edit.
+- Also fixed in the runner: a recovered `DONE` checkpoint now re-runs the DONE gate, symlinked paths no longer leak runtime files into commits, a resumed loop keeps its own uncommitted work, squash failures print the footer, stop signals reach a running executor promptly (TERM, then KILL after `KILL_GRACE`), state files are replaced atomically, and generated squash messages drop assistant session trailers.
+
 ### Changed — `apex` always confirms before launch (2026-10-16)
 
 - **Behaviour change: `apex` no longer auto-proceeds after a timed objection window.** Its launch gate is the Confirm-before-launch tier in every Mode, `AUTORUN_FULL` included: it shows the selected goal and requires an explicit Y / edit / abort. With no response it persists the Phase 0 goal artifact and stops (resumable) instead of launching (#58, ba48839).

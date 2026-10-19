@@ -41,15 +41,15 @@ Purpose: load this when `goal.md` is weak, vague, or missing. It converts ambigu
 
 | Hypothesis | AC template | Verify command |
 |------------|-------------|----------------|
-| split a large module | X split into `<= N` files, each `< 200` lines | `wc -l src/X/*.ts` |
-| remove duplication | duplication score `< 5%` | `npx jscpd src/X/` |
-| simplify interface | public API reduced to `<= N` exports | `grep -c '^export' src/X/index.ts` |
+| split a large module | X split into `<= N` files, each `< 200` lines | `bash -c 'set -- src/X/*.ts; [ "$#" -le N ] && for f; do [ "$(wc -l < "$f")" -lt 200 ] \|\| exit 1; done'` |
+| remove duplication | duplication score `< 5%` | `npx jscpd --threshold 5 src/X/` (exits non-zero above the threshold) |
+| simplify interface | public API reduced to `<= N` exports | `[ "$(grep -c '^export' src/X/index.ts)" -le N ]` |
 
 ### "clean up X"
 
 | Hypothesis | AC template | Verify command |
 |------------|-------------|----------------|
-| remove dead code | no unused exports | `npx ts-prune src/X/` |
+| remove dead code | no unused exports | `npx ts-prune --error -p tsconfig.json` (non-zero exit on any finding) |
 | formatting/lint issue | zero lint errors | `npx eslint src/X/ --max-warnings 0` |
 | dependency cleanup | no unused dependencies | `npx depcheck` |
 
@@ -57,9 +57,9 @@ Purpose: load this when `goal.md` is weak, vague, or missing. It converts ambigu
 
 | Hypothesis | AC template | Verify command |
 |------------|-------------|----------------|
-| bundle-size issue | bundle `< N KB` | `npm run build && du -sh dist/` |
+| bundle-size issue | bundle `< N KB` | `npm run build && [ "$(du -sk dist/ \| cut -f1)" -lt N ]` |
 | runtime performance issue | benchmark `< N ms` | `npm run bench` |
-| startup-time issue | cold start `< N s` | `time node dist/index.js --dry-run` |
+| startup-time issue | cold start `< N s` | `timeout N node dist/index.js --dry-run` (exit `124` when slower) |
 
 ## Three-Hypothesis Protocol
 
@@ -94,7 +94,7 @@ Alternatives:
 | "Performance is good" | P95 latency `< N ms` under `M` users | `k6 run --vus M --duration 30s load-test.js` |
 | "No regressions" | all existing tests pass and no new lint warnings | `npm test && npm run lint -- --max-warnings 0` |
 | "UI looks correct" | visual diff `< 0.1%` | `npx playwright test --project=visual` |
-| "Works on mobile" | Lighthouse mobile score `>= 90` | `npx lighthouse --preset=desktop --output=json URL` |
+| "Works on mobile" | Lighthouse mobile performance score `>= 90` | `npx lighthouse URL --form-factor=mobile --output=json --output-path=lh.json --quiet && node -e 'process.exit(require("./lh.json").categories.performance.score >= 0.9 ? 0 : 1)'` |
 | "Handles errors" | all error paths return expected status | `npm run test:error-paths` |
 | "Is accessible" | zero axe-core violations | `npx playwright test --project=a11y` |
 

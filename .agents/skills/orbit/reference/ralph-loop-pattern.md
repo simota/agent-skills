@@ -95,8 +95,9 @@ Orbit-generated `PROMPT.md` must include at minimum:
 |----------|-----------------|
 | `990_DO_NOT_IMPLEMENT_PLACEHOLDERS` | `PLACEHOLDER_GREP` in the triple DONE gate — placeholders in changed src force `CONTINUE`, never `DONE` |
 | `998_DO_NOT_EDIT_GOAL_MD` | `GOAL_IMMUTABLE` `.goal.sha256` pin — mid-run `goal.md` change ABORTs |
-| `997_DO_NOT_EDIT_TESTS_OR_VERIFY` | `TESTS_IMMUTABLE` (`chmod 0444` + sha256 pin) |
-| `996_DO_NOT_EDIT_SETTINGS_JSON` | `SETTINGS_IMMUTABLE` sha256 pin |
+| `997_DO_NOT_EDIT_TESTS_OR_VERIFY` | `ARTIFACT_PINS` `.pins.sha256` — `verify.sh` always; `tests/` when `PIN_PATHS=tests`; mid-run change ABORTs |
+| `996_DO_NOT_EDIT_SETTINGS_JSON` | `ARTIFACT_PINS` `.pins.sha256` — `PROJECT_ROOT/.claude/settings.json` and `settings.local.json` (creation counts); mid-run change ABORTs |
+| `999_DO_NOT_EDIT_PROMPT_MD` | `ARTIFACT_PINS` `.pins.sha256` — `PROMPT.md` in `LOOP_DIR` and `PROJECT_ROOT`; `PROMPT_plan.md` / `PROMPT_build.md` via `PIN_PATHS`; mid-run change ABORTs |
 
 The prompt rule reduces the *probability* of the action; the runner pin makes it *non-completable*. Generate both — neither alone is sufficient.
 
@@ -165,14 +166,14 @@ Ralph Loop is unbounded by construction. Termination must be enforced externally
 | `<promise>COMPLETE</promise>` | Agent emits sentinel in stdout; runner greps and exits | **No** (agent-emitted) | well-defined goal with clear completion semantics (snarktank/ralph style) |
 | `MAX_ITERATIONS` cap | Runner counter | Yes | safety cap regardless of agent claim |
 | `LOOP_TIMEOUT` | Runner wall-clock deadline (`run-loop.sh`) | Yes | overnight runs |
-| `USD_PER_RUN_CAP` / `USD_PER_ITER_CAP` | Runner sums `.cost-usd`, hard-ABORTs on breach (PAUSE + human resume) | Yes | **every Ralph Loop must set `USD_PER_RUN_CAP > 0`** |
+| `USD_PER_RUN_CAP` / `USD_PER_ITER_CAP` | Runner sums `.cost-usd`, hard-ABORTs on breach (PAUSE + human resume) | Yes, when the executor writes `.cost-usd` | set whenever the executor reports cost; otherwise rely on `LOOP_TIMEOUT` |
 | `verify.sh PASS` + `done.md` + placeholder-clean | Triple DONE Evidence Gate | Yes | Orbit standard |
 
-`TOKEN_BUDGET` is a **soft** alert threshold only (`[COST:WARN]` at 0.8×, `[COST:BLOCKED]` at 1.0×); it is **not** a hard terminator. Use `USD_PER_RUN_CAP` (operation-contract `v1.2.0` hard cap) for guaranteed budget termination.
+`TOKEN_BUDGET` (soft `[COST:WARN]` at 0.8×, `[COST:BLOCKED]` at 1.0×) is an audit/design-time guard — not enforced by the shipped template; it is **not** a terminator. Use `USD_PER_RUN_CAP` (operation-contract `v1.2.0` hard cap) for guaranteed budget termination.
 
 [Source: https://github.com/snarktank/ralph]
 
-**Hard rule**: Never rely on the agent's self-assessment alone. A Ralph Loop must have **at least two _runner-enforced_ terminators** active (the `<promise>` sentinel does **not** count — it is agent-emitted). The `ralph` subcommand satisfies this by forcing `MAX_ITERATIONS` plus one of `LOOP_TIMEOUT > 0` / `USD_PER_RUN_CAP > 0` before generation (SKILL `ralph` Core-Defaults override).
+**Hard rule**: Never rely on the agent's self-assessment alone. A Ralph Loop must have **at least two _runner-enforced_ terminators** active (the `<promise>` sentinel does **not** count — it is agent-emitted). The `ralph` Recipe satisfies this by requiring `MAX_ITERATIONS` plus `LOOP_TIMEOUT > 0` and/or `USD_PER_RUN_CAP > 0` before generation (SKILL.md Recipes table: ">=1 hard terminator beyond `MAX_ITERATIONS`"); the shipped runner also refuses to start with `LOOP_TIMEOUT`, `USD_PER_RUN_CAP` and `USD_PER_ITER_CAP` all `0`.
 
 ## 10. Green-field-only Constraint
 
@@ -196,7 +197,7 @@ Detection heuristic (any one triggers brownfield):
  || [[ -f Cargo.lock && $(grep -c '^\[\[package\]\]' Cargo.lock) -gt 50 ]]
 ```
 
-If a user explicitly forces Ralph in a brownfield, log a warning, require `RALPH_BROWNFIELD_ACK=true`, and tighten guardrails: `WORKTREE_ISOLATION=true`, mandatory `997_DO_NOT_EDIT_TESTS_OR_VERIFY`, mandatory rollback rehearsal.
+If a user explicitly forces Ralph in a brownfield, log a warning, require `RALPH_BROWNFIELD_ACK=true`, and tighten guardrails: per-iteration worktree isolation (a custom runner — the shipped template has no `WORKTREE_ISOLATION`), `PIN_PATHS=tests`, mandatory `997_DO_NOT_EDIT_TESTS_OR_VERIFY`, mandatory rollback rehearsal.
 
 ## 11. Huntley's Anti-Pattern Warnings
 
@@ -242,7 +243,7 @@ Orbit's three already-promoted defaults (BP-1 cache, BP-4 critic, BP-7 worktree)
 - [ ] `<promise>COMPLETE</promise>` sentinel or equivalent included (convenience exit, not one of the two required terminators).
 - [ ] `9xx` critical rules cover placeholders, assume-missing, prompt-immutability, tests-immutability, goal-immutability, settings-immutability — **each paired with its runner sha256/grep backstop** (Section 4).
 - [ ] Build/test subagent count is exactly 1 (RP-5).
-- [ ] `WORKTREE_ISOLATION=true` and `USD_PER_RUN_CAP > 0` (hard cap; `TOKEN_BUDGET` soft-alert is not sufficient alone).
+- [ ] Iteration isolation (`BRANCH_ISOLATION=true` in the shipped runner; per-iteration worktrees need a custom runner) and the terminator from Section 9 (`LOOP_TIMEOUT > 0` and/or `USD_PER_RUN_CAP > 0`; `TOKEN_BUDGET` is not a terminator).
 - [ ] Plan disposability triggers wired to CONVERGENCE_STALL / OSCILLATION_LOOP (RP-6).
 - [ ] User has acknowledged green-field constraint if running long unattended sessions.
 
@@ -270,10 +271,10 @@ Gas Town mechanisms mapped to Orbit primitives:
 |---------------|------------------------|------------------|
 | Beads queue | dependency-aware graph; one JSON issue per line in git; hash-based IDs to prevent collisions; workers atomically claim one task | single source of work; replaces direct PRD fan-out |
 | Mayor | the main agent you talk to (concierge / chief-of-staff) | human-facing entry point; not a per-task dispatcher |
-| Refinery | merges one branch at a time to main | single merge-serializer; `WORKTREE_ISOLATION=true` |
+| Refinery | merges one branch at a time to main | single merge-serializer; worktree isolation (custom runner) |
 | Witness | unsticks swarmed / stuck workers | maps to CONVERGENCE_STALL / OSCILLATION_LOOP detection |
 | Idle backoff | exponential backoff when no work | `RETRY_BACKOFF=exponential` |
-| Per-worker isolation | `git worktree` per loop | `WORKTREE_ISOLATION=true` |
+| Per-worker isolation | `git worktree` per loop | one worktree per runner (custom runner; not the shipped template's `WORKTREE_ISOLATION`) |
 
 Generating or auditing a Ralph **fleet** (vs. a single runner) requires, in addition to §13:
 

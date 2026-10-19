@@ -32,6 +32,7 @@ class ExecutorContractTests(unittest.TestCase):
         environment = {
             **fixture_environment(), "AUTOCOMMIT": "false", "BRANCH_ISOLATION": "false",
             "MAX_ITERATIONS": "1", "RETRY_LIMIT": "1", "SQUASH_ON_DONE": "false",
+            "SQUASH_MSG_ENGINE": "none", "ALLOW_UNBOUNDED_RUN": "true",
             "EXEC_CMD": command, **overrides,
         }
         return subprocess.run(["bash", str(self.runner)], cwd=self.cwd, env=environment,

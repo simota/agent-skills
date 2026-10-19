@@ -111,7 +111,7 @@ When a goal explicitly invokes Ralph Loop shapes (`PROMPT.md`, `<promise>COMPLET
 
 ## Codex CLI engine check (nexus apex Phase 6)
 
-When driving apex Phase 6, Orbit's engine is **fixed to Codex CLI** (`spawn_agent` / `wait_agent` / `send_input` / `resume_agent` / `close_agent`). Before consuming the loop contract, verify:
+When driving apex Phase 6, the executor engine is **fixed to Codex CLI**. Orbit's runner invokes that executor; the Codex executor — not Orbit — spawns and coordinates agents (`spawn_agent` / `wait_agent` / `send_input` / `resume_agent` / `close_agent`). Orbit itself orchestrates no agents. Before consuming the loop contract, verify:
 
 1. Codex CLI is reachable.
 2. Spawn capacity/nesting is sufficient under `_common/CODEX_ORCHESTRATION.md` C1.
@@ -135,7 +135,7 @@ Lay out generated runner prompts with `cache_control` breakpoints at stable boun
 
 ## Worktree iteration isolation
 
-Each iteration runs in a dedicated `git worktree`. Success → squash-merge back; failure → leave the worktree path in stderr for forensic inspection. `WORKTREE_ISOLATION=true` is the default and supersedes `BRANCH_ISOLATION` for parallel-safe runners. Rollback becomes a single `git worktree remove`. [Source: towardsdatascience.com — AI Agents Need Their Own Desk; codeline.co — Sandcastle Isolation]
+Design pattern (_audit/design-time guard — not enforced by the shipped template_): each iteration runs in a dedicated `git worktree`. Success → squash-merge back; failure → leave the worktree path in stderr for forensic inspection. The shipped `run-loop.sh` has no `WORKTREE_ISOLATION` switch; it isolates with `BRANCH_ISOLATION=true` (iteration branch + squash to a summary branch). A custom runner that adds worktrees supersedes `BRANCH_ISOLATION` for parallel-safe runs. Rollback becomes a single `git worktree remove`. [Source: towardsdatascience.com — AI Agents Need Their Own Desk; codeline.co — Sandcastle Isolation]
 
 ## Token budget bound (loop-wide)
 
@@ -143,7 +143,7 @@ Verified 2026-07-25. The API's `task_budget` — an advisory loop-wide budget th
 
 ## Independent critic model
 
-Gate DONE through an independent critic model (`CRITIC_MODEL=haiku` by default): a different model + different system prompt reviews the iteration output. Only critic-approved iterations advance to the DONE Evidence Gate. Same-model self-eval inherits the same blind spots and produces shallow agreement; an independent critic catches false-DONE that conventional verify cannot. [Source: genta.dev — Agentic Design Patterns; addyosmani.com — Self-Improving Agents]
+Design pattern (_audit/design-time guard — not enforced by the shipped template_; enforce it by calling the critic from `verify.sh`): gate DONE through an independent critic model (e.g. `CRITIC_MODEL=haiku`): a different model + different system prompt reviews the iteration output. Only critic-approved iterations advance to the DONE Evidence Gate. Same-model self-eval inherits the same blind spots and produces shallow agreement; an independent critic catches false-DONE that conventional verify cannot. [Source: genta.dev — Agentic Design Patterns; addyosmani.com — Self-Improving Agents]
 
 
 ---
@@ -161,5 +161,6 @@ Gate DONE through an independent critic model (`CRITIC_MODEL=haiku` by default):
 ## Runner Prompt Layout
 
 Lay out runner prompts with `PROMPT_CACHE_BREAKPOINTS=4` `cache_control` breakpoints
-(system / tools / goal / context tail); run each iteration in a dedicated `git worktree`;
-gate DONE through an independent critic model (`CRITIC_MODEL=haiku`).
+(system / tools / goal / context tail); per-iteration `git worktree` and an independent critic
+model (`CRITIC_MODEL=haiku`) are design patterns the shipped template does not enforce — wire the
+critic into `verify.sh`, and use `BRANCH_ISOLATION` for the shipped runner's isolation.

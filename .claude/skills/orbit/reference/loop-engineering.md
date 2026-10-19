@@ -13,7 +13,7 @@ External context for *why* a loop exists, *who* shaped the pattern, and *when no
 3. **Verification agents** (a checker separate from the maker)
 4. **Persistent memory** (state outside the conversation, on disk)
 
-This is exactly Orbit's territory: 1 → `run-loop.sh` cadence, 2 → `git worktree` isolation, 3 → independent `CRITIC_MODEL` DONE gate, 4 → `state.env` / `progress.md` / `done.md` filesystem-as-memory.
+This is exactly Orbit's territory: 1 → `run-loop.sh` cadence, 2 → iteration isolation (`BRANCH_ISOLATION` in the shipped runner; `git worktree` per iteration is a design pattern it does not implement), 3 → independent DONE gate (the runner's triple gate; a `CRITIC_MODEL` critic is an audit/design-time guard — not enforced by the shipped template unless wired into `verify.sh`), 4 → `state.env` / `progress.md` / `done.md` filesystem-as-memory.
 
 ## Lineage (who said what)
 
@@ -34,7 +34,7 @@ A loop is *not* always the right answer. For one-off tasks, a single well-aimed 
 2. **The code has no automated verification** — an unattended loop is a loop making mistakes unattended; without a real checker, "done" is a claim, not a proof.
 3. **The real constraint is review capacity, not typing speed** — loops lengthen the review queue rather than shortening delivery.
 
-These map to Orbit guardrails already in the SKILL: external termination enforcement, independent `CRITIC_MODEL` DONE gate (never trust verify-PASS alone — see AP-12/AP-18), and `USD_PER_RUN_CAP` / `BURN_RATE_ANOMALY` cost caps.
+These map to Orbit guardrails already in the SKILL: external termination enforcement, independent DONE gate (the runner's triple gate; a `CRITIC_MODEL` critic only when wired into `verify.sh` — never trust verify-PASS alone, see AP-12/AP-18), and `USD_PER_RUN_CAP` / `USD_PER_ITER_CAP` cost caps (`BURN_RATE_ANOMALY` EWMA detection is audit-time).
 
 Confidence on this section: medium (critique synthesized largely from secondary sources, e.g. AlphaSignal 2026-06-08). Treat as directional, not absolute. The stronger claim "loops only pay off when all four of {weekly repetition, automated verification, slack token budget, senior-engineer tooling} hold" was weakly refuted in verification (1-2) — necessary-condition framing is too strict.
 
@@ -59,7 +59,7 @@ The Orange Book (HuaShu IEEE reformatting, *Loop Engineering: The Anthropic Play
 
 | Anti-pattern | Skipped move | Symptom | Orbit guard |
 |--------------|--------------|---------|-------------|
-| **Nodding loop** (most common) | Verification | self-approved output; "never said no in hundreds of turns" | independent `CRITIC_MODEL` DONE gate — never trust verify-PASS alone (AP-12/AP-18) |
+| **Nodding loop** (most common) | Verification | self-approved output; "never said no in hundreds of turns" | independent DONE gate — triple gate plus a `CRITIC_MODEL` check wired into `verify.sh`; never trust verify-PASS alone (AP-12/AP-18) |
 | **Amnesiac loop** | Persistence | no cumulative progress; restarts from the same place each morning | `state.env`/`progress.md` filesystem-as-memory |
 | **Manual loop** | Scheduling | silently stops when attention wanders | `run-loop.sh` cadence / a real cron/event trigger |
 | **Blind loop** | Discovery | human still spends the morning picking the work | discovery logic in a *skill*, not a pasted list |
