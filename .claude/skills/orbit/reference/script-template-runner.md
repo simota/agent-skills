@@ -59,6 +59,13 @@ USD_PER_RUN_CAP="${USD_PER_RUN_CAP:-0}"      # absolute USD cap per run; 0 = unl
 USD_PER_ITER_CAP="${USD_PER_ITER_CAP:-0}"    # absolute USD cap per iteration; 0 = unlimited
 ALLOW_UNBOUNDED_RUN="${ALLOW_UNBOUNDED_RUN:-false}" # true only for an attended run with all three at 0
 # Executors that know their cost append a USD float line to ${LOOP_DIR}/.cost-usd each iteration.
+# Validate before use: "1m" or "2.5" would pass the refusal below yet disable the deadline.
+for limit_var in LOOP_TIMEOUT EXEC_TIMEOUT KILL_GRACE; do
+  [[ "${!limit_var}" =~ ^(0|[1-9][0-9]*)$ ]] || { echo "[ABORT] ${limit_var}=${!limit_var} must be whole seconds"; exit 1; }
+done
+for limit_var in USD_PER_RUN_CAP USD_PER_ITER_CAP; do
+  [[ "${!limit_var}" =~ ^[0-9]+([.][0-9]+)?$ ]] || { echo "[ABORT] ${limit_var}=${!limit_var} must be a USD amount"; exit 1; }
+done
 limit_set() { awk -v v="$1" 'BEGIN{exit !(v + 0 > 0)}'; }
 if ! limit_set "${LOOP_TIMEOUT}" && ! limit_set "${USD_PER_RUN_CAP}" && ! limit_set "${USD_PER_ITER_CAP}" \
    && [[ "${ALLOW_UNBOUNDED_RUN}" != "true" ]]; then
@@ -76,24 +83,37 @@ GOAL_IMMUTABLE="${GOAL_IMMUTABLE:-true}"
 ARTIFACT_PINS="${ARTIFACT_PINS:-true}"
 PIN_PATHS="${PIN_PATHS:-}"
 
+#--- Process groups (macOS + Linux) ---
+# Every executor/verify job leads its own process group — with or without a local
+# limit — so a stop signal reaches the whole tree, grandchildren included. setsid
+# where available (Linux); perl's POSIX::setsid otherwise (macOS). The job has no
+# controlling terminal: EXEC_CMD must be a non-interactive (headless) invocation.
+if command -v setsid >/dev/null 2>&1; then
+  GROUP_CMD=(setsid)
+  setsid -w true >/dev/null 2>&1 && GROUP_CMD=(setsid -w)
+elif command -v perl >/dev/null 2>&1; then
+  GROUP_CMD=(perl -MPOSIX -e 'POSIX::setsid(); exec { $ARGV[0] } @ARGV or die "exec: $!\n"')
+else
+  GROUP_CMD=() # no group: signals reach the job's top process only
+fi
+
 #--- Portable timeout (macOS + Linux) ---
 # SIGTERM first, SIGKILL at the hard limit: TERM fires at secs - grace, KILL at secs,
-# grace = min(KILL_GRACE, secs / 2). Called only as a background job from
-# run_with_budget; exec keeps that job's PID equal to the timeout process so a
-# forwarded SIGTERM reaches the command.
+# grace = min(KILL_GRACE, secs / 2). Sets TIMEOUT_CMD, the prefix run_with_budget
+# places between the process-group launcher and the command.
 portable_timeout() {
-  local secs="$1" grace; shift
+  local secs="$1" grace
   grace=$(( KILL_GRACE < secs / 2 ? KILL_GRACE : secs / 2 ))
   if command -v timeout >/dev/null 2>&1 && [[ "${grace}" -gt 0 ]]; then
-    exec timeout --signal=TERM --kill-after="${grace}" "$((secs - grace))" "$@"
+    TIMEOUT_CMD=(timeout --signal=TERM --kill-after="${grace}" "$((secs - grace))")
   elif command -v timeout >/dev/null 2>&1; then
-    exec timeout --signal=KILL "${secs}" "$@"
+    TIMEOUT_CMD=(timeout --signal=KILL "${secs}")
   elif command -v gtimeout >/dev/null 2>&1 && [[ "${grace}" -gt 0 ]]; then
-    exec gtimeout --signal=TERM --kill-after="${grace}" "$((secs - grace))" "$@"
+    TIMEOUT_CMD=(gtimeout --signal=TERM --kill-after="${grace}" "$((secs - grace))")
   elif command -v gtimeout >/dev/null 2>&1; then
-    exec gtimeout --signal=KILL "${secs}" "$@"
+    TIMEOUT_CMD=(gtimeout --signal=KILL "${secs}")
   else
-    exec perl -e '
+    TIMEOUT_CMD=(perl -e '
       use POSIX ":sys_wait_h";
       my ($timeout, $grace) = splice @ARGV, 0, 2;
       my $pid = fork // die "fork: $!";
@@ -114,7 +134,7 @@ portable_timeout() {
       waitpid($pid, 0);
       my $status = $?;
       exit(($status & 127) ? 128 + ($status & 127) : $status >> 8);
-    ' "${secs}" "${grace}" "$@"
+    ' "${secs}" "${grace}")
   fi
 }
 
@@ -457,25 +477,54 @@ STATE_EOF
   write_atomic "${LOOP_DIR}/state.env.sha256" "$(shasum -a 256 "${LOOP_DIR}/state.env" | awk '{print $1}')"
 }
 
+#--- Dirty-path bookkeeping (see the dirty baseline snapshot below) ---
+dirty_paths() {
+  git -C "${REPO_ROOT}" diff --name-only -z -- 2>/dev/null || true
+  git -C "${REPO_ROOT}" diff --cached --name-only -z -- 2>/dev/null || true
+  git -C "${REPO_ROOT}" ls-files --others --exclude-standard -z 2>/dev/null || true
+}
+nul_list_has() { # FILE PATH: exact-match membership in a NUL-delimited list
+  local entry
+  [[ -f "$1" ]] || return 1
+  while IFS= read -r -d '' entry; do [[ "${entry}" == "$2" ]] && return 0; done < "$1"
+  return 1
+}
+record_loop_dirty() {
+  [[ "${AUTOCOMMIT}" == "true" && -f "${LOOP_DIR}/dirty-start-paths.nul" ]] || return 0
+  local tmp path
+  tmp=$(mktemp "${LOOP_DIR}/loop-dirty-paths.XXXXXX")
+  dirty_paths | while IFS= read -r -d '' path; do
+    nul_list_has "${LOOP_DIR}/dirty-start-paths.nul" "${path}" || printf '%s\0' "${path}"
+  done > "${tmp}"
+  mv "${tmp}" "${LOOP_DIR}/loop-dirty-paths.nul"
+}
+
 #--- Graceful shutdown (SIGINT/SIGTERM) ---
 SHUTDOWN=0
 CHILD_PID=""
+# The job leads its own group (GROUP_CMD); fall back to its PID where none exists.
+job_alive() { kill -0 -- "-${CHILD_PID}" 2>/dev/null || kill -0 "${CHILD_PID}" 2>/dev/null; }
+signal_job() {
+  kill -s "$1" -- "-${CHILD_PID}" 2>/dev/null || kill -s "$1" "${CHILD_PID}" 2>/dev/null || true
+}
 cleanup() {
   echo "[SIGNAL] Caught signal — initiating graceful shutdown"
   SHUTDOWN=1
 
-  # Step 0: forward SIGTERM to the running executor/verify job; SIGKILL after KILL_GRACE
-  if [[ -n "${CHILD_PID}" ]] && kill -0 "${CHILD_PID}" 2>/dev/null; then
-    kill -TERM "${CHILD_PID}" 2>/dev/null || true
+  # Step 0: SIGTERM the running job's process group; SIGKILL the group once
+  # KILL_GRACE (+1s, so a wrapping timeout's own kill-after lands first) has passed.
+  if [[ -n "${CHILD_PID}" ]] && job_alive; then
+    signal_job TERM
     local waited=0
-    while kill -0 "${CHILD_PID}" 2>/dev/null && [[ "${waited}" -lt "${KILL_GRACE}" ]]; do
+    while job_alive && [[ "${waited}" -le "${KILL_GRACE}" ]]; do
       sleep 1; waited=$((waited + 1))
     done
-    kill -KILL "${CHILD_PID}" 2>/dev/null || true
+    signal_job KILL
   fi
 
-  # Step 1: State snapshot
+  # Step 1: State snapshot (incl. the paths this run left dirty — not human edits)
   write_state "${ITER:-1}" CONTINUE
+  record_loop_dirty || true
 
   # Step 2: Partial results summary
   {
@@ -521,12 +570,24 @@ if [[ -n "${PIN_PATHS}" ]]; then
   IFS=':' read -r -a PIN_EXTRA <<< "${PIN_PATHS}"
   for pin_path in "${PIN_EXTRA[@]}"; do PIN_TARGETS+=("${PROJECT_ROOT}/${pin_path}"); done
 fi
+# Directories in a Git work tree hash tracked + untracked-not-ignored files, so ignored
+# build output (tests/__pycache__) is not a mutation; outside Git, every file.
+pin_dir_files() {
+  if git -C "$1" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    git -C "$1" ls-files -co --exclude-standard -z -- . 2>/dev/null |
+      while IFS= read -r -d '' file; do
+        if [[ -f "$1/${file}" ]]; then printf './%s\0' "${file}"; fi
+      done
+  else
+    (cd -- "$1" && find . -type f -print0)
+  fi
+}
 pin_manifest() {
   local path
   for path in "${PIN_TARGETS[@]}"; do
     if [[ -d "${path}" ]]; then
-      printf '%s  %s/\n' "$( (cd -- "${path}" && find . -type f -print0 | LC_ALL=C sort -z |
-        xargs -0 shasum -a 256 2>/dev/null || true) | shasum -a 256 | awk '{print $1}')" "${path}"
+      printf '%s  %s/\n' "$( (pin_dir_files "${path}" | LC_ALL=C sort -z |
+        (cd -- "${path}" && xargs -0 shasum -a 256 2>/dev/null) || true) | shasum -a 256 | awk '{print $1}')" "${path}"
     elif [[ -f "${path}" ]]; then
       printf '%s  %s\n' "$(shasum -a 256 < "${path}" | awk '{print $1}')" "${path}"
     else
@@ -550,17 +611,18 @@ check_pins() {
 #--- Loop-level external terminator (wall clock) ---
 LOOP_START_TS=$(date +%s)
 LOOP_DEADLINE=0
-[[ "${LOOP_TIMEOUT}" -gt 0 ]] && LOOP_DEADLINE=$((LOOP_START_TS + LOOP_TIMEOUT))
+[[ "${LOOP_TIMEOUT}" -eq 0 ]] || LOOP_DEADLINE=$((LOOP_START_TS + LOOP_TIMEOUT))
 
 # Executor attempts, retry delays, and verification share this one deadline.
 # A zero command limit means no local limit; the remaining loop budget still applies.
 # The command runs as a background job so the SIGINT/SIGTERM trap fires at once
 # (bash defers traps until a foreground command returns); cleanup forwards the signal.
-# SIGTERM lands KILL_GRACE before the hard limit, so a job cut off by the loop budget
-# marks the deadline reached even if the clock has not quite passed it.
+# Only the clock marks the budget spent — a command's own exit 124/137 (verify.sh
+# running `timeout`, say) is an ordinary failure. SIGTERM lands up to the grace before
+# the hard limit, so a job cut off by the loop budget ends within that grace of it.
 LOOP_BUDGET_SPENT=false
 run_with_budget() {
-  local limit="$1" remaining status=0 bound=false; shift
+  local limit="$1" remaining status=0 bound=false grace; shift
   if [[ "${LOOP_DEADLINE}" -gt 0 ]]; then
     remaining=$((LOOP_DEADLINE - $(date +%s)))
     [[ "${remaining}" -gt 0 ]] || { LOOP_BUDGET_SPENT=true; return 124; }
@@ -568,16 +630,16 @@ run_with_budget() {
       limit="${remaining}"; bound=true
     fi
   fi
-  if [[ "${limit}" -gt 0 ]]; then
-    portable_timeout "${limit}" "$@" <&0 &
-  else
-    "$@" <&0 &
-  fi
+  TIMEOUT_CMD=()
+  [[ "${limit}" -eq 0 ]] || portable_timeout "${limit}"
+  # ${a[@]+...}: an empty array is "unbound" under set -u in bash < 4.4 (macOS).
+  ${GROUP_CMD[@]+"${GROUP_CMD[@]}"} ${TIMEOUT_CMD[@]+"${TIMEOUT_CMD[@]}"} "$@" <&0 &
   CHILD_PID=$!
   wait "${CHILD_PID}" || status=$?
   CHILD_PID=""
-  if [[ "${bound}" == "true" ]] && [[ "${status}" -eq 124 || "${status}" -eq 137 ]]; then
-    LOOP_BUDGET_SPENT=true
+  if [[ "${bound}" == "true" && "${status}" -ne 0 ]]; then
+    grace=$(( KILL_GRACE < limit / 2 ? KILL_GRACE : limit / 2 ))
+    [[ $((LOOP_DEADLINE - $(date +%s))) -gt "${grace}" ]] || LOOP_BUDGET_SPENT=true
   fi
   return "${status}"
 }
@@ -611,6 +673,29 @@ ITER="${NEXT_ITERATION:-1}"
 STATUS="${LAST_STATUS:-READY}"
 LOOP_BASE="${LOOP_BASE:-$(git rev-parse --verify "${ORIGIN_BRANCH:-HEAD}" 2>/dev/null || true)}"
 
+#--- Pending squash: a conflicted squash waits for its human, not for a new suffix ---
+# Written when the post-loop squash conflicts: line 1 the summary branch, line 2 the
+# iteration branch. Deleting the iteration branch marks the squash done; deleting the
+# summary branch asks for a fresh squash attempt. Until then every run stops here.
+SQUASH_PENDING_FILE="${LOOP_DIR}/.squash-pending"
+if [[ -f "${SQUASH_PENDING_FILE}" ]]; then
+  PENDING_SUMMARY=$(sed -n 1p "${SQUASH_PENDING_FILE}")
+  PENDING_ITER=$(sed -n 2p "${SQUASH_PENDING_FILE}")
+  if [[ -n "${PENDING_SUMMARY}" && -n "${PENDING_ITER}" ]] \
+     && git show-ref --verify --quiet "refs/heads/${PENDING_SUMMARY}" \
+     && git show-ref --verify --quiet "refs/heads/${PENDING_ITER}"; then
+    echo "[BRANCH:PENDING] Squash of ${PENDING_ITER} into ${PENDING_SUMMARY} still needs a human — not retrying"
+    echo "[BRANCH:PENDING] Resolved: commit the resolution on ${PENDING_SUMMARY}, then mark the squash done: git branch -D ${PENDING_ITER}"
+    echo "[BRANCH:PENDING] Aborted: update ${PENDING_ITER} (e.g. merge ${ORIGIN_BRANCH:-the origin branch}), then retry the squash: git branch -D ${PENDING_SUMMARY}"
+    emit_log "ERROR" "squash_pending" "summary_branch" "${PENDING_SUMMARY}"
+    echo ""
+    echo "NEXUS_LOOP_STATUS: CONTINUE"
+    echo "NEXUS_LOOP_SUMMARY: Iteration ${ITER}/${MAX_ITERATIONS}, status=BLOCKED, squash pending on ${PENDING_SUMMARY}"
+    exit 1
+  fi
+  rm -f "${SQUASH_PENDING_FILE}"
+fi
+
 #--- Resume gate: a DONE checkpoint is not evidence; re-run the DONE gate ---
 if [[ "${STATUS}" == "DONE" ]]; then
   RESUME_VERIFY="SKIP"
@@ -619,9 +704,16 @@ if [[ "${STATUS}" == "DONE" ]]; then
   fi
   if [[ ! -f "${LOOP_DIR}/done.md" || "${RESUME_VERIFY}" == "FAIL" ]] \
      || ! check_goal_immutable || ! check_pins || ! placeholder_clean; then
-    echo "[RESUME] DONE checkpoint fails the DONE gate (done.md + verify=${RESUME_VERIFY} + pins + placeholders) — continuing"
     emit_log "WARN" "resume_done_rejected" "verify" "${RESUME_VERIFY}"
-    STATUS="CONTINUE"
+    # Checkpoint the verdict before any branch work, so a rerun never re-trusts DONE.
+    if [[ "${ITER}" -gt "${MAX_ITERATIONS}" ]]; then
+      echo "[RESUME] DONE checkpoint fails the DONE gate (done.md + verify=${RESUME_VERIFY} + pins + placeholders) and no iteration is left (MAX_ITERATIONS=${MAX_ITERATIONS}) — BLOCKED; raise MAX_ITERATIONS to resume"
+      STATUS="BLOCKED"
+    else
+      echo "[RESUME] DONE checkpoint fails the DONE gate (done.md + verify=${RESUME_VERIFY} + pins + placeholders) — continuing"
+      STATUS="CONTINUE"
+    fi
+    write_state "${ITER}" "${STATUS}"
   fi
 fi
 
@@ -642,8 +734,10 @@ if [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${AUTOCOMMIT}" == "true" ]]; the
   fi
 
   CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-  # DONE can be resumed after squash has already removed the iteration branch.
-  if [[ "${STATUS}" != "DONE" ]] && [[ "${CURRENT_BRANCH}" != "${ITER_BRANCH}" ]]; then
+  # DONE can be resumed after squash has already removed the iteration branch; past
+  # MAX_ITERATIONS no iteration runs, so there is nothing to isolate.
+  if [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]] \
+     && [[ "${CURRENT_BRANCH}" != "${ITER_BRANCH}" ]]; then
     # Stash dirty worktree before branch switch
     STASHED_FOR_BRANCH=false
     if ! git diff --quiet 2>/dev/null || ! git diff --cached --quiet 2>/dev/null; then
@@ -664,15 +758,23 @@ if [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${AUTOCOMMIT}" == "true" ]]; the
 fi
 
 #--- Dirty baseline snapshot (NUL preserves spaces, quotes, and newlines) ---
-# Taken once per loop and kept across resumes: the loop's own uncommitted work from a
-# BLOCKED/interrupted iteration is not pre-existing user work. Cleared at DONE.
-if [[ "${AUTOCOMMIT}" == "true" ]] && [[ ! -f "${LOOP_DIR}/dirty-start-paths.nul" ]]; then
+# Taken at loop start and kept across resumes: the loop's own uncommitted work from a
+# BLOCKED/interrupted iteration is not pre-existing user work. Whenever the runner stops
+# it records that work in loop-dirty-paths.nul; on resume, any other path that became
+# dirty meanwhile is a human edit made during the pause and joins the baseline. The
+# split is per path: a human edit to a file the loop left dirty is committed with it.
+# Both files are cleared at DONE.
+if [[ "${AUTOCOMMIT}" == "true" ]]; then
   BASELINE_TMP=$(mktemp "${LOOP_DIR}/dirty-start-paths.XXXXXX")
-  {
-    git -C "${REPO_ROOT}" diff --name-only -z -- 2>/dev/null || true
-    git -C "${REPO_ROOT}" diff --cached --name-only -z -- 2>/dev/null || true
-    git -C "${REPO_ROOT}" ls-files --others --exclude-standard -z 2>/dev/null || true
-  } > "${BASELINE_TMP}"
+  if [[ ! -f "${LOOP_DIR}/dirty-start-paths.nul" ]]; then
+    dirty_paths > "${BASELINE_TMP}"
+  else
+    cat "${LOOP_DIR}/dirty-start-paths.nul" > "${BASELINE_TMP}"
+    dirty_paths | while IFS= read -r -d '' path; do
+      nul_list_has "${LOOP_DIR}/dirty-start-paths.nul" "${path}" \
+        || nul_list_has "${LOOP_DIR}/loop-dirty-paths.nul" "${path}" || printf '%s\0' "${path}"
+    done >> "${BASELINE_TMP}"
+  fi
   mv "${BASELINE_TMP}" "${LOOP_DIR}/dirty-start-paths.nul"
 fi
 
@@ -705,6 +807,9 @@ write_terminal_state() {
 #--- Main loop ---
 VERIFY_RESULT="N/A"
 COMMIT_HASH="no-commit"
+if [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -gt "${MAX_ITERATIONS}" ]]; then
+  echo "[CAP] Iteration ${ITER} exceeds MAX_ITERATIONS=${MAX_ITERATIONS} — nothing to run; raise MAX_ITERATIONS to resume"
+fi
 
 while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
   [[ "${SHUTDOWN}" -eq 1 ]] && break
@@ -867,22 +972,12 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
 
   #--- Scoped auto-commit ---
   if [[ "${AUTOCOMMIT}" == "true" ]]; then
-    {
-      git -C "${REPO_ROOT}" diff --name-only -z -- 2>/dev/null || true
-      git -C "${REPO_ROOT}" diff --cached --name-only -z -- 2>/dev/null || true
-      git -C "${REPO_ROOT}" ls-files --others --exclude-standard -z 2>/dev/null || true
-    } > "${LOOP_DIR}/current-changes.nul"
+    dirty_paths > "${LOOP_DIR}/current-changes.nul"
     CANDIDATES=()
     while IFS= read -r -d '' path; do
       # Runtime files must never enter a source commit, even without .gitignore.
       [[ "${REPO_ROOT}/${path}" == "${LOOP_DIR}/"* ]] && continue
-      BASELINE_PATH=false
-      while IFS= read -r -d '' baseline; do
-        if [[ "${path}" == "${baseline}" ]]; then BASELINE_PATH=true; break; fi
-      done < "${LOOP_DIR}/dirty-start-paths.nul"
-      if [[ "${BASELINE_PATH}" != "true" ]]; then
-        CANDIDATES+=("${path}")
-      fi
+      nul_list_has "${LOOP_DIR}/dirty-start-paths.nul" "${path}" || CANDIDATES+=("${path}")
     done < "${LOOP_DIR}/current-changes.nul"
     rm -f "${LOOP_DIR}/current-changes.nul"
     if [[ "${#CANDIDATES[@]}" -gt 0 ]]; then
@@ -936,6 +1031,9 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
   echo "[ITER ${ITER}] status=${STATUS} verify=${VERIFY_RESULT} commit=${COMMIT_HASH} duration=${ITER_DURATION}s"
   ITER=${NEXT_ITER}
 done
+
+# Uncommitted work this run leaves behind is the loop's own, not a human edit.
+record_loop_dirty
 
 #--- Branch isolation (post-loop squash) ---
 # Called as an `if` condition, where errexit is off: every step that must not be
@@ -1060,6 +1158,8 @@ Iterations: $((ITER - 1)), Verify: ${VERIFY_RESULT}"
     if [[ "${stashed}" == "true" ]]; then
       echo "[BRANCH:CONFLICT] After resolving or aborting, restore prior work: git stash pop --index"
     fi
+    echo "[BRANCH:CONFLICT] Then: resolved → git branch -D ${ITER_BRANCH}; aborted → git branch -D ${SUMMARY_BRANCH} to retry the squash"
+    write_atomic "${SQUASH_PENDING_FILE}" "${SUMMARY_BRANCH}"$'\n'"${ITER_BRANCH}"
     return 1
   fi
 }
@@ -1075,13 +1175,14 @@ if [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${AUTOCOMMIT}" == "true" ]] \
     STATUS="BLOCKED"
     emit_log "ERROR" "squash_failed" "summary_branch" "${SUMMARY_BRANCH}"
   fi
-elif [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${STATUS}" != "DONE" ]] && [[ -n "${ITER_BRANCH:-}" ]]; then
+elif [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${STATUS}" != "DONE" ]] && [[ -n "${ITER_BRANCH:-}" ]] \
+     && [[ "$(git rev-parse --abbrev-ref HEAD 2>/dev/null)" == "${ITER_BRANCH}" ]]; then
   echo "[BRANCH] STATUS=${STATUS} — staying on ${ITER_BRANCH} for resume"
 fi
 
 #--- Release lock; a finished loop's dirty baseline must not leak into the next loop ---
 rm -f "${LOOP_DIR}/.run-loop.lock"
-[[ "${STATUS}" != "DONE" ]] || rm -f "${LOOP_DIR}/dirty-start-paths.nul"
+[[ "${STATUS}" != "DONE" ]] || rm -f "${LOOP_DIR}/dirty-start-paths.nul" "${LOOP_DIR}/loop-dirty-paths.nul"
 
 #--- Status footer ---
 FINAL_STATUS="${STATUS}"
@@ -1093,6 +1194,7 @@ emit_log "INFO" "loop_complete" "final_status" "${FINAL_STATUS}" "iterations" "$
 echo ""
 echo "NEXUS_LOOP_STATUS: ${FINAL_STATUS}"
 echo "NEXUS_LOOP_SUMMARY: Iteration ${ITER}/${MAX_ITERATIONS}, status=${STATUS}, verify=${VERIFY_RESULT}"
-# A failed squash is not a resumable CONTINUE: exit non-zero so the caller stops for a human.
+# The footer has no BLOCKED token, so a failed squash prints CONTINUE with status=BLOCKED
+# and exits non-zero: the caller must stop for a human instead of resuming.
 [[ "${SQUASH_FAILED}" != "true" ]] || exit 1
 ```

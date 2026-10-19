@@ -77,8 +77,10 @@ Companion loop artifacts (not in `state.env`, but part of the resumable contract
 | Artifact | Role | Owner |
 |----------|------|-------|
 | `.goal.sha256` | pin of `goal.md` at loop start; mid-run mismatch ABORTs (`GOAL_IMMUTABLE`, AP-16) | runner pins; never hand-edit |
-| `.pins.sha256` | manifest pinning `verify.sh`, `PROMPT.md`, `.claude/settings{,.local}.json` and `PIN_PATHS` at loop start; mid-run mismatch ABORTs (`ARTIFACT_PINS`, AP-13 / AP-20) | runner pins; re-pin via `recover.sh --repin-goal` |
-| `dirty-start-paths.nul` | pre-existing dirty paths excluded from auto-commit; taken once per loop, kept across resumes, removed at `DONE` | runner only |
+| `.pins.sha256` | manifest pinning `verify.sh`, `PROMPT.md`, `.claude/settings{,.local}.json` and `PIN_PATHS` (directories in Git: tracked + untracked-not-ignored files) at loop start; mid-run mismatch ABORTs (`ARTIFACT_PINS`, AP-13 / AP-20) | runner pins; re-pin via `recover.sh --repin-goal` |
+| `dirty-start-paths.nul` | pre-existing dirty paths excluded from auto-commit; taken at loop start, kept across resumes and extended on resume with paths a human dirtied while the loop was stopped, removed at `DONE` | runner only |
+| `loop-dirty-paths.nul` | paths the loop itself left uncommitted when it stopped (BLOCKED / interrupted); on resume these stay auto-commit candidates while other newly dirty paths join the baseline; removed at `DONE` | runner only |
+| `.squash-pending` | summary + iteration branch of a conflicted squash; reruns stop `[BRANCH:PENDING]` until the human deletes the iteration branch (resolved) or the summary branch (retry) | runner writes; human resolves |
 | `.cost-usd` | append-only per-iteration USD floats; runner sums them to enforce `USD_PER_RUN_CAP` / `USD_PER_ITER_CAP` | executor appends; runner reads |
 | `.action-sig.log` | per-iteration change signature; `CONVERGENCE_WINDOW` identical lines → `CONVERGENCE_STALL` | runner only |
 | `state.env.sha256` | atomic-write integrity guard for `state.env` | runner only |

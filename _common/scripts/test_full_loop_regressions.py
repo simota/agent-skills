@@ -3,6 +3,7 @@
 
 import hashlib
 import os
+import shutil
 import signal
 import sys
 from pathlib import Path
@@ -38,6 +39,17 @@ class FullLoopRegressions(unittest.TestCase):
         self.git("config", "user.email", "fixture@example.invalid")
         self.git("add", ".")
         self.git("commit", "-qm", "initial")
+        # Sanitized PATH: claude/codex resolve to guards that record any call, so a
+        # fixture can never reach a real assistant CLI.
+        self.guard = Path(self.temp.name) / "guard-bin"
+        self.guard.mkdir()
+        for name in ("claude", "codex"):
+            stub = self.guard / name
+            stub.write_text(f'#!/bin/sh\necho {name} >> "{self.guard}/invoked"\nexit 97\n')
+            stub.chmod(0o755)
+        self.safe_path = f"{self.guard}{os.pathsep}{os.environ['PATH']}"
+        self.addCleanup(lambda: self.assertFalse(
+            (self.guard / "invoked").exists(), "a fixture reached an assistant CLI"))
 
     def git(self, *args, cwd=None):
         return subprocess.check_output(
@@ -55,7 +67,7 @@ class FullLoopRegressions(unittest.TestCase):
             "AUTOCOMMIT": "true", "BRANCH_ISOLATION": "false",
             "MAX_ITERATIONS": "1", "RETRY_LIMIT": "1",
             "SQUASH_ON_DONE": "false", "SQUASH_MSG_ENGINE": "none",
-            "ALLOW_UNBOUNDED_RUN": "true",
+            "ALLOW_UNBOUNDED_RUN": "true", "PATH": self.safe_path,
             **overrides,
         }
 
@@ -340,9 +352,14 @@ class FullLoopRegressions(unittest.TestCase):
         self.assertEqual(self.git("branch", "--list", "loop/*"), "")
 
     # --- Signals reach the executor ---
-    def test_sigterm_interrupts_a_running_executor_promptly(self):
-        env = self.loop_env('touch "$LOOP_DIR/started"\nexec sleep 30\n', AUTOCOMMIT="false")
+    def interrupt_runner(self, env, *, settle=10, descendant=None):
+        """Start the runner, SIGTERM it once the job touched "started", return (code, output).
+
+        descendant: a pid file the job wrote; asserted gone before the fixture's own
+        process-group KILL could reap it on the runner's behalf.
+        """
         output = Path(self.temp.name) / "runner-output.txt"
+        survivor = None
         with output.open("w") as sink:
             proc = subprocess.Popen(
                 ["bash", str(self.loop / "run-loop.sh")], cwd=self.repo, env=env,
@@ -351,20 +368,67 @@ class FullLoopRegressions(unittest.TestCase):
             try:
                 deadline = time.monotonic() + 10
                 while not (self.loop / "started").exists():
-                    self.assertLess(time.monotonic(), deadline, "executor never started")
+                    self.assertLess(time.monotonic(), deadline, "job never started")
                     time.sleep(0.05)
                 proc.send_signal(signal.SIGTERM)
-                code = proc.wait(timeout=5)
+                code = proc.wait(timeout=settle)
+                if descendant is not None:
+                    pid = int(descendant.read_text())
+                    deadline = time.monotonic() + 3
+                    while self.process_alive(pid) and time.monotonic() < deadline:
+                        time.sleep(0.05)
+                    survivor = pid if self.process_alive(pid) else None
             except subprocess.TimeoutExpired:
-                self.fail("SIGTERM waited for the executor to finish")
+                self.fail("SIGTERM waited for the job to finish")
             finally:
                 try:
                     os.killpg(proc.pid, signal.SIGKILL)
                 except ProcessLookupError:
                     pass
                 proc.wait()
-        self.assertEqual(code, 130, output.read_text())
+        text = output.read_text()
+        self.assertIsNone(survivor, f"descendant {survivor} survived the runner\n{text}")
+        return code, text
+
+    @staticmethod
+    def process_alive(pid):
+        try:
+            os.kill(pid, 0)
+        except ProcessLookupError:
+            return False
+        try:
+            return Path(f"/proc/{pid}/stat").read_text().split(")")[-1].split()[0] != "Z"
+        except OSError:
+            return True
+
+    def test_sigterm_interrupts_a_running_executor_promptly(self):
+        env = self.loop_env('touch "$LOOP_DIR/started"\nexec sleep 30\n', AUTOCOMMIT="false")
+        code, output = self.interrupt_runner(env, settle=5)
+        self.assertEqual(code, 130, output)
         self.assertEqual(self.state()["LAST_STATUS"], "CONTINUE")
+
+    def test_sigterm_reaches_grandchildren_of_an_unlimited_verify(self):
+        # verify always runs with no local limit; without LOOP_TIMEOUT nothing bounds it.
+        (self.loop / "verify.sh").write_text(
+            '#!/bin/bash\nsleep 30 &\necho $! > "$LOOP_DIR/grandchild.pid"\n'
+            'touch "$LOOP_DIR/started"\nwait\n')
+        env = self.loop_env('true\n', AUTOCOMMIT="false", KILL_GRACE="1")
+        code, output = self.interrupt_runner(env, descendant=self.loop / "grandchild.pid")
+        self.assertEqual(code, 130, output)
+
+    def test_term_ignoring_executor_and_its_child_are_killed_after_grace(self):
+        for exec_timeout in ("0", "600"):
+            with self.subTest(exec_timeout=exec_timeout):
+                for name in ("started", "child.pid"):
+                    (self.loop / name).unlink(missing_ok=True)
+                env = self.loop_env(
+                    "trap '' TERM\nsleep 30 &\necho $! > \"$LOOP_DIR/child.pid\"\n"
+                    'touch "$LOOP_DIR/started"\nwhile :; do wait || true; done\n',
+                    AUTOCOMMIT="false", KILL_GRACE="2", EXEC_TIMEOUT=exec_timeout)
+                start = time.monotonic()
+                code, output = self.interrupt_runner(env, descendant=self.loop / "child.pid")
+                self.assertEqual(code, 130, output)
+                self.assertLess(time.monotonic() - start, 9, output)
 
     def test_iteration_timeout_sends_term_before_kill(self):
         start = time.monotonic()
@@ -433,6 +497,176 @@ class FullLoopRegressions(unittest.TestCase):
             self.assertEqual(link.read_text(), before, link.name)
         self.assertNotEqual((self.loop / ".goal.sha256").read_text(), "previous\n")
 
+    # --- A command's own exit code is not the loop deadline ---
+    def test_verify_exit_124_is_not_a_loop_timeout(self):
+        body = "timeout 1 sleep 5\n" if shutil.which("timeout") else "exit 124\n"
+        (self.loop / "verify.sh").write_text("#!/bin/bash\n" + body)
+        result = self.run_loop(LOOP_TIMEOUT="3600", AUTOCOMMIT="false")
+        self.assert_success(result)
+        self.assertNotIn("[TIMEOUT]", result.stdout)
+        self.assertIn("verify=FAIL", result.stdout)
+        self.assertEqual(self.state()["LAST_STATUS"], "CONTINUE")
+
+    def test_executor_exit_124_or_137_is_a_tool_failure_not_a_loop_timeout(self):
+        for code in ("124", "137"):
+            with self.subTest(code=code):
+                result = self.run_loop(f"exit {code}\n", LOOP_TIMEOUT="3600", EXEC_TIMEOUT="0",
+                                       AUTOCOMMIT="false")
+                self.assert_success(result)
+                self.assertNotIn("[TIMEOUT]", result.stdout)
+                self.assertIn("TOOL_FAILURE", result.stdout)
+
+    def test_loop_deadline_still_stops_a_running_executor(self):
+        start = time.monotonic()
+        result = self.run_loop("sleep 30\n", LOOP_TIMEOUT="3", KILL_GRACE="1", AUTOCOMMIT="false")
+        self.assert_success(result)
+        self.assertLess(time.monotonic() - start, 8)
+        self.assertIn("[TIMEOUT]", result.stdout)
+        self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
+
+    # --- Directory pins cover source, not ignored build output ---
+    def test_pin_paths_ignore_gitignored_build_output(self):
+        (self.repo / "tests").mkdir()
+        (self.repo / "tests/test_fixture.py").write_text("assert True\n")
+        (self.repo / ".gitignore").write_text(".loop/\n__pycache__/\n")
+        self.git("add", ".")
+        self.git("commit", "-qm", "add tests")
+        result = self.run_loop(
+            'mkdir -p tests/__pycache__\necho compiled > tests/__pycache__/test_fixture.pyc\n'
+            'touch "$LOOP_DIR/done.md"\n', AUTOCOMMIT="false", PIN_PATHS="tests")
+        self.assert_success(result)
+        self.assertIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+
+    def test_pin_paths_detect_a_new_untracked_test_file(self):
+        (self.repo / "tests").mkdir()
+        (self.repo / "tests/test_fixture.py").write_text("assert True\n")
+        result = self.run_loop(
+            'echo "assert True" > tests/test_added.py\ntouch "$LOOP_DIR/done.md"\n',
+            AUTOCOMMIT="false", PIN_PATHS="tests")
+        self.assert_success(result)
+        self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
+
+    # --- A conflicted squash waits for a human instead of taking a new suffix ---
+    def conflicting_squash(self):
+        self.git("branch", "loop/iter-loop")
+        (self.repo / "source.py").write_text("value = 3\n")
+        self.git("commit", "-qam", "origin changed")
+        self.git("checkout", "-q", "loop/iter-loop")
+        (self.loop / "state.env").write_text("NEXT_ITERATION=1\nLAST_STATUS=READY\nORIGIN_BRANCH=main\n")
+        result = self.run_loop(
+            'echo "value = 2" > source.py\ntouch "$LOOP_DIR/done.md"\n',
+            BRANCH_ISOLATION="true", SQUASH_ON_DONE="true")
+        self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("[BRANCH:CONFLICT]", result.stdout)
+
+    def rerun_squash(self):
+        return self.run_loop('touch "$LOOP_DIR/unexpected-execution"\n',
+                             BRANCH_ISOLATION="true", SQUASH_ON_DONE="true")
+
+    def assert_squash_pending(self, result):
+        self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("NEXUS_LOOP_STATUS: CONTINUE", result.stdout)
+        self.assertIn("status=BLOCKED", result.stdout)
+        self.assertIn("loop/summary-loop", result.stdout)
+        self.assertIn("git branch -D loop/iter-loop", result.stdout)
+        self.assertEqual(self.git("branch", "--list", "loop/summary-loop-*"), "")
+        self.assertFalse((self.loop / "unexpected-execution").exists())
+
+    def test_rerun_after_resolving_a_squash_conflict_does_not_open_a_new_summary(self):
+        self.conflicting_squash()
+        # Follow the printed "Resolve" instruction.
+        (self.repo / "source.py").write_text("value = 4\n")
+        self.git("add", "source.py")
+        self.git("commit", "-qm", "resolve squash")
+        self.assert_squash_pending(self.rerun_squash())
+        self.assertEqual(self.git("branch", "--show-current"), "loop/summary-loop")
+        # Deleting the iteration branch marks the squash done.
+        self.git("branch", "-D", "loop/iter-loop")
+        result = self.rerun_squash()
+        self.assert_success(result)
+        self.assertIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+        self.assertEqual(self.git("branch", "--list", "loop/summary-loop-*"), "")
+        self.assertEqual(self.git("show", "HEAD:source.py"), "value = 4")
+
+    def test_rerun_after_aborting_a_squash_conflict_does_not_open_a_new_summary(self):
+        self.conflicting_squash()
+        # Follow the printed "Or abort" instruction.
+        self.git("reset", "--merge")
+        self.git("checkout", "-q", "loop/iter-loop")
+        self.assert_squash_pending(self.rerun_squash())
+        self.assertEqual(self.git("branch", "--show-current"), "loop/iter-loop")
+
+    # --- A rejected DONE checkpoint at the iteration cap stops cleanly ---
+    def test_rejected_done_checkpoint_at_the_cap_blocks_without_an_iteration_branch(self):
+        self.write_checkpoint("NEXT_ITERATION=2\nLAST_STATUS=DONE\n")
+        for attempt in (1, 2):
+            with self.subTest(attempt=attempt):
+                result = self.run_loop('touch "$LOOP_DIR/executed"\n',
+                                       BRANCH_ISOLATION="true", SQUASH_ON_DONE="true")
+                self.assert_success(result)
+                self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+                self.assertIn("MAX_ITERATIONS", result.stdout)
+                self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
+                self.assertEqual(self.git("branch", "--show-current"), "main")
+                self.assertEqual(self.git("branch", "--list", "loop/*"), "")
+                self.assertFalse((self.loop / "executed").exists())
+
+    def test_recovery_keeps_done_for_the_runner_gate(self):
+        (self.loop / "progress.md").write_text("# Progress\n\n## Iteration 1 — DONE\n- Status: DONE\n")
+        recover = self.loop / "recover.sh"
+        recover.write_text(template("recover.sh"))
+        result = subprocess.run(
+            ["bash", str(recover), str(self.loop)], cwd=self.repo,
+            env=fixture_environment(), text=True, capture_output=True, timeout=10)
+        self.assert_success(result)
+        self.assertEqual(self.state()["LAST_STATUS"], "DONE")
+        self.assertEqual(self.state()["NEXT_ITERATION"], "2")
+
+    # --- Numeric terminators are validated, not coerced ---
+    def test_non_integer_limits_abort(self):
+        cases = {"LOOP_TIMEOUT": ("1m", "2.5"), "EXEC_TIMEOUT": ("10s",),
+                 "KILL_GRACE": ("-1", "x"), "USD_PER_RUN_CAP": ("1usd",),
+                 "USD_PER_ITER_CAP": ("$1",)}
+        for key, values in cases.items():
+            for value in values:
+                with self.subTest(key=key, value=value):
+                    result = self.run_loop('touch "$LOOP_DIR/executed"\n', **{key: value})
+                    self.assertNotEqual(result.returncode, 0, result.stdout)
+                    self.assertIn("[ABORT]", result.stdout)
+                    self.assertIn(key, result.stdout)
+                    self.assertFalse((self.loop / "executed").exists())
+
+    def test_bootstrap_next_step_sets_an_external_terminator(self):
+        script = template("bootstrap.sh")
+        for key, value in {"VERIFY_CMD": "", "RUN_LOOP_CONTENT": "#!/bin/bash\ntrue",
+                           "NOTIFY_CONTENT": "#!/bin/bash\ntrue"}.items():
+            script = script.replace("{{" + key + "}}", value)
+        path = self.loop / "bootstrap.sh"
+        path.write_text(script)
+        result = subprocess.run(
+            ["bash", str(path), str(self.loop)], cwd=self.repo, env=fixture_environment(),
+            text=True, capture_output=True, timeout=10)
+        self.assert_success(result)
+        hint = [line for line in result.stdout.splitlines() if line.startswith("Next:")]
+        self.assertEqual(len(hint), 1, result.stdout)
+        self.assertIn("LOOP_TIMEOUT=", hint[0])
+
+    # --- Human edits made while the loop is stopped stay out of auto-commits ---
+    def test_human_edit_during_blocked_pause_is_not_auto_committed(self):
+        result = self.run_loop('echo "value = 2" > source.py\nexit 1\n')
+        self.assert_success(result)
+        self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
+        (self.repo / "user.txt").write_text("human edit while blocked\n")
+        (self.repo / "notes.txt").write_text("human note\n")
+        result = self.run_loop('touch "$LOOP_DIR/done.md"\n')
+        self.assert_success(result)
+        self.assertIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+        self.assertEqual(self.git("show", "HEAD:source.py"), "value = 2")
+        self.assertEqual(self.git("show", "HEAD:user.txt"), "baseline")
+        self.assertEqual(self.git("ls-files", "notes.txt"), "")
+        self.assertEqual((self.repo / "user.txt").read_text(), "human edit while blocked\n")
+
+
     # --- Generated squash messages follow _common/GIT_GUIDELINES.md rule 6 ---
     def test_squash_message_drops_assistant_session_trailers(self):
         stub_dir = Path(self.temp.name) / "bin"
@@ -447,7 +681,7 @@ class FullLoopRegressions(unittest.TestCase):
         result = self.run_loop(
             'echo "value = 2" > source.py\ntouch "$LOOP_DIR/done.md"\n',
             BRANCH_ISOLATION="true", SQUASH_ON_DONE="true", SQUASH_MSG_ENGINE="claude",
-            PATH=f"{stub_dir}{os.pathsep}{os.environ['PATH']}",
+            PATH=f"{stub_dir}{os.pathsep}{self.safe_path}",
         )
         self.assert_success(result)
         self.assertEqual(

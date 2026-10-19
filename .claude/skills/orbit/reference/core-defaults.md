@@ -29,9 +29,9 @@ Purpose: parameter reference for generated nexus-autoloop runners. Load this whe
 | `CIRCUIT_THRESHOLD` | `3` | consecutive same-signature failures to trip |
 | `CIRCUIT_COOLDOWN` | `300` | seconds before auto-retry after circuit opens |
 | `TOOL_TIMEOUT` | `120` | per-tool invocation timeout |
-| `LOOP_TIMEOUT` | `0` | total loop timeout; `0` = unlimited. When `LOOP_TIMEOUT`, `USD_PER_RUN_CAP` and `USD_PER_ITER_CAP` are all `0`, the runner refuses to start |
+| `LOOP_TIMEOUT` | `0` | total loop timeout in whole seconds; `0` = unlimited. When `LOOP_TIMEOUT`, `USD_PER_RUN_CAP` and `USD_PER_ITER_CAP` are all `0`, the runner refuses to start; a non-integer `LOOP_TIMEOUT` / `EXEC_TIMEOUT` / `KILL_GRACE` (e.g. `1m`, `2.5`) or non-numeric USD cap is `[ABORT]` |
 | `ALLOW_UNBOUNDED_RUN` | `false` | `true` lets a run start with all three external limits at `0` — attended runs only |
-| `KILL_GRACE` | `10` | seconds between `SIGTERM` and `SIGKILL`; a command limit of `N` sends `SIGTERM` at `N - min(KILL_GRACE, N/2)` and `SIGKILL` at `N` |
+| `KILL_GRACE` | `10` | seconds between `SIGTERM` and `SIGKILL`; a command limit of `N` sends `SIGTERM` at `N - min(KILL_GRACE, N/2)` and `SIGKILL` at `N`. On runner shutdown the job's whole process group gets `SIGTERM`, then `SIGKILL` after `KILL_GRACE` + 1 s |
 | `PROJECT_ROOT` | launch directory | runner `cd`s here before running anything; the executor's working directory |
 | `STRUCTURED_LOG` | `true` | emit JSON Lines to `runner.jsonl` |
 | `COST_TRACKING` | — (not in template) | token and cost tracking — _audit/design-time guard — not enforced by the shipped template_ |
@@ -47,7 +47,7 @@ Purpose: parameter reference for generated nexus-autoloop runners. Load this whe
 | `PLACEHOLDER_GREP` | `true` | grep `TODO` / `pass` / `NotImplementedError` / `return None` in changed src (AP-12) |
 | `GOAL_IMMUTABLE` | `true` | `goal.md` sha256-pinned (`.goal.sha256`) at first start; checked before and after every executor run; change → `BLOCKED` (AP-16). AC files outside `goal.md` are pinned only via `PIN_PATHS` |
 | `ARTIFACT_PINS` | `true` | sha256 manifest (`.pins.sha256`) taken at first start and checked before and after every executor run: `verify.sh` and `PROMPT.md` in `LOOP_DIR` and `PROJECT_ROOT`, `PROJECT_ROOT/.claude/settings.json`, `PROJECT_ROOT/.claude/settings.local.json` (creating an absent one counts), plus `PIN_PATHS`; change → `[ABORT]`, `BLOCKED` (AP-13 / AP-20 / RP-1). Re-pin with `recover.sh --repin-goal` |
-| `PIN_PATHS` | empty | extra `PROJECT_ROOT`-relative files or directories to pin, colon-separated — set `PIN_PATHS=tests` to pin a `tests/` tree; the template does not know the test path otherwise |
+| `PIN_PATHS` | empty | extra `PROJECT_ROOT`-relative files or directories to pin, colon-separated — set `PIN_PATHS=tests` to pin a `tests/` tree; the template does not know the test path otherwise. In a Git work tree a directory pin covers tracked and untracked-not-ignored files, so ignored build output (`tests/__pycache__`) is not a mutation |
 | `ARGV_DEDUP` | `true` (design value) | hash tool-call argv and dedup-check the last `DEDUP_WINDOW` calls (AP-21) — _audit/design-time guard — not enforced by the shipped template_ |
 | `ARCH_LINT` | `false` | run `jscpd` / `dependency-cruiser` / `ts-prune` in verify; enable for long loops (AP-18) |
 | `PROMPT_CACHE_BREAKPOINTS` | `4` | `cache_control` breakpoints in runner prompt layout; aim for 85-90% cache hit, ≥ 60× input-cost reduction (see `resilience-patterns.md`) |
@@ -81,7 +81,7 @@ Tier selection rules:
 | Branch state | no detached HEAD when `BRANCH_ISOLATION=true` (and `AUTOCOMMIT=true`) | `[ABORT] detached HEAD` before any iteration | `BRANCH_ISOLATION=false` |
 | External terminator | at least one of `LOOP_TIMEOUT` / `USD_PER_RUN_CAP` / `USD_PER_ITER_CAP` `> 0` | `[ABORT]` before pre-flight | `ALLOW_UNBOUNDED_RUN=true` (attended runs only) |
 | Log size | `runner.log ≤ MAX_LOG_SIZE` | rotate to `runner.log.prev` | — |
-| State integrity | `state.env.sha256` matches | auto-run `recover.sh` (never yields `DONE`); a `DONE` checkpoint is re-gated on resume | — |
+| State integrity | `state.env.sha256` matches | auto-run `recover.sh`; every `DONE` checkpoint (recovered or not) is re-gated on resume — a failed gate continues, or stops `BLOCKED` past `MAX_ITERATIONS` | — |
 
 ## 3-Tier Timeout architecture
 

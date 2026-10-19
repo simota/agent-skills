@@ -132,7 +132,7 @@ echo ""
 echo "=== Bootstrap Complete ==="
 echo "Loop directory: ${LOOP_DIR}"
 echo "Artifacts: goal.md, progress.md, state.env, run-loop.sh, notify.sh${VERIFY_CMD:+, verify.sh}"
-echo "Next: run 'bash ${LOOP_DIR}/run-loop.sh' to start execution"
+echo "Next: run 'LOOP_TIMEOUT=<seconds> bash ${LOOP_DIR}/run-loop.sh' to start execution (or set USD_PER_RUN_CAP / USD_PER_ITER_CAP — the runner refuses to start without an external terminator)"
 ````
 
 ## Recovery Template (`recover.sh`)
@@ -143,7 +143,7 @@ Usage: `recover.sh [--reset-circuit] [--repin-goal] [--clear-stall] [--migrate] 
 
 | Flag | Recovers | Class |
 |------|----------|-------|
-| (none) | rebuild `state.env` from `progress.md` evidence (durable checkpoint-replay); never emits `DONE` — a `DONE` iteration is recovered as `CONTINUE` so the runner re-applies the DONE gate | `STATE_DRIFT` |
+| (none) | rebuild `state.env` from `progress.md` evidence (durable checkpoint-replay); a `DONE` iteration stays `DONE` — the runner re-runs the DONE gate on every `DONE` resume and continues (or stops `BLOCKED` past `MAX_ITERATIONS`) when it fails | `STATE_DRIFT` |
 | `--reset-circuit` | delete `.circuit-state` | `CIRCUIT_OPEN` |
 | `--clear-stall` | delete `.action-sig.log` so the stall counter resets after disambiguation | `CONVERGENCE_STALL` / `OSCILLATION_LOOP` |
 | `--repin-goal` | re-pin `.goal.sha256` to current `goal.md` and drop `.pins.sha256` so the runner re-pins `verify.sh` / `PROMPT.md` / `.claude/settings*.json` / `PIN_PATHS` on next start (only after confirming the current files are the intended baseline) | `GOAL_DRIFT` / `VALIDATOR_GAP` / `PERMISSION_HIJACK` |
@@ -244,12 +244,8 @@ if [[ -f "${LOOP_DIR}/progress.md" ]]; then
   read -r LATEST_ITER RECOVERED_STATUS <<< "${RECOVERED_EVIDENCE}"
 fi
 
-# Recovery never emits DONE: progress.md text is not completion evidence. The runner
-# re-applies the DONE gate (done.md + verify + pins + placeholders) on the next iteration.
-if [[ "${RECOVERED_STATUS}" == "DONE" ]]; then
-  echo "[INFO] Latest iteration reports DONE — recovered as CONTINUE; the runner re-checks the DONE gate"
-  RECOVERED_STATUS="CONTINUE"
-fi
+# A recovered DONE is a claim, not evidence: the runner re-runs the DONE gate
+# (done.md + verify + pins + placeholders) on every DONE resume and continues on failure.
 if [[ "${RECOVERED_STATUS}" == "BLOCKED" || "${RECOVERED_STATUS}" == "INTERRUPTED" ]]; then
   NEXT_ITER=$((LATEST_ITER > 0 ? LATEST_ITER : 1))
   [[ "${RECOVERED_STATUS}" == "INTERRUPTED" ]] && RECOVERED_STATUS="CONTINUE"
