@@ -323,7 +323,7 @@ Use **Nexus** for complex tasks. Nexus operates in the following modes:
 
 | Mode | Trigger | Behavior | Interaction |
 |------|---------|----------|-------------|
-| **Full Auto** (default) | no marker, or `## NEXUS_AUTORUN_FULL` | Executes all tasks with guardrails | Only on Ask First / errors |
+| **Full Auto** (default) | no marker, or `## NEXUS_AUTORUN_FULL` | Executes all tasks, including COMPLEX, with guardrails | Ask First triggers and guardrail escalations only |
 | **Auto** | `## NEXUS_AUTORUN` | Executes simple tasks only; complex tasks fall back to Guided | Ask First triggers, guardrail escalations, and errors |
 | **Guided** | `## NEXUS_GUIDED` | Confirms at decision points | Option-based interaction |
 | **Interactive** | `## NEXUS_INTERACTIVE` | Confirms at each step | Always interactive |
@@ -333,7 +333,7 @@ Use **Nexus** for complex tasks. Nexus operates in the following modes:
 
 Each agent asks for user confirmation at important decision points (using the platform's interaction capabilities):
 
-- **Start confirmation**: Confirms approach after chain design, before execution
+- **Start confirmation** (Interactive only): Confirms approach after chain design, before execution — Guided confirms only at decision points
 - **Decision point confirmation**: Security risks, destructive changes, multiple approaches, etc.
 - **Questions as options**: Choose from 2-4 options ("Other" is always available)
 
@@ -368,247 +368,121 @@ See `_common/INTERACTION.md` for details.
 
 ### Chain Templates by Task Type
 
-> **Source of truth:** base chains live in `nexus/reference/routing-matrix.md` and variants in `nexus/reference/agent-chains.md`; where this summary differs, those files win.
+> **Source of truth:** base chains (rows without a `/variant`) come from `nexus/reference/routing-matrix.md`; `TYPE/variant` rows come from `nexus/reference/agent-chains.md`. This is a representative excerpt — where it differs, those files win. Variant rows omit the terminal Guardian (SHIP) step that the matrix default adds for code changes; `?` marks an optional step.
 
-#### Investigation & Understanding
+#### Investigation & Incidents
 
-| Task | Description | Chain |
-|------|-------------|-------|
-| INVESTIGATE/feature | Feature existence/implementation investigation | Lens |
-| INVESTIGATE/flow | Data flow/processing flow tracing | Lens > Canvas |
-| INVESTIGATE/onboarding | Full codebase understanding | Lens > Scribe |
-| INVESTIGATE/pre-impl | Investigation then implementation | Lens > Builder > Radar |
+| Task | Use | Chain |
+|------|-----|-------|
+| INVESTIGATE | Does X exist / how does it work | Lens |
+| INVESTIGATE/flow | Data/processing flow tracing | Lens > Canvas |
+| INVESTIGATE/onboarding | Whole-codebase understanding | Lens > Scribe |
+| INVESTIGATE/pre-impl | Investigate, then implement | Lens > Builder > Radar |
+| INVESTIGATE/regression | Regression from a past commit | Trail > Scout > Builder > Radar |
+| BUG/simple | Simple bug fix | Scout > Lens > Radar > Builder > Radar |
+| BUG/complex | Complex bug (RCA required) | Scout > Lens > Sherpa > Radar > Builder > Radar > Sentinel |
+| INCIDENT/SEV1/2 | Major incident | Triage > Scout > Builder > Radar > Triage (postmortem) |
 
 > **Lens vs Scout**: Lens = codebase understanding and feature exploration ("Does X exist?", "How does Y flow?"), Scout = bug investigation and root cause analysis ("Why did it break?")
 
-#### Bug Fixes
+#### Features, APIs & Integrations
 
-| Task | Description | Chain |
-|------|-------------|-------|
-| BUG/simple | Simple bug fix | Scout > Lens > Radar > Builder > Radar |
-| BUG/complex | Complex bug (RCA required) | Scout > Lens > Sherpa > Radar > Builder > Radar > Sentinel |
-| BUG/frontend | Frontend bug | Scout > Artisan > Radar |
-
-#### Feature Development
-
-| Task | Description | Chain |
-|------|-------------|-------|
+| Task | Use | Chain |
+|------|-----|-------|
 | FEATURE/S | Small feature | Builder > Radar |
 | FEATURE/M | Medium feature | Sherpa > Forge > Builder > Radar |
 | FEATURE/L | Large feature | Spark > Sherpa > Forge > Builder > Radar > Quill |
+| FEATURE/UI | UI-heavy feature | Spark > Forge > Muse > Builder > Lens > Radar |
 | FEATURE/frontend | Frontend feature | Forge > Artisan > Radar |
-| FEATURE/fullstack | Full-stack feature | Sherpa > Forge > Artisan > Builder > Radar |
-| FEATURE/api | API development | Gateway > Builder > Radar > Quill |
+| API/new | New API | Gateway > Builder > Radar > Quill |
+| MESSAGING | Chat bots, channel adapters, WebSocket/SSE | Gateway > Builder > Radar |
+| WEBHOOK | Webhook contracts and handlers | Gateway > Builder |
 
-#### UI/UX
+#### Design & UX
 
-| Task | Description | Chain |
-|------|-------------|-------|
-| UI/new | New UI implementation | Vision > Forge > Vitrine > Muse > Artisan > Radar |
-| UI/redesign | UI redesign | Vision > Muse > Palette > Flow > Artisan > Radar |
-| UI/component | Component creation | Forge > Vitrine > Muse > Artisan > Radar |
-| UI/animation | Animation addition | Flow > Artisan > Radar |
-| UX/research | UX research | Field > Echo > Palette |
-| UX/improve | UX improvement | Echo > Palette > Artisan > Radar |
-| UX/session-analysis | Session analysis | Trace > Echo > Palette |
-| UX/persona-validation | Persona validation | Field > Trace > Echo |
+| Task | Use | Chain |
+|------|-----|-------|
+| DESIGN/creative | New visual direction to UI | Vision > Muse > Forge > Artisan > Radar |
+| DESIGN/flow | Animation / interaction | Flow > Artisan > Radar |
+| DESIGN/usability-audit | Usability fixes | Palette > Artisan > Radar |
+| DESIGN_SYSTEM/full | Design system build-out | Vision > Muse > Vitrine > Artisan > Quill > Radar |
+| UX_RESEARCH | UX research | Field > Echo > Palette |
+| UX_RESEARCH/session-replay | Session analysis | Trace > Field > Echo > Palette |
 
-#### Refactoring
+#### Refactoring, Performance & Quality
 
-| Task | Description | Chain |
-|------|-------------|-------|
+| Task | Use | Chain |
+|------|-----|-------|
 | REFACTOR/small | Small refactor | Radar? > Zen > Radar |
 | REFACTOR/arch | Architecture improvement | Atlas > Sherpa > Zen > Radar |
-| REFACTOR/legacy | Legacy modernization | Shift (detect) > Sherpa > Zen > Radar |
-
-#### Performance
-
-| Task | Description | Chain |
-|------|-------------|-------|
-| PERF/frontend | Frontend optimization | Bolt > Artisan > Radar |
-| PERF/backend | Backend optimization | Bolt > Builder > Radar |
-| PERF/db | Database optimization | Tuner > Schema > Builder > Radar |
-
-#### AI/ML
-
-| Task | Description | Chain |
-|------|-------------|-------|
-| AI/rag | RAG pipeline design | Oracle > Gateway > Builder > Radar |
-| AI/llm-app | LLM application design | Oracle > Builder > Radar |
-| AI/safety | AI safety review | Oracle > Sentinel > Oracle |
-| AI/prompt-ops | Prompt engineering & evaluation | Oracle > Radar |
-| AI/prompt-spec | Turning a vague prompt into an executable spec | Chisel |
-
-#### Observability/SRE
-
-| Task | Description | Chain |
-|------|-------------|-------|
-| SRE/slo | SLO definition & monitoring | Beacon > Gear > Builder > Radar |
-| SRE/observability | Full observability setup | Beacon > Gear > Builder > Radar |
-
-#### Security
-
-| Task | Description | Chain |
-|------|-------------|-------|
-| SECURITY/audit | Static analysis | Sentinel > Builder > Radar > Sentinel |
-| SECURITY/pentest | Dynamic testing | Sentinel > Probe > Builder > Radar > Probe |
-| SECURITY/full | Full audit | Sentinel > Probe > Builder > Radar > Sentinel > Probe |
-
-#### Testing
-
-| Task | Description | Chain |
-|------|-------------|-------|
-| TEST/unit | Unit test addition | Radar |
-| TEST/e2e | E2E test addition | Voyager > Lens > Radar |
-| TEST/coverage | Coverage improvement | Radar > Voyager |
-| TEST/load | Load testing | Siege > Bolt |
-| TEST/chaos | Chaos engineering | Siege > Bolt > Triage > Builder > Beacon |
-| TEST/contract | Contract testing | Gateway > Siege > Radar |
-| TEST/mutation | Mutation testing | Siege > Radar |
-
-#### Review
-
-| Task | Description | Chain |
-|------|-------------|-------|
-| REVIEW/pr | PR review | Judge > Builder/Zen/Sentinel (based on findings) > Radar |
-| REVIEW/security | Security review | Judge > Sentinel |
-
-#### Git/PR
-
-| Task | Description | Chain |
-|------|-------------|-------|
-| GIT/pr-prep | PR preparation | Guardian > Judge |
-| GIT/commit-split | Commit splitting | Guardian |
-| GIT/pr-full | Implement > PR > Review | Builder > Guardian > Judge > Zen |
-| GIT/release | Release notes generation | Guardian |
-
-#### Decision Making
-
-| Task | Description | Chain |
-|------|-------------|-------|
-| DECISION/arch | Architecture selection | Magi > Builder/Zen |
-| DECISION/strategy | Strategic decisions | Scribe[unified] > Magi > Spark |
-| DECISION/office-hours | Founder office hours advisory | Magi > Builder/Echo[demand]/Sherpa |
-| DECISION/retro | Postmortem on a recent decision/outcome | Magi |
-
-#### Analysis
-
-| Task | Description | Chain |
-|------|-------------|-------|
-| ANALYSIS/impact | Change impact analysis | Ripple > Builder > Radar |
-| ANALYSIS/standards | Standards compliance check | Canon > Builder > Radar |
+| OPTIMIZE/app | Application hotspot | Bolt > Radar |
+| OPTIMIZE/db | Database optimization | Tuner > Schema > Builder > Radar |
+| YAGNI/standard | Subtract over-engineering | Void > Sweep > Zen > Radar |
+| ANALYSIS | Change impact analysis | Ripple > Builder > Radar |
 | ANALYSIS/cleanup | Code cleanup | Sweep > Zen > Radar |
+| QUALITY/standard | Quality audit | Judge > Zen > Radar > Sentinel > Canvas |
 
-#### Subtraction & Culture
+#### Security, Testing & Review
 
-| Task | Description | Chain |
-|------|-------------|-------|
-| SUBTRACT/feature-gate | Feature proposal subtraction gate | Spark > Void > Magi |
-| SUBTRACT/scope-check | Scope validation | Sherpa > Void > Sherpa |
-| SUBTRACT/arch-simplify | Architecture over-engineering detection | Atlas > Void > Zen |
+| Task | Use | Chain |
+|------|-----|-------|
+| SECURITY/static | Static analysis | Sentinel > Builder > Radar > Sentinel |
+| SECURITY/dynamic | Dynamic testing | Sentinel > Probe > Builder > Radar > Probe |
+| SECURITY/full | Full audit | Sentinel > Probe > Builder > Radar > Sentinel > Probe |
+| TEST | Unit / coverage | Radar |
+| TEST/e2e | E2E tests | Voyager > Lens > Radar |
+| LOAD_TEST/chaos | Chaos engineering | Siege > Bolt > Triage > Builder > Beacon |
+| REVIEW/PR | PR review | Judge > Builder/Zen/Sentinel (based on findings) > Radar |
 
-#### Documentation
+#### AI, Operations & Release
 
-| Task | Description | Chain |
-|------|-------------|-------|
-| DOCS/prd | PRD creation | Scribe |
-| DOCS/srs | SRS creation | Scribe |
-| DOCS/design | Design document creation | Scribe |
-| DOCS/spec-to-build | Spec to implementation | Spark > Scribe > Sherpa > Builder |
-| DOCS/code | Code documentation | Quill |
-| DOCS/component | Component documentation | Vitrine > Quill |
-| DOCS/architecture | Architecture diagrams | Canvas |
-| DOCS/convert | Format conversion | Scribe |
-| DOCS/report | PR report | Launch[weekly] > Scribe |
-| DOCS/learning | Change-based learning doc | Tome |
-| DOCS/onboarding | Onboarding material from changes | Trail > Tome |
-
-#### Demo & Recording
-
-| Task | Description | Chain |
-|------|-------------|-------|
-| DEMO/prototype | Prototype demo | Forge > Cue > Growth |
-
-#### Infrastructure & DevOps
-
-| Task | Description | Chain |
-|------|-------------|-------|
-| INFRA/ci | CI/CD setup | Gear > Radar |
-| INFRA/cloud | Cloud setup | Scaffold > Gear |
-| INFRA/cli | CLI development | Builder > Radar |
-
-#### Deploy & Release
-
-| Task | Description | Chain |
-|------|-------------|-------|
-| DEPLOY/release | Release execution | Guardian > Launch |
-| DEPLOY/full | Full pipeline | Radar > Guardian > Launch |
-
-#### Modernization
-
-| Task | Description | Chain |
-|------|-------------|-------|
+| Task | Use | Chain |
+|------|-----|-------|
+| AI_FEATURE | LLM feature | Oracle > Builder > Radar |
+| AI_FEATURE/rag | RAG pipeline | Oracle > Gateway > Builder > Radar |
+| PROMPT_SPEC | Vague prompt to executable spec | Chisel |
+| OBSERVABILITY/slo-design | SLO definition & monitoring | Beacon > Gear > Builder > Radar |
+| INFRA | Infrastructure setup | Scaffold > Gear > Radar |
+| GHA_WORKFLOW/new | New GitHub Actions workflow | Gear[gha] > Radar |
+| PRERELEASE/full | Pre-release gate | Sentinel > Radar > Guardian > Launch |
+| DEPLOY/full | Full release pipeline | Radar > Guardian > Launch |
 | MODERNIZE/stack | Tech stack refresh | Lens > Shift (detect+modernize) > Sherpa > Builder > Radar |
-| MODERNIZE/i18n | Internationalization | Polyglot > Artisan > Radar |
-| MODERNIZE/structure | Repository structure improvement | Grove > Sherpa > Zen > Radar |
 
-#### Strategy & Growth
+#### Decisions, Strategy & Documents
 
-| Task | Description | Chain |
-|------|-------------|-------|
-| STRATEGY/seo | SEO improvement | Growth > Artisan > Radar |
+| Task | Use | Chain |
+|------|-----|-------|
+| DECISION/architecture | Architecture selection | Magi > Builder/Zen (based on verdict) |
+| DECISION/strategy | Strategic decision | Scribe[unified] > Magi > Spark |
+| ADVISORY | Office-hours advisory | Magi > (Builder/Echo/Sherpa) |
 | STRATEGY/compete | Competitive analysis to implementation | Compete > Spark > Builder > Radar |
-| STRATEGY/feedback | Feedback integration | Voice > Spark > Builder > Radar |
-| STRATEGY/metrics | Metrics infrastructure | Pulse > Builder > Radar |
-| STRATEGY/retention | Retention initiatives | Growth > Spark > Builder > Radar |
-| STRATEGY/ab-test | A/B test design | Experiment > Builder > Radar |
-| STRATEGY/data | Data pipeline | Stream > Schema > Builder > Radar |
+| MARKETING/quick | Quick marketing plan | Compete > Growth > Funnel |
+| REQUIREMENTS/complex | PRD / requirements | Scribe[unified] > Magi > Scribe > Sherpa > Canvas |
+| DOCS | Code documentation | Quill |
+| DOCS/report | PR report | Launch[weekly] > Scribe |
+| PROJECT/full | Full product from an ambiguous goal | Nexus[deliver] > Sherpa > Builder > Radar > Guardian > Launch |
 
 #### Parallel Execution (Rally Integration)
 
-For large-scale tasks where parallel execution is beneficial, Nexus escalates to Rally.
+For large-scale tasks where parallel execution is beneficial, Nexus escalates to Rally (`agent-chains.md` § Rally Parallel Chain Variants).
 
-| Task | Description | Parallel Chain |
-|------|-------------|---------------|
-| FEATURE/L (parallel) | Large-scale full-stack | Spark > Sherpa > Rally(Forge+Artisan, Builder, Radar) |
-| FEATURE/fullstack (parallel) | Frontend + Backend | Rally(Artisan, Builder, Radar) |
-| FEATURE/multi (parallel) | Multiple independent features | Sherpa > Rally(Builder x N, Radar) |
-| BUG/multiple (parallel) | Multiple independent bug fixes | Rally(Builder x N) > Radar |
-| REFACTOR/arch (parallel) | Multi-module refactoring | Atlas > Sherpa > Rally(Zen x N) > Radar |
-| SECURITY/full (parallel) | Static + dynamic parallel scan | Rally(Sentinel, Probe) > Builder > Radar |
-| TEST/coverage (parallel) | Unit + E2E parallel testing | Rally(Radar, Voyager) |
-| MODERNIZE/stack (parallel) | Multi-area modernization | Lens > Shift (detect+modernize) > Sherpa > Rally(Builder x N) > Radar |
-| DOCS/full (parallel) | Code docs + diagrams + stories | Rally(Quill, Canvas, Vitrine) |
+| Base Chain | Parallel Chain |
+|------------|----------------|
+| FEATURE/L | Spark > Sherpa > Rally(Forge+Artisan, Builder, Radar) |
+| FEATURE/M (multi-unit) | Sherpa > Rally(Builder x N, Radar) |
+| FEATURE/fullstack | Rally(Artisan, Builder, Radar) |
+| BUG/multiple | Rally(Builder x N) > Radar |
+| REFACTOR/arch (multi-module) | Atlas > Sherpa > Rally(Zen x N) > Radar |
+| SECURITY/full | Rally(Sentinel, Probe) > Builder > Radar |
+| TEST/coverage | Rally(Radar, Voyager) |
+| MODERNIZE/stack | Lens > Shift (detect+modernize) > Sherpa > Rally(Builder x N) > Radar |
+| DOCS/full | Rally(Quill, Canvas, Vitrine) |
 
 > **Rally Escalation Criteria**: Rally is triggered when there are 2+ independent implementation steps, changes span 4+ files across 2+ domains, or Sherpa detects a `parallel_group`.
 
 > **Nexus parallel vs Rally**: Nexus's built-in `_PARALLEL_BRANCHES` is for lightweight parallelism (each branch < 50 lines). Rally's multi-session parallelism is used for substantial implementation work.
 
-#### Product Lifecycle (`Nexus deliver`)
-
-| Task | Description | Chain |
-|------|-------------|-------|
-| PROJECT/full | Full product from ambiguous goal | Nexus[deliver] > Sherpa > Builder > Radar > Guardian > Launch |
-| PROJECT/mvp | MVP-focused delivery | `Nexus deliver` (minimum viable specialist chain) |
-
 > **Nexus build modes**: `feature` handles one bounded capability, `deliver` sizes a product/MVP chain to scope, and `apex` runs a high-investment discovery-to-ship workflow.
-
-#### Other
-
-| Task | Description | Chain |
-|------|-------------|-------|
-| INCIDENT | Incident response | Triage > Scout > Builder |
-| TEST/quality | Iterative quality improvement | Judge > Zen > Radar |
-| INVESTIGATE/regression | Regression investigation | Trail > Scout > Builder > Radar |
-
-#### Messaging & Real-time
-
-| Task | Description | Chain |
-|------|-------------|-------|
-| MESSAGING/bot | Bot development | Gateway > Builder > Radar |
-| WEBHOOK | Webhook handler | Gateway > Builder |
-| MESSAGING/realtime | Real-time communication | Gateway > Scaffold > Builder > Radar |
-| MESSAGING/multi-channel | Multi-channel integration | Gateway > Builder > Radar |
 
 ## Shared Knowledge
 
@@ -616,7 +490,7 @@ Agents share knowledge through the `.agents/` directory:
 
 | File | Purpose | When to Update |
 |------|---------|---------------|
-| `PROJECT.md` | Shared knowledge + activity log | **Required for all agents after completing work** |
+| `PROJECT.md` | Shared knowledge + activity log | When the task produced a reusable insight or a decision later agents need (`_common/OPERATIONAL.md` § Activity Log) |
 | `{agent}.md` | Agent-specific learnings | When domain-specific discoveries are made |
 
 ### PROJECT.md Structure
@@ -631,14 +505,7 @@ Agents share knowledge through the `.agents/` directory:
 
 ## Agent Principles
 
-All agents follow these principles:
-
-### Common Rules
-
-- **Changes under 50 lines** - Aim for small, safe changes
-- **Respect existing patterns** - Follow project conventions
-- **Run tests** - Run tests before and after changes
-- **Journal only significant learnings** - Don't record routine work
+Shared rules live in `_common/` (`BOUNDARIES.md`, `OPERATIONAL.md`, `INTERACTION.md`, ...); each skill's `## Boundaries` section states its own Always / Ask first / Never rules.
 
 ### Boundary Types
 
@@ -676,7 +543,7 @@ I want to add a user profile editing feature
 - With validation
 - Show toast on successful save
 
-## NEXUS_AUTORUN
+## NEXUS_AUTORUN_FULL
 ```
 
 **Execution chain**: Spark (spec) > Sherpa (task decomposition) > Forge (prototype) > Builder (production implementation) > Radar (tests) > Quill (documentation)
@@ -690,7 +557,7 @@ I want to add a user profile editing feature
 Investigate and fix a payment error that only occurs in production.
 It doesn't reproduce locally.
 
-## NEXUS_AUTORUN
+## NEXUS_AUTORUN_FULL
 ```
 
 **Execution chain**: Scout (investigation) > Sherpa (task decomposition) > Builder (fix) > Radar (regression tests) > Sentinel (security verification)
@@ -728,7 +595,11 @@ I want users to be able to input star ratings and comments.
 ```
 /Nexus
 I want to add a search feature.
+
+## NEXUS_INTERACTIVE
 ```
+
+`## NEXUS_INTERACTIVE` confirms before every step; `/Nexus` with no marker runs as AUTORUN_FULL.
 
 #### AUTORUN Mode (Automatic Execution - Recommended)
 
@@ -821,10 +692,7 @@ Define CartItem and CartSummary interfaces.
 
 ### Adding New Agents
 
-1. Create `<skill-name>/SKILL.md` at the repository root (lowercase kebab-case)
-2. Define `name` and `description` in frontmatter
-3. Specify boundaries (Always do / Ask first / Never do)
-4. Add AUTORUN Support and Nexus Hub Mode sections
+Follow [CONTRIBUTING.md § 新しいグローバルエージェントの追加](CONTRIBUTING.md#新しいグローバルエージェントの追加) (adding a new global agent): it lists the required sections, the Complexity Budget declaration, every roster that must be updated by hand, and the generators to re-run. A new skill is done when `make check` passes.
 
 ### Modifying Agents
 

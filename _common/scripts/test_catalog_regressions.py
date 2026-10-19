@@ -119,6 +119,36 @@ class CatalogDataTests(unittest.TestCase):
                 with self.subTest(file=name, pattern=pattern.pattern):
                     self.assertTrue(found, "no count claim matched; the pattern has gone stale")
                     self.assertEqual(set(found), {expected})
+        # The READMEs also state the sum ("= 93 distinct skills" / "= 93の個別スキル").
+        total = len(self.global_skills | self.local_skills)
+        distinct = re.compile(r"(\d{1,4})\s*(?:distinct skills|の個別スキル)")
+        for name in ("README.md", "README_ja.md"):
+            found = [int(m.group(1)) for m in distinct.finditer((ROOT / name).read_text(encoding="utf-8"))]
+            with self.subTest(file=name, pattern=distinct.pattern):
+                self.assertTrue(found, "no distinct-skill total matched; the pattern has gone stale")
+                self.assertEqual(set(found), {total})
+
+    def test_stat_counters_match_their_sources(self):
+        # The hero stats animate `data-count` values that nothing regenerated. The
+        # category count is CATEGORIES minus the 'all' filter and the project-local
+        # bucket; the chain count is a floor ("50+") over the chain-variant table.
+        domains = [c["id"] for c in self.data["categories"] if c["id"] not in {"all", "project-local"}]
+        stats = {label: int(value) for value, label in re.findall(
+            r'data-count="(\d+)"[^>]*>0</div><div class="stat-label">([^<]+)<', HTML)}
+        self.assertEqual(stats.get("Categories"), len(domains))
+        prose = HTML[:HTML.index("const SUBCOMMANDS")] + HTML[HTML.index("const TRANSLATIONS"):]
+        claims = re.findall(r"(\d+)(?:領域|カテゴリ| categories| Domains)", prose)
+        self.assertTrue(claims, "no category-count claim matched; the pattern has gone stale")
+        for claim in claims:
+            with self.subTest(claim=claim):
+                self.assertEqual(int(claim), len(domains))
+        chains = (ROOT / "nexus/reference/agent-chains.md").read_text(encoding="utf-8")
+        table = chains.split("## Chain Variants by Task Type", 1)[1].split("\n## ", 1)[0]
+        rows = [line for line in table.splitlines()
+                if line.startswith("| ") and not line.startswith("| Type") and line.count("|") >= 4]
+        self.assertIn("Chains", stats)
+        self.assertLessEqual(stats["Chains"], len(rows),
+                             "the Chains stat claims more templates than agent-chains.md defines")
 
 
 class LanguagePreferenceTests(unittest.TestCase):

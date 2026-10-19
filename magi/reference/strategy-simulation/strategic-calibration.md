@@ -203,10 +203,10 @@ reusable: true
 |---|---|---|
 | Annual strategy | `PESTLE -> SWOT -> Porter -> Ansoff` | Best with Tier `1+2` data |
 | M&A evaluation | `Porter -> SWOT -> BCG -> Financial` | Best with Tier `1+2+3C` data |
-| New market entry | `PESTLE -> Porter -> Ansoff -> Blue Ocean` | Market research quality is decisive |
+| New market entry | `PESTLE -> Porter -> Ansoff` | Market research quality is decisive |
 | Crisis response | `SWOT -> ST-3` | Speed matters more than depth |
 | KPI forecasting | `ST-1 / ST-2` | Tier `2A` data is critical |
-| Long-term vision | `Blue Ocean -> PESTLE -> BSC` | Use wider scenario ranges |
+| Long-term vision | `PESTLE -> BSC` | Use wider scenario ranges |
 
 ### Quick FORESIGHT
 

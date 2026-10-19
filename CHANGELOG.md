@@ -6,6 +6,44 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed — `apex` always confirms before launch (2026-10-16)
+
+- **Behaviour change: `apex` no longer auto-proceeds after a timed objection window.** Its launch gate is the Confirm-before-launch tier in every Mode, `AUTORUN_FULL` included: it shows the selected goal and requires an explicit Y / edit / abort. With no response it persists the Phase 0 goal artifact and stops (resumable) instead of launching (#58, ba48839).
+
+### Fixed — handoff-bundle schema and storage path (2026-10-16)
+
+- **`_templates/handoff-bundle.template.json` is now a real JSON Schema.** It declared JSON Schema yet accepted any JSON, and later typed only some of its required fields, so a bundle with a null `intent` or `code_instructions` validated and atelier's schema-valid exit criterion could not fail. Every required field is now typed, and `bundle_id` has a fixed pattern (#58, ba48839).
+- **Bundles are stored at `.agents/atelier/{bundle_id}.json`** (was `.agents/atelier/bundle-{slug}-{date}.json`), so the file name carries the same unique id as the bundle (#58, ba48839).
+
+### Removed — magi's Blue Ocean lens claim (2026-10-19)
+
+- **`magi`'s CAPABILITIES_SUMMARY no longer advertises a Blue Ocean lens.** Its backing reference, `magi/reference/strategy-simulation/blue-ocean-strategy.md`, was deleted on purpose in the generic-reference audit (#50, e307415), which made the 2026-08-20 entry below ("Both files are now in place") stale for that file. The claim is dropped rather than the file restored.
+
+### Fixed — repository-wide review passes (2026-10-10 – 2026-10-16)
+
+- **#53 (1e21383), #54 (4537a3e):** stale catalog and README claims corrected; routing hints re-pointed to subcommands that exist, enforced by new routing-oracle checks RO-9 (routing-matrix hints) and RO-10 (corpus-wide subcommand pointers); overlapping ownership claims settled; portable launch report scripts.
+- **#55 (350ad2b):** silent-pass gaps in validators closed; the Compass Recipes directory generator gained `--check` and joined `make validate`; shared contracts reconciled (`AUTORUN_FULL` is the default mode everywhere).
+- **#56 (86e932e):** blocking checkers made observable when stubbed; `make link` stops picking up non-skill directories; the catalog tests skip locally without Node.js.
+- **#57 (41329a6):** handoff tokens aligned between senders and receivers, enforced by RO-11; protocol contradictions resolved; the pre-commit hook detects that it is stale.
+- **#58 (ba48839):** recipe contracts reconciled, learning-loop kit gates made real, RO-11 retired-name gaps closed.
+
+### Added — generated `index.html` subcommands (2026-10-12)
+
+- **The landing page's recipe list is generated from each SKILL.md Recipes table** by `_common/scripts/generate-index-subcommands.py`, replacing a hand-kept copy that had drifted; `make validate` runs it with `--check` and fails on a stale page (4d4802b).
+
+### Added — validation entry points and the pre-commit hook (2026-08-21 – 2026-10-15)
+
+- **`make hooks`** installs a repository-managed pre-commit hook (4d4eeea); it checks a snapshot of exactly what will be committed (#43, bd5d9cd).
+- **`make test-catalog`** runs only the fast catalog regression tests; the hook runs `validate` + `test-catalog` on every commit and the full `check` when scripts, tests, or files the tests read change (86e932e, 41329a6).
+- **`make validate` reports the hook state** — `hooks on`, `hooks off`, or `hook stale` when the Makefile's hook recipe changed since installation (41329a6).
+- **`_common/scripts/lint-project-local.py`** validates the project-local skills: registry/roster agreement, canonical ↔ mirror identity, and resolving shared-contract symlinks (PL-1 – PL-3), wired into `make validate` and CI (#44, 36e6030).
+
+### Added — `make link` installer (2026-08-21 – 2026-09-17)
+
+- **`make link` / `make unlink` / `make status`** symlink this repository into the Claude Code, Codex CLI and Antigravity CLI skill directories **per entry**, not as one whole-repo link: the CLI directory stays real, an existing skill of the same name is reported and skipped, and `unlink` removes only this installer's links (b81655c, ced3569). Per-CLI targets: `link-claude`, `link-codex`, `link-agy`.
+- **agy links go to `~/.gemini/antigravity-cli/skills`** (6257e73).
+- **Codex links moved from `~/.codex/skills` to `~/.agents/skills`**, the directory current Codex CLI reads (#47, 35ffd55).
+
 ### Removed — retired skill packages (2026-10-16)
 
 - **Deleted the 31 retired packages under `.archive/` before their documented retention dates (2026-11-17 / 2026-11-18).** No checker, route or installer read them; they remain recoverable from git history at the commit before this removal.
