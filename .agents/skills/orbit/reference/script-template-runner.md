@@ -121,10 +121,11 @@ portable_timeout() {
         setpgrp(0, 0) or die "setpgrp: $!";
         exec { $ARGV[0] } @ARGV or die "exec: $!";
       }
+      # The group outlives its leader: wait for the group, not just the direct child.
       sub stop {
         my ($code) = @_;
         kill "TERM", -$pid; kill "TERM", $pid;
-        for (1 .. $grace) { exit $code if waitpid($pid, WNOHANG) > 0; sleep 1; }
+        for (1 .. $grace) { waitpid($pid, WNOHANG); last unless kill 0, -$pid; sleep 1; }
         kill 9, -$pid; kill 9, $pid;
         waitpid($pid, 0); exit $code;
       }
@@ -133,6 +134,12 @@ portable_timeout() {
       alarm($timeout - $grace);
       waitpid($pid, 0);
       my $status = $?;
+      if (kill 0, -$pid) { # leader gone, descendants left: reap them (alarm still armed)
+        kill "TERM", -$pid;
+        for (1 .. $grace) { last unless kill 0, -$pid; sleep 1; }
+        kill 9, -$pid;
+      }
+      alarm(0);
       exit(($status & 127) ? 128 + ($status & 127) : $status >> 8);
     ' "${secs}" "${grace}")
   fi
@@ -598,9 +605,17 @@ pin_manifest() {
 if [[ "${ARTIFACT_PINS}" == "true" ]] && [[ ! -f "${PINS_FILE}" ]]; then
   write_atomic "${PINS_FILE}" "$(pin_manifest)"
 fi
+# The manifest lives where the executor can write, so its digest is anchored in this
+# process at start: deleting or rewriting it mid-run is itself a pin violation.
+PINS_SHA=""
+[[ "${ARTIFACT_PINS}" != "true" ]] || PINS_SHA=$(shasum -a 256 < "${PINS_FILE}" | awk '{print $1}')
 check_pins() {
   [[ "${ARTIFACT_PINS}" == "true" ]] || return 0
-  [[ -f "${PINS_FILE}" ]] || return 0
+  if [[ ! -f "${PINS_FILE}" ]] \
+     || [[ "$(shasum -a 256 < "${PINS_FILE}" | awk '{print $1}')" != "${PINS_SHA}" ]]; then
+    echo "[ABORT] pin manifest ${PINS_FILE} removed or rewritten mid-run (AP-13 / AP-20)"
+    return 1
+  fi
   local changed
   changed=$(diff <(cat "${PINS_FILE}") <(pin_manifest) | sed -n 's/^> [^ ]*  //p' || true)
   [[ -z "${changed}" ]] && return 0
@@ -621,6 +636,18 @@ LOOP_DEADLINE=0
 # running `timeout`, say) is an ordinary failure. SIGTERM lands up to the grace before
 # the hard limit, so a job cut off by the loop budget ends within that grace of it.
 LOOP_BUDGET_SPENT=false
+# `timeout` (and its KILL) watches only the command it started: once that exits, a
+# TERM-ignoring descendant left in the job's group would outlive the limit. TERM, then
+# KILL after the grace ($1), whatever is left. Without GROUP_CMD there is no group.
+reap_job_group() {
+  [[ "${#GROUP_CMD[@]}" -gt 0 ]] && kill -0 -- "-${CHILD_PID}" 2>/dev/null || return 0
+  kill -s TERM -- "-${CHILD_PID}" 2>/dev/null || true
+  local waited=0
+  while kill -0 -- "-${CHILD_PID}" 2>/dev/null && [[ "${waited}" -lt "$1" ]]; do
+    sleep 1; waited=$((waited + 1))
+  done
+  kill -s KILL -- "-${CHILD_PID}" 2>/dev/null || true
+}
 run_with_budget() {
   local limit="$1" remaining status=0 bound=false grace; shift
   if [[ "${LOOP_DEADLINE}" -gt 0 ]]; then
@@ -631,14 +658,18 @@ run_with_budget() {
     fi
   fi
   TIMEOUT_CMD=()
-  [[ "${limit}" -eq 0 ]] || portable_timeout "${limit}"
+  grace="${KILL_GRACE}"
+  if [[ "${limit}" -ne 0 ]]; then
+    portable_timeout "${limit}"
+    grace=$(( KILL_GRACE < limit / 2 ? KILL_GRACE : limit / 2 ))
+  fi
   # ${a[@]+...}: an empty array is "unbound" under set -u in bash < 4.4 (macOS).
   ${GROUP_CMD[@]+"${GROUP_CMD[@]}"} ${TIMEOUT_CMD[@]+"${TIMEOUT_CMD[@]}"} "$@" <&0 &
   CHILD_PID=$!
   wait "${CHILD_PID}" || status=$?
+  reap_job_group "${grace}"
   CHILD_PID=""
   if [[ "${bound}" == "true" && "${status}" -ne 0 ]]; then
-    grace=$(( KILL_GRACE < limit / 2 ? KILL_GRACE : limit / 2 ))
     [[ $((LOOP_DEADLINE - $(date +%s))) -gt "${grace}" ]] || LOOP_BUDGET_SPENT=true
   fi
   return "${status}"
@@ -1036,11 +1067,13 @@ done
 record_loop_dirty
 
 #--- Branch isolation (post-loop squash) ---
-# Called as an `if` condition, where errexit is off: every step that must not be
-# skipped carries an explicit `|| return 1`.
+# Covers every SQUASH_MSG_ENGINE; a human Co-Authored-By trailer is kept.
+ASSISTANT_RE='claude|anthropic|codex|openai|chatgpt|gpt-|copilot|gemini|antigravity|agy'
+# squash_iteration_branch is called as an `if` condition, where errexit is off: every
+# step that must not be skipped carries an explicit `|| return 1`.
 strip_tool_trailers() {
   # _common/GIT_GUIDELINES.md rule 6: no assistant session/tool metadata in commits.
-  grep -viE '^[[:space:]]*(Claude-Session:|Co-Authored-By:.*(claude|anthropic)|.*Generated with \[?Claude|https://claude\.ai/code/session_)' || true
+  grep -viE "^[[:space:]]*([A-Za-z-]*Session(-Id)?:|Co-Authored-By:.*(${ASSISTANT_RE})|.*Generated (with|by) .*(${ASSISTANT_RE}))|https?://(claude\.ai/code|chatgpt\.com|([a-z]+\.)?openai\.com)/" || true
 }
 
 squash_iteration_branch() {
@@ -1136,10 +1169,19 @@ Iterations: $((ITER - 1)), Verify: ${VERIFY_RESULT}"
       echo "[BRANCH] LLM unavailable — using heuristic commit message"
     fi
 
-    git commit -m "${SQUASH_MSG}" || return 1
+    if ! git commit -m "${SQUASH_MSG}"; then
+      echo "[BRANCH:FAILED] Summary commit rejected — the squash is staged on ${SUMMARY_BRANCH}"
+      echo "[BRANCH:FAILED] Resolve: fix the cause (e.g. the pre-commit hook) && git commit"
+      [[ "${stashed}" != "true" ]] || echo "[BRANCH:FAILED] Then restore prior work: git stash pop --index"
+      echo "[BRANCH:FAILED] Then: git branch -D ${ITER_BRANCH}; or retry: git reset --merge && git checkout ${ITER_BRANCH} && git branch -D ${SUMMARY_BRANCH}"
+      write_atomic "${SQUASH_PENDING_FILE}" "${SUMMARY_BRANCH}"$'\n'"${ITER_BRANCH}"
+      return 1
+    fi
 
-    if [[ "${stashed}" == "true" ]]; then
-      git stash pop --index || { echo "[ABORT] Stash restore conflict — resolve before resuming"; return 1; }
+    if [[ "${stashed}" == "true" ]] && ! git stash pop --index; then
+      echo "[ABORT] Stash restore conflict — resolve, then: git branch -D ${ITER_BRANCH}"
+      write_atomic "${SQUASH_PENDING_FILE}" "${SUMMARY_BRANCH}"$'\n'"${ITER_BRANCH}"
+      return 1
     fi
 
     # Delete iteration branch

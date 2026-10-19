@@ -305,6 +305,30 @@ class FullLoopRegressions(unittest.TestCase):
         self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
 
     # --- Symlinked checkout path ---
+    def test_deleting_the_pin_manifest_cannot_approve_a_rewritten_verify(self):
+        (self.loop / "verify.sh").write_text("#!/bin/bash\nexit 1\n")
+        result = self.run_loop(
+            'printf "#!/bin/bash\\nexit 0\\n" > "$LOOP_DIR/verify.sh"\n'
+            'rm -f "$LOOP_DIR/.pins.sha256"\ntouch "$LOOP_DIR/done.md"\n', AUTOCOMMIT="false",
+        )
+        self.assert_success(result)
+        self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+        self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
+        self.assertIn(".pins.sha256", result.stdout)
+
+    def test_rewriting_the_pin_manifest_cannot_approve_a_rewritten_verify(self):
+        (self.loop / "verify.sh").write_text("#!/bin/bash\nexit 1\n")
+        result = self.run_loop(
+            'printf "#!/bin/bash\\nexit 0\\n" > "$LOOP_DIR/verify.sh"\n'
+            'h=$(shasum -a 256 < "$LOOP_DIR/verify.sh" | awk \'{print $1}\')\n'
+            'sed -i "s|^[^ ]*  $LOOP_DIR/verify.sh\\$|$h  $LOOP_DIR/verify.sh|" "$LOOP_DIR/.pins.sha256"\n'
+            'touch "$LOOP_DIR/done.md"\n', AUTOCOMMIT="false",
+        )
+        self.assert_success(result)
+        self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+        self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
+        self.assertIn(".pins.sha256", result.stdout)
+
     def test_symlinked_repository_path_keeps_runtime_files_out_of_commits(self):
         (self.repo / ".gitignore").write_text("")
         self.git("commit", "-qam", "track loop directory")
@@ -440,6 +464,23 @@ class FullLoopRegressions(unittest.TestCase):
         self.assertLess(time.monotonic() - start, 8)
         self.assertTrue((self.loop / "got-term").exists(), result.stdout)
         self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
+
+    def test_iteration_timeout_kills_term_ignoring_descendants_of_an_exited_job(self):
+        # The job's top process exits on TERM; a TERM-ignoring child must not outlive
+        # the hard limit just because the command `timeout` watches is gone.
+        result = self.run_loop(
+            '(trap "" TERM; exec sleep 30 >/dev/null 2>&1) &\necho $! > "$LOOP_DIR/child.pid"\nwait\n',
+            AUTOCOMMIT="false", ITER_TIMEOUT="4", KILL_GRACE="1",
+        )
+        self.assert_success(result)
+        pid = int((self.loop / "child.pid").read_text())
+        deadline = time.monotonic() + 3
+        while self.process_alive(pid) and time.monotonic() < deadline:
+            time.sleep(0.05)
+        alive = self.process_alive(pid)
+        if alive:
+            os.kill(pid, signal.SIGKILL)
+        self.assertFalse(alive, f"TERM-ignoring child {pid} outlived the job\n{result.stdout}")
 
     # --- External terminator required for unattended runs ---
     def test_unbounded_unattended_run_is_refused(self):
@@ -596,6 +637,17 @@ class FullLoopRegressions(unittest.TestCase):
         self.assert_squash_pending(self.rerun_squash())
         self.assertEqual(self.git("branch", "--show-current"), "loop/iter-loop")
 
+    def test_rerun_after_a_rejected_summary_commit_does_not_open_a_new_summary(self):
+        hook = self.repo / ".git/hooks/pre-commit"
+        hook.write_text('#!/bin/sh\ncase "$(git branch --show-current)" in loop/summary-*) exit 1;; esac\n')
+        hook.chmod(0o755)
+        first = self.run_loop('echo "value = 2" > source.py\ntouch "$LOOP_DIR/done.md"\n',
+                              BRANCH_ISOLATION="true", SQUASH_ON_DONE="true")
+        self.assertNotEqual(first.returncode, 0, first.stdout + first.stderr)
+        self.assertIn("NEXUS_LOOP_STATUS: CONTINUE", first.stdout)
+        self.assert_squash_pending(self.rerun_squash())
+        self.assertEqual(self.git("stash", "list"), "")
+
     # --- A rejected DONE checkpoint at the iteration cap stops cleanly ---
     def test_rejected_done_checkpoint_at_the_cap_blocks_without_an_iteration_branch(self):
         self.write_checkpoint("NEXT_ITERATION=2\nLAST_STATUS=DONE\n")
@@ -689,6 +741,28 @@ class FullLoopRegressions(unittest.TestCase):
             "feat(loop): finish fixture\n\nBody line.\n\n"
             "Co-Authored-By: Jane Doe <jane@example.invalid>")
 
+
+    def test_squash_message_drops_codex_session_metadata(self):
+        stub_dir = Path(self.temp.name) / "bin"
+        stub_dir.mkdir()
+        stub = stub_dir / "codex"  # stub engine; never the real CLI
+        stub.write_text(
+            '#!/bin/bash\nwhile [[ $# -gt 0 && "$1" != "-o" ]]; do shift; done\n'
+            "printf '%s\\n' 'feat(loop): finish fixture' '' 'Body line.' '' "
+            "'Generated with Codex' 'Session: https://chatgpt.com/codex/tasks/task_e_fixture' "
+            "'Co-Authored-By: Jane Doe <jane@example.invalid>' "
+            "'Co-authored-by: Codex <codex@openai.com>' > \"$2\"\n")
+        stub.chmod(0o755)
+        result = self.run_loop(
+            'echo "value = 2" > source.py\ntouch "$LOOP_DIR/done.md"\n',
+            BRANCH_ISOLATION="true", SQUASH_ON_DONE="true", SQUASH_MSG_ENGINE="codex",
+            PATH=f"{stub_dir}{os.pathsep}{self.safe_path}",
+        )
+        self.assert_success(result)
+        self.assertEqual(
+            self.git("log", "-1", "--format=%B"),
+            "feat(loop): finish fixture\n\nBody line.\n\n"
+            "Co-Authored-By: Jane Doe <jane@example.invalid>")
 
 if __name__ == "__main__":
     unittest.main()
