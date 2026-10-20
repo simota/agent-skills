@@ -610,6 +610,8 @@ pin_dir_entries() {
 pin_manifest() {
   local path
   for path in "${PIN_TARGETS[@]}"; do
+    # A pinned path that is itself a symlink is pinned by its target as well as content.
+    [[ ! -L "${path}" ]] || printf 'link %s  %s@\n' "$(readlink -- "${path}")" "${path}"
     if [[ -d "${path}" ]]; then
       printf '%s  %s/\n' "$( (pin_dir_files "${path}" | LC_ALL=C sort -z |
         (cd -- "${path}" && pin_dir_entries) || true) | shasum -a 256 | awk '{print $1}')" "${path}"
@@ -635,7 +637,7 @@ check_pins() {
     return 1
   fi
   local changed
-  changed=$(diff <(cat "${PINS_FILE}") <(pin_manifest) | sed -n 's/^> [^ ]*  //p' || true)
+  changed=$(diff <(cat "${PINS_FILE}") <(pin_manifest) | sed -n 's/^[<>] .*  //p' | sort -u || true)
   [[ -z "${changed}" ]] && return 0
   echo "[ABORT] pinned artifact changed mid-run (AP-13 / AP-20): ${changed//$'\n'/, }"
   return 1
