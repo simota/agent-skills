@@ -726,6 +726,17 @@ class FullLoopRegressions(unittest.TestCase):
         self.assertEqual(self.git("branch", "--list", "loop/summary-loop-*"), "")
         self.assertFalse((self.loop / "unexpected-execution").exists())
 
+    def test_executor_leaving_the_iteration_branch_blocks_before_commit(self):
+        main_head = self.git("rev-parse", "main")
+        result = self.run_loop(
+            'git checkout -q main\necho "value = 2" > source.py\ntouch "$LOOP_DIR/done.md"\n',
+            BRANCH_ISOLATION="true", SQUASH_ON_DONE="true")
+        self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+        self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
+        self.assertIn("loop/iter-loop", result.stdout)
+        self.assertEqual(self.git("rev-parse", "main"), main_head)
+        self.assertFalse((self.loop / ".squash-pending").exists())
+
     def test_rerun_after_resolving_a_squash_conflict_does_not_open_a_new_summary(self):
         self.conflicting_squash()
         # Follow the printed "Resolve" instruction.

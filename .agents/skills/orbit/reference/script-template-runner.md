@@ -1052,6 +1052,14 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
     STATUS="BLOCKED"; write_terminal_state BLOCKED; break
   fi
 
+  # The executor can run git: a checkout it leaves behind would put this iteration's
+  # auto-commit, and the squash after DONE, on whatever branch it moved to.
+  if [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${AUTOCOMMIT}" == "true" ]] && [[ -n "${ITER_BRANCH:-}" ]] \
+     && [[ "$(git rev-parse --abbrev-ref HEAD 2>/dev/null)" != "${ITER_BRANCH}" ]]; then
+    echo "[ABORT] HEAD left ${ITER_BRANCH} during the iteration — nothing was committed; a rerun checks it out again" | tee -a "${LOOP_DIR}/runner.log"
+    STATUS="BLOCKED"; write_terminal_state BLOCKED; break
+  fi
+
   #--- Scoped auto-commit ---
   if [[ "${AUTOCOMMIT}" == "true" ]]; then
     dirty_paths > "${LOOP_DIR}/current-changes.nul"
