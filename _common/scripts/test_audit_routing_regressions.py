@@ -66,6 +66,32 @@ class TestRoutingSectionEvidence(TempCase):
         self.assertTrue(any(f.level == "ERROR" and "exempt" in f.message for f in findings),
                         [str(f) for f in findings])
 
+    def test_exempt_list_continues_past_an_abbreviation(self):
+        findings = self.check_bare_dispatch(
+            "- **Bare-subcommand exception.** Bare tokens reach GATE. "
+            "**Exempt:** `pack` (profile switch, i.e. no object), `optimize`.\n")
+        self.assertTrue(any(f.level == "ERROR" and "exempt" in f.message for f in findings),
+                        [str(f) for f in findings])
+
+    def test_exempt_list_continues_across_a_line_wrap(self):
+        findings = self.check_bare_dispatch(
+            "- **Bare-subcommand exception.** Bare tokens reach GATE. **Exempt:** `pack`,\n"
+            "  `optimize`.\n")
+        self.assertTrue(any(f.level == "ERROR" and "exempt" in f.message for f in findings),
+                        [str(f) for f in findings])
+
+    def test_exempt_list_ends_at_its_list_item(self):
+        findings = self.check_bare_dispatch(
+            "- **Bare-subcommand exception.** Bare tokens reach GATE. **Exempt:** `pack`.\n"
+            "- otherwise `optimize` with an object dispatches.\n")
+        self.assertEqual(findings, [])
+
+    def test_exempt_list_ends_at_its_sentence(self):
+        findings = self.check_bare_dispatch(
+            "- **Bare-subcommand exception.** Bare tokens reach GATE. **Exempt:** `pack`. "
+            "Fixtures cover bare `optimize`.\n")
+        self.assertEqual(findings, [])
+
     def test_dispatch_at_eof_is_checked(self):
         findings = self.check_bare_dispatch("Match the first token and dispatch.\n", next_section=False)
         self.assertTrue(any(f.level == "ERROR" for f in findings), [str(f) for f in findings])
