@@ -700,6 +700,37 @@ class FullLoopRegressions(unittest.TestCase):
         self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
         self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
 
+    # Ignore rules decide what a directory pin lists, and the executor can write them:
+    # a rule it adds must not hide the file it adds next.
+    def assert_ignore_rule_cannot_hide_a_pinned_file(self, hide):
+        (self.repo / "tests").mkdir()
+        (self.repo / "tests/test_fixture.py").write_text("assert True\n")
+        self.git("add", "tests")
+        self.git("commit", "-qm", "tests")
+        result = self.run_loop(
+            hide + 'echo "skip = True" > tests/conftest.py\ntouch "$LOOP_DIR/done.md"\n',
+            AUTOCOMMIT="false", PIN_PATHS="tests")
+        self.assert_success(result)
+        self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+        self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
+        self.assertIn("tests", result.stdout)
+
+    def test_pin_paths_cover_a_file_hidden_by_info_exclude(self):
+        self.assert_ignore_rule_cannot_hide_a_pinned_file(
+            'echo tests/conftest.py >> "$(git rev-parse --git-path info/exclude)"\n')
+
+    def test_pin_paths_cover_a_file_hidden_by_the_root_gitignore(self):
+        self.assert_ignore_rule_cannot_hide_a_pinned_file('echo tests/conftest.py >> .gitignore\n')
+
+    def test_pin_paths_cover_a_file_hidden_by_a_self_ignoring_gitignore(self):
+        self.assert_ignore_rule_cannot_hide_a_pinned_file(
+            'printf "conftest.py\\n.gitignore\\n" > tests/.gitignore\n')
+
+    def test_pin_paths_cover_a_file_hidden_by_core_excludes_file(self):
+        self.assert_ignore_rule_cannot_hide_a_pinned_file(
+            'echo conftest.py > "$LOOP_DIR/excludes"\n'
+            'git config core.excludesFile "$LOOP_DIR/excludes"\n')
+
     # --- A conflicted squash waits for a human instead of taking a new suffix ---
     def conflicting_squash(self):
         self.git("branch", "loop/iter-loop")

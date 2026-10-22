@@ -587,6 +587,8 @@ fi
 # ignore test reads the rules alone (--no-index): against the index, one force-added
 # file makes an ignored directory read as not ignored.
 # Symlinks are listed too: they are pinned by their target, not by what they reach.
+# The ignore rules that decide the listing are executor-writable, so they are pinned with
+# it (pin_ignore_rules): a rule added mid-run cannot hide the file added next.
 pin_dir_files() {
   if git -C "$1" rev-parse --is-inside-work-tree >/dev/null 2>&1 \
      && ! git -C "$1" check-ignore -q --no-index . 2>/dev/null; then
@@ -597,6 +599,35 @@ pin_dir_files() {
   else
     (cd -- "$1" && find . \( -type f -o -type l \) -print0)
   fi
+}
+# Every source of ignore rules for directory $1: info/exclude, core.excludesFile (the
+# setting and its file), and each .gitignore from the work-tree root down to $1 and
+# anywhere below it, ignored or not. One "<sha256|absent>  <source>" line each.
+pin_ignore_rules() {
+  local top dir excludes source
+  top=$(git -C "$1" rev-parse --show-toplevel 2>/dev/null) || return 0
+  (
+    cd -- "$1" || exit 0
+    excludes=$(git config --path core.excludesFile 2>/dev/null || true)
+    printf 'core.excludesFile=%s\n' "${excludes}"
+    {
+      git rev-parse --git-path info/exclude
+      printf '%s\n' "${excludes:-${XDG_CONFIG_HOME:-${HOME:-}/.config}/git/ignore}"
+      dir=$(pwd -P)
+      while :; do
+        printf '%s/.gitignore\n' "${dir}"
+        [[ "${dir}" != "${top}" && "${dir}" != "/" ]] || break
+        dir=$(dirname -- "${dir}")
+      done
+      find . -mindepth 2 -name .gitignore | LC_ALL=C sort
+    } | while IFS= read -r source; do
+      if [[ -f "${source}" ]]; then
+        printf '%s  %s\n' "$(shasum -a 256 < "${source}" | awk '{print $1}')" "${source}"
+      else
+        printf 'absent  %s\n' "${source}"
+      fi
+    done
+  )
 }
 # Reads sorted NUL paths in the directory: "link <target>" per symlink, then one
 # sha256 line per regular file.
@@ -617,8 +648,9 @@ pin_manifest() {
     # A pinned path that is itself a symlink is pinned by its target as well as content.
     [[ ! -L "${path}" ]] || printf 'link %s  %s@\n' "$(readlink -- "${path}")" "${path}"
     if [[ -d "${path}" ]]; then
-      printf '%s  %s/\n' "$( (pin_dir_files "${path}" | LC_ALL=C sort -z |
-        (cd -- "${path}" && pin_dir_entries) || true) | shasum -a 256 | awk '{print $1}')" "${path}"
+      printf '%s  %s/\n' "$( { (pin_dir_files "${path}" | LC_ALL=C sort -z |
+        (cd -- "${path}" && pin_dir_entries) || true); pin_ignore_rules "${path}"; } |
+        shasum -a 256 | awk '{print $1}')" "${path}"
     elif [[ -f "${path}" ]]; then
       printf '%s  %s\n' "$(shasum -a 256 < "${path}" | awk '{print $1}')" "${path}"
     else
