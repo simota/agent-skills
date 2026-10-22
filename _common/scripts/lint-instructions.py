@@ -55,8 +55,9 @@ INSTRUCTION_FILES = ["AGENTS.md", "CLAUDE.md"]
 # measured against. Numbered list markers ("1) 担当スキル") do not match, because ") 担当"
 # is not in the qualifier set.
 #
-# Also recognised: an open-ended "90+ skills", a Japanese counter ("90 個のスキル",
-# "90件のスキル"), "agent"/"repository-local" qualifiers, and comma-grouped numbers
+# Also recognised: an open-ended "90+ skills", a hyphenated adjective ("a 90-skill
+# corpus"), a Japanese counter ("90 個のスキル", "90件のスキル", "3つのスキル"),
+# "agent"/"repository-local" qualifiers, and comma-grouped numbers
 # ("1,234 skills" is 1234, never 234). The lookbehind stops a match from starting
 # in the middle of a longer number. Separators are any whitespace within one paragraph (NBSP, U+3000 and a
 # soft line wrap included), so a wrapped claim is still checked but a list number never pairs with "Skills"
@@ -64,7 +65,7 @@ INSTRUCTION_FILES = ["AGENTS.md", "CLAUDE.md"]
 # Whitespace that stays inside one paragraph: a soft line wrap is allowed, a blank line is not.
 _SEP = r"(?:[^\S\n]|\n(?![^\S\n]*\n))"
 COUNT_PATTERN = re.compile(
-    rf"(?<![\d,.])(\d{{1,3}}(?:,\d{{3}})+|\d{{1,4}})\+?{_SEP}*(?:個|件|本)?{_SEP}*(?:の)?{_SEP}*"
+    rf"(?<![\d,.])(\d{{1,3}}(?:,\d{{3}})+|\d{{1,4}})\+?(?:-|{_SEP}*)(?:個|件|本|つ)?{_SEP}*(?:の)?{_SEP}*"
     rf"((?:(?:global|specialist|agent|project-local|repository-local|repo-local"
     rf"|グローバル|プロジェクトローカル|専用の?){_SEP}*)*)"
     rf"(?:skill{_SEP}+agents?|skills?|スキルエージェント|スキル)",
@@ -87,7 +88,9 @@ LOCAL_SKILLS_DIR = ".claude/skills"
 # flagging them trains readers to ignore this lint, which costs more than the
 # coverage it would buy.
 _EXT = r"\.(?:md|py|sh|json|ya?ml)"
-PATH_PATTERN = re.compile(rf"`([A-Za-z0-9_.][A-Za-z0-9_.-]*(?:/[A-Za-z0-9_.-]+)+{_EXT})(?:#[^`\s]*)?`")
+# A section pointer may sit inside the backticks (`_common/X.md § Rules`), as
+# lint-contracts' TICKED_ANY accepts.
+PATH_PATTERN = re.compile(rf"`([A-Za-z0-9_.][A-Za-z0-9_.-]*(?:/[A-Za-z0-9_.-]+)+{_EXT})(?:#[^`\s]*)?(?:\s*§[^`]*)?`")
 LINK_PATTERN = re.compile(rf"\]\(([A-Za-z0-9_.][A-Za-z0-9_.-]*(?:/[A-Za-z0-9_.-]+)+{_EXT})(?:#[^)\s]*)?\)")
 # CLAUDE.md `@path` imports: a word starting with `@` outside a code span. Unlike a
 # backticked mention, an import is an explicit claim that the file exists, so a bare
