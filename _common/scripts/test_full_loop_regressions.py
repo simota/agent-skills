@@ -801,6 +801,19 @@ class FullLoopRegressions(unittest.TestCase):
                     self.assertIn(key, result.stdout)
                     self.assertFalse((self.loop / "executed").exists())
 
+    def test_adaptive_timeout_reads_only_numeric_timings(self):
+        # The timings log sits where the executor writes, and its median reaches bash
+        # arithmetic: an expression there would run in the runner, outside the timeout.
+        marker = self.loop / "evaluated"
+        injected = f"PIN_TARGETS[$(touch {shlex.quote(str(marker))})0]\n"
+        (self.loop / ".iter-timings.log").write_text(
+            "100\n200\n300\n" + injected * 3 + "foo\n08\n")
+        result = self.run_loop(ADAPTIVE_TIMEOUT="true", EXEC_TIMEOUT="60")
+        self.assert_success(result)
+        self.assertFalse(marker.exists(), result.stdout + result.stderr)
+        self.assertIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+        self.assertIn("median=200s", result.stdout)
+
     def test_bootstrap_next_step_sets_an_external_terminator(self):
         script = template("bootstrap.sh")
         for key, value in {"VERIFY_CMD": "", "RUN_LOOP_CONTENT": "#!/bin/bash\ntrue",

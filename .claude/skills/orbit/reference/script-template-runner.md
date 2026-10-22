@@ -858,7 +858,9 @@ EFFECTIVE_TIMEOUT="${EXEC_TIMEOUT}"
 TIMING_LOG="${LOOP_DIR}/.iter-timings.log"
 if [[ "${ADAPTIVE_TIMEOUT}" == "true" ]] && [[ -f "${TIMING_LOG}" ]]; then
   # Calculate median of last 5 timings x 2, bounded by [EXEC_TIMEOUT, EXEC_TIMEOUT*3]
-  TIMINGS=$(tail -5 "${TIMING_LOG}" | sort -n)
+  # The log is executor-writable and the median reaches bash arithmetic, which evaluates
+  # an expression in a value: only plain decimal integers are read.
+  TIMINGS=$(grep -E '^(0|[1-9][0-9]{0,8})$' "${TIMING_LOG}" | tail -5 | sort -n || true)
   COUNT=$(echo "${TIMINGS}" | wc -l | tr -d ' ')
   if [[ "${COUNT}" -ge 3 ]]; then
     MEDIAN=$(echo "${TIMINGS}" | sed -n "$(( (COUNT + 1) / 2 ))p")
