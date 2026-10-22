@@ -812,6 +812,17 @@ class FullLoopRegressions(unittest.TestCase):
                     self.assertIn(key, result.stdout)
                     self.assertFalse((self.loop / "executed").exists())
 
+    def test_run_budget_stops_retries(self):
+        # A cap is a hard terminator: a failed attempt that spent past it must not
+        # buy the next retry.
+        result = self.run_loop(
+            'echo attempt >> "$LOOP_DIR/attempts"\necho 5 >> "$LOOP_DIR/.cost-usd"\nexit 1\n',
+            USD_PER_RUN_CAP="1", RETRY_LIMIT="4", RETRY_BACKOFF_BASE="1")
+        self.assert_success(result)
+        self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
+        self.assertIn("[BUDGET:RUN]", result.stdout)
+        self.assertEqual((self.loop / "attempts").read_text().count("attempt"), 1)
+
     def test_adaptive_timeout_reads_only_numeric_timings(self):
         # The timings log sits where the executor writes, and its median reaches bash
         # arithmetic: an expression there would run in the runner, outside the timeout.

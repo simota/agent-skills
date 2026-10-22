@@ -990,6 +990,13 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
       break
     fi
 
+    # A failed attempt can spend too: the caps are checked before buying another.
+    if [[ "${RETRY_COUNT}" -lt "${RETRY_LIMIT}" ]] && BUDGET_MSG=$(budget_exceeded); then
+      echo "[ABORT] ${BUDGET_MSG} — pausing; explicit human resume required" | tee -a "${LOOP_DIR}/runner.log"
+      emit_log "ERROR" "budget_exceeded" "detail" "${BUDGET_MSG}"
+      STATUS="BLOCKED"; write_terminal_state BLOCKED; break 2
+    fi
+
     if [[ "${RETRY_COUNT}" -lt "${RETRY_LIMIT}" ]]; then
       JITTER=$((RANDOM % (RETRY_BACKOFF_BASE ** RETRY_COUNT / 2 + 1)))
       BACKOFF=$((RETRY_BACKOFF_BASE ** RETRY_COUNT + JITTER))
