@@ -684,6 +684,22 @@ class FullLoopRegressions(unittest.TestCase):
         self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
         self.assertIn("fixtures", result.stdout)
 
+    def test_pin_paths_cover_an_ignored_directory_with_a_force_added_file(self):
+        # Against the index, one tracked file makes an ignored directory read as
+        # not ignored, which would leave its other ignored files unpinned.
+        (self.repo / "fixtures").mkdir()
+        (self.repo / "fixtures/tracked.txt").write_text("baseline\n")
+        (self.repo / "fixtures/golden.txt").write_text("baseline\n")
+        (self.repo / ".gitignore").write_text(".loop/\nfixtures/\n")
+        self.git("add", "-f", "fixtures/tracked.txt")
+        self.git("commit", "-qam", "ignore fixtures, force-add one")
+        result = self.run_loop(
+            'echo weakened > fixtures/golden.txt\ntouch "$LOOP_DIR/done.md"\n',
+            AUTOCOMMIT="false", PIN_PATHS="fixtures")
+        self.assert_success(result)
+        self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+        self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
+
     # --- A conflicted squash waits for a human instead of taking a new suffix ---
     def conflicting_squash(self):
         self.git("branch", "loop/iter-loop")
