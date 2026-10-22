@@ -347,7 +347,8 @@ class FullLoopRegressions(unittest.TestCase):
         for action in ('rm -f "$LOOP_DIR/.goal.sha256"\n',
                        'shasum -a 256 "$LOOP_DIR/goal.md" | awk \'{print $1}\' > "$LOOP_DIR/.goal.sha256"\n'):
             with self.subTest(action=action):
-                for name in ("state.env", "state.env.sha256", ".goal.sha256", ".pins.sha256", "done.md"):
+                for name in ("state.env", "state.env.sha256", ".goal.sha256", ".pins.sha256",
+                             ".pin-violation", "done.md"):
                     (self.loop / name).unlink(missing_ok=True)
                 (self.loop / "goal.md").write_text("# Goal\n\n## Objective\nFinish the fixture\n")
                 result = self.run_loop(
@@ -357,6 +358,42 @@ class FullLoopRegressions(unittest.TestCase):
                 self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
                 self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
                 self.assertIn("goal.md changed", result.stdout)
+
+    # A violation outlives the run that found it: the next start must not re-pin
+    # whatever the executor left behind.
+    def tamper_then_fail(self):
+        (self.loop / "verify.sh").write_text("#!/bin/bash\nexit 1\n")
+        return self.run_loop(
+            'printf "#!/bin/bash\\nexit 0\\n" > "$LOOP_DIR/verify.sh"\n'
+            'rm -f "$LOOP_DIR/.pins.sha256" "$LOOP_DIR/.goal.sha256"\n'
+            'echo weakened >> "$LOOP_DIR/goal.md"\nexit 1\n', AUTOCOMMIT="false", RETRY_LIMIT="1")
+
+    def test_tampering_before_a_tool_failure_is_reported(self):
+        result = self.tamper_then_fail()
+        self.assert_success(result)
+        self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
+        self.assertIn("goal.md changed", result.stdout)
+        self.assertIn("pin manifest", result.stdout)
+
+    def test_rerun_after_a_pin_violation_does_not_re_pin(self):
+        self.tamper_then_fail()
+        result = self.run_loop('touch "$LOOP_DIR/executed" "$LOOP_DIR/done.md"\n', AUTOCOMMIT="false")
+        self.assertNotEqual(result.returncode, 0, result.stdout)
+        self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+        self.assertIn("recover.sh --repin-goal", result.stdout)
+        self.assertFalse((self.loop / "executed").exists())
+
+    def test_repin_goal_clears_a_pin_violation(self):
+        self.tamper_then_fail()
+        recover = self.loop / "recover.sh"
+        recover.write_text(template("recover.sh"))
+        repin = subprocess.run(
+            ["bash", str(recover), "--repin-goal", str(self.loop)], cwd=self.repo,
+            env=fixture_environment(), text=True, capture_output=True, timeout=10)
+        self.assert_success(repin)
+        result = self.run_loop('touch "$LOOP_DIR/done.md"\n', AUTOCOMMIT="false")
+        self.assert_success(result)
+        self.assertIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
 
     def test_pin_paths_detect_a_retargeted_directory_symlink(self):
         for name, code in (("safe", 1), ("malicious", 0)):

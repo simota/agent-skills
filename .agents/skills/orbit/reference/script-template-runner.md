@@ -554,6 +554,17 @@ cleanup() {
 trap cleanup SIGINT SIGTERM
 
 #--- Goal/AC immutability pin (AP-16: mid-run goal drift ABORTs) ---
+# Pins are taken when missing, so a violation is recorded where only this runner
+# writes it -- after the executor has exited -- and a later start refuses to re-pin
+# whatever the executor left behind until a human re-pins with recover.sh.
+PIN_VIOLATION_FILE="${LOOP_DIR}/.pin-violation"
+if [[ -f "${PIN_VIOLATION_FILE}" ]]; then
+  echo "[ABORT] unresolved pin violation ($(head -1 "${PIN_VIOLATION_FILE}")) — restore the pinned files, then re-pin them as the baseline: recover.sh --repin-goal"
+  exit 1
+fi
+record_pin_violation() {
+  write_atomic "${PIN_VIOLATION_FILE}" "$1"
+}
 GOAL_SHA_FILE="${LOOP_DIR}/.goal.sha256"
 if [[ "${GOAL_IMMUTABLE}" == "true" ]] && [[ -f "${LOOP_DIR}/goal.md" ]]; then
   if [[ ! -f "${GOAL_SHA_FILE}" ]]; then
@@ -568,7 +579,7 @@ check_goal_immutable() {
   [[ "${GOAL_IMMUTABLE}" == "true" ]] || return 0
   [[ -n "${GOAL_SHA}" ]] || return 0
   local now; now=$(shasum -a 256 "${LOOP_DIR}/goal.md" 2>/dev/null | awk '{print $1}')
-  [[ "${now}" == "${GOAL_SHA}" ]]
+  [[ "${now}" == "${GOAL_SHA}" ]] || { record_pin_violation "GOAL_DRIFT: goal.md"; return 1; }
 }
 
 #--- Artifact pins (AP-13 / AP-20 / RP-1: mid-run mutation ABORTs) ---
@@ -670,12 +681,14 @@ check_pins() {
   if [[ ! -f "${PINS_FILE}" ]] \
      || [[ "$(shasum -a 256 < "${PINS_FILE}" | awk '{print $1}')" != "${PINS_SHA}" ]]; then
     echo "[ABORT] pin manifest ${PINS_FILE} removed or rewritten mid-run (AP-13 / AP-20)"
+    record_pin_violation "pin manifest removed or rewritten"
     return 1
   fi
   local changed
   changed=$(diff <(cat "${PINS_FILE}") <(pin_manifest) | sed -n 's/^[<>] .*  //p' | sort -u || true)
   [[ -z "${changed}" ]] && return 0
   echo "[ABORT] pinned artifact changed mid-run (AP-13 / AP-20): ${changed//$'\n'/, }"
+  record_pin_violation "pinned artifact changed: ${changed//$'\n'/, }"
   return 1
 }
 # Callers check pins before verification, then run a copy whose hash matches the pin:
@@ -920,6 +933,7 @@ if [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -gt "${MAX_ITERATIONS}" ]]; then
   echo "[CAP] Iteration ${ITER} exceeds MAX_ITERATIONS=${MAX_ITERATIONS} — nothing to run; raise MAX_ITERATIONS to resume"
 fi
 
+EXECUTOR_RAN=false
 while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
   [[ "${SHUTDOWN}" -eq 1 ]] && break
 
@@ -989,6 +1003,7 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
   LAST_EXIT_CODE=0
   while [[ "${RETRY_COUNT}" -lt "${RETRY_LIMIT}" ]]; do
     LAST_EXIT_CODE=0
+    EXECUTOR_RAN=true
     # EXEC_CMD is trusted operator-authored shell configuration, never model output.
     run_with_budget "${EFFECTIVE_TIMEOUT}" bash -c "${EXEC_CMD}" > >(tee -a "${LOOP_DIR}/runner.log") 2>&1 || LAST_EXIT_CODE=$?
     if loop_timeout_reached; then
@@ -1160,6 +1175,20 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
   echo "[ITER ${ITER}] status=${STATUS} verify=${VERIFY_RESULT} commit=${COMMIT_HASH} duration=${ITER_DURATION}s"
   ITER=${NEXT_ITER}
 done
+
+# TOOL_FAILURE, timeout and circuit exits leave the loop before the verification gate;
+# a pin or goal change the executor made before failing is still found and recorded.
+if [[ "${EXECUTOR_RAN}" == "true" ]] && [[ "${STATUS}" != "DONE" ]] && [[ ! -f "${PIN_VIOLATION_FILE}" ]]; then
+  if ! check_goal_immutable; then
+    echo "[ABORT] goal.md changed mid-run (GOAL_DRIFT / AP-16)" | tee -a "${LOOP_DIR}/runner.log"
+    STATUS="BLOCKED"; write_terminal_state BLOCKED
+  fi
+  if ! PIN_MSG=$(check_pins); then
+    echo "${PIN_MSG}" | tee -a "${LOOP_DIR}/runner.log"
+    emit_log "ERROR" "pin_drift" "detail" "${PIN_MSG}"
+    STATUS="BLOCKED"; write_terminal_state BLOCKED
+  fi
+fi
 
 # Uncommitted work this run leaves behind is the loop's own, not a human edit.
 record_loop_dirty
