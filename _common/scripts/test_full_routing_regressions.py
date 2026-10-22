@@ -62,6 +62,25 @@ class RecipeSourceTests(TempCase):
                 path = self.write("skill/SKILL.md", content)
                 self.assertTrue(any("R-REC-01" in error for error in recipes.validate("skill", path)[0]))
 
+    def test_list_item_default_dispatch_counts_as_a_default(self):
+        # A list marker does not make a declaration less binding: with a ✓ Recipe it
+        # is a second default, and alone it is the skill's fallback.
+        for marker in ("- ", "* ", "  - "):
+            with self.subTest(marker=marker):
+                dispatch = marker + "**Default dispatch:** `phase:TRIAGE`\n"
+                path = self.write("skill/SKILL.md", "## Recipes\n" + TABLE
+                                  + "\n## Subcommand Dispatch\n" + dispatch)
+                self.assertTrue(any("R-REC-01" in error for error in recipes.validate("skill", path)[0]))
+                path = self.write("skill/SKILL.md", "## Recipes\n" + TABLE.replace("✓", "")
+                                  + "\n## Subcommand Dispatch\n" + dispatch)
+                self.assertEqual(recipes.validate("skill", path)[0], [])
+
+    def test_indented_code_default_dispatch_is_not_a_fallback(self):
+        content = "## Recipes\n" + TABLE.replace("✓", "") \
+            + "\n## Subcommand Dispatch\n\n    **Default dispatch:** `phase:CLASSIFY`\n"
+        path = self.write("skill/SKILL.md", content)
+        self.assertTrue(any("R-REC-01" in error for error in recipes.validate("skill", path)[0]))
+
     def test_comment_cannot_supply_the_required_dispatch_heading(self):
         content = "## Recipes\n" + TABLE + "\n<!--\n## Subcommand Dispatch\n-->\n"
         path = self.write("skill/SKILL.md", content)
