@@ -805,6 +805,32 @@ class FullLoopRegressions(unittest.TestCase):
         self.assertEqual(self.git("rev-parse", "main"), main_head)
         self.assertFalse((self.loop / ".squash-pending").exists())
 
+    def test_signal_during_the_squash_keeps_done_and_waits_for_a_human(self):
+        slow = Path(self.temp.name) / "slow-bin"
+        slow.mkdir()
+        started = slow / "started"
+        (slow / "claude").write_text(f'#!/bin/sh\ntouch "{started}"\nsleep 30\n')
+        (slow / "claude").chmod(0o755)
+        env = self.loop_env('echo "value = 2" > source.py\ntouch "$LOOP_DIR/done.md"\n',
+                            BRANCH_ISOLATION="true", SQUASH_ON_DONE="true",
+                            SQUASH_MSG_ENGINE="claude", MAX_ITERATIONS="3")
+        env["PATH"] = f"{slow}{os.pathsep}{env['PATH']}"
+        runner = subprocess.Popen(["bash", str(self.loop / "run-loop.sh")], cwd=self.repo, env=env,
+                                  text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        deadline = time.monotonic() + 10
+        while not started.exists() and time.monotonic() < deadline:
+            time.sleep(0.1)
+        self.assertTrue(started.exists(), "the squash never reached its message engine")
+        runner.send_signal(signal.SIGTERM)
+        output = runner.communicate(timeout=20)[0]
+        self.assertEqual(self.state()["LAST_STATUS"], "DONE", output)
+        self.assertTrue((self.loop / ".squash-pending").exists(), output)
+        self.assertNotIn("INTERRUPTED", (self.loop / "progress.md").read_text())
+        result = self.run_loop('touch "$LOOP_DIR/unexpected-execution"\n',
+                               BRANCH_ISOLATION="true", SQUASH_ON_DONE="true", MAX_ITERATIONS="3")
+        self.assertIn("[BRANCH:PENDING]", result.stdout)
+        self.assertFalse((self.loop / "unexpected-execution").exists())
+
     def test_rerun_after_resolving_a_squash_conflict_does_not_open_a_new_summary(self):
         self.conflicting_squash()
         # Follow the printed "Resolve" instruction.

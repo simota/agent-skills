@@ -529,26 +529,36 @@ cleanup() {
     signal_job KILL
   fi
 
-  # Step 1: State snapshot (incl. the paths this run left dirty — not human edits)
-  write_state "${ITER:-1}" CONTINUE
-  record_loop_dirty || true
+  # Once the loop has exited, its checkpoint is final: overwriting a DONE with CONTINUE
+  # would rerun the executor on a finished goal. An interrupted squash waits for a
+  # human exactly as a conflicted one does.
+  if [[ "${LOOP_FINISHED:-false}" == "true" ]]; then
+    if [[ "${SQUASH_IN_PROGRESS:-false}" == "true" ]]; then
+      write_atomic "${SQUASH_PENDING_FILE}" "${SUMMARY_BRANCH}"$'\n'"${ITER_BRANCH}"
+      echo "[SIGNAL] Squash of ${ITER_BRANCH} into ${SUMMARY_BRANCH} interrupted — see git status; the next run reports it as pending"
+    fi
+  else
+    # Step 1: State snapshot (incl. the paths this run left dirty — not human edits)
+    write_state "${ITER:-1}" CONTINUE
+    record_loop_dirty || true
 
-  # Step 2: Partial results summary
-  {
-    echo ""
-    echo "## Iteration ${ITER} — INTERRUPTED"
-    echo "- Signal: graceful shutdown"
-    echo "- Timestamp: $(date -u +"%Y-%m-%dT%H:%M:%SZ")"
-    echo "- Last verify: ${VERIFY_RESULT:-N/A}"
-    echo "- Partial work preserved for resume"
-  } >> "${LOOP_DIR}/progress.md"
+    # Step 2: Partial results summary
+    {
+      echo ""
+      echo "## Iteration ${ITER} — INTERRUPTED"
+      echo "- Signal: graceful shutdown"
+      echo "- Timestamp: $(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+      echo "- Last verify: ${VERIFY_RESULT:-N/A}"
+      echo "- Partial work preserved for resume"
+    } >> "${LOOP_DIR}/progress.md"
+  fi
 
   # Step 3: Structured log
   emit_log "WARN" "graceful_shutdown" "iteration" "${ITER}" "verify" "${VERIFY_RESULT:-N/A}"
 
   # Step 4: Cleanup
   rm -f "${LOOP_DIR}/.run-loop.lock" "${LOOP_DIR}"/.verify-pinned.*
-  echo "[SIGNAL] State saved — safe to resume from iteration ${ITER}"
+  [[ "${LOOP_FINISHED:-false}" == "true" ]] || echo "[SIGNAL] State saved — safe to resume from iteration ${ITER}"
   exit 130
 }
 trap cleanup SIGINT SIGTERM
@@ -1192,6 +1202,7 @@ fi
 
 # Uncommitted work this run leaves behind is the loop's own, not a human edit.
 record_loop_dirty
+LOOP_FINISHED=true
 
 #--- Branch isolation (post-loop squash) ---
 # Covers every SQUASH_MSG_ENGINE; a human Co-Authored-By trailer is kept.
@@ -1339,11 +1350,13 @@ if [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${AUTOCOMMIT}" == "true" ]] \
    && [[ "${SQUASH_ON_DONE}" == "true" ]] \
    && git show-ref --verify --quiet "refs/heads/${ITER_BRANCH}"; then
   # state.env keeps DONE: the work passed its gate; only the squash needs a human.
+  SQUASH_IN_PROGRESS=true
   if ! squash_iteration_branch; then
     SQUASH_FAILED=true
     STATUS="BLOCKED"
     emit_log "ERROR" "squash_failed" "summary_branch" "${SUMMARY_BRANCH}"
   fi
+  SQUASH_IN_PROGRESS=false
 elif [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${STATUS}" != "DONE" ]] && [[ -n "${ITER_BRANCH:-}" ]] \
      && [[ "$(git rev-parse --abbrev-ref HEAD 2>/dev/null)" == "${ITER_BRANCH}" ]]; then
   echo "[BRANCH] STATUS=${STATUS} — staying on ${ITER_BRANCH} for resume"
