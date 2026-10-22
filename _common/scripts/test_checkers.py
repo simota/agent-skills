@@ -262,13 +262,11 @@ class TestInstructionDrift(CheckerCase):
         self.edit("AGENTS.md", "90 global specialist skill agents", "a 91-skill corpus of agents")
         self.expect_caught("lint-instructions.py", "claims 91 skills", "--severity", "error")
 
-    def test_a_count_with_the_tsu_counter_that_drifts_fails(self):
-        """I1. つ is the usual counter for a small count, and it was not in the
-        counter set, so "専用の5つのスキル" passed."""
-        self.edit("CLAUDE.md", "このリポジトリ専用の3スキル", "このリポジトリ専用の5つのスキル")
-        self.expect_caught(
-            "lint-instructions.py", "claims 5 project-local skills", "--severity", "error"
-        )
+    def test_routing_prose_with_the_tsu_counter_is_not_a_count(self):
+        """I1. Counting つ read "1つのスキルで完結する" as a claim of one skill and
+        blocked ordinary routing prose."""
+        self.append("CLAUDE.md", "\n- 依頼が1つのスキルで完結する場合は直接呼び出す。\n")
+        self.expect_clean("lint-instructions.py", "--severity", "error")
 
     def test_a_list_number_does_not_pair_with_skills_on_the_next_line(self):
         """I1. `\\s*` crossed blank lines and read "step 7" + "Skills" as a claim."""
