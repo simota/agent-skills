@@ -669,6 +669,21 @@ class FullLoopRegressions(unittest.TestCase):
         self.assert_success(result)
         self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
 
+    def test_pin_paths_cover_an_ignored_pinned_directory(self):
+        # Ignore rules drop build output inside a pinned tree; a pinned root that is
+        # itself ignored would otherwise hash as empty and never change.
+        (self.repo / "fixtures").mkdir()
+        (self.repo / "fixtures/expected.txt").write_text("baseline\n")
+        (self.repo / ".gitignore").write_text(".loop/\nfixtures/\n")
+        self.git("commit", "-qam", "ignore fixtures")
+        result = self.run_loop(
+            'echo weakened > fixtures/expected.txt\ntouch "$LOOP_DIR/done.md"\n',
+            AUTOCOMMIT="false", PIN_PATHS="fixtures")
+        self.assert_success(result)
+        self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+        self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
+        self.assertIn("fixtures", result.stdout)
+
     # --- A conflicted squash waits for a human instead of taking a new suffix ---
     def conflicting_squash(self):
         self.git("branch", "loop/iter-loop")

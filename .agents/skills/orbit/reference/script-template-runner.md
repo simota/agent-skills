@@ -582,10 +582,12 @@ if [[ -n "${PIN_PATHS}" ]]; then
   for pin_path in "${PIN_EXTRA[@]}"; do PIN_TARGETS+=("${PROJECT_ROOT}/${pin_path}"); done
 fi
 # Directories in a Git work tree hash tracked + untracked-not-ignored files, so ignored
-# build output (tests/__pycache__) is not a mutation; outside Git, every file.
+# build output (tests/__pycache__) is not a mutation; outside Git, or when the pinned
+# directory is itself ignored (which would otherwise list nothing), every file.
 # Symlinks are listed too: they are pinned by their target, not by what they reach.
 pin_dir_files() {
-  if git -C "$1" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  if git -C "$1" rev-parse --is-inside-work-tree >/dev/null 2>&1 \
+     && ! git -C "$1" check-ignore -q . 2>/dev/null; then
     git -C "$1" ls-files -co --exclude-standard -z -- . 2>/dev/null |
       while IFS= read -r -d '' file; do
         if [[ -f "$1/${file}" || -L "$1/${file}" ]]; then printf './%s\0' "${file}"; fi

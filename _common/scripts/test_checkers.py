@@ -228,6 +228,12 @@ class TestInstructionDrift(CheckerCase):
         )
         self.expect_caught("lint-instructions.py", "NO_SUCH_CONTRACT.md", "--severity", "error")
 
+    def test_a_dead_path_with_a_section_pointer_inside_the_backticks_fails(self):
+        """I2. The matcher required the closing backtick right after the suffix,
+        so `path § Section` -- the shape lint-contracts accepts -- was skipped."""
+        self.append("CLAUDE.md", "\n- see `_common/NO_SUCH_SECTIONED.md § Rules`\n")
+        self.expect_caught("lint-instructions.py", "NO_SUCH_SECTIONED.md", "--severity", "error")
+
     def test_a_path_into_the_archive_fails(self):
         """I2. A retired skill is on disk but not installed; resolving against it
         turned a dead reference into a passing one."""
@@ -249,6 +255,20 @@ class TestInstructionDrift(CheckerCase):
         through an ordinary line wrap inside one paragraph."""
         self.edit("AGENTS.md", "90 global specialist skill", "91 global specialist\nskill")
         self.expect_caught("lint-instructions.py", "claims 91 skills", "--severity", "error")
+
+    def test_a_hyphenated_count_that_drifts_fails(self):
+        """I1. Only whitespace and 個/件/本 could sit between the number and the
+        noun, so "a 91-skill corpus" was never read as a claim."""
+        self.edit("AGENTS.md", "90 global specialist skill agents", "a 91-skill corpus of agents")
+        self.expect_caught("lint-instructions.py", "claims 91 skills", "--severity", "error")
+
+    def test_a_count_with_the_tsu_counter_that_drifts_fails(self):
+        """I1. つ is the usual counter for a small count, and it was not in the
+        counter set, so "専用の5つのスキル" passed."""
+        self.edit("CLAUDE.md", "このリポジトリ専用の3スキル", "このリポジトリ専用の5つのスキル")
+        self.expect_caught(
+            "lint-instructions.py", "claims 5 project-local skills", "--severity", "error"
+        )
 
     def test_a_list_number_does_not_pair_with_skills_on_the_next_line(self):
         """I1. `\\s*` crossed blank lines and read "step 7" + "Skills" as a claim."""
