@@ -896,6 +896,75 @@ class FullLoopRegressions(unittest.TestCase):
         self.assertEqual(self.state()["LAST_STATUS"], "DONE", output)
         self.assertEqual(self.state()["NEXT_ITERATION"], "2", output)
 
+    def signal_once(self, started, env):
+        """Start the runner, SIGTERM it once `started` exists, return its output."""
+        runner = subprocess.Popen(["bash", str(self.loop / "run-loop.sh")], cwd=self.repo, env=env,
+                                  text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        deadline = time.monotonic() + 10
+        while not started.exists() and time.monotonic() < deadline:
+            time.sleep(0.1)
+        self.assertTrue(started.exists(), "the runner never reached the signal point")
+        runner.send_signal(signal.SIGTERM)
+        return runner.communicate(timeout=20)[0]
+
+    def test_signal_during_the_resume_gate_keeps_the_done_checkpoint(self):
+        # The resume gate runs before the loop; a signal there used to save CONTINUE
+        # over the DONE checkpoint, and the next run reran the executor.
+        started = Path(self.temp.name) / "verify-started"
+        (self.loop / "verify.sh").write_text(f'#!/bin/bash\ntouch "{started}"\nsleep 3\n')
+        (self.loop / "done.md").write_text("done\n")
+        self.write_checkpoint("NEXT_ITERATION=4\nLAST_STATUS=DONE\n")
+        output = self.signal_once(started, self.loop_env(
+            'touch "$LOOP_DIR/unexpected-execution"\n', AUTOCOMMIT="false", MAX_ITERATIONS="5"))
+        self.assertEqual(self.state()["LAST_STATUS"], "DONE", output)
+        self.assertEqual(self.state()["NEXT_ITERATION"], "4", output)
+        self.assertNotIn("INTERRUPTED", (self.loop / "progress.md").read_text())
+        self.assertFalse((self.loop / "unexpected-execution").exists())
+
+    def test_signal_after_a_continue_checkpoint_does_not_rewind_the_iteration(self):
+        # notify.sh runs after the checkpoint names the next iteration; a signal there
+        # used to save the finished iteration again and run it past MAX_ITERATIONS.
+        started = self.loop / "notify-started"
+        (self.loop / "notify.sh").write_text(f'#!/bin/bash\ntouch "{started}"\nsleep 3\n')
+        output = self.signal_once(started, self.loop_env(
+            "true\n", NOTIFY_ENABLED="true", AUTOCOMMIT="false", MAX_ITERATIONS="2"))
+        self.assertEqual(self.state()["NEXT_ITERATION"], "2", output)
+        self.assertEqual(self.state()["LAST_STATUS"], "CONTINUE", output)
+        self.assertNotIn("INTERRUPTED", (self.loop / "progress.md").read_text())
+
+    def test_a_rejected_auto_commit_blocks_and_keeps_the_work_the_loops_own(self):
+        hook = Path(self.git("rev-parse", "--git-path", "hooks/pre-commit"))
+        hook = hook if hook.is_absolute() else self.repo / hook
+        hook.parent.mkdir(parents=True, exist_ok=True)
+        hook.write_text("#!/bin/sh\nexit 1\n")
+        hook.chmod(0o755)
+        result = self.run_loop('echo "value = 2" > source.py\n')
+        self.assertIn("NEXUS_LOOP_STATUS: CONTINUE", result.stdout, result.stdout + result.stderr)
+        self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
+        self.assertIn(b"source.py\0", (self.loop / "loop-dirty-paths.nul").read_bytes())
+
+    def test_non_integer_runner_limits_abort_before_the_executor(self):
+        for name, value in (("TOOL_TIMEOUT", "2m"), ("RETRY_LIMIT", "x"), ("CONVERGENCE_WINDOW", "1")):
+            with self.subTest(name=name):
+                result = self.run_loop('touch "$LOOP_DIR/unexpected-execution"\n', **{name: value})
+                self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+                self.assertIn(f"[ABORT] {name}=", result.stdout)
+                self.assertFalse((self.loop / "unexpected-execution").exists())
+
+    def test_the_iteration_branch_is_never_taken_as_the_origin(self):
+        self.git("checkout", "-qb", "loop/iter-loop")
+        result = self.run_loop('touch "$LOOP_DIR/unexpected-execution"\n', BRANCH_ISOLATION="true")
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        self.assertIn("[ABORT] origin branch would be the iteration branch", result.stdout)
+        self.assertFalse((self.loop / "unexpected-execution").exists())
+
+    def test_placeholder_gate_skips_the_dirty_baseline(self):
+        # Pre-existing user work is outside the loop: its TODO cannot hold DONE back.
+        (self.repo / "user_wip.py").write_text("# TODO: user's own work\n")
+        result = self.run_loop('echo "value = 2" > source.py\ntouch "$LOOP_DIR/done.md"\n')
+        self.assert_success(result)
+        self.assertEqual(self.state()["LAST_STATUS"], "DONE", result.stdout)
+
     def test_rerun_after_resolving_a_squash_conflict_does_not_open_a_new_summary(self):
         self.conflicting_squash()
         # Follow the printed "Resolve" instruction.
