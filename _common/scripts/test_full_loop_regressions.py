@@ -396,7 +396,7 @@ class FullLoopRegressions(unittest.TestCase):
         self.assertIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
 
     def test_signalling_the_runner_does_not_escape_a_pin_violation(self):
-        for sig in ("TERM", "HUP", "USR1"):
+        for sig in ("TERM", "HUP", "USR1", "XCPU", "VTALRM", "PIPE"):
             with self.subTest(sig=sig):
                 for name in ("state.env", "state.env.sha256", ".goal.sha256", ".pins.sha256",
                              ".pin-violation", "done.md"):

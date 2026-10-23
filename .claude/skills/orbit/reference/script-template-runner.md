@@ -569,9 +569,18 @@ cleanup() {
   [[ "${LOOP_FINISHED:-false}" == "true" ]] || echo "[SIGNAL] State saved — safe to resume from iteration ${ITER}"
   exit 130
 }
-# Every signal whose default action ends the runner is trapped: an untrapped one would
-# end it without saving state or recording a pin violation (SIGKILL cannot be caught).
-trap cleanup SIGINT SIGTERM SIGHUP SIGQUIT SIGUSR1 SIGUSR2 SIGALRM
+# Every catchable signal whose default action ends the runner is trapped, listed from
+# the shell rather than by name (XCPU, PIPE, real-time signals...): an untrapped one would
+# end it without saving state or recording a pin violation. SIGKILL cannot be caught;
+# signals that by default are ignored or stop the process are left alone, as are bash's
+# pseudo-signals (EXIT keeps the lock cleanup above). A name this platform cannot trap
+# is skipped.
+while IFS= read -r sig; do
+  case "${sig#SIG}" in
+    EXIT|DEBUG|ERR|RETURN|KILL|STOP|CHLD|CLD|CONT|TSTP|TTIN|TTOU|URG|WINCH|INFO) continue ;;
+  esac
+  trap cleanup "${sig}" 2>/dev/null || true
+done < <(compgen -A signal)
 
 #--- Goal/AC immutability pin (AP-16: mid-run goal drift ABORTs) ---
 # Pins are taken when missing, so a violation is recorded where only this runner
