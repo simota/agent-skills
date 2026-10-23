@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed — `orbit` runner closes executor bypasses of its pins and caps (2026-10-23)
+
+- **Behaviour change: a pin or `goal.md` violation now outlives the run that found it.** The runner records it in `.pin-violation` after the executor has exited and refuses to start while it exists, because pins are re-taken whenever their files are missing: an executor that weakened `verify.sh` and `goal.md`, deleted both pin files and exited non-zero used to be re-pinned on the next start and finish `DONE verify=PASS`. Pins are now also checked on the `TOOL_FAILURE`, timeout, circuit and signal exits; a runner killed with `SIGKILL` records nothing, so isolating the executor stays operator hardening. Clear it with `recover.sh --repin-goal` once the files are the intended baseline.
+- **Behaviour change: a `PIN_PATHS` directory pins the ignore rules that decide its listing** (`info/exclude`, `core.excludesFile`, each `.gitignore` above and below it). Adding an ignore rule mid-run used to hide the file added next; it is now a pin violation, editing the root `.gitignore` included. A `.gitignore` a tool writes inside an already-ignored cache directory (`.pytest_cache/`) is not pinned.
+- **Behaviour change: an iteration whose executor left `HEAD` off the iteration branch stops `BLOCKED` before committing.** Its edits used to be auto-committed to whatever branch it checked out, `main` included; a rerun returns to the iteration branch.
+- Also fixed in the runner: the USD caps are checked before each retry (a failed attempt that spent past `USD_PER_RUN_CAP` used to buy every remaining retry), `ADAPTIVE_TIMEOUT` reads only integers from the executor-writable `.iter-timings.log` (an expression there ran in the runner through bash arithmetic, and a non-numeric line killed it at start), and a signal during the post-`DONE` squash keeps the `DONE` checkpoint and marks the squash pending instead of rewriting it as `CONTINUE` and rerunning the executor.
+- Checkers: `validate-recipes.py` counts a list-item `Default dispatch` toward R-REC-01, `routing-oracle.py` RO-6 reads the exempt list to the end of its sentence (past an abbreviation, and not into the text after it), and RO-3 checks the Primary Chain column it documents as well as Recipe Hints.
+
 ### Changed — `orbit` runner refuses unbounded runs and pins artifacts (2026-10-19)
 
 - **Behaviour change: the generated `run-loop.sh` refuses to start when `LOOP_TIMEOUT`, `USD_PER_RUN_CAP` and `USD_PER_ITER_CAP` are all 0.** Set one of them, or `ALLOW_UNBOUNDED_RUN=true` for an attended run.
