@@ -396,15 +396,27 @@ class FullLoopRegressions(unittest.TestCase):
         self.assertIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
 
     def test_signalling_the_runner_does_not_escape_a_pin_violation(self):
-        (self.loop / "verify.sh").write_text("#!/bin/bash\nexit 1\n")
-        self.run_loop(
-            'printf "#!/bin/bash\\nexit 0\\n" > "$LOOP_DIR/verify.sh"\n'
-            'rm -f "$LOOP_DIR/.pins.sha256" "$LOOP_DIR/.goal.sha256"\n'
-            'kill -TERM "$(cat "$LOOP_DIR/.run-loop.lock")"\nsleep 5\n', AUTOCOMMIT="false")
-        self.assertTrue((self.loop / ".pin-violation").exists())
-        result = self.run_loop('touch "$LOOP_DIR/done.md"\n', AUTOCOMMIT="false")
+        for sig in ("TERM", "HUP", "USR1"):
+            with self.subTest(sig=sig):
+                for name in ("state.env", "state.env.sha256", ".goal.sha256", ".pins.sha256",
+                             ".pin-violation", "done.md"):
+                    (self.loop / name).unlink(missing_ok=True)
+                (self.loop / "verify.sh").write_text("#!/bin/bash\nexit 1\n")
+                self.run_loop(
+                    'printf "#!/bin/bash\\nexit 0\\n" > "$LOOP_DIR/verify.sh"\n'
+                    'rm -f "$LOOP_DIR/.pins.sha256" "$LOOP_DIR/.goal.sha256"\n'
+                    f'kill -{sig} "$(cat "$LOOP_DIR/.run-loop.lock")"\nsleep 5\n', AUTOCOMMIT="false")
+                self.assertTrue((self.loop / ".pin-violation").exists())
+                result = self.run_loop('touch "$LOOP_DIR/done.md"\n', AUTOCOMMIT="false")
+                self.assertNotEqual(result.returncode, 0, result.stdout)
+                self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+
+    def test_a_fifo_at_the_marker_path_refuses_without_blocking(self):
+        os.mkfifo(self.loop / ".pin-violation")
+        result = self.run_loop('touch "$LOOP_DIR/executed"\n', AUTOCOMMIT="false")
         self.assertNotEqual(result.returncode, 0, result.stdout)
-        self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+        self.assertIn("unresolved pin violation", result.stdout)
+        self.assertFalse((self.loop / "executed").exists())
 
     def test_a_directory_cannot_stand_in_for_the_pin_violation_marker(self):
         (self.loop / "verify.sh").write_text("#!/bin/bash\nexit 1\n")

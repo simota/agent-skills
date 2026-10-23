@@ -569,7 +569,9 @@ cleanup() {
   [[ "${LOOP_FINISHED:-false}" == "true" ]] || echo "[SIGNAL] State saved — safe to resume from iteration ${ITER}"
   exit 130
 }
-trap cleanup SIGINT SIGTERM
+# Every signal whose default action ends the runner is trapped: an untrapped one would
+# end it without saving state or recording a pin violation (SIGKILL cannot be caught).
+trap cleanup SIGINT SIGTERM SIGHUP SIGQUIT SIGUSR1 SIGUSR2 SIGALRM
 
 #--- Goal/AC immutability pin (AP-16: mid-run goal drift ABORTs) ---
 # Pins are taken when missing, so a violation is recorded where only this runner
@@ -579,7 +581,13 @@ PIN_VIOLATION_FILE="${LOOP_DIR}/.pin-violation"
 # Any entry at the marker's path counts: a directory there must not read as "no violation".
 pin_violation_recorded() { [[ -e "${PIN_VIOLATION_FILE}" || -L "${PIN_VIOLATION_FILE}" ]]; }
 if pin_violation_recorded; then
-  echo "[ABORT] unresolved pin violation ($(head -1 "${PIN_VIOLATION_FILE}" 2>/dev/null || echo "marker is not a file")) — restore the pinned files, then re-pin them as the baseline: recover.sh --repin-goal"
+  # Read only a regular file: a FIFO there would block this start indefinitely.
+  if [[ -f "${PIN_VIOLATION_FILE}" && ! -L "${PIN_VIOLATION_FILE}" ]]; then
+    PIN_VIOLATION_DETAIL=$(head -1 "${PIN_VIOLATION_FILE}")
+  else
+    PIN_VIOLATION_DETAIL="marker is not a regular file"
+  fi
+  echo "[ABORT] unresolved pin violation (${PIN_VIOLATION_DETAIL}) — restore the pinned files, then re-pin them as the baseline: recover.sh --repin-goal"
   exit 1
 fi
 record_pin_violation() {
