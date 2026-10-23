@@ -114,6 +114,7 @@ class TestRoutingSectionEvidence(TempCase):
     def test_exempt_list_ends_before_text_that_follows_it(self):
         for after in (" `optimize` with an object dispatches.\n",
                       " /nexus `optimize` asks first.\n",
+                      " otherwise bare `optimize` reaches GATE.\n",
                       "\n| `optimize` | GATE |\n",
                       "\n```\n/nexus `optimize`\n```\n"):
             with self.subTest(after=after):
