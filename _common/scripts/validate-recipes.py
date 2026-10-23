@@ -188,12 +188,16 @@ def heading_issues(content: str) -> list[str]:
 
 
 def default_dispatches(content: str) -> list[str]:
-    """Return valid explicit Default dispatch declarations from Subcommand Dispatch."""
+    """Return valid explicit Default dispatch declarations from Subcommand Dispatch.
+
+    A list item (`- **Default dispatch:** ...`, `1. ...`) declares one too; four spaces of
+    indentation are an indented code block, i.e. an example, and do not.
+    """
     section = markdown_section(content, "Subcommand Dispatch")
     if section is None:
         return []
     return re.findall(
-        r"^\*\*Default dispatch:\*\*\s*`((?:phase|workflow):[A-Za-z][A-Za-z0-9_-]*)`",
+        r"^ {0,3}(?:(?:[-*+]|\d{1,9}[.)])[ \t]+)?\*\*Default dispatch:\*\*\s*`((?:phase|workflow):[A-Za-z][A-Za-z0-9_-]*)`",
         active_text(section), re.MULTILINE,
     )
 

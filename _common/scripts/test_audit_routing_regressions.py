@@ -66,6 +66,87 @@ class TestRoutingSectionEvidence(TempCase):
         self.assertTrue(any(f.level == "ERROR" and "exempt" in f.message for f in findings),
                         [str(f) for f in findings])
 
+    def check_producer_verifier(self, primary, hints):
+        matrix = self.write("routing-matrix.md", "| Task | Primary Chain | Recipe Hints |\n"
+                            "|---|---|---|\n" f"| DECISION | {primary} | {hints} |\n")
+        findings = []
+        with patch.object(routing, "ROUTING_MATRIX", matrix):
+            routing.check_producer_verifier(findings)
+        return [f for f in findings if "same-agent verify" in f.message]
+
+    def test_same_agent_verify_is_flagged_in_either_chain_column(self):
+        for primary, hints in (("Magi", "Builder[api], Builder[verify]"),
+                               ("Builder[api] → Builder[verify+regression]", "Magi[decide]")):
+            with self.subTest(primary=primary, hints=hints):
+                self.assertEqual(len(self.check_producer_verifier(primary, hints)), 1)
+
+    def test_unannotated_producer_counts_as_the_previous_step(self):
+        self.assertEqual(len(self.check_producer_verifier("Builder → Builder[verify]", "Magi[decide]")), 1)
+
+    def test_an_unannotated_step_between_breaks_adjacency(self):
+        self.assertEqual(self.check_producer_verifier(
+            "Builder[api] → Radar → Builder[verify]", "Magi[decide]"), [])
+
+    def test_independent_verifier_is_not_flagged(self):
+        self.assertEqual(self.check_producer_verifier(
+            "Builder[api] → Radar[verify]", "Builder[api], Radar[verify]"), [])
+
+    def test_exempt_list_continues_past_an_abbreviation(self):
+        findings = self.check_bare_dispatch(
+            "- **Bare-subcommand exception.** Bare tokens reach GATE. "
+            "**Exempt:** `pack` (profile switch, i.e. no object), `optimize`.\n")
+        self.assertTrue(any(f.level == "ERROR" and "exempt" in f.message for f in findings),
+                        [str(f) for f in findings])
+
+    def test_exempt_list_continues_across_a_line_wrap(self):
+        findings = self.check_bare_dispatch(
+            "- **Bare-subcommand exception.** Bare tokens reach GATE. **Exempt:** `pack`,\n"
+            "  `optimize`.\n")
+        self.assertTrue(any(f.level == "ERROR" and "exempt" in f.message for f in findings),
+                        [str(f) for f in findings])
+
+    def test_exempt_list_ends_at_its_list_item(self):
+        findings = self.check_bare_dispatch(
+            "- **Bare-subcommand exception.** Bare tokens reach GATE. **Exempt:** `pack`.\n"
+            "- otherwise `optimize` with an object dispatches.\n")
+        self.assertEqual(findings, [])
+
+    def test_exempt_list_ends_before_text_that_follows_it(self):
+        for after in (" `optimize` with an object dispatches.\n",
+                      " /nexus `optimize` asks first.\n",
+                      " otherwise bare `optimize` reaches GATE.\n",
+                      "\n| `optimize` | GATE |\n",
+                      "\n```\n/nexus `optimize`\n```\n"):
+            with self.subTest(after=after):
+                findings = self.check_bare_dispatch(
+                    "- **Bare-subcommand exception.** Bare tokens reach GATE. **Exempt:** `pack`." + after)
+                self.assertEqual(findings, [])
+
+    def test_exempt_list_ends_at_a_sentence_closing_abbreviation(self):
+        findings = self.check_bare_dispatch(
+            "- **Bare-subcommand exception.** Bare tokens reach GATE. **Exempt:** `pack`, etc. "
+            "Fixtures cover `optimize`.\n")
+        self.assertEqual(findings, [])
+
+    def test_exempt_list_ends_at_an_abbreviation_before_decorated_text(self):
+        findings = self.check_bare_dispatch(
+            "- **Bare-subcommand exception.** Bare tokens reach GATE. **Exempt:** `pack`, etc. "
+            "**Fixtures** cover bare `optimize`.\n")
+        self.assertEqual(findings, [])
+
+    def test_exempt_list_continues_past_cf(self):
+        findings = self.check_bare_dispatch(
+            "- **Bare-subcommand exception.** Bare tokens reach GATE. "
+            "**Exempt:** `pack` (cf. `optimize`).\n")
+        self.assertTrue(any(f.level == "ERROR" and "exempt" in f.message for f in findings),
+                        [str(f) for f in findings])
+
+    def test_exempt_list_ends_at_its_sentence(self):
+        findings = self.check_bare_dispatch(
+            "- **Bare-subcommand exception.** Bare tokens reach GATE. **Exempt:** `pack`. "
+            "Fixtures cover bare `optimize`.\n")
+        self.assertEqual(findings, [])
+
     def test_dispatch_at_eof_is_checked(self):
         findings = self.check_bare_dispatch("Match the first token and dispatch.\n", next_section=False)
         self.assertTrue(any(f.level == "ERROR" for f in findings), [str(f) for f in findings])

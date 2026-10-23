@@ -529,31 +529,80 @@ cleanup() {
     signal_job KILL
   fi
 
-  # Step 1: State snapshot (incl. the paths this run left dirty — not human edits)
-  write_state "${ITER:-1}" CONTINUE
-  record_loop_dirty || true
+  # The job is gone, so the executor can no longer touch the pinned files: a change it
+  # made before signalling the runner is recorded now, or the next start re-pins it.
+  if [[ "${EXECUTOR_RAN:-false}" == "true" ]] && ! pin_violation_recorded; then
+    check_goal_immutable || echo "[ABORT] goal.md changed mid-run (GOAL_DRIFT / AP-16)" | tee -a "${LOOP_DIR}/runner.log"
+    check_pins | tee -a "${LOOP_DIR}/runner.log" || true
+  fi
 
-  # Step 2: Partial results summary
-  {
-    echo ""
-    echo "## Iteration ${ITER} — INTERRUPTED"
-    echo "- Signal: graceful shutdown"
-    echo "- Timestamp: $(date -u +"%Y-%m-%dT%H:%M:%SZ")"
-    echo "- Last verify: ${VERIFY_RESULT:-N/A}"
-    echo "- Partial work preserved for resume"
-  } >> "${LOOP_DIR}/progress.md"
+  # Once the loop has exited, its checkpoint is final: overwriting a DONE with CONTINUE
+  # would rerun the executor on a finished goal. An interrupted squash waits for a
+  # human exactly as a conflicted one does.
+  if [[ "${LOOP_FINISHED:-false}" == "true" ]]; then
+    if [[ "${SQUASH_IN_PROGRESS:-false}" == "true" ]]; then
+      write_atomic "${SQUASH_PENDING_FILE}" "${SUMMARY_BRANCH}"$'\n'"${ITER_BRANCH}"
+      echo "[SIGNAL] Squash of ${ITER_BRANCH} into ${SUMMARY_BRANCH} interrupted — see git status; the next run reports it as pending"
+    fi
+    record_loop_dirty || true
+  else
+    # Step 1: State snapshot (incl. the paths this run left dirty — not human edits)
+    write_state "${ITER:-1}" CONTINUE
+    record_loop_dirty || true
+
+    # Step 2: Partial results summary
+    {
+      echo ""
+      echo "## Iteration ${ITER} — INTERRUPTED"
+      echo "- Signal: graceful shutdown"
+      echo "- Timestamp: $(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+      echo "- Last verify: ${VERIFY_RESULT:-N/A}"
+      echo "- Partial work preserved for resume"
+    } >> "${LOOP_DIR}/progress.md"
+  fi
 
   # Step 3: Structured log
   emit_log "WARN" "graceful_shutdown" "iteration" "${ITER}" "verify" "${VERIFY_RESULT:-N/A}"
 
   # Step 4: Cleanup
   rm -f "${LOOP_DIR}/.run-loop.lock" "${LOOP_DIR}"/.verify-pinned.*
-  echo "[SIGNAL] State saved — safe to resume from iteration ${ITER}"
+  [[ "${LOOP_FINISHED:-false}" == "true" ]] || echo "[SIGNAL] State saved — safe to resume from iteration ${ITER}"
   exit 130
 }
-trap cleanup SIGINT SIGTERM
+# Every catchable signal whose default action ends the runner is trapped, listed from
+# the shell rather than by name (XCPU, PIPE, real-time signals...): an untrapped one would
+# end it without saving state or recording a pin violation. SIGKILL cannot be caught;
+# signals that by default are ignored or stop the process are left alone, as are bash's
+# pseudo-signals (EXIT keeps the lock cleanup above). A name this platform cannot trap
+# is skipped.
+while IFS= read -r sig; do
+  case "${sig#SIG}" in
+    EXIT|DEBUG|ERR|RETURN|KILL|STOP|CHLD|CLD|CONT|TSTP|TTIN|TTOU|URG|WINCH|INFO) continue ;;
+  esac
+  trap cleanup "${sig}" 2>/dev/null || true
+done < <(compgen -A signal)
 
 #--- Goal/AC immutability pin (AP-16: mid-run goal drift ABORTs) ---
+# Pins are taken when missing, so a violation is recorded where only this runner
+# writes it -- after the executor has exited -- and a later start refuses to re-pin
+# whatever the executor left behind until a human re-pins with recover.sh.
+PIN_VIOLATION_FILE="${LOOP_DIR}/.pin-violation"
+# Any entry at the marker's path counts: a directory there must not read as "no violation".
+pin_violation_recorded() { [[ -e "${PIN_VIOLATION_FILE}" || -L "${PIN_VIOLATION_FILE}" ]]; }
+if pin_violation_recorded; then
+  # Read only a regular file: a FIFO there would block this start indefinitely.
+  if [[ -f "${PIN_VIOLATION_FILE}" && ! -L "${PIN_VIOLATION_FILE}" ]]; then
+    PIN_VIOLATION_DETAIL=$(head -1 "${PIN_VIOLATION_FILE}")
+  else
+    PIN_VIOLATION_DETAIL="marker is not a regular file"
+  fi
+  echo "[ABORT] unresolved pin violation (${PIN_VIOLATION_DETAIL}) — restore the pinned files, then re-pin them as the baseline: recover.sh --repin-goal"
+  exit 1
+fi
+record_pin_violation() {
+  rm -rf -- "${PIN_VIOLATION_FILE}"
+  write_atomic "${PIN_VIOLATION_FILE}" "$1"
+}
 GOAL_SHA_FILE="${LOOP_DIR}/.goal.sha256"
 if [[ "${GOAL_IMMUTABLE}" == "true" ]] && [[ -f "${LOOP_DIR}/goal.md" ]]; then
   if [[ ! -f "${GOAL_SHA_FILE}" ]]; then
@@ -568,7 +617,7 @@ check_goal_immutable() {
   [[ "${GOAL_IMMUTABLE}" == "true" ]] || return 0
   [[ -n "${GOAL_SHA}" ]] || return 0
   local now; now=$(shasum -a 256 "${LOOP_DIR}/goal.md" 2>/dev/null | awk '{print $1}')
-  [[ "${now}" == "${GOAL_SHA}" ]]
+  [[ "${now}" == "${GOAL_SHA}" ]] || { record_pin_violation "GOAL_DRIFT: goal.md"; return 1; }
 }
 
 #--- Artifact pins (AP-13 / AP-20 / RP-1: mid-run mutation ABORTs) ---
@@ -587,6 +636,8 @@ fi
 # ignore test reads the rules alone (--no-index): against the index, one force-added
 # file makes an ignored directory read as not ignored.
 # Symlinks are listed too: they are pinned by their target, not by what they reach.
+# The ignore rules that decide the listing are executor-writable, so they are pinned with
+# it (pin_ignore_rules): a rule added mid-run cannot hide the file added next.
 pin_dir_files() {
   if git -C "$1" rev-parse --is-inside-work-tree >/dev/null 2>&1 \
      && ! git -C "$1" check-ignore -q --no-index . 2>/dev/null; then
@@ -597,6 +648,39 @@ pin_dir_files() {
   else
     (cd -- "$1" && find . \( -type f -o -type l \) -print0)
   fi
+}
+# Every source of ignore rules for directory $1: info/exclude, core.excludesFile (the
+# setting and its file), and each .gitignore from the work-tree root down to $1 and
+# anywhere below it, ignored or not. One "<sha256|absent>  <source>" line each.
+pin_ignore_rules() {
+  local top dir excludes source
+  top=$(git -C "$1" rev-parse --show-toplevel 2>/dev/null) || return 0
+  (
+    cd -- "$1" || exit 0
+    excludes=$(git config --path core.excludesFile 2>/dev/null || true)
+    printf 'core.excludesFile=%s\n' "${excludes}"
+    {
+      git rev-parse --git-path info/exclude
+      printf '%s\n' "${excludes:-${XDG_CONFIG_HOME:-${HOME:-}/.config}/git/ignore}"
+      dir=$(pwd -P)
+      while :; do
+        printf '%s/.gitignore\n' "${dir}"
+        [[ "${dir}" != "${top}" && "${dir}" != "/" ]] || break
+        dir=$(dirname -- "${dir}")
+      done
+      # Git never reads a .gitignore inside a directory outer rules ignore (a tool cache
+      # such as .pytest_cache/ writes one); those outer rules are pinned above.
+      find . -mindepth 2 -name .gitignore | LC_ALL=C sort | while IFS= read -r source; do
+        git check-ignore -q --no-index -- "$(dirname -- "${source}")" 2>/dev/null || printf '%s\n' "${source}"
+      done
+    } | while IFS= read -r source; do
+      if [[ -f "${source}" ]]; then
+        printf '%s  %s\n' "$(shasum -a 256 < "${source}" | awk '{print $1}')" "${source}"
+      else
+        printf 'absent  %s\n' "${source}"
+      fi
+    done
+  )
 }
 # Reads sorted NUL paths in the directory: "link <target>" per symlink, then one
 # sha256 line per regular file.
@@ -617,8 +701,9 @@ pin_manifest() {
     # A pinned path that is itself a symlink is pinned by its target as well as content.
     [[ ! -L "${path}" ]] || printf 'link %s  %s@\n' "$(readlink -- "${path}")" "${path}"
     if [[ -d "${path}" ]]; then
-      printf '%s  %s/\n' "$( (pin_dir_files "${path}" | LC_ALL=C sort -z |
-        (cd -- "${path}" && pin_dir_entries) || true) | shasum -a 256 | awk '{print $1}')" "${path}"
+      printf '%s  %s/\n' "$( { (pin_dir_files "${path}" | LC_ALL=C sort -z |
+        (cd -- "${path}" && pin_dir_entries) || true); pin_ignore_rules "${path}"; } |
+        shasum -a 256 | awk '{print $1}')" "${path}"
     elif [[ -f "${path}" ]]; then
       printf '%s  %s\n' "$(shasum -a 256 < "${path}" | awk '{print $1}')" "${path}"
     else
@@ -638,12 +723,14 @@ check_pins() {
   if [[ ! -f "${PINS_FILE}" ]] \
      || [[ "$(shasum -a 256 < "${PINS_FILE}" | awk '{print $1}')" != "${PINS_SHA}" ]]; then
     echo "[ABORT] pin manifest ${PINS_FILE} removed or rewritten mid-run (AP-13 / AP-20)"
+    record_pin_violation "pin manifest removed or rewritten"
     return 1
   fi
   local changed
   changed=$(diff <(cat "${PINS_FILE}") <(pin_manifest) | sed -n 's/^[<>] .*  //p' | sort -u || true)
   [[ -z "${changed}" ]] && return 0
   echo "[ABORT] pinned artifact changed mid-run (AP-13 / AP-20): ${changed//$'\n'/, }"
+  record_pin_violation "pinned artifact changed: ${changed//$'\n'/, }"
   return 1
 }
 # Callers check pins before verification, then run a copy whose hash matches the pin:
@@ -858,7 +945,9 @@ EFFECTIVE_TIMEOUT="${EXEC_TIMEOUT}"
 TIMING_LOG="${LOOP_DIR}/.iter-timings.log"
 if [[ "${ADAPTIVE_TIMEOUT}" == "true" ]] && [[ -f "${TIMING_LOG}" ]]; then
   # Calculate median of last 5 timings x 2, bounded by [EXEC_TIMEOUT, EXEC_TIMEOUT*3]
-  TIMINGS=$(tail -5 "${TIMING_LOG}" | sort -n)
+  # The log is executor-writable and the median reaches bash arithmetic, which evaluates
+  # an expression in a value: only plain decimal integers are read.
+  TIMINGS=$(grep -E '^(0|[1-9][0-9]{0,8})$' "${TIMING_LOG}" | tail -5 | sort -n || true)
   COUNT=$(echo "${TIMINGS}" | wc -l | tr -d ' ')
   if [[ "${COUNT}" -ge 3 ]]; then
     MEDIAN=$(echo "${TIMINGS}" | sed -n "$(( (COUNT + 1) / 2 ))p")
@@ -886,6 +975,7 @@ if [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -gt "${MAX_ITERATIONS}" ]]; then
   echo "[CAP] Iteration ${ITER} exceeds MAX_ITERATIONS=${MAX_ITERATIONS} — nothing to run; raise MAX_ITERATIONS to resume"
 fi
 
+EXECUTOR_RAN=false
 while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
   [[ "${SHUTDOWN}" -eq 1 ]] && break
 
@@ -955,6 +1045,7 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
   LAST_EXIT_CODE=0
   while [[ "${RETRY_COUNT}" -lt "${RETRY_LIMIT}" ]]; do
     LAST_EXIT_CODE=0
+    EXECUTOR_RAN=true
     # EXEC_CMD is trusted operator-authored shell configuration, never model output.
     run_with_budget "${EFFECTIVE_TIMEOUT}" bash -c "${EXEC_CMD}" > >(tee -a "${LOOP_DIR}/runner.log") 2>&1 || LAST_EXIT_CODE=$?
     if loop_timeout_reached; then
@@ -986,6 +1077,13 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
     if [[ "${CIRCUIT_BREAKER}" == "true" && "${CB_STATE}" == "OPEN" ]]; then
       echo "[CIRCUIT:OPEN] Execution blocked until cooldown or manual reset"
       break
+    fi
+
+    # A failed attempt can spend too: the caps are checked before buying another.
+    if [[ "${RETRY_COUNT}" -lt "${RETRY_LIMIT}" ]] && BUDGET_MSG=$(budget_exceeded); then
+      echo "[ABORT] ${BUDGET_MSG} — pausing; explicit human resume required" | tee -a "${LOOP_DIR}/runner.log"
+      emit_log "ERROR" "budget_exceeded" "detail" "${BUDGET_MSG}"
+      STATUS="BLOCKED"; write_terminal_state BLOCKED; break 2
     fi
 
     if [[ "${RETRY_COUNT}" -lt "${RETRY_LIMIT}" ]]; then
@@ -1050,6 +1148,14 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
     STATUS="BLOCKED"; write_terminal_state BLOCKED; break
   fi
 
+  # The executor can run git: a checkout it leaves behind would put this iteration's
+  # auto-commit, and the squash after DONE, on whatever branch it moved to.
+  if [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${AUTOCOMMIT}" == "true" ]] && [[ -n "${ITER_BRANCH:-}" ]] \
+     && [[ "$(git rev-parse --abbrev-ref HEAD 2>/dev/null)" != "${ITER_BRANCH}" ]]; then
+    echo "[ABORT] HEAD left ${ITER_BRANCH} during the iteration — nothing was committed; a rerun checks it out again" | tee -a "${LOOP_DIR}/runner.log"
+    STATUS="BLOCKED"; write_terminal_state BLOCKED; break
+  fi
+
   #--- Scoped auto-commit ---
   if [[ "${AUTOCOMMIT}" == "true" ]]; then
     dirty_paths > "${LOOP_DIR}/current-changes.nul"
@@ -1094,6 +1200,9 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
   #--- Atomic state write ---
   NEXT_ITER=$((ITER + 1))
   write_state "${NEXT_ITER}" "${STATUS}"
+  # A saved DONE is final from here: a signal during notify.sh or the log lines below
+  # must not rewrite it as CONTINUE and rerun the executor on a finished goal.
+  [[ "${STATUS}" != "DONE" ]] || LOOP_FINISHED=true
 
   #--- Iteration notification (|| true — never fatal) ---
   ITER_END=$(date +%s)
@@ -1111,6 +1220,21 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
   echo "[ITER ${ITER}] status=${STATUS} verify=${VERIFY_RESULT} commit=${COMMIT_HASH} duration=${ITER_DURATION}s"
   ITER=${NEXT_ITER}
 done
+LOOP_FINISHED=true
+
+# TOOL_FAILURE, timeout and circuit exits leave the loop before the verification gate;
+# a pin or goal change the executor made before failing is still found and recorded.
+if [[ "${EXECUTOR_RAN}" == "true" ]] && [[ "${STATUS}" != "DONE" ]] && ! pin_violation_recorded; then
+  if ! check_goal_immutable; then
+    echo "[ABORT] goal.md changed mid-run (GOAL_DRIFT / AP-16)" | tee -a "${LOOP_DIR}/runner.log"
+    STATUS="BLOCKED"; write_terminal_state BLOCKED
+  fi
+  if ! PIN_MSG=$(check_pins); then
+    echo "${PIN_MSG}" | tee -a "${LOOP_DIR}/runner.log"
+    emit_log "ERROR" "pin_drift" "detail" "${PIN_MSG}"
+    STATUS="BLOCKED"; write_terminal_state BLOCKED
+  fi
+fi
 
 # Uncommitted work this run leaves behind is the loop's own, not a human edit.
 record_loop_dirty
@@ -1261,11 +1385,13 @@ if [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${AUTOCOMMIT}" == "true" ]] \
    && [[ "${SQUASH_ON_DONE}" == "true" ]] \
    && git show-ref --verify --quiet "refs/heads/${ITER_BRANCH}"; then
   # state.env keeps DONE: the work passed its gate; only the squash needs a human.
+  SQUASH_IN_PROGRESS=true
   if ! squash_iteration_branch; then
     SQUASH_FAILED=true
     STATUS="BLOCKED"
     emit_log "ERROR" "squash_failed" "summary_branch" "${SUMMARY_BRANCH}"
   fi
+  SQUASH_IN_PROGRESS=false
 elif [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${STATUS}" != "DONE" ]] && [[ -n "${ITER_BRANCH:-}" ]] \
      && [[ "$(git rev-parse --abbrev-ref HEAD 2>/dev/null)" == "${ITER_BRANCH}" ]]; then
   echo "[BRANCH] STATUS=${STATUS} — staying on ${ITER_BRANCH} for resume"

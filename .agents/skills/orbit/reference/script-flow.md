@@ -56,7 +56,7 @@ Effect on `DONE`:
 |----------|----------|----------|
 | `bootstrap.sh` | `goal.md`, `progress.md`, `state.env`, optional `verify.sh`, `run-loop.sh`, `notify.sh` | bootstrap initializes the loop contract |
 | `run-loop.sh` | reads `state.env`, `goal.md`, optional `verify.sh`, optional `notify.sh`, optional `done.md` | main execution loop |
-| `run-loop.sh` | writes `progress.md`, `runner.log`, `state.env`, `state.env.sha256`, `.run-loop.lock`, `.goal.sha256`, `.pins.sha256`, `.circuit-state`, `dirty-start-paths.nul`, `loop-dirty-paths.nul`, `.action-sig.log`, optional `.squash-pending`, optional `.iter-timings.log`; reads optional `.cost-usd` | resumable execution state + stall/budget/immutability evidence |
+| `run-loop.sh` | writes `progress.md`, `runner.log`, `state.env`, `state.env.sha256`, `.run-loop.lock`, `.goal.sha256`, `.pins.sha256`, optional `.pin-violation`, `.circuit-state`, `dirty-start-paths.nul`, `loop-dirty-paths.nul`, `.action-sig.log`, optional `.squash-pending`, optional `.iter-timings.log`; reads optional `.cost-usd` | resumable execution state + stall/budget/immutability evidence |
 | `run-loop.sh` | creates `loop/iter-{name}` and `loop/summary-{name}` | branch isolation and final squash |
 | `recover.sh` | reads `progress.md` and rewrites `state.env` | evidence-based recovery |
 | `notify.sh` | reads commit metadata and writes notification logs/audio | non-fatal notification hook |

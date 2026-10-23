@@ -146,7 +146,7 @@ Usage: `recover.sh [--reset-circuit] [--repin-goal] [--clear-stall] [--migrate] 
 | (none) | rebuild `state.env` from `progress.md` evidence (durable checkpoint-replay); a `DONE` iteration stays `DONE` — the runner re-runs the DONE gate on every `DONE` resume and continues (or stops `BLOCKED` past `MAX_ITERATIONS`) when it fails | `STATE_DRIFT` |
 | `--reset-circuit` | delete `.circuit-state` | `CIRCUIT_OPEN` |
 | `--clear-stall` | delete `.action-sig.log` so the stall counter resets after disambiguation | `CONVERGENCE_STALL` / `OSCILLATION_LOOP` |
-| `--repin-goal` | re-pin `.goal.sha256` to current `goal.md` and drop `.pins.sha256` so the runner re-pins `verify.sh` / `PROMPT.md` / `.claude/settings*.json` / `PIN_PATHS` on next start (only after confirming the current files are the intended baseline) | `GOAL_DRIFT` / `VALIDATOR_GAP` / `PERMISSION_HIJACK` |
+| `--repin-goal` | re-pin `.goal.sha256` to current `goal.md`, clear `.pin-violation`, and drop `.pins.sha256` so the runner re-pins `verify.sh` / `PROMPT.md` / `.claude/settings*.json` / `PIN_PATHS` on next start (only after confirming the current files are the intended baseline) | `GOAL_DRIFT` / `VALIDATOR_GAP` / `PERMISSION_HIJACK` |
 | `--migrate` | set `CONTRACT_VERSION` to current and add missing optional fields with defaults | contract migration |
 
 ```bash
@@ -223,6 +223,7 @@ fi
 if [[ "${DO_REPIN_GOAL}" == "true" ]] && [[ -f "${LOOP_DIR}/goal.md" ]]; then
   write_atomic "${LOOP_DIR}/.goal.sha256" "$(shasum -a 256 "${LOOP_DIR}/goal.md" | awk '{print $1}')"
   rm -f "${LOOP_DIR}/.pins.sha256"
+  rm -rf -- "${LOOP_DIR}/.pin-violation"
   echo "[OK] goal.md re-pinned; artifact pins re-taken on next runner start — confirm both are the intended baseline"
 fi
 

@@ -347,7 +347,8 @@ class FullLoopRegressions(unittest.TestCase):
         for action in ('rm -f "$LOOP_DIR/.goal.sha256"\n',
                        'shasum -a 256 "$LOOP_DIR/goal.md" | awk \'{print $1}\' > "$LOOP_DIR/.goal.sha256"\n'):
             with self.subTest(action=action):
-                for name in ("state.env", "state.env.sha256", ".goal.sha256", ".pins.sha256", "done.md"):
+                for name in ("state.env", "state.env.sha256", ".goal.sha256", ".pins.sha256",
+                             ".pin-violation", "done.md"):
                     (self.loop / name).unlink(missing_ok=True)
                 (self.loop / "goal.md").write_text("# Goal\n\n## Objective\nFinish the fixture\n")
                 result = self.run_loop(
@@ -357,6 +358,75 @@ class FullLoopRegressions(unittest.TestCase):
                 self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
                 self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
                 self.assertIn("goal.md changed", result.stdout)
+
+    # A violation outlives the run that found it: the next start must not re-pin
+    # whatever the executor left behind.
+    def tamper_then_fail(self):
+        (self.loop / "verify.sh").write_text("#!/bin/bash\nexit 1\n")
+        return self.run_loop(
+            'printf "#!/bin/bash\\nexit 0\\n" > "$LOOP_DIR/verify.sh"\n'
+            'rm -f "$LOOP_DIR/.pins.sha256" "$LOOP_DIR/.goal.sha256"\n'
+            'echo weakened >> "$LOOP_DIR/goal.md"\nexit 1\n', AUTOCOMMIT="false", RETRY_LIMIT="1")
+
+    def test_tampering_before_a_tool_failure_is_reported(self):
+        result = self.tamper_then_fail()
+        self.assert_success(result)
+        self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
+        self.assertIn("goal.md changed", result.stdout)
+        self.assertIn("pin manifest", result.stdout)
+
+    def test_rerun_after_a_pin_violation_does_not_re_pin(self):
+        self.tamper_then_fail()
+        result = self.run_loop('touch "$LOOP_DIR/executed" "$LOOP_DIR/done.md"\n', AUTOCOMMIT="false")
+        self.assertNotEqual(result.returncode, 0, result.stdout)
+        self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+        self.assertIn("recover.sh --repin-goal", result.stdout)
+        self.assertFalse((self.loop / "executed").exists())
+
+    def test_repin_goal_clears_a_pin_violation(self):
+        self.tamper_then_fail()
+        recover = self.loop / "recover.sh"
+        recover.write_text(template("recover.sh"))
+        repin = subprocess.run(
+            ["bash", str(recover), "--repin-goal", str(self.loop)], cwd=self.repo,
+            env=fixture_environment(), text=True, capture_output=True, timeout=10)
+        self.assert_success(repin)
+        result = self.run_loop('touch "$LOOP_DIR/done.md"\n', AUTOCOMMIT="false")
+        self.assert_success(result)
+        self.assertIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+
+    def test_signalling_the_runner_does_not_escape_a_pin_violation(self):
+        for sig in ("TERM", "HUP", "USR1", "XCPU", "VTALRM", "PIPE"):
+            with self.subTest(sig=sig):
+                for name in ("state.env", "state.env.sha256", ".goal.sha256", ".pins.sha256",
+                             ".pin-violation", "done.md"):
+                    (self.loop / name).unlink(missing_ok=True)
+                (self.loop / "verify.sh").write_text("#!/bin/bash\nexit 1\n")
+                self.run_loop(
+                    'printf "#!/bin/bash\\nexit 0\\n" > "$LOOP_DIR/verify.sh"\n'
+                    'rm -f "$LOOP_DIR/.pins.sha256" "$LOOP_DIR/.goal.sha256"\n'
+                    f'kill -{sig} "$(cat "$LOOP_DIR/.run-loop.lock")"\nsleep 5\n', AUTOCOMMIT="false")
+                self.assertTrue((self.loop / ".pin-violation").exists())
+                result = self.run_loop('touch "$LOOP_DIR/done.md"\n', AUTOCOMMIT="false")
+                self.assertNotEqual(result.returncode, 0, result.stdout)
+                self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+
+    def test_a_fifo_at_the_marker_path_refuses_without_blocking(self):
+        os.mkfifo(self.loop / ".pin-violation")
+        result = self.run_loop('touch "$LOOP_DIR/executed"\n', AUTOCOMMIT="false")
+        self.assertNotEqual(result.returncode, 0, result.stdout)
+        self.assertIn("unresolved pin violation", result.stdout)
+        self.assertFalse((self.loop / "executed").exists())
+
+    def test_a_directory_cannot_stand_in_for_the_pin_violation_marker(self):
+        (self.loop / "verify.sh").write_text("#!/bin/bash\nexit 1\n")
+        self.run_loop(
+            'printf "#!/bin/bash\\nexit 0\\n" > "$LOOP_DIR/verify.sh"\n'
+            'rm -f "$LOOP_DIR/.pins.sha256"\nmkdir "$LOOP_DIR/.pin-violation"\nexit 1\n',
+            AUTOCOMMIT="false", RETRY_LIMIT="1")
+        result = self.run_loop('touch "$LOOP_DIR/done.md"\n', AUTOCOMMIT="false")
+        self.assertNotEqual(result.returncode, 0, result.stdout)
+        self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
 
     def test_pin_paths_detect_a_retargeted_directory_symlink(self):
         for name, code in (("safe", 1), ("malicious", 0)):
@@ -700,6 +770,52 @@ class FullLoopRegressions(unittest.TestCase):
         self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
         self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
 
+    # Ignore rules decide what a directory pin lists, and the executor can write them:
+    # a rule it adds must not hide the file it adds next.
+    def assert_ignore_rule_cannot_hide_a_pinned_file(self, hide):
+        (self.repo / "tests").mkdir()
+        (self.repo / "tests/test_fixture.py").write_text("assert True\n")
+        self.git("add", "tests")
+        self.git("commit", "-qm", "tests")
+        result = self.run_loop(
+            hide + 'echo "skip = True" > tests/conftest.py\ntouch "$LOOP_DIR/done.md"\n',
+            AUTOCOMMIT="false", PIN_PATHS="tests")
+        self.assert_success(result)
+        self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+        self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
+        self.assertIn("tests", result.stdout)
+
+    def test_a_tool_cache_gitignore_in_an_ignored_directory_is_not_a_mutation(self):
+        # pytest, ruff and mypy write a .gitignore into their cache directory; git never
+        # reads one inside an already-ignored directory, so it decides nothing.
+        (self.repo / "tests").mkdir()
+        (self.repo / "tests/test_fixture.py").write_text("assert True\n")
+        (self.repo / ".gitignore").write_text(".loop/\n.pytest_cache/\n")
+        self.git("add", ".")
+        self.git("commit", "-qm", "tests")
+        (self.loop / "verify.sh").write_text(
+            '#!/bin/bash\nroot=$(git rev-parse --show-toplevel)\n'
+            'mkdir -p "$root/tests/.pytest_cache" && echo "*" > "$root/tests/.pytest_cache/.gitignore"\n')
+        result = self.run_loop(AUTOCOMMIT="false", PIN_PATHS="tests")
+        self.assert_success(result)
+        self.assertIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+
+    def test_pin_paths_cover_a_file_hidden_by_info_exclude(self):
+        self.assert_ignore_rule_cannot_hide_a_pinned_file(
+            'echo tests/conftest.py >> "$(git rev-parse --git-path info/exclude)"\n')
+
+    def test_pin_paths_cover_a_file_hidden_by_the_root_gitignore(self):
+        self.assert_ignore_rule_cannot_hide_a_pinned_file('echo tests/conftest.py >> .gitignore\n')
+
+    def test_pin_paths_cover_a_file_hidden_by_a_self_ignoring_gitignore(self):
+        self.assert_ignore_rule_cannot_hide_a_pinned_file(
+            'printf "conftest.py\\n.gitignore\\n" > tests/.gitignore\n')
+
+    def test_pin_paths_cover_a_file_hidden_by_core_excludes_file(self):
+        self.assert_ignore_rule_cannot_hide_a_pinned_file(
+            'echo conftest.py > "$LOOP_DIR/excludes"\n'
+            'git config core.excludesFile "$LOOP_DIR/excludes"\n')
+
     # --- A conflicted squash waits for a human instead of taking a new suffix ---
     def conflicting_squash(self):
         self.git("branch", "loop/iter-loop")
@@ -725,6 +841,60 @@ class FullLoopRegressions(unittest.TestCase):
         self.assertIn("git branch -D loop/iter-loop", result.stdout)
         self.assertEqual(self.git("branch", "--list", "loop/summary-loop-*"), "")
         self.assertFalse((self.loop / "unexpected-execution").exists())
+
+    def test_executor_leaving_the_iteration_branch_blocks_before_commit(self):
+        main_head = self.git("rev-parse", "main")
+        result = self.run_loop(
+            'git checkout -q main\necho "value = 2" > source.py\ntouch "$LOOP_DIR/done.md"\n',
+            BRANCH_ISOLATION="true", SQUASH_ON_DONE="true")
+        self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+        self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
+        self.assertIn("loop/iter-loop", result.stdout)
+        self.assertEqual(self.git("rev-parse", "main"), main_head)
+        self.assertFalse((self.loop / ".squash-pending").exists())
+
+    def test_signal_during_the_squash_keeps_done_and_waits_for_a_human(self):
+        slow = Path(self.temp.name) / "slow-bin"
+        slow.mkdir()
+        started = slow / "started"
+        (slow / "claude").write_text(f'#!/bin/sh\ntouch "{started}"\nsleep 30\n')
+        (slow / "claude").chmod(0o755)
+        env = self.loop_env('echo "value = 2" > source.py\ntouch "$LOOP_DIR/done.md"\n',
+                            BRANCH_ISOLATION="true", SQUASH_ON_DONE="true",
+                            SQUASH_MSG_ENGINE="claude", MAX_ITERATIONS="3")
+        env["PATH"] = f"{slow}{os.pathsep}{env['PATH']}"
+        runner = subprocess.Popen(["bash", str(self.loop / "run-loop.sh")], cwd=self.repo, env=env,
+                                  text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        deadline = time.monotonic() + 10
+        while not started.exists() and time.monotonic() < deadline:
+            time.sleep(0.1)
+        self.assertTrue(started.exists(), "the squash never reached its message engine")
+        runner.send_signal(signal.SIGTERM)
+        output = runner.communicate(timeout=20)[0]
+        self.assertEqual(self.state()["LAST_STATUS"], "DONE", output)
+        self.assertTrue((self.loop / ".squash-pending").exists(), output)
+        self.assertNotIn("INTERRUPTED", (self.loop / "progress.md").read_text())
+        result = self.run_loop('touch "$LOOP_DIR/unexpected-execution"\n',
+                               BRANCH_ISOLATION="true", SQUASH_ON_DONE="true", MAX_ITERATIONS="3")
+        self.assertIn("[BRANCH:PENDING]", result.stdout)
+        self.assertFalse((self.loop / "unexpected-execution").exists())
+
+    def test_signal_after_the_done_checkpoint_keeps_done(self):
+        # notify.sh runs after DONE is saved; a signal while it runs must not turn the
+        # saved DONE back into CONTINUE and rerun the executor.
+        started = self.loop / "notify-started"
+        (self.loop / "notify.sh").write_text(f'#!/bin/bash\ntouch "{started}"\nsleep 3\n')
+        env = self.loop_env('touch "$LOOP_DIR/done.md"\n', NOTIFY_ENABLED="true", AUTOCOMMIT="false")
+        runner = subprocess.Popen(["bash", str(self.loop / "run-loop.sh")], cwd=self.repo, env=env,
+                                  text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        deadline = time.monotonic() + 10
+        while not started.exists() and time.monotonic() < deadline:
+            time.sleep(0.1)
+        self.assertTrue(started.exists(), "notify.sh never ran")
+        runner.send_signal(signal.SIGTERM)
+        output = runner.communicate(timeout=20)[0]
+        self.assertEqual(self.state()["LAST_STATUS"], "DONE", output)
+        self.assertEqual(self.state()["NEXT_ITERATION"], "2", output)
 
     def test_rerun_after_resolving_a_squash_conflict_does_not_open_a_new_summary(self):
         self.conflicting_squash()
@@ -800,6 +970,30 @@ class FullLoopRegressions(unittest.TestCase):
                     self.assertIn("[ABORT]", result.stdout)
                     self.assertIn(key, result.stdout)
                     self.assertFalse((self.loop / "executed").exists())
+
+    def test_run_budget_stops_retries(self):
+        # A cap is a hard terminator: a failed attempt that spent past it must not
+        # buy the next retry.
+        result = self.run_loop(
+            'echo attempt >> "$LOOP_DIR/attempts"\necho 5 >> "$LOOP_DIR/.cost-usd"\nexit 1\n',
+            USD_PER_RUN_CAP="1", RETRY_LIMIT="4", RETRY_BACKOFF_BASE="1")
+        self.assert_success(result)
+        self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
+        self.assertIn("[BUDGET:RUN]", result.stdout)
+        self.assertEqual((self.loop / "attempts").read_text().count("attempt"), 1)
+
+    def test_adaptive_timeout_reads_only_numeric_timings(self):
+        # The timings log sits where the executor writes, and its median reaches bash
+        # arithmetic: an expression there would run in the runner, outside the timeout.
+        marker = self.loop / "evaluated"
+        injected = f"PIN_TARGETS[$(touch {shlex.quote(str(marker))})0]\n"
+        (self.loop / ".iter-timings.log").write_text(
+            "100\n200\n300\n" + injected * 3 + "foo\n08\n")
+        result = self.run_loop(ADAPTIVE_TIMEOUT="true", EXEC_TIMEOUT="60")
+        self.assert_success(result)
+        self.assertFalse(marker.exists(), result.stdout + result.stderr)
+        self.assertIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+        self.assertIn("median=200s", result.stdout)
 
     def test_bootstrap_next_step_sets_an_external_terminator(self):
         script = template("bootstrap.sh")
