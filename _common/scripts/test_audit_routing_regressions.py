@@ -104,6 +104,16 @@ class TestRoutingSectionEvidence(TempCase):
             "- otherwise `optimize` with an object dispatches.\n")
         self.assertEqual(findings, [])
 
+    def test_exempt_list_ends_before_text_that_follows_it(self):
+        for after in (" `optimize` with an object dispatches.\n",
+                      " /nexus `optimize` asks first.\n",
+                      "\n| `optimize` | GATE |\n",
+                      "\n```\n/nexus `optimize`\n```\n"):
+            with self.subTest(after=after):
+                findings = self.check_bare_dispatch(
+                    "- **Bare-subcommand exception.** Bare tokens reach GATE. **Exempt:** `pack`." + after)
+                self.assertEqual(findings, [])
+
     def test_exempt_list_ends_at_its_sentence(self):
         findings = self.check_bare_dispatch(
             "- **Bare-subcommand exception.** Bare tokens reach GATE. **Exempt:** `pack`. "

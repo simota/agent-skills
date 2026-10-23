@@ -541,12 +541,13 @@ def check_bare_subcommand_dispatch(findings: list[Finding]):
         return
 
     # The exception's own exempt list must not re-admit a contested token. The list
-    # runs to the end of its sentence -- a period before a capital, or the end of its
-    # list item -- so neither an abbreviation ("i.e. no object") nor a line wrap cuts
-    # it short.
+    # runs to the end of its sentence -- a period before whitespace that does not close
+    # an abbreviation ("i.e. no object") -- or the end of its list item, so neither an
+    # abbreviation nor a line wrap cuts it short and the text after it is not read.
     exempt_clause = re.search(
         r"\*\*Exempt(?::\*\*|\*\*[^.\n]*?:)\s*(.+?)"
-        r"(?:\.(?=\s+[A-Z])|\.?[ \t]*(?=\n[ \t]*(?:[-*+][ \t]|\d+[.)][ \t]|#|\n)|\Z))",
+        r"(?:(?<!\bi\.e)(?<!\be\.g)(?<!\betc)(?<!\bvs)\.(?=\s)"
+        r"|\.?[ \t]*(?=\n[ \t]*(?:[-*+][ \t]|\d+[.)][ \t]|#|\||```|~~~|\n)|\Z))",
         section, re.S)
     if exempt_clause:
         exempt = {t.lower() for t in re.findall(r"`([a-z][a-z0-9-]*)`", exempt_clause.group(1))}
