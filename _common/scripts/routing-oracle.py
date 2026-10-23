@@ -566,14 +566,14 @@ def check_bare_subcommand_dispatch(findings: list[Finding]):
     # The exception's own exempt list must not re-admit a contested token. The list
     # ends at its sentence end -- any period before whitespace -- except where the
     # period closes an abbreviation ("i.e.", "e.g.", "cf.", "vs.", "etc.") that the
-    # sentence runs on past; such an abbreviation still ends it before a capital. It
-    # also ends with its list item, so a line wrap does not cut it short.
+    # sentence runs on past; such an abbreviation still ends it before a capital, bold
+    # or not. It also ends with its list item, so a line wrap does not cut it short.
     abbreviations = (r"\bi\.e", r"\be\.g", r"\bcf", r"\bvs", r"\betc")  # each fixed-width
     not_after = "".join(f"(?<!{a})" for a in abbreviations)
     after = "|".join(f"(?<={a})" for a in abbreviations)
     exempt_clause = re.search(
         r"\*\*Exempt(?::\*\*|\*\*[^.\n]*?:)\s*(.+?)"
-        rf"(?:{not_after}\.(?=\s)|(?:{after})\.(?=\s+[A-Z])"
+        rf"(?:{not_after}\.(?=\s)|(?:{after})\.(?=\s+[*_~\[(]*[A-Z])"
         r"|\.?[ \t]*(?=\n[ \t]*(?:[-*+][ \t]|\d+[.)][ \t]|#|\||```|~~~|\n)|\Z))",
         section, re.S)
     if exempt_clause:
