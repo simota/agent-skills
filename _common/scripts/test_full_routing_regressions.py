@@ -65,7 +65,7 @@ class RecipeSourceTests(TempCase):
     def test_list_item_default_dispatch_counts_as_a_default(self):
         # A list marker does not make a declaration less binding: with a ✓ Recipe it
         # is a second default, and alone it is the skill's fallback.
-        for marker in ("- ", "* ", "  - "):
+        for marker in ("- ", "* ", "  - ", "1. ", "2) "):
             with self.subTest(marker=marker):
                 dispatch = marker + "**Default dispatch:** `phase:TRIAGE`\n"
                 path = self.write("skill/SKILL.md", "## Recipes\n" + TABLE
