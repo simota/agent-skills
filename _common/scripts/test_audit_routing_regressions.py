@@ -80,6 +80,13 @@ class TestRoutingSectionEvidence(TempCase):
             with self.subTest(primary=primary, hints=hints):
                 self.assertEqual(len(self.check_producer_verifier(primary, hints)), 1)
 
+    def test_unannotated_producer_counts_as_the_previous_step(self):
+        self.assertEqual(len(self.check_producer_verifier("Builder → Builder[verify]", "Magi[decide]")), 1)
+
+    def test_an_unannotated_step_between_breaks_adjacency(self):
+        self.assertEqual(self.check_producer_verifier(
+            "Builder[api] → Radar → Builder[verify]", "Magi[decide]"), [])
+
     def test_independent_verifier_is_not_flagged(self):
         self.assertEqual(self.check_producer_verifier(
             "Builder[api] → Radar[verify]", "Builder[api], Radar[verify]"), [])

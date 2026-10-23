@@ -382,8 +382,37 @@ def _matrix_rows(content: str, malformed: list[str] | None = None):
         yield cells
 
 
+def _chain_steps(chain: str) -> list[tuple[set[str], str]]:
+    """Split a chain cell into steps: (agent names, annotation) per element.
+
+    Elements are separated by `→` or `,` outside brackets and parentheses, so an
+    unannotated step (`Builder → Builder[verify]`) still occupies its position and
+    an unannotated step between two others breaks their adjacency. Alternatives
+    (`Probe/Radar`, `(Bolt ‖ Zen)`) give a step several names.
+    """
+    elements, current, depth = [], [], 0
+    for char in chain:
+        if char in "([":
+            depth += 1
+        elif char in ")]":
+            depth = max(depth - 1, 0)
+        if depth == 0 and char in "→,":
+            elements.append("".join(current))
+            current = []
+        else:
+            current.append(char)
+    elements.append("".join(current))
+    steps = []
+    for element in elements:
+        annotations = re.findall(r"\[([^\]]*)\]", element)
+        names = set(re.findall(r"\b[A-Z][A-Za-z0-9]*\b", re.sub(r"\[[^\]]*\]", " ", element)))
+        if names:
+            steps.append((names, " ".join(annotations)))
+    return steps
+
+
 def check_producer_verifier(findings: list[Finding]):
-    """RO-3: in a chain's Primary Chain or Recipe Hints column, the agent immediately
+    """RO-3: in a chain's Primary Chain or Recipe Hints column, the step immediately
     preceding a `[...verify...]`-annotated step must not be the same agent as the verifier."""
     if not ROUTING_MATRIX.is_file():
         findings.append(Finding("RO-3", "WARNING", "routing-matrix.md not found — producer/verifier check skipped"))
@@ -394,19 +423,13 @@ def check_producer_verifier(findings: list[Finding]):
         if len(cells) < 3:
             continue
         for column, chain in (("Primary Chain", cells[1]), ("Recipe Hints", cells[2])):
-            # Steps look like "Agent[annotation]" separated by commas or arrows.
-            steps = re.findall(r"([A-Za-z][A-Za-z0-9]*)\[([^\]]*)\]", chain)
-            if not steps:
-                continue
-            if column == "Recipe Hints":
+            steps = _chain_steps(chain)
+            if column == "Recipe Hints" and "[" in chain and steps:
                 rows_checked += 1
-            for i, (agent, annotation) in enumerate(steps):
-                if "verify" not in annotation.lower():
-                    continue
-                if i == 0:
-                    continue  # verify step with nothing before it in this list — not a self-verify risk
-                prev_agent, _ = steps[i - 1]
-                if prev_agent == agent:
+            for i, (agents, annotation) in enumerate(steps):
+                if "verify" not in annotation.lower() or i == 0:
+                    continue  # no verify step, or nothing before it in this list
+                for agent in sorted(agents & steps[i - 1][0]):
                     # WARNING not ERROR: a same-agent verify step can be a legitimate
                     # self-contained continuous-measurement loop rather than a
                     # producer grading its own correctness claim. Surface for
@@ -415,14 +438,14 @@ def check_producer_verifier(findings: list[Finding]):
                     if (cells[0], agent) in RO3_REVIEWED_EXCEPTIONS:
                         findings.append(Finding(
                             "RO-3", "WARNING",
-                            f"{cells[0]}: same-agent verify — `{prev_agent}` immediately precedes its own "
+                            f"{cells[0]}: same-agent verify — `{agent}` immediately precedes its own "
                             f"`{agent}[{annotation}]` verify step in {column}: {chain} "
                             f"(reviewed exception — accepted self-measurement loop, see RO3_REVIEWED_EXCEPTIONS)",
                         ))
                     else:
                         findings.append(Finding(
                             "RO-3", "WARNING",
-                            f"{cells[0]}: same-agent verify — `{prev_agent}` immediately precedes its own "
+                            f"{cells[0]}: same-agent verify — `{agent}` immediately precedes its own "
                             f"`{agent}[{annotation}]` verify step in {column}: {chain} "
                             f"(review: is this a self-contained measurement loop, or a missing independent verifier?)",
                         ))
