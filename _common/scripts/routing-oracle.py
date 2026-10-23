@@ -251,15 +251,20 @@ def check_dead_references(findings: list[Finding]):
             # means the reference/ file belongs to the just-named architect/ skill,
             # not to the citing file's own skill dir. Before flagging a true
             # dead link, check whether exactly one same-named file exists
-            # anywhere else in the repo under a reference/ dir.
+            # anywhere else in the repo under a reference/ dir, owned by a skill
+            # the citing line names -- any owner would let a nexus file cite a
+            # reference it lost because some other skill has one by that name.
             basename = Path(raw_path).name
             # Archived and gitignored trees do not count as "resolvable elsewhere".
             # A retired skill under `.archive/` is not installed and not loadable, so
             # a reference that resolves only there is dead in every way that matters
             # -- and resolving it made two genuinely broken links read as live.
+            line_end = content.find("\n", m.end())
+            line = content[content.rfind("\n", 0, m.start()) + 1 : None if line_end < 0 else line_end]
             elsewhere = [
                 p for p in REPO_ROOT.rglob(f"reference/{basename}")
                 if p.is_file() and not _corpus.is_excluded_path(p, REPO_ROOT)
+                and re.search(rf"(?<![a-z0-9]){re.escape(p.parent.parent.name)}(?![a-z0-9])", line)
             ] if raw_path.startswith("reference/") else []
             if len(elsewhere) == 1:
                 continue  # shorthand cross-skill reference, resolvable elsewhere — not dead
