@@ -529,6 +529,13 @@ cleanup() {
     signal_job KILL
   fi
 
+  # The job is gone, so the executor can no longer touch the pinned files: a change it
+  # made before signalling the runner is recorded now, or the next start re-pins it.
+  if [[ "${EXECUTOR_RAN:-false}" == "true" ]] && ! pin_violation_recorded; then
+    check_goal_immutable || echo "[ABORT] goal.md changed mid-run (GOAL_DRIFT / AP-16)" | tee -a "${LOOP_DIR}/runner.log"
+    check_pins | tee -a "${LOOP_DIR}/runner.log" || true
+  fi
+
   # Once the loop has exited, its checkpoint is final: overwriting a DONE with CONTINUE
   # would rerun the executor on a finished goal. An interrupted squash waits for a
   # human exactly as a conflicted one does.
@@ -537,6 +544,7 @@ cleanup() {
       write_atomic "${SQUASH_PENDING_FILE}" "${SUMMARY_BRANCH}"$'\n'"${ITER_BRANCH}"
       echo "[SIGNAL] Squash of ${ITER_BRANCH} into ${SUMMARY_BRANCH} interrupted — see git status; the next run reports it as pending"
     fi
+    record_loop_dirty || true
   else
     # Step 1: State snapshot (incl. the paths this run left dirty — not human edits)
     write_state "${ITER:-1}" CONTINUE
@@ -568,11 +576,14 @@ trap cleanup SIGINT SIGTERM
 # writes it -- after the executor has exited -- and a later start refuses to re-pin
 # whatever the executor left behind until a human re-pins with recover.sh.
 PIN_VIOLATION_FILE="${LOOP_DIR}/.pin-violation"
-if [[ -f "${PIN_VIOLATION_FILE}" ]]; then
-  echo "[ABORT] unresolved pin violation ($(head -1 "${PIN_VIOLATION_FILE}")) — restore the pinned files, then re-pin them as the baseline: recover.sh --repin-goal"
+# Any entry at the marker's path counts: a directory there must not read as "no violation".
+pin_violation_recorded() { [[ -e "${PIN_VIOLATION_FILE}" || -L "${PIN_VIOLATION_FILE}" ]]; }
+if pin_violation_recorded; then
+  echo "[ABORT] unresolved pin violation ($(head -1 "${PIN_VIOLATION_FILE}" 2>/dev/null || echo "marker is not a file")) — restore the pinned files, then re-pin them as the baseline: recover.sh --repin-goal"
   exit 1
 fi
 record_pin_violation() {
+  rm -rf -- "${PIN_VIOLATION_FILE}"
   write_atomic "${PIN_VIOLATION_FILE}" "$1"
 }
 GOAL_SHA_FILE="${LOOP_DIR}/.goal.sha256"
@@ -640,7 +651,11 @@ pin_ignore_rules() {
         [[ "${dir}" != "${top}" && "${dir}" != "/" ]] || break
         dir=$(dirname -- "${dir}")
       done
-      find . -mindepth 2 -name .gitignore | LC_ALL=C sort
+      # Git never reads a .gitignore inside a directory outer rules ignore (a tool cache
+      # such as .pytest_cache/ writes one); those outer rules are pinned above.
+      find . -mindepth 2 -name .gitignore | LC_ALL=C sort | while IFS= read -r source; do
+        git check-ignore -q --no-index -- "$(dirname -- "${source}")" 2>/dev/null || printf '%s\n' "${source}"
+      done
     } | while IFS= read -r source; do
       if [[ -f "${source}" ]]; then
         printf '%s  %s\n' "$(shasum -a 256 < "${source}" | awk '{print $1}')" "${source}"
@@ -1185,10 +1200,11 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
   echo "[ITER ${ITER}] status=${STATUS} verify=${VERIFY_RESULT} commit=${COMMIT_HASH} duration=${ITER_DURATION}s"
   ITER=${NEXT_ITER}
 done
+LOOP_FINISHED=true
 
 # TOOL_FAILURE, timeout and circuit exits leave the loop before the verification gate;
 # a pin or goal change the executor made before failing is still found and recorded.
-if [[ "${EXECUTOR_RAN}" == "true" ]] && [[ "${STATUS}" != "DONE" ]] && [[ ! -f "${PIN_VIOLATION_FILE}" ]]; then
+if [[ "${EXECUTOR_RAN}" == "true" ]] && [[ "${STATUS}" != "DONE" ]] && ! pin_violation_recorded; then
   if ! check_goal_immutable; then
     echo "[ABORT] goal.md changed mid-run (GOAL_DRIFT / AP-16)" | tee -a "${LOOP_DIR}/runner.log"
     STATUS="BLOCKED"; write_terminal_state BLOCKED
@@ -1202,7 +1218,6 @@ fi
 
 # Uncommitted work this run leaves behind is the loop's own, not a human edit.
 record_loop_dirty
-LOOP_FINISHED=true
 
 #--- Branch isolation (post-loop squash) ---
 # Covers every SQUASH_MSG_ENGINE; a human Co-Authored-By trailer is kept.

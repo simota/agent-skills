@@ -395,6 +395,27 @@ class FullLoopRegressions(unittest.TestCase):
         self.assert_success(result)
         self.assertIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
 
+    def test_signalling_the_runner_does_not_escape_a_pin_violation(self):
+        (self.loop / "verify.sh").write_text("#!/bin/bash\nexit 1\n")
+        self.run_loop(
+            'printf "#!/bin/bash\\nexit 0\\n" > "$LOOP_DIR/verify.sh"\n'
+            'rm -f "$LOOP_DIR/.pins.sha256" "$LOOP_DIR/.goal.sha256"\n'
+            'kill -TERM "$(cat "$LOOP_DIR/.run-loop.lock")"\nsleep 5\n', AUTOCOMMIT="false")
+        self.assertTrue((self.loop / ".pin-violation").exists())
+        result = self.run_loop('touch "$LOOP_DIR/done.md"\n', AUTOCOMMIT="false")
+        self.assertNotEqual(result.returncode, 0, result.stdout)
+        self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+
+    def test_a_directory_cannot_stand_in_for_the_pin_violation_marker(self):
+        (self.loop / "verify.sh").write_text("#!/bin/bash\nexit 1\n")
+        self.run_loop(
+            'printf "#!/bin/bash\\nexit 0\\n" > "$LOOP_DIR/verify.sh"\n'
+            'rm -f "$LOOP_DIR/.pins.sha256"\nmkdir "$LOOP_DIR/.pin-violation"\nexit 1\n',
+            AUTOCOMMIT="false", RETRY_LIMIT="1")
+        result = self.run_loop('touch "$LOOP_DIR/done.md"\n', AUTOCOMMIT="false")
+        self.assertNotEqual(result.returncode, 0, result.stdout)
+        self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
+
     def test_pin_paths_detect_a_retargeted_directory_symlink(self):
         for name, code in (("safe", 1), ("malicious", 0)):
             (self.repo / name).mkdir()
@@ -751,6 +772,21 @@ class FullLoopRegressions(unittest.TestCase):
         self.assertNotIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
         self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
         self.assertIn("tests", result.stdout)
+
+    def test_a_tool_cache_gitignore_in_an_ignored_directory_is_not_a_mutation(self):
+        # pytest, ruff and mypy write a .gitignore into their cache directory; git never
+        # reads one inside an already-ignored directory, so it decides nothing.
+        (self.repo / "tests").mkdir()
+        (self.repo / "tests/test_fixture.py").write_text("assert True\n")
+        (self.repo / ".gitignore").write_text(".loop/\n.pytest_cache/\n")
+        self.git("add", ".")
+        self.git("commit", "-qm", "tests")
+        (self.loop / "verify.sh").write_text(
+            '#!/bin/bash\nroot=$(git rev-parse --show-toplevel)\n'
+            'mkdir -p "$root/tests/.pytest_cache" && echo "*" > "$root/tests/.pytest_cache/.gitignore"\n')
+        result = self.run_loop(AUTOCOMMIT="false", PIN_PATHS="tests")
+        self.assert_success(result)
+        self.assertIn("NEXUS_LOOP_STATUS: DONE", result.stdout)
 
     def test_pin_paths_cover_a_file_hidden_by_info_exclude(self):
         self.assert_ignore_rule_cannot_hide_a_pinned_file(

@@ -222,7 +222,8 @@ if [[ "${DO_CLEAR_STALL}" == "true" ]]; then
 fi
 if [[ "${DO_REPIN_GOAL}" == "true" ]] && [[ -f "${LOOP_DIR}/goal.md" ]]; then
   write_atomic "${LOOP_DIR}/.goal.sha256" "$(shasum -a 256 "${LOOP_DIR}/goal.md" | awk '{print $1}')"
-  rm -f "${LOOP_DIR}/.pins.sha256" "${LOOP_DIR}/.pin-violation"
+  rm -f "${LOOP_DIR}/.pins.sha256"
+  rm -rf -- "${LOOP_DIR}/.pin-violation"
   echo "[OK] goal.md re-pinned; artifact pins re-taken on next runner start — confirm both are the intended baseline"
 fi
 
