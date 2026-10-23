@@ -383,8 +383,8 @@ def _matrix_rows(content: str, malformed: list[str] | None = None):
 
 
 def check_producer_verifier(findings: list[Finding]):
-    """RO-3: in a chain's Recipe Hints list, the agent immediately preceding a
-    `[...verify...]`-annotated step must not be the same agent as the verifier."""
+    """RO-3: in a chain's Primary Chain or Recipe Hints column, the agent immediately
+    preceding a `[...verify...]`-annotated step must not be the same agent as the verifier."""
     if not ROUTING_MATRIX.is_file():
         findings.append(Finding("RO-3", "WARNING", "routing-matrix.md not found — producer/verifier check skipped"))
         return
@@ -393,38 +393,39 @@ def check_producer_verifier(findings: list[Finding]):
     for cells in _matrix_rows(content):
         if len(cells) < 3:
             continue
-        recipe_hints = cells[2]
-        # Steps look like "Agent[annotation]" separated by commas.
-        steps = re.findall(r"([A-Za-z][A-Za-z0-9]*)\[([^\]]*)\]", recipe_hints)
-        if not steps:
-            continue
-        rows_checked += 1
-        for i, (agent, annotation) in enumerate(steps):
-            if "verify" not in annotation.lower():
+        for column, chain in (("Primary Chain", cells[1]), ("Recipe Hints", cells[2])):
+            # Steps look like "Agent[annotation]" separated by commas or arrows.
+            steps = re.findall(r"([A-Za-z][A-Za-z0-9]*)\[([^\]]*)\]", chain)
+            if not steps:
                 continue
-            if i == 0:
-                continue  # verify step with nothing before it in this list — not a self-verify risk
-            prev_agent, _ = steps[i - 1]
-            if prev_agent == agent:
-                # WARNING not ERROR: a same-agent verify step can be a legitimate
-                # self-contained continuous-measurement loop rather than a
-                # producer grading its own correctness claim. Surface for
-                # human review; don't hard-block on a pattern this heuristic
-                # can't structurally distinguish from an intentional design.
-                if (cells[0], agent) in RO3_REVIEWED_EXCEPTIONS:
-                    findings.append(Finding(
-                        "RO-3", "WARNING",
-                        f"{cells[0]}: same-agent verify — `{prev_agent}` immediately precedes its own "
-                        f"`{agent}[{annotation}]` verify step in Recipe Hints: {recipe_hints} "
-                        f"(reviewed exception — accepted self-measurement loop, see RO3_REVIEWED_EXCEPTIONS)",
-                    ))
-                else:
-                    findings.append(Finding(
-                        "RO-3", "WARNING",
-                        f"{cells[0]}: same-agent verify — `{prev_agent}` immediately precedes its own "
-                        f"`{agent}[{annotation}]` verify step in Recipe Hints: {recipe_hints} "
-                        f"(review: is this a self-contained measurement loop, or a missing independent verifier?)",
-                    ))
+            if column == "Recipe Hints":
+                rows_checked += 1
+            for i, (agent, annotation) in enumerate(steps):
+                if "verify" not in annotation.lower():
+                    continue
+                if i == 0:
+                    continue  # verify step with nothing before it in this list — not a self-verify risk
+                prev_agent, _ = steps[i - 1]
+                if prev_agent == agent:
+                    # WARNING not ERROR: a same-agent verify step can be a legitimate
+                    # self-contained continuous-measurement loop rather than a
+                    # producer grading its own correctness claim. Surface for
+                    # human review; don't hard-block on a pattern this heuristic
+                    # can't structurally distinguish from an intentional design.
+                    if (cells[0], agent) in RO3_REVIEWED_EXCEPTIONS:
+                        findings.append(Finding(
+                            "RO-3", "WARNING",
+                            f"{cells[0]}: same-agent verify — `{prev_agent}` immediately precedes its own "
+                            f"`{agent}[{annotation}]` verify step in {column}: {chain} "
+                            f"(reviewed exception — accepted self-measurement loop, see RO3_REVIEWED_EXCEPTIONS)",
+                        ))
+                    else:
+                        findings.append(Finding(
+                            "RO-3", "WARNING",
+                            f"{cells[0]}: same-agent verify — `{prev_agent}` immediately precedes its own "
+                            f"`{agent}[{annotation}]` verify step in {column}: {chain} "
+                            f"(review: is this a self-contained measurement loop, or a missing independent verifier?)",
+                        ))
     if rows_checked == 0:
         findings.append(Finding("RO-3", "WARNING", "no bracket-annotated Recipe Hints rows found — producer/verifier check may be stale vs table format"))
 

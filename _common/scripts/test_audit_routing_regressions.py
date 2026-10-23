@@ -66,6 +66,24 @@ class TestRoutingSectionEvidence(TempCase):
         self.assertTrue(any(f.level == "ERROR" and "exempt" in f.message for f in findings),
                         [str(f) for f in findings])
 
+    def check_producer_verifier(self, primary, hints):
+        matrix = self.write("routing-matrix.md", "| Task | Primary Chain | Recipe Hints |\n"
+                            "|---|---|---|\n" f"| DECISION | {primary} | {hints} |\n")
+        findings = []
+        with patch.object(routing, "ROUTING_MATRIX", matrix):
+            routing.check_producer_verifier(findings)
+        return [f for f in findings if "same-agent verify" in f.message]
+
+    def test_same_agent_verify_is_flagged_in_either_chain_column(self):
+        for primary, hints in (("Magi", "Builder[api], Builder[verify]"),
+                               ("Builder[api] → Builder[verify+regression]", "Magi[decide]")):
+            with self.subTest(primary=primary, hints=hints):
+                self.assertEqual(len(self.check_producer_verifier(primary, hints)), 1)
+
+    def test_independent_verifier_is_not_flagged(self):
+        self.assertEqual(self.check_producer_verifier(
+            "Builder[api] → Radar[verify]", "Builder[api], Radar[verify]"), [])
+
     def test_exempt_list_continues_past_an_abbreviation(self):
         findings = self.check_bare_dispatch(
             "- **Bare-subcommand exception.** Bare tokens reach GATE. "
