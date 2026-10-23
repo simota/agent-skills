@@ -222,6 +222,19 @@ class TestInstructionDrift(CheckerCase):
         self.edit("CLAUDE.md", "90のグローバルスキル", "3のグローバルスキル")
         self.expect_caught("lint-instructions.py", "claims 3 skills", "--severity", "error")
 
+    def test_a_repository_local_extension_count_that_drifts_fails(self):
+        """I1. AGENTS.md counts the project-local skills as "operating
+        extensions", which is not a skill noun, so the claim was never read."""
+        self.edit("AGENTS.md", "plus 3 repository-local operating", "plus 7 repository-local operating")
+        self.expect_caught(
+            "lint-instructions.py", "claims 7 project-local skills", "--severity", "error"
+        )
+
+    def test_an_unscoped_extension_count_is_not_a_skill_count(self):
+        """I1. "extensions" counts skills only under a local qualifier."""
+        self.append("CLAUDE.md", "\n- 2 extensions are loaded by the editor.\n")
+        self.expect_clean("lint-instructions.py", "--severity", "error")
+
     def test_a_dead_path_in_an_instruction_file_fails(self):
         self.edit(
             "CLAUDE.md", "`_common/PROJECT_LOCAL_SKILLS.md`", "`_common/NO_SUCH_CONTRACT.md`"
@@ -652,6 +665,38 @@ class TestLessonsRegister(CheckerCase):
         self.add_row(mech="Reviewers ought to re-run the matcher.")
         self.expect_caught("lint-lessons.py", "LS-2", "--severity", "error")
 
+    def test_the_registers_own_counter_example_is_rejected(self):
+        """LS-2. LESSONS.md names "we will be more careful" as the answer that
+        is not a mechanism; a literal "be careful" match let it through."""
+        self.add_row(mech="We will be more careful when editing counts.")
+        self.expect_caught("lint-lessons.py", "LS-2", "--severity", "error")
+
+    def test_a_japanese_intention_is_rejected(self):
+        """LS-2. The repository writes Japanese; an English-only phrase list
+        accepted the same disposition written in Japanese."""
+        self.add_row(mech="件数を忘れずに確認する。")
+        self.expect_caught("lint-lessons.py", "LS-2", "--severity", "error")
+
+    def test_a_placeholder_mechanism_fails(self):
+        """LS-1. "TBD" is an empty cell with characters in it."""
+        self.add_row(mech="TBD")
+        self.expect_caught("lint-lessons.py", "LS-1", "--severity", "error")
+
+    def test_a_row_without_a_leading_pipe_is_still_checked(self):
+        """GFM makes the leading pipe optional; such a row ended the register
+        and skipped every rule."""
+        self.append(
+            "_common/LESSONS.md",
+            "\nL902 | Something happened. | `F9` | A check enforces it. | `Makefile` | 2026-08-21 |\n",
+        )
+        self.expect_caught("lint-lessons.py", "L902", "--severity", "error")
+
+    def test_a_where_with_a_section_pointer_resolves(self):
+        """LS-3. `path` § Section names a file; stripping only the outer
+        backticks read the pointer as part of the path and blocked validate."""
+        self.add_row(mech="A check enforces it.", where="`_common/scripts/test_checkers.py` § I1")
+        self.expect_clean("lint-lessons.py", "--severity", "error")
+
     def test_a_mechanism_living_nowhere_fails(self):
         """A `Where` that stopped resolving means the mechanism was deleted and
         the lesson quietly stopped being kept."""
@@ -732,6 +777,16 @@ class TestProjectLocalMirror(CheckerCase):
     def test_a_mirror_that_diverges_from_its_canonical_tree_fails(self):
         self.append(".agents/skills/orbit/reference/examples.md", "\nmirror-only drift\n")
         self.expect_caught("lint-project-local.py", "orbit: canonical/mirror trees differ",
+                           "--severity", "error")
+
+
+    def test_a_shell_reference_without_its_shared_symlink_fails(self):
+        """PL-3. Only md/py/json/yaml references were read, so a `.sh` under
+        `_templates/` passed with no `_templates` symlink beside the skill."""
+        ref = "\nRun `_templates/learning-loop-kit/_scripts/check-rendered.sh`.\n"
+        self.append(".claude/skills/lore/SKILL.md", ref)
+        self.append(".agents/skills/lore/SKILL.md", ref)
+        self.expect_caught("lint-project-local.py", "references `_templates/`",
                            "--severity", "error")
 
 

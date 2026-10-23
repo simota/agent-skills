@@ -64,13 +64,16 @@ INSTRUCTION_FILES = ["AGENTS.md", "CLAUDE.md"]
 # opening the next paragraph.
 # つ is left out: "1つのスキルで完結する" is routing prose, not a corpus count, and it is far
 # more common in these files than a count written with つ.
+# "Extensions" is a skill noun only under a local qualifier: AGENTS.md counts the
+# project-local skills as "3 repository-local operating extensions", while a bare
+# "2 extensions" is about something else.
 # Whitespace that stays inside one paragraph: a soft line wrap is allowed, a blank line is not.
 _SEP = r"(?:[^\S\n]|\n(?![^\S\n]*\n))"
 COUNT_PATTERN = re.compile(
     rf"(?<![\d,.])(\d{{1,3}}(?:,\d{{3}})+|\d{{1,4}})\+?(?:-|{_SEP}*)(?:個|件|本)?{_SEP}*(?:の)?{_SEP}*"
     rf"((?:(?:global|specialist|agent|project-local|repository-local|repo-local"
     rf"|グローバル|プロジェクトローカル|専用の?){_SEP}*)*)"
-    rf"(?:skill{_SEP}+agents?|skills?|スキルエージェント|スキル)",
+    rf"(?:skill{_SEP}+agents?|skills?|スキルエージェント|スキル|(?P<ext>(?:operating{_SEP}+)?extensions?))",
     re.I,
 )
 
@@ -133,6 +136,8 @@ def check_counts(path: Path, text: str, actual: int) -> list[tuple[str, str, str
         # a different count ("3 project-local skills, 90 global skills").
         if any(mark in qualifier for mark in LOCAL_MARKERS):
             is_local = True
+        elif m.group("ext"):
+            continue
         elif "global" in qualifier or "グローバル" in qualifier:
             is_local = False
         else:

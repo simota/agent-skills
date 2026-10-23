@@ -20,7 +20,7 @@ SHARED_NAMESPACES = ("_common", "_templates")
 REGISTRY_ROW_RE = re.compile(r"^\|\s*`([a-z0-9-]+)`\s*\|", re.MULTILINE)
 SHARED_REF_RE = re.compile(
     r"(?<![A-Za-z0-9_./-])"
-    r"((?:_common|_templates)/[A-Za-z0-9_./-]+\.(?:md|py|json|ya?ml))"
+    r"((?:_common|_templates)/[A-Za-z0-9_./-]+\.(?:md|py|sh|json|ya?ml))"
 )
 
 
