@@ -114,6 +114,19 @@ class TestRoutingSectionEvidence(TempCase):
                     "- **Bare-subcommand exception.** Bare tokens reach GATE. **Exempt:** `pack`." + after)
                 self.assertEqual(findings, [])
 
+    def test_exempt_list_ends_at_a_sentence_closing_abbreviation(self):
+        findings = self.check_bare_dispatch(
+            "- **Bare-subcommand exception.** Bare tokens reach GATE. **Exempt:** `pack`, etc. "
+            "Fixtures cover `optimize`.\n")
+        self.assertEqual(findings, [])
+
+    def test_exempt_list_continues_past_cf(self):
+        findings = self.check_bare_dispatch(
+            "- **Bare-subcommand exception.** Bare tokens reach GATE. "
+            "**Exempt:** `pack` (cf. `optimize`).\n")
+        self.assertTrue(any(f.level == "ERROR" and "exempt" in f.message for f in findings),
+                        [str(f) for f in findings])
+
     def test_exempt_list_ends_at_its_sentence(self):
         findings = self.check_bare_dispatch(
             "- **Bare-subcommand exception.** Bare tokens reach GATE. **Exempt:** `pack`. "
