@@ -1191,6 +1191,9 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
   #--- Atomic state write ---
   NEXT_ITER=$((ITER + 1))
   write_state "${NEXT_ITER}" "${STATUS}"
+  # A saved DONE is final from here: a signal during notify.sh or the log lines below
+  # must not rewrite it as CONTINUE and rerun the executor on a finished goal.
+  [[ "${STATUS}" != "DONE" ]] || LOOP_FINISHED=true
 
   #--- Iteration notification (|| true — never fatal) ---
   ITER_END=$(date +%s)

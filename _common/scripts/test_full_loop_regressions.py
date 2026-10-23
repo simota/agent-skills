@@ -879,6 +879,23 @@ class FullLoopRegressions(unittest.TestCase):
         self.assertIn("[BRANCH:PENDING]", result.stdout)
         self.assertFalse((self.loop / "unexpected-execution").exists())
 
+    def test_signal_after_the_done_checkpoint_keeps_done(self):
+        # notify.sh runs after DONE is saved; a signal while it runs must not turn the
+        # saved DONE back into CONTINUE and rerun the executor.
+        started = self.loop / "notify-started"
+        (self.loop / "notify.sh").write_text(f'#!/bin/bash\ntouch "{started}"\nsleep 3\n')
+        env = self.loop_env('touch "$LOOP_DIR/done.md"\n', NOTIFY_ENABLED="true", AUTOCOMMIT="false")
+        runner = subprocess.Popen(["bash", str(self.loop / "run-loop.sh")], cwd=self.repo, env=env,
+                                  text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        deadline = time.monotonic() + 10
+        while not started.exists() and time.monotonic() < deadline:
+            time.sleep(0.1)
+        self.assertTrue(started.exists(), "notify.sh never ran")
+        runner.send_signal(signal.SIGTERM)
+        output = runner.communicate(timeout=20)[0]
+        self.assertEqual(self.state()["LAST_STATUS"], "DONE", output)
+        self.assertEqual(self.state()["NEXT_ITERATION"], "2", output)
+
     def test_rerun_after_resolving_a_squash_conflict_does_not_open_a_new_summary(self):
         self.conflicting_squash()
         # Follow the printed "Resolve" instruction.
