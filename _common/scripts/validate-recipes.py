@@ -13,9 +13,10 @@ Validates every SKILL.md against the rules defined in `_common/RECIPES.md`:
             hub skills (HUB_SKILLS) → always INFO (recipe breadth by design)
             reviewed skills (REC04_REVIEWED) → INFO while at or below the reviewed
             count; warns again if the count grows past it
-  R-REC-05: historical (`_common/RECIPES.md`) -- superseded by lint-frontmatter
-            ST1, which requires `## Recipes` in every skill. A skill without the
-            section is only noted here (INFO); ST1 owns the requirement
+  R-REC-05: `## Recipes` is present (ERROR). lint-frontmatter ST1 states the
+            requirement but is advisory, and a skill without the exact heading
+            (`## Recipes (Subcommands)` included) skips every rule above, so the
+            requirement blocks here
 
 Plus heading integrity:
   H-REC-01: `## Subcommand Dispatch` heading exists alongside `## Recipes` (ERROR)
@@ -212,8 +213,8 @@ def validate(skill: str, path: Path) -> tuple[list[str], list[str], list[str]]:
 
     block = extract_recipes_block(content, path.parent)
     if block is None:
-        infos.append("R-REC-05: no `## Recipes` section — required for every skill "
-                     "(historical rule, superseded by lint-frontmatter ST1)")
+        errors.append("R-REC-05: no bare `## Recipes` section — required for every skill "
+                      "(lint-frontmatter ST1); a suffixed heading is not read")
         return errors, warnings, infos
 
     rows = parse_rows(block, errors)
@@ -234,9 +235,11 @@ def validate(skill: str, path: Path) -> tuple[list[str], list[str], list[str]]:
                               f"(missing: {sorted(expected - actual)}, unknown: {sorted(actual - expected)})")
             if len(allowlist) != len(actual):
                 errors.append("R-REC-02: duplicate subcommands in dispatch allowlist")
-        declared = re.findall(r"Default Recipe:\s*`([^`]+)`", active_text(source_block))
+        # Rule 3 of the externalized registry: the default is marked in SKILL.md,
+        # in plain or bold form, whenever the registry has one.
+        declared = re.findall(r"(?:\*\*)?Default Recipe:(?:\*\*)?\s*`([^`]+)`", active_text(source_block))
         defaults = [subcmd for _, subcmd, default in rows if "✓" in default]
-        if declared and declared != defaults:
+        if (declared or defaults) and declared != defaults:
             errors.append("R-REC-01: external registry Default Recipe declaration differs "
                           f"from its table (declared: {declared}, table: {defaults})")
 

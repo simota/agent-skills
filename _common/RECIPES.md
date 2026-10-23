@@ -72,9 +72,9 @@ A skill whose Recipes table has grown large enough to push `SKILL.md` toward the
 
 Rules:
 
-1. The `## Recipes` section stays in `SKILL.md` — only its table moves. Removing the section entirely trips lint-frontmatter `ST1` (the historical `R-REC-05` also reports it).
+1. The `## Recipes` section stays in `SKILL.md` — only its table moves. Removing the section, or suffixing its heading, fails `R-REC-05` (lint-frontmatter `ST1` also reports it, advisory).
 2. The section must name the registry as a backticked path matching `reference/*recipes-index.md`; the validators follow that pointer and validate the table wherever it lives.
-3. The allowlist must list **every** subcommand. Mark the default Recipe when one exists; otherwise declare the explicit `Default dispatch` in `## Subcommand Dispatch`. A token absent from the allowlist is not a subcommand.
+3. The allowlist must list **every** subcommand. Mark the default Recipe when one exists (``Default Recipe: `token` `` beside the allowlist, compared with the registry's ✓ row by R-REC-01); otherwise declare the explicit `Default dispatch` in `## Subcommand Dispatch`. A token absent from the allowlist is not a subcommand.
 4. The registry file states its own purpose and read-trigger like any other reference.
 
 Use this only when the size ceiling actually forces it; a table that fits belongs inline, where it is one read away instead of two. A skill using it is identifiable without a roster here: its `## Recipes` section carries the pointer instead of a table.
@@ -168,7 +168,7 @@ The following rules are evaluated by **Gauge** during normalization audits.
 | R-REC-02 | All Subcommand values must match `^(?=.{2,20}$)[a-z0-9]+(?:-[a-z0-9]+)*$` (kebab-case, 2-20 chars; leading digit allowed for domain terms like `5whys`) and be backtick-quoted in the Recipe table | ERROR |
 | R-REC-03 | Subcommand values must not be reserved words: `default`, `auto`, `help`, `list` | ERROR |
 | R-REC-04 | Recipe count, tiered (calibrated 2026-07-03 against the 132-skill corpus, where 54% exceeded the old flat max-7): ≤7 recommended; 8-10 = INFO (corpus norm band, ≤10 = P95); 11+ = WARNING (consolidation review candidate); hub skills (`HUB_SKILLS` in validator, currently `nexus`) always INFO — recipe breadth by design; a skill whose count was reviewed and found to be breadth rather than duplication is INFO while it stays at or below its reviewed count (`REC04_REVIEWED`, see below) | INFO / WARNING (tiered) |
-| R-REC-05 | Historical (Phase 1): presence of `## Recipes` was RECOMMENDED for Adoption Tiers 1-2, not required. Superseded — the heading is now required for every skill (lint-frontmatter ST1) | — (historical) |
+| R-REC-05 | Every skill carries a bare `## Recipes` heading (Phase 1 only RECOMMENDED it for Adoption Tiers 1-2). lint-frontmatter ST1 states the requirement but is advisory; a missing or suffixed heading skips every rule above, so it blocks here | ERROR |
 
 ---
 

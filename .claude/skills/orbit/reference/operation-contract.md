@@ -72,6 +72,8 @@ Rules:
 - `TOTAL_API_CALLS` (cumulative API call count)
 - `ESTIMATED_COST_USD` (cumulative estimated cost)
 
+A signal rewrites the checkpoint as an interrupted `CONTINUE` only while an iteration is in flight and unsaved. Before the loop (the resume gate included) it keeps the loaded or gated checkpoint, and once an iteration is saved — its next iteration, or a `BLOCKED` stop — it leaves that checkpoint as written.
+
 Companion loop artifacts (not in `state.env`, but part of the resumable contract — written/read by the `generate` runner):
 
 | Artifact | Role | Owner |
@@ -80,7 +82,7 @@ Companion loop artifacts (not in `state.env`, but part of the resumable contract
 | `.pins.sha256` | manifest pinning `verify.sh`, `PROMPT.md`, `.claude/settings{,.local}.json` and `PIN_PATHS` (directories in Git: tracked + untracked-not-ignored files, every file when the pinned directory is itself ignored; the ignore rules that decide this — `info/exclude`, `core.excludesFile`, and each `.gitignore` above and below the directory — are pinned with it; symlinks by their target) at loop start; mid-run mismatch ABORTs, and so does deleting or rewriting the manifest (the runner holds its digest from start) (`ARTIFACT_PINS`, AP-13 / AP-20) | runner pins; re-pin via `recover.sh --repin-goal` |
 | `.pin-violation` | written by the runner (after the executor has exited) when a pin or `goal.md` check fails, on every exit the runner handles (verification gate, `TOOL_FAILURE`, timeout, circuit, and every catchable signal whose default action ends the runner; not `SIGKILL`, nor a process that escaped the executor's process group); while present, the runner refuses to start instead of re-taking missing pins from the tampered state (AP-13 / AP-16 / AP-20) | runner writes; cleared only by `recover.sh --repin-goal` |
 | `dirty-start-paths.nul` | pre-existing dirty paths excluded from auto-commit; taken at loop start, kept across resumes and extended on resume with paths a human dirtied while the loop was stopped, removed at `DONE` | runner only |
-| `loop-dirty-paths.nul` | paths the loop itself left uncommitted when it stopped (BLOCKED / interrupted); on resume these stay auto-commit candidates while other newly dirty paths join the baseline; removed at `DONE` | runner only |
+| `loop-dirty-paths.nul` | paths the loop itself left uncommitted when it stopped (BLOCKED / interrupted, or an auto-commit a pre-commit hook rejected, which stops `BLOCKED`); on resume these stay auto-commit candidates while other newly dirty paths join the baseline; removed at `DONE` | runner only |
 | `.squash-pending` | summary + iteration branch of a failed squash (conflict, rejected summary commit, stash restore) or of one a signal interrupted — a signal after the loop never rewrites the DONE checkpoint; reruns stop `[BRANCH:PENDING]` until the human deletes the iteration branch (resolved) or the summary branch (retry) | runner writes; human resolves |
 | `.cost-usd` | append-only per-iteration USD floats; runner sums them to enforce `USD_PER_RUN_CAP` / `USD_PER_ITER_CAP` | executor appends; runner reads |
 | `.action-sig.log` | per-iteration change signature; `CONVERGENCE_WINDOW` identical lines → `CONVERGENCE_STALL` | runner only |

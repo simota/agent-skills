@@ -222,6 +222,19 @@ class TestInstructionDrift(CheckerCase):
         self.edit("CLAUDE.md", "90のグローバルスキル", "3のグローバルスキル")
         self.expect_caught("lint-instructions.py", "claims 3 skills", "--severity", "error")
 
+    def test_a_repository_local_extension_count_that_drifts_fails(self):
+        """I1. AGENTS.md counts the project-local skills as "operating
+        extensions", which is not a skill noun, so the claim was never read."""
+        self.edit("AGENTS.md", "plus 3 repository-local operating", "plus 7 repository-local operating")
+        self.expect_caught(
+            "lint-instructions.py", "claims 7 project-local skills", "--severity", "error"
+        )
+
+    def test_an_unscoped_extension_count_is_not_a_skill_count(self):
+        """I1. "extensions" counts skills only under a local qualifier."""
+        self.append("CLAUDE.md", "\n- 2 extensions are loaded by the editor.\n")
+        self.expect_clean("lint-instructions.py", "--severity", "error")
+
     def test_a_dead_path_in_an_instruction_file_fails(self):
         self.edit(
             "CLAUDE.md", "`_common/PROJECT_LOCAL_SKILLS.md`", "`_common/NO_SUCH_CONTRACT.md`"
@@ -343,13 +356,14 @@ class TestContractDelivery(CheckerCase):
         self.expect_caught("lint-contracts.py", "ORPHAN_FIXTURE.md", "--severity", "error")
 
     def test_a_contract_with_no_declared_tier_fails(self):
-        """CD-6. An undeclared tier makes CD-1 unable to see the file at all."""
+        """CD-6. An undeclared tier makes CD-1 unable to see the file at all.
+        A spine fixture passed only because CD-1 fired; CD-6 itself was advisory."""
         self.edit(
-            "_common/VALUES.md",
-            "> **Tier:** `spine` — in effect on every run.",
-            "This file has no tier line.",
+            "_common/RECIPES.md",
+            "> **Tier:** `authoring`",
+            "> This file has no tier line.",
         )
-        self.expect_caught("lint-contracts.py", "CD-", "--severity", "error")
+        self.expect_caught("lint-contracts.py", "CD-6", "--severity", "error")
 
     def test_a_gitignored_journal_does_not_deliver_a_contract(self):
         """Regression. `.agents/` is gitignored, so an edge through it made a
@@ -615,6 +629,23 @@ class TestRoutingSurface(CheckerCase):
         self.expect_clean("routing-oracle.py", "--severity", "error")
 
 
+class TestNexusReferences(CheckerCase):
+    """`routing-oracle.py` RO-1."""
+
+    def test_a_bare_reference_owned_by_another_skill_is_dead(self):
+        """RO-1. A bare `reference/X.md` resolved through any skill owning an X.md,
+        so a nexus file citing a reference it does not have passed."""
+        self.append("nexus/reference/spec-recipe.md",
+                    "\nSee `reference/communication-patterns.md`.\n")
+        self.expect_caught("routing-oracle.py", "communication-patterns.md", "--severity", "error")
+
+    def test_a_reference_shorthand_after_its_owning_skill_resolves(self):
+        """RO-1. "`rally/SKILL.md` (+ `reference/X.md`)" names the owner."""
+        self.append("nexus/reference/spec-recipe.md",
+                    "\nSee `rally/SKILL.md` (+ `reference/communication-patterns.md`).\n")
+        self.expect_clean("routing-oracle.py", "--severity", "error")
+
+
 class TestLessonsRegister(CheckerCase):
     """`lint-lessons.py`. The register's entire value is what it refuses, so
     every refusal is tested; a gate that accepts everything is a filing cabinet."""
@@ -651,6 +682,38 @@ class TestLessonsRegister(CheckerCase):
     def test_ought_to_is_rejected(self):
         self.add_row(mech="Reviewers ought to re-run the matcher.")
         self.expect_caught("lint-lessons.py", "LS-2", "--severity", "error")
+
+    def test_the_registers_own_counter_example_is_rejected(self):
+        """LS-2. LESSONS.md names "we will be more careful" as the answer that
+        is not a mechanism; a literal "be careful" match let it through."""
+        self.add_row(mech="We will be more careful when editing counts.")
+        self.expect_caught("lint-lessons.py", "LS-2", "--severity", "error")
+
+    def test_a_japanese_intention_is_rejected(self):
+        """LS-2. The repository writes Japanese; an English-only phrase list
+        accepted the same disposition written in Japanese."""
+        self.add_row(mech="件数を忘れずに確認する。")
+        self.expect_caught("lint-lessons.py", "LS-2", "--severity", "error")
+
+    def test_a_placeholder_mechanism_fails(self):
+        """LS-1. "TBD" is an empty cell with characters in it."""
+        self.add_row(mech="TBD")
+        self.expect_caught("lint-lessons.py", "LS-1", "--severity", "error")
+
+    def test_a_row_without_a_leading_pipe_is_still_checked(self):
+        """GFM makes the leading pipe optional; such a row ended the register
+        and skipped every rule."""
+        self.append(
+            "_common/LESSONS.md",
+            "\nL902 | Something happened. | `F9` | A check enforces it. | `Makefile` | 2026-08-21 |\n",
+        )
+        self.expect_caught("lint-lessons.py", "L902", "--severity", "error")
+
+    def test_a_where_with_a_section_pointer_resolves(self):
+        """LS-3. `path` § Section names a file; stripping only the outer
+        backticks read the pointer as part of the path and blocked validate."""
+        self.add_row(mech="A check enforces it.", where="`_common/scripts/test_checkers.py` § I1")
+        self.expect_clean("lint-lessons.py", "--severity", "error")
 
     def test_a_mechanism_living_nowhere_fails(self):
         """A `Where` that stopped resolving means the mechanism was deleted and
@@ -735,6 +798,16 @@ class TestProjectLocalMirror(CheckerCase):
                            "--severity", "error")
 
 
+    def test_a_shell_reference_without_its_shared_symlink_fails(self):
+        """PL-3. Only md/py/json/yaml references were read, so a `.sh` under
+        `_templates/` passed with no `_templates` symlink beside the skill."""
+        ref = "\nRun `_templates/learning-loop-kit/_scripts/check-rendered.sh`.\n"
+        self.append(".claude/skills/lore/SKILL.md", ref)
+        self.append(".agents/skills/lore/SKILL.md", ref)
+        self.expect_caught("lint-project-local.py", "references `_templates/`",
+                           "--severity", "error")
+
+
 class TestRecipeValidator(CheckerCase):
     """`validate-recipes.py`."""
 
@@ -744,8 +817,26 @@ class TestRecipeValidator(CheckerCase):
         self.edit("zen/SKILL.md", "## Recipes", "## Recipe Notes")
         with mock.patch.dict(os.environ, {"VERBOSE": "1"}):
             _, out = self.run_checker("validate-recipes.py", "--severity", "error")
-        self.assertIn("superseded by lint-frontmatter ST1", out)
+        self.assertIn("lint-frontmatter ST1", out)
         self.assertNotIn("RECOMMENDED for Tier 1-2", out)
+
+    def test_a_suffixed_recipes_heading_fails(self):
+        """R-REC-05. ST1 is advisory, and a suffixed heading is not `## Recipes`,
+        so every Recipe rule was skipped for the skill and validate passed."""
+        self.edit("scout/SKILL.md", "## Recipes", "## Recipes (Subcommands)")
+        self.expect_caught("validate-recipes.py", "R-REC-05", "--severity", "error")
+
+    def test_a_bold_external_default_declaration_is_still_compared(self):
+        """R-REC-01. Only plain `Default Recipe:` was read, so the bold form --
+        the style `**Default dispatch:**` uses -- could name any Recipe."""
+        self.edit("builder/SKILL.md", "Default Recipe: `fix`.", "**Default Recipe:** `crud`.")
+        self.expect_caught("validate-recipes.py", "declaration differs", "--severity", "error")
+
+    def test_a_missing_external_default_declaration_fails(self):
+        """R-REC-01. The allowlist is all SKILL.md shows; without the declaration
+        the default is visible only one read away."""
+        self.edit("builder/SKILL.md", "Default Recipe: `fix`.", "")
+        self.expect_caught("validate-recipes.py", "declaration differs", "--severity", "error")
 
 
 class TestRecipesDirectory(CheckerCase):
@@ -770,10 +861,17 @@ class TestIndexSubcommands(CheckerCase):
         self.expect_caught("generate-index-subcommands.py", "SUBCOMMANDS is stale", "--check")
 
     def test_a_skill_without_a_recipes_section_is_skipped_not_fatal(self):
-        """`## Recipes` is recommended, not required (`_common/RECIPES.md`). The
+        """validate-recipes R-REC-05 owns the `## Recipes` requirement. The
         generator must drop such a skill from the page, not abort the run."""
         self.edit("architect/SKILL.md", "## Recipes", "## Recipe Notes")
         self.expect_caught("generate-index-subcommands.py", "SUBCOMMANDS is stale", "--check")
+
+    def test_a_row_without_a_description_cell_fails(self):
+        """A short row was dropped from the page with no message, while
+        validate-recipes and the Recipe directory still listed it."""
+        self.edit("breach/reference/recipes-index.md", "| Purple Team | `purple` |",
+                  "| Short Row | `short-row` |\n| Purple Team | `purple` |")
+        self.expect_caught("generate-index-subcommands.py", "short-row", "--check")
 
     def test_a_table_without_a_description_column_fails(self):
         """Falling back to a fixed column published Mode tokens (`FULL`) as descriptions."""

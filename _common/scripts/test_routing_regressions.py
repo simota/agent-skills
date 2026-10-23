@@ -116,8 +116,8 @@ class TestRecipes(TempCase):
 
 
 class TestRoutingEvidence(TempCase):
-    def dead_references(self, reference):
-        skill = self.write("nexus/SKILL.md", f"Read `{reference}`.\n")
+    def dead_references(self, reference, owner=""):
+        skill = self.write("nexus/SKILL.md", f"Read {owner}`{reference}`.\n")
         self.write("other/reference/shared.md", "# Existing file\n")
         findings = []
         with patch.multiple(routing, REPO_ROOT=self.root, NEXUS_DIR=skill.parent,
@@ -136,7 +136,14 @@ class TestRoutingEvidence(TempCase):
                             for f in findings), [str(f) for f in findings])
 
     def test_unique_bare_reference_shorthand_remains_valid(self):
-        self.assertEqual(self.dead_references("reference/shared.md"), [])
+        """The shorthand names its owning skill on the citing line."""
+        self.assertEqual(self.dead_references("reference/shared.md", owner="`other/SKILL.md` (+ "), [])
+
+    def test_bare_reference_without_its_owner_is_dead(self):
+        """A unique same-named file elsewhere is not the citing skill's file."""
+        findings = self.dead_references("reference/shared.md")
+        self.assertTrue(any(f.check == "RO-1" and f.level == "ERROR"
+                            for f in findings), [str(f) for f in findings])
 
     def test_fallback_enums_must_be_on_the_fallback_field(self):
         path = self.write("formats.md", "## NEXUS_COMPLETE\n```\n"

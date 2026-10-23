@@ -11,7 +11,8 @@ mechanism that is missing.
 
 Checks:
 
-  LS-1  Every row carries a mechanism. An empty cell is a lesson nobody is keeping.
+  LS-1  Every row carries a mechanism. An empty cell is a lesson nobody is keeping,
+        and so is a placeholder ("TBD", "—") standing in for one.
   LS-2  The mechanism is not an intention. "Remember to", "be careful", "always
         try to", "make sure", "should", "ought to" -- phrasings that describe a disposition
         rather than a check. This is the rule the file exists for.
@@ -52,6 +53,10 @@ LESSON_AGE_DAYS = 365
 
 FAILURE_CLASSES = {"F1", "F2", "F3", "F4"}
 ID_PATTERN = re.compile(r"^L\d{3}$")
+#: A cell holding only a placeholder is an empty cell (LS-1).
+PLACEHOLDER = re.compile(r"(?:[-–—]+|tbd|todo|n/?a|none|\?+)", re.I)
+#: GFM makes a row's leading pipe optional; an ID-led line is still a row.
+BARE_ROW = re.compile(r"^L\d+\s*(?<!\\)\|")
 
 #: Phrasings that describe a disposition rather than a check. Matched against a
 #: lowercased mechanism with backticked code spans stripped, so a mechanism that
@@ -63,6 +68,10 @@ INTENTION_PHRASES = (
     "we should", "one should", "agents should", "should always", "should remember",
     "aim to", "strive to", "be mindful", "pay attention", "bear in mind",
     "shouldn't", "ought to",
+    # "We will be more careful" is the counter-example LESSONS.md itself names.
+    "more careful", "try to",
+    # The repository writes Japanese as often as English.
+    "忘れずに", "気をつけ", "気を付け", "注意する", "心がけ", "心掛け", "徹底する",
     # Bare "should" (LS-2 above) -- "reviewers should run the checker" names who
     # ought to act, not what catches the failure. Matched as a whole word.
     "should",
@@ -84,6 +93,11 @@ def intention_phrase(mechanism: str) -> str | None:
     return None
 
 
+def is_blank(cell: str) -> bool:
+    cell = cell.strip().strip("`").strip()
+    return not cell or PLACEHOLDER.fullmatch(cell) is not None
+
+
 def strip_code(text: str) -> str:
     return without_inline_code(text)
 
@@ -94,7 +108,9 @@ def parse_rows(text: str) -> list[tuple[int, list[str]]]:
     in_register = False
     for lineno, line in enumerate(without_fenced_examples(text).splitlines(), 1):
         line = line.strip()
-        if not line.startswith("|"):
+        if BARE_ROW.match(line):
+            line = "|" + line
+        elif not line.startswith("|"):
             in_register = False
             continue
         # Remove the boundary pipes individually so an empty first/last cell
@@ -133,7 +149,7 @@ def check(text: str) -> list[tuple[str, str, str]]:
             findings.append(("P0", "LS-5", f"line {lineno}: id {ident} reused (first seen line {seen[ident]})"))
         seen[ident] = lineno
 
-        if not what:
+        if is_blank(what):
             findings.append(("P1", "LS-1", f"{ident}: no description of what happened"))
 
         if failure.strip("`") not in FAILURE_CLASSES:
@@ -143,7 +159,7 @@ def check(text: str) -> list[tuple[str, str, str]]:
                 f"(`_common/HARNESS_DEBT.md` s 3b)",
             ))
 
-        if not mechanism:
+        if is_blank(mechanism):
             findings.append((
                 "P0", "LS-1",
                 f"{ident}: no mechanism. A lesson with no mechanism is a hope -- "
@@ -161,7 +177,9 @@ def check(text: str) -> list[tuple[str, str, str]]:
         if not where:
             findings.append(("P1", "LS-3", f"{ident}: no `Where` -- name the file that carries the mechanism"))
         else:
-            target = where.strip("`")
+            # The file is the first code span; a `§ Section` pointer may follow it.
+            span = re.match(r"`([^`]+)`", where)
+            target = (span.group(1) if span else where).split("§", 1)[0].strip().strip("`")
             candidate = REPO_ROOT / target
             try:
                 within_repo = candidate.resolve().is_relative_to(REPO_ROOT.resolve())
@@ -176,7 +194,7 @@ def check(text: str) -> list[tuple[str, str, str]]:
                 ))
 
         try:
-            when = dt.date.fromisoformat(added)
+            when = dt.date.fromisoformat(added.strip("`"))
         except ValueError:
             findings.append(("P1", "LS-6", f"{ident}: `Added` {added!r} is not an ISO date"))
         else:

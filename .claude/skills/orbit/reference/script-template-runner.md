@@ -66,6 +66,11 @@ done
 for limit_var in USD_PER_RUN_CAP USD_PER_ITER_CAP; do
   [[ "${!limit_var}" =~ ^[0-9]+([.][0-9]+)?$ ]] || { echo "[ABORT] ${limit_var}=${!limit_var} must be a USD amount"; exit 1; }
 done
+# The other counts and intervals reach bash arithmetic or a deadline too: "2m" there is
+# an arithmetic error that abandons whichever branch evaluates it (the squash included).
+for limit_var in MAX_ITERATIONS RETRY_LIMIT RETRY_BACKOFF_BASE CIRCUIT_THRESHOLD CIRCUIT_COOLDOWN TOOL_TIMEOUT MAX_LOG_SIZE; do
+  [[ "${!limit_var}" =~ ^(0|[1-9][0-9]*)$ ]] || { echo "[ABORT] ${limit_var}=${!limit_var} must be a whole number"; exit 1; }
+done
 limit_set() { awk -v v="$1" 'BEGIN{exit !(v + 0 > 0)}'; }
 if ! limit_set "${LOOP_TIMEOUT}" && ! limit_set "${USD_PER_RUN_CAP}" && ! limit_set "${USD_PER_ITER_CAP}" \
    && [[ "${ALLOW_UNBOUNDED_RUN}" != "true" ]]; then
@@ -75,6 +80,9 @@ fi
 
 #--- Semantic-stall & evidence gates ---
 CONVERGENCE_WINDOW="${CONVERGENCE_WINDOW:-3}"
+# One signature always repeats itself: a window below 2 stalls after the first iteration.
+[[ "${CONVERGENCE_WINDOW}" =~ ^[1-9][0-9]*$ && "${CONVERGENCE_WINDOW}" -ge 2 ]] \
+  || { echo "[ABORT] CONVERGENCE_WINDOW=${CONVERGENCE_WINDOW} must be a whole number of at least 2"; exit 1; }
 PLACEHOLDER_GREP="${PLACEHOLDER_GREP:-true}"
 GOAL_IMMUTABLE="${GOAL_IMMUTABLE:-true}"
 # Pinned at first start, rechecked every iteration (AP-13 / AP-20 / RP-1): verify.sh and
@@ -383,6 +391,10 @@ placeholder_clean() {
       *.js|*.ts|*.tsx|*.jsx|*.py|*.go|*.rb|*.rs|*.java|*.kt|*.swift|*.php|*.c|*.cc|*.cpp|*.h) ;;
       *) continue ;;
     esac
+    # Pre-existing work is outside the loop: it is never committed, nor scanned.
+    if [[ "${AUTOCOMMIT}" == "true" ]] && nul_list_has "${LOOP_DIR}/dirty-start-paths.nul" "${path}"; then
+      continue
+    fi
     path="${REPO_ROOT}/${path}"
     [[ -f "${path}" ]] || continue # deleted source needs no scan
     result=0
@@ -482,6 +494,8 @@ STATE_EOF
   done
   mv "${tmp}" "${LOOP_DIR}/state.env"
   write_atomic "${LOOP_DIR}/state.env.sha256" "$(shasum -a 256 "${LOOP_DIR}/state.env" | awk '{print $1}')"
+  SAVED_ITER="${next}"
+  CHECKPOINTED=true
 }
 
 #--- Dirty-path bookkeeping (see the dirty baseline snapshot below) ---
@@ -545,6 +559,15 @@ cleanup() {
       echo "[SIGNAL] Squash of ${ITER_BRANCH} into ${SUMMARY_BRANCH} interrupted — see git status; the next run reports it as pending"
     fi
     record_loop_dirty || true
+  elif [[ "${LOOP_STARTED:-false}" != "true" ]]; then
+    # Before the loop no iteration is in flight: the checkpoint is the one this run
+    # loaded or gated. Saving CONTINUE would turn a DONE into a rerun, and before the
+    # state is loaded there is nothing of this run's to save.
+    [[ -z "${ITER:-}" || -z "${STATUS:-}" ]] || write_state "${ITER}" "${STATUS}"
+  elif [[ "${CHECKPOINTED:-false}" == "true" ]]; then
+    # This iteration is already saved (the next one, or a BLOCKED stop): rewriting it
+    # as an interrupted CONTINUE would run it again, past MAX_ITERATIONS.
+    record_loop_dirty || true
   else
     # Step 1: State snapshot (incl. the paths this run left dirty — not human edits)
     write_state "${ITER:-1}" CONTINUE
@@ -562,11 +585,11 @@ cleanup() {
   fi
 
   # Step 3: Structured log
-  emit_log "WARN" "graceful_shutdown" "iteration" "${ITER}" "verify" "${VERIFY_RESULT:-N/A}"
+  emit_log "WARN" "graceful_shutdown" "iteration" "${ITER:-0}" "verify" "${VERIFY_RESULT:-N/A}"
 
   # Step 4: Cleanup
   rm -f "${LOOP_DIR}/.run-loop.lock" "${LOOP_DIR}"/.verify-pinned.*
-  [[ "${LOOP_FINISHED:-false}" == "true" ]] || echo "[SIGNAL] State saved — safe to resume from iteration ${ITER}"
+  [[ "${LOOP_FINISHED:-false}" == "true" ]] || echo "[SIGNAL] State saved — safe to resume from iteration ${SAVED_ITER:-${ITER:-1}}"
   exit 130
 }
 # Every catchable signal whose default action ends the runner is trapped, listed from
@@ -894,6 +917,12 @@ if [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${AUTOCOMMIT}" == "true" ]]; the
     echo "[ABORT] detached HEAD — check out a branch first, or set BRANCH_ISOLATION=false"
     exit 1
   fi
+  # With no recorded origin (a run killed before its first checkpoint), HEAD can be the
+  # iteration branch itself; the squash after DONE could then never return to it.
+  if [[ "${ORIGIN_BRANCH}" == "${ITER_BRANCH}" ]]; then
+    echo "[ABORT] origin branch would be the iteration branch ${ITER_BRANCH} — check out the branch the loop started from"
+    exit 1
+  fi
 
   CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
   # DONE can be resumed after squash has already removed the iteration branch; past
@@ -976,8 +1005,10 @@ if [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -gt "${MAX_ITERATIONS}" ]]; then
 fi
 
 EXECUTOR_RAN=false
+LOOP_STARTED=true
 while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
   [[ "${SHUTDOWN}" -eq 1 ]] && break
+  CHECKPOINTED=false
 
   #--- External terminators: wall-clock timeout & budget caps ---
   if loop_timeout_reached; then
@@ -1166,13 +1197,25 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
       nul_list_has "${LOOP_DIR}/dirty-start-paths.nul" "${path}" || CANDIDATES+=("${path}")
     done < "${LOOP_DIR}/current-changes.nul"
     rm -f "${LOOP_DIR}/current-changes.nul"
+    COMMIT_FAILED=false
     if [[ "${#CANDIDATES[@]}" -gt 0 ]]; then
-      git -C "${REPO_ROOT}" --literal-pathspecs add --all -- "${CANDIDATES[@]}"
-      if ! git -C "${REPO_ROOT}" --literal-pathspecs diff --cached --quiet -- "${CANDIDATES[@]}"; then
+      if ! git -C "${REPO_ROOT}" --literal-pathspecs add --all -- "${CANDIDATES[@]}"; then
+        COMMIT_FAILED=true
+      elif ! git -C "${REPO_ROOT}" --literal-pathspecs diff --cached --quiet -- "${CANDIDATES[@]}"; then
         # --only leaves pre-existing staged work in the index, outside this commit.
-        git -C "${REPO_ROOT}" --literal-pathspecs commit --only -m "${COMMIT_MSG_PREFIX}(iter-${ITER}): auto-commit [verify=${VERIFY_RESULT}]" -- "${CANDIDATES[@]}"
-        COMMIT_HASH=$(git rev-parse --short HEAD 2>/dev/null || echo "unknown")
+        if git -C "${REPO_ROOT}" --literal-pathspecs commit --only -m "${COMMIT_MSG_PREFIX}(iter-${ITER}): auto-commit [verify=${VERIFY_RESULT}]" -- "${CANDIDATES[@]}"; then
+          COMMIT_HASH=$(git rev-parse --short HEAD 2>/dev/null || echo "unknown")
+        else
+          COMMIT_FAILED=true
+        fi
       fi
+    fi
+    # A rejected commit (a pre-commit hook, say) must not end the runner under errexit:
+    # the work stays uncommitted, is recorded as the loop's own, and is committed on resume.
+    if [[ "${COMMIT_FAILED}" == "true" ]]; then
+      echo "[ABORT] auto-commit failed (pre-commit hook or git error) — the iteration's work stays uncommitted; fix the cause and rerun" | tee -a "${LOOP_DIR}/runner.log"
+      emit_log "ERROR" "autocommit_failed" "iteration" "${ITER}"
+      STATUS="BLOCKED"; write_terminal_state BLOCKED; break
     fi
   fi
 

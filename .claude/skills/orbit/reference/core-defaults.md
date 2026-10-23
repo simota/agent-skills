@@ -29,7 +29,7 @@ Purpose: parameter reference for generated nexus-autoloop runners. Load this whe
 | `CIRCUIT_THRESHOLD` | `3` | consecutive same-signature failures to trip |
 | `CIRCUIT_COOLDOWN` | `300` | seconds before auto-retry after circuit opens |
 | `TOOL_TIMEOUT` | `120` | per-tool invocation timeout |
-| `LOOP_TIMEOUT` | `0` | total loop timeout in whole seconds; `0` = unlimited. When `LOOP_TIMEOUT`, `USD_PER_RUN_CAP` and `USD_PER_ITER_CAP` are all `0`, the runner refuses to start; a non-integer `LOOP_TIMEOUT` / `EXEC_TIMEOUT` / `KILL_GRACE` (e.g. `1m`, `2.5`) or non-numeric USD cap is `[ABORT]` |
+| `LOOP_TIMEOUT` | `0` | total loop timeout in whole seconds; `0` = unlimited. When `LOOP_TIMEOUT`, `USD_PER_RUN_CAP` and `USD_PER_ITER_CAP` are all `0`, the runner refuses to start; a non-integer `LOOP_TIMEOUT` / `EXEC_TIMEOUT` / `KILL_GRACE` (e.g. `1m`, `2.5`) or non-numeric USD cap is `[ABORT]`, as is a non-integer `MAX_ITERATIONS` / `RETRY_LIMIT` / `RETRY_BACKOFF_BASE` / `CIRCUIT_THRESHOLD` / `CIRCUIT_COOLDOWN` / `TOOL_TIMEOUT` / `MAX_LOG_SIZE` |
 | `ALLOW_UNBOUNDED_RUN` | `false` | `true` lets a run start with all three external limits at `0` — attended runs only |
 | `KILL_GRACE` | `10` | seconds between `SIGTERM` and `SIGKILL`; a command limit of `N` sends `SIGTERM` at `N - min(KILL_GRACE, N/2)` and `SIGKILL` at `N`. On runner shutdown the job's whole process group gets `SIGTERM`, then `SIGKILL` after `KILL_GRACE` + 1 s; descendants still in the group when the job's top process exits get `SIGTERM`, then `SIGKILL` after the same grace or at the command limit, whichever comes first |
 | `PROJECT_ROOT` | launch directory | runner `cd`s here before running anything; the executor's working directory |
@@ -40,7 +40,7 @@ Purpose: parameter reference for generated nexus-autoloop runners. Load this whe
 | `ESCALATION_THRESHOLD` | `0.3` | human-intervention rate > 30% triggers loop redesign |
 | `DEDUP_WINDOW` | `5` (design value) | check last N actions for duplicate tool calls — _audit/design-time guard — not enforced by the shipped template_ |
 | `CONVERGENCE_THRESHOLD` | `0.85` (design value) | action similarity ratio — _audit/design-time guard — not enforced by the shipped template_; the runner detects exact signature repetition via `CONVERGENCE_WINDOW` |
-| `CONVERGENCE_WINDOW` | `3` | consecutive iterations with an identical signature (HEAD tree + worktree diff + verify result) → `CONVERGENCE_STALL`, runner stops `BLOCKED` |
+| `CONVERGENCE_WINDOW` | `3` | consecutive iterations with an identical signature (HEAD tree + worktree diff + verify result) → `CONVERGENCE_STALL`, runner stops `BLOCKED`; a value below `2` (one signature always matches itself) is `[ABORT]` |
 | `BURN_RATE_THRESHOLD` | `3.0` (design value) | 5-min token-rate multiplier vs prior window; `BURN_RATE_ANOMALY` (AP-17) — _audit/design-time guard — not enforced by the shipped template_ |
 | `USD_PER_ITER_CAP` | `0` | absolute USD cap per iteration; fires only when the executor appends its cost to `.cost-usd` |
 | `USD_PER_RUN_CAP` | `0` | absolute USD cap per loop run; fires only when the executor appends its cost to `.cost-usd` |
@@ -78,7 +78,7 @@ Tier selection rules:
 | Disk space during iteration | `≥ 50MB` free | mark `BLOCKED` and stop safely | — |
 | Process lock | `.run-loop.lock` PID must be dead or absent | active PID aborts; dead PID auto-clears | — (runs after the disk check: a low-disk abort leaves a stale lock in place) |
 | Git health | no rebase in progress when `AUTOCOMMIT=true` | abort or block auto-commit loop | `AUTOCOMMIT=false` |
-| Branch state | no detached HEAD when `BRANCH_ISOLATION=true` (and `AUTOCOMMIT=true`) | `[ABORT] detached HEAD` before any iteration | `BRANCH_ISOLATION=false` |
+| Branch state | no detached HEAD, and an origin branch other than the iteration branch, when `BRANCH_ISOLATION=true` (and `AUTOCOMMIT=true`) | `[ABORT]` before any iteration | `BRANCH_ISOLATION=false` |
 | External terminator | at least one of `LOOP_TIMEOUT` / `USD_PER_RUN_CAP` / `USD_PER_ITER_CAP` `> 0` | `[ABORT]` before pre-flight | `ALLOW_UNBOUNDED_RUN=true` (attended runs only) |
 | Log size | `runner.log ≤ MAX_LOG_SIZE` | rotate to `runner.log.prev` | — |
 | State integrity | `state.env.sha256` matches | auto-run `recover.sh`; every `DONE` checkpoint (recovered or not) is re-gated on resume — a failed gate continues, or stops `BLOCKED` past `MAX_ITERATIONS` | — |

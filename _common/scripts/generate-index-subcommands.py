@@ -61,7 +61,7 @@ def recipe_rows(skill_dir: Path) -> list[dict[str, str]]:
         if pointer:
             block = (skill_dir / pointer).read_text(encoding="utf-8")
     if not list(recipe_cells(block)):
-        return []  # No Recipes table: `## Recipes` is recommended, not required.
+        return []  # No Recipes table: validate-recipes R-REC-05 reports it, not the page.
     column = description_column(block)
     if column is None:
         # A condensed table may defer its When to Use column to a named detail file.
@@ -69,7 +69,9 @@ def recipe_rows(skill_dir: Path) -> list[dict[str, str]]:
     rows = []
     for cells in recipe_cells(block):
         match = re.fullmatch(r"`([^`]+)`", cells[1] if len(cells) >= 2 else "")
-        if match and len(cells) > column:
+        if match and len(cells) <= column:
+            raise SystemExit(f"error: {skill_dir.name}: Recipe `{match.group(1)}` has no description cell")
+        if match:
             rows.append({"n": match.group(1), "d": summary(cells[column])})
     return rows
 

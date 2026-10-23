@@ -355,7 +355,7 @@ def check_tier_declarations(tiers: dict[str, str | None], findings: list) -> Non
     """CD-6."""
     for name, tier in sorted(tiers.items()):
         if tier is None:
-            findings.append(("P2", "CD-6", f"_common/{name} declares no `Tier:` line"))
+            findings.append(("P1", "CD-6", f"_common/{name} declares no `Tier:` line"))
 
 
 def print_report(matrix: dict[str, dict[str, int]], skills: list[Path]) -> None:
