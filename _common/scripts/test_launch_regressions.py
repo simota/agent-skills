@@ -256,6 +256,14 @@ Path(sys.argv[-1]).write_bytes(b'%PDF-1.7\\n' + b'x' * 1100 + b'\\n%%EOF\\n')
                 self.assertNotEqual(result.returncode, 0)
                 self.assertEqual("Running as root" in result.stderr, named, result.stderr)
 
+    def test_a_root_failure_without_chrome_does_not_blame_the_sandbox(self):
+        """The sandbox hint printed for any root failure, even when only
+        wkhtmltopdf was tried and Chrome never ran."""
+        self.executable("id", "print(0)\n")
+        result = self.pdf("--method", "wkhtmltopdf", self.input, self.output)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertNotIn("Running as root", result.stderr)
+
     def test_generic_environment_variables_are_ignored(self):
         """TIMEOUT/VERBOSE from the caller's shell overrode the defaults;
         TIMEOUT=30s failed a call that passed no --timeout."""

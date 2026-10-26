@@ -81,7 +81,9 @@ COUNT_PATTERN = re.compile(
 COUNT_NOUN_FIRST = re.compile(
     rf"(?:skill{_SEP}+count|number{_SEP}+of{_SEP}+skills|スキル(?:の)?数)"
     rf"(?:{_SEP}*(?:[:：=]|は|is|was)(?![a-z]))?{_SEP}*"
-    rf"(\d{{1,3}}(?:,\d{{3}})+|\d{{1,4}})(?![\d,.]?\d)(?!{_SEP}*(?:以上|以下|未満|を超|まで|\+|or{_SEP}+(?:more|fewer|less)))",
+    rf"(\d{{1,3}}(?:,\d{{3}})+|\d{{1,4}})(?![\d,.]?\d)"
+    rf"(?!{_SEP}*(?:個|件|本|つ)?{_SEP}*(?:以上|以下|未満|を超|まで|\+|[〜~–-]{_SEP}*\d"
+    rf"|at{_SEP}+(?:most|least)|or{_SEP}+(?:more|fewer|less)))",
     re.I,
 )
 

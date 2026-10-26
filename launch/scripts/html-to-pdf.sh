@@ -149,6 +149,7 @@ find_chrome() {
 convert_with_chrome() {
   local chrome_cmd
   chrome_cmd=$(find_chrome) || return 1
+  BROWSER_TRIED=true
   log "Using Chrome: $chrome_cmd"
   run_converter "$chrome_cmd" --headless --disable-gpu \
     --disable-software-rasterizer --disable-dev-shm-usage \
@@ -172,6 +173,7 @@ convert_with_puppeteer() {
   command -v node >/dev/null 2>&1 || return 1
   local script_dir
   script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+  BROWSER_TRIED=true
   log "Using Puppeteer"
   run_converter node "$script_dir/puppeteer-pdf.js" "$INPUT_FILE" "$PDF_FILE" || return 1
   verify_output
@@ -179,6 +181,7 @@ convert_with_puppeteer() {
 
 echo "Converting: $INPUT_FILE"
 echo "Output: $OUTPUT_FILE"
+BROWSER_TRIED=false
 METHODS=(chrome wkhtmltopdf puppeteer)
 if [ -n "$METHOD" ]; then METHODS=("$METHOD"); fi
 for candidate in "${METHODS[@]}"; do
@@ -193,7 +196,7 @@ error "PDF conversion failed. Install Chrome, wkhtmltopdf, or Puppeteer; use --v
 # Chromium refuses to start as root without --no-sandbox, so an installed Chrome
 # or Puppeteer fails here exactly as a missing one does. The sandbox is not
 # disabled on the user's behalf; name the cause instead.
-if [ "$(id -u)" = 0 ]; then
+if [ "$BROWSER_TRIED" = true ] && [ "$(id -u)" = 0 ]; then
   error "Running as root: Chrome and Puppeteer cannot start their sandbox. Run as a non-root user."
 fi
 exit 1

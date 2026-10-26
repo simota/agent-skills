@@ -72,8 +72,9 @@ INTENTION_PHRASES = (
     "more careful", "try to",
     # The repository writes Japanese as often as English.
     "忘れずに", "気をつけ", "気を付け", "注意する", "心がけ", "心掛け", "徹底する",
-    # べき is "should", rejected in English below.
-    "べき",
+    # べき is "should", rejected in English below -- as a suffix, since a bare
+    # べき also sits inside 調べきる / 食べきる.
+    "すべき", "るべき", "べきだ", "べきで", "べき。", "べきこと",
     # Bare "should" (LS-2 above) -- "reviewers should run the checker" names who
     # ought to act, not what catches the failure. Matched as a whole word.
     "should",
@@ -98,7 +99,9 @@ def intention_phrase(mechanism: str) -> str | None:
 def is_blank(cell: str) -> bool:
     # Emphasis and trailing punctuation do not make a placeholder a mechanism:
     # `**TBD**`, `_TBD_` and `TBD.` are the same empty cell.
-    cell = cell.strip().strip("`*_~").strip().rstrip(".:;").strip()
+    previous = None
+    while cell != previous:  # `**TBD**.` and `**TBD.**` alike
+        previous, cell = cell, cell.strip().strip("`*_~").rstrip(".:;")
     return not cell or PLACEHOLDER.fullmatch(cell) is not None
 
 

@@ -252,7 +252,7 @@ def check_dead_references(findings: list[Finding]):
             # not to the citing file's own skill dir. Before flagging a true
             # dead link, check whether exactly one same-named file exists
             # anywhere else in the repo under a reference/ dir, owned by a skill
-            # the citing line names as a path (`rally/`, `<...-orbit-skill-root>/`)
+            # the citing line names as a code-span path (`rally/...`, `<...-orbit-skill-root>/`)
             # -- any owner would let a nexus file cite a reference it lost because
             # some other skill has one by that name, and a bare word would let
             # names like `chain` or `stage` in ordinary prose stand in as owners.
@@ -266,7 +266,8 @@ def check_dead_references(findings: list[Finding]):
             elsewhere = [
                 p for p in REPO_ROOT.rglob(f"reference/{basename}")
                 if p.is_file() and not _corpus.is_excluded_path(p, REPO_ROOT)
-                and re.search(rf"(?<![a-z0-9]){re.escape(p.parent.parent.name)}(?:/|-skill-root>/)", line)
+                and re.search(rf"(?<=`){re.escape(p.parent.parent.name)}/"
+                              rf"|-{re.escape(p.parent.parent.name)}-skill-root>/", line)
             ] if raw_path.startswith("reference/") else []
             if len(elsewhere) == 1:
                 continue  # shorthand cross-skill reference, resolvable elsewhere — not dead
@@ -562,11 +563,19 @@ def check_bare_subcommand_dispatch(findings: list[Finding]):
     defined = re.search(r"\*\*Bare-subcommand exception[.:]?\*\*", section)
     # GATE must be the exception's own destination: the Default dispatch flow above
     # it always names GATE, so a section-wide search passed an exception that
-    # dispatched bare tokens without asking. The item ends where the next list
-    # item, heading, table, fence or blank line begins.
-    item = re.match(r".*?(?=\n[ \t]*(?:[-*+][ \t]|\d+[.)][ \t]|#|\||```|~~~|\n)|\Z)",
-                    section[defined.end():], re.S).group() if defined else ""
-    if not (defined and re.search(r"\bGATE\b", item)):
+    # dispatched bare tokens without asking, and a bare mention passed "skipping
+    # GATE". The item ends at a list item no deeper than its own, a heading, table,
+    # fence or blank line; its own sub-bullets belong to it.
+    item = ""
+    if defined:
+        line_start = section.rfind("\n", 0, defined.start()) + 1
+        indent = len(section[line_start:]) - len(section[line_start:].lstrip(" \t"))
+        item = re.match(
+            rf".*?(?=\n[ \t]{{0,{indent}}}(?:[-*+][ \t]|\d+[.)][ \t])|\n[ \t]*(?:#|\||```|~~~|\n)|\Z)",
+            section[defined.end():], re.S).group()
+    routes_to_gate = re.search(
+        r"(?<!never )(?<!not )(?:enters?\s+CLASSIFY\s+at|reach(?:es)?|routes?\s+to)\s+`?GATE\b", item)
+    if not (defined and routes_to_gate):
         findings.append(Finding(
             "RO-6", "ERROR",
             "Subcommand Dispatch skips CLASSIFY on a first-token match, but task-battery.md requires "

@@ -303,7 +303,9 @@ class TestInstructionDrift(CheckerCase):
 
     def test_a_noun_first_bound_is_a_threshold_not_a_count(self):
         """I1. "スキル数は 7 以下" defines a rule; it does not count the corpus."""
-        for rule in ("\nチェーンのスキル数は 7 以下に抑える。\n", "\nKeep the skill count: 7 or fewer per chain.\n"):
+        for rule in ("\nチェーンのスキル数は 7 以下に抑える。\n", "\nKeep the skill count: 7 or fewer per chain.\n",
+                     "\nチェーンのスキル数は 7 個以下に抑える。\n", "\nスキル数は 3〜7 が目安。\n",
+                     "\nKeep the skill count: 7 at most.\n", "\nskill count: max 7\n"):
             with self.subTest(rule=rule):
                 self.append("CLAUDE.md", rule)
                 self.expect_clean("lint-instructions.py", "--severity", "error")
@@ -699,6 +701,16 @@ class TestNexusReferences(CheckerCase):
                     "\nBefore the rally starts, read `reference/communication-patterns.md`.\n")
         self.expect_caught("routing-oracle.py", "communication-patterns.md", "--severity", "error")
 
+    def test_a_word_before_a_slash_is_not_an_owning_skill(self):
+        """RO-1. "field/value" or "per-field/step" in prose named `field/` as the owner."""
+        for prose in ("field/value pair", "per-field/step value"):
+            with self.subTest(prose=prose):
+                self.append("nexus/reference/spec-recipe.md",
+                            f"\nRecord each {prose} per `reference/diary-longitudinal-study.md`.\n")
+                self.expect_caught("routing-oracle.py", "diary-longitudinal-study.md",
+                                   "--severity", "error")
+                self.tearDown()
+
     def test_a_bare_subcommand_exception_must_itself_route_to_gate(self):
         """RO-6. GATE was searched across the whole section, and the Default
         dispatch flow above the exception always names GATE, so an exception
@@ -707,6 +719,21 @@ class TestNexusReferences(CheckerCase):
                   "enters CLASSIFY at `GATE` and asks one focused question",
                   "dispatches directly to its Recipe")
         self.expect_caught("routing-oracle.py", "RO-6", "--severity", "error")
+
+    def test_a_bare_subcommand_exception_that_skips_gate_fails(self):
+        """RO-6. Any mention of GATE passed, so "skipping `GATE`" did too."""
+        self.edit("nexus/SKILL.md",
+                  "enters CLASSIFY at `GATE` and asks one focused question",
+                  "dispatches directly to its Recipe, skipping `GATE`")
+        self.expect_caught("routing-oracle.py", "RO-6", "--severity", "error")
+
+    def test_a_bare_subcommand_exception_may_continue_in_a_sub_bullet(self):
+        """RO-6. A nested list marker ended the item, so the exception's own
+        sub-bullet was read as outside it."""
+        self.edit("nexus/SKILL.md",
+                  "(`/nexus optimize`, `/nexus kaizen`) enters CLASSIFY",
+                  "(`/nexus optimize`, `/nexus kaizen`):\n  - enters CLASSIFY")
+        self.expect_clean("routing-oracle.py", "--severity", "error")
 
 
 class TestLessonsRegister(CheckerCase):
@@ -758,6 +785,11 @@ class TestLessonsRegister(CheckerCase):
         self.add_row(mech="コミット前にゲートを確認するべき。")
         self.expect_caught("lint-lessons.py", "LS-2", "--severity", "error")
 
+    def test_a_verb_ending_in_beki_is_not_should(self):
+        """LS-2. 調べきる ("examine exhaustively") contains べき but is not "should"."""
+        self.add_row(mech="`lint-lessons.py` が全行を調べきるまで pre-commit が止める。")
+        self.expect_clean("lint-lessons.py", "--severity", "error")
+
     def test_a_japanese_intention_is_rejected(self):
         """LS-2. The repository writes Japanese; an English-only phrase list
         accepted the same disposition written in Japanese."""
@@ -772,7 +804,7 @@ class TestLessonsRegister(CheckerCase):
     def test_a_formatted_placeholder_mechanism_fails(self):
         """LS-1. Only backticks were stripped, so emphasis or a trailing
         period turned a placeholder back into a mechanism."""
-        for mech in ("**TBD**", "_TBD_", "TBD.", "*n/a*"):
+        for mech in ("**TBD**", "_TBD_", "TBD.", "*n/a*", "**TBD**.", "`n/a`."):
             with self.subTest(mech=mech):
                 self.add_row(mech=mech)
                 self.expect_caught("lint-lessons.py", "LS-1", "--severity", "error")
