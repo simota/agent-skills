@@ -574,7 +574,8 @@ def check_bare_subcommand_dispatch(findings: list[Finding]):
             rf".*?(?=\n[ \t]{{0,{indent}}}(?:[-*+][ \t]|\d+[.)][ \t])|\n[ \t]*(?:#|\||```|~~~|\n)|\Z)",
             section[defined.end():], re.S).group()
     routes_to_gate = re.search(
-        r"(?<!never )(?<!not )(?:enters?\s+CLASSIFY\s+at|reach(?:es)?|routes?\s+to)\s+`?GATE\b", item)
+        r"(?<!never )(?<!not )(?<!n't )(?<!no )\b(?:enters?\s+CLASSIFY\s+at|reach(?:es)?|routes?\s+to)"
+        r"\s+`?GATE\b", item, re.I)
     if not (defined and routes_to_gate):
         findings.append(Finding(
             "RO-6", "ERROR",

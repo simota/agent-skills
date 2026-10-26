@@ -291,9 +291,9 @@ class TestInstructionDrift(CheckerCase):
         "Skill count: 77" stated a corpus quantity no check re-derived."""
         for claim in ("\nスキル数は 77。\n", "\nSkill count: 77.\n", "\nThe number of skills is 77.\n"):
             with self.subTest(claim=claim):
+                self.tearDown()  # restore first: a failed case must not carry over
                 self.append("CLAUDE.md", claim)
                 self.expect_caught("lint-instructions.py", "claims 77 skills", "--severity", "error")
-                self.tearDown()
 
     def test_a_noun_first_project_local_count_is_scoped(self):
         """I1. The local qualifier before a noun-first claim scopes it as it does
@@ -304,12 +304,12 @@ class TestInstructionDrift(CheckerCase):
     def test_a_noun_first_bound_is_a_threshold_not_a_count(self):
         """I1. "スキル数は 7 以下" defines a rule; it does not count the corpus."""
         for rule in ("\nチェーンのスキル数は 7 以下に抑える。\n", "\nKeep the skill count: 7 or fewer per chain.\n",
-                     "\nチェーンのスキル数は 7 個以下に抑える。\n", "\nスキル数は 3〜7 が目安。\n",
+                     "\nチェーンのスキル数は 7 個以下に抑える。\n", "\nスキル数は 3〜7 が目安。\n", "\nスキル数は 3～7 が目安。\n",
                      "\nKeep the skill count: 7 at most.\n", "\nskill count: max 7\n"):
             with self.subTest(rule=rule):
+                self.tearDown()  # restore first: a failed case must not carry over
                 self.append("CLAUDE.md", rule)
                 self.expect_clean("lint-instructions.py", "--severity", "error")
-                self.tearDown()
 
     def test_a_count_inside_a_fenced_example_is_not_a_claim(self):
         """I1. A fenced block is an example, as I2 already treats it; reading
@@ -705,11 +705,11 @@ class TestNexusReferences(CheckerCase):
         """RO-1. "field/value" or "per-field/step" in prose named `field/` as the owner."""
         for prose in ("field/value pair", "per-field/step value"):
             with self.subTest(prose=prose):
+                self.tearDown()  # restore first: a failed case must not carry over
                 self.append("nexus/reference/spec-recipe.md",
                             f"\nRecord each {prose} per `reference/diary-longitudinal-study.md`.\n")
                 self.expect_caught("routing-oracle.py", "diary-longitudinal-study.md",
                                    "--severity", "error")
-                self.tearDown()
 
     def test_a_bare_subcommand_exception_must_itself_route_to_gate(self):
         """RO-6. GATE was searched across the whole section, and the Default
@@ -726,6 +726,16 @@ class TestNexusReferences(CheckerCase):
                   "enters CLASSIFY at `GATE` and asks one focused question",
                   "dispatches directly to its Recipe, skipping `GATE`")
         self.expect_caught("routing-oracle.py", "RO-6", "--severity", "error")
+
+    def test_a_negated_route_to_gate_fails(self):
+        """RO-6. Only lowercase "never"/"not" negated the route."""
+        for said in ("dispatches directly and doesn't route to `GATE`",
+                     "Never enters CLASSIFY at `GATE`; it dispatches directly"):
+            with self.subTest(said=said):
+                self.tearDown()  # restore first: a failed case must not carry over
+                self.edit("nexus/SKILL.md",
+                          "enters CLASSIFY at `GATE` and asks one focused question", said)
+                self.expect_caught("routing-oracle.py", "RO-6", "--severity", "error")
 
     def test_a_bare_subcommand_exception_may_continue_in_a_sub_bullet(self):
         """RO-6. A nested list marker ended the item, so the exception's own
@@ -782,13 +792,21 @@ class TestLessonsRegister(CheckerCase):
     def test_a_japanese_should_is_rejected(self):
         """LS-2. Bare English "should" was rejected but べき, its Japanese
         counterpart, was accepted as a mechanism."""
-        self.add_row(mech="コミット前にゲートを確認するべき。")
-        self.expect_caught("lint-lessons.py", "LS-2", "--severity", "error")
+        for mech in ("コミット前にゲートを確認するべき。", "PR では必ず diff を読むべき",
+                     "チェッカーを使うべき場面がある。"):
+            with self.subTest(mech=mech):
+                self.tearDown()  # restore first: a failed case must not carry over
+                self.add_row(mech=mech)
+                self.expect_caught("lint-lessons.py", "LS-2", "--severity", "error")
 
     def test_a_verb_ending_in_beki_is_not_should(self):
         """LS-2. 調べきる ("examine exhaustively") contains べき but is not "should"."""
-        self.add_row(mech="`lint-lessons.py` が全行を調べきるまで pre-commit が止める。")
-        self.expect_clean("lint-lessons.py", "--severity", "error")
+        for mech in ("`lint-lessons.py` が全行を調べきるまで pre-commit が止める。",
+                     "`lint-lessons.py` が述べきれない行を pre-commit で止める。"):
+            with self.subTest(mech=mech):
+                self.tearDown()  # restore first: a failed case must not carry over
+                self.add_row(mech=mech)
+                self.expect_clean("lint-lessons.py", "--severity", "error")
 
     def test_a_japanese_intention_is_rejected(self):
         """LS-2. The repository writes Japanese; an English-only phrase list
@@ -806,9 +824,9 @@ class TestLessonsRegister(CheckerCase):
         period turned a placeholder back into a mechanism."""
         for mech in ("**TBD**", "_TBD_", "TBD.", "*n/a*", "**TBD**.", "`n/a`."):
             with self.subTest(mech=mech):
+                self.tearDown()  # restore first: a failed case must not carry over
                 self.add_row(mech=mech)
                 self.expect_caught("lint-lessons.py", "LS-1", "--severity", "error")
-                self.tearDown()
 
     def test_a_row_without_a_leading_pipe_is_still_checked(self):
         """GFM makes the leading pipe optional; such a row ended the register
@@ -934,11 +952,11 @@ class TestProjectLocalMirror(CheckerCase):
         for ref in ("\nCopy `_templates/learning-loop-kit/` into the target.\n",
                     "\nScaffold from `./_templates/SKILL_TEMPLATE.md`.\n"):
             with self.subTest(ref=ref):
+                self.tearDown()  # restore first: a failed case must not carry over
                 self.append(".claude/skills/lore/SKILL.md", ref)
                 self.append(".agents/skills/lore/SKILL.md", ref)
                 self.expect_caught("lint-project-local.py", "references `_templates/`",
                                    "--severity", "error")
-                self.tearDown()
 
     def test_a_directory_reference_through_its_symlink_resolves(self):
         """PL-3. A directory reference resolves as a directory, not a file."""
