@@ -190,4 +190,10 @@ for candidate in "${METHODS[@]}"; do
   log "$candidate unavailable or failed"
 done
 error "PDF conversion failed. Install Chrome, wkhtmltopdf, or Puppeteer; use --verbose for diagnostics."
+# Chromium refuses to start as root without --no-sandbox, so an installed Chrome
+# or Puppeteer fails here exactly as a missing one does. The sandbox is not
+# disabled on the user's behalf; name the cause instead.
+if [ "$(id -u)" = 0 ]; then
+  error "Running as root: Chrome and Puppeteer cannot start their sandbox. Run as a non-root user."
+fi
 exit 1

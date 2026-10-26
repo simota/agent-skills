@@ -245,6 +245,17 @@ Path(sys.argv[-1]).write_bytes(b'%PDF-1.7\\n' + b'x' * 1100 + b'\\n%%EOF\\n')
         self.assertIn("Done (wkhtmltopdf)", result.stdout)
         self.assertTrue(self.output.read_bytes().startswith(b"%PDF-"))
 
+    def test_a_failure_as_root_names_the_sandbox(self):
+        """Chromium will not start as root without --no-sandbox, and the only
+        message blamed a missing install while Chrome was installed."""
+        self.env["CHROME_NO_OUTPUT"] = "1"
+        for uid, named in (("0", True), ("1000", False)):
+            with self.subTest(uid=uid):
+                self.executable("id", f"print({uid})\n")
+                result = self.pdf("--method", "chrome", self.input, self.output)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertEqual("Running as root" in result.stderr, named, result.stderr)
+
     def test_generic_environment_variables_are_ignored(self):
         """TIMEOUT/VERBOSE from the caller's shell overrode the defaults;
         TIMEOUT=30s failed a call that passed no --timeout."""
