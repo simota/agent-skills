@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed — checkers close bypasses; pre-commit hook covers every template (2026-10-26)
+
+- **Behaviour change (checkers): rules that passed what they claim to catch now block.** `routing-oracle.py` RO-6 requires `GATE` inside the Bare-subcommand exception itself (the Default dispatch flow above it always names GATE, so an exception that dispatched bare tokens passed); RO-1's cross-skill shorthand needs its owner written as a path (`rally/`, `<…-orbit-skill-root>/`), not as a word (`chain`, `stage`) in prose. `task-battery-check.py` keyword items require the keyword's `signal-keywords.md` row to route to the battery's Recipe, not just to exist. `lint-contracts.py` CD-6 rejects a tier other than `spine` / `domain` / `orchestration` / `authoring`, and CD-5 reads `.sh` references. `lint-lessons.py` LS-1 treats `**TBD**`, `_TBD_` and `TBD.` as empty, and LS-2 rejects `べき`. `lint-project-local.py` PL-3 reads directory (`_templates/learning-loop-kit/`) and `./`-prefixed references. `lint-frontmatter.py` F1 rejects `claude`/`anthropic` anywhere in a name, as the skill spec says, not only as a prefix. `_recipes.py` reads a Recipe named `-` as a row.
+- `lint-instructions.py` I1 also reads noun-first counts (`スキル数は 90`, `Skill count: 90`) and no longer reads a fenced example as a claim.
+- **Behaviour change (hook): a commit touching anything under `_templates/` runs `make check`.** Only `learning-loop-kit/` was listed, so a change to `design-feedback-kit/`, which a launch test gates, ran the catalog tests alone. Rerun `make hooks` (validate reports `hook stale`).
+- `launch/scripts/html-to-pdf.sh` names the cause when it fails as root (Chrome cannot start its sandbox) instead of only asking for an install.
+
 ### Changed — `orbit` runner keeps checkpoints across signals; checkers close bypasses (2026-10-23)
 
 - **Behaviour change: a signal saves an interrupted `CONTINUE` only while an iteration is in flight and unsaved.** Before the loop (the `DONE` resume gate included) it used to overwrite the loaded checkpoint, so a `DONE` loop reran its executor and, before the state was loaded, `NEXT_ITERATION` and the branch fields were reset; after an iteration was saved (during `notify.sh`) it saved that iteration again, running the executor past `MAX_ITERATIONS`.
