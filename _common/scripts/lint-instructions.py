@@ -76,6 +76,14 @@ COUNT_PATTERN = re.compile(
     rf"(?:skill{_SEP}+agents?|skills?|スキルエージェント|スキル|(?P<ext>(?:operating{_SEP}+)?extensions?))",
     re.I,
 )
+# The same claim written noun-first: "スキル数は 90", "Skill count: 90",
+# "the number of skills is 90". A bound ("7 以下", "10+") is a threshold, not a count.
+COUNT_NOUN_FIRST = re.compile(
+    rf"(?:skill{_SEP}+count|number{_SEP}+of{_SEP}+skills|スキル(?:の)?数)"
+    rf"(?:{_SEP}*(?:[:：=]|は|is|was)(?![a-z]))?{_SEP}*"
+    rf"(\d{{1,3}}(?:,\d{{3}})+|\d{{1,4}})(?![\d,.]?\d)(?!{_SEP}*(?:以上|以下|未満|を超|まで|\+|or{_SEP}+(?:more|fewer|less)))",
+    re.I,
+)
 
 # Words that, in the 24 characters before the number or inside the qualifier, mark the
 # claim as counting project-local skills rather than global ones.
@@ -125,18 +133,24 @@ def check_counts(path: Path, text: str, actual: int) -> list[tuple[str, str, str
     findings = []
     local_actual = actual_local_skill_count()
     previous_claim_end = 0
-    for m in COUNT_PATTERN.finditer(text):
+    # A fenced block is an example, not a claim -- as for `@path` imports. Lines are
+    # kept, so line numbers still point at the source.
+    text = _markdown.without_fenced_examples(text)
+    matches = sorted([*COUNT_PATTERN.finditer(text), *COUNT_NOUN_FIRST.finditer(text)],
+                     key=lambda match: match.start())
+    for m in matches:
         claimed = int(m.group(1).replace(",", ""))
         # The preceding claim's qualifier cannot scope this one: in
         # "3 project-local skills and 90 skills", only the first count is local.
         before = text[max(previous_claim_end, m.start() - 24) : m.start()]
         previous_claim_end = m.end()
-        qualifier = (m.group(2) or "").lower()
+        qualifier = (m.group(2) if m.re is COUNT_PATTERN else "") or ""
+        qualifier = qualifier.lower()
         # An explicit qualifier belongs to this claim; nearby text can describe
         # a different count ("3 project-local skills, 90 global skills").
         if any(mark in qualifier for mark in LOCAL_MARKERS):
             is_local = True
-        elif m.group("ext"):
+        elif m.re is COUNT_PATTERN and m.group("ext"):
             continue
         elif "global" in qualifier or "グローバル" in qualifier:
             is_local = False

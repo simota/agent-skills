@@ -10,7 +10,8 @@ documented ID is itself checked -- see check_battery_coverage):
   claims a specific Recipe/task-type/entry-mode mapping backed by literal text in
   `nexus/reference/routing-matrix.md`, `nexus/reference/signal-keywords.md`,
   or the Recipe registry/default dispatch in `nexus/SKILL.md`. This script asserts that literal
-  evidence is still present (verbatim substring match) — it proves the
+  evidence is still present (verbatim substring match) and, for a keyword item, that
+  its signal-keywords row still routes to the Recipe the battery names — it proves the
   routing *artifact* hasn't drifted out from under the battery's claim.
   It does NOT simulate classify's live semantic mapping of the item's
   example sentence to a Recipe — that step still requires an LLM.
@@ -75,7 +76,8 @@ FILES = {
     "recipes-index.md": RECIPES_INDEX,
 }
 
-# Mechanical items: (item, short description, file key, required verbatim substring).
+# Mechanical items: (item, short description, file key, required verbatim substring
+# [, Recipe the substring's signal-keywords row must route to]).
 # Each substring is the literal textual evidence in the routing artifact that
 # backs the item's "Expected routing" claim in task-battery.md.
 MECHANICAL_ITEMS = [
@@ -92,22 +94,22 @@ MECHANICAL_ITEMS = [
      "`polish`/`improve`/`enhance` a *feature* → `kaizen`"),
     (7, "improve the design REDIRECT -> anneal/restyle", "signal-keywords.md",
      "architecture/code design → `anneal`; UI/visual/look-and-feel → `restyle`"),
-    (8, "design weaknesses keyword -> anneal", "signal-keywords.md", "`design weaknesses`"),
-    (9, "redesign the screen keyword -> restyle", "signal-keywords.md", "`redesign the screen`"),
+    (8, "design weaknesses keyword -> anneal", "signal-keywords.md", "`design weaknesses`", "anneal"),
+    (9, "redesign the screen keyword -> restyle", "signal-keywords.md", "`redesign the screen`", "restyle"),
     (10, "loop shape-resolves to goal/converge/local-orbit/apex", "signal-keywords.md",
      "unattended runner (scripts/contracts/recovery) → project-local `orbit` when available, otherwise `goal` or `apex` · discovery→ship one-shot → `apex`"),
     (11, "goal keyword row -> goal", "signal-keywords.md",
      "`goal`, `/goal setup`, `goal recipe`, `long-running goal`, `autonomous loop setup` | `goal`"),
     (12, "feature subcommand/keyword exists", "recipes-index.md", "| Feature | `feature` |"),
-    (13, "end-to-end feature keyword -> apex", "signal-keywords.md", "`end-to-end feature`"),
-    (15, "spec out keyword -> spec", "signal-keywords.md", "`spec out`"),
+    (13, "end-to-end feature keyword -> apex", "signal-keywords.md", "`end-to-end feature`", "apex"),
+    (15, "spec out keyword -> spec", "signal-keywords.md", "`spec out`", "spec"),
     (16, "self-driving team charter keyword -> charter", "signal-keywords.md",
-     "`self-driving team charter`"),
+     "`self-driving team charter`", "charter"),
     (17, "gedanken worked example matches verbatim", "signal-keywords.md",
      "think through whether microservices are worth it here, no code"),
-    (18, "evolve this feature keyword -> delve", "signal-keywords.md", "`evolve this feature`"),
-    (19, "map the system keyword -> cartograph", "signal-keywords.md", "`map the system`"),
-    (20, "how did we get here keyword -> chronicle", "signal-keywords.md", "`how did we get here`"),
+    (18, "evolve this feature keyword -> delve", "signal-keywords.md", "`evolve this feature`", "delve"),
+    (19, "map the system keyword -> cartograph", "signal-keywords.md", "`map the system`", "cartograph"),
+    (20, "how did we get here keyword -> chronicle", "signal-keywords.md", "`how did we get here`", "chronicle"),
     (36, "named-figure keyword -> FIGURE_CHANNELING (Magi)", "signal-keywords.md",
      "`how would <figure> approach this`"),
     (37, "Magi conclave hands the verdict to Magi decide", "agent-chains.md",
@@ -126,43 +128,43 @@ MECHANICAL_ITEMS = [
      "`chorus` (cross-platform coherence proof; precondition ≥2 shipped/specced platforms"),
     (44, "assay never infers permission to apply changes", "signal-keywords.md",
      "`assay` (experimental proof of code/architecture design claims; `apply=true` is **opt-in and never inferred**"),
-    (21, "must-have keyword -> essential", "signal-keywords.md", "`essential`, `must-have`"),
-    (22, "dead weight keyword -> trim", "signal-keywords.md", "`dead weight`"),
+    (21, "must-have keyword -> essential", "signal-keywords.md", "`essential`, `must-have`", "essential"),
+    (22, "dead weight keyword -> trim", "signal-keywords.md", "`dead weight`", "trim"),
     (23, "copy this product keyword -> clone", "signal-keywords.md",
-     "`clone`, `replicate`, `copy this product`"),
-    (24, "once-in-a-lifetime keyword -> wish", "signal-keywords.md", "`once-in-a-lifetime request`"),
-    (25, "best possible design keyword -> runway", "signal-keywords.md", "`best possible design`"),
+     "`clone`, `replicate`, `copy this product`", "clone"),
+    (24, "once-in-a-lifetime keyword -> wish", "signal-keywords.md", "`once-in-a-lifetime request`", "wish"),
+    (25, "best possible design keyword -> runway", "signal-keywords.md", "`best possible design`", "runway"),
     (26, "generate a full package keyword -> package", "signal-keywords.md",
-     "`generate a full package`"),
+     "`generate a full package`", "package"),
     (27, "bare /Nexus -> proactive mode", "signal-keywords.md", "`/Nexus` (no arguments) | `proactive mode` (non-Recipe)"),
     (45, "review-to-zero keyword -> quell", "signal-keywords.md",
-     "`loop until zero findings`"),
+     "`loop until zero findings`", "quell"),
     (46, "behavior-preserving review loop -> quell profile=refactor", "signal-keywords.md",
      "→ `quell profile=refactor`"),
     (47, "design review-to-zero keyword -> burnish", "signal-keywords.md",
-     "`loop until zero design findings`"),
+     "`loop until zero design findings`", "burnish"),
     (48, "burnish subcommand registered", "recipes-index.md", "| Burnish | `burnish` |"),
     (49, "mutation-survivor keyword -> whet", "signal-keywords.md",
-     "`kill the surviving mutants`"),
+     "`kill the surviving mutants`", "whet"),
     (50, "whet subcommand registered", "recipes-index.md", "| Whet | `whet` |"),
     (51, "scanner sweep -> security mode=to-zero", "signal-keywords.md",
-     "`drive vulnerabilities to zero`"),
+     "`drive vulnerabilities to zero`", "security"),
     (52, "budget sweep -> optimize mode=to-zero", "signal-keywords.md",
-     "`clear the performance budget violations`"),
+     "`clear the performance budget violations`", "optimize"),
     (53, "docs-contradict-code keyword -> verity", "signal-keywords.md",
-     "`the docs contradict the code`"),
+     "`the docs contradict the code`", "verity"),
     (54, "verity subcommand registered", "recipes-index.md", "| Verity | `verity` |"),
     (55, "spec-code drift splits register-vs-fix (anneal guard)", "signal-keywords.md",
      "**`spec-code drift` splits on register-vs-fix**"),
     (56, "docs-vs-code drift splits scope-vs-record (pdm guard)", "signal-keywords.md",
      "**`docs-vs-code drift` splits on the question asked:**"),
     (57, "ADR-drift keyword -> abide", "signal-keywords.md",
-     "`audit the recent changes against the docs`"),
+     "`audit the recent changes against the docs`", "abide"),
     (58, "abide subcommand registered", "recipes-index.md", "| Abide | `abide` |"),
     (59, "verity-vs-abide splits on the change anchor", "signal-keywords.md",
      "the split from `verity` is the anchor, not the subject"),
     (60, "vague-prompt keyword -> PROMPT_SPEC (Chisel)", "signal-keywords.md",
-     "`make this prompt explicit`"),
+     "`make this prompt explicit`", "PROMPT_SPEC"),
     (61, "PROMPT_SPEC requires supplied prompt text (over-capture guard)",
      "signal-keywords.md",
      "**Every anchor is prompt-scoped by construction: the object must be supplied prompt text.**"),
@@ -226,9 +228,43 @@ def safe_check(fn, findings: list[Finding]):
         traceback.print_exc(file=sys.stderr)
 
 
+def _cells(line: str) -> list[str]:
+    """Table cells of `line`, splitting on `|` outside code spans and not
+    escaped as `\\|` (GFM's literal pipe, e.g. `desktop \\| mobile`)."""
+    cells, current, in_code = [], [], False
+    for char in line.strip().strip("|"):
+        if char == "`":
+            in_code = not in_code
+        if char == "|" and not in_code and not (current and current[-1] == "\\"):
+            cells.append("".join(current).strip())
+            current = []
+        else:
+            current.append(char)
+    cells.append("".join(current).strip())
+    return cells
+
+
+def routed_to(content: str, needle: str, route: str) -> bool:
+    """Whether a table row holding `needle` routes to `route`: its last cell,
+    the route, opens with that Recipe (`| keywords | `route` (...) |`).
+
+    A keyword alone proves only that it is still written somewhere: moved to
+    another Recipe's row, it would still be found while classify sends the
+    battery's sentence elsewhere.
+    """
+    for line in content.splitlines():
+        if needle not in line or not line.lstrip().startswith("|"):
+            continue
+        cells = _cells(line)
+        first = re.match(r"`([^`]+)`", cells[-1])
+        if len(cells) > 1 and first and first.group(1) == route:
+            return True
+    return False
+
+
 def check_mechanical_items(findings: list[Finding]):
     passed = 0
-    for num, desc, file_key, needle in MECHANICAL_ITEMS:
+    for num, desc, file_key, needle, *route in MECHANICAL_ITEMS:
         path = FILES[file_key]
         label = f"item {num} ({desc})"
         if not path.is_file():
@@ -236,9 +272,15 @@ def check_mechanical_items(findings: list[Finding]):
             print(f"FAIL  {label} -- {file_key} not found")
             continue
         content = active_text(path.read_text(encoding="utf-8"))
-        if needle in content:
+        if needle in content and (not route or routed_to(content, needle, route[0])):
             passed += 1
             print(f"PASS  {label}")
+        elif needle in content:
+            findings.append(Finding(
+                label, "ERROR",
+                f"{needle!r} no longer sits in a {file_key} row routing to `{route[0]}`",
+            ))
+            print(f"FAIL  {label} -- {needle!r} is not in a row routing to `{route[0]}`")
         else:
             findings.append(Finding(
                 label, "ERROR",

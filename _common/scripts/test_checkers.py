@@ -286,6 +286,35 @@ class TestInstructionDrift(CheckerCase):
         self.append("CLAUDE.md", "\n1. step 7\n\nSkills are listed in the catalog.\n")
         self.expect_clean("lint-instructions.py", "--severity", "error")
 
+    def test_a_count_written_noun_first_that_drifts_fails(self):
+        """I1. Only number-then-noun was read, so "スキル数は 77" and
+        "Skill count: 77" stated a corpus quantity no check re-derived."""
+        for claim in ("\nスキル数は 77。\n", "\nSkill count: 77.\n", "\nThe number of skills is 77.\n"):
+            with self.subTest(claim=claim):
+                self.append("CLAUDE.md", claim)
+                self.expect_caught("lint-instructions.py", "claims 77 skills", "--severity", "error")
+                self.tearDown()
+
+    def test_a_noun_first_project_local_count_is_scoped(self):
+        """I1. The local qualifier before a noun-first claim scopes it as it does
+        a number-first one."""
+        self.append("CLAUDE.md", "\nproject-local skill count: 3\n")
+        self.expect_clean("lint-instructions.py", "--severity", "error")
+
+    def test_a_noun_first_bound_is_a_threshold_not_a_count(self):
+        """I1. "スキル数は 7 以下" defines a rule; it does not count the corpus."""
+        for rule in ("\nチェーンのスキル数は 7 以下に抑える。\n", "\nKeep the skill count: 7 or fewer per chain.\n"):
+            with self.subTest(rule=rule):
+                self.append("CLAUDE.md", rule)
+                self.expect_clean("lint-instructions.py", "--severity", "error")
+                self.tearDown()
+
+    def test_a_count_inside_a_fenced_example_is_not_a_claim(self):
+        """I1. A fenced block is an example, as I2 already treats it; reading
+        its text blocked validate on sample output."""
+        self.append("CLAUDE.md", "\n```text\nexample: a 2-skill chain\n```\n")
+        self.expect_clean("lint-instructions.py", "--severity", "error")
+
     def test_a_dead_at_import_in_an_instruction_file_fails(self):
         """I2. CLAUDE.md loads `@path` imports into every session; the backtick-only
         matcher never read them, so a renamed import target passed."""
@@ -365,6 +394,12 @@ class TestContractDelivery(CheckerCase):
         )
         self.expect_caught("lint-contracts.py", "CD-6", "--severity", "error")
 
+    def test_an_unknown_tier_is_not_a_declaration(self):
+        """CD-6. Any lowercase word counted as declared, so a misspelt
+        `spine` dropped the file out of CD-1 exactly as a missing line did."""
+        self.edit("_common/SECURITY.md", "> **Tier:** `domain`", "> **Tier:** `domian`")
+        self.expect_caught("lint-contracts.py", "CD-6", "--severity", "error")
+
     def test_a_gitignored_journal_does_not_deliver_a_contract(self):
         """Regression. `.agents/` is gitignored, so an edge through it made a
         contract look addressed locally while CI -- which has no such file --
@@ -389,6 +424,12 @@ class TestContractDelivery(CheckerCase):
         self.append("zen/SKILL.md", "\nSee `reference/no-such-section-file.md §Intro`.\n")
         self.expect_caught("lint-contracts.py", "no-such-section-file.md", "--severity", "error")
 
+    def test_a_dead_shell_script_reference_fails(self):
+        """CD-5. Only md/py/yaml/json references were read, so a moved script
+        under `reference/` stayed cited with nothing to run."""
+        self.append("gauge/SKILL.md", "\nRun `reference/no-such-runner.sh` first.\n")
+        self.expect_caught("lint-contracts.py", "no-such-runner.sh", "--severity", "error")
+
 
 class TestSkillStructure(CheckerCase):
     """`lint-frontmatter.py`."""
@@ -397,6 +438,12 @@ class TestSkillStructure(CheckerCase):
         """F3. `permissions:` and friends are escalated as supply-chain risk."""
         self.edit("zen/SKILL.md", "name: zen", "name: zen\npermissions: all")
         self.expect_caught("lint-frontmatter.py", "F3", "--severity", "error")
+
+    def test_a_reserved_word_inside_a_name_fails(self):
+        """F1. The spec forbids `claude`/`anthropic` anywhere in a name; only a
+        leading segment was rejected, so `zen-claude-helper` passed."""
+        self.edit("zen/SKILL.md", "name: zen", "name: zen-claude-helper")
+        self.expect_caught("lint-frontmatter.py", "reserved word", "--severity", "error")
 
     def test_an_oversized_body_is_reported(self):
         """S2 is advisory (P3), so it is asserted as *reported*, not blocking.
@@ -645,6 +692,22 @@ class TestNexusReferences(CheckerCase):
                     "\nSee `rally/SKILL.md` (+ `reference/communication-patterns.md`).\n")
         self.expect_clean("routing-oracle.py", "--severity", "error")
 
+    def test_a_common_word_is_not_an_owning_skill(self):
+        """RO-1. Skill names such as `chain` are ordinary words, so "Before the
+        chain runs, read `reference/X.md`" took chain/ as the owner of X.md."""
+        self.append("nexus/reference/spec-recipe.md",
+                    "\nBefore the rally starts, read `reference/communication-patterns.md`.\n")
+        self.expect_caught("routing-oracle.py", "communication-patterns.md", "--severity", "error")
+
+    def test_a_bare_subcommand_exception_must_itself_route_to_gate(self):
+        """RO-6. GATE was searched across the whole section, and the Default
+        dispatch flow above the exception always names GATE, so an exception
+        that dispatched bare tokens without a question still passed."""
+        self.edit("nexus/SKILL.md",
+                  "enters CLASSIFY at `GATE` and asks one focused question",
+                  "dispatches directly to its Recipe")
+        self.expect_caught("routing-oracle.py", "RO-6", "--severity", "error")
+
 
 class TestLessonsRegister(CheckerCase):
     """`lint-lessons.py`. The register's entire value is what it refuses, so
@@ -689,6 +752,12 @@ class TestLessonsRegister(CheckerCase):
         self.add_row(mech="We will be more careful when editing counts.")
         self.expect_caught("lint-lessons.py", "LS-2", "--severity", "error")
 
+    def test_a_japanese_should_is_rejected(self):
+        """LS-2. Bare English "should" was rejected but べき, its Japanese
+        counterpart, was accepted as a mechanism."""
+        self.add_row(mech="コミット前にゲートを確認するべき。")
+        self.expect_caught("lint-lessons.py", "LS-2", "--severity", "error")
+
     def test_a_japanese_intention_is_rejected(self):
         """LS-2. The repository writes Japanese; an English-only phrase list
         accepted the same disposition written in Japanese."""
@@ -699,6 +768,15 @@ class TestLessonsRegister(CheckerCase):
         """LS-1. "TBD" is an empty cell with characters in it."""
         self.add_row(mech="TBD")
         self.expect_caught("lint-lessons.py", "LS-1", "--severity", "error")
+
+    def test_a_formatted_placeholder_mechanism_fails(self):
+        """LS-1. Only backticks were stripped, so emphasis or a trailing
+        period turned a placeholder back into a mechanism."""
+        for mech in ("**TBD**", "_TBD_", "TBD.", "*n/a*"):
+            with self.subTest(mech=mech):
+                self.add_row(mech=mech)
+                self.expect_caught("lint-lessons.py", "LS-1", "--severity", "error")
+                self.tearDown()
 
     def test_a_row_without_a_leading_pipe_is_still_checked(self):
         """GFM makes the leading pipe optional; such a row ended the register
@@ -767,6 +845,16 @@ class TestTaskBattery(CheckerCase):
         self.expect_caught("task-battery-check.py", "item 4 (clean up keyword -> refactor)",
                            "--severity", "error")
 
+    def test_a_keyword_moved_to_another_recipes_row_fails(self):
+        """Item 8 searched only for `design weaknesses`, so moving it from the
+        anneal row to restyle's kept the item passing while classify would
+        send the battery's sentence to restyle."""
+        self.edit("nexus/reference/signal-keywords.md", "`design weaknesses`, ", "")
+        self.edit("nexus/reference/signal-keywords.md",
+                  "`redesign the screen`", "`redesign the screen`, `design weaknesses`")
+        self.expect_caught("task-battery-check.py", "item 8 (design weaknesses keyword -> anneal)",
+                           "--severity", "error")
+
     def test_a_crashed_check_blocks_in_error_mode(self):
         """Fail-open let an unreadable artifact skip every mechanical item and exit 0."""
         path = self._remember("nexus/reference/signal-keywords.md")
@@ -807,9 +895,37 @@ class TestProjectLocalMirror(CheckerCase):
         self.expect_caught("lint-project-local.py", "references `_templates/`",
                            "--severity", "error")
 
+    def test_a_directory_or_dot_slash_reference_without_its_symlink_fails(self):
+        """PL-3. A reference needed a file extension and no `/` before it, so
+        `_templates/learning-loop-kit/` and `./_templates/X.md` passed with no
+        `_templates` symlink beside the skill."""
+        for ref in ("\nCopy `_templates/learning-loop-kit/` into the target.\n",
+                    "\nScaffold from `./_templates/SKILL_TEMPLATE.md`.\n"):
+            with self.subTest(ref=ref):
+                self.append(".claude/skills/lore/SKILL.md", ref)
+                self.append(".agents/skills/lore/SKILL.md", ref)
+                self.expect_caught("lint-project-local.py", "references `_templates/`",
+                                   "--severity", "error")
+                self.tearDown()
+
+    def test_a_directory_reference_through_its_symlink_resolves(self):
+        """PL-3. A directory reference resolves as a directory, not a file."""
+        ref = "\nThe checkers live in `_common/scripts/`.\n"
+        self.append(".claude/skills/lore/SKILL.md", ref)
+        self.append(".agents/skills/lore/SKILL.md", ref)
+        self.expect_clean("lint-project-local.py", "--severity", "error")
+
 
 class TestRecipeValidator(CheckerCase):
     """`validate-recipes.py`."""
+
+    def test_a_recipe_named_dash_is_a_row_not_a_separator(self):
+        """A first cell of dashes alone marked a separator, so a Recipe named
+        `-` was invisible to every rule -- here a second default and `help`."""
+        self.edit("scout/SKILL.md",
+                  "| Focused Hunt | `bug` | ✓ |",
+                  "| - | `help` | ✓ | x | y |\n| Focused Hunt | `bug` | ✓ |")
+        self.expect_caught("validate-recipes.py", "R-REC-03", "--severity", "error")
 
     def test_a_missing_recipes_section_cites_the_requirement_that_owns_it(self):
         """R-REC-05 still called the section RECOMMENDED for Tier 1-2 after

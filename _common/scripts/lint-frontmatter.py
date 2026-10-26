@@ -4,7 +4,7 @@ Lint SKILL.md frontmatter and structural constraints for the claude-skills repos
 
 Checks (all derived from official Anthropic Agent Skills spec + repository conventions):
 
-  F1  name: kebab-case, <=64 chars, no reserved prefixes (anthropic/claude), no XML tags
+  F1  name: kebab-case, <=64 chars, no reserved words (anthropic/claude), no XML tags
   F2  description: non-empty, <=1024 chars, no XML tags, no Japanese chars,
                    contains WHAT (capability) AND WHEN (trigger) phrasing
   F3  Valid YAML mapping with exactly the repository keys (name, description)
@@ -64,7 +64,9 @@ import yaml
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
 FRONTMATTER_KEY_ALLOWLIST = {"name", "description"}
-RESERVED_PREFIXES = {"anthropic", "claude"}
+#: The skill spec forbids these words anywhere in a name, not only as a prefix
+#: (`sigil/reference/official-skill-guide.md`: "must not contain").
+RESERVED_WORDS = {"anthropic", "claude"}
 NAME_PATTERN = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 # CJK punctuation, kana (incl. phonetic extensions), CJK Ext A, unified ideographs,
 # and half/full-width forms. Kana+kanji alone let 、。「」 and ｽｷﾙ through.
@@ -275,9 +277,9 @@ def lint_skill(skill_dir: Path, report: Report) -> None:
         if not NAME_PATTERN.fullmatch(fm_name):
             report.add(Finding(name, "F1", "P0",
                                f"name '{fm_name}' not kebab-case", rel, 1))
-        if any(fm_name == p or fm_name.startswith(p + "-") for p in RESERVED_PREFIXES):
+        if any(word in fm_name for word in RESERVED_WORDS):
             report.add(Finding(name, "F1", "P0",
-                               f"name '{fm_name}' uses reserved prefix (anthropic/claude)",
+                               f"name '{fm_name}' contains a reserved word (anthropic/claude)",
                                rel, 1))
         if XML_TAG_PATTERN.search(fm_name):
             report.add(Finding(name, "F1", "P0",
