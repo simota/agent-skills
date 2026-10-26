@@ -133,6 +133,25 @@ class StagedHookRegressionTests(unittest.TestCase):
         )
         self.assertEqual(list(self.repo.glob("agent-skills-index.*")), [])
 
+    def test_a_template_the_tests_read_selects_the_full_check(self):
+        """Only `_templates/learning-loop-kit/` was in the hook's list, so a
+        commit to `_templates/design-feedback-kit/` -- which a launch test gates
+        -- ran the catalog tests alone and passed what CI then failed."""
+        full_only = self.repo / "_common" / "scripts" / "test_full_only.py"
+        full_only.write_text(
+            "import unittest\nclass Full(unittest.TestCase):\n"
+            "    def test_full_suite_ran(self): self.fail('full suite ran')\n"
+        )
+        self.assert_ok(self.run_command("git", "add", "."))
+        self.assert_ok(self.run_command("git", "commit", "--no-verify", "-m", "test: add full-only test"))
+        kit = self.repo / "_templates" / "design-feedback-kit" / "principles" / "core.md"
+        kit.parent.mkdir(parents=True)
+        kit.write_text("kit change\n")
+        self.assert_ok(self.run_command("git", "add", "_templates"))
+        result = self.run_command("git", "commit", "-m", "docs(kit): change a shipped template")
+        self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("full suite ran", result.stdout + result.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()

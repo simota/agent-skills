@@ -104,7 +104,11 @@ run_converter() {
   if [ "$VERBOSE" = true ]; then
     run_with_timeout "$@"
   else
-    run_with_timeout "$@" >"$WORK_DIR/converter.log" 2>&1
+    run_with_timeout "$@" >"$WORK_DIR/converter.log" 2>&1 || {
+      # Chromium as root refuses to start without --no-sandbox, in its own words.
+      if grep -q -e '--no-sandbox' -- "$WORK_DIR/converter.log"; then SANDBOX_REFUSED=true; fi
+      return 1
+    }
   fi
 }
 
@@ -179,6 +183,7 @@ convert_with_puppeteer() {
 
 echo "Converting: $INPUT_FILE"
 echo "Output: $OUTPUT_FILE"
+SANDBOX_REFUSED=false
 METHODS=(chrome wkhtmltopdf puppeteer)
 if [ -n "$METHOD" ]; then METHODS=("$METHOD"); fi
 for candidate in "${METHODS[@]}"; do
@@ -190,4 +195,10 @@ for candidate in "${METHODS[@]}"; do
   log "$candidate unavailable or failed"
 done
 error "PDF conversion failed. Install Chrome, wkhtmltopdf, or Puppeteer; use --verbose for diagnostics."
+# An installed Chrome or Puppeteer that refused to start as root fails here
+# exactly as a missing one does. The sandbox is not disabled on the user's
+# behalf; name the cause the converter reported instead.
+if [ "$SANDBOX_REFUSED" = true ]; then
+  error "The browser refused to start without its sandbox (running as root). Run as a non-root user."
+fi
 exit 1

@@ -62,6 +62,9 @@ BARE_ROW = re.compile(r"^L\d+\s*(?<!\\)\|")
 #: lowercased mechanism with backticked code spans stripped, so a mechanism that
 #: legitimately quotes such a phrase from a rule it enforces is not caught by
 #: its own quotation.
+#: べき is "should" (rejected in English as bare "should"), but 〜きる verbs such as
+#: 調べきる / 食べきれない / 述べきった also contain it; their conjugation follows.
+JA_SHOULD = re.compile(r"べき(?![るれらりっろ])")
 INTENTION_PHRASES = (
     "remember to", "be careful", "always try", "try to remember", "make sure",
     "keep in mind", "don't forget", "do not forget", "take care to", "be sure to",
@@ -90,11 +93,17 @@ def intention_phrase(mechanism: str) -> str | None:
     for phrase in INTENTION_PHRASES:
         if re.search(r"(?<![a-z])" + re.escape(phrase) + r"(?![a-z])", lowered):
             return phrase
+    if JA_SHOULD.search(lowered):
+        return "べき"
     return None
 
 
 def is_blank(cell: str) -> bool:
-    cell = cell.strip().strip("`").strip()
+    # Emphasis and trailing punctuation do not make a placeholder a mechanism:
+    # `**TBD**`, `_TBD_` and `TBD.` are the same empty cell.
+    previous = None
+    while cell != previous:  # `**TBD**.` and `**TBD.**` alike
+        previous, cell = cell, cell.strip().strip("`*_~").rstrip(".:;")
     return not cell or PLACEHOLDER.fullmatch(cell) is not None
 
 

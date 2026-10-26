@@ -18,9 +18,12 @@ REGISTRY_REL = Path("_common/PROJECT_LOCAL_SKILLS.md")
 SHARED_NAMESPACES = ("_common", "_templates")
 
 REGISTRY_ROW_RE = re.compile(r"^\|\s*`([a-z0-9-]+)`\s*\|", re.MULTILINE)
+# A file with a known suffix or a directory (trailing `/`), written bare or as
+# `./_templates/...`: both resolve through the symlink beside SKILL.md.
 SHARED_REF_RE = re.compile(
-    r"(?<![A-Za-z0-9_./-])"
-    r"((?:_common|_templates)/[A-Za-z0-9_./-]+\.(?:md|py|sh|json|ya?ml))"
+    r"(?:(?<=[^./]\./)|(?<=^\./)|(?<![A-Za-z0-9_./-]))"
+    r"((?:_common|_templates)/(?:[A-Za-z0-9_./-]+\.(?:md|py|sh|json|ya?ml)\b|(?:[A-Za-z0-9_.-]+/)+))",
+    re.M,
 )
 
 
@@ -163,7 +166,8 @@ def _check_shared_delivery(
                 continue
 
             for ref in namespace_refs:
-                if not (skill_dir / ref).is_file():
+                target = skill_dir / ref
+                if not (target.is_dir() if ref.endswith("/") else target.is_file()):
                     findings.append(
                         Finding(
                             "P1",

@@ -245,6 +245,29 @@ Path(sys.argv[-1]).write_bytes(b'%PDF-1.7\\n' + b'x' * 1100 + b'\\n%%EOF\\n')
         self.assertIn("Done (wkhtmltopdf)", result.stdout)
         self.assertTrue(self.output.read_bytes().startswith(b"%PDF-"))
 
+    def test_a_sandbox_refusal_is_named(self):
+        """Chromium will not start as root without --no-sandbox, and the only
+        message blamed a missing install while Chrome was installed."""
+        for said, named in (("Running as root without --no-sandbox is not supported", True),
+                            ("some other crash", False)):
+            with self.subTest(said=said):
+                self.executable("google-chrome", f"import sys\nprint({said!r}, file=sys.stderr)\nsys.exit(1)\n")
+                result = self.pdf("--method", "chrome", self.input, self.output)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertEqual("refused to start without its sandbox" in result.stderr, named,
+                                 result.stderr)
+
+    def test_a_failure_without_a_browser_does_not_blame_the_sandbox(self):
+        """The hint printed for any root failure, even when only wkhtmltopdf
+        was tried or Puppeteer was not installed."""
+        self.executable("id", "print(0)\n")
+        self.executable("node", "import sys\nprint('Cannot find module puppeteer', file=sys.stderr)\nsys.exit(1)\n")
+        for method in ("wkhtmltopdf", "puppeteer"):
+            with self.subTest(method=method):
+                result = self.pdf("--method", method, self.input, self.output)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertNotIn("sandbox", result.stderr)
+
     def test_generic_environment_variables_are_ignored(self):
         """TIMEOUT/VERBOSE from the caller's shell overrode the defaults;
         TIMEOUT=30s failed a call that passed no --timeout."""

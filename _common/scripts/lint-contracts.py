@@ -34,8 +34,9 @@ Checks:
   CD-5  A repo-internal reference (`_common/`, `_templates/`, `reference/`) resolves
         somewhere. These namespaces exist only inside this repository, so one that
         resolves nowhere is a dead pointer rather than a path into a user's project.
-  CD-6  Every `_common/*.md` declares its tier. An undeclared tier makes CD-1 and the
-        precedence order in OPERATIONAL.md unable to see the file at all.
+  CD-6  Every `_common/*.md` declares its tier, and the tier is one OPERATIONAL.md
+        defines. An undeclared or misspelt tier makes CD-1 and the precedence order
+        in OPERATIONAL.md unable to see the file at all.
 
 Severity tiers:
   --severity warning  (default)  print findings, exit 0
@@ -85,16 +86,20 @@ DIRECT_DEPTH = 1
 #: pointer after the path (`reference/x.md §Section`, `x.md § 9.1`) is the corpus's
 #: usual shape and still names the file, so it is allowed after the extension.
 TICKED_ANY = re.compile(
-    r"`([A-Za-z0-9_~.][A-Za-z0-9_./~-]*\.(?:md|py|ya?ml|json))(?:#[^`\s]*)?(?:\s*§[^`]*)?`")
+    r"`([A-Za-z0-9_~.][A-Za-z0-9_./~-]*\.(?:md|py|sh|ya?ml|json))(?:#[^`\s]*)?(?:\s*§[^`]*)?`")
 
 #: Markdown link targets, e.g. [`token-economy.py`](scripts/token-economy.py).
-MD_LINK = re.compile(r"\]\(([A-Za-z0-9_.][A-Za-z0-9_./-]*\.(?:md|py|ya?ml|json))(?:#[^)\s]*)?\)")
+MD_LINK = re.compile(r"\]\(([A-Za-z0-9_.][A-Za-z0-9_./-]*\.(?:md|py|sh|ya?ml|json))(?:#[^)\s]*)?\)")
 
 #: Namespaces that exist only inside this repository (CD-5 scope).
 REPO_NAMESPACES = ("_common/", "_templates/", "reference/", "_prompts/", "_loops/")
 
 #: Self-declared tier line, e.g. "> **Tier:** `spine` -- in effect on every run."
 TIER_LINE = re.compile(r"\*\*Tier:\*\*\s*`?([a-z]+)`?")
+
+#: The tiers `OPERATIONAL.md` § Contract Precedence defines. Any other word is a
+#: typo, and a misspelt `spine` would drop the file out of CD-1 and CD-2 unseen.
+TIERS = ("spine", "domain", "orchestration", "authoring")
 
 #: The authoritative spine roster: the Contract Precedence entry that enumerates it.
 SPINE_ROSTER_LINE = re.compile(r"^\d+\.\s+\*\*The spine\*\*(.+)$", re.M)
@@ -356,6 +361,9 @@ def check_tier_declarations(tiers: dict[str, str | None], findings: list) -> Non
     for name, tier in sorted(tiers.items()):
         if tier is None:
             findings.append(("P1", "CD-6", f"_common/{name} declares no `Tier:` line"))
+        elif tier not in TIERS:
+            findings.append(("P1", "CD-6", f"_common/{name} declares unknown tier `{tier}` "
+                             f"(expected one of: {', '.join(TIERS)})"))
 
 
 def print_report(matrix: dict[str, dict[str, int]], skills: list[Path]) -> None:

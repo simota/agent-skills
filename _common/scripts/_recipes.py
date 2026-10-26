@@ -37,7 +37,8 @@ def recipe_cells(block: str):
             in_table = len(cells) >= 2 and cells[0].lower() == "recipe" \
                 and cells[1].lower() == "subcommand"
             continue
-        if cells and re.fullmatch(r":?-+:?", cells[0]):
+        # A separator is dashes in every cell; one Recipe named `-` is a row.
+        if cells and all(re.fullmatch(r":?-+:?", cell) for cell in cells):
             continue
         yield cells or [""]
 
