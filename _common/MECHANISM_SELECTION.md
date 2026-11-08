@@ -38,6 +38,24 @@ An **instruction is soft**: Claude follows it *most* of the time, but breaks und
 
 **Inverse caution (subagent):** the body and intermediate reasoning never return to the parent, so the main thread can't steer or see them. Use a **skill** when you need the procedure to play out *in* the main thread step-by-step.
 
+## Recurrence: move the fix up one rung
+
+The decision rule places a new instruction. A failure that recurs after its fix says the fix sits
+too low. Strongest first:
+
+| Rung | Form | Holds because |
+|------|------|---------------|
+| 1 Structure | the wrong form cannot be written — type, schema, file layout, generated artifact | there is nothing to violate |
+| 2 Check | a checker or hook blocks it (`make validate`, `PreToolUse` deny) | deterministic, runs every time |
+| 3 Skill / rule | loaded text that steers the agent | soft; holds only while loaded |
+| 4 Prose | CLAUDE.md line, style guide, comment | soft; decays under pressure |
+| 5 Human review | a person notices | does not scale to agent throughput |
+
+A second occurrence moves the fix up at least one rung; another sentence at the same rung is not a
+fix. Human review's job is finding the next constraint to promote, not being the constraint. A
+rung-2 check without a test that watches it fail is indistinguishable from rung 4
+(`_common/LESSONS.md` L001/L002).
+
 ## Admission: is the line worth its rent?
 
 The decision rule above answers *where*. This answers *whether*. Anything placed at an always-on
@@ -74,7 +92,10 @@ Optimize placement, not length: the goal is that detail arrives at the moment it
   Give anything time-bound an owner and a removal condition when you add it, not later.
 - **Exceptions promoted to absolutes** — one package's rule placed at the root; "always run every
   test", "never add a dependency". Stated unconditionally, they misfire on docs-only edits and
-  throwaway experiments. Attach the condition, or scope the file.
+  throwaway experiments. Attach the condition, or scope the file. A bare prohibition also
+  over-fires on legitimate cases beside its target: "don't write tests that copy constants" deletes
+  tests that should stay. Write the criterion that decides X, and check it against a case where X
+  is correct.
 
 ## Budget review: report the always-on delta
 
@@ -113,3 +134,5 @@ rules keep the figure meaningful:
 - **sigil** — decides skill vs rule vs CLAUDE.md when authoring project skills (`cross-tool-rules-landscape.md`).
 - **architect** — decides whether a new capability is a skill vs hook/rule/subagent at design time.
 - **Grove `llm`** — `.claude/rules/` tiering in monorepos.
+
+**Lifecycle:** failure: instructions land at a level too weak to hold, and recurring failures get another sentence instead of a stronger mechanism; effect: a placement rule plus a promotion ladder, not a guarantee that any line is obeyed; owner: hone (instruction triage) with skill maintainers; removal: when the runtime enforces placement and promotion itself, or `hone`'s audit absorbs both rules.

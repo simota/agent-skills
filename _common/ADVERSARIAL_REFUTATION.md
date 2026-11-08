@@ -10,6 +10,15 @@ Cross-skill discipline for **stress-testing a high-stakes claim with a panel of 
 
 ---
 
+## 0. Run before arguing
+
+A claim a command can settle — a test, a reproduction, a measurement, a type or schema check — is
+settled by running it, not by a panel. Run it first and record the result as evidence; the panel
+argues only the residue no check can decide (market, demand, intent, novelty). A skeptic's objection
+about checkable behavior is a request to run that check, not a vote.
+
+---
+
 ## 1. The panel
 
 - **2-3 independent skeptics**, each attacking from a **distinct angle**, not three copies of the same objection. Independence is the whole point: a single reviewer rationalizes; a diverse panel surfaces failure modes redundancy can't.
