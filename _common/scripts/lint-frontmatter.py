@@ -418,7 +418,7 @@ def changed_paths() -> list[Path]:
     def git(*args: str) -> list[str]:
         return subprocess.run(
             ["git", *args],
-            cwd=str(REPO_ROOT), check=True, capture_output=True, text=True,
+            cwd=str(REPO_ROOT), check=True, capture_output=True, text=True, timeout=60,
         ).stdout.split("\0")
 
     out = git("diff", "--name-only", "-z", "HEAD") + git(
@@ -471,7 +471,7 @@ def main() -> int:
                 raise ValueError("requested paths contain no skill files")
         else:
             skills = iter_skill_dirs([REPO_ROOT])
-    except (OSError, ValueError, subprocess.CalledProcessError) as error:
+    except (OSError, ValueError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as error:
         print(f"lint-frontmatter: unable to select skills: {error}", file=sys.stderr)
         return 2
 
