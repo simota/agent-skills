@@ -36,7 +36,7 @@ class CheckerBoundaryTests(unittest.TestCase):
     def setUp(self):
         directory = tempfile.TemporaryDirectory(prefix="audit-checker-")
         self.addCleanup(directory.cleanup)
-        self.root = Path(directory.name)
+        self.root = Path(directory.name).resolve()
         for module in (frontmatter, contracts, instructions, lessons):
             patcher = mock.patch.object(module, "REPO_ROOT", self.root)
             patcher.start()

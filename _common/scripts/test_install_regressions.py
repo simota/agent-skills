@@ -25,7 +25,7 @@ class InstallRegressionTests(unittest.TestCase):
     def setUp(self) -> None:
         self.temp = tempfile.TemporaryDirectory(prefix="install-regressions-")
         self.addCleanup(self.temp.cleanup)
-        self.root = Path(self.temp.name)
+        self.root = Path(self.temp.name).resolve()
         self.repo = self.root / "source with spaces"
         self.repo.mkdir()
         shutil.copyfile(REPO_ROOT / "Makefile", self.repo / "Makefile")

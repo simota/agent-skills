@@ -321,7 +321,8 @@ class FullLoopRegressions(unittest.TestCase):
         result = self.run_loop(
             'printf "#!/bin/bash\\nexit 0\\n" > "$LOOP_DIR/verify.sh"\n'
             'h=$(shasum -a 256 < "$LOOP_DIR/verify.sh" | awk \'{print $1}\')\n'
-            'sed -i "s|^[^ ]*  $LOOP_DIR/verify.sh\\$|$h  $LOOP_DIR/verify.sh|" "$LOOP_DIR/.pins.sha256"\n'
+            'sed "s|^[^ ]*  $LOOP_DIR/verify.sh\\$|$h  $LOOP_DIR/verify.sh|" "$LOOP_DIR/.pins.sha256" > "$LOOP_DIR/.pins.new"\n'
+            'mv "$LOOP_DIR/.pins.new" "$LOOP_DIR/.pins.sha256"\n'
             'touch "$LOOP_DIR/done.md"\n', AUTOCOMMIT="false",
         )
         self.assert_success(result)

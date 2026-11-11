@@ -115,7 +115,7 @@ class TestSessionStartExamples(unittest.TestCase):
     def setUp(self) -> None:
         self.temp = tempfile.TemporaryDirectory(prefix="sessionstart-example-")
         self.addCleanup(self.temp.cleanup)
-        self.cwd = Path(self.temp.name)
+        self.cwd = Path(self.temp.name).resolve()
         self.environment = {**os.environ, "XDG_CACHE_HOME": str(self.cwd / "cache")}
 
     def test_dispatches_actual_stdin_source(self) -> None:

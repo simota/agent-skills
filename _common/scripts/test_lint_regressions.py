@@ -37,7 +37,7 @@ class FixtureCase(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix='lint-regressions-')
         self.addCleanup(self.temp.cleanup)
-        self.root = pathlib.Path(self.temp.name)
+        self.root = pathlib.Path(self.temp.name).resolve()
         for module in (frontmatter, lessons, contracts, instructions):
             patcher = mock.patch.object(module, 'REPO_ROOT', self.root)
             patcher.start()

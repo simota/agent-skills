@@ -20,7 +20,7 @@ class InstallBoundaryTests(unittest.TestCase):
     def setUp(self):
         temp = tempfile.TemporaryDirectory(prefix="install-boundaries-")
         self.addCleanup(temp.cleanup)
-        self.root = Path(temp.name)
+        self.root = Path(temp.name).resolve()
         self.repo = self.root / "source"
         self.repo.mkdir()
         shutil.copyfile(REPO_ROOT / "Makefile", self.repo / "Makefile")
