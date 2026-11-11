@@ -146,16 +146,6 @@ For roster changes, do not treat one updated README as completion. Public counts
 
 Checker code is production infrastructure for this repository. A checker change should include regression cases that demonstrate both the failing repository state and the repaired state. Keep the `Makefile`, CI, hook fixtures, and installer fixtures synchronized when the checker roster changes.
 
-## Recent operational changes reflected here
-
-### 2026-09-15 — project-local validation became executable policy
-
-The merged change behind commit `36e6030` added dedicated validation for project-local skills, wired it into `make validate` and CI, and added resolving shared-contract symlinks to both canonical and mirror trees. The repository now rejects roster drift, mirror drift, and runtime-unresolvable shared references for project-local skills.
-
-### 2026-09-14 — corpus/runtime audit repair
-
-The preceding merged audit repaired staged-content validation, installer-path protection, Markdown parsing, recipe registration, catalog metadata, token-usage checks, execution-loop preservation, atomic report output, HTML escaping, print layout, and kit setup. It also added regression tests for each repaired defect; current test and corpus counts come from `make check`, not from this history.
-
 ## Maintenance rule
 
 Prefer **executable truth over duplicated prose**. Counts and catalog text still need to be human-readable, but whenever a fact can drift (rosters, mirrors, recipes, routing, contract reachability), the repository's checker should define the invariant and documentation should point maintainers to that checker.
