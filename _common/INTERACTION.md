@@ -62,6 +62,9 @@ options, and decide. Three properties cut that cost, and all three are required.
 - **Ask only what they already know.** A question the person must investigate to answer is not a
   question — it is the work handed back. Do the investigation, then ask the decision that remains.
   When the investigation is itself the thing in doubt, say so and ask whether to run it.
+  The same holds for a "which approach" fork whose answer is observable — behavior, timing,
+  layout, output, performance: build the throwaway sketch and let the result decide. The
+  question is reserved for a product or preference call no experiment can settle.
 
 **The one-question rule is unchanged** (`nexus/reference/intent-clarification.md`): when one focused
 question resolves the ambiguity, ask one. Answer Cost governs the shape of whichever questions are
@@ -315,3 +318,5 @@ Agents with custom triggers should define YAML templates in their own reference 
 Follow `OPERATIONAL.md` Output Language rules:
 - Question text, options, descriptions, reports: follow the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`)
 - Code, identifiers, APIs, protocol markers: **Repository conventions** (typically English)
+
+**Lifecycle:** failure: F4 — questions that hand the work back (no default, no reversibility, or a fact the agent could have observed) get cleared unread or stall the run; effect: shapes the questions that are asked and removes the observable ones, it does not decide when consent is required (Ask First triggers do); owner: nexus (intent clarification) with skill maintainers; removal: when the runtime question tool enforces default/reversibility fields and trigger definitions move to host-side permission rules.

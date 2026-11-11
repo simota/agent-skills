@@ -179,6 +179,16 @@ Multiple subagents implement different solutions to the same problem, then the b
 | **All-pass** | Every result must pass; any failure = overall failure | VERIFICATION_PARALLEL |
 | **Compete** | Evaluate against criteria → select best | COMPETITIVE_APPROACH, MULTI_ENGINE (selective) |
 
+**The parent owns what it merges.** A subagent's report is a claim about its work, not the work:
+read the diff or artifact itself and write the summary from that, never by passing the report
+through.
+
+**Follow-up rounds go to a fresh subagent.** A fix round, retry, or next queue item gets a new
+subagent briefed with consolidated scope — the original brief, every later directive, and the prior
+report and branch. Resume an existing one only when the work needs state that lives in it and is
+costly to move (uncommitted changes, a running process); directives chained onto a running agent
+are the ones that get dropped.
+
 ---
 
 ## Error Handling

@@ -28,5 +28,10 @@ Pick the analysis shape from the failure's structure, not from habit.
 ## Stall Protocol
 
 - A hypothesis with no supporting evidence after 3 investigative probes → switch to the next.
+- Two hypotheses (or two attempted fixes) that rest on the same belief have both failed → the
+  belief is the suspect, not the third variant. Write that shared premise as one sentence, name
+  an observation that would come out differently if it were false, and make that observation
+  before forming another hypothesis that assumes it. Look at how the failures are distributed,
+  not only how large they are.
 - All 3 hypotheses exhausted without progress → escalate to Multi-Engine Mode, or request
   additional context from the reporter.
