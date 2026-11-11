@@ -651,7 +651,7 @@ class TestRoutingSurface(CheckerCase):
         """RO-11. Absorbed skills are recorded only in CHANGELOG prose
         (`shard` → `schema`, `sketch` → `builder`) once their packages leave the
         tree, so the retired set cannot come from `.archive/` alone: routing-oracle
-        carries them in its hard-coded `REMOVED_SKILLS` list (transcribed from that history)."""
+        reads them from `_corpus.REMOVED_SKILLS` (transcribed from that history)."""
         self.append("zen/SKILL.md", "\n- legacy: `SHARD_TO_SKETCH`\n")
         self.expect_caught("routing-oracle.py", "SHARD_TO_SKETCH", "--severity", "error")
 
@@ -925,6 +925,13 @@ class TestTaskBattery(CheckerCase):
                   "| 35 | **[out-of-coverage]**",
                   "| 66a | \"fixture item\" | Build | `deliver` |\n| 35 | **[out-of-coverage]**")
         self.expect_caught("task-battery-check.py", "unrecognised item ID", "--severity", "error")
+
+    def test_a_battery_item_naming_a_removed_skill_is_stale(self):
+        """The stale guard reads the same removed-skill list as routing-oracle
+        (`_corpus.REMOVED_SKILLS`), so a name on that list is caught here too."""
+        self.append("nexus/reference/task-battery.md", "\nChain: Scout -> Zine -> Builder\n")
+        self.expect_caught("task-battery-check.py", "references retired agent `Zine`",
+                           "--severity", "strict")
 
 
 class TestProjectLocalMirror(CheckerCase):

@@ -33,6 +33,22 @@ INFRA_DIRS = frozenset({
     "_common", "_loops", "_prompts", "_templates",
 })
 
+#: Skills no longer in the tree. Mostly packages deleted from `.archive/` in
+#: commit 7969059 (CHANGELOG "Removed — retired skill packages"). With the
+#: directory gone this is the only record of their names short of git history,
+#: which a shallow CI checkout does not have. A future sunset keeps its package
+#: under `.archive/` and is read from there.
+REMOVED_SKILLS = frozenset({
+    "accord", "anvil", "bazaar", "bond", "clause", "crest", "cull", "director",
+    "grok", "harvest", "hearth", "helm", "latch", "loom", "mint", "morph", "nest",
+    "oath", "pipe", "plea", "relay", "riff", "sage", "shard", "sketch", "snap",
+    "summon", "tempo", "titan", "trawl", "zine",
+    # Retired without an archived package: absorbed in CHANGELOG prose
+    # (`dock`, `wield`), renamed then retired (`agora`), or never archived
+    # (`dawn`, `hex`, `sonar`, `realm`, `haul`).
+    "dock", "wield", "agora", "dawn", "hex", "sonar", "realm", "haul",
+})
+
 
 def is_external(entry: pathlib.Path) -> bool:
     """True when `entry` is a skill directory owned by another repository.

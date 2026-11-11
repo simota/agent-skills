@@ -24,10 +24,7 @@ documented ID is itself checked -- see check_battery_coverage):
   coverage stays fully accounted for (no silent caps).
 
 Also runs a lightweight STALE guard: flags any task-battery.md item that
-still names a retired agent (Dawn / Hex / Sonar / Realm / Haul, plus the
-2026-08-20 consolidation set: Trawl / Grok / Bond / Morph / Mint / Relay /
-Riff / Helm / Tempo / Anvil — sunset
-prior to the 2026-07-29 routing-matrix.md edit), so a future edit that
+still names a removed skill (`_corpus.REMOVED_SKILLS`), so a future edit that
 reintroduces a stale reference is caught instead of silently passing.
 
 Crash contract: any unhandled exception during a check is caught, printed,
@@ -57,6 +54,7 @@ import traceback
 from collections import Counter
 from pathlib import Path
 
+from _corpus import REMOVED_SKILLS
 from _recipes import active_text
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -200,11 +198,9 @@ JUDGMENT_ITEMS = [
      "requires live compass Gap-mode + architect proposal spawn"),
 ]
 
-# Agents sunset prior to the 2026-07-29 routing-matrix.md edit. A battery
-# item still naming one of these is stale evidence of a pre-sunset chain.
-RETIRED_AGENTS = ["Dawn", "Hex", "Sonar", "Realm", "Haul",
-                  "Trawl", "Grok", "Bond", "Morph", "Mint",
-                  "Relay", "Riff", "Helm", "Tempo", "Anvil"]
+# The battery names agents capitalised. An item still naming a removed skill
+# is stale evidence of a chain that no longer exists.
+RETIRED_AGENTS = sorted(name.capitalize() for name in REMOVED_SKILLS)
 
 
 class Finding:
