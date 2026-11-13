@@ -4,15 +4,13 @@
 [![Global Agents](https://img.shields.io/badge/Global_Agents-90-blue.svg)]()
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-🤖 90のグローバルスキルと3つのproject-local拡張による協調開発を実現するスキルコレクション
+## Features
 
-## ✨ Features
+- 90のグローバルエージェント + 3つのproject-local拡張: 対象はバグ調査、テスト、セキュリティ、UI/UX、AI/ML、可観測性、インフラまで
+- Nexusオーケストレーター: タスクに合うエージェントチェーンを設計して実行する
+- プラットフォーム非依存: Claude Code、Codex CLI、Antigravity CLI等で動作
 
-- **90のグローバルエージェント + 3つのproject-local拡張** - バグ調査、テスト、セキュリティ、UI/UX、AI/ML、可観測性、インフラまで網羅
-- **Nexusオーケストレーター** - タスクを分析し最適なエージェントチェーンを自動設計
-- **プラットフォーム非依存** - Claude Code、Codex CLI、Antigravity CLI等で動作
-
-## 🚀 Quick Start
+## Quick Start
 
 ### インストール
 
@@ -62,9 +60,9 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 
 Codexのスキル配置先は `~/.agents/skills`、設定は引き続き `~/.codex` です。旧配置は自動削除しません。**このリポジトリが作った旧リンクだけ**を外す場合は `make unlink-codex CODEX_DIR="$HOME/.codex/skills"` の結果を確認し、`make link-codex` を実行してください。他のファイルやリンクは保持します。`.agents` がなく `.codex` が存在する場合、新しい親ディレクトリをソースリポジトリ外に限って作成します。それ以外は意図した外部配置先を明示的に準備してください。
 
-## 📚 概要
+## 概要
 
-このリポジトリには、ソフトウェア開発の様々な側面を専門とする90のグローバルエージェントと、3つのproject-local拡張が含まれています。各エージェントは特定のドメインに特化しており、**Nexus**オーケストレーターによって統括・連携されます。
+各エージェントは特定のドメインに特化しており、Nexusオーケストレーターによって統括・連携されます。
 
 ### スキル数の数え方
 
@@ -303,21 +301,19 @@ Codexのスキル配置先は `~/.agents/skills`、設定は引き続き `~/.cod
 |------------|------|------|
 | **Vector** | _"The browser is a stage. Every click is a scene."_ - Playwright/Chrome DevToolsによるブラウザ操作自動化。データ収集、フォーム操作、スクリーンショット取得、ネットワーク監視、クロールシステム設計（`crawl` Recipe） | 自動化スクリプト |
 
-**Cue と Vitrine の役割分担**:
-- **Cue**: ブラウザ（Web UI）のデモ動画（Playwright、.webm出力）
-- **Vitrine**: コンポーネントカタログと Storybook ストーリー、ビジュアルリグレッション連携
+Cue と Vitrine の役割分担:
+- Cue: ブラウザ（Web UI）のデモ動画（Playwright、.webm出力）
+- Vitrine: コンポーネントカタログと Storybook ストーリー、ビジュアルリグレッション連携
 
 ## ワークフロー
 
 ### 基本的な使い方
 
-1. `/AgentName` でエージェントを呼び出し
-2. エージェントがタスクを実行
-3. 必要に応じて他エージェントへの引き継ぎを提案
+`/AgentName` でエージェントを呼び出すと、エージェントがタスクを実行し、必要に応じて他エージェントへの引き継ぎを提案します。
 
 ### Nexusによるオーケストレーション
 
-複雑なタスクには**Nexus**を使用します。Nexusは以下のモードで動作します：
+複雑なタスクにはNexusを使用します。Nexusは以下のモードで動作します：
 
 | モード | トリガー | 動作 | 対話 |
 |--------|----------|------|------|
@@ -331,9 +327,9 @@ Codexのスキル配置先は `~/.agents/skills`、設定は引き続き `~/.cod
 
 各エージェントは重要な判断ポイントでユーザーに確認を求めます（プラットフォームの対話機能を使用）：
 
-- **開始時確認**（Interactive のみ）: チェーン設計後、実行前に方針を確認 — Guided は判断ポイントでのみ確認
-- **判断ポイント確認**: セキュリティリスク、破壊的変更、複数アプローチなど
-- **質問は選択肢形式**: 2〜4つの選択肢から選択（「その他」も選択可能）
+- 開始時確認（Interactive のみ）: チェーン設計後、実行前に方針を確認。Guided は判断ポイントでのみ確認
+- 判断ポイント確認: セキュリティリスク、破壊的変更、複数アプローチなど
+- 質問は選択肢形式: 2〜4つの選択肢から選択（「その他」も選択可能）
 
 ```yaml
 # 選択肢形式の質問例
@@ -357,10 +353,6 @@ questions:
 | 影響ファイル数 | 1-3 | 4+ |
 | セキュリティ関連 | No | Yes |
 | 破壊的変更 | No | Yes |
-
-- **デフォルト (AUTORUN_FULL)**: COMPLEX を含む全タスクをガードレール付きで実行
-- **SIMPLE + NEXUS_AUTORUN**: 完全自動実行
-- **NEXUS_AUTORUN 下の COMPLEX**: Guided モードに切り替え（対話必須）
 
 詳細は `_common/INTERACTION.md` を参照してください。
 
@@ -493,25 +485,17 @@ questions:
 
 ### PROJECT.md の構成
 
-- **Architecture Decisions** - アーキテクチャ選択の記録
-- **Domain Glossary** - 用語の統一
-- **API & External Services** - 外部サービスの制約
-- **Known Gotchas** - 既知の落とし穴
-- **Security Considerations** - セキュリティ制約
-- **Performance Budgets** - パフォーマンス予算
-- **Activity Log** - エージェントの作業履歴
+- Architecture Decisions
+- Domain Glossary
+- API & External Services: 外部サービスの制約
+- Known Gotchas
+- Security Considerations: セキュリティ制約
+- Performance Budgets: パフォーマンス予算
+- Activity Log: エージェントの作業履歴
 
 ## エージェントの原則
 
 共通ルールは `_common/`（`BOUNDARIES.md`、`OPERATIONAL.md`、`INTERACTION.md` など）にあり、各スキルの `## Boundaries` 節がそのスキル固有の Always / Ask first / Never を定めます。
-
-### 境界の種類
-
-| マーカー | 意味 |
-|---------|------|
-| ✅ Always do | 常に実行すべきこと |
-| ⚠️ Ask first | 確認が必要なこと |
-| 🚫 Never do | 絶対にしないこと |
 
 ## ディレクトリ構成
 
@@ -546,8 +530,6 @@ agent-skills/
 
 **実行チェーン**: Spark（仕様策定）→ Sherpa（タスク分解）→ Forge（プロトタイプ）→ Builder（本番実装）→ Radar（テスト）→ Quill（ドキュメント）
 
----
-
 #### バグ修正（複雑なケース）
 
 ```
@@ -560,8 +542,6 @@ agent-skills/
 
 **実行チェーン**: Scout（調査）→ Sherpa（タスク分解）→ Builder（修正）→ Radar（回帰テスト）→ Sentinel（セキュリティ確認）
 
----
-
 #### 大規模リファクタリング
 
 ```
@@ -572,8 +552,6 @@ Clean Architectureに沿ってリファクタリングしたいです。
 
 **実行チェーン**: Atlas（アーキテクチャ設計）→ Sherpa（段階的計画）→ Zen（リファクタリング）→ Radar（テスト）
 
----
-
 #### UI機能の追加
 
 ```
@@ -583,8 +561,6 @@ Clean Architectureに沿ってリファクタリングしたいです。
 ```
 
 **実行チェーン**: Spark（仕様）→ Forge（UI プロトタイプ）→ Muse（デザイン調整）→ Builder（実装）→ Radar（テスト）
-
----
 
 ### ステップバイステップ実行（手動制御）
 
@@ -629,11 +605,9 @@ _STEP_COMPLETE:
 [自動で次のステップへ...]
 ```
 
-**コピペ不要** - 最終成果物まで自動実行されます。
-
 #### GUIDEDモード（判断ポイントで確認）
 
-Nexus がチェーンを自分で実行し、判断ポイント（Ask First 該当、ガードレール発動、各スキルの対話トリガー）でのみ停止します。全ステップで確認したい場合は `## NEXUS_INTERACTIVE` を使います：
+Nexus がチェーンを自分で実行し、判断ポイント（Ask First 該当、ガードレール発動、各スキルの対話トリガー）でのみ停止します。
 
 ```
 ## NEXUS_GUIDED
@@ -651,8 +625,6 @@ Nexusがチェーンを設計・実行し、判断が必要な箇所で停止：
 Spark が検索範囲を2案提示しました。Sherpa はどちらで計画しますか？
 [選択肢]
 ```
-
----
 
 ### タスク分解の活用（Sherpa）
 
