@@ -4,13 +4,11 @@
 [![Global Agents](https://img.shields.io/badge/Global_Agents-90-blue.svg)]()
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-A skill collection that enables collaborative development with a team of specialized AI agents.
-
 ## Features
 
-- **90 Global Agents + 3 Project-local Extensions** - Broad reusable coverage without exposing repository-specific operating skills everywhere
-- **Nexus Orchestrator** - Analyzes tasks and automatically designs optimal agent chains
-- **Platform Agnostic** - Works with Claude Code, Codex CLI, Antigravity CLI, and others
+- 90 Global Agents + 3 Project-local Extensions: the repository's own operating skills (`orbit`, `lore`, `darwin`) stay out of global profiles
+- Nexus Orchestrator: designs the agent chain for a task and runs it
+- Platform Agnostic: works with Claude Code, Codex CLI, Antigravity CLI, and others
 
 ## Quick Start
 
@@ -64,7 +62,7 @@ Codex skills now use `~/.agents/skills`; settings still use `~/.codex`. The inst
 
 ## Overview
 
-This repository contains 90 globally reusable AI agents and 3 repository-local operating extensions. Each skill specializes in a specific domain and is coordinated by the **Nexus** orchestrator when available in the active profile.
+Each skill specializes in one domain and is coordinated by the Nexus orchestrator when available in the active profile.
 
 ### Roster Counting
 
@@ -102,7 +100,7 @@ The active repository surface is therefore **90 global + 3 project-local = 93 di
 |-------|-------------|--------|
 | **Scout** | _"Every bug has a story. I read the ending first."_ - Bug investigation and root cause analysis (RCA). Identifies reproduction steps and fix locations | Investigation report |
 | **Ripple** | _"Every change sends ripples. Know where they land before you leap."_ - Pre-change impact analysis. Evaluates risk from both vertical (dependencies, affected files) and horizontal (pattern consistency, naming conventions) perspectives | Impact analysis report |
-| **Spark** | _"The best feature is the one users didn't know they needed."_ - Feature proposals. Suggests features leveraging existing data/logic as Markdown specs | Specification document |
+| **Spark** | _"The best feature is the one users didn't know they needed."_ - Feature proposals. Suggests features built on existing data/logic as Markdown specs | Specification document |
 | **Compete** | _"Know your enemy. Know the market. Know yourself."_ - Competitive research, differentiation, positioning, and engineering-professional branding across GitHub, LinkedIn, portfolios, publishing, and conference presence | Competitive analysis, positioning and brand strategy |
 | **Voice** | _"Feedback is a gift. Analysis is unwrapping it."_ - User feedback collection, NPS survey design, sentiment analysis, and insight extraction | Feedback report |
 | **Field** | _"Good research asks the right questions. Great research changes what you thought was the question."_ - User research design, interview guides, qualitative analysis, persona/journey map creation | Research report |
@@ -305,21 +303,19 @@ The active repository surface is therefore **90 global + 3 project-local = 93 di
 |-------|-------------|--------|
 | **Vector** | _"The browser is a stage. Every click is a scene."_ - Browser automation via Playwright/Chrome DevTools. Data collection, form interaction, screenshots, network monitoring, and crawl-system architecture (`crawl` Recipe) | Automation scripts |
 
-**Cue vs Vitrine responsibilities**:
-- **Cue**: Browser (Web UI) demo videos (Playwright, .webm output)
-- **Vitrine**: Component catalogs and Storybook stories with visual-regression wiring
+Cue vs Vitrine responsibilities:
+- Cue: Browser (Web UI) demo videos (Playwright, .webm output)
+- Vitrine: Component catalogs and Storybook stories with visual-regression wiring
 
 ## Workflows
 
 ### Basic Usage
 
-1. Invoke an agent with `/AgentName`
-2. The agent executes the task
-3. Suggests handoff to other agents as needed
+Invoke an agent with `/AgentName`. It runs the task and suggests a handoff to other agents when one is needed.
 
 ### Orchestration with Nexus
 
-Use **Nexus** for complex tasks. Nexus operates in the following modes:
+Use Nexus for complex tasks. Nexus operates in the following modes:
 
 | Mode | Trigger | Behavior | Interaction |
 |------|---------|----------|-------------|
@@ -333,9 +329,9 @@ Use **Nexus** for complex tasks. Nexus operates in the following modes:
 
 Each agent asks for user confirmation at important decision points (using the platform's interaction capabilities):
 
-- **Start confirmation** (Interactive only): Confirms approach after chain design, before execution — Guided confirms only at decision points
-- **Decision point confirmation**: Security risks, destructive changes, multiple approaches, etc.
-- **Questions as options**: Choose from 2-4 options ("Other" is always available)
+- Start confirmation (Interactive only): confirms the approach after chain design, before execution; Guided confirms only at decision points
+- Decision point confirmation: security risks, destructive changes, multiple approaches, etc.
+- Questions as options: choose from 2-4 options ("Other" is always available)
 
 ```yaml
 # Example option-based question
@@ -359,10 +355,6 @@ questions:
 | Affected files | 1-3 | 4+ |
 | Security-related | No | Yes |
 | Destructive changes | No | Yes |
-
-- **Default (AUTORUN_FULL)**: Executes all tasks, including COMPLEX, with guardrails
-- **SIMPLE + NEXUS_AUTORUN**: Fully automatic execution
-- **COMPLEX under NEXUS_AUTORUN**: Switches to Guided mode (interaction required)
 
 See `_common/INTERACTION.md` for details.
 
@@ -495,25 +487,17 @@ Agents share knowledge through the `.agents/` directory:
 
 ### PROJECT.md Structure
 
-- **Architecture Decisions** - Record of architecture choices
-- **Domain Glossary** - Unified terminology
-- **API & External Services** - External service constraints
-- **Known Gotchas** - Known pitfalls
-- **Security Considerations** - Security constraints
-- **Performance Budgets** - Performance targets
-- **Activity Log** - Agent work history
+- Architecture Decisions
+- Domain Glossary
+- API & External Services: external service constraints
+- Known Gotchas
+- Security Considerations: security constraints
+- Performance Budgets: performance targets
+- Activity Log: agent work history
 
 ## Agent Principles
 
 Shared rules live in `_common/` (`BOUNDARIES.md`, `OPERATIONAL.md`, `INTERACTION.md`, ...); each skill's `## Boundaries` section states its own Always / Ask first / Never rules.
-
-### Boundary Types
-
-| Marker | Meaning |
-|--------|---------|
-| Always do | Must always be done |
-| Ask first | Requires confirmation |
-| Never do | Must never be done |
 
 ## Directory Structure
 
@@ -548,8 +532,6 @@ I want to add a user profile editing feature
 
 **Execution chain**: Spark (spec) > Sherpa (task decomposition) > Forge (prototype) > Builder (production implementation) > Radar (tests) > Quill (documentation)
 
----
-
 #### Bug Fix (Complex Case)
 
 ```
@@ -562,8 +544,6 @@ It doesn't reproduce locally.
 
 **Execution chain**: Scout (investigation) > Sherpa (task decomposition) > Builder (fix) > Radar (regression tests) > Sentinel (security verification)
 
----
-
 #### Large-scale Refactoring
 
 ```
@@ -574,8 +554,6 @@ I want to refactor it to follow Clean Architecture.
 
 **Execution chain**: Atlas (architecture design) > Sherpa (phased plan) > Zen (refactoring) > Radar (tests)
 
----
-
 #### UI Feature Addition
 
 ```
@@ -585,8 +563,6 @@ I want users to be able to input star ratings and comments.
 ```
 
 **Execution chain**: Spark (spec) > Forge (UI prototype) > Muse (design adjustment) > Builder (implementation) > Radar (tests)
-
----
 
 ### Step-by-Step Execution (Manual Control)
 
@@ -631,11 +607,9 @@ _STEP_COMPLETE:
 [Automatically proceeding to next step...]
 ```
 
-**No copy-paste needed** - automatically executes to the final deliverable.
-
 #### GUIDED Mode (Confirm at Decision Points)
 
-Nexus runs the chain itself and pauses only at decision points (Ask First triggers, guardrail escalations, or a skill's interaction triggers). Use `## NEXUS_INTERACTIVE` to confirm every step instead:
+Nexus runs the chain itself and pauses only at decision points (Ask First triggers, guardrail escalations, or a skill's interaction triggers).
 
 ```
 ## NEXUS_GUIDED
@@ -653,8 +627,6 @@ Nexus designs the chain, runs it, and stops when a decision needs you:
 Spark proposed two search scopes. Which should Sherpa plan for?
 [Options]
 ```
-
----
 
 ### Task Decomposition in Practice (Sherpa)
 

@@ -1,16 +1,6 @@
 # Repository Guide
 
-> Current-state guide for maintainers and contributors.
-
-This document explains how the repository is organized, what is authoritative, how the active skill roster is counted, and which checks define a valid change. It complements the public catalog in `README.md` / `README_ja.md` and the authoring rules in `CONTRIBUTING.md`.
-
-## Current baseline
-
-The active repository surface is the global skills at `<skill-name>/SKILL.md` plus the project-local skills `orbit`, `lore`, and `darwin`.
-
-This guide deliberately records no measured quantities (skill, recipe, test, or contract counts): they drift with every change and nothing here re-derives them (`_common/OPERATIONAL.md` § Derived Numbers). For the current numbers, run `make check` — each checker prints its own counts and findings, and the test runner prints the number of tests run. The public roster counts in `README.md` / `README_ja.md` / `index.html` are re-derived by `_common/scripts/test_catalog_regressions.py`.
-
-Non-blocking advisories (size or recipe-count warnings, reviewed routing exceptions) are printed by the same checkers and are not failures; their reviewed-exception lists live in the owning checker.
+For maintainers and contributors. The public catalog is in `README.md` / `README_ja.md` and the authoring rules are in `CONTRIBUTING.md`.
 
 ## Repository model
 
@@ -109,7 +99,7 @@ These checks close a gap that ordinary top-level corpus iteration cannot cover b
 
 ## Documentation consistency map
 
-Changes to the skill ecosystem can require updates in more than one public or routing surface. Use this table before opening a PR.
+One change can require updates in several public or routing surfaces. Check this table before opening a PR.
 
 | Change | Documentation / registry surfaces to review |
 |---|---|
@@ -144,8 +134,12 @@ For roster changes, do not treat one updated README as completion. Public counts
 
 ### Validation tooling change
 
-Checker code is production infrastructure for this repository. A checker change should include regression cases that demonstrate both the failing repository state and the repaired state. Keep the `Makefile`, CI, hook fixtures, and installer fixtures synchronized when the checker roster changes.
+A checker change should include regression cases that demonstrate both the failing repository state and the repaired state. Keep the `Makefile`, CI, hook fixtures, and installer fixtures synchronized when the checker roster changes.
 
 ## Maintenance rule
 
-Prefer **executable truth over duplicated prose**. Counts and catalog text still need to be human-readable, but whenever a fact can drift (rosters, mirrors, recipes, routing, contract reachability), the repository's checker should define the invariant and documentation should point maintainers to that checker.
+Prefer executable truth over duplicated prose. Counts and catalog text still need to be human-readable, but whenever a fact can drift (rosters, mirrors, recipes, routing, contract reachability), the repository's checker should define the invariant and documentation should point maintainers to that checker.
+
+This guide deliberately records no measured quantities (skill, recipe, test, or contract counts): they drift with every change and nothing here re-derives them (`_common/OPERATIONAL.md` § Derived Numbers). For the current numbers, run `make check` — each checker prints its own counts and findings, and the test runner prints the number of tests run. The public roster counts in `README.md` / `README_ja.md` / `index.html` are re-derived by `_common/scripts/test_catalog_regressions.py`.
+
+Non-blocking advisories (size or recipe-count warnings, reviewed routing exceptions) are printed by the same checkers and are not failures; their reviewed-exception lists live in the owning checker.

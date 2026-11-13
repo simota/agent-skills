@@ -1,10 +1,10 @@
 # Contributing / コントリビューションガイド
 
-AI Agent Skills へのコントリビューションを歓迎します！
-
 リポジトリ構造・正本・検証の全体像は [`docs/REPOSITORY_GUIDE.md`](docs/REPOSITORY_GUIDE.md) も参照してください。
 
-## 🐛 バグ報告
+## Issue
+
+### バグ報告
 
 1. [Issues](../../issues) で既存の報告がないか確認
 2. 新規 Issue を作成し、以下を記載:
@@ -13,12 +13,12 @@ AI Agent Skills へのコントリビューションを歓迎します！
    - 実際の動作
    - 使用プラットフォーム（Claude Code, Codex CLI 等）
 
-## 💡 機能要望
+### 機能要望
 
 1. [Issues](../../issues) で新規 Issue を作成
 2. ユースケースと期待される効果を記載
 
-## 🔧 プルリクエスト
+## プルリクエスト
 
 ### セットアップ
 
@@ -113,21 +113,20 @@ Route elsewhere when the task is primarily:
 [Hub mode handoff format]
 ```
 
-上の見出しは `_common/scripts/lint-frontmatter.py` の `ST1`（必須見出し）が実際に検査する集合です。省略すると lint が指摘します。
+完全なセクション一覧・順序・記法はテンプレートにあります。上の見出しは `_common/scripts/lint-frontmatter.py` の `ST1`（必須見出し）が実際に検査する集合です。省略すると lint が指摘します。
 
 `## INTERACTION_TRIGGERS`（ユーザー確認が必要な決定ポイントの定義）は、必要なエージェントで使用する任意セクションです。
 
-3. 完全なセクション一覧・順序・記法は `_templates/SKILL_TEMPLATE.md` を参照し、それに沿って作成する
-4. Complexity Budget（`_common/HARNESS_DEBT.md` §3b）の4項目 `failure` / `effect` / `owner` / `removal` を宣言する。`removal` が空欄なら却下される
-5. **ロスターを更新する（手作業のレジストリは自動同期されない）**:
+3. Complexity Budget（`_common/HARNESS_DEBT.md` §3b）の4項目 `failure` / `effect` / `owner` / `removal` を宣言する。`removal` が空欄なら却下される
+4. **ロスターを更新する（手作業のレジストリは自動同期されない）**:
    - `README.md` / `README_ja.md` のエージェント一覧とエージェント数
    - `index.html`（`const AGENTS` 配列・英訳・カテゴリ件数・件数を記載した全テキスト。`SUBCOMMANDS` は生成物なので手で編集しない）
    - `compass/reference/catalog.md`（カテゴリ節とその件数）
    - `_common/SKILL_PACKS.md`（最低1つのPack、またはoptional／explicit-only配置に登録する）
    - `AGENTS.md` / `CLAUDE.md` のスキル数
-6. Recipes や routing を追加・変更した場合は、それぞれの参照ファイル・ルーティング面を同期し、生成物を再生成する（`python3 _common/scripts/generate-index-subcommands.py`、`python3 _common/scripts/generate-recipes-directory.py`）
-7. `make check` を通す
-8. warning が残る場合は、その warning の仕様に従ってレビュー済み例外として根拠を残す。単に検証を迂回しない
+5. Recipes や routing を追加・変更した場合は、それぞれの参照ファイル・ルーティング面を同期し、生成物を再生成する（`python3 _common/scripts/generate-index-subcommands.py`、`python3 _common/scripts/generate-recipes-directory.py`）
+6. `make check` を通す
+7. warning が残る場合は、その warning の仕様に従ってレビュー済み例外として根拠を残す。単に検証を迂回しない
 
 ### project-local スキルの変更
 
@@ -155,6 +154,10 @@ project-local スキルはグローバルロスターとは別の運用拡張で
 - 新規スキルが共有契約を名指ししても、実行時に解決する `_common` symlink が無ければ contract delivery は成立しない
 - checker の変更には、壊れた状態を再現する回帰テストと修復後の成功ケースを追加する
 - checker roster を変えた場合は `Makefile`、CI、hook fixture、installer fixture の同期を確認する
+
+### ドキュメント改善
+
+誤字脱字の修正、説明の明確化、翻訳の改善、実装済み invariant とドキュメントの差分解消を歓迎します。ドキュメントの重複を増やすより、可能な限り executable check を正本にし、人向け文書からそこへ誘導してください。
 
 ### コーディング規約
 
@@ -198,22 +201,13 @@ Examples:
 - [ ] warning / reviewed exception を増やした場合、根拠と境界を記録した
 - [ ] 必要な説明・変更履歴を更新した
 
-## 📝 ドキュメント改善
 
-ドキュメントの改善も歓迎します:
-- 誤字脱字の修正
-- 説明の明確化
-- 翻訳の改善
-- 実装済み invariant とドキュメントの差分解消
-
-ドキュメントの重複を増やすより、可能な限り executable check を正本にし、人向け文書からそこへ誘導してください。
-
-## 🤝 コードオブコンダクト
+## コードオブコンダクト
 
 - 建設的なフィードバックを心がける
 - 多様な意見を尊重する
 - 初心者に優しく対応する
 
-## 📜 ライセンス
+## ライセンス
 
 コントリビューションは [MIT License](LICENSE) の下で提供されます。

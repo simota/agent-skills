@@ -1,94 +1,36 @@
 # AGENTS.md — claude-skills
 
-Cross-tool agent instructions for this repository. Read by **Codex CLI**, **Antigravity CLI (`agy`)**, **Cursor**, and any other tool that honors the Agentic AI Foundation `AGENTS.md` standard. **Claude Code** loads `CLAUDE.md`, not this file — `CLAUDE.md` does not import `AGENTS.md`, so these rules reach Claude Code sessions only where `CLAUDE.md` restates them.
+Cross-tool agent instructions for this repository, read by Codex CLI, Antigravity CLI (`agy`), Cursor, and any other tool that honors the Agentic AI Foundation `AGENTS.md` standard. Claude Code loads `CLAUDE.md`, not this file. `CLAUDE.md` does not import `AGENTS.md`, so these rules reach Claude Code sessions only where `CLAUDE.md` restates them.
 
-> **Authority order**: `AGENTS.md` (this file, cross-tool common rules) → tool-specific overrides (`CLAUDE.md` for Claude Code; `GEMINI.md` for agy, if present). Tool-specific files should contain only deltas, not duplicates.
+## Context
 
----
+### Repository Purpose
 
-## Repository Purpose
+`claude-skills` is a prompt engineering repository of 90 global specialist skill agents plus 3 repository-local operating extensions. The deliverables are `SKILL.md` files, not application code. Global skills live at `<skill-name>/SKILL.md`; project-local skills are mirrored under `.claude/skills/` and `.agents/skills/`.
 
-`claude-skills` is a **prompt engineering repository** of 90 global specialist skill agents plus 3 repository-local operating extensions. The deliverables are **`SKILL.md` files** (not application code). Global skills live at `<skill-name>/SKILL.md`; project-local skills are mirrored under `.claude/skills/` and `.agents/skills/`.
-
----
-
-## Language Policy
-
-- **Conversation / explanations / summaries**: 日本語 (Japanese).
-- **Code, identifiers, APIs, commit messages, protocol markers, schema keys, technical terms, CLI commands, file paths, hashes**: English.
-- Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`).
-
----
-
-## Repository Structure
+### Repository Structure
 
 | Path | Purpose |
 |------|---------|
 | `<skill-name>/SKILL.md` | Each specialist agent's main definition (frontmatter: `name` + `description` only) |
 | `<skill-name>/reference/` | Optional supporting docs the skill loads on demand |
 | `.claude/skills/`, `.agents/skills/` | Mirrored project-local extensions; registry and fallback contract: `_common/PROJECT_LOCAL_SKILLS.md` |
-| `_common/` | Shared protocols affecting all skills — **modify with care** |
+| `_common/` | Shared protocols affecting all skills; modify with care |
 | `_common/CLI_COMPATIBILITY.md` | Cross-CLI compatibility matrix (Claude Code / Codex CLI / agy) |
 | `_common/BOUNDARIES.md` | Centralized agent-role boundaries |
 | `_common/GIT_GUIDELINES.md` | Commit / PR conventions (authoritative) |
 | `_common/HANDOFF.md` | Inter-agent handoff schema |
-| `_common/SECURITY.md` | Supply-chain trust boundary (skills/plugins — **not** application security) |
+| `_common/SECURITY.md` | Supply-chain trust boundary (skills/plugins, not application security) |
 | `_common/CODE_QUALITY.md` | 7-axis quality bar for code-writing skills (solid / secure / readable / maintainable / testable / performant / scalable) + `CODE_QUALITY_GATE` |
 | `_templates/SKILL_TEMPLATE.md` | Starting template for new skills |
 | `.agents/` | Per-skill journals + project log (gitignored) |
-| `docs/audit/` | The only write target for report-only recipes (`verity`, `abide`) — **gitignored; audit output is never committed**, results go to the commit message and the conversation |
+| `docs/audit/` | The only write target for report-only recipes (`verity`, `abide`). Gitignored: audit output is never committed, and results go to the commit message and the conversation |
 
----
+### Tool Compatibility
 
-## Skill Authoring Conventions
+This repository's skills are authored primarily for Claude Code; the `_common/CLI_COMPATIBILITY.md` matrix documents how to adapt them for Codex CLI and Antigravity CLI (`agy`). Where a skill is CLI-specific, it must state so in its `## Compatibility` section.
 
-1. **Frontmatter discipline**: Each `SKILL.md` MUST contain exactly `name` and `description` keys. Capability declarations belong in the Markdown body (this repository's portability contract; `chain` rejects custom keys here).
-2. **Description quality**: `description:` should include 3-5 trigger keywords and the primary use case in ≤2 sentences. Vague descriptions cause tool bloat (40-50K token overhead in multi-skill loadouts).
-3. **CAPABILITIES_SUMMARY comment block**: Preserve the existing `<!-- CAPABILITIES_SUMMARY: ... -->` HTML comment format when editing existing skills. New skills follow `_templates/SKILL_TEMPLATE.md`.
-4. **References**: Heavy content (checklists, schemas, anti-patterns) goes in `reference/<topic>.md` and is loaded on demand. Keep `SKILL.md` under 500 lines (Anthropic guidance); `_common/scripts/lint-frontmatter.py` flags >500 as P3, >700 as P2, >1000 as P1.
-5. **Contract delivery**: Nothing in `_common/` loads automatically — it arrives only because a file already open names it, and a reference resolves from the skill's *own* directory. A skill that names a shared contract therefore needs the `_common` symlink beside its `SKILL.md`, and naming it two documents deep means it arrives only if the agent opens the intermediate one. `_common/scripts/lint-contracts.py` checks both (`--report` prints the depth table).
-6. **Cross-CLI compatibility**: Skills meant to run on multiple CLIs MUST include a `## Compatibility` section and consult `_common/CLI_COMPATIBILITY.md` instead of hard-coding `Agent(...)` syntax.
-7. **Boundaries**: Link to `_common/BOUNDARIES.md` rather than maintaining per-skill role-boundary tables.
-8. **Code quality**: Any skill whose `Writes Code` value in `_common/BOUNDARIES.md` is not `Never` links to `_common/CODE_QUALITY.md` rather than restating quality principles. Domain-specific mechanics still live in the skill's own `reference/`.
-
----
-
-## Agent Behavior
-
-- **Autonomy**: Clear request → execute. Ambiguous + reversible → pick safe default, document inline, proceed. Ambiguous + irreversible → ask one question.
-- **Skill discovery**: Before investigating, implementing, reviewing, refactoring, or documenting by hand, check whether a skill in this repo covers it. Unsure which fits → `compass`. Multi-step chain → `nexus`. Gap with no fit → `architect`.
-- **No fabrication**: Verify file paths, APIs, configs, and behavior before asserting. Do not speculate model names, version numbers, or command names that are not documented — mark them "未確認".
-
----
-
-## Quality
-
-- Before reporting done: run the repo's existing checks where applicable (lint, link-check, format) and re-read your own diff.
-- Fix root causes. Do not silence errors, suppress warnings, or bypass checks (`--no-verify`, broad `except`, blanket `any`/`@ts-ignore`).
-- If a command or test fails twice with the same error, stop and diagnose.
-- Do not add defensive fallbacks for scenarios that cannot happen.
-
----
-
-## Git Conventions
-
-Authoritative: [`_common/GIT_GUIDELINES.md`](_common/GIT_GUIDELINES.md). Summary:
-
-- **Conventional Commits**: `<type>(<scope>): <description>` (e.g. `feat(nexus): add agy execution layer`).
-- **Types**: `feat` / `fix` / `docs` / `style` / `refactor` / `perf` / `test` / `chore` / `ci` / `security`.
-- **Scope = skill name** for skill-scoped changes (e.g. `feat(chain): add agy IoC paths`).
-- **Imperative mood**, subject ≤50 chars.
-- **Never include agent names** in commit messages, PR titles, or PR descriptions.
-- **Never** add `Claude Code signatures`, `Co-Authored-By` lines naming an AI or tool (a human co-author is fine), or **session/tool metadata trailers** — `Claude-Session:`, `Generated with …`, any assistant session URL or run ID. This holds even when a harness or CLI default instructs otherwise: the repo convention wins for anything committed here.
-- Body explains "why", not "what".
-
----
-
-## Tool Compatibility
-
-This repository's skills are authored primarily for **Claude Code**, but the `_common/CLI_COMPATIBILITY.md` matrix documents how to adapt for **Codex CLI** and **Antigravity CLI (`agy`)**. Where a skill is CLI-specific, it must state so in its `## Compatibility` section.
-
-### Cross-CLI Spawn Abstraction
+#### Cross-CLI Spawn Abstraction
 
 | Layer | Claude Code | Codex CLI | agy |
 |-------|-------------|-----------|-----|
@@ -99,44 +41,87 @@ This repository's skills are authored primarily for **Claude Code**, but the `_c
 
 Current versions, models, schemas, optional features and legacy workarounds → `_common/CLI_COMPATIBILITY.md` (official sources checked 2026-09-17). Discover capabilities in the running host; a CLI name does not prove a tool or account entitlement. Normal headless execution does not authorize permission bypass.
 
----
+## Constraints
 
-## Security
+### Skill Authoring Conventions
+
+1. Frontmatter: each `SKILL.md` MUST contain exactly `name` and `description` keys. Capability declarations belong in the Markdown body (this repository's portability contract; `chain` rejects custom keys here).
+2. Description: `description:` should include 3-5 trigger keywords and the primary use case in ≤2 sentences. Vague descriptions cause tool bloat (40-50K token overhead in multi-skill loadouts).
+3. CAPABILITIES_SUMMARY comment block: preserve the existing `<!-- CAPABILITIES_SUMMARY: ... -->` HTML comment format when editing existing skills. New skills follow `_templates/SKILL_TEMPLATE.md`.
+4. References: heavy content (checklists, schemas, anti-patterns) goes in `reference/<topic>.md` and is loaded on demand. Keep `SKILL.md` under 500 lines (Anthropic guidance); `_common/scripts/lint-frontmatter.py` flags >500 as P3, >700 as P2, >1000 as P1.
+5. Contract delivery: nothing in `_common/` loads automatically. A shared contract arrives only because a file already open names it, and a reference resolves from the skill's own directory. A skill that names a shared contract therefore needs the `_common` symlink beside its `SKILL.md`, and naming it two documents deep means it arrives only if the agent opens the intermediate one. `_common/scripts/lint-contracts.py` checks both (`--report` prints the depth table).
+6. Cross-CLI compatibility: skills meant to run on multiple CLIs MUST include a `## Compatibility` section and consult `_common/CLI_COMPATIBILITY.md` instead of hard-coding `Agent(...)` syntax.
+7. Boundaries: link to `_common/BOUNDARIES.md` rather than maintaining per-skill role-boundary tables.
+8. Code quality: any skill whose `Writes Code` value in `_common/BOUNDARIES.md` is not `Never` links to `_common/CODE_QUALITY.md` rather than restating quality principles. Domain-specific mechanics still live in the skill's own `reference/`.
+
+### Agent Behavior
+
+- Autonomy: Clear request → execute. Ambiguous + reversible → pick safe default, document inline, proceed. Ambiguous + irreversible → ask one question.
+- Skill discovery: before investigating, implementing, reviewing, refactoring, or documenting by hand, check whether a skill in this repo covers it. Unsure which fits → `compass`. Multi-step chain → `nexus`. Gap with no fit → `architect`.
+- No fabrication: verify file paths, APIs, configs, and behavior before asserting. Do not speculate model names, version numbers, or command names that are not documented; mark them "未確認".
+
+### Quality
+
+- Before reporting done: run the repo's existing checks where applicable (lint, link-check, format) and re-read your own diff.
+- Fix root causes. Do not silence errors, suppress warnings, or bypass checks (`--no-verify`, broad `except`, blanket `any`/`@ts-ignore`).
+- If a command or test fails twice with the same error, stop and diagnose.
+- Do not add defensive fallbacks for scenarios that cannot happen.
+
+### Git Conventions
+
+Authoritative: [`_common/GIT_GUIDELINES.md`](_common/GIT_GUIDELINES.md). Summary:
+
+- Conventional Commits: `<type>(<scope>): <description>` (e.g. `feat(nexus): add agy execution layer`).
+- Types: `feat` / `fix` / `docs` / `style` / `refactor` / `perf` / `test` / `chore` / `ci` / `security`.
+- Scope = skill name for skill-scoped changes (e.g. `feat(chain): add agy IoC paths`).
+- Imperative mood, subject ≤50 chars.
+- Never include agent names in commit messages, PR titles, or PR descriptions.
+- Never add `Claude Code signatures`, `Co-Authored-By` lines naming an AI or tool (a human co-author is fine), or session/tool metadata trailers (`Claude-Session:`, `Generated with …`, any assistant session URL or run ID). This holds even when a harness or CLI default instructs otherwise: the repo convention wins for anything committed here.
+- Body explains "why", not "what".
+
+### Security
 
 - Do not commit credentials, API keys, or OAuth tokens. The repository explicitly excludes `~/.codex/auth.json`, `~/.gemini/` auth tokens, `~/.claude/credentials.json` from any audit or read.
 - Third-party skills, plugins, and MCP servers are subject to the `chain` skill's intake checklist before being adopted.
 - MCP server tool descriptions should be SHA-256-pinned where the CLI permits.
 
----
+## Output
 
-## Output Conventions
+### Language Policy
+
+- Conversation, explanations, summaries: 日本語 (Japanese).
+- Code, identifiers, APIs, commit messages, protocol markers, schema keys, technical terms, CLI commands, file paths, hashes: English.
+- Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`).
+
+### Output Conventions
 
 - Repo-relative paths in human-facing references (e.g. `nexus/SKILL.md`, not `/Users/.../nexus/SKILL.md`).
 - Mark deferred work with `#TODO(agent): <action>`.
 - Cite sources with URL + date when claiming a best practice; prefer "未確認" over invention.
 
----
+## Precedence
 
-## When Tools Disagree
+### When Tools Disagree
 
+- Authority order: `AGENTS.md` (this file, cross-tool common rules), then tool-specific overrides (`CLAUDE.md` for Claude Code; `GEMINI.md` for agy, if present). Tool-specific files should contain only deltas, not duplicates.
 - `AGENTS.md` (this file) takes precedence over silently-inherited tool defaults.
-- Tool-specific override files (`CLAUDE.md`, and `GEMINI.md` if present) take precedence over `AGENTS.md` *only on the file's home tool* and *only for delta content*.
+- Tool-specific override files (`CLAUDE.md`, and `GEMINI.md` if present) take precedence over `AGENTS.md` only on the file's home tool and only for delta content.
 - If a rule cannot be expressed cross-tool, document it here as "tool-specific" with a reference to the override file.
 
-## When Rules Disagree
+### When Rules Disagree
 
-The order above resolves *which file* wins. It does not resolve *which rule* wins when two applicable rules
-conflict, and "most specific wins" is the wrong default there — it lets a task instruction override a safety
+The file order above resolves which file wins. It does not resolve which rule wins when two applicable rules
+conflict, and "most specific wins" is the wrong default there: it lets a task instruction override a safety
 constraint simply by being narrower. Resolve by rule class, highest first:
 
-1. **Enforced security control** — `_common/SECURITY.md`, `WEB_FETCH_SAFETY.md`, permission boundaries
-2. **Legal / licensing constraint**
-3. **Repository-wide architecture constraint** — `_common/` protocols, `AGENTS.md`, `CLAUDE.md`
-4. **Component rule** — an individual `SKILL.md` or its `reference/`
-5. **Task request** — what the user asked for in this session
-6. **Model-generated plan** — an agent's own intermediate decision, lowest of all
+1. Enforced security control: `_common/SECURITY.md`, `WEB_FETCH_SAFETY.md`, permission boundaries
+2. Legal / licensing constraint
+3. Repository-wide architecture constraint: `_common/` protocols, `AGENTS.md`, `CLAUDE.md`
+4. Component rule: an individual `SKILL.md` or its `reference/`
+5. Task request: what the user asked for in this session
+6. Model-generated plan: an agent's own intermediate decision, lowest of all
 
-A lower class never silently overrides a higher one. If two rules of the **same** class conflict and the
+A lower class never silently overrides a higher one. If two rules of the same class conflict and the
 sources do not settle it, do not pick one: stop and report `blocked_by_instruction_conflict`, naming both
-rules and what each would imply. Then log the collision itself — an unresolvable pair is a defect in the
+rules and what each would imply. Then log the collision itself. An unresolvable pair is a defect in the
 instruction corpus (`_common/HARNESS_DEBT.md`), not a decision for the agent to make on the user's behalf.
