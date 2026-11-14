@@ -4,9 +4,9 @@
 
 The 2026 privacy landscape compresses three trends into a single operating reality:
 
-- **EU AI Act** — high-risk obligations (Annex III) bind on **2 Dec 2027** (deferred from 2 Aug 2026 by the Digital Omnibus on AI, in force 27 Jul 2026); the GDPR penalty regime applies *concurrently*. New penalty ceiling adds `€35M / 7%` of global turnover for prohibited practices, `€15M / 3%` for high-risk non-compliance. See `canon/reference/regulatory-gdpr-eu-ai-act.md` § EU AI Act Enforcement Timeline for the full timeline.
-- **US state laws fragmenting** — `19+` US states have comprehensive privacy laws in effect by Jan 2026 (Indiana, Kentucky, Rhode Island added in Jan 2026; Texas Responsible AI Governance Act and Colorado AI Act follow). Treat "is this a CCPA-only project?" as obsolete framing; any consumer-facing US product needs a state-by-state applicability matrix.
-- **GDPR fines hit €7.1B cumulative** — the regulators are *enforcing*, not warning. Treat 72-hour breach notification and DPIA-before-launch as hard deadlines, not aspirational ones.
+- EU AI Act: high-risk obligations (Annex III) bind on 2 Dec 2027 (deferred from 2 Aug 2026 by the Digital Omnibus on AI, in force 27 Jul 2026); the GDPR penalty regime applies *concurrently*. New penalty ceiling adds `€35M / 7%` of global turnover for prohibited practices, `€15M / 3%` for high-risk non-compliance. See `canon/reference/regulatory-gdpr-eu-ai-act.md` § EU AI Act Enforcement Timeline for the full timeline.
+- US state laws fragmenting: `19+` US states have comprehensive privacy laws in effect by Jan 2026 (Indiana, Kentucky, Rhode Island added in Jan 2026; Texas Responsible AI Governance Act and Colorado AI Act follow). Treat "is this a CCPA-only project?" as obsolete framing; any consumer-facing US product needs a state-by-state applicability matrix.
+- GDPR fines hit €7.1B cumulative: the regulators are *enforcing*, not warning. Treat 72-hour breach notification and DPIA-before-launch as hard deadlines, not aspirational ones.
 
 ## GDPR (EU General Data Protection Regulation)
 
@@ -94,11 +94,11 @@ CCPA applies if the business:
 
 ### Key Implementation Requirements
 
-1. **Privacy policy** disclosing categories of PI collected and purposes.
-2. **"Do Not Sell or Share"** link on website (if applicable).
-3. **Verification** of consumer identity before fulfilling requests.
-4. **Non-discrimination** for exercising rights.
-5. **Service provider contracts** with use restrictions.
+1. Privacy policy disclosing categories of PI collected and purposes.
+2. "Do Not Sell or Share" link on website (if applicable).
+3. Verification of consumer identity before fulfilling requests.
+4. Non-discrimination for exercising rights.
+5. Service provider contracts with use restrictions.
 
 ## APPI (Japan — Act on the Protection of Personal Information)
 
@@ -128,18 +128,18 @@ CCPA applies if the business:
 
 ### 2022 Amendment Key Changes
 
-- **Pseudonymously Processed Information** category added.
-- **Cross-border transfer** requirements strengthened (must inform of destination country's regime).
-- **Breach notification** to PPC became mandatory.
-- **Individual rights** expanded (deletion, usage cessation).
+- Pseudonymously Processed Information category added.
+- Cross-border transfer requirements strengthened (must inform of destination country's regime).
+- Breach notification to PPC became mandatory.
+- Individual rights expanded (deletion, usage cessation).
 
 ### 2026 APPI Amendment (in progress)
 
-The Japanese Cabinet approved a fresh APPI amendment bill on **2026-04-07** and submitted it to the Diet. Expected to take full effect by **2028** if passed during 2026. Key practical impacts:
+The Japanese Cabinet approved a fresh APPI amendment bill on 2026-04-07 and submitted it to the Diet. Expected to take full effect by 2028 if passed during 2026. Key practical impacts:
 
-- **Cross-border transfer monitoring** — when relying on the "receiving country's protection system" basis, the controller must now monitor the receiving party's protection regime at least **once per year** (the previous rule was open-ended).
-- **Cross-border consent disclosure** — when relying on data-subject consent for an overseas transfer, the controller MUST disclose (i) the destination country name, (ii) that country's data protection regime, and (iii) the receiving party's specific protective measures *before* obtaining consent.
-- **Tighter alignment with GDPR / China PIPL / Korea PIPA** — the amendment is explicitly framed as continuing the trajectory toward global-standard parity.
+- Cross-border transfer monitoring — when relying on the "receiving country's protection system" basis, the controller must now monitor the receiving party's protection regime at least once per year (the previous rule was open-ended).
+- Cross-border consent disclosure: when relying on data-subject consent for an overseas transfer, the controller MUST disclose (i) the destination country name, (ii) that country's data protection regime, and (iii) the receiving party's specific protective measures *before* obtaining consent.
+- Tighter alignment with GDPR / China PIPL / Korea PIPA — the amendment is explicitly framed as continuing the trajectory toward global-standard parity.
 
 Plan APPI projects against this trajectory even before the effective date; the cross-border monitoring requirement is the most operationally disruptive change for SaaS providers serving Japan from outside Japan.
 
@@ -147,14 +147,14 @@ Plan APPI projects against this trajectory even before the effective date; the c
 
 | Feature | GDPR | CCPA/CPRA | APPI | EU AI Act (high-risk from 2027-12-02) |
 |---------|------|-----------|------|----------------------|
-| Opt-in vs Opt-out | Opt-in (consent first) | Opt-out (collect, allow opt-out) | Opt-in (consent for sensitive) | N/A — risk-tier based |
+| Opt-in vs Opt-out | Opt-in (consent first) | Opt-out (collect, allow opt-out) | Opt-in (consent for sensitive) | N/A: risk-tier based |
 | Territorial scope | EU residents (worldwide) | CA residents (revenue threshold) | Japan residents + Japan-based operators | EU users (worldwide) |
-| Max penalty | €20M or 4% global revenue | $2,663 per unintentional; $7,988 per intentional or minor-related violation | ¥100M or criminal penalties | **€35M / 7%** (prohibited), **€15M / 3%** (high-risk) |
+| Max penalty | €20M or 4% global revenue | $2,663 per unintentional; $7,988 per intentional or minor-related violation | ¥100M or criminal penalties | €35M / 7% (prohibited), €15M / 3% (high-risk) |
 | DPO required | Certain organizations | No | No (recommended) | Conformity assessor for high-risk |
 | Children's age | <16 (member states may lower to 13) | <16 (COPPA <13) | No specific age threshold | N/A |
 | Breach notification | 72h to DPA | No fixed timeline (AG action) | Promptly to PPC | High-risk system serious-incident reporting |
 
-When a project triggers more than one regime, **penalties apply concurrently** — GDPR + EU AI Act on the same EU-user data flow can produce two ceilings, not one. Plan to the strictest applicable rule per regime.
+When a project triggers more than one regime, penalties apply concurrently: GDPR + EU AI Act on the same EU-user data flow can produce two ceilings, not one. Plan to the strictest applicable rule per regime.
 
 ## DPIA Template Structure
 
@@ -200,13 +200,13 @@ When a project triggers more than one regime, **penalties apply concurrently** �
 
 ## 2026 Regulatory Landscape (SKILL.md excerpt)
 
-**EU AI Act (Annex III high-risk obligations from 2 Dec 2027 after the Digital Omnibus deferral):** High-risk AI systems processing personal data trigger both a Fundamental Rights Impact Assessment (FRIA, Art. 27) and a GDPR DPIA (Art. 35). Data governance requirements (Art. 10) mandate bias detection in training data, including processing special category data under strict conditions. Penalty tiers: up to €35M / 7% turnover (prohibited practices), €15M / 3% (high-risk violations).
+EU AI Act (Annex III high-risk obligations from 2 Dec 2027 after the Digital Omnibus deferral): High-risk AI systems processing personal data trigger both a Fundamental Rights Impact Assessment (FRIA, Art. 27) and a GDPR DPIA (Art. 35). Data governance requirements (Art. 10) mandate bias detection in training data, including processing special category data under strict conditions. Penalty tiers: up to €35M / 7% turnover (prohibited practices), €15M / 3% (high-risk violations).
 
-**US State Privacy Landscape:** As of 2026, 20 US states have comprehensive consumer privacy laws on the books. Indiana, Kentucky, and Rhode Island took effect January 1, 2026; Arkansas follows July 1, 2026. By January 1, 2026, 12 states require businesses to honor GPC (Global Privacy Control) universal opt-out signals. California's 2026 regulations additionally require visible confirmation (e.g., "Opt-Out Request Honored") when a GPC signal is processed. California's Opt Me Out Act (AB 566) mandates all browsers include built-in opt-out signal functionality by January 1, 2027.
+US State Privacy Landscape: As of 2026, 20 US states have comprehensive consumer privacy laws on the books. Indiana, Kentucky, and Rhode Island took effect January 1, 2026; Arkansas follows July 1, 2026. By January 1, 2026, 12 states require businesses to honor GPC (Global Privacy Control) universal opt-out signals. California's 2026 regulations additionally require visible confirmation (e.g., "Opt-Out Request Honored") when a GPC signal is processed. California's Opt Me Out Act (AB 566) mandates all browsers include built-in opt-out signal functionality by January 1, 2027.
 
-**HIPAA Security Rule (NPRM Jan 2025; final rule not issued — HHS target moved from May 2026 to July 2027):** Proposed changes are the most sweeping update since 2013 — encryption of ePHI at rest and in transit moves from "addressable" to required; MFA mandatory for all ePHI access; biannual vulnerability scans; annual penetration testing; 72-hour system restoration. Critical for HealthTech projects.
+HIPAA Security Rule (NPRM Jan 2025; final rule not issued — HHS target moved from May 2026 to July 2027): Proposed changes are the most sweeping update since 2013 — encryption of ePHI at rest and in transit moves from "addressable" to required; MFA mandatory for all ePHI access; biannual vulnerability scans; annual penetration testing; 72-hour system restoration. Critical for HealthTech projects.
 
-**Frameworks:** NIST Privacy Framework 1.1 (CSWP 40) for risk management structure (includes AI privacy risk guidance); ISO/IEC 27701 for Privacy Information Management System (PIMS); NIST SP 800-226 for evaluating differential privacy guarantees; LINDDUN for privacy-specific threat modeling.
+Frameworks: NIST Privacy Framework 1.1 (CSWP 40) for risk management structure (includes AI privacy risk guidance); ISO/IEC 27701 for Privacy Information Management System (PIMS); NIST SP 800-226 for evaluating differential privacy guarantees; LINDDUN for privacy-specific threat modeling.
 
-**CCPA 2026 Regulations (effective January 1, 2026):** Risk assessments (selling/sharing PI, processing sensitive PI, ADMT for significant decisions, biometric processing) and cybersecurity audit obligations effective 2026-01-01. **ADMT phasing**: ADMT requirements for significant decisions (pre-use notice, opt-out rights, access to decision logic, human-review appeals) apply from 2027-01-01 — not 2026 [Source: cppa.ca.gov]. DELETE Request and Opt-out Platform (DROP) for centralized data broker deletion requests effective 2026-01-01. Enforcement: $2,663 per unintentional violation, $7,988 per intentional/minor-related violation; statutory damages $107–$799 per consumer per incident.
+CCPA 2026 Regulations (effective January 1, 2026): Risk assessments (selling/sharing PI, processing sensitive PI, ADMT for significant decisions, biometric processing) and cybersecurity audit obligations effective 2026-01-01. ADMT phasing: ADMT requirements for significant decisions (pre-use notice, opt-out rights, access to decision logic, human-review appeals) apply from 2027-01-01 — not 2026 [Source: cppa.ca.gov]. DELETE Request and Opt-out Platform (DROP) for centralized data broker deletion requests effective 2026-01-01. Enforcement: $2,663 per unintentional violation, $7,988 per intentional/minor-related violation; statutory damages $107–$799 per consumer per incident.
 
