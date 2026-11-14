@@ -1,52 +1,50 @@
 # Craft Standards
 
-The super-quality bar for Design, Animation, and Branding axes. These are the standards `funnel premium` enforces upstream of and across Stages 4–7. Lighthouse and WCAG are the floor — this document defines the ceiling.
+The super-quality bar for Design, Animation, and Branding axes. These are the standards `funnel premium` enforces upstream of and across Stages 4–7. Lighthouse and WCAG are the floor; this document defines the ceiling.
 
 > A landing page that hits the perf budget but feels generic loses to a landing page that hits the same budget and feels inevitable. Craft is the difference.
-
----
 
 ## Design Discipline
 
 ### 1. Visual Hierarchy Rubric
 
-Score each LP from 0–3 per criterion. **Ship target: ≥ 20/27**.
+Score each LP from 0–3 per criterion. Ship target: ≥ 20/27.
 
-| Criterion | 3 — Excellent | 2 — Good | 1 — Weak | 0 — Broken |
+| Criterion | 3: Excellent | 2: Good | 1: Weak | 0: Broken |
 |-----------|---------------|----------|----------|------------|
-| **Hero-Contract Legibility** | What / for whom / why-now answerable in ≤ 5 seconds | 6–8 seconds | 8–12 seconds | Not answerable |
-| **Primary focal point** | Single, unmistakable focal point above fold | One focal point with some competition | Multiple competing elements | No focal point |
-| **Scale contrast** | Hero element ≥ 3× secondary | 2× contrast | 1.5× contrast | Flat |
-| **Weight contrast** | Bold vs. regular vs. light used purposefully | Two weights with clear roles | Inconsistent weight use | Single weight everywhere |
-| **Color hierarchy** | Accent reserved for actions/highlights; neutral palette carries body | Mostly disciplined | Accent overused | Accent everywhere |
-| **Whitespace rhythm** | Section padding follows tokens; breathing room around CTAs | Mostly consistent | Cramped or arbitrary | No system |
-| **Scan-pattern coherence** | Layout matches chosen pattern (F / Z / Layer-cake / Centered / Card-grid) per `premium-ia-blueprint.md` | Mostly aligned | Some misalignment | Random placement |
-| **Section identity** | Each section visually distinct yet cohesive | Mostly distinct | Sections blur into each other | All sections look the same |
-| **Mobile fidelity** | Mobile is designed, not shrunk; tap targets ≥ 44×44 px; thumb-zone aware | Adapted; targets ≥ 40 px | Reactive only | Broken on mobile |
+| Hero-Contract Legibility | What / for whom / why-now answerable in ≤ 5 seconds | 6–8 seconds | 8–12 seconds | Not answerable |
+| Primary focal point | Single, unmistakable focal point above fold | One focal point with some competition | Multiple competing elements | No focal point |
+| Scale contrast | Hero element ≥ 3× secondary | 2× contrast | 1.5× contrast | Flat |
+| Weight contrast | Bold vs. regular vs. light used purposefully | Two weights with clear roles | Inconsistent weight use | Single weight everywhere |
+| Color hierarchy | Accent reserved for actions/highlights; neutral palette carries body | Mostly disciplined | Accent overused | Accent everywhere |
+| Whitespace rhythm | Section padding follows tokens; breathing room around CTAs | Mostly consistent | Cramped or arbitrary | No system |
+| Scan-pattern coherence | Layout matches chosen pattern (F / Z / Layer-cake / Centered / Card-grid) per `premium-ia-blueprint.md` | Mostly aligned | Some misalignment | Random placement |
+| Section identity | Each section visually distinct yet cohesive | Mostly distinct | Sections blur into each other | All sections look the same |
+| Mobile fidelity | Mobile is designed, not shrunk; tap targets ≥ 44×44 px; thumb-zone aware | Adapted; targets ≥ 40 px | Reactive only | Broken on mobile |
 
 ### 2. Typography Craft
 
-- **Type scale**: modular (e.g., 1.25, 1.333, 1.5 ratio). Document the ratio in `tokens.json`. No off-scale sizes.
-- **Display headline**: 1 family, 1–2 weights. Optical sizing if variable font. Pair with body for clear contrast (serif↔sans or display↔text).
-- **Body line-height**: 1.5–1.7 for paragraphs, 1.2–1.35 for headlines, 1.1 for display.
-- **Measure (line length)**: 45–75 characters for body. Enforce `max-width` per breakpoint.
-- **Kerning + balance**: `text-wrap: balance` on headlines; `text-wrap: pretty` on paragraphs (where supported, with fallback).
-- **Variable font axes**: use weight/optical-size/slant axes when available; ship single woff2 file under 100KB subsetted.
-- **Numerical typography**: tabular numerals for pricing, stats, dashboards (`font-variant-numeric: tabular-nums`).
-- **2026 trend awareness**: kinetic typography on hero (animated weight/width shift), pair with reduced-motion fallback.
+- Type scale: modular (e.g., 1.25, 1.333, 1.5 ratio). Document the ratio in `tokens.json`. No off-scale sizes.
+- Display headline: 1 family, 1–2 weights. Optical sizing if variable font. Pair with body for clear contrast (serif↔sans or display↔text).
+- Body line-height: 1.5–1.7 for paragraphs, 1.2–1.35 for headlines, 1.1 for display.
+- Measure (line length): 45–75 characters for body. Enforce `max-width` per breakpoint.
+- Kerning + balance: `text-wrap: balance` on headlines; `text-wrap: pretty` on paragraphs (where supported, with fallback).
+- Variable font axes: use weight/optical-size/slant axes when available; ship single woff2 file under 100KB subsetted.
+- Numerical typography: tabular numerals for pricing, stats, dashboards (`font-variant-numeric: tabular-nums`).
+- 2026 trend awareness: kinetic typography on hero (animated weight/width shift), pair with reduced-motion fallback.
 
 ### 3. Color Discipline
 
-- **Token-only**: zero hardcoded color values in production code. Enforced at Build gate.
-- **Semantic naming**: `--color-action-primary` not `--color-blue-500`. Surface vs. ink vs. accent vs. status.
-- **Contrast ratios**:
+- Token-only: zero hardcoded color values in production code. Enforced at Build gate.
+- Semantic naming: `--color-action-primary` not `--color-blue-500`. Surface vs. ink vs. accent vs. status.
+- Contrast ratios:
   - Body text: ≥ 4.5:1 (AA)
   - Large text (18px+ bold or 24px+): ≥ 3:1 (AA)
   - UI components / focus indicators: ≥ 3:1 (AA)
-  - **Stretch target**: AAA where feasible (7:1 body, 4.5:1 UI)
-- **Color blindness**: verify against Deuteranopia + Protanopia + Tritanopia simulators; never rely on color alone for state.
-- **Dark mode**: if in scope, use `color-mix()` for tonal variants; preserve hierarchy across modes.
-- **Gradient usage**: purposeful, brand-coherent. Banned: rainbow gradients without semantic anchor. Encouraged: 2-stop subtle gradients on hero, mesh gradients with motion budget.
+  - Stretch target: AAA where feasible (7:1 body, 4.5:1 UI)
+- Color blindness: verify against Deuteranopia + Protanopia + Tritanopia simulators; never rely on color alone for state.
+- Dark mode: if in scope, use `color-mix()` for tonal variants; preserve hierarchy across modes.
+- Gradient usage: purposeful, brand-coherent. Banned: rainbow gradients without semantic anchor. Encouraged: 2-stop subtle gradients on hero, mesh gradients with motion budget.
 
 ### 4. Whitespace Rhythm
 
@@ -59,13 +57,13 @@ Score each LP from 0–3 per criterion. **Ship target: ≥ 20/27**.
 
 The differentiator between B+ and A+ LPs:
 
-- **Cursor states**: every interactive element has a hover + focus + active state. No `cursor: default` on buttons.
-- **Focus rings**: visible, branded, AA contrast against any background.
-- **Empty states**: every list / search / filter has an explicit empty state with copy + illustration.
-- **Loading states**: skeleton screens for any content > 100ms; spinner only for genuine indeterminate wait.
-- **Error states**: every form field has specific error microcopy (Prose), never "Invalid input".
-- **Icon system**: single icon family (Ink-produced or curated set). Stroke weight matches typography weight. Pixel-aligned at 16/20/24/32.
-- **Image craft**: every hero / lifestyle / illustration has intentional crop, focal point, exposure consistency. No stock-photo bingo.
+- Cursor states: every interactive element has a hover + focus + active state. No `cursor: default` on buttons.
+- Focus rings: visible, branded, AA contrast against any background.
+- Empty states: every list / search / filter has an explicit empty state with copy + illustration.
+- Loading states: skeleton screens for any content > 100ms; spinner only for genuine indeterminate wait.
+- Error states: every form field has specific error microcopy (Prose), never "Invalid input".
+- Icon system: single icon family (Ink-produced or curated set). Stroke weight matches typography weight. Pixel-aligned at 16/20/24/32.
+- Image craft: every hero / lifestyle / illustration has intentional crop, focal point, exposure consistency. No stock-photo bingo.
 
 ### 6. 2026 Design Trend Calibration
 
@@ -73,20 +71,18 @@ Read awareness, not mandatory adoption. Apply only when brand and audience justi
 
 | Trend | When to adopt | When to skip |
 |-------|---------------|--------------|
-| **Liquid Glass / dimensional UI** | Premium hardware / consumer apps / luxury B2C | Trust-critical B2B (banking, healthcare) |
-| **Kinetic typography on hero** | Brand-led launches, creative-industry, design tools | Calm UI / clarity-led / accessibility-critical |
-| **Mesh gradients + organic shapes** | Modern SaaS, creator economy, lifestyle | Enterprise SaaS / professional services |
-| **Brutalist editorial** | Strong-POV brands, agencies, niche communities | Mass market / conversion-first |
-| **Calm UI / generous whitespace** | Trust-critical (legal, finance, health, premium) | Direct-response / high-urgency campaigns |
-| **3D / Spline / interactive demos** | Product-led demos, hardware showcases | Performance-budget-constrained pages |
-| **AI-driven adaptive UI** | SaaS with rich behavioral data, ecom personalization | Trust-critical / fixed-message brand launches |
-| **Variable-font dynamic typography** | Modern editorial, brand-led design tools | Multi-locale LPs (subsetting complexity) |
-| **Spatial / Z-axis layering (non-XR depth)** | Premium hardware, creative tools, design portfolios | Information-dense B2B / dashboards |
-| **Anti-AI-look / human craft signaling** | Heritage brands, craft / artisanal, anti-tech positioning | AI-native products (counter-message) |
+| Liquid Glass / dimensional UI | Premium hardware / consumer apps / luxury B2C | Trust-critical B2B (banking, healthcare) |
+| Kinetic typography on hero | Brand-led launches, creative-industry, design tools | Calm UI / clarity-led / accessibility-critical |
+| Mesh gradients + organic shapes | Modern SaaS, creator economy, lifestyle | Enterprise SaaS / professional services |
+| Brutalist editorial | Strong-POV brands, agencies, niche communities | Mass market / conversion-first |
+| Calm UI / generous whitespace | Trust-critical (legal, finance, health, premium) | Direct-response / high-urgency campaigns |
+| 3D / Spline / interactive demos | Product-led demos, hardware showcases | Performance-budget-constrained pages |
+| AI-driven adaptive UI | SaaS with rich behavioral data, ecom personalization | Trust-critical / fixed-message brand launches |
+| Variable-font dynamic typography | Modern editorial, brand-led design tools | Multi-locale LPs (subsetting complexity) |
+| Spatial / Z-axis layering (non-XR depth) | Premium hardware, creative tools, design portfolios | Information-dense B2B / dashboards |
+| Anti-AI-look / human craft signaling | Heritage brands, craft / artisanal, anti-tech positioning | AI-native products (counter-message) |
 
-**Mandatory rule**: when adopting AI-driven adaptive UI, an explainability affordance ("Why am I seeing this?") must be present and tested. This is gate-checked at DESIGN exit when the trend is in scope.
-
----
+Mandatory rule: when adopting AI-driven adaptive UI, an explainability affordance ("Why am I seeing this?") must be present and tested. This is gate-checked at DESIGN exit when the trend is in scope.
 
 ## Animation Discipline
 
@@ -124,28 +120,28 @@ Define in `tokens.json` under `motion.*`:
 
 | Principle | Rule |
 |-----------|------|
-| **Purpose** | Every animation answers: orient (where I am), feedback (what happened), delight (brand). No motion without one of these. |
-| **Speed** | UI feedback < 200ms. Section transitions 250–400ms. Hero/atmospheric ≤ 600ms. Never longer unless cinematic and skippable. |
-| **Easing** | Standard easing for most. Decelerate for entrances. Accelerate for exits. Emphasized for hero moments. Spring for playful brand. Never linear (except progress). |
-| **Choreography** | Coordinated, not chaotic. Stagger reveals 30–120ms; one element starts, the next begins as the first crosses ~60% progress. |
-| **Direction** | Motion direction matches information flow. Top-to-bottom for new content; left-to-right for forward; right-to-left for back. |
-| **Reduced motion** | `@media (prefers-reduced-motion: reduce)` removes parallax, autoplay, infinite loops, attention-grabbing motion. Functional transitions can keep 100ms cross-fades. |
-| **Performance** | Animate only `transform`, `opacity`, `filter`. Never layout-triggering properties (width/height/top/left). |
-| **INP budget (HARD CEILING)** | Motion contribution to INP ≤ 50ms is a **hard ceiling, not a rubric criterion**. Failure to meet it triggers immediate Flow+Bolt repair (see `premium-quality-gates.md` Oscillation Guard); motion rubric scoring continues only after the ceiling is met. |
+| Purpose | Every animation answers: orient (where I am), feedback (what happened), delight (brand). No motion without one of these. |
+| Speed | UI feedback < 200ms. Section transitions 250–400ms. Hero/atmospheric ≤ 600ms. Never longer unless cinematic and skippable. |
+| Easing | Standard easing for most. Decelerate for entrances. Accelerate for exits. Emphasized for hero moments. Spring for playful brand. Never linear (except progress). |
+| Choreography | Coordinated, not chaotic. Stagger reveals 30–120ms; one element starts, the next begins as the first crosses ~60% progress. |
+| Direction | Motion direction matches information flow. Top-to-bottom for new content; left-to-right for forward; right-to-left for back. |
+| Reduced motion | `@media (prefers-reduced-motion: reduce)` removes parallax, autoplay, infinite loops, attention-grabbing motion. Functional transitions can keep 100ms cross-fades. |
+| Performance | Animate only `transform`, `opacity`, `filter`. Never layout-triggering properties (width/height/top/left). |
+| INP budget (HARD CEILING) | Motion contribution to INP ≤ 50ms is a hard ceiling, not a rubric criterion. Failure to meet it triggers immediate Flow+Bolt repair (see `premium-quality-gates.md` Oscillation Guard); motion rubric scoring continues only after the ceiling is met. |
 
 ### 3. Motion Patterns (named, reusable)
 
 | Pattern | Use | Implementation |
 |---------|-----|----------------|
-| **Hero entrance** | Above-fold reveal | Stagger headline → sub → CTA → hero asset; decelerate 400ms |
-| **Section enter** | Scroll-into-view | IntersectionObserver fade-up 24px, decelerate 300ms, once |
-| **Scroll-driven progress** | Page progress, parallax | CSS `animation-timeline: scroll()` — no JS scroll listeners |
-| **CTA hover** | Buttons / cards | 150ms transform scale 1.02 + shadow lift |
-| **Form feedback** | Input focus / error | 200ms outline + 75ms shake (errors only, 1 cycle, low amplitude) |
-| **Modal / sheet** | Overlay panels | View Transitions API where supported; fallback to 250ms slide+fade |
-| **Loading skeleton** | Async content | Subtle linear gradient sweep, 1.5s loop, paused under reduced-motion |
-| **Counter / stat reveal** | Numbers in social proof | requestAnimationFrame ease-out 800–1200ms, observed once |
-| **Microinteraction confirm** | Successful submit / copy / save | 250ms checkmark draw + 600ms bloom + auto-dismiss |
+| Hero entrance | Above-fold reveal | Stagger headline → sub → CTA → hero asset; decelerate 400ms |
+| Section enter | Scroll-into-view | IntersectionObserver fade-up 24px, decelerate 300ms, once |
+| Scroll-driven progress | Page progress, parallax | CSS `animation-timeline: scroll()`: no JS scroll listeners |
+| CTA hover | Buttons / cards | 150ms transform scale 1.02 + shadow lift |
+| Form feedback | Input focus / error | 200ms outline + 75ms shake (errors only, 1 cycle, low amplitude) |
+| Modal / sheet | Overlay panels | View Transitions API where supported; fallback to 250ms slide+fade |
+| Loading skeleton | Async content | Subtle linear gradient sweep, 1.5s loop, paused under reduced-motion |
+| Counter / stat reveal | Numbers in social proof | requestAnimationFrame ease-out 800–1200ms, observed once |
+| Microinteraction confirm | Successful submit / copy / save | 250ms checkmark draw + 600ms bloom + auto-dismiss |
 
 ### 4. Tool & Format Choice
 
@@ -163,21 +159,19 @@ Define in `tokens.json` under `motion.*`:
 
 Ship target: ≥ 15/20.
 
-| Criterion | 4 — Excellent | 3 — Good | 2 — Weak | 1 — Broken |
+| Criterion | 4: Excellent | 3: Good | 2: Weak | 1: Broken |
 |-----------|---------------|----------|----------|------------|
-| **Purpose clarity** | Every animation has a reason | Most do | Some decorative-only | Motion for motion's sake |
-| **Choreography** | Sequenced reveals feel composed | Mostly coordinated | Some clashes | Everything moves at once |
-| **Easing fit** | Easing matches motion type | Mostly | Some linear | All linear |
-| **Reduced-motion respect** | Full alternative path | Most paths | Partial | Ignored |
-| **Performance** | All on compositor; INP ≤ 200ms | Mostly | Some layout-triggering | Jank visible |
-
----
+| Purpose clarity | Every animation has a reason | Most do | Some decorative-only | Motion for motion's sake |
+| Choreography | Sequenced reveals feel composed | Mostly coordinated | Some clashes | Everything moves at once |
+| Easing fit | Easing matches motion type | Mostly | Some linear | All linear |
+| Reduced-motion respect | Full alternative path | Most paths | Partial | Ignored |
+| Performance | All on compositor; INP ≤ 200ms | Mostly | Some layout-triggering | Jank visible |
 
 ## Branding Discipline
 
 ### 1. Brand System Anatomy
 
-Before any LP design, the brand system must be defined or referenced. Missing pieces → ask user or escalate to Vision/Saga. **Vision authors the Voice_Spectrum; Prose executes voice in copy**.
+Before any LP design, the brand system must be defined or referenced. Missing pieces → ask user or escalate to Vision/Saga. Vision authors the Voice_Spectrum; Prose executes voice in copy.
 
 ```yaml
 BRAND_SYSTEM:
@@ -240,8 +234,8 @@ BRAND_SYSTEM:
 ```
 
 Two added archetypes for 2026 LPs:
-- **Oracle / Agent** — AI-native brands whose promise is autonomous outcomes; requires explainability affordance ("Why am I seeing this?") in any AI-driven adaptive surface.
-- **Operator** — Linear / Stripe / Vercel cluster: Magi authority + Creator precision with deliberate personality restraint. Distinct from Magi in restraint discipline.
+- Oracle / Agent — AI-native brands whose promise is autonomous outcomes; requires explainability affordance ("Why am I seeing this?") in any AI-driven adaptive surface.
+- Operator: Linear / Stripe / Vercel cluster: Magi authority + Creator precision with deliberate personality restraint. Distinct from Magi in restraint discipline.
 
 ### 2. `direction.md` Minimum Payload Contract
 
@@ -290,10 +284,10 @@ AI-driven adaptive UI: <on/off; if on, explainability indicator location declare
 
 Voice = consistent personality across all copy. Tone = situational adjustment.
 
-- **Hero**: highest brand voice expression. Bold, distilled, memorable.
-- **Body benefits**: voice slightly dialed back for clarity. Specifics + outcomes.
-- **Microcopy / errors**: tone shifts to helpful + warm. Voice still present but quiet.
-- **Legal / footer**: plain language, voice barely visible, but never robotic.
+- Hero: highest brand voice expression. Bold, distilled, memorable.
+- Body benefits: voice slightly dialed back for clarity. Specifics + outcomes.
+- Microcopy / errors: tone shifts to helpful + warm. Voice still present but quiet.
+- Legal / footer: plain language, voice barely visible, but never robotic.
 
 Prose owns voice execution. `funnel premium` confirms the brand system is referenced.
 
@@ -313,45 +307,43 @@ Three-channel coherence audit:
 
 | Channel | What to check |
 |---------|---------------|
-| **Visual** | Token usage matches brand archetype. Imagery treatment matches image style. Motion matches motion story. |
-| **Voice** | Sample 10 copy strings across LP. Score each on the voice spectrum. Variance < 1.5 points per axis. |
-| **Experience** | Form fields, micro-interactions, success states all reinforce brand personality. Errors don't break voice. |
+| Visual | Token usage matches brand archetype. Imagery treatment matches image style. Motion matches motion story. |
+| Voice | Sample 10 copy strings across LP. Score each on the voice spectrum. Variance < 1.5 points per axis. |
+| Experience | Form fields, micro-interactions, success states all reinforce brand personality. Errors don't break voice. |
 
 A regression on any channel = repair before Launch.
 
 ### 5. Brand Quality Rubric
 
-**Ship target: ≥ 17/24** (6 criteria × 4 points).
+Ship target: ≥ 17/24 (6 criteria × 4 points).
 
-| Criterion | 4 — Excellent | 3 — Good | 2 — Weak | 1 — Broken |
+| Criterion | 4: Excellent | 3: Good | 2: Weak | 1: Broken |
 |-----------|---------------|----------|----------|------------|
-| **Promise clarity** | One-sentence test passes in 5 seconds | Mostly clear | Hedged or generic | No discernible promise |
-| **Voice consistency** | All copy reads as one author (variance < 1.5 per spectrum axis) | Mostly | Some inconsistency (variance 1.5–2.5) | Multiple voices clash (variance > 2.5) |
-| **Positioning crispness** | Category + differentiator + against-whom + anti-archetype clear | Mostly | Two of four | None visible |
-| **Visual coherence** | Archetype (incl. secondary mix) reads in <3 seconds | Mostly | Mixed signals | No archetype |
-| **Story echo** | Hero arc visible (customer-as-hero by default; guide-as-hero acceptable for technical-developer brands when declared in Brand System) | Mostly | Implicit only | Brand-as-hero anti-pattern |
-| **Trust-signal density** | ≥3 trust mechanics surfaced by section 2 (named-customer outcome / numeric proof / press / open-source / guarantee / author authority) | 2 mechanics | 1 mechanic | None — brand asks for action without credibility |
-
----
+| Promise clarity | One-sentence test passes in 5 seconds | Mostly clear | Hedged or generic | No discernible promise |
+| Voice consistency | All copy reads as one author (variance < 1.5 per spectrum axis) | Mostly | Some inconsistency (variance 1.5–2.5) | Multiple voices clash (variance > 2.5) |
+| Positioning crispness | Category + differentiator + against-whom + anti-archetype clear | Mostly | Two of four | None visible |
+| Visual coherence | Archetype (incl. secondary mix) reads in <3 seconds | Mostly | Mixed signals | No archetype |
+| Story echo | Hero arc visible (customer-as-hero by default; guide-as-hero acceptable for technical-developer brands when declared in Brand System) | Mostly | Implicit only | Brand-as-hero anti-pattern |
+| Trust-signal density | ≥3 trust mechanics surfaced by section 2 (named-customer outcome / numeric proof / press / open-source / guarantee / author authority) | 2 mechanics | 1 mechanic | None: brand asks for action without credibility |
 
 ## Cross-Discipline Coordination
 
 These rules govern how Design, Animation, and Branding stay aligned:
 
-1. **Brand system precedes design tokens.** Vision + Saga define brand before Muse generates tokens. Tokens must encode brand decisions, not the inverse.
-2. **Motion story comes from brand archetype.** A "Magi" brand uses deliberate, calm motion; a "Jester" brand uses snappy, playful motion. Flow consults Vision's `direction.md` before authoring motion tokens.
-3. **Design rubric scoring happens before Build.** No production code on a < 20/27 design or < 15/20 motion or < 17/24 brand score. Repair or escalate.
-4. **Detail craft is the Verify checklist's secret tier.** Judge re-walks for cursor states, focus rings, empty states, loading states, error states, icon consistency, image craft. Anything missing = P2 finding.
+1. Brand system precedes design tokens. Vision + Saga define brand before Muse generates tokens. Tokens must encode brand decisions, not the inverse.
+2. Motion story comes from brand archetype. A "Magi" brand uses deliberate, calm motion; a "Jester" brand uses snappy, playful motion. Flow consults Vision's `direction.md` before authoring motion tokens.
+3. Design rubric scoring happens before Build. No production code on a < 20/27 design or < 15/20 motion or < 17/24 brand score. Repair or escalate.
+4. Detail craft is the Verify checklist's secret tier. Judge re-walks for cursor states, focus rings, empty states, loading states, error states, icon consistency, image craft. Anything missing = P2 finding.
 
 
 ## Six-Axis Ownership + Ship Rubrics (SKILL.md excerpt)
 
 | Axis | Primary owners | Ship rubric | Where the bar lives |
 |------|----------------|-------------|---------------------|
-| **Design** | Vision (direction) + Muse (tokens) + Palette (a11y/feel) + Frame (Figma) + Pixel (fidelity); or Atelier when multi-artifact bundle — rubric still enforced | Visual hierarchy ≥ 20/27 (incl. Hero-Contract Legibility); typography craft; color discipline; whitespace rhythm; tap targets ≥ 44px; detail craft (cursor / focus / empty / loading / error / icon / image) | `premium-craft-standards.md` § Design Discipline |
-| **Animation** | Flow (impl) + Muse (motion tokens) + Bolt (INP budget) | Motion rubric ≥ 15/20; tokenized duration / easing / stagger; reduced-motion alternative path; **INP ≤ 50ms is a hard ceiling — not a rubric criterion** | `premium-craft-standards.md` § Animation Discipline |
-| **Branding** | Vision (archetype + visual identity, voice spectrum) + Saga (story arc at Strategy, narrative copy at Structure) + Compete (positioning + anti-archetype) + Prose (voice execution) | Brand rubric ≥ 17/24 (incl. Trust-Signal Density); Brand System record (Promise+Type / Story / Verbal_Identity / Voice & Tone / Positioning / Visual Identity / Accessibility Stance / Evidence Bank); voice consistency variance < 1.5 / spectrum axis | `premium-craft-standards.md` § Branding Discipline |
-| **Marketing** | Funnel (structure) + Pulse (KPI) + Growth (CRO) + Experiment (variants) + Magi (strategy) | CVR target met (industry-calibrated, recipe-aligned, traffic-source-qualified per playbook); messaging hierarchy (Big Idea → Headline → Sub → Proof); copy framework chosen via Recipe→Framework map; first A/B variant queued (≥1000 conv/variant, 95% sig, ≥14 days); analytics + GEO Mention/Citation/SoV events live | `premium-conversion-playbook.md` |
-| **SEO** | Growth (4-pillar: SEO / SMO / CRO / GEO) + Bolt (CWV + TTFB + FCP) + Polyglot (hreflang) | Technical SEO checklist 100% (incl. AI Bot Policy, IndexNow, image/video schema); Schema.org valid + content-consistent; CWV all Green; content SEO intent-aligned (5 intents incl. Answer-Engine); Author entity with `sameAs`; Lighthouse Mobile Perf ≥ 90 / Acc ≥ 95 / BP ≥ 95 / SEO ≥ 95 | `premium-ia-blueprint.md` §§ 2–4 |
-| **IA** | Funnel (structure + scan pattern + navigation pattern) + Canvas (journey-map viz) + Echo (cognitive walk + baseline) + Prose (heading craft) | IA rubric ≥ 15/20; one promise (Two-Promise Probe at UNDERSTAND) / 5-second scan / coherent scroll arc / chunking ≤ 7 elements above fold / clean heading hierarchy / navigation pattern locked at Structure | `premium-ia-blueprint.md` § 1 |
+| Design | Vision (direction) + Muse (tokens) + Palette (a11y/feel) + Frame (Figma) + Pixel (fidelity); or Atelier when multi-artifact bundle; rubric still enforced | Visual hierarchy ≥ 20/27 (incl. Hero-Contract Legibility); typography craft; color discipline; whitespace rhythm; tap targets ≥ 44px; detail craft (cursor / focus / empty / loading / error / icon / image) | `premium-craft-standards.md` § Design Discipline |
+| Animation | Flow (impl) + Muse (motion tokens) + Bolt (INP budget) | Motion rubric ≥ 15/20; tokenized duration / easing / stagger; reduced-motion alternative path; INP ≤ 50ms is a hard ceiling, not a rubric criterion | `premium-craft-standards.md` § Animation Discipline |
+| Branding | Vision (archetype + visual identity, voice spectrum) + Saga (story arc at Strategy, narrative copy at Structure) + Compete (positioning + anti-archetype) + Prose (voice execution) | Brand rubric ≥ 17/24 (incl. Trust-Signal Density); Brand System record (Promise+Type / Story / Verbal_Identity / Voice & Tone / Positioning / Visual Identity / Accessibility Stance / Evidence Bank); voice consistency variance < 1.5 / spectrum axis | `premium-craft-standards.md` § Branding Discipline |
+| Marketing | Funnel (structure) + Pulse (KPI) + Growth (CRO) + Experiment (variants) + Magi (strategy) | CVR target met (industry-calibrated, recipe-aligned, traffic-source-qualified per playbook); messaging hierarchy (Big Idea → Headline → Sub → Proof); copy framework chosen via Recipe→Framework map; first A/B variant queued (≥1000 conv/variant, 95% sig, ≥14 days); analytics + GEO Mention/Citation/SoV events live | `premium-conversion-playbook.md` |
+| SEO | Growth (4-pillar: SEO / SMO / CRO / GEO) + Bolt (CWV + TTFB + FCP) + Polyglot (hreflang) | Technical SEO checklist 100% (incl. AI Bot Policy, IndexNow, image/video schema); Schema.org valid + content-consistent; CWV all Green; content SEO intent-aligned (5 intents incl. Answer-Engine); Author entity with `sameAs`; Lighthouse Mobile Perf ≥ 90 / Acc ≥ 95 / BP ≥ 95 / SEO ≥ 95 | `premium-ia-blueprint.md` §§ 2–4 |
+| IA | Funnel (structure + scan pattern + navigation pattern) + Canvas (journey-map viz) + Echo (cognitive walk + baseline) + Prose (heading craft) | IA rubric ≥ 15/20; one promise (Two-Promise Probe at UNDERSTAND) / 5-second scan / coherent scroll arc / chunking ≤ 7 elements above fold / clean heading hierarchy / navigation pattern locked at Structure | `premium-ia-blueprint.md` § 1 |
 
