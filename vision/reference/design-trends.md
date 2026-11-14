@@ -36,17 +36,17 @@ Contents:
 | Trend | Risk | Application |
 |-------|------|-------------|
 | Calm UI / Cognitive Clarity | Low | Prioritize cognitive clarity over sensory richness. Functional minimalism: large typography, soft radius, generous spacing, high contrast. Replace decorative elements with purposeful whitespace |
-| Adaptive Design Systems | Low | UI complexity adjusts dynamically based on user behavior, expertise level, and context. Progressive disclosure evolution — expert/beginner modes, context-aware density |
+| Adaptive Design Systems | Low | UI complexity adjusts dynamically based on user behavior, expertise level, and context. Progressive disclosure evolution: expert/beginner modes, context-aware density |
 | Figma Make / AI-Driven Design | Low | Text prompt → design-system-compliant UI generation. Concept-to-prototype time reduced ~38%. Designer role shifts from "how" to "what/why". Review AI output against brand guidelines |
-| Multi-modal Input Direction | Medium | Design for seamless touch/voice/keyboard/gesture switching. Invisible interactions (voice commands, gesture recognition, presence detection). Requires input-mode-agnostic component design |
+| Multi-modal Input Direction | Medium | Design for switching among touch/voice/keyboard/gesture input. Invisible interactions (voice commands, gesture recognition, presence detection). Requires input-mode-agnostic component design |
 | Dynamic Typography | Low | Variable Fonts for responsive weight/width/slant. CSS `text-wrap: balance` (headings ≤6 lines) and `text-wrap: pretty` (orphan prevention). Typography adapts to device and context |
 
 ### Calm UI Design Principles
 
-1. **Cognitive Clarity > Sensory Richness**: Every visual element must serve comprehension, not decoration
-2. **Functional Minimalism**: Distinct from decorative minimalism — restrained palette, clear primary action, generous whitespace
-3. **Trust Through Calm**: Users arrive with calibrated skepticism from AI failures (NN/g State of UX 2026) — earn trust through clarity, not urgency
-4. **Quiet Interfaces**: Reduce notification noise, minimize competing CTAs, let content hierarchy guide attention
+1. Cognitive Clarity > Sensory Richness: Every visual element must serve comprehension, not decoration
+2. Functional Minimalism: Distinct from decorative minimalism: restrained palette, clear primary action, generous whitespace
+3. Trust Through Calm: Users arrive with calibrated skepticism from AI failures (NN/g State of UX 2026) — earn trust through clarity, not urgency
+4. Quiet Interfaces: Reduce notification noise, minimize competing CTAs, let content hierarchy guide attention
 
 ## AI Interface Patterns
 
@@ -109,24 +109,24 @@ Design principles for immersive interfaces:
 | Window Management | Windows float in space. Users arrange spatially. Respect user's spatial memory |
 | Passthrough Integration | Blend digital and physical. Respect real-world lighting and shadows |
 
-**Design rule**: Start with 2D flat design, add depth only where it communicates hierarchy. Spatial design is not 3D decoration — it is information architecture in the z-axis.
+Design rule: Start with 2D flat design, add depth only where it communicates hierarchy. Spatial design is not 3D decoration; it is information architecture in the z-axis.
 
 ### AI-Native Interface Design Philosophy
 
-2026 is the year "interfaces become agents." Shift from GUI paradigm (click/tap guidance) to **intent-centric design** where UI is a medium, not a message.
+2026 is the year "interfaces become agents." Shift from GUI paradigm (click/tap guidance) to intent-centric design where UI is a medium, not a message.
 
-**New UI Patterns replacing traditional paradigms**:
+New UI Patterns replacing traditional paradigms:
 
 | Old Pattern | New Pattern | What Changes |
 |-------------|-------------|--------------|
-| Forms | **Intent Canvas** | Accept messy input, deliver structured interpretation |
-| Confirmation Dialog | **Negotiation** | Human and agent co-create the plan |
-| Progress Indicator | **Narrative** | System explains what it's doing as a story |
-| Hard Failure | **Graceful Escalation** | Soften boundaries, provide escalation paths |
+| Forms | Intent Canvas | Accept messy input, deliver structured interpretation |
+| Confirmation Dialog | Negotiation | Human and agent co-create the plan |
+| Progress Indicator | Narrative | System explains what it's doing as a story |
+| Hard Failure | Graceful Escalation | Soften boundaries, provide escalation paths |
 
-**Autonomy Dial**: Meta-control allowing users to dynamically adjust agent autonomy level. Not a binary copilot/autopilot — a continuous slider.
+Autonomy Dial: Meta-control allowing users to dynamically adjust agent autonomy level. Not a binary copilot/autopilot; a continuous slider.
 
-**"Nudge, don't nag"**: The meta-principle — prompt helpfully without being intrusive.
+"Nudge, don't nag": The meta-principle: prompt helpfully without being intrusive.
 
 The spectrum from tool to agent:
 
@@ -137,11 +137,11 @@ The spectrum from tool to agent:
 | L3 Agent | Proposal → approve | Medium | Devin, Cursor Agent |
 | L4 Autopilot | Autonomous with guardrails | Low | Self-driving CI/CD |
 
-**Key design tensions**:
-- **Confidence visualization**: Show AI certainty (progress bars, probability badges, "I'm not sure" indicators). Never present uncertain output as certain.
-- **Intent Preview**: Before any autonomous action, show what will happen and let user approve/edit/cancel.
-- **Graceful degradation**: When AI fails, fall back to manual workflow seamlessly. Never dead-end.
-- **Explanation affordance**: Every AI output should have a "why?" path available (not mandatory, but accessible).
+Key design tensions:
+- Confidence visualization: Show AI certainty (progress bars, probability badges, "I'm not sure" indicators). Never present uncertain output as certain.
+- Intent Preview: Before any autonomous action, show what will happen and let user approve/edit/cancel.
+- Graceful degradation: When AI fails, fall back to the manual workflow. Never dead-end.
+- Explanation affordance: Every AI output should have a "why?" path available (not mandatory, but accessible).
 
 ### Emotional Design & Neuroaesthetics
 
@@ -151,11 +151,11 @@ The spectrum from tool to agent:
 | Behavioral | Usability pleasure (efficiency, predictability, control) | Core workflows, repeated actions |
 | Reflective | Identity, meaning, social signaling | Profile, sharing, achievement |
 
-**Ethical dopamine design**: Use reward mechanisms to reinforce user goals (progress toward their objective), not platform goals (engagement metrics). Celebration animations on task completion, not on infinite scroll consumption.
+Ethical dopamine design: Use reward mechanisms to reinforce user goals (progress toward their objective), not platform goals (engagement metrics). Celebration animations on task completion, not on infinite scroll consumption.
 
 ### Anti-Design & Neo-Brutalism 2.0
 
-Not chaos — intentional rule-breaking with purpose:
+Not chaos: intentional rule-breaking with purpose:
 
 | Element | Convention | Neo-Brutalism |
 |---------|-----------|---------------|
@@ -165,7 +165,7 @@ Not chaos — intentional rule-breaking with purpose:
 | Imagery | Polished photos, illustrations | Raw screenshots, brutalist photography, ASCII art |
 | Borders | Subtle or none | Thick (2-4px) black borders on everything |
 
-**When to use**: Developer tools, creative agencies, counter-cultural brands, personal portfolios. **Never**: Healthcare, finance, government, accessibility-critical products.
+When to use: Developer tools, creative agencies, counter-cultural brands, personal portfolios. Never: Healthcare, finance, government, accessibility-critical products.
 
 ### Sustainability in Digital Design
 
@@ -177,11 +177,11 @@ Not chaos — intentional rule-breaking with purpose:
 | System fonts | Zero font transfer cost | Font stack: `-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif` |
 | Lightweight design | Every KB costs CO₂ (avg page: 2.3MB, ideal: <500KB) | Performance budget as sustainability metric |
 
-**Carbon-aware color**: Darker colors on OLED = less energy. Design tokens should include an "eco" mode with maximum dark, minimum animation.
+Carbon-aware color: Darker colors on OLED = less energy. Design tokens should include an "eco" mode with maximum dark, minimum animation.
 
 ### Generative Design Systems
 
-**AI-readable design tokens** — the most leveraged evolution point. Tokens shift from storing values to storing **intent**:
+AI-readable design tokens: tokens shift from storing values to storing intent:
 
 ```json
 {
@@ -217,11 +217,11 @@ Design tokens that generate themselves through rules rather than static values:
 | Warm luxury | `#1C1917` | `#D4A574` | `#FAFAF9` | `#A8A29E` |
 | Gradient dark | `#0F172A→#020617` | `#22D3EE` | `#F1F5F9` | `#64748B` |
 
-**Rule**: Never use pure `#000000` (use `#0A0A0A+`). Reduce saturation of accents for dark backgrounds. 4.5:1 contrast minimum for body text.
+Rule: Never use pure `#000000` (use `#0A0A0A+`). Reduce saturation of accents for dark backgrounds. 4.5:1 contrast minimum for body text.
 
 ### Rounded Everything (Pill UI)
 
-`border-radius: 999px` on buttons, `16-24px` on cards. Neurologically soothing — eyes flow naturally around curves. Products: iOS, Material You, Arc, Linear, Spotify.
+`border-radius: 999px` on buttons, `16-24px` on cards. Eyes flow naturally around curves. Products: iOS, Material You, Arc, Linear, Spotify.
 
 ### Large Typography, Minimal Chrome
 
