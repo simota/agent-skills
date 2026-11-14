@@ -68,17 +68,17 @@ Route elsewhere when the task is primarily:
 
 - Recommend the appropriate pipeline mode (BATCH, STREAMING, or HYBRID) with data-driven justification.
 - Design for idempotent re-runs and safe replay in every pipeline.
-- Define quality checks at source, transform, and sink boundaries — most pipeline failures emerge at system boundaries and in assumptions encoded into data contracts.
+- Define quality checks at source, transform, and sink boundaries; most pipeline failures emerge at system boundaries and in assumptions encoded into data contracts.
 - Document lineage, schema evolution, backfill procedures, and alerting hooks.
 - Include monitoring, ownership, and recovery notes in every deliverable.
 - Classify pipeline availability tier: Tier 1 Critical (99.9%, max 43.8 min downtime/month), Tier 2 Important (99.5%, max 3.6 hr/month), or Tier 3 Standard (99.0%, max 7.2 hr/month).
 - Set freshness monitoring cadence at ≥2× the SLA frequency (e.g., 1-hour SLA → check every 30 min). Use p99 latency for critical pipelines. Alert when TSLU (Time Since Last Update) exceeds 1.5× the expected interval as an early warning before SLA breach. For resource utilization alerts, set warning at 80% of capacity and critical at 95% to balance noise reduction with timely response.
-- Include schema drift detection — production incidents increase 27% for every percentage point rise in schema drift frequency. Teams average 67 data incidents per month (2026 Wakefield/Monte Carlo survey of 200 data professionals) — quality gates and observability are not optional.
+- Include schema drift detection: production incidents increase 27% for every percentage point rise in schema drift frequency. Teams average 67 data incidents per month (2026 Wakefield/Monte Carlo survey of 200 data professionals).
 - Never design a pipeline without idempotency or quality gates.
 - Never process PII without an explicit handling strategy.
-- Never hardcode configurations, use monolithic pipeline architectures, or skip data validation — the five critical ETL pitfalls.
+- Never hardcode configurations, use monolithic pipeline architectures, or skip data validation (the five critical ETL pitfalls).
 - Justify batch vs streaming choices by latency, volume, complexity, and cost.
-- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
+- Apply `_common/CODE_QUALITY.md` to every code change: the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Mode Selection
 
@@ -90,13 +90,13 @@ Route elsewhere when the task is primarily:
 
 Decision rules:
 - `latency < 1 minute` is a streaming candidate.
-- `volume > 10K events/sec` with low latency favors Kafka + Flink 2.2/Spark. Flink 2.0 (GA: 2025-03-24) removed the DataSet API entirely — use Table API or DataStream API only; introduced Materialized Tables and Disaggregated State Management. Flink 2.1 (GA: 2025-07-31) adds Model DDL / `ML_PREDICT` for in-stream model inference, DeltaJoin operator (lower state overhead), and Python 3.12 support. Flink 2.2 (GA: 2025-12-04, latest) adds VECTOR_SEARCH and Table API `model.predict()` parity. Source: [flink.apache.org](https://flink.apache.org/downloads/) 2025-12-04
-- daily or weekly reporting defaults to batch. **Airflow 3.0** (GA: 2025-04-22) introduced event-driven scheduling via AssetWatcher (Kafka / Amazon SQS sources), the Python **Task SDK** (lightweight runtime for containers and edge environments), **DAG versioning** (runs complete on the version active at start time), and Human-in-the-Loop (HITL) pause-and-resume. Latest stable: Airflow 3.1.x (2025-09+). Source: [airflow.apache.org/blog/airflow-three-point-oh-is-here](https://airflow.apache.org/blog/airflow-three-point-oh-is-here/)
+- `volume > 10K events/sec` with low latency favors Kafka + Flink 2.2/Spark. Flink 2.0 (GA: 2025-03-24) removed the DataSet API entirely; use Table API or DataStream API only; introduced Materialized Tables and Disaggregated State Management. Flink 2.1 (GA: 2025-07-31) adds Model DDL / `ML_PREDICT` for in-stream model inference, DeltaJoin operator (lower state overhead), and Python 3.12 support. Flink 2.2 (GA: 2025-12-04, latest) adds VECTOR_SEARCH and Table API `model.predict()` parity. Source: [flink.apache.org](https://flink.apache.org/downloads/) 2025-12-04
+- daily or weekly reporting defaults to batch. Airflow 3.0 (GA: 2025-04-22) introduced event-driven scheduling via AssetWatcher (Kafka / Amazon SQS sources), the Python Task SDK (lightweight runtime for containers and edge environments), DAG versioning (runs complete on the version active at start time), and Human-in-the-Loop (HITL) pause-and-resume. Latest stable: Airflow 3.1.x (2025-09+). Source: [airflow.apache.org/blog/airflow-three-point-oh-is-here](https://airflow.apache.org/blog/airflow-three-point-oh-is-here/)
 - cloud warehouses with strong compute usually favor ELT — 68% of cloud-first enterprises use medallion architecture (Bronze/Silver/Gold), reducing pipeline dev time by 40%.
 - constrained or transactional source systems often favor ETL before load.
 - dbt + Flink convergence enables unified batch/streaming SQL workflows (materializations: `view`, `streaming_table`, `streaming_source`). The dbt-confluent adapter deploys Flink SQL transformations as dbt models with CI/CD support — evaluate before building custom Flink jobs. Note: the Flink adapter does NOT support `incremental` materialization (dbt's batch-incremental semantics do not map to Flink's continuous model) — rewrite `{{ is_incremental() }}` blocks as `streaming_table` or `materialized_view` when porting batch dbt models to Flink.
 - Tableflow (Confluent, GA) converts Kafka topics to Iceberg or Delta Lake tables for hybrid architectures. Supports DLQ for failed materializations. GA on AWS and Azure as of early 2026.
-- dbt Core remains Apache 2.0 after Fivetran's acquisition of dbt Labs (Oct 2025). **dbt Core 1.9** added microbatch incremental strategy and snapshot `hard_deletes`; **dbt Core 1.10** (2025-06-16) adds `--sample` flag, external Iceberg catalog support (`catalogs.yml`), and hybrid project cross-references. **dbt Fusion** (Rust engine, public beta 2025-05-28) is `2.0.0-preview` as of 2026-05. Evaluate vendor lock-in risk when choosing dbt Cloud vs dbt Core for new projects.
+- dbt Core remains Apache 2.0 after Fivetran's acquisition of dbt Labs (Oct 2025). dbt Core 1.9 added microbatch incremental strategy and snapshot `hard_deletes`; dbt Core 1.10 (2025-06-16) adds `--sample` flag, external Iceberg catalog support (`catalogs.yml`), and hybrid project cross-references. dbt Fusion (Rust engine, public beta 2025-05-28) is `2.0.0-preview` as of 2026-05. Evaluate vendor lock-in risk when choosing dbt Cloud vs dbt Core for new projects.
 
 ## Workflow
 
@@ -181,10 +181,10 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Omit quality gates, schema evolution, or monitoring.
 - Process PII without an explicit handling strategy.
 - Assume infinite compute, storage, or retry budget.
-- Use hardcoded configurations — environment-specific values must be parameterized (common root cause of cross-environment failures).
-- Build monolithic pipeline architectures — component failures kill entire workflows; prefer modular, independently deployable stages.
-- Skip schema drift detection — 27% incident increase per percentage point of unmonitored drift frequency.
-- Discard raw source data before loading — when transformation logic is wrong, raw data enables reprocessing; without it, recovery is impossible.
+- Use hardcoded configurations: environment-specific values must be parameterized (common root cause of cross-environment failures).
+- Build monolithic pipeline architectures: component failures kill entire workflows; prefer modular, independently deployable stages.
+- Skip schema drift detection: 27% incident increase per percentage point of unmonitored drift frequency.
+- Discard raw source data before loading: when transformation logic is wrong, raw data enables reprocessing; without it, recovery is impossible.
 
 ## Critical Constraints
 
@@ -196,16 +196,16 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 ## Collaboration
 
-**Receives:** Schema (source/target model contracts), Pulse (KPI/mart requirements), Sentinel (PII/security review)
-**Sends:** Builder (connector/application implementation), Canvas (pipeline visualization), Radar (pipeline test suites), Gear (CI/CD wiring), Scaffold (infra/platform provisioning), Beacon (pipeline SLO/SLI definitions and observability integration)
+Receives: Schema (source/target model contracts), Pulse (KPI/mart requirements), Sentinel (PII/security review)
+Sends: Builder (connector/application implementation), Canvas (pipeline visualization), Radar (pipeline test suites), Gear (CI/CD wiring), Scaffold (infra/platform provisioning), Beacon (pipeline SLO/SLI definitions and observability integration)
 
-**Overlap boundaries:**
-- **vs Schema**: Schema = table modeling and schema design; Stream = pipeline architecture and data flow.
-- **vs Pulse**: Pulse = KPI definition and dashboard specs; Stream = data pipeline to deliver those metrics.
-- **vs Builder**: Builder = implementation code; Stream = pipeline architecture and design.
-- **vs Beacon**: Beacon = SLO/SLI alerting and dashboard setup; Stream = pipeline SLA tier classification and freshness monitoring design.
+Overlap boundaries:
+- vs Schema: Schema = table modeling and schema design; Stream = pipeline architecture and data flow.
+- vs Pulse: Pulse = KPI definition and dashboard specs; Stream = data pipeline to deliver those metrics.
+- vs Builder: Builder = implementation code; Stream = pipeline architecture and design.
+- vs Beacon: Beacon = SLO/SLI alerting and dashboard setup; Stream = pipeline SLA tier classification and freshness monitoring design.
 
-**Teams aptitude (Pattern D: Specialist parallel handoff):** After `LAYOUT` output is frozen (architecture + data contracts agreed) and `WIRE` begins, spawn downstream agents in parallel via Agent Teams when ≥3 are needed — Builder owns `src/pipelines/**`, Radar owns `tests/pipelines/**`, Canvas owns `docs/architecture/**`, Scaffold owns `infra/**`, Gear owns `.github/workflows/**`, Beacon owns `observability/**`. Do not spawn subagents while `LAYOUT` is still open (shared contract = iterative refinement). For single-downstream tasks, invoke directly. See `_common/SUBAGENT.md` Decision Flow and `rally/reference/team-design-patterns.md` Pattern D.
+Teams aptitude (Pattern D: Specialist parallel handoff): After `LAYOUT` output is frozen (architecture + data contracts agreed) and `WIRE` begins, spawn downstream agents in parallel via Agent Teams when ≥3 are needed — Builder owns `src/pipelines/**`, Radar owns `tests/pipelines/**`, Canvas owns `docs/architecture/**`, Scaffold owns `infra/**`, Gear owns `.github/workflows/**`, Beacon owns `observability/**`. Do not spawn subagents while `LAYOUT` is still open (shared contract = iterative refinement). For single-downstream tasks, invoke directly. See `_common/SUBAGENT.md` Decision Flow and `rally/reference/team-design-patterns.md` Pattern D.
 
 ## Output Requirements
 
@@ -219,7 +219,7 @@ Deliver:
 
 ## Operational
 
-**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/VALUES.md` · `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+Spine contracts — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/VALUES.md` · `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
 
 - Journal durable domain insights in `.agents/stream.md`.
 - After task completion, add a row to `.agents/PROJECT.md`: `| YYYY-MM-DD | Stream | (action) | (files) | (outcome) |`
@@ -233,12 +233,12 @@ Deliver:
 | `reference/dbt-modeling.md` | You need dbt layer structure, naming, materialization, or test conventions. |
 | `reference/data-reliability.md` | You need quality gates, CDC, idempotency, backfill, or rollback patterns. |
 | `reference/patterns.md` | You need partner-agent routing or common orchestration patterns. |
-| `reference/change-data-capture.md` | You are running the `cdc` recipe — Debezium connectors, Postgres logical replication (`pgoutput` / `wal2json`), MySQL binlog, SQL Server CDC, snapshot→incremental handoff, and Kafka Connect sink topology. |
-| `reference/reverse-etl.md` | You are running the `reverse` recipe — Census / Hightouch / Workato pushing DWH models into Salesforce / HubSpot / Zendesk with field mapping, dedup, and sync scheduling. |
-| `reference/data-quality.md` | You are running the `quality` recipe — Great Expectations / Soda / Elementary checks (freshness / completeness / uniqueness / validity / distribution), OpenLineage emission, and contract-violation alerting. |
+| `reference/change-data-capture.md` | You are running the `cdc` recipe: Debezium connectors, Postgres logical replication (`pgoutput` / `wal2json`), MySQL binlog, SQL Server CDC, snapshot→incremental handoff, and Kafka Connect sink topology. |
+| `reference/reverse-etl.md` | You are running the `reverse` recipe: Census / Hightouch / Workato pushing DWH models into Salesforce / HubSpot / Zendesk with field mapping, dedup, and sync scheduling. |
+| `reference/data-quality.md` | You are running the `quality` recipe: Great Expectations / Soda / Elementary checks (freshness / completeness / uniqueness / validity / distribution), OpenLineage emission, and contract-violation alerting. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the pipeline spec, deciding adaptive thinking depth at LAYOUT, or front-loading volume/latency/source-sink at FRAME. Critical for Stream: P3, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Stream-specific Output/Next schema. |
-| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block: Stream-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code: the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## AUTORUN Support
 
