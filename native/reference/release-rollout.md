@@ -1,11 +1,9 @@
 # Staged Release & Rollout (Pure-Native)
 
-**Purpose:** Pure-native iOS / Android release strategy — TestFlight + App Store Phased Release and Play Console Staged Rollout, server-driven Feature Flags, Halt + Hotfix.
-**Read when:** Planning a release, designing a staged rollout, handling rollback, or executing an emergency hotfix.
+Purpose: Pure-native iOS / Android release strategy: TestFlight + App Store Phased Release and Play Console Staged Rollout, server-driven Feature Flags, Halt + Hotfix.
+Read when: Planning a release, designing a staged rollout, handling rollback, or executing an emergency hotfix.
 
-> **Important:** In a pure-native environment, **OTA cannot update native code**. CodePush / EAS Update / Shorebird are React Native / Flutter only and out of scope here. For native, the rollback strategy centers on the combination of "**Phased Release** (iOS) / **Staged Rollout** (Android) + server-driven Feature Flags."
-
----
+> Important: In a pure-native environment, OTA cannot update native code. CodePush / EAS Update / Shorebird are React Native / Flutter only and out of scope here. For native, the rollback strategy centers on the combination of "Phased Release (iOS) / Staged Rollout (Android) + server-driven Feature Flags."
 
 ## Release-layer overview
 
@@ -21,9 +19,7 @@
    └─ In-app remote config (assets / copy / pricing)
 ```
 
-**Principle:** Client-side rollback is slow. Make server-driven Feature Flags the primary line of defense and store mechanisms the secondary line.
-
----
+Principle: Client-side rollback is slow. Make server-driven Feature Flags the primary line of defense and store mechanisms the secondary line.
 
 ## iOS — TestFlight + Phased Release
 
@@ -37,7 +33,7 @@
 
 ### Phased Release
 
-Enabling "Phased Release for Automatic Updates" in App Store Connect spreads delivery to auto-update users **over 7 days** at 1% / 2% / 5% / 10% / 20% / 50% / 100%.
+Enabling "Phased Release for Automatic Updates" in App Store Connect spreads delivery to auto-update users over 7 days at 1% / 2% / 5% / 10% / 20% / 50% / 100%.
 
 | Day | Auto-update % |
 |-----|---------------|
@@ -53,16 +49,14 @@ Note: Manual updates (a user tapping Update in the App Store) bypass this thrott
 
 ### Pausing / rolling back a Phased Release
 
-- **Pause Phased Release** can be triggered at any time — halts auto-delivery to remaining users.
+- Pause Phased Release can be triggered at any time; it halts auto-delivery to remaining users.
 - Re-publish an older version by overwrite (a new build number with the same functionality = "rollback build").
-- True rollback (reverting to the prior binary) is not provided. The accepted form is to **re-release the previous version's behavior in a new build**.
-- Expedited Review can be requested — use only for severe issues; abusing it makes future requests more likely to be denied.
+- True rollback (reverting to the prior binary) is not provided. The accepted form is to re-release the previous version's behavior in a new build.
+- Expedited Review can be requested: use only for severe issues; abusing it makes future requests more likely to be denied.
 
 ### Phased Release is unavailable for a brand-new app's first release
 
 Phased Release is a feature for "auto-updates to existing users." It does not apply to first submissions, so the initial release is a normal (immediate-to-everyone) release.
-
----
 
 ## Android — Play Console Staged Rollout
 
@@ -88,15 +82,13 @@ Pick "Staged rollout" when shipping to Production and choose a percentage. Examp
 
 ### Halting a Staged Rollout / partial release
 
-- **Halted release** stops the rollout (remaining users stay on the previous version).
+- Halted release stops the rollout (remaining users stay on the previous version).
 - "Resume" lets you continue at the same or a different percentage.
-- True rollback: **re-release the same APK / AAB with an incremented versionCode** (Play Console rejects re-uploading the older versionCode). Rebuild from the "revert commit" with an incremented version code.
+- True rollback: re-release the same APK / AAB with an incremented versionCode (Play Console rejects re-uploading the older versionCode). Rebuild from the "revert commit" with an incremented version code.
 
 ### Hotfix delivery
 
 - Submit a hotfix as a new production release. Either ship Staged Rollout immediately at 100%, or ramp 5% → 20% while monitoring.
-
----
 
 ## Server-driven Feature Flags (primary defense)
 
@@ -114,11 +106,11 @@ Native rollback is slow, so Feature Flags are the real kill switch.
 
 ### Design principles
 
-- **Flag every high-risk feature** — auth flows, IAP, push receive logic, CRDT sync, AI calls.
-- **Default = OFF** is the safe side. Treat fetch failure / timeout as OFF.
-- Allow **per-platform / per-version** segmentation (if the bug only affects iOS 17, turn it off only on iOS 17).
-- **Flag fetch timeout:** never block app launch by hundreds of milliseconds.
-- **Removal flow:** track each flag with a "Sunset Date" and delete it once stable.
+- Flag every high-risk feature: auth flows, IAP, push receive logic, CRDT sync, AI calls.
+- Default = OFF is the safe side. Treat fetch failure / timeout as OFF.
+- Allow per-platform / per-version segmentation (if the bug only affects iOS 17, turn it off only on iOS 17).
+- Flag fetch timeout: never block app launch by hundreds of milliseconds.
+- Removal flow: track each flag with a "Sunset Date" and delete it once stable.
 
 ```swift
 // iOS example — fetch flags once at launch with a sound fallback
@@ -158,8 +150,6 @@ class FeatureFlags(private val client: FlagsClient) {
 }
 ```
 
----
-
 ## Staged Rollout monitoring checklist
 
 | Metric | Threshold | Action |
@@ -175,8 +165,6 @@ class FeatureFlags(private val client: FlagsClient) {
 Monitoring tools:
 - iOS: MetricKit, Crashlytics / Sentry, Xcode Organizer
 - Android: Android Vitals, Crashlytics / Sentry, Firebase Performance
-
----
 
 ## Rollback decision tree
 
@@ -197,8 +185,6 @@ Crash spike / ANR spike / severe error?
               └─ NO  → Advance to next %
 ```
 
----
-
 ## Hotfix release procedure
 
 | Step | iOS | Android |
@@ -209,8 +195,6 @@ Crash spike / ANR spike / severe error?
 | 4. Build / versionCode | Bump build number | Bump versionCode |
 | 5. Re-submit | App Review (request Expedited Review if needed) | Create a new release in Play Console |
 | 6. Roll out | Smoke test in TestFlight Internal → brief External → Phased Release in Production (or 100% immediately in emergencies) | Internal → Closed if needed → Production staged or 100% |
-
----
 
 ## CHANGELOG / Release Notes
 
@@ -261,17 +245,13 @@ NATIVE_TO_LAUNCH_HANDOFF:
     tertiary: "Hotfix build with revert (a released store binary cannot be instantly reverted)"
 ```
 
----
-
 ## Anti-patterns
 
-- **Assuming OTA can update native code.** Impossible in pure-native. Do not import React Native / Flutter assumptions.
-- **Bolting on flags at the last minute.** Flags wired in just before rollout produce flag-broken bugs. Write flags alongside the feature.
-- **Phased Release at 100% immediately.** Except in emergencies, always ramp. The point of 1% is to surface problems early.
-- **Overwriting with a new binary without halting.** Users left on the broken old version remain. **Halt first.**
-- **Stopping at TestFlight Internal.** Internal skews to insiders and finds few defects. Use Closed / External to cover diverse devices and networks.
-- **Not aiming for 99.85% crash-free.** Falling below industry benchmarks collapses app ratings.
-
----
+- Assuming OTA can update native code. Impossible in pure-native. Do not import React Native / Flutter assumptions.
+- Bolting on flags at the last minute. Flags wired in just before rollout produce flag-broken bugs. Write flags alongside the feature.
+- Phased Release at 100% immediately. Except in emergencies, always ramp. The point of 1% is to surface problems early.
+- Overwriting with a new binary without halting. Users left on the broken old version remain. Halt first.
+- Stopping at TestFlight Internal. Internal skews to insiders and finds few defects. Use Closed / External to cover diverse devices and networks.
+- Not aiming for 99.85% crash-free. Falling below industry benchmarks collapses app ratings.
 
 > Pure-native cannot escape via OTA. Make Feature Flags the primary line of defense, Staged Rollout the secondary, and Hotfix the last resort.

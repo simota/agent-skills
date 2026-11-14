@@ -1,6 +1,6 @@
 # Content Strategy for Design
 
-Purpose: Use this reference when writing content that will be integrated into visual design — particularly landing pages, marketing sites, and product pages where copy and layout are inseparable.
+Purpose: Use this reference when writing content that will be integrated into visual design, particularly landing pages, marketing sites, and product pages where copy and layout are inseparable.
 
 ## Contents
 
@@ -12,11 +12,9 @@ Purpose: Use this reference when writing content that will be integrated into vi
 - Content and Composition Alignment
 - Content Strategy Checklist
 
----
-
 ## Product Language Principle
 
-**Write about the product, not about the design.**
+Write about the product, not about the design.
 
 | Do | Don't |
 |----|-------|
@@ -28,22 +26,20 @@ Purpose: Use this reference when writing content that will be integrated into vi
 ### Why This Matters
 
 Design commentary ("beautiful", "elegant", "modern", "sleek") is:
-- **Empty** — it describes the surface, not the value
-- **Unverifiable** — the user decides if it's beautiful, not the copy
-- **Generic** — every product claims to be beautiful
-- **Self-serving** — it's about the maker, not the user
+- Empty: it describes the surface, not the value
+- Unverifiable: the user decides if it's beautiful, not the copy
+- Generic: every product claims to be beautiful
+- Self-serving: it's about the maker, not the user
 
 Product language:
-- **Specific** — names the actual benefit or capability
-- **Verifiable** — the user can confirm the claim
-- **Differentiating** — unique to what this product actually does
-- **User-centered** — frames value from the user's perspective
-
----
+- Specific: names the actual benefit or capability
+- Verifiable: the user can confirm the claim
+- Differentiating: unique to what this product actually does
+- User-centered: frames value from the user's perspective
 
 ## The 30% Cut Rule
 
-After writing any piece of copy, **cut 30% of the words.** Then check if meaning is preserved. If yes, the cut version ships.
+After writing any piece of copy, cut 30% of the words. Then check if meaning is preserved. If yes, the cut version ships.
 
 ### Process
 
@@ -65,16 +61,14 @@ After writing any piece of copy, **cut 30% of the words.** Then check if meaning
 
 | Word Type | Usually Cut | Sometimes Kept |
 |-----------|------------|----------------|
-| Adverbs (easily, quickly, simply) | Always cut | Never — they weaken, not strengthen |
+| Adverbs (easily, quickly, simply) | Always cut | Never: they weaken, not strengthen |
 | Filler phrases ("in order to", "that allows you to") | Always cut | — |
 | Hedging ("helps you", "enables you to") | Usually cut | Keep only when directness would be inaccurate |
 | Adjectives (powerful, advanced, comprehensive) | Usually cut | Keep only when specific and verifiable |
 
----
-
 ## Copy-First Design Process
 
-**Write headlines before choosing layouts.** Copy determines composition, not the other way around.
+Write headlines before choosing layouts. Copy determines composition, not the other way around.
 
 ### Why Copy-First
 
@@ -87,11 +81,11 @@ After writing any piece of copy, **cut 30% of the words.** Then check if meaning
 
 ### Process
 
-1. **Write all headlines first** (H1, H2, H3 for the page)
-2. **Test the headline story** — read only headlines top-to-bottom. Does it tell a coherent story?
-3. **Write supporting copy** for each headline
-4. **Apply the 30% cut** to all supporting copy
-5. **Now design the layout** around the finalized copy
+1. Write all headlines first (H1, H2, H3 for the page)
+2. Test the headline story: read only headlines top-to-bottom. Does it tell a coherent story?
+3. Write supporting copy for each headline
+4. Apply the 30% cut to all supporting copy
+5. Now design the layout around the finalized copy
 
 ### Headline Story Test
 
@@ -109,27 +103,25 @@ Read these headlines in order. They should form a coherent narrative:
 Coherent narrative? [Yes / No — if No, revise headlines]
 ```
 
----
-
 ## Hero Copy Contract
 
 The hero section requires exactly this copy:
 
 | Element | Rules | Character Limit |
 |---------|-------|----------------|
-| **Headline** | 1 sentence. Product language. Specific benefit or capability | 60 characters (6-12 words) |
-| **Subline** | Supports headline. Answers "how" or "for whom" | 120 characters (15-25 words) |
-| **Primary CTA** | 1 action. Verb-first. Specific outcome | 25 characters (2-4 words) |
-| **Secondary CTA** (optional) | Lower commitment alternative | 30 characters (2-5 words) |
+| Headline | 1 sentence. Product language. Specific benefit or capability | 60 characters (6-12 words) |
+| Subline | Supports headline. Answers "how" or "for whom" | 120 characters (15-25 words) |
+| Primary CTA | 1 action. Verb-first. Specific outcome | 25 characters (2-4 words) |
+| Secondary CTA (optional) | Lower commitment alternative | 30 characters (2-5 words) |
 
 ### Headline Formula Options
 
 | Formula | Example |
 |---------|---------|
-| [Action] + [Object] + [Speed/Quality modifier] | "Deploy to production in 60 seconds" |
-| [Your/Your team's] + [Desired outcome] | "Your team's best work, organized" |
-| [Verb] + [what] + [differentiator] | "Search your entire codebase instantly" |
-| [Outcome], [without the pain point] | "Ship daily, without the merge conflicts" |
+| "[Action] + [Object] + [Speed/Quality modifier]" | "Deploy to production in 60 seconds" |
+| "[Your/Your team's] + [Desired outcome]" | "Your team's best work, organized" |
+| "[Verb] + [what] + [differentiator]" | "Search your entire codebase instantly" |
+| "[Outcome], [without the pain point]" | "Ship daily, without the merge conflicts" |
 
 ### CTA Label Rules
 
@@ -139,8 +131,6 @@ The hero section requires exactly this copy:
 | "Try free for 14 days" | "Learn more" (passive) |
 | "See it in action" | "Click here" (mechanical) |
 | "Create your first project" | "Sign up" (commitment without context) |
-
----
 
 ## Section Copy Patterns
 
@@ -168,8 +158,6 @@ The hero section requires exactly this copy:
 | Subline | Address remaining objections ("No credit card required", "Free for teams up to 5") |
 | CTA | Same as hero CTA (consistency builds confidence) |
 
----
-
 ## Content and Composition Alignment
 
 Copy and layout decisions are interdependent. Use this mapping:
@@ -178,12 +166,10 @@ Copy and layout decisions are interdependent. Use this mapping:
 |--------------|-------------------|
 | Short headline (< 6 words) | Can pair with large hero image |
 | Long headline (> 10 words) | Needs more text space, image secondary |
-| 3 key benefits | Horizontal layout or vertical stack — NOT a card grid |
+| 3 key benefits | Horizontal layout or vertical stack: NOT a card grid |
 | Feature with screenshot | Side-by-side layout (text + image alternating) |
 | Testimonial quote | Inline within narrative, not a card |
 | Process/workflow | Numbered steps or visual flow, not bullet list |
-
----
 
 ## Content Strategy Checklist
 
@@ -217,8 +203,6 @@ Copy and layout decisions are interdependent. Use this mapping:
 - [ ] Final CTA reinforces core value
 - [ ] No filler sections (every section serves a named purpose)
 ```
-
----
 
 ## Content Design 2025
 
@@ -292,12 +276,12 @@ Measure copy performance with specific metrics:
 
 | Metric | What It Measures | How to Track |
 |--------|-----------------|--------------|
-| **Conversion rate** | CTA copy effectiveness | A/B test button labels vs. baseline |
-| **Task success rate (TSR)** | Onboarding and flow copy clarity | Usability test with task completion tracking |
-| **Error rate** | Form copy and validation message quality | % of form submissions with errors |
-| **Cart abandonment rate** | Checkout copy friction | Track drop-off at copy-heavy steps |
-| **Support contact rate** | Error message resolution quality | Contacts after error exposure |
-| **Time-on-task** | Instruction copy clarity | Time to complete a guided flow |
+| Conversion rate | CTA copy effectiveness | A/B test button labels vs. baseline |
+| Task success rate (TSR) | Onboarding and flow copy clarity | Usability test with task completion tracking |
+| Error rate | Form copy and validation message quality | % of form submissions with errors |
+| Cart abandonment rate | Checkout copy friction | Track drop-off at copy-heavy steps |
+| Support contact rate | Error message resolution quality | Contacts after error exposure |
+| Time-on-task | Instruction copy clarity | Time to complete a guided flow |
 
 ```markdown
 ## Measurement Framework
