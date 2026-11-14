@@ -4,52 +4,48 @@
 
 Standard format for `## NEXUS_HANDOFF` output. Designed for flexibility: include what's relevant, skip what's not.
 
----
-
 ## NEXUS_HANDOFF Format
 
 ### Required Fields (always include)
 
 | Field | Description |
 |-------|-------------|
-| **Summary** | What was accomplished (1-3 sentences) |
-| **Next** | Recommended next agent or action |
-| **Verified** | Required **whenever the handoff claims something passes, builds, or is done**. One entry per claim, each an evidence object — never a bare `true`. See *Completed vs Verified* below. Omit only when the step made no such claim. |
+| Summary | What was accomplished (1-3 sentences) |
+| Next | Recommended next agent or action |
+| Verified | Required whenever the handoff claims something passes, builds, or is done. One entry per claim, each an evidence object, never a bare `true`. See *Completed vs Verified* below. Omit only when the step made no such claim. |
 
 ### Recommended Fields (include for complex tasks)
 
 | Field | Description |
 |-------|-------------|
-| **Findings** | Key discoveries, root causes, analysis results |
-| **Risks** | Identified risks, concerns, potential issues |
-| **Open questions** | Unresolved items that need attention |
+| Findings | Key discoveries, root causes, analysis results |
+| Risks | Identified risks, concerns, potential issues |
+| Open questions | Unresolved items that need attention |
 
 ### Optional Fields (include when applicable)
 
 | Field | Description |
 |-------|-------------|
-| **Step** | Step number in chain (e.g., 2/5) |
-| **Agent** | Current agent name |
-| **Artifacts** | Files created or modified |
-| **Contract_Ref** | Sprint Contract ID (e.g., SC-login-feature-20260325) when Evaluator Loop is active |
-| **Pending Confirmations** | Decisions awaiting user input |
-| **User Confirmations** | Decisions already confirmed by user |
-| **Suggested alternatives** | Alternative approaches considered |
-| **Do not repeat** | Approaches already **tried and ruled out**, each with the evidence that ruled it out. Distinct from *Suggested alternatives* (untried options worth considering) — this field exists to stop the next agent from re-running a dead end. Required whenever a handoff follows a failed attempt or a resumed long-running task. |
-| **Guardrail Events** | Safety events triggered during execution |
-| **Context labels** | For content the handoff *passes forward* rather than merely cites: its label per `_common/CONTEXT_SUFFICIENCY.md` §3b — at minimum `source` and `trust`. **Required whenever anything non-`operator` is forwarded** (a fetched page, a tool result, another agent's output, a summary this step produced). A receiving agent cannot recover the origin of text it is handed, so an unlabeled forward silently promotes external content to the same standing as the user's own words. Content the step produced by summarizing or merging inherits the strictest label of its inputs. |
-| **Omitted** | What was deliberately left out and why — identifiers and reasons, never the content. Distinguishes "considered and set aside" from "never seen", which have opposite fixes. |
-
----
+| Step | Step number in chain (e.g., 2/5) |
+| Agent | Current agent name |
+| Artifacts | Files created or modified |
+| Contract_Ref | Sprint Contract ID (e.g., SC-login-feature-20260325) when Evaluator Loop is active |
+| Pending Confirmations | Decisions awaiting user input |
+| User Confirmations | Decisions already confirmed by user |
+| Suggested alternatives | Alternative approaches considered |
+| Do not repeat | Approaches already tried and ruled out, each with the evidence that ruled it out. Distinct from *Suggested alternatives* (untried options worth considering): this field exists to stop the next agent from re-running a dead end. Required whenever a handoff follows a failed attempt or a resumed long-running task. |
+| Guardrail Events | Safety events triggered during execution |
+| Context labels | For content the handoff *passes forward* rather than merely cites: its label per `_common/CONTEXT_SUFFICIENCY.md` §3b, at minimum `source` and `trust`. Required whenever anything non-`operator` is forwarded (a fetched page, a tool result, another agent's output, a summary this step produced). A receiving agent cannot recover the origin of text it is handed, so an unlabeled forward silently promotes external content to the same authority as the user's own words. Content the step produced by summarizing or merging inherits the strictest label of its inputs. |
+| Omitted | What was deliberately left out and why: identifiers and reasons, never the content. Distinguishes "considered and set aside" from "never seen", which have opposite fixes. |
 
 ## Completed vs Verified
 
-**"I changed the code" and "the acceptance criteria hold" are different claims.** Collapsing them is how a
+"I changed the code" and "the acceptance criteria hold" are different claims. Collapsing them is how a
 chain inherits a false completion: the next step reads `tests passed`, skips its own check, and builds on a
 state that was never confirmed. `_common/HARNESS_DEBT.md` names this `HD-STATE`; this section is how it is paid down.
 
-- **Summary / Artifacts** carry what was *done* — edits made, files touched, analysis produced.
-- **Verified** carries what was *confirmed*, and only that. A claim with no evidence object does not belong here.
+- Summary / Artifacts carry what was *done*: edits made, files touched, analysis produced.
+- Verified carries what was *confirmed*, and only that. A claim with no evidence object does not belong here.
 
 ### Evidence object
 
@@ -70,8 +66,8 @@ Verified:
 
 `result: not_run` is a required distinction, not a formality: an absent row and an unrun check look identical
 downstream, and only one of them is safe to re-derive. For non-executable work (design, spec, research),
-`command` is replaced by the observation that stands in for it — a reviewer, a cited source locator, a
-rendered artifact — but the claim/evidence pairing does not change.
+`command` is replaced by the observation that stands in for it (a reviewer, a cited source locator, a
+rendered artifact), but the claim/evidence pairing does not change.
 
 ### Validator rules (relations, not field presence)
 
@@ -85,8 +81,8 @@ A handoff that has all its fields can still be wrong. Check the relations:
 | V4 | Every load-bearing claim in `Summary` appears in `Verified` or is labeled `UNVERIFIED` | Prose asserts more than the evidence supports |
 | V5 | `Do not repeat` survived any compaction between attempt and handoff | The next agent re-runs a known dead end |
 
-**Staleness rule:** if HEAD moves after the handoff is written, every claim bound to the Version clock (below)
-is `STALE` — regardless of how complete the handoff looks. The receiver re-derives rather than trusting it (`_common/OPERATIONAL.md` §
+Staleness rule: if HEAD moves after the handoff is written, every claim bound to the Version clock (below)
+is `STALE`, regardless of how complete the handoff looks. The receiver re-derives rather than trusting it (`_common/OPERATIONAL.md` §
 *Post-Handoff Rehydration*).
 
 ### Freshness is four clocks, not one
@@ -96,10 +92,10 @@ moved. Check each clock that applies to the claim:
 
 | Clock | Stale when | Typical trigger |
 |-------|-----------|-----------------|
-| **Time** | Elapsed since observation exceeds what the claim's impact tolerates | Wall clock |
-| **Version** | The claim was made against a different code / spec / API version | `head` mismatch (V1), dependency bump |
-| **Event** | A qualifying event occurred and nothing re-verified after it | `deployment_completed`, `feature_flag_changed`, `incident_declared`, `permission_changed` |
-| **Authority** | The source that backed the claim no longer holds decision authority | ADR superseded, policy replaced, owner changed |
+| Time | Elapsed since observation exceeds what the claim's impact tolerates | Wall clock |
+| Version | The claim was made against a different code / spec / API version | `head` mismatch (V1), dependency bump |
+| Event | A qualifying event occurred and nothing re-verified after it | `deployment_completed`, `feature_flag_changed`, `incident_declared`, `permission_changed` |
+| Authority | The source that backed the claim no longer holds decision authority | ADR superseded, policy replaced, owner changed |
 
 Declare the triggers a handoff is sensitive to rather than assuming git alone:
 
@@ -108,12 +104,12 @@ invalidate_on: [deployment_completed, permission_changed]
 max_age: PT1H          # scale to impact: PT24H low · PT1H medium · PT5M high · live-query critical
 ```
 
-**Staleness is not one verdict.** Pick the response the claim's role warrants, and say which one was taken:
+Staleness is not one verdict. Pick the response the claim's role warrants, and say which one was taken:
 
 | Behavior | Use when |
 |----------|----------|
-| `re_fetch` | The source is cheap to re-read and authoritative — default |
-| `fallback` | A last-known-good value is usable **and is labeled as such** in the handoff |
+| `re_fetch` | The source is cheap to re-read and authoritative (default) |
+| `fallback` | A last-known-good value is usable and is labeled as such in the handoff |
 | `block` | The claim is load-bearing for an irreversible action |
 | `escalate` | Staleness is caused by an authority change, not a clock |
 | `degrade_scope` | Proceed read-only / analysis-only until re-verified |
@@ -121,11 +117,9 @@ max_age: PT1H          # scale to impact: PT24H low · PT1H medium · PT5M high 
 A blanket reject on every stale field costs more than it saves; an unlabeled `fallback` is how a stale value
 becomes a fact. Both failures are avoided by naming the behavior, not by picking a stricter default.
 
-**Status ceiling:** a step whose claims carry no evidence reports `PARTIAL`, never `SUCCESS`. Producing the
-work and verifying it are separate roles — an agent's own assertion is `E0` on `_common/EVIDENCE_LADDER.md`
+Status ceiling: a step whose claims carry no evidence reports `PARTIAL`, never `SUCCESS`. Producing the
+work and verifying it are separate roles: an agent's own assertion is `E0` on `_common/EVIDENCE_LADDER.md`
 and never ships on its own.
-
----
 
 ## Examples
 
@@ -183,28 +177,24 @@ and never ships on its own.
 - Next: Builder (implement fixes, priority: SQL injection first)
 ```
 
----
-
 ## Rules
 
-1. **Always include Summary + Next** — these are the minimum for any handoff
-2. **Never state a pass/build/done claim outside `Verified`** — a claim in prose with no evidence object is
+1. Summary and Next are the minimum for any handoff (§ Required Fields)
+2. Never state a pass/build/done claim outside `Verified`: a claim in prose with no evidence object is
    `UNVERIFIED`, and the step's status is capped at `PARTIAL`
-3. **Add detail proportional to complexity** — simple tasks need minimal handoff
-4. **Be specific in Next** — include what the next agent should do, not just who
-5. **Findings should be actionable** — include file paths, line numbers, evidence
-6. **Risks should be concrete** — "might break X" is better than "there are risks"
-7. **Journal what's worth keeping** — when a step produces a reusable insight, a notable decision, or state needed for recovery/learning, record it in `.agents/{agent}.md` / `.agents/PROJECT.md` per `_common/OPERATIONAL.md` and reference the paths in `Artifacts`. Routine or trivial steps don't need an entry.
-
----
+3. Add detail proportional to complexity: simple tasks need minimal handoff
+4. Be specific in Next: include what the next agent should do, not just who
+5. Findings should be actionable: include file paths, line numbers, evidence
+6. Risks should be concrete: "might break X" is better than "there are risks"
+7. Journal what's worth keeping: when a step produces a reusable insight, a notable decision, or state needed for recovery/learning, record it in `.agents/{agent}.md` / `.agents/PROJECT.md` per `_common/OPERATIONAL.md` and reference the paths in `Artifacts`. Routine or trivial steps don't need an entry.
 
 ## Handoff Admission Gate
 
-A handoff is **admitted or sent back** by the *receiver*, at intake, before it does any work. This
-is the only point where rework is cheap — once the receiver has built on a bad input, the cost of
+A handoff is admitted or sent back by the *receiver*, at intake, before it does any work. This
+is the only point where rework is cheap; once the receiver has built on a bad input, the cost of
 unwinding exceeds the cost of the original redo.
 
-`_common/REVERSE_FEEDBACK.md` is advisory-only — it never refuses anything.
+`_common/REVERSE_FEEDBACK.md` is advisory-only: it never refuses anything.
 This section owns the refusal end to end: when it is mandatory, when it is forbidden, how it
 terminates, and what the message carries.
 
@@ -233,73 +223,69 @@ of its work.
 | 1 | `RSK: risk` is present and unresolved | Binary, and already blocking under `OPERATIONAL.md` § Completion Contract |
 | 2 | A required handoff field is absent, or a locator in it does not resolve | The receiver opens the path, runs the command, follows the reference |
 | 3 | The sender's `OUT` rung is below the floor its change class requires | `_common/EVIDENCE_LADDER.md` § Choosing the required floor and the `R01`–`R21` table are external rules, not the sender's opinion |
-| 4 | A `Completed` item is presented as `Verified` | Definitional — § Completed vs Verified above |
-| 5 | The receiver's own `IN` lands ★★☆☆☆ or below **and** the cause is a specific item the sender held and did not pass | The receiver rates `IN` independently; the named item is the evidence |
+| 4 | A `Completed` item is presented as `Verified` | Definitional: § Completed vs Verified above |
+| 5 | The receiver's own `IN` lands ★★☆☆☆ or below and the cause is a specific item the sender held and did not pass | The receiver rates `IN` independently; the named item is the evidence |
 
 ### Never refuse on these
 
-- **The sender's own star ratings on `IN`, `FIT`, `EVD`, `CLR`, or `OUT`.** Every star band is
+- The sender's own star ratings on `IN`, `FIT`, `EVD`, `CLR`, or `OUT`. Every star band is
   self-assigned; `_common/WORK_GATE.md` § Complexity Budget states that `IN`, `FIT`, and `CLR` have
   no external check and that only `OUT` is anchored to an artifact a reader can inspect. That anchor
   is used through row 3 (the `OUT` rung against an external floor), never through the sender's `OUT`
   stars. Wiring a self-certified figure into a gate is what `_common/TOKEN_ECONOMY.md` §6
   forbids: *a formula with no data source is never presented with a grade band or wired into a
   gate.* A low self-rating is information for the reader, never an automatic rejection.
-- **A stylistic preference, or work the receiver would have done differently.** Refusal is for a
+- A stylistic preference, or work the receiver would have done differently. Refusal is for a
   missing input, not a different taste.
-- **Anything at `Skip` tier.** A one-line answer does not carry an admission gate.
+- Anything at `Skip` tier. A one-line answer does not carry an admission gate.
 
-Condition 5 is deliberately the only star-driven refusal, and the star is the **receiver's**, not
-the sender's — an independent read of what actually arrived. It still requires naming the missing
+Condition 5 is deliberately the only star-driven refusal, and the star is the receiver's, not
+the sender's: an independent read of what actually arrived. It still requires naming the missing
 item, because "`IN` felt low" is not an actionable rejection.
 
 ### Termination — one bounce, then escalate
 
-- **One send-back per handoff edge.** The same edge never bounces twice. This is a property of the
+- One send-back per handoff edge. The same edge never bounces twice. This is a property of the
   edge, not of the run: `Builder → Radar` gets one rework, and a later `Builder → Radar` in the
   same chain gets none.
-- **The send-back names the artifact to add**, not a quality level to reach. "Improve the
+- The send-back names the artifact to add, not a quality level to reach. "Improve the
   evidence" is not a valid refusal; "the `p95` figure has no measurement — attach the command and
   its output, or label it `UNVERIFIED`" is.
-- **A second failure on the same condition escalates.** It becomes a typed residual
+- A second failure on the same condition escalates. It becomes a typed residual
   (`OPERATIONAL.md` § Completion Contract) plus a question to the user. There is no third attempt,
   because two failures on a named, actionable item mean the item cannot be produced.
-- **When the sender cannot satisfy it because the information does not exist**, the refusal
-  converts to a residual (`blocked-external` / `out-of-contract`) and the receiver **proceeds with
-  the gap recorded**. A chain never stalls on an unobtainable input.
+- When the sender cannot satisfy it because the information does not exist, the refusal
+  converts to a residual (`blocked-external` / `out-of-contract`) and the receiver proceeds with
+  the gap recorded. A chain never stalls on an unobtainable input.
 
 ### The receiver is accountable for refusing
 
 Refusal costs the sender a full rerun, so it is not free to issue.
 
-- A refusal the sender answers with content **already present in the original handoff** is
-  recorded as a receiver-side defect — over-refusal, not a sender defect.
+- A refusal the sender answers with content already present in the original handoff is
+  recorded as a receiver-side defect: over-refusal, not a sender defect.
 - The receiver states its `IN` rating and the named missing item in the same message. A refusal
   without both is not admitted either.
 
 ### Who arbitrates
 
-- **Inside a Nexus chain:** Nexus. It sees both gates, applies the one-bounce rule across the
+- Inside a Nexus chain: Nexus. It sees both gates, applies the one-bounce rule across the
   whole chain, and reports rework in the envelope so a redone step is never invisible.
-- **Direct skill-to-skill:** the receiver, on its own authority, under the same conditions.
-
----
+- Direct skill-to-skill: the receiver, on its own authority, under the same conditions.
 
 ## Pre-Handoff Journaling
 
 When a handoff carries durable state, a reusable insight, or a notable decision, precede it with:
 
-1. Appending one row to `.agents/PROJECT.md` (if the write fails, note it in the handoff and continue — `_common/OPERATIONAL.md` § Activity Log)
+1. Appending one row to `.agents/PROJECT.md` (if the write fails, note it in the handoff and continue; `_common/OPERATIONAL.md` § Activity Log)
 2. Adding a journal entry to `.agents/{agent}.md` when a reusable insight was generated
 3. Listing both file paths in the handoff `Artifacts` field
 
 Routine or trivial steps that produce nothing worth persisting don't need an entry.
 
-**Orchestrator handling (Nexus/Rally):** When recovery- or learning-relevant state is clearly missing from a handoff, the orchestrator asks the agent to record it before the chain moves on. Persistent journaling gaps from the same agent are a review signal — surface them rather than silently degrading.
+Orchestrator handling (Nexus/Rally): When recovery- or learning-relevant state is clearly missing from a handoff, the orchestrator asks the agent to record it before the chain moves on. Persistent journaling gaps from the same agent are a review signal: surface them rather than silently degrading.
 
-**Why journaling matters:** Session durability (next section) depends on persistent state outside the orchestrator context. A handoff that skips journaling weakens crash recovery and routing learning — see also `_common/EVOLUTION.md` and `_common/nexus/reference/routing-learning.md` (Nexus).
-
----
+Why journaling matters: Session durability (next section) depends on persistent state outside the orchestrator context. A handoff that skips journaling weakens crash recovery and routing learning; see also `_common/EVOLUTION.md` and `_common/nexus/reference/routing-learning.md` (Nexus).
 
 ## Session Durability Principle
 
@@ -307,9 +293,9 @@ Routine or trivial steps that produce nothing worth persisting don't need an ent
 
 Based on the Managed Agents virtualization pattern (Anthropic), session state (the append-only record of what happened) must live outside the orchestrator so that:
 
-- **Crash recovery**: If the orchestrator (Nexus/Rally) is interrupted mid-chain, the last `_STEP_COMPLETE` + `NEXUS_HANDOFF` in `.agents/PROJECT.md` and agent journals enables any new orchestrator instance to resume from the last successful step.
-- **Debuggability**: All handoff data is inspectable in persistent files (`.agents/*.md`), not trapped in a transient context window.
-- **Checkpoint-resume**: For chains with 4+ steps, each `_STEP_COMPLETE` acts as a durable checkpoint. A `wake(sessionId)` equivalent is: read `.agents/PROJECT.md` → find last completed step → reconstruct handoff context → spawn next agent.
+- Crash recovery: If the orchestrator (Nexus/Rally) is interrupted mid-chain, the last `_STEP_COMPLETE` + `NEXUS_HANDOFF` in `.agents/PROJECT.md` and agent journals enables any new orchestrator instance to resume from the last successful step.
+- Debuggability: All handoff data is inspectable in persistent files (`.agents/*.md`), not trapped in a transient context window.
+- Checkpoint-resume: For chains with 4+ steps, each `_STEP_COMPLETE` acts as a durable checkpoint. A `wake(sessionId)` equivalent is: read `.agents/PROJECT.md` → find last completed step → reconstruct handoff context → spawn next agent.
 
 ### Practical Implications
 
@@ -329,13 +315,11 @@ Based on the Managed Agents virtualization pattern (Anthropic), session state (t
 | Full error traces | When the chain is 4+ steps (checkpoint) or the step is non-trivial | Key error + file:line only |
 | Acceptance criteria | At chain start, when the chain is 4+ steps (checkpoint) or non-trivial | Reference only |
 
----
-
 ## DESIGN_INTENT_HANDOFF Format
 
-**Purpose**: Specialized handoff schema for design-to-implementation pipelines (inspired by Claude Design by Anthropic Labs, 2026-04-17). Use this when atelier/Vision/Frame/Muse hand off to implementation agents (Forge/Artisan/Pixel/Vitrine) or to Claude Code.
+Purpose: Specialized handoff schema for design-to-implementation pipelines (inspired by Claude Design by Anthropic Labs, 2026-04-17). Use this when atelier/Vision/Frame/Muse hand off to implementation agents (Forge/Artisan/Pixel/Vitrine) or to Claude Code.
 
-**When to use**:
+When to use:
 - atelier orchestrating design → code loops
 - Vision passing direction to Muse/Frame/Forge
 - Forge/Pixel producing prototypes to hand off to Artisan
@@ -345,28 +329,28 @@ Based on the Managed Agents virtualization pattern (Anthropic), session state (t
 
 | Field | Description |
 |-------|-------------|
-| **Intent** | Design direction in natural language (from Vision or user). What feel, what audience, what emotional register |
-| **Tokens** | Current design-system tokens as `{color, typography, spacing, radius, shadow, motion}`. Reference to `.agents/design-system/{project}.json` when loaded |
-| **Constraints** | Platform (web/mobile/desktop), brand rules, a11y targets (WCAG level), regulatory (cookie/ADA/EU AI Act), performance budgets |
-| **Acceptance** | Measurable criteria — contrast ratio, bundle size, responsive breakpoints, browser matrix |
+| Intent | Design direction in natural language (from Vision or user). What feel, what audience, what emotional register |
+| Tokens | Current design-system tokens as `{color, typography, spacing, radius, shadow, motion}`. Reference to `.agents/design-system/{project}.json` when loaded |
+| Constraints | Platform (web/mobile/desktop), brand rules, a11y targets (WCAG level), regulatory (cookie/ADA/EU AI Act), performance budgets |
+| Acceptance | Measurable criteria: contrast ratio, bundle size, responsive breakpoints, browser matrix |
 
 ### Recommended Fields
 
 | Field | Description |
 |-------|-------------|
-| **Assets** | References to images, icons, fonts, existing components (file paths or URLs) |
-| **References** | Inspiration sources — screenshots, competitor UIs, Figma URLs, web captures |
-| **Variants** | Parametric options if the caller wants multiple explorations (see `_common/parametric-output.md`) |
-| **Code_Instructions** | When next agent is Claude Code / Artisan / Builder: explicit "what file, what framework, what test" directives |
+| Assets | References to images, icons, fonts, existing components (file paths or URLs) |
+| References | Inspiration sources: screenshots, competitor UIs, Figma URLs, web captures |
+| Variants | Parametric options if the caller wants multiple explorations (see `_common/parametric-output.md`) |
+| Code_Instructions | When next agent is Claude Code / Artisan / Builder: explicit "what file, what framework, what test" directives |
 
 ### Optional Fields
 
 | Field | Description |
 |-------|-------------|
-| **Registry_Ref** | Path to persisted design system (e.g., `.agents/design-system/marketing-2026.json`) |
-| **Vision_Ref** | Path to Vision direction document (e.g., `.agents/vision/direction.md`) |
-| **Handoff_Bundle** | Path to structured bundle (see `_templates/handoff-bundle.template.json`) |
-| **Do_Not** | Explicit anti-patterns — colors/layouts/words that must be avoided |
+| Registry_Ref | Path to persisted design system (e.g., `.agents/design-system/marketing-2026.json`) |
+| Vision_Ref | Path to Vision direction document (e.g., `.agents/vision/direction.md`) |
+| Handoff_Bundle | Path to structured bundle (see `_templates/handoff-bundle.template.json`) |
+| Do_Not | Explicit anti-patterns: colors/layouts/words that must be avoided |
 
 ### Example (Minimal)
 
@@ -425,9 +409,9 @@ DESIGN_INTENT_HANDOFF:
 
 ### Rules
 
-1. **Intent is mandatory** — a handoff without explicit design intent is a handoff that will drift
-2. **Tokens must be referenceable** — either inline or a registry path. Never free-form color names
-3. **Constraints include a11y by default** — WCAG level must be declared, not assumed
-4. **Code_Instructions are explicit when crossing the design→code boundary** — frameworks, file paths, test expectations
-5. **Do_Not is as important as Intent** — negative space prevents regression to generic outputs
-6. **Registry_Ref persists across sessions** — the design system outlives any single chain; refer to it, don't re-derive it
+1. Intent is mandatory: a handoff without explicit design intent is a handoff that will drift
+2. Tokens must be referenceable: either inline or a registry path. Never free-form color names
+3. Constraints include a11y by default: WCAG level must be declared, not assumed
+4. Code_Instructions are explicit when crossing the design→code boundary: frameworks, file paths, test expectations
+5. Do_Not is as important as Intent: negative space prevents regression to generic outputs
+6. Registry_Ref persists across sessions: the design system outlives any single chain; refer to it, don't re-derive it

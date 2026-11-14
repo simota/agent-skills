@@ -6,26 +6,22 @@ How individual agents learn from their own experience. Complements `EVOLUTION.md
 
 | Aspect | EVOLUTION.md | SELF_EVOLUTION.md (this) |
 |--------|-------------|--------------------------|
-| Direction | Outward — signals to ecosystem | Inward — learning from own experience |
+| Direction | Outward: signals to ecosystem | Inward: learning from own experience |
 | Scope | Ecosystem-wide | Individual agent |
 | Actions | EVOLUTION_SIGNAL emission, ECOSYSTEM.md reading | Journal reading, effectiveness measurement, parameter adjustment |
 | Orchestrator | Darwin collects | Each agent executes independently |
-
----
 
 ## Three Tiers
 
 | Tier | Who | What | Trigger |
 |------|-----|------|---------|
-| **Tier 1: Context Loading** | All agents | Read prior context before starting work | Every task start |
-| **Tier 2: Calibration Loop** | Agents with learning loops (19+) | Post-task effectiveness measurement & adjustment | Calibration Triggers (CT-01–06) |
-| **Tier 3: Self-Modification** | Architect, Gauge (+ future qualified agents) | Modify own SKILL.md / references | 30+ data points + Safety Level framework |
-
----
+| Tier 1: Context Loading | All agents | Read prior context before starting work | Every task start |
+| Tier 2: Calibration Loop | Agents with learning loops (19+) | Post-task effectiveness measurement & adjustment | Calibration Triggers (CT-01–06) |
+| Tier 3: Self-Modification | Architect, Gauge (+ future qualified agents) | Modify own SKILL.md / references | 30+ data points + Safety Level framework |
 
 ## Tier 1: Context Loading Protocol
 
-Before starting any task, load prior context to avoid repeating mistakes and leverage learned patterns.
+Before starting any task, load prior context to avoid repeating mistakes and reuse learned patterns.
 
 ### Reading Targets
 
@@ -37,18 +33,15 @@ Before starting any task, load prior context to avoid repeating mistakes and lev
 
 ### Application Method
 
-1. **Scan** — Check if any journal `Apply when:` conditions match the current task
-2. **Adjust** — Modify approach based on matched patterns (e.g., avoid known pitfalls, reuse successful strategies)
-3. **Proceed** — Start task with enriched context
+1. Scan: Check if any journal `Apply when:` conditions match the current task
+2. Adjust: Modify approach based on matched patterns (e.g., avoid known pitfalls, reuse successful strategies)
 
 ### Rules
 
 - Check file existence before reading (`.agents/ECOSYSTEM.md` may not exist yet)
-- Read selectively — only entries relevant to the current task type
-- Complete within seconds — context loading must not delay task execution
+- Read selectively: only entries relevant to the current task type
+- Complete within seconds: context loading must not delay task execution
 - Do NOT modify any files during context loading
-
----
 
 ## Tier 2: Standard Calibration Loop
 
@@ -62,26 +55,26 @@ OBSERVE → MEASURE → EXTRACT → ADAPT → SAFEGUARD → PERSIST
 
 | Phase | Purpose | Input | Output |
 |-------|---------|-------|--------|
-| **OBSERVE** | Collect raw execution data | Task results, user feedback, tool outputs | Structured observation record |
-| **MEASURE** | Judge effectiveness | Observation record + scoring template | Effectiveness Score (A–F) |
-| **EXTRACT** | Identify actionable patterns | Score + observation + historical journal | Candidate adjustments (max 3) |
-| **ADAPT** | Apply adjustments to internal parameters | Candidate adjustments | Updated heuristics / weights / thresholds |
-| **SAFEGUARD** | Validate changes are safe | Pre/post comparison | Approved or rolled-back changes |
-| **PERSIST** | Record to journal + emit signals | Approved changes | Journal entry + EVOLUTION_SIGNAL (if reusable) |
+| OBSERVE | Collect raw execution data | Task results, user feedback, tool outputs | Structured observation record |
+| MEASURE | Judge effectiveness | Observation record + scoring template | Effectiveness Score (A–F) |
+| EXTRACT | Identify actionable patterns | Score + observation + historical journal | Candidate adjustments (max 3) |
+| ADAPT | Apply adjustments to internal parameters | Candidate adjustments | Updated heuristics / weights / thresholds |
+| SAFEGUARD | Validate changes are safe | Pre/post comparison | Approved or rolled-back changes |
+| PERSIST | Record to journal + emit signals | Approved changes | Journal entry + EVOLUTION_SIGNAL (if reusable) |
 
 ### Phase Details
 
-**OBSERVE:** Record what happened — inputs, decisions made, outcomes, user reactions. Raw data only, no interpretation.
+OBSERVE: Record what happened: inputs, decisions made, outcomes, user reactions. Raw data only, no interpretation.
 
-**MEASURE:** Apply the Effectiveness Score rubric (below): rate each dimension A–F with evidence. Requires 3+ data points before assigning a label.
+MEASURE: Apply the Effectiveness Score rubric (below): rate each dimension A–F with evidence. Requires 3+ data points before assigning a label.
 
-**EXTRACT:** Compare current score against historical baseline. Identify what worked, what didn't, and why. Generate max 3 candidate adjustments per cycle.
+EXTRACT: Compare current score against historical baseline. Identify what worked, what didn't, and why. Generate max 3 candidate adjustments per cycle.
 
-**ADAPT:** Apply extracted adjustments to internal parameters (weights, thresholds, heuristics, approach preferences). Tier 2 agents may only adjust parameters within their existing SKILL.md framework — not modify the SKILL.md itself.
+ADAPT: Apply extracted adjustments to internal parameters (weights, thresholds, heuristics, approach preferences). Tier 2 agents may only adjust parameters within their existing SKILL.md framework, not modify the SKILL.md itself.
 
-**SAFEGUARD:** Verify adjustments don't degrade performance on previously successful patterns. If degradation detected → rollback to pre-ADAPT state.
+SAFEGUARD: Verify adjustments don't degrade performance on previously successful patterns. If degradation detected → rollback to pre-ADAPT state.
 
-**PERSIST:** Write journal entry using the template below. If insight is reusable across agents, emit EVOLUTION_SIGNAL (format → `EVOLUTION.md`).
+PERSIST: Write journal entry using the template below. If insight is reusable across agents, emit EVOLUTION_SIGNAL (format → `EVOLUTION.md`).
 
 ### Mapping Table: Existing Loops → Standard Phases
 
@@ -97,9 +90,7 @@ OBSERVE → MEASURE → EXTRACT → ADAPT → SAFEGUARD → PERSIST
 | Architect | EVOLVE | INTROSPECT | DIAGNOSE | PRESCRIBE | MUTATE | VERIFY | PERSIST |
 | Darwin | (framework) | SENSE | ASSESS | — | EVOLVE | VERIFY | PERSIST |
 
-Agents retain their own naming. This table is for conceptual alignment only — no renaming required.
-
----
+Agents retain their own naming. This table is for conceptual alignment only; no renaming required.
 
 ## Effectiveness Score Template
 
@@ -107,7 +98,7 @@ Generic template adaptable to any agent's domain. Each agent defines its own Pri
 
 ### Rubric
 
-**Status: qualitative, not computed.** No script in this repo computes ES or persists its inputs, so ES is
+Status: qualitative, not computed. No script in this repo computes ES or persists its inputs, so ES is
 a structured judgment, not a measurement. Per `_common/TOKEN_ECONOMY.md` (a formula with no data source is
 never presented with a grade band or wired into a gate), it drives no gate; report it with the evidence
 behind each dimension.
@@ -122,7 +113,7 @@ Rate each dimension A–F (labels below), citing the evidence for each:
 | Adaptability | Response to novel/unexpected situations | Graceful degradation, creative solutions |
 | User_Autonomy | User empowerment vs. dependency creation | Knowledge transfer, self-service enablement |
 
-**Overall label (deterministic):** order the labels A > B > C > D > F, so one step is one position
+Overall label (deterministic): order the labels A > B > C > D > F, so one step is one position
 (D→F is one step). Start from the Primary_Outcome label; if any other dimension is two or more steps
 lower, lower the overall label by exactly one step (never below F). The same per-dimension labels always
 yield the same ES.
@@ -131,101 +122,97 @@ yield the same ES.
 
 | Label | Meaning |
 |-------|---------|
-| A | Excellent — maintain current approach |
-| B | Good — minor refinements |
-| C | Adequate — targeted improvements needed |
-| D | Below expectations — full cycle required |
-| F | Critical — immediate intervention |
+| A | Excellent: maintain current approach |
+| B | Good: minor refinements |
+| C | Adequate: targeted improvements needed |
+| D | Below expectations: full cycle required |
+| F | Critical: immediate intervention |
 
 ### Minimum Data Requirements
 
-- **3+ data points** required before assigning an ES label
+- 3+ data points required before assigning an ES label
 - Below 3 data points: record observations only (OBSERVE + PERSIST), skip MEASURE–ADAPT
 - Agents with existing scoring (CES/AES/etc.) may map their judgments to these labels
 
 ### Comparison Discipline (before a score is allowed to justify a change)
 
-"3+ data points" bounds sample size. It does not make the points **comparable** — and a MEASURE→ADAPT
+"3+ data points" bounds sample size. It does not make the points comparable, and a MEASURE→ADAPT
 cycle run on incomparable points adapts to noise, which is exactly how a metric moves while the property
 stays put (`_common/HARNESS_DEBT.md` `HD-GAME`).
 
-**A score compares two configurations only when all of these hold.**
+A score compares two configurations only when all of these hold.
 
 | Control | Rule |
 |---------|------|
 | Fixed corpus | Same repository revision / fixture set across baseline and variant. Record it. |
-| One variable | Change **one** of instruction text, model, tool set, or permission per comparison. Two at once yields no attribution. Safety fixes are the exception and are not comparisons. |
+| One variable | Change one of instruction text, model, tool set, or permission per comparison. Two at once yields no attribution. Safety fixes are the exception and are not comparisons. |
 | No carryover | Variant runs start without the baseline run's memory, journal state, or conversation. Persistent state is measured only when persistence *is* the variable. |
 | Criteria first | Success criteria written before the runs, not selected after seeing them. |
 | Repeat | Multiple runs per configuration. Non-determinism makes a single success uninformative. |
 | Keep failures | Failed and aborted runs stay in the denominator, classified by failure reason. Excluding them is the most common way a comparison lies. |
 | Stable prompt | The prompt is not edited between runs of the same configuration. Tuning mid-series turns a comparison into a demonstration. |
 | Blind where possible | When a human grades output, the grader does not know which configuration produced it. |
-| Median + range | Report median and range, never the mean alone — the mean hides the long tail, and the long tail is the failure mode users feel. |
+| Median + range | Report median and range, never the mean alone: the mean hides the long tail, and the long tail is the failure mode users feel. |
 | Split the verdict | Report mechanical pass (tests/build/schema) separately from acceptance (criteria met, no rework). A configuration can raise one and lower the other. |
-| Named limits | Record what was *not* controlled — sample size, single environment, one task class, vendor-side model updates between runs. |
+| Named limits | Record what was *not* controlled: sample size, single environment, one task class, vendor-side model updates between runs. |
 
-**Recorded with every calibration that claims an improvement:** baseline id · variant id · the single changed
+Recorded with every calibration that claims an improvement: baseline id · variant id · the single changed
 variable · corpus revision · run count · median + range per configuration · failure classes · limitations ·
 agent + version + model · start cwd · prompt id · condition label.
 A calibration missing the changed variable or the failure classes is logged as an observation (`Lightweight`),
 never as evidence for ADAPT.
 
-**Case Calibration.** A run series that satisfies the controls but is too small to separate signal
+Case Calibration. A run series that satisfies the controls but is too small to separate signal
 from variance is recorded as a `Case Calibration`: what changed, what was observed, and what it does
-*not* establish. It is a legitimate result and often the only affordable one — but it names a
+*not* establish. It is a legitimate result and often the only affordable one, but it names a
 hypothesis, never a rule. Promoting one to a general finding is the failure this section exists to
 prevent. Label it explicitly; an unlabeled small series gets read later as settled.
 
 ### When the changed variable is instruction text
 
 Task outcome alone cannot tell "the agent followed the rule and the rule was wrong" from "the rule
-was fine and the agent ignored it" — and those need opposite fixes. When a calibration changes
+was fine and the agent ignored it", and those need opposite fixes. When a calibration changes
 instruction text, split the verdict further:
 
 | Measure | Definition | Reads on |
 |---------|-----------|----------|
-| `adherence` | required actions observed ÷ required actions **applicable to this task** | whether the instruction landed |
+| `adherence` | required actions observed ÷ required actions applicable to this task | whether the instruction landed |
 | `violation_rate` | forbidden actions attempted ÷ opportunities to attempt one | whether prohibitions hold |
 | `check_recall` | required checks selected ÷ required checks | whether verification is complete |
 | `check_precision` | required checks selected ÷ all checks selected | whether it is affordable |
 
 Four rules make these honest:
 
-- **Fix the applicable set before scoring.** A rule that does not apply to the task is not in the
+- Fix the applicable set before scoring. A rule that does not apply to the task is not in the
   denominator. Deciding applicability after seeing the run turns the metric into a narrative.
-- **Read `adherence` against outcome, as a pair.** High adherence with a failed outcome means the
+- Read `adherence` against outcome, as a pair. High adherence with a failed outcome means the
   instruction is wrong; low adherence with a passing outcome means the run got lucky and the
   process risk is still there. Neither shows up in a single number.
-- **A guard block is not compliance.** An action stopped by a hook or permission rule says the
+- A guard block is not compliance. An action stopped by a hook or permission rule says the
   guard worked, not that the model would have complied without it. Count the two separately, and
   never let a deterministic block inflate an adherence figure.
-- **Running every check is not a win.** It maximizes `check_recall` while destroying
+- Running every check is not a win. It maximizes `check_recall` while destroying
   `check_precision` and cost. Report both, or the cheap degenerate strategy scores best.
 
-**`NOT_VERIFIED` is a third value.** A check that did not run is neither pass nor fail. Scoring it
+`NOT_VERIFIED` is a third value. A check that did not run is neither pass nor fail. Scoring it
 `0` understates the configuration; dropping it silently shrinks the denominator and overstates it.
-Carry the count alongside the percentages (`_common/FINDING_LEDGER.md` — where a dismissal moves the
+Carry the count alongside the percentages (`_common/FINDING_LEDGER.md`, where a dismissal moves the
 denominator, the dismissal count is reported with the metric).
-
----
 
 ## Calibration Triggers
 
 | ID | Trigger | Scope | Priority |
 |----|---------|-------|----------|
-| CT-01 | Task completion | **Lightweight** (OBSERVE + MEASURE + PERSIST) | Normal |
-| CT-02 | Same pattern fails 3+ times | **Full cycle** | High |
-| CT-03 | User override / correction | **Full cycle** | Highest |
-| CT-04 | Judge/Nexus quality feedback | **Medium** (OBSERVE → EXTRACT → PERSIST) | High |
-| CT-05 | Lore cross-agent pattern notification | **Medium** | Normal |
-| CT-06 | 30+ days since last calibration | **Full cycle** | Low |
+| CT-01 | Task completion | Lightweight (OBSERVE + MEASURE + PERSIST) | Normal |
+| CT-02 | Same pattern fails 3+ times | Full cycle | High |
+| CT-03 | User override / correction | Full cycle | Highest |
+| CT-04 | Judge/Nexus quality feedback | Medium (OBSERVE → EXTRACT → PERSIST) | High |
+| CT-05 | Lore cross-agent pattern notification | Medium | Normal |
+| CT-06 | 30+ days since last calibration | Full cycle | Low |
 
-**Lightweight** = OBSERVE + MEASURE + PERSIST (no parameter changes).
-**Medium** = OBSERVE + MEASURE + EXTRACT + PERSIST (identify but don't apply).
-**Full cycle** = All 6 phases.
-
----
+Lightweight = OBSERVE + MEASURE + PERSIST (no parameter changes).
+Medium = OBSERVE + MEASURE + EXTRACT + PERSIST (identify but don't apply).
+Full cycle = All 6 phases.
 
 ## Safety Framework
 
@@ -265,8 +252,6 @@ denominator, the dismissal count is reported with the metric).
 3. If SAFEGUARD detects degradation: restore snapshot entirely (no partial rollback)
 4. Record rollback in journal with reason
 
----
-
 ## Tier 3: Self-Modification
 
 Direct modification of own SKILL.md and references. Currently implemented by Architect and Gauge.
@@ -275,14 +260,14 @@ Direct modification of own SKILL.md and references. Currently implemented by Arc
 
 | Level | Scope | Example | Approval |
 |-------|-------|---------|----------|
-| **A: Autonomous** | reference/ additions only | New insights, examples, templates | None |
-| **B: Autonomous + Verify** | reference/ updates, minor SKILL.md updates | Content updates with equivalence verification | Self-verify |
-| **C: Human Approval** | Core SKILL.md sections | Boundaries, Principles, Framework changes | Human required |
-| **D: Forbidden** | Safety mechanisms | Own Safety Level, trigger conditions, guardrails | Never |
+| A: Autonomous | reference/ additions only | New insights, examples, templates | None |
+| B: Autonomous + Verify | reference/ updates, minor SKILL.md updates | Content updates with equivalence verification | Self-verify |
+| C: Human Approval | Core SKILL.md sections | Boundaries, Principles, Framework changes | Human required |
+| D: Forbidden | Safety mechanisms | Own Safety Level, trigger conditions, guardrails | Never |
 
 ### Change Class (what authority the change touches)
 
-Safety Levels above classify changes by **which artifact** is edited. Change Class classifies them by **which authority** the change moves — an orthogonal axis, and the one that catches the dangerous case Levels A-D miss: an edit entirely inside `reference/` that quietly relaxes the standard the agent is graded against.
+Safety Levels above classify changes by which artifact is edited. Change Class classifies them by which authority the change moves: an orthogonal axis, and the one that catches the dangerous case Levels A-D miss: an edit entirely inside `reference/` that quietly relaxes the standard the agent is graded against.
 
 | Class | What it changes | Examples in this repo | Promotion rule |
 |-------|-----------------|----------------------|----------------|
@@ -290,31 +275,29 @@ Safety Levels above classify changes by **which artifact** is edited. Change Cla
 | `C1` | Low-risk behavior | Reference ordering, `description` trigger words, phrasing | Self-verify + one clean run |
 | `C2` | Execution behavior | Retry counts, routing preference, which verification step runs | Independent review by a different agent |
 | `C3` | Control boundary | Boundaries (Always/Ask/Never), guardrail levels, spawn authority | Human approval |
-| `C4` | **Evaluation authority** | Success criteria, rubrics, thresholds, checklists, fixtures — anything that decides whether the agent passed | **Human approval, and never bundled with a `C2`/`C3` change** |
+| `C4` | Evaluation authority | Success criteria, rubrics, thresholds, checklists, fixtures: anything that decides whether the agent passed | Human approval, and never bundled with a `C2`/`C3` change |
 
-**`C4` is the class this table exists for.** An agent that can edit its own grader can raise its score without improving. In this repo the `C4` surface is concrete: `gauge`'s compliance checklist, `darwin`'s EFS formula and grading scale, `nexus`'s CES weights and confidence thresholds, `_common/EVIDENCE_LADDER.md` floors, `PROOF_CARRYING.md` gates, and every fixture under `task-battery.md` / `routing-oracle.py`. Level D already forbids an agent editing its *own safety levels*; `C4` extends that to its own *success conditions*.
+`C4` is the class this table exists for. An agent that can edit its own grader can raise its score without improving. In this repo the `C4` surface is concrete: `gauge`'s compliance checklist, `darwin`'s EFS formula and grading scale, `nexus`'s CES weights and confidence thresholds, `_common/EVIDENCE_LADDER.md` floors, `PROOF_CARRYING.md` gates, and every fixture under `task-battery.md` / `routing-oracle.py`. Level D already forbids an agent editing its *own safety levels*; `C4` extends that to its own *success conditions*.
 
 ### Eval Integrity
 
 Three rules, all of which bind regardless of Tier:
 
-1. **Never ship a grader change and a behavior change in one commit.** Evaluate the new behavior against the *fixed* rubric first. If it is accepted, consider the rubric change separately, afterward.
-2. **Hold out fixtures from the improving agent.** An agent proposing corpus changes does not read the fixtures it will be measured against. Where full isolation is impractical, record the exposure rather than pretending to independence.
-3. **Proposer ≠ approver.** The agent that generates a candidate change does not also decide it ships. `darwin` proposes; the human or an independent agent promotes.
+1. Never ship a grader change and a behavior change in one commit. Evaluate the new behavior against the *fixed* rubric first. If it is accepted, consider the rubric change separately, afterward.
+2. Hold out fixtures from the improving agent. An agent proposing corpus changes does not read the fixtures it will be measured against. Where full isolation is impractical, record the exposure rather than pretending to independence.
+3. Proposer ≠ approver. The agent that generates a candidate change does not also decide it ships. `darwin` proposes; the human or an independent agent promotes.
 
-**Adversarial improvement — what to watch for.** A self-improving harness attacks its own metric before it attacks the problem. Concrete signatures: dropping hard cases from a fixture set, shortening a timeout so failures reclassify as invalid, loosening a rubric threshold, reducing what gets journaled so violations stop being visible, and cutting escalations so unverified guesses count as autonomy. Any of these appearing alongside a score improvement voids the improvement.
+Adversarial improvement: what to watch for. A self-improving harness attacks its own metric before it attacks the problem. Concrete signatures: dropping hard cases from a fixture set, shortening a timeout so failures reclassify as invalid, loosening a rubric threshold, reducing what gets journaled so violations stop being visible, and cutting escalations so unverified guesses count as autonomy. Any of these appearing alongside a score improvement voids the improvement.
 
 ### Tier 3 Activation Requirements
 
 An agent may implement Tier 3 only when ALL conditions are met:
 
-1. **30+ data points** in journal with consistent patterns
-2. **Dedicated reference file** at `reference/self-evolution.md` with full Safety Level definitions
-3. **RP-01 through RP-05** implemented with agent-specific budgets
-4. **Level D** includes: own safety levels, `_common/*.md`, other agents' files
-5. **Explicit design** — Architect must include Tier 3 capability when creating the agent
-
----
+1. 30+ data points in journal with consistent patterns
+2. Dedicated reference file at `reference/self-evolution.md` with full Safety Level definitions
+3. RP-01 through RP-05 implemented with agent-specific budgets
+4. Level D includes: own safety levels, `_common/*.md`, other agents' files
+5. Explicit design: Architect must include Tier 3 capability when creating the agent
 
 ## Integration Points
 
@@ -334,8 +317,6 @@ An agent may implement Tier 3 only when ALL conditions are met:
 
 This protocol does NOT redefine EVOLUTION_SIGNAL format or ECOSYSTEM.md reading rules. For those specifications → `_common/EVOLUTION.md`.
 
----
-
 ## Journal Entry Template (Calibration Record)
 
 ```markdown
@@ -350,13 +331,11 @@ This protocol does NOT redefine EVOLUTION_SIGNAL format or ECOSYSTEM.md reading 
 **Rollback:** [Not needed | Performed — reason]
 ```
 
----
-
 ## Adoption Guide
 
 ### For Agents Without Learning Loops (Tier 1 Only)
 
-Implement Tier 1 Context Loading at task start. No SKILL.md changes needed — this is standard operational behavior:
+Implement Tier 1 Context Loading at task start. No SKILL.md changes needed; this is standard operational behavior:
 
 1. Read own journal → check `Apply when:` matches
 2. Read PROJECT.md → recent cross-agent context
