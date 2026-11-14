@@ -192,7 +192,7 @@ These extend G1-G3 with concerns surfaced when Code Proof + Design Proof two-axi
 
 ### G4. Differential Implementation Diversity
 
-Problem: "Two AIs implement the same spec, CI diffs them; if diff = 0, ship." This works only when the two AIs do not share the same misreading. If both are the same LLM family, they share priors and the same statistical bias → silent agreement on a wrong reading (omen FM-A1, RPN=630, S=9). LLM-vendor diversity is not the same as training-data diversity (omen FM-A8, RPN=540).
+Problem: "Two AIs implement the same spec, CI diffs them — if diff = 0, ship." This works only when the two AIs do not share the same misreading. If both are the same LLM family, they share priors and the same statistical bias → silent agreement on a wrong reading (omen FM-A1, RPN=630, S=9). LLM-vendor diversity is not the same as training-data diversity (omen FM-A8, RPN=540).
 
 Rule: When Dual-Implementation Oracle is used (see §Dual-Implementation Oracle):
 1. AI-A (production) and AI-B (reference oracle) MUST run on different LLM families. Default baseline: AI-A on Claude, AI-B on Codex (or vice versa); these are the two always-available engines and have non-overlapping training-data priors. agy may substitute for either when AVAILABLE. Same-family combinations (e.g. two Claude subagents) FAIL G4 even with prompt differentiation.
