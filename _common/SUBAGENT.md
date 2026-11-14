@@ -5,32 +5,28 @@
 Common protocol for individual skills to delegate independent subtasks using the runtime's advertised subagent interface.
 For Nexus internal parallel branches → `_common/PARALLEL.md`. For full team orchestration (4+ workers) → Rally.
 
----
-
 ## Scope: Three Layers of Parallelism
 
 | Layer | Orchestrator | Workers | Use When |
 |-------|-------------|---------|----------|
-| **Skill-internal** (this doc) | Individual skill agent | 2-3 Task subagents | Independent subtasks within a single skill's work |
-| **Nexus parallel branches** | Nexus | Agent chains per branch | AUTORUN_FULL multi-branch execution |
-| **Rally team** | Rally | Multiple Claude instances | 4+ parallel workers, complex coordination |
-
----
+| Skill-internal (this doc) | Individual skill agent | 2-3 Task subagents | Independent subtasks within a single skill's work |
+| Nexus parallel branches | Nexus | Agent chains per branch | AUTORUN_FULL multi-branch execution |
+| Rally team | Rally | Multiple Claude instances | 4+ parallel workers, complex coordination |
 
 ## Decision: When to Spawn Subagents
 
 ### USE subagents when:
-- 2-3 **independent** subtasks exist (no data dependencies)
-- Multiple **perspectives/engines** improve quality (Multi-Engine Mode)
-- Parallel **verification** reduces wall-clock time (test + lint + type-check)
-- Different **code areas** need simultaneous investigation
+- 2-3 independent subtasks exist (no data dependencies)
+- Multiple perspectives/engines improve quality (Multi-Engine Mode)
+- Parallel verification reduces wall-clock time (test + lint + type-check)
+- Different code areas need simultaneous investigation
 
 ### DO NOT use subagents when:
-- Tasks have **sequential dependencies** (B needs A's output)
-- Working on a **single file** (subagents cannot share file ownership)
-- Task completes in **< 30 seconds** (spawn overhead exceeds benefit)
-- **4+ workers** needed → use Rally instead
-- Task requires **shared mutable state** or iterative refinement
+- Tasks have sequential dependencies (B needs A's output)
+- Working on a single file (subagents cannot share file ownership)
+- Task completes in < 30 seconds (spawn overhead exceeds benefit)
+- 4+ workers needed → use Rally instead
+- Task requires shared mutable state or iterative refinement
 
 ### Decision Flow
 
@@ -44,13 +40,11 @@ Task received
 
 ### Why subagents pay: context isolation, not extra hands
 
-A subagent's value is that it explores in a **clean context window** and returns a **condensed, distilled summary — Anthropic's reference figure is 1,000–2,000 tokens** (*Effective context engineering for AI agents*). The detailed exploration (dozens of file reads, dead ends, raw tool output) is spent inside the subagent and *never enters the parent's context*; only the distillation crosses the boundary. That separation of detailed search from high-level synthesis is the mechanism — a subagent that streams its raw findings back has paid the spawn cost and kept the context cost.
+A subagent's value is that it explores in a clean context window and returns a condensed, distilled summary; Anthropic's reference figure is 1,000–2,000 tokens (*Effective context engineering for AI agents*). The detailed exploration (dozens of file reads, dead ends, raw tool output) is spent inside the subagent and *never enters the parent's context*; only the distillation crosses the boundary. That separation of detailed search from high-level synthesis is the mechanism. A subagent that streams its raw findings back has paid the spawn cost and kept the context cost.
 
-**Two consequences for authoring:**
-- **Give each spawn an appropriate return ceiling**, not a token quota. Return evidence pointers and unresolved issues rather than raw traces; `_STEP_COMPLETE` / `## NEXUS_HANDOFF` supply the structure. Large artifacts may remain in files.
-- **Judge a fan-out by context saved, not tasks parallelized.** If each branch would return its full trace, the parent's context grows as fast as if it had done the work inline, and only wall-clock improves.
-
----
+Two consequences for authoring:
+- Give each spawn an appropriate return ceiling, not a token quota. Return evidence pointers and unresolved issues rather than raw traces; `_STEP_COMPLETE` / `## NEXUS_HANDOFF` supply the structure. Large artifacts may remain in files.
+- Judge a fan-out by context saved, not tasks parallelized. If each branch would return its full trace, the parent's context grows as fast as if it had done the work inline, and only wall-clock improves.
 
 ## Agent Tool Quick Reference
 
@@ -76,30 +70,26 @@ Launch independent work through the available concurrent interface, then join al
 
 Use `_common/CODEX_ORCHESTRATION.md` for Codex and `_common/AGY_ORCHESTRATION.md` for agy; apply the same outcome, authority, ownership and merge contracts. Runtime details stay in the compatibility layer.
 
----
-
 ## Patterns
 
 ### RESEARCH_FAN_OUT
 
 Multiple Explore agents investigate different areas in parallel.
 
-**When:** Broad investigation across distinct code areas, documentation, or domains.
+When: Broad investigation across distinct code areas, documentation, or domains.
 
-**Setup:**
+Setup:
 - 2-3 `Explore` subagents, each with a distinct search scope
 - Each agent receives: Role + Target area + Output format
 - No shared files or overlapping scope
 
-**Merge:** Union — collect all findings → deduplicate → consolidate → report.
-
----
+Merge: Union (§ Result Aggregation).
 
 ### MULTI_ENGINE
 
-Multiple AI engines independently work on the same task, leveraging diverse knowledge bases. **Default baseline: Claude + Codex (dual-engine).** agy / Antigravity is added as a third axis when AVAILABLE at PREFLIGHT — never required. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy` for tag conventions and Engine Availability Modes.
+Multiple AI engines work independently on the same task. Default baseline: Claude + Codex (dual-engine). agy / Antigravity is added as a third axis when AVAILABLE at PREFLIGHT; it is never required. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy` for tag conventions and Engine Availability Modes.
 
-**When:** Quality-critical tasks where diverse perspectives catch blind spots (security scans, bug hunts, edge-case tests, refactoring proposals).
+When: Quality-critical tasks where diverse perspectives catch blind spots (security scans, bug hunts, edge-case tests, refactoring proposals).
 
 #### Engine Dispatch Table
 
@@ -121,108 +111,96 @@ Use § Engine Availability Modes in `_common/MULTI_ENGINE_RECIPE.md`. Same-engin
 
 | Strategy | When | Process |
 |----------|------|---------|
-| **Union** | Findings should be comprehensive (scans, tests, investigations) | Collect all → deduplicate same-location/same-type → boost confidence for multi-engine hits → sort by severity → report |
-| **Compete** | Best single output needed (refactoring, proposals) | Collect all → evaluate against criteria → select best (or combine best parts) → present with rationale |
+| Union | Every finding counts (scans, tests, investigations) | Collect all → deduplicate same-location/same-type → boost confidence for multi-engine hits → sort by severity → report |
+| Compete | Best single output needed (refactoring, proposals) | Collect all → evaluate against criteria → select best (or combine best parts) → present with rationale |
 
 Each skill defines its own merge details (criteria, dedup rules, output format) in its SKILL.md.
-
----
 
 ### INDEPENDENT_IMPL
 
 Parallel implementation of independent files/modules.
 
-**When:** Multiple files need changes with no shared dependencies.
+When: Multiple files need changes with no shared dependencies.
 
-**Setup:**
+Setup:
 - Each `general-purpose` subagent owns specific files (declare ownership upfront)
 - No two subagents may modify the same file
 
-**Merge:** Concat — combine all changes (no conflicts expected).
-
----
+Merge: Concat (§ Result Aggregation).
 
 ### VERIFICATION_PARALLEL
 
 Run multiple verification tasks simultaneously.
 
-**When:** Test suite, linter, type checker, and/or security scan can all run independently.
+When: Test suite, linter, type checker, and/or security scan can all run independently.
 
-**Setup:**
+Setup:
 - Each subagent runs one verification tool
 - Results are independent pass/fail
 
-**Merge:** All-pass gate — all must pass for overall success. Any failure blocks.
-
----
+Merge: All-pass (§ Result Aggregation).
 
 ### COMPETITIVE_APPROACH
 
 Multiple subagents implement different solutions to the same problem, then the best is selected.
 
-**When:** Design exploration, algorithm comparison, or uncertain approach.
+When: Design exploration, algorithm comparison, or uncertain approach.
 
-**Setup:**
+Setup:
 - 2-3 `general-purpose` subagents, each with a different approach/constraint
 - Each works in isolation on the same problem
 
-**Merge:** Compete — evaluate each against criteria → select winner → adopt (or combine best elements).
-
----
+Merge: Compete (§ Result Aggregation).
 
 ## Result Aggregation
 
 | Strategy | Description | Use With |
 |----------|-------------|----------|
-| **Union** | Collect all → deduplicate → consolidate → rank | RESEARCH_FAN_OUT, MULTI_ENGINE (comprehensive) |
-| **Concat** | Combine all outputs (no overlap expected) | INDEPENDENT_IMPL |
-| **All-pass** | Every result must pass; any failure = overall failure | VERIFICATION_PARALLEL |
-| **Compete** | Evaluate against criteria → select best | COMPETITIVE_APPROACH, MULTI_ENGINE (selective) |
+| Union | Collect all → deduplicate → consolidate → rank | RESEARCH_FAN_OUT, MULTI_ENGINE (every finding) |
+| Concat | Combine all outputs (no overlap expected) | INDEPENDENT_IMPL |
+| All-pass | Every result must pass; any failure = overall failure | VERIFICATION_PARALLEL |
+| Compete | Evaluate against criteria → select best (or combine best elements) | COMPETITIVE_APPROACH, MULTI_ENGINE (selective) |
 
-**The parent owns what it merges.** A subagent's report is a claim about its work, not the work:
+The parent owns what it merges. A subagent's report is a claim about its work, not the work:
 read the diff or artifact itself and write the summary from that, never by passing the report
 through.
 
-**Follow-up rounds go to a fresh subagent.** A fix round, retry, or next queue item gets a new
-subagent briefed with consolidated scope — the original brief, every later directive, and the prior
+Follow-up rounds go to a fresh subagent. A fix round, retry, or next queue item gets a new
+subagent briefed with consolidated scope: the original brief, every later directive, and the prior
 report and branch. Resume an existing one only when the work needs state that lives in it and is
 costly to move (uncommitted changes, a running process); directives chained onto a running agent
 are the ones that get dropped.
-
----
 
 ## Error Handling
 
 | Scenario | Action |
 |----------|--------|
-| **1 of 3 subagents fails** | Continue with remaining results; note reduced coverage in report |
-| **All subagents fail** | Fall back to sequential single-agent execution |
-| **Timeout** (subagent takes too long) | Use available results; note incomplete coverage |
-| **Conflicting results** | Flag contradictions explicitly; escalate to user if safety-critical |
-| **Engine unavailable** (MULTI_ENGINE) | Apply truthful degraded mode; never relabel a same-engine result |
-
----
+| 1 of 3 subagents fails | Continue with remaining results; note reduced coverage in report |
+| All subagents fail | Fall back to sequential single-agent execution |
+| Timeout (subagent takes too long) | Use available results; note incomplete coverage |
+| Conflicting results | Flag contradictions explicitly; escalate to user if safety-critical |
+| Engine unavailable (MULTI_ENGINE) | Apply truthful degraded mode; never relabel a same-engine result |
 
 ## Constraints
 
 | Rule | Limit | Reason |
 |------|-------|--------|
-| Max parallel subagents | **~3 (default guideline)** | Not an absolute ceiling — tune to available capacity, ownership, measured benefit and authorized budget. For large parallel workloads, delegating to Rally for proper coordination is recommended. |
-| File ownership | **Exclusive** | No two subagents modify the same file |
-| Cost awareness | **Each subagent consumes runtime resources** | Only parallelize when benefit > overhead |
-| Spawn decision | **Agent's judgment** | Unless Nexus explicitly instructs `multi-engine` |
-| Nesting | **Prohibited** | Repo policy, not a host limit: a subagent does not spawn further subagents, which keeps file ownership and cost bounded even where the host allows nesting (`_common/CLI_COMPATIBILITY.md` § Claude Code Subagent Context) |
-| Output style | **No completion preamble** | See `_common/OUTPUT_STYLE.md §Subagent Completion Pattern` — open with the deliverable, never with "completed/finished/here is the report" |
+| Max parallel subagents | ~3 (default guideline) | Not an absolute ceiling: tune to available capacity, ownership, measured benefit and authorized budget. For large parallel workloads, delegate to Rally for coordination. |
+| File ownership | Exclusive | No two subagents modify the same file |
+| Cost awareness | Each subagent consumes runtime resources | Only parallelize when benefit > overhead |
+| Spawn decision | Agent's judgment | Unless Nexus explicitly instructs `multi-engine` |
+| Nesting | Prohibited | Repo policy, not a host limit: a subagent does not spawn further subagents, which keeps file ownership and cost bounded even where the host allows nesting (`_common/CLI_COMPATIBILITY.md` § Claude Code Subagent Context) |
+| Output style | No completion preamble | See `_common/OUTPUT_STYLE.md §Subagent Completion Pattern`: open with the deliverable, never with "completed/finished/here is the report" |
 
 ## Subagent Output Rules
 
 Subagents return text to the orchestrator (parent skill or user). Apply universally regardless of `subagent_type`:
 
-- **Open with the deliverable.** No "All work is complete. Here's the summary." Begin with the first `## ` header, table, or lead finding. The completion is implicit.
-- **End at the last deliverable line.** No trailing closer ("以上で完了です", "Let me know if anything else").
-- **Tier the report.** Pick S/M/L/XL based on what was actually asked; don't pad to fill an L-tier report shape when M would do. See `_common/OUTPUT_STYLE.md §Output Tiers`.
-- **Structure beats prose.** ≥3 distinct items → table or bullet list, not paragraph.
-- **`_STEP_COMPLETE` and handoff blocks are exempt** from tier limits but must NOT be preceded by prose preamble.
+- Open with the deliverable. No "All work is complete. Here's the summary." Begin with the first `## ` header, table, or lead finding. The completion is implicit.
+- End at the last deliverable line. No trailing closer ("以上で完了です", "Let me know if anything else").
+- Tier the report. Pick S/M/L/XL based on what was actually asked; don't pad to fill an L-tier report shape when M would do. See `_common/OUTPUT_STYLE.md §Output Tiers`.
+- Structure beats prose. ≥3 distinct items → table or bullet list, not paragraph.
+- `_STEP_COMPLETE` and handoff blocks are exempt from tier limits but must NOT be preceded by prose preamble.
 
 When invoking a subagent via the `Agent` tool, instruct it explicitly in the prompt: *"Open with the deliverable, not with completion preamble."*
 

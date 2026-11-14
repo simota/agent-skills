@@ -2,13 +2,11 @@
 
 > **Tier:** `orchestration` — activates from the hub, a recipe, or on engine detection. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
 
-**Purpose:** Repository-wide convention for keeping the Anthropic prompt-cache hit rate high across skill loads, `_common/` shared context, and per-task variable input.
+Purpose: Repository-wide convention for keeping the Anthropic prompt-cache hit rate high across skill loads, `_common/` shared context, and per-task variable input.
 
-**Read when:** Designing a new skill, restructuring `_common/`, authoring an orchestration recipe, or auditing prompt-cache miss rate via `hone`.
+Read when: Designing a new skill, restructuring `_common/`, authoring an orchestration recipe, or auditing prompt-cache miss rate via `hone`.
 
-**Source:** [platform.claude.com — Prompt Caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching), [platform.claude.com — Pricing](https://platform.claude.com/docs/en/about-claude/pricing).
-
----
+Source: [platform.claude.com — Prompt Caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching), [platform.claude.com — Pricing](https://platform.claude.com/docs/en/about-claude/pricing).
 
 ## The hierarchy
 
@@ -18,11 +16,9 @@ Anthropic's prompt cache invalidates strictly top-down:
 tools  →  system  →  messages
 ```
 
-Any change at level N invalidates level N and **every level below**. A single per-request timestamp in `tools` busts the whole prefix — including all skill SKILL.md content, `_common/` shared text, and conversation history.
+Any change at level N invalidates level N and every level below. A single per-request timestamp in `tools` busts the whole prefix, including all skill SKILL.md content, `_common/` shared text, and conversation history.
 
-Cache read = **10%** of base input price (90% savings). Cache write = **1.25×** (5 min TTL) / **2×** (1 hr TTL). Break-even at **>= 1-2 hits**.
-
----
+Cache read = 10% of base input price (90% savings). Cache write = 1.25× (5 min TTL) / 2× (1 hr TTL). Break-even at >= 1-2 hits.
 
 ## Three-tier content classification
 
@@ -30,30 +26,26 @@ Every byte that flows into the model belongs to exactly one tier. Place it accor
 
 | Tier | Content | Layer | Volatility |
 |------|---------|-------|------------|
-| **T-static** | Tool definitions, skill SKILL.md, `_common/` protocols, agent persona, system instructions | `tools` + `system` (top) | Changes per release, not per request |
-| **T-semi-static** | Active recipe, `_AGENT_CONTEXT` template, current Workflow phase, journal pointers | `system` (middle) | Changes per task, stable within task |
-| **T-dynamic** | User input, timestamps, request IDs, `ARGUMENTS`, tool results, conversation deltas | `messages` (always) | Changes per request |
+| T-static | Tool definitions, skill SKILL.md, `_common/` protocols, agent persona, system instructions | `tools` + `system` (top) | Changes per release, not per request |
+| T-semi-static | Active recipe, `_AGENT_CONTEXT` template, current Workflow phase, journal pointers | `system` (middle) | Changes per task, stable within task |
+| T-dynamic | User input, timestamps, request IDs, `ARGUMENTS`, tool results, conversation deltas | `messages` (always) | Changes per request |
 
-**Hard rule:** Never let T-dynamic content leak into `tools` or `system`. Never put cache breakpoints on T-dynamic content (top failure mode — see Anti-patterns).
-
----
+Hard rule: Never let T-dynamic content leak into `tools` or `system`. Never put cache breakpoints on T-dynamic content (the top failure mode; see Anti-patterns).
 
 ## Cache breakpoint placement
 
 Place at most 4 cache breakpoints, all on T-static content:
 
-1. **After tool definitions** — covers tools + skill registry.
-2. **After `_common/` shared protocols** — covers BOUNDARIES, HANDOFF, OPERATIONAL, OPUS_5_AUTHORING, CODEX_ORCHESTRATION, this file.
-3. **After active skill SKILL.md(s)** — covers the skill's static body and any loaded reference excerpts.
-4. **After recipe / handoff template** (if T-semi-static) — covers per-task template before user input.
+1. After tool definitions: covers tools + skill registry.
+2. After `_common/` shared protocols: covers BOUNDARIES, HANDOFF, OPERATIONAL, OPUS_5_AUTHORING, CODEX_ORCHESTRATION, this file.
+3. After active skill SKILL.md(s): covers the skill's static body and any loaded reference excerpts.
+4. After recipe / handoff template (if T-semi-static): covers per-task template before user input.
 
 Never place a breakpoint on:
 - A line containing `Date.now()`, `new Date()`, ISO timestamps, or `__TIMESTAMP__` macros
 - User input, `ARGUMENTS`, `_AGENT_CONTEXT` filled values (only the template)
 - Tool call results
 - Conversation history past the last static boundary
-
----
 
 ## Repository layout rules
 
@@ -74,52 +66,44 @@ The order in which Nexus (and any orchestrator) assembles context must keep T-st
   - Tool results                   ← T-dynamic
 ```
 
-**`_common/` load order** is stable across skills — list them alphabetically or by canonical priority and never inject per-task content between them. If a recipe needs additional `_common/` text, append it to the end of the `_common/` block, not interleaved.
+`_common/` load order is stable across skills: list them alphabetically or by canonical priority and never inject per-task content between them. If a recipe needs additional `_common/` text, append it to the end of the `_common/` block, not interleaved.
 
-**`reference/` lazy load** is encouraged (progressive disclosure), but once loaded the excerpt must stay above the active recipe block — moving it bottomward on the next turn forces a full miss.
-
----
+`reference/` lazy load is encouraged (progressive disclosure), but once loaded the excerpt must stay above the active recipe block. Moving it bottomward on the next turn forces a full miss.
 
 ## Per-skill authoring requirements
 
 Every SKILL.md should:
 
-1. Place all volatile placeholders (`{TASK}`, `{ARGUMENTS}`, `{TIMESTAMP}`, `_AGENT_CONTEXT` filled fields) inside `messages`-equivalent sections — never in the static body.
-2. Reference `_common/` files by path, not by inlined excerpt — inlining duplicates the bytes and forces them into the per-skill cache window twice.
+1. Place all volatile placeholders (`{TASK}`, `{ARGUMENTS}`, `{TIMESTAMP}`, `_AGENT_CONTEXT` filled fields) inside `messages`-equivalent sections, never in the static body.
+2. Reference `_common/` files by path, not by inlined excerpt. Inlining duplicates the bytes and forces them into the per-skill cache window twice.
 3. Keep date-dependent claims in `reference/` with explicit revision dates, so the live SKILL.md stays stable.
-4. Avoid `currentDate` / `userEmail` echoes in the static body — those values come from the harness preamble (T-dynamic).
-
----
+4. Avoid `currentDate` / `userEmail` echoes in the static body; those values come from the harness preamble (T-dynamic).
 
 ## Anti-patterns (most-common cache busters)
 
-1. **Cache breakpoint on a timestamp line** — every request bumps the prefix; cache hit rate → 0%.
-2. **Per-request data in `tools` or `system`** — request ID, user ID, ARGUMENTS interpolated into the system prompt invalidates everything beneath.
-3. **Reordering `_common/` loads per task** — the load order itself is part of the cached prefix; swap two files and the whole `_common/` block re-writes.
-4. **Inlining `_common/` text into SKILL.md** — duplicate bytes occupy two cache slots; updating one location desyncs both.
-5. **Loading reference/ on demand but appending below the recipe block** — the next turn re-orders content, invalidating cache.
-6. **Recipe-specific date in the static recipe block** — move dates to `reference/` with explicit revision metadata.
-7. **MCP tool list churn** — adding/removing MCP servers per task changes the `tools` layer; consolidate MCP enablement at session start. Exception: tools marked `defer_loading: true` are cache-safe to add mid-session — see #11.
-8. **Mixing T-static and T-dynamic in a single message** — split into a cached system addendum + a fresh user/tool message.
-9. **Cache write on a tiny prefix** — 5-minute TTL writes cost 1.25×, so break-even is one read (2 reads on the 1-hour tier at 2×). The minimum cacheable prompt size is model-specific (current values → `_common/CLI_COMPATIBILITY.md` § Anthropic Model-Specific Prompt-Cache Facts); where it is low, short prefixes create entries — but a prefix that is rarely re-read still loses. Group small skills under one breakpoint.
+1. Cache breakpoint on a timestamp line: every request bumps the prefix; cache hit rate → 0%.
+2. Per-request data in `tools` or `system`: request ID, user ID, ARGUMENTS interpolated into the system prompt invalidates everything beneath.
+3. Reordering `_common/` loads per task: the load order itself is part of the cached prefix; swap two files and the whole `_common/` block re-writes.
+4. Inlining `_common/` text into SKILL.md: duplicate bytes occupy two cache slots; updating one location desyncs both.
+5. Loading reference/ on demand but appending below the recipe block: the next turn re-orders content, invalidating cache.
+6. Recipe-specific date in the static recipe block: move dates to `reference/` with explicit revision metadata.
+7. MCP tool list churn: adding/removing MCP servers per task changes the `tools` layer; consolidate MCP enablement at session start. Exception: tools marked `defer_loading: true` are cache-safe to add mid-session (see #11).
+8. Mixing T-static and T-dynamic in a single message: split into a cached system addendum + a fresh user/tool message.
+9. Cache write on a tiny prefix: 5-minute TTL writes cost 1.25×, so break-even is one read (2 reads on the 1-hour tier at 2×). The minimum cacheable prompt size is model-specific (current values → `_common/CLI_COMPATIBILITY.md` § Anthropic Model-Specific Prompt-Cache Facts); where it is low, short prefixes create entries, but a prefix that is rarely re-read still loses. Group small skills under one breakpoint.
 
-10. **Effort changes invalidate the cache — steer per-message instead.** `effort` renders into the prompt, so varying it between requests drops the cached prefix (measured: a cache-read turn of 3,546 tokens becomes a 3,546-token cache *write* on the turn effort changes). Pick a level per conversation and hold it. When a step genuinely needs different depth, append the nudge to the **newest user message** ("Please think hard before responding." / "Answer directly without deliberating.") — guidance in the newest turn leaves earlier breakpoints intact where a parameter change does not. Setting `effort` explicitly to the model's default equals omitting it and is cache-neutral.
+10. Effort changes invalidate the cache; steer per-message instead. `effort` renders into the prompt, so varying it between requests drops the cached prefix (measured: a cache-read turn of 3,546 tokens becomes a 3,546-token cache *write* on the turn effort changes). Pick a level per conversation and hold it. When a step genuinely needs different depth, append the nudge to the newest user message ("Please think hard before responding." / "Answer directly without deliberating."): guidance in the newest turn leaves earlier breakpoints intact where a parameter change does not. Setting `effort` explicitly to the model's default equals omitting it and is cache-neutral.
 
-11. **Tool-list churn invalidates the cache — unless deferred.** Changing the `tools` array drops the cached prefix (some models lift this behind a beta — `_common/CLI_COMPATIBILITY.md` § Anthropic Model-Specific Prompt-Cache Facts). Tools marked `defer_loading: true` are stripped from the prefix *before* the cache key is computed and expand inline in the conversation body when discovered, so **adding deferred tools is cache-safe** and the cache survives both the discovery turn and the call turn. Trade-off: a deferred tool cannot carry `cache_control` (400) — keep the breakpoint on a non-deferred tool. Detail → `oracle/reference/advanced-tool-use.md` §2.
-12. **Forgetting the 1-hour TTL extended cache** for long sessions — pay 2× once, save 90% on every subsequent hour of work.
-
----
+11. Tool-list churn invalidates the cache unless deferred. Changing the `tools` array drops the cached prefix (some models lift this behind a beta; see `_common/CLI_COMPATIBILITY.md` § Anthropic Model-Specific Prompt-Cache Facts). Tools marked `defer_loading: true` are stripped from the prefix *before* the cache key is computed and expand inline in the conversation body when discovered, so adding deferred tools is cache-safe and the cache survives both the discovery turn and the call turn. Trade-off: a deferred tool cannot carry `cache_control` (400); keep the breakpoint on a non-deferred tool. Detail → `oracle/reference/advanced-tool-use.md` §2.
+12. Forgetting the 1-hour TTL extended cache for long sessions: pay 2× once, save 90% on every subsequent hour of work.
 
 ## What the cache may not buy
 
 Every rule above optimizes hit rate. Hit rate is not the only thing a prefix decides, and two of the cheapest ways to raise it are not available:
 
-1. **Never pin a stale policy, threshold, or reference revision to keep a prefix stable.** Prefix stability is a cost property; the currency of a safety rule or a dated claim is a correctness property, and correctness wins. When a `_common/` protocol or a dated `reference/` block changes, take the cache miss.
-2. **Never widen a cached prefix across a boundary that isolates data.** Context belonging to different tenants, projects, customers, or trust levels does not get merged into one shared prefix to earn a hit. A cache key is not an authorization decision.
+1. Never pin a stale policy, threshold, or reference revision to keep a prefix stable. Prefix stability is a cost property; the currency of a safety rule or a dated claim is a correctness property, and correctness wins. When a `_common/` protocol or a dated `reference/` block changes, take the cache miss.
+2. Never widen a cached prefix across a boundary that isolates data. Context belonging to different tenants, projects, customers, or trust levels does not get merged into one shared prefix to earn a hit. A cache key is not an authorization decision.
 
 State the trade-off where it bites: if a stable prefix and a current rule genuinely conflict, the rule is what ships and the cache absorbs the loss.
-
----
 
 ## Audit hooks for Hone
 
@@ -134,11 +118,7 @@ State the trade-off where it bites: if a stable prefix and a current rule genuin
 
 Report cache hit rate from prior session logs (if available) and flag any session below 70% hit rate as a P1 finding.
 
----
-
 ## Reference
 
-- [Prompt Caching docs](https://platform.claude.com/docs/en/build-with-claude/prompt-caching)
-- [Pricing — cache read/write multipliers](https://platform.claude.com/docs/en/about-claude/pricing)
-- `_common/OPUS_5_AUTHORING.md` — agent authoring conventions (Claude Code hub)
-- `_common/CODEX_ORCHESTRATION.md` — agent authoring conventions (Codex CLI hub)
+- `_common/OPUS_5_AUTHORING.md`: agent authoring conventions (Claude Code hub)
+- `_common/CODEX_ORCHESTRATION.md`: agent authoring conventions (Codex CLI hub)
