@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed — fix ladder, premise and guard rules; plainer prose (2026-11-08 – 2026-11-14)
+
+- **`_common/MECHANISM_SELECTION.md` orders fixes by enforcement strength.** A recurring failure must move up a rung instead of gaining another sentence at the same level, and a bare prohibition must state the criterion that decides it (#68, 6a5dd40).
+- `_common/ADVERSARIAL_REFUTATION.md` runs mechanically decidable claims before convening a panel, so argument is spent only on the residue (#68).
+- `builder` plans a new interface as caller usage plus a type skeleton and treats a cascade of `any`/casts/workarounds as a design failure (#68). It accepts a guard, retry or swallowed error only for a legitimate state, and fixes every site with the same fault (07315db).
+- `scout` tests the shared premise after two failed hypotheses or fixes that rest on it; `bolt` reports a difference as inconclusive without a named limiter, tuned sides and checked errors (07315db).
+- `_common/INTERACTION.md` settles an observable fork with a throwaway sketch instead of a question; `_common/SUBAGENT.md` has the parent read the diff rather than the report, and gives follow-up rounds to a fresh subagent (07315db).
+- Checkers: `task-battery-check.py` and `routing-oracle.py` read one removed-skill list (`_corpus.REMOVED_SKILLS`); the battery's stale-name guard used to cover only a subset (f34f395). Eight regression tests that failed only on macOS (unresolved `/var` temp paths, GNU-only `sed -i`) now pass there (8a629af).
+- READMEs, `AGENTS.md`, `CONTRIBUTING.md`, `docs/REPOSITORY_GUIDE.md`, `index.html`, shared protocols and several skill references were rewritten to drop AI-style padding without changing their facts. The repository guide no longer keeps a dated change history; this file is the record.
+
 ### Changed — checkers close bypasses; pre-commit hook covers every template (2026-10-26)
 
 - **Behaviour change (checkers): rules that passed what they claim to catch now block.** `routing-oracle.py` RO-6 requires the Bare-subcommand exception itself (its sub-bullets included) to route to `GATE` — "enters CLASSIFY at `GATE`", "reaches GATE" — since the Default dispatch flow above it always names GATE and a bare mention passed "skipping `GATE`" (negations such as "Never enters" / "doesn't route to" do not count); RO-1's cross-skill shorthand needs its owner opening a code span (`` `rally/SKILL.md` ``) or as `<…-orbit-skill-root>/`, not as a word in prose (`chain`, `field/value`). `task-battery-check.py` keyword items require the keyword's `signal-keywords.md` row to route to the battery's Recipe, not just to exist. `lint-contracts.py` CD-6 rejects a tier other than `spine` / `domain` / `orchestration` / `authoring`, and CD-5 reads `.sh` references. `lint-lessons.py` LS-1 treats `**TBD**`, `_TBD_`, `TBD.` and `**TBD**.` as empty, and LS-2 rejects `べき` ("should") but not 〜きる verbs such as 調べきる. `lint-project-local.py` PL-3 reads directory (`_templates/learning-loop-kit/`) and `./`-prefixed references. `lint-frontmatter.py` F1 rejects `claude`/`anthropic` anywhere in a name, as the skill spec says, not only as a prefix. `_recipes.py` reads a Recipe named `-` as a row.

@@ -33,7 +33,7 @@ If a project-local skill references `_common/` or `_templates/`, both canonical 
 
 ### Archived skills
 
-`.archive/` holds a retired skill only while `prune`'s sunset protocol keeps it; it is currently empty, and earlier packages are recoverable from git history. Archived packages are excluded from all active-roster counts and must not be reintroduced into routing, profiles, or public counts accidentally.
+`.archive/` holds a retired skill only while `prune`'s sunset protocol keeps it. The directory does not exist until a sunset creates it; earlier packages are recoverable from git history. Archived packages are excluded from all active-roster counts and must not be reintroduced into routing, profiles, or public counts accidentally.
 
 ## Authoritative sources
 
@@ -59,10 +59,11 @@ Generated or mirrored artifacts should be regenerated or synchronized from their
 The supported validation entry points are defined in the `Makefile`:
 
 ```bash
-make validate   # corpus/invariant checks
-make test       # regression tests for checkers and tooling
-make check      # validate + test
-make hooks      # install the repository-managed pre-commit hook
+make validate      # corpus/invariant checks
+make test          # regression tests for checkers and tooling
+make test-catalog  # only the fast catalog regression tests
+make check         # validate + test
+make hooks         # install the repository-managed pre-commit hook
 ```
 
 `make check` is the default pre-PR command because it exercises both repository invariants and the checker regression suite.

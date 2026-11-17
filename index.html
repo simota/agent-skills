@@ -49,7 +49,7 @@
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Nexus", "description": "Team orchestrator that decomposes requests and auto-designs optimal agent chains" },
         { "@type": "ListItem", "position": 2, "name": "Scout", "description": "Bug investigation, root cause analysis (RCA), and reproduction step identification" },
-        { "@type": "ListItem", "position": 3, "name": "Builder", "description": "Type-safe, production-ready implementation craftsman with TDD and CQRS support" },
+        { "@type": "ListItem", "position": 3, "name": "Builder", "description": "Type-safe, production-ready implementation craftsman with DDD and CQRS support" },
         { "@type": "ListItem", "position": 4, "name": "Sentinel", "description": "Security static analysis (SAST) and vulnerability pattern detection" },
         { "@type": "ListItem", "position": 5, "name": "Vision", "description": "Creative direction and Design System construction" }
       ]
@@ -1119,7 +1119,7 @@ a:focus-visible, .btn:focus-visible, .filter-btn:focus-visible, .lang-btn:focus-
         <h4 class="subcmd-agent-name">/builder image</h4>
         <p class="subcmd-agent-desc" data-i18n="subcmd.builder-image">実装と AI 画像生成 — API 統合から後処理まで</p>
         <div class="subcmd-tokens">
-          <span class="subcmd-token-pill default">image</span>
+          <span class="subcmd-token-pill">image</span>
           <span class="subcmd-token-pill">image-edit</span>
           <span class="subcmd-token-pill">image-prompt</span>
           <span class="subcmd-token-pill">image-batch</span>
@@ -1367,7 +1367,7 @@ const AGENTS = [
   { name: 'Nexus', motto: 'The right agent at the right time changes everything.', description: 'チーム統括と規模適応型プロダクトデリバリー。最小エージェントチェーンを設計・実行', category: 'orchestration' },
   { name: 'Sherpa', motto: "The mountain doesn't care about your deadline. Plan accordingly.", description: 'タスク分解ガイド。複雑なタスクを15分以内のAtomic Stepに分解', category: 'orchestration' },
   { name: 'Architect', motto: 'Every agent is a possibility. Every SKILL.md is a birth certificate.', description: '新しいスキルエージェントを設計・生成するメタデザイナー', category: 'orchestration' },
-  { name: 'Rally', motto: 'One task, many hands. Parallel by design.', description: 'Agent Teams APIで複数Claudeインスタンスを並行実行するオーケストレーター', category: 'orchestration' },
+  { name: 'Rally', motto: 'One task, many hands. Parallel by design.', description: 'Agent Teams API・Codex CLIサブエージェントで複数セッションを並行実行するオーケストレーター', category: 'orchestration' },
   { name: 'Sigil', motto: 'Every project has patterns waiting to become power.', description: 'プロジェクト運用レイヤーを設計し、スキル・レシピ・ワークフローを生成', category: 'orchestration' },
   { name: 'Gauge', motto: 'What gets measured gets managed. What gets audited gets normalized.', description: 'SKILL.md正規化監査・自己進化エージェント', category: 'orchestration' },
   { name: 'Orbit', motto: "Give me a goal. I'll give you a runner that finishes.", description: 'project-local: nexus-autoloop完走スクリプト生成・運用契約設計', category: 'project-local' },
@@ -1406,7 +1406,7 @@ const AGENTS = [
   { name: 'Voyager', motto: "E2E tests are the user's advocate in CI/CD.", description: 'Web・モバイル・iOS E2E専門。Playwright/Cypress/XCUITest・スナップショット設計', category: 'quality' },
   { name: 'Sentinel', motto: "Security is not a feature. It's a responsibility.", description: 'セキュリティ静的分析（SAST）・脆弱性パターン検出', category: 'quality' },
   { name: 'Probe', motto: 'A system is only as secure as its weakest endpoint.', description: 'セキュリティ動的テスト（DAST）・ペネトレーションテスト', category: 'quality' },
-  { name: 'Judge', motto: 'Good code needs no defense. Bad code has no excuse.', description: 'codex reviewによるコードレビュー・PRレビュー自動化', category: 'quality' },
+  { name: 'Judge', motto: 'Good code needs no defense. Bad code has no excuse.', description: 'Claude + Codexのマルチエンジンコードレビュー。secure・correct・leanの3軸で修正価値のある指摘のみ報告', category: 'quality' },
   { name: 'Zen', motto: "Clean code is not written. It's rewritten.", description: 'リファクタリング・コード品質改善（動作は変えない）', category: 'quality' },
   { name: 'Sweep', motto: 'Dead code is technical debt that earns no interest.', description: '不要ファイル検出・未使用コード特定・安全な削除提案', category: 'quality' },
   { name: 'Attest', motto: 'Specs are truth. Code is evidence. Attest finds the gaps.', description: '仕様適合検証。BDDシナリオ生成、敵対的検証', category: 'quality' },
@@ -1419,7 +1419,7 @@ const AGENTS = [
   { name: 'Builder', motto: 'Types are contracts. Code is a promise.', description: '型安全な実装・CLI/TUI・regex/parser/DSL。Gemini画像生成・編集パイプラインを含む', category: 'implementation' },
   { name: 'Artisan', motto: 'Prototypes promise. Production delivers.', description: 'React/Vue/Svelteの本番フロントエンド実装職人', category: 'implementation' },
   { name: 'Forge', motto: 'Done is better than perfect. Ship it, learn, iterate.', description: 'プロトタイプ作成。完璧より動くものを優先', category: 'implementation' },
-  { name: 'Native', motto: 'Every pixel ships. Every platform matters.', description: 'iOS（Swift 6.3 + SwiftUI + Liquid Glass）/ Android（Kotlin 2.4+ + Jetpack Compose + Material 3 Expressive）のピュアネイティブモバイル実装スペシャリスト。RN/Flutter/KMP/CMPは対象外', category: 'implementation' },
+  { name: 'Native', motto: 'Every pixel ships. Every platform matters.', description: 'iOS（Swift 6.3 + SwiftUI + Liquid Glass）/ Android（Kotlin 2.4+ + Jetpack Compose + Material 3 Expressive）・macOSのピュアネイティブ実装スペシャリスト。RN/Flutter/KMP/CMPは対象外', category: 'implementation' },
   { name: 'Pixel', motto: 'Every pixel matters. Fidelity is non-negotiable.', description: '画像モックアップからピクセルパーフェクトなHTML/CSS生成', category: 'implementation' },
 
   // Performance (2)
@@ -1678,7 +1678,7 @@ const AGENT_DESC_EN = {
   'Nexus': 'Team orchestrator and scope-adaptive product delivery owner. Designs and executes minimum viable agent chains',
   'Sherpa': 'Task decomposition guide. Breaks complex tasks into atomic steps under 15 min',
   'Architect': 'Meta-designer that creates and generates new skill agents',
-  'Rally': 'Parallel orchestrator running multiple Claude instances via Agent Teams API',
+  'Rally': 'Parallel orchestrator running multiple sessions via Agent Teams API and Codex CLI subagents',
   'Sigil': 'Designs project operating layers and authors project skills, recipes, workflows, and routing maps',
   'Gauge': 'SKILL.md normalization auditor and self-evolving agent',
   'Orbit': 'Autonomous loop runner script generation and operation contract design',
@@ -1687,10 +1687,10 @@ const AGENT_DESC_EN = {
   'Scout': 'Bug investigation, root cause analysis (RCA), and reproduction step identification',
   'Ripple': 'Pre-change impact analysis. Risk assessment from vertical and horizontal perspectives',
   'Spark': 'Feature proposals leveraging existing data and logic, delivered as Markdown',
-  'Compete': 'Competitive research, differentiation analysis, and positioning',
+  'Compete': 'Competitive research, differentiation, and product and individual-engineer positioning',
   'Voice': 'User feedback collection, NPS survey design, and sentiment analysis',
   'Trace': 'Session replay analysis, behavior pattern extraction, and UX issue storytelling',
-  'Canon': 'Compliance assessment against OWASP/WCAG/OpenAPI/ISO standards',
+  'Canon': 'Compliance assessment against OWASP/WCAG/ISO standards, regulations, and legal documents',
   'Lens': 'Codebase comprehension and investigation specialist',
   'Magi': 'Multi-perspective decisions, founder advisory, documented expert lenses, and business scenario simulation',
   'Flux': 'Reframes assumptions through cross-domain thinking and supports iterative brainstorming',
@@ -1698,13 +1698,13 @@ const AGENT_DESC_EN = {
   'Chisel': 'Converts supplied prompts into executable specifications with traceable ambiguity resolution',
   'Matrix': 'Universal analysis controlling combinatorial explosion across multiple dimensions',
   'Guardian': 'Git/PR guardian. Change analysis, commit granularity optimization, PR strategy',
-  'Launch': 'Release management. Versioning, CHANGELOG, and Feature Flags',
+  'Launch': 'Release management, weekly/monthly PR reports, DORA metrics, CHANGELOG, and Feature Flags',
   'Trail': 'Git history investigation, regression root cause analysis, and code archaeology',
   'Radar': 'Unit/integration tests, flaky-test repair, coverage improvement, and test-data factories/fixtures',
   'Voyager': 'Cross-platform and iOS E2E specialist for Playwright, Appium, XCUITest, and snapshots',
   'Sentinel': 'Security static analysis (SAST) and vulnerability pattern detection',
   'Probe': 'Security dynamic testing (DAST) and penetration testing',
-  'Judge': 'Automated code review and PR review via codex review',
+  'Judge': 'Multi-engine (Claude + Codex) code review on secure, correct, and lean axes, reporting only findings worth fixing',
   'Zen': 'Refactoring and code quality improvement (behavior-preserving)',
   'Sweep': 'Dead file detection, unused code identification, and safe removal proposals',
   'Attest': 'Spec conformance verification. BDD scenario generation and adversarial testing',
@@ -1734,7 +1734,7 @@ const AGENT_DESC_EN = {
   'Stream': 'ETL/ELT pipeline design. Kafka/Airflow/dbt support',
   'Scribe': 'PRD/SRS/design and test specifications, implementation checklists, and Markdown/Word/PDF/HTML conversion',
   'Quill': 'JSDoc/TSDoc additions, README updates, and type definition improvements',
-  'Tome': 'Transforms changes into learning docs (terminology, design decisions, anti-patterns)',
+  'Tome': 'Turns changes into learning docs and publishable articles for note/Zenn/Qiita/dev.to',
   'Growth': 'SEO/SMO/CRO, CTA improvements, retention, re-engagement, and loyalty design',
   'Funnel': 'Landing-page conversion and premium production orchestration',
   'Pulse': 'KPI definition, tracking event design, and dashboard specs',
@@ -1746,7 +1746,7 @@ const AGENT_DESC_EN = {
   'Polyglot': 'Internationalization (i18n) and localization. Intl API and translation key management',
   'Breach': 'Red team engineering. Attack scenarios and threat modeling',
   'Vigil': 'Detection engineering. Sigma/YARA rules and threat hunting',
-  'Native': 'Pure-native mobile implementation for iOS (Swift 6.3 + SwiftUI + Liquid Glass) and Android (Kotlin 2.4+ + Jetpack Compose + Material 3 Expressive). RN/Flutter/KMP/CMP are out of scope',
+  'Native': 'Pure-native implementation for iOS (Swift 6.3 + SwiftUI + Liquid Glass) and Android (Kotlin 2.4+ + Jetpack Compose + Material 3 Expressive), plus macOS. RN/Flutter/KMP/CMP are out of scope',
   'Port': 'Web-to-native porting design (2026 spec). Translates React/Vue/Svelte/Angular apps to iOS Swift / Android Kotlin pure-native with parity matrices, architecture maps, and Strangler-Fig roadmaps',
   'Weave': 'Workflow/state-machine design, scheduling, timezones, business calendars, and backfill policies',
   'Seek': 'Search engine and vector DB design. Full-text/vector/hybrid search architecture',
@@ -1758,12 +1758,12 @@ const AGENT_DESC_EN = {
   'Ink': 'SVG icon/illustration generation and icon system design',
   'Crypt': 'Cryptographic architecture design. Key management, E2E, KMS, and TLS',
   'Shift': 'Migration and upgrade orchestrator for frameworks, libraries, APIs, and infrastructure',
-  'Cue': 'Video script, storyboard, and narration design',
+  'Cue': 'Video scripts and storyboards, plus Playwright demo recording and quality checks',
   'Stage': 'Slide generation with Marp/reveal.js/Slidev. Conference talk optimization',
   'Prune': 'Ecosystem cleanup auditor. Audits the agent roster for overlap and inactivity, proposing merge and sunset plans with evidence',
   'Field': 'User research design and analysis — interview guides, usability tests, qualitative analysis, personas, and journey mapping',
   'PDM': 'PdM-style read-only delivery navigator. Reconciles planned scope against implemented code into feature inventories and gap lists',
-  'Chain': 'Audits skill/plugin/MCP supply chains — sha256 manifests, Unicode Tag injection scans, and third-party intake checklists',
+  'Chain': 'Audits skill/MCP and npm/PyPI supply chains, scans for IoCs, and plans safe eradication',
   'Vitrine': 'Storybook story authoring, component catalog management, and Visual Regression integration. CSF 3.0, Storybook 10',
   'Vector': 'Browser automation, data collection, form interaction, and distributed crawl-system architecture',
 };

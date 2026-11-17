@@ -69,7 +69,7 @@ Each skill specializes in one domain and is coordinated by the Nexus orchestrato
 - **90 global skills** are the active, reusable roster under `<skill-name>/SKILL.md`.
 - **3 project-local extensions** (`orbit`, `lore`, and `darwin`) are repository operating skills and are not included in the global count or global profiles.
 - `.claude/skills/` is the canonical project-local location; `.agents/skills/` is a cross-tool mirror, not an additional set of skills.
-- `.archive/` holds a retired skill only while `prune`'s sunset protocol keeps it, and is excluded from every active-roster count. It is currently empty; earlier retired packages are recoverable from git history.
+- `.archive/` holds a retired skill only while `prune`'s sunset protocol keeps it, and is excluded from every active-roster count. The directory does not exist until a sunset creates it; earlier retired packages are recoverable from git history.
 
 The active repository surface is therefore **90 global + 3 project-local = 93 distinct skills**.
 
@@ -84,8 +84,8 @@ The active repository surface is therefore **90 global + 3 project-local = 93 di
 | **Nexus** | _"The right agent at the right time changes everything."_ - Team orchestrator and scope-adaptive product delivery owner. Designs and executes minimum viable agent chains | Prompts, progress management |
 | **Sherpa** | _"The mountain doesn't care about your deadline. Plan accordingly."_ - Task decomposition guide. Breaks complex tasks into atomic steps completable within 15 minutes | Checklists |
 | **Architect** | _"Every agent is a possibility. Every SKILL.md is a birth certificate."_ - Meta-designer that creates new skill agents. Ecosystem gap analysis, duplication detection, SKILL.md generation | SKILL.md, references |
-| **Rally** | _"One task, many hands. Parallel by design."_ - Multi-session parallel orchestrator. Spawns and manages multiple Claude instances via Claude Code Agent Teams API for concurrent task execution | Team management, parallel execution |
-| **Sigil** | _"Every project has patterns waiting to become power."_ - Dynamic skill generator. Analyzes project codebases, discovers patterns and conventions, and generates optimized Claude Code skills for the project's `.claude/skills/` directory | Project-specific skills |
+| **Rally** | _"One task, many hands. Parallel by design."_ - Multi-session parallel orchestrator. Spawns and manages multiple Claude instances via Claude Code Agent Teams API, or Codex CLI subagents, for concurrent task execution | Team management, parallel execution |
+| **Sigil** | _"Every project has patterns waiting to become power."_ - Project-local operating-layer designer and generator. Creates skills, recipes, workflows, and a routing map | Project-specific skills |
 | **Orbit** *(project-local)* | _"Give me a goal. I'll give you a runner that finishes."_ - Nexus-autoloop completion specialist for this repository. Generates completion scripts, operation contracts, and audits for autonomous loop execution | Runner scripts, contracts |
 | **Darwin** *(project-local)* | _"Ecosystems that cannot sense themselves cannot evolve themselves."_ - Repository-local ecosystem evolution orchestrator persisted through `.agents/ECOSYSTEM.md` | Ecosystem Fitness Score, evolution proposals |
 | **Lore** *(project-local)* | _"Forgotten lessons are lessons repeated. Institutional memory is the compound interest of experience."_ - Repository-local curator that synthesizes `.agents/*.md` into `METAPATTERNS.md` | METAPATTERNS.md, knowledge insights |
@@ -129,7 +129,7 @@ The active repository surface is therefore **90 global + 3 project-local = 93 di
 
 | Agent | Description | Output |
 |-------|-------------|--------|
-| **Guardian** | _"Every commit tells a story. Make it worth reading."_ - Git/PR gatekeeper. Signal/Noise analysis of changes, commit granularity optimization, branch naming, PR strategy proposals | Analysis report, PR preparation |
+| **Guardian** | _"Every commit tells a story. Make it worth reading."_ - Git/PR gatekeeper. Signal/Noise analysis of changes, commit granularity optimization, branch naming, PR strategy proposals; the `ship` Recipe also creates, CI-watches, and merges the PR (merge is Ask First) | Analysis report, PR preparation |
 | **Launch** | _"Shipping is not the end. It's the beginning of accountability."_ - Release management plus read-only GitHub PR collection, weekly/monthly/client reporting, DORA/SPACE metrics, retrospectives, and PDF export | Release plans, CHANGELOG and delivery reports |
 | **Trail** | _"Every bug has a birthday. Every regression has a parent commit. Find them."_ - Git history investigation, regression root cause analysis, code archaeology. Travels back in time to uncover the truth | History investigation report |
 
@@ -146,7 +146,7 @@ The active repository surface is therefore **90 global + 3 project-local = 93 di
 | **Sentinel** | _"Security is not a feature. It's a responsibility."_ - Static security analysis (SAST), vulnerability pattern detection, input validation | Security fixes |
 | **Probe** | _"A system is only as secure as its weakest endpoint."_ - Dynamic security testing (DAST), OWASP ZAP/Nuclei integration, penetration testing | Vulnerability report |
 | **Vigil** | _"An undetected attack is an undefended system. Vigil ensures nothing passes unseen."_ - Detection Engineering agent. Sigma/YARA rule design, detection coverage mapping (MITRE ATT&CK), threat hunting hypothesis design, Purple Team Blue side execution, Detection-as-Code CI/CD integration | Detection rules, coverage maps |
-| **Judge** | _"Good code needs no defense. Bad code has no excuse."_ - Code review via codex review, automated PR review, pre-commit checks, AI hallucination detection | Review report |
+| **Judge** | _"Good code needs no defense. Bad code has no excuse."_ - Multi-engine code review (Claude + Codex), automated PR review, pre-commit checks, AI hallucination detection | Review report |
 | **Zen** | _"Clean code is not written. It's rewritten."_ - Refactoring and code quality improvement (behavior unchanged) | Code improvements |
 | **Sweep** | _"Dead code is technical debt that earns no interest."_ - Unused file detection, dead code identification, orphaned file discovery, safe deletion proposals | Cleanup proposals |
 | **Attest** | _"Specs are truth. Code is evidence. Attest finds the gaps."_ - Specification compliance verifier. Extracts acceptance criteria from specs, generates BDD scenarios, and adversarially probes for gaps between spec and implementation. Issues CERTIFIED/CONDITIONAL/REJECTED verdicts | Compliance report, BDD scenarios |
@@ -163,7 +163,7 @@ The active repository surface is therefore **90 global + 3 project-local = 93 di
 | **Builder** | _"Types are contracts. Code is a promise."_ - Type-safe production implementation plus Gemini image-generation/editing code, prompt design, batch generation, style transfer, post-processing, provenance, and content-policy gates, plus CLI/TUI construction (`cli`) and regex/parser/DSL authoring (`grammar`) | Production and image-generation code |
 | **Artisan** | _"Prototypes promise. Production delivers."_ - Production frontend implementation craftsman. React/Vue/Svelte, Hooks design, state management, Server Components, form handling, data fetching | Frontend code |
 | **Forge** | _"Done is better than perfect. Ship it, learn, iterate."_ - Prototyping. Prioritizes working software over perfection. Outputs types.ts, errors.ts, forge-insights.md for Builder handoff | MVP/PoC |
-| **Native** | _"Every pixel ships. Every platform matters."_ - Pure-native mobile implementation specialist for iOS (Swift 6.3 + SwiftUI + Liquid Glass) and Android (Kotlin 2.4+ + Jetpack Compose + Material 3 Expressive). Production-quality features with @Observable / Swift Concurrency, Compose Strong Skipping + Type-safe Navigation, SwiftData / Room, Credential Manager + Passkeys, Privacy Manifest, edge-to-edge, predictive back, Live Activities, App Intents, Foundation Models / Gemini Nano, store compliance, and per-store staged rollout. React Native / Flutter / KMP / CMP are out of scope | Code |
+| **Native** | _"Every pixel ships. Every platform matters."_ - Pure-native implementation specialist for iOS (Swift 6.3 + SwiftUI + Liquid Glass), Android (Kotlin 2.4+ + Jetpack Compose + Material 3 Expressive), and macOS. Production-quality features with @Observable / Swift Concurrency, Compose Strong Skipping + Type-safe Navigation, SwiftData / Room, Credential Manager + Passkeys, Privacy Manifest, edge-to-edge, predictive back, Live Activities, App Intents, Foundation Models / Gemini Nano, store compliance, and per-store staged rollout. React Native / Flutter / KMP / CMP are out of scope | Code |
 | **Pixel** | _"Every pixel matters. Fidelity is non-negotiable."_ - Faithful reproduction agent. Generates pixel-accurate HTML/CSS from image mockups (PNG/JPG/screenshots) and performs visual verification | HTML/CSS code |
 
 ### AI/ML
@@ -181,7 +181,7 @@ The active repository surface is therefore **90 global + 3 project-local = 93 di
 
 | Agent | Description | Output |
 |-------|-------------|--------|
-| **Bolt** | _"Speed is a feature. Slowness is a bug you haven't fixed yet."_ - Application performance improvement. Frontend (re-render reduction) and backend (N+1 fix) optimization | Optimized code |
+| **Bolt** | _"Speed is a feature. Slowness is a bug you haven't fixed yet."_ - Application performance improvement. Frontend (re-render reduction) and backend (N+1 fix) optimization, plus auto-tuning of GC/threadpool/cache/worker settings | Optimized code |
 | **Tuner** | _"A fast query is a happy user. A slow query is a lost customer."_ - DB performance optimization. EXPLAIN ANALYZE analysis, index recommendations, slow query improvement | Query optimization |
 
 ### Observability/SRE
@@ -278,7 +278,7 @@ The active repository surface is therefore **90 global + 3 project-local = 93 di
 
 | Agent | Description | Output |
 |-------|-------------|--------|
-| **Growth** | _"Traffic without conversion is just expensive vanity."_ - SEO (meta/OGP/JSON-LD), SMO (social share display), CRO (CTA improvement), and retention/re-engagement design (`retention` Recipe) | Growth initiatives |
+| **Growth** | _"Traffic without conversion is just expensive vanity."_ - SEO (meta/OGP/JSON-LD), SMO (social share display), CRO (CTA improvement), GEO (AI citation optimization), and retention/re-engagement design (`retention` Recipe) | Growth initiatives |
 | **Funnel** | _"Above the fold is your one shot. Make every pixel convert."_ - LP (Landing Page) conversion strategist and premium production orchestrator. Framework-based structure design (AIDA/PAS/BAB/4Ps), hero section craft, CTA placement strategy, social proof hierarchy, mobile-first responsive implementation | LP structure, copy, specs |
 
 ### Analytics
@@ -491,9 +491,11 @@ Agents share knowledge through the `.agents/` directory:
 - Domain Glossary
 - API & External Services: external service constraints
 - Known Gotchas
+- Browser / Environment Support
 - Security Considerations: security constraints
 - Performance Budgets: performance targets
 - Activity Log: agent work history
+- Cross-Agent Discoveries
 
 ## Agent Principles
 

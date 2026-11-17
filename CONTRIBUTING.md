@@ -40,8 +40,9 @@ make check
 |---|---|
 | `make validate` | スキル構造、project-local 配線、Recipes、routing、instructions、contract delivery、lessons、task battery、`index.html` の Recipe 一覧（`SUBCOMMANDS`）と Compass の Recipes directory の鮮度を検証し、pre-commit hook の状態（on / off / stale）を表示 |
 | `make test` | 検証スクリプトと周辺ツールの回帰テストを実行 |
+| `make test-catalog` | `index.html` と README を各 `SKILL.md` と照合する高速なカタログ回帰テストだけを実行 |
 | `make check` | `make validate` + `make test`。PR 前の標準コマンド |
-| `make hooks` | リポジトリ管理の pre-commit hook を有効化 |
+| `make hooks` | リポジトリ管理の pre-commit hook を有効化。毎回 `validate` と `test-catalog`、検査コードやテストが読むファイルに触れたコミットでは `check` を走らせる |
 
 個別 lint コマンドの羅列をドキュメント側で正本化せず、通常は `make check` を実行してください。検証スクリプトが増減した場合は `Makefile`・CI・hook/installer fixture を同時に更新します。
 
@@ -89,7 +90,7 @@ Route elsewhere when the task is primarily:
 [Phases and what each produces]
 
 ## Recipes
-[Required by ST1 (a missing heading is a P2 warning) — see `_common/RECIPES.md`]
+[Required: a missing or suffixed heading fails `validate-recipes.py` R-REC-05 — see `_common/RECIPES.md`]
 
 ## Subcommand Dispatch
 [Required by ST1 alongside `## Recipes` — see `_common/RECIPES.md`]

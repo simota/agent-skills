@@ -69,7 +69,7 @@ Codexのスキル配置先は `~/.agents/skills`、設定は引き続き `~/.cod
 - **90のグローバルスキル**は、`<skill-name>/SKILL.md`配下の再利用可能なアクティブロスターです。
 - **3つのproject-local拡張**（`orbit`、`lore`、`darwin`）はこのリポジトリ専用の運用スキルで、グローバル数やグローバルプロファイルには含めません。
 - `.claude/skills/`がproject-localの正本、`.agents/skills/`がクロスツール用のミラーであり、別スキルとして重複カウントしません。
-- `.archive/`は`prune`のsunset protocolが保持する間だけ退役スキルを置く場所で、アクティブロスター数から除外します。現在は空で、過去の退役パッケージはgit履歴から復元できます。
+- `.archive/`は`prune`のsunset protocolが保持する間だけ退役スキルを置く場所で、アクティブロスター数から除外します。ディレクトリはsunsetで作られるまで存在せず、過去の退役パッケージはgit履歴から復元できます。
 
 したがって、現在のアクティブ構成は **90 global + 3 project-local = 93の個別スキル**です。
 
@@ -84,7 +84,7 @@ Codexのスキル配置先は `~/.agents/skills`、設定は引き続き `~/.cod
 | **Nexus** | _"The right agent at the right time changes everything."_ - チーム統括と規模適応型プロダクトデリバリー。最小限のエージェントチェーンを設計・実行 | プロンプト、進行管理 |
 | **Sherpa** | _"The mountain doesn't care about your deadline. Plan accordingly."_ - タスク分解ガイド。複雑なタスクを15分以内のAtomic Stepに分解 | チェックリスト |
 | **Architect** | _"Every agent is a possibility. Every SKILL.md is a birth certificate."_ - 新しいスキルエージェントを設計・生成するメタデザイナー。エコシステムギャップ分析、重複検出、SKILL.md生成 | SKILL.md、references |
-| **Rally** | _"One task, many hands. Parallel by design."_ - マルチセッション並列オーケストレーター。Claude Code Agent Teams APIで複数Claudeインスタンスを生成・管理し、並行タスク実行を実現 | チーム管理、並列実行 |
+| **Rally** | _"One task, many hands. Parallel by design."_ - マルチセッション並列オーケストレーター。Claude Code Agent Teams APIまたはCodex CLIサブエージェントで複数インスタンスを生成・管理し、並行タスク実行を実現 | チーム管理、並列実行 |
 | **Sigil** | _"Every project has patterns waiting to become power."_ - プロジェクト運用レイヤー設計・生成。スキル、レシピ、ワークフロー、ルーティングマップを作成 | プロジェクト固有スキル |
 | **Orbit** *(project-local)* | _"Give me a goal. I'll give you a runner that finishes."_ - このリポジトリのNexus-autoloop完走スクリプト生成・運用契約設計・監査を担当 | ランナースクリプト、契約 |
 | **Darwin** *(project-local)* | _"Ecosystems that cannot sense themselves cannot evolve themselves."_ - `.agents/ECOSYSTEM.md`へ永続化する、このリポジトリ専用のエコシステム進化オーケストレーター | エコシステムフィットネススコア、進化提案 |
@@ -129,7 +129,7 @@ Codexのスキル配置先は `~/.agents/skills`、設定は引き続き `~/.cod
 
 | エージェント | 説明 | 出力 |
 |------------|------|------|
-| **Guardian** | _"Every commit tells a story. Make it worth reading."_ - Git/PRの番人。変更のSignal/Noise分析、コミット粒度最適化、ブランチ命名、PR戦略提案 | 分析レポート、PR準備 |
+| **Guardian** | _"Every commit tells a story. Make it worth reading."_ - Git/PRの番人。変更のSignal/Noise分析、コミット粒度最適化、ブランチ命名、PR戦略提案。`ship` RecipeはPR作成・CI監視・マージまで実行（マージはAsk First） | 分析レポート、PR準備 |
 | **Launch** | _"Shipping is not the end. It's the beginning of accountability."_ - リリース管理に、GitHub PRのread-only収集、週次/月次/client report、DORA/SPACE指標、retrospective、PDF出力を統合 | リリース計画、CHANGELOG、デリバリーレポート |
 | **Trail** | _"Every bug has a birthday. Every regression has a parent commit. Find them."_ - Git履歴調査・リグレッション原因分析・コード考古学。時間を遡って真相を解明 | 履歴調査レポート |
 
@@ -146,7 +146,7 @@ Codexのスキル配置先は `~/.agents/skills`、設定は引き続き `~/.cod
 | **Sentinel** | _"Security is not a feature. It's a responsibility."_ - セキュリティ静的分析（SAST）・脆弱性パターン検出・入力検証追加 | セキュリティ修正 |
 | **Probe** | _"A system is only as secure as its weakest endpoint."_ - セキュリティ動的テスト（DAST）・OWASP ZAP/Nuclei連携・ペネトレーションテスト | 脆弱性レポート |
 | **Vigil** | _"An undetected attack is an undefended system. Vigil ensures nothing passes unseen."_ - Detection Engineeringエージェント。Sigma/YARAルール設計、検出カバレッジマッピング、脅威ハンティング仮説設計、Detection-as-Code CI/CD統合 | 検出ルール、カバレッジマップ |
-| **Judge** | _"Good code needs no defense. Bad code has no excuse."_ - codex reviewによるコードレビュー・PRレビュー自動化・コミット前チェック・AI幻覚検出 | レビューレポート |
+| **Judge** | _"Good code needs no defense. Bad code has no excuse."_ - マルチエンジン（Claude + Codex）コードレビュー・PRレビュー自動化・コミット前チェック・AI幻覚検出 | レビューレポート |
 | **Zen** | _"Clean code is not written. It's rewritten."_ - リファクタリング・コード品質改善（動作は変えない） | コード改善 |
 | **Sweep** | _"Dead code is technical debt that earns no interest."_ - 不要ファイル検出・未使用コード特定・孤立ファイル発見・安全な削除提案 | クリーンアップ提案 |
 | **Attest** | _"Specs are truth. Code is evidence. Attest finds the gaps."_ - 仕様適合検証エージェント。仕様書から受入基準を抽出し、BDDシナリオを生成し、実装が仕様通りか敵対的に検証。CERTIFIED/CONDITIONAL/REJECTED判定を発行 | 適合レポート、BDDシナリオ |
@@ -163,7 +163,7 @@ Codexのスキル配置先は `~/.agents/skills`、設定は引き続き `~/.cod
 | **Builder** | _"Types are contracts. Code is a promise."_ - 型安全な本番実装に、Gemini画像生成・編集コード、prompt設計、batch生成、style transfer、後処理、provenance、content-policy gateに加え、CLI/TUI構築（`cli`）と regex/parser/DSL設計（`grammar`）を統合 | プロダクションコード、画像生成コード |
 | **Artisan** | _"Prototypes promise. Production delivers."_ - フロントエンド本番実装の職人。React/Vue/Svelte、Hooks設計、状態管理、Server Components、フォーム処理、データフェッチング | フロントエンドコード |
 | **Forge** | _"Done is better than perfect. Ship it, learn, iterate."_ - プロトタイプ作成。完璧より動くものを優先。Builder連携用にtypes.ts, errors.ts, forge-insights.mdを出力 | MVP/PoC |
-| **Native** | _"Every pixel ships. Every platform matters."_ - Pure-nativeモバイル実装スペシャリスト。iOS（Swift 6.3 + SwiftUI + Liquid Glass）と Android（Kotlin 2.4+ + Jetpack Compose + Material 3 Expressive）。@Observable/Swift Concurrency、Compose Strong Skipping + Type-safe Navigation、SwiftData/Room、Credential Manager + Passkey、Privacy Manifest、edge-to-edge、predictive back、Live Activities、App Intents、Foundation Models / Gemini Nano、ストア準拠、ステージドロールアウト。React Native / Flutter / KMP / CMP は対象外 | コード |
+| **Native** | _"Every pixel ships. Every platform matters."_ - Pure-native実装スペシャリスト。iOS（Swift 6.3 + SwiftUI + Liquid Glass）、Android（Kotlin 2.4+ + Jetpack Compose + Material 3 Expressive）、macOS。@Observable/Swift Concurrency、Compose Strong Skipping + Type-safe Navigation、SwiftData/Room、Credential Manager + Passkey、Privacy Manifest、edge-to-edge、predictive back、Live Activities、App Intents、Foundation Models / Gemini Nano、ストア準拠、ステージドロールアウト。React Native / Flutter / KMP / CMP は対象外 | コード |
 | **Pixel** | _"Every pixel matters. Fidelity is non-negotiable."_ - 画像モックアップ（PNG/JPG/スクリーンショット）からピクセルパーフェクトなHTML/CSSを生成し、視覚的検証を行う忠実再現エージェント | HTML/CSSコード |
 
 ### AI/ML
@@ -181,7 +181,7 @@ Codexのスキル配置先は `~/.agents/skills`、設定は引き続き `~/.cod
 
 | エージェント | 説明 | 出力 |
 |------------|------|------|
-| **Bolt** | _"Speed is a feature. Slowness is a bug you haven't fixed yet."_ - アプリケーションパフォーマンス改善。フロント（再レンダリング削減）とバック（N+1修正）両面 | 最適化コード |
+| **Bolt** | _"Speed is a feature. Slowness is a bug you haven't fixed yet."_ - アプリケーションパフォーマンス改善。フロント（再レンダリング削減）とバック（N+1修正）両面、GC/スレッドプール/キャッシュ/ワーカー設定の自動チューニング | 最適化コード |
 | **Tuner** | _"A fast query is a happy user. A slow query is a lost customer."_ - DBパフォーマンス最適化。EXPLAIN ANALYZE分析・インデックス推奨・スロークエリ改善 | クエリ最適化 |
 
 ### 可観測性/SRE
@@ -276,7 +276,7 @@ Codexのスキル配置先は `~/.agents/skills`、設定は引き続き `~/.cod
 
 | エージェント | 説明 | 出力 |
 |------------|------|------|
-| **Growth** | _"Traffic without conversion is just expensive vanity."_ - SEO（meta/OGP/JSON-LD）・SMO（SNSシェア表示）・CRO（CTA改善）・リテンション/再エンゲージメント設計（`retention` Recipe） | 成長施策 |
+| **Growth** | _"Traffic without conversion is just expensive vanity."_ - SEO（meta/OGP/JSON-LD）・SMO（SNSシェア表示）・CRO（CTA改善）・GEO（AI引用最適化）・リテンション/再エンゲージメント設計（`retention` Recipe） | 成長施策 |
 | **Funnel** | _"Above the fold is your one shot. Make every pixel convert."_ - LP（ランディングページ）のコンバージョン戦略とプレミアム制作パイプライン。フレームワーク（AIDA/PAS/BAB/4Ps）に基づく構造設計、ヒーローセクション、CTA配置戦略、Social Proof階層、モバイルファーストのレスポンシブ実装 | LP構造、コピー、仕様 |
 
 ### 分析
@@ -489,9 +489,11 @@ questions:
 - Domain Glossary
 - API & External Services: 外部サービスの制約
 - Known Gotchas
+- Browser / Environment Support
 - Security Considerations: セキュリティ制約
 - Performance Budgets: パフォーマンス予算
 - Activity Log: エージェントの作業履歴
+- Cross-Agent Discoveries
 
 ## エージェントの原則
 
