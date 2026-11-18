@@ -1,0 +1,47 @@
+name: pages
+
+# Publish only the site, not the repository root. The skill directories hold
+# cyclic symlinks (_common/_common, oracle/_common <-> _common/oracle) that
+# make the dereferencing tar in a root-level Pages upload recurse forever.
+on:
+  push:
+    branches: [main]
+    paths:
+      - index.html
+      - .github/workflows/pages.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          sparse-checkout: index.html
+          sparse-checkout-cone-mode: false
+
+      - name: Stage site
+        run: |
+          mkdir _site
+          cp index.html _site/
+          touch _site/.nojekyll
+
+      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
