@@ -41,6 +41,14 @@ Use these as prioritization guidance, not as rigid gates:
 | Low | Low | Monitor or schedule later |
 | Low | High | Leave alone |
 
+### Payoff ceiling for review findings
+
+When Zen reports smells (review or audit output, not an in-flight refactor), the priority is the payoff, not the smell:
+
+- **High** needs a hotspot **and** at least one fix commit in a stated history window that touched the smell's lines (cite the hash).
+- A smell with neither a history payoff nor an upcoming change the requester named is reported at most as **Info**, however textbook it is.
+- Ask for the upcoming changes before reading. If nobody can answer, record `axis: assumed` and route every High to the decisions list (`_common/FINDING_LEDGER.md` § Grading).
+
 ### Zen application
 
 When Atlas sends a hotspot:

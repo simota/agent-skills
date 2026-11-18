@@ -128,7 +128,22 @@ Performance regressions are UX regressions — flag in audit.
 
 ## 7. Prioritized Remediation Backlog
 
-Score each finding on **Effort × Impact**:
+### Verify each finding before scoring
+
+A checklist hit is a candidate, not a finding. Answer four questions for each one, then try to disprove it:
+
+1. **Standard** — which heuristic, WCAG criterion, or token rule does it break?
+2. **Reach** — does a user actually get there? Dead code, Storybook-only stories, and unreleased flags are `NotApplicable`. Viewports outside the supported set are `NotApplicable`; if the supported set is unknown, assume 360 / 768 / 1280 and say so in the report.
+3. **Compensation** — is it covered elsewhere? A global focus style, a wrapper that adds the label, a parent error boundary.
+4. **Impact** — which primary task does it block or slow, and for whom? Fix the primary flows (task, actor, screen order) before collecting findings, and attach each finding to one.
+
+Record the verdict as `Valid` / `Likely` / `Unlikely` / `FalsePositive` / `NotApplicable`. Only `Valid` and `Likely` enter the backlog. Severity follows reach and confidence stays separate (`_common/FINDING_LEDGER.md` § Grading).
+
+**Re-audits.** When a previous audit exists, compare against it and report `regressed` first. A finding that disappeared is "no longer reported", not "fixed", until an after-screenshot or test shows the fix.
+
+### Score
+
+Score each verified finding on **Effort × Impact**:
 
 | Effort | Impact | Priority |
 |---|---|---|

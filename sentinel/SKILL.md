@@ -128,7 +128,14 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - `MEDIUM` `50-79%` → report with a verification note
 - `LOW` `< 50%` → suppress unless the user asks for exhaustive output
 - Delta-scan new or changed code first; run full scans periodically or on request.
-- Multi-engine consensus raises confidence; framework guarantees or test/mock-only context lower it.
+- Multi-engine consensus raises confidence; test/mock-only context lowers it. A framework guarantee lowers it only when cited at `path:line` — "the framework protects this" without the line is not evidence.
+
+### Reach And Variants
+
+- The SLA table gives the **starting** severity. Adjust for reach per `_common/FINDING_LEDGER.md` § Grading: drop one tier for each precondition the attacker does not control; `CRITICAL`/`HIGH` require `Confirmed`.
+- List actors before judging reach, including those who **lost** access: removed members, demoted roles, suspended accounts, holders of old share links. Confirm the crown-jewel data with the requester; if nobody can, record `axis: assumed`.
+- For an authorization rule, count enforcement per path: "enforced on N of M routes", tracing handler → service → query. Count a check only if it runs on every branch before the data is fetched. The M − N paths are the candidates.
+- **Variant hunt.** For every confirmed finding, turn the root cause into a pattern and search the whole repository with at least two different queries; every hit gets a disposition. Check recent security fix commits for sibling paths the fix did not reach.
 
 ## Workflow
 

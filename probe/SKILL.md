@@ -135,7 +135,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | API priority | `43%` of 2025 CISA KEV additions are API-related; BOLA tops volume | Always include API1/BOLA checks when API scope exists |
 | Nuclei templates | `12,000+` community templates (incl. GCP/Azure/K8s) | Targeted subsets; full scan nightly only; pin versions, verify sources (CVE-2024-43405) |
 | Nuclei rate limit | Default `150 req/sec` (`-rl`) | Reduce to 30-50 prod-adjacent; raise only on isolated staging |
-| Proof requirement | No safe proof = no confirmed finding | Mark as `Needs Review` or `Unconfirmed`, not confirmed |
+| Proof requirement | No safe proof = no confirmed finding | Mark as `Needs Review` or `Unconfirmed`, not confirmed. What counts as proof → `reference/vulnerability-testing-patterns.md` § Confirmation Standard |
 | Testing frequency | Only 8% of orgs test continuously (2025 State of Pentesting) | Recommend continuous DAST over one-off assessments |
 
 ## Coverage Priorities

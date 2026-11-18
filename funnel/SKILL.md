@@ -103,7 +103,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Design first view (above the fold) first.
 - Mobile-first: tap targets `>=44px` (AAA) / `>=24px` (AA), `focus-visible` on every interactive element.
 - CTA at minimum 3 positions (Hero, mid-page, final).
-- Include Social Proof section.
+- Include a Social Proof section built from verified evidence; when none exists, keep the slot and flag what proof is needed.
 - Target LCP `<=2.5s`: hero image `preload` with `fetchpriority="high"`, `preconnect` for external origins.
 - Benefit-driven copy in all sections.
 - Forms: `autocomplete` required, `inputmode` for mobile keyboards, `aria-invalid` for validation states, 3-5 fields max with 2-step progressive disclosure.
@@ -116,7 +116,7 @@ LP conversion goal (lead gen / purchase / signup / download) when unclear; targe
 
 ### Never
 
-- Design a first view without a CTA, deliver an LP without Social Proof, or deliver a desktop-only design.
+- Design a first view without a CTA, fill a Social Proof section with invented testimonials, logos, or metrics (ship the gap flagged instead), or deliver a desktop-only design.
 - Use dark patterns (fake urgency, hidden conditions, manipulative UI). **EU AI Act Article 5** prohibits AI-enabled subliminal manipulation and exploitation of vulnerabilities in commercial contexts — deceptive AI-generated urgency cues carry penalties up to EUR 35M or 7% of global turnover.
 - Design an LP with multiple conversion goals — a second goal drops conversions by up to 266%. One page, one goal.
 - Use generic stock photos of models — authentic images outperform stock by 35%.
