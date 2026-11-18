@@ -77,6 +77,22 @@ A finding must keep the same identity from the cycle that opens it to the cycle 
 
 **Per-finding record:** `id · location · class · severity · engine(s) + concurrence · first_seen_cycle · disposition · disposition_evidence · closed_in_cycle`. Members extend the record with domain fields (`burnish` adds `locus` and `expected/observed`); they never drop one.
 
+### Grading — three axes, never one number
+
+A single "severity" that blends impact, certainty, and fix difficulty cannot be argued with: a reviewer who disagrees cannot tell which part is wrong. Grade on three axes and record each separately.
+
+| Axis | Question it answers | Values |
+|------|--------------------|--------|
+| `severity` | What does the defect expose, to whom, under which conditions? | the member's tier names (e.g. `CRITICAL`…`LOW`) |
+| `confidence` | Does the evidence show the defect is real? | `Confirmed` (reproduced or traced end to end at `path:line`) / `Likely` / `Suspected` |
+| `change risk` | What can fixing it break? | member-defined (e.g. `Safe` / `Guarded` / `Risky` for refactors) |
+
+1. **Severity follows reach, not class.** A member's class table gives the *starting* tier. Drop one tier for each precondition the attacker or user does not control (needs an admin role, needs a flag that is off by default, needs a second bug). A condition the repository itself establishes (`replicas: 3`, a public route) is a fact, not a precondition, and costs nothing.
+2. **The top tier requires `Confirmed`.** A finding that would rate `CRITICAL`/`HIGH` on `Likely` or `Suspected` evidence is either confirmed or reported one tier lower with the missing confirmation named. Severity and confidence never trade against each other silently.
+3. **An assumed axis sends the top tier to a human.** When the axis severity is measured against — the critical flows, the crown-jewel data, the core tables, the upcoming changes — was not confirmed by the requester, record `axis: assumed`. Every top-tier finding then goes to the decisions list for ratification instead of being acted on automatically.
+
+**Lifecycle:** failure: F2 — a high-severity finding shipped on pattern-match alone, or graded against a priority nobody confirmed; effect: makes the evidence behind each top-tier finding explicit and routes assumed priorities to a human, it does not make the evidence correct; owner: finding-ledger members (sentinel, judge, zen, vision audits); removal: when a checker validates finding records against these rules and the prose is replaced by its schema.
+
 ## 5. Disposition vocabulary
 
 Every finding carries **exactly one** disposition. Nothing is silently dropped.

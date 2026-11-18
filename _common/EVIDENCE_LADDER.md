@@ -124,6 +124,9 @@ an observation. Label every entry with one of three, and never let the label be 
    State which check would have to run to lift it.
 4. **`executed` binds to a revision.** If HEAD moved after the run, the status is stale, not passing
    (`_common/HANDOFF.md` § Completed vs Verified).
+5. **`executed` also binds to a clean tree.** A run over uncommitted changes binds to no revision anyone can
+   reproduce; run evidence from a clean worktree at the pinned commit. Evidence runs disable retries — a test
+   that passes only on retry is reported as `flaky`, not passing.
 
 ---
 
@@ -141,6 +144,12 @@ count in the completion sweep (`_common/OPERATIONAL.md` § Completion Contract):
 7 evidenced`, and while the two numbers differ the status is not `SUCCESS`.
 
 Code, spec, README, config, and this file are all changes. **None is exempt for being prose.**
+
+**An audit counts review units the same way.** A read-only review splits its scope into units (a flow, a
+module, a table) and closes each one only when every row of its checklist holds a result — evidence at
+`path:line`, `N/A` with a reason, or `not checked` with what was missing. When the budget runs out, **close
+units in priority order instead of thinning every unit**, and report the number of units never reached. A
+report that touched everything lightly reads as complete and is not.
 
 ### Verifying a document — through what it names
 
@@ -235,6 +244,10 @@ The left column is what teams reach for by reflex, and it is the column that lea
 2. **Separate the contexts**: author the oracle in a session that has never seen the implementation, or before it exists.
 3. Add **one E4 mechanism** — a property, a mutation run over the changed lines, or a differential against the old path.
 4. Record in the PR **what the tests prove and what they do not**.
+5. **Show the key test red on the old code.** For each acceptance criterion, run the test that carries it
+   against the pre-change code (the base revision with the new tests applied, or a mutant of the feature code).
+   It must fail on an assertion. A failure from a crash, an import error, or a missing fixture is not a
+   counterexample: it proves the test cannot run, not that it detects anything.
 
 ---
 

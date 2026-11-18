@@ -236,6 +236,10 @@ not re-asked downstream.
 Context Engineering optimizes for *just enough*, not maximal. Violating these re-creates the
 "over-questioning sin".
 
+- A clear ask gets no question. If you can write two sentences without guessing — what the requester wants,
+  and who will judge it done by looking at what — act. A question on a clear ask is a defect, not caution.
+- Taste that is cheap, local, and reversible is shown, not asked: build two candidates and let the requester pick.
+- While a question is pending, keep doing the work that no possible answer would change.
 - One turn, ≤ 4 questions. Batch blocking dimensions; never a multi-message interrogation.
 - Stop at sufficiency. Once the blocking set is resolved, act; don't keep gathering nice-to-haves.
 - Disclose every inference ("I interpreted … / assumed …") so a wrong fill is cheap to correct.

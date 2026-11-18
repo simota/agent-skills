@@ -15,6 +15,7 @@ Other agents may import this taxonomy when classifying multi-file inconsistencie
 - [Categories](#categories)
 - [Severity Rubric](#severity-rubric)
 - [Detection Confidence Rules](#detection-confidence-rules)
+- [Codebase Rule Ledger](#codebase-rule-ledger)
 - [False Positive Filtering](#false-positive-filtering)
 - [Finding & Report Schemas](#finding--report-schemas)
 
@@ -238,6 +239,20 @@ Report a category as a consistency violation only when:
    - **50–69%** → weak consensus; flag for team decision, recommend strongest candidate.
    - **<50%** → no consensus; escalate to Atlas for architectural guidance, do not auto-unify.
 3. **Not on the exclusion list** (see below).
+
+---
+
+## Codebase Rule Ledger
+
+The categories above are generic. Most real violations break a rule **this codebase** set for itself ("handlers never call the DB directly", "every tenant query goes through `scoped()`"). Write those rules down before judging any site against them.
+
+**1. Source strength.** Record where each rule comes from, strongest first: enforced config (lint rule, type, CI check) > written doc (ADR, CONTRIBUTING) > majority of sites (record the counts) > direction of recent migrations > code comments. A rule backed only by the last three is `inferred`: findings against it go to the decisions list, not straight to a fix.
+
+**2. One trace row per site.** Search for every site the rule governs, record the hit count, and give each site one state: `holds` / `violated` / `partly read` / `not checked`. The `control` column names what enforces the rule at that site as `path:line`, or `NONE` / `UNKNOWN` (with what would decide it). "The framework handles it" is not a value — cite the line where it does.
+
+**3. Close-check.** A rule is closed only when the number of trace rows equals the hit count and no cell is blank. A comment is not a control: a rule held only by a comment is recorded with `control: NONE`, and the remedy moves it into a type, test, or lint before the comment is deleted — never "add a comment".
+
+**Lifecycle:** failure: F2 — a consistency or architecture review judges against textbook rules and misses the codebase's own, or samples a few sites and reports the rule as holding; effect: forces each rule's source and every governed site into the record so an omission is countable, it does not find rules nobody wrote or practiced; owner: atlas and zen (consumers of this framework); removal: when a checker derives the trace from the search and rejects unclosed ledgers.
 
 ---
 
